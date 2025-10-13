@@ -472,6 +472,8 @@ export default function NumberSpeechTrainer() {
 
       if (event.error === 'no-speech') {
         setFeedback(t.noSpeech);
+      } else if (event.error === 'not-allowed') {
+        setFeedback('🔒 Microphone permission denied. Click the 🔒 icon next to the URL and allow microphone access. 🔒 Permissão do microfone negada. Clique no ícone 🔒 ao lado da URL e permita o acesso ao microfone.');
       } else if (event.error !== 'aborted') {
         setFeedback('Error: ' + event.error);
       }
