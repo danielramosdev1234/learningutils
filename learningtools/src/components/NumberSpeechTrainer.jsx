@@ -551,12 +551,10 @@ export default function NumberSpeechTrainer() {
 
                     </div>
 
-          <div className="grid md:grid-cols-3 gap-4 mb-8 p-4 bg-gray-50 rounded-lg">
+          <div className="grid grid-cols-3 gap-2 md:gap-4 mb-8 p-3 md:p-4 bg-gray-50 rounded-lg">
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
-                <Globe className="w-4 h-4" />
-                Language
-              </label>
+
+              <label className="block text-sm font-semibold text-gray-700 mb-2">Language</label>
               <select
                 value={selectedLanguage}
                 onChange={(e) => setSelectedLanguage(e.target.value)}
@@ -571,7 +569,7 @@ export default function NumberSpeechTrainer() {
             </div>
 
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">Min Number</label>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">Min</label>
               <input
                 type="number"
                 value={minRange}
@@ -581,7 +579,7 @@ export default function NumberSpeechTrainer() {
             </div>
 
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">Max Number</label>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">Max</label>
               <input
                 type="number"
                 value={maxRange}
@@ -591,9 +589,9 @@ export default function NumberSpeechTrainer() {
             </div>
           </div>
 
-          <div className="text-center mb-8">
-            <div className="inline-block bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-2xl px-16 py-12 shadow-lg">
-              <p className="text-7xl font-bold">{currentNumber}</p>
+          <div className="text-center mb-6 md:mb-8">
+            <div className="inline-block bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-xl md:rounded-2xl px-8 py-6 md:px-16 md:py-12 shadow-lg">
+              <p className="text-4xl md:text-7xl font-bold">{currentNumber}</p>
             </div>
           </div>
 
