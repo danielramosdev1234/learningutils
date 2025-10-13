@@ -269,38 +269,45 @@ export default function NumberSpeechTrainer() {
   };
 
   const checkAnswer = (spokenText) => {
-    const t = getTranslation();
-    const trimmed = spokenText ? spokenText.trim() : '';
+      const t = getTranslation();
+      const trimmed = spokenText ? spokenText.trim() : '';
 
-    if (!trimmed) {
-      setFeedback(t.noSpeech);
-      return;
-    }
+      if (!trimmed) {
+        setFeedback(t.noSpeech);
+        return;
+      }
 
-    const spokenLower = trimmed.toLowerCase();
-    const numberStr = currentNumber.toString();
-    const numberWords = numberToWordsSimple(currentNumber).toLowerCase();
+      const spokenLower = trimmed.toLowerCase();
+      const numberStr = currentNumber.toString();
+      const numberWords = numberToWordsSimple(currentNumber).toLowerCase();
 
-    const isCorrect = spokenLower === numberStr ||
-                      spokenLower === numberWords ||
-                      spokenLower.includes(numberStr) ||
-                      spokenLower.includes(numberWords) ||
-                      spokenLower.replace(/\s+/g, '') === numberWords.replace(/\s+/g, '');
+      // Remove separadores comuns (vírgulas, pontos, espaços) para comparação
+      const normalizeNumber = (str) => str.replace(/[,.\s]/g, '');
+      const spokenNormalized = normalizeNumber(spokenLower);
+      const numberNormalized = normalizeNumber(numberStr);
+      const wordsNormalized = normalizeNumber(numberWords);
 
-    setScore(prev => ({
-      correct: prev.correct + (isCorrect ? 1 : 0),
-      total: prev.total + 1
-    }));
+      const isCorrect = spokenNormalized === numberNormalized ||
+                        spokenNormalized === wordsNormalized ||
+                        spokenNormalized.includes(numberNormalized) ||
+                        spokenNormalized.includes(wordsNormalized) ||
+                        spokenLower === numberStr ||
+                        spokenLower === numberWords;
 
-    if (isCorrect) {
-      setFeedback(t.correct);
-      setTimeout(() => {
-        generateNewNumber();
-      }, 1500);
-    } else {
-      setFeedback(`✗ ${t.notQuite} "${trimmed}". ${t.correctAnswer}: ${currentNumber} (${numberToWordsSimple(currentNumber)})`);
-    }
-  };
+      setScore(prev => ({
+        correct: prev.correct + (isCorrect ? 1 : 0),
+        total: prev.total + 1
+      }));
+
+      if (isCorrect) {
+        setFeedback(t.correct);
+        setTimeout(() => {
+          generateNewNumber();
+        }, 1500);
+      } else {
+        setFeedback(`✗ ${t.notQuite} "${trimmed}". ${t.correctAnswer}: ${currentNumber} (${numberToWordsSimple(currentNumber)})`);
+      }
+    };
 
   const startListening = () => {
     const t = getTranslation();
