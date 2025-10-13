@@ -12,6 +12,7 @@ export default function NumberSpeechTrainer() {
   const [feedback, setFeedback] = useState('');
   const [score, setScore] = useState({ correct: 0, total: 0 });
   const [loadingVoices, setLoadingVoices] = useState(true);
+  const [recognition, setRecognition] = useState(null);
 
   useEffect(() => {
     const loadVoices = () => {
@@ -309,30 +310,38 @@ export default function NumberSpeechTrainer() {
       }
     };
 
-  const startListening = () => {
+  const toggleListening = () => {
     const t = getTranslation();
 
+    // Se já está ouvindo, para a captura
+    if (isListening && recognition) {
+      recognition.stop();
+      setIsListening(false);
+      return;
+    }
+
+    // Se não está ouvindo, inicia a captura
     if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
       setFeedback(t.notSupported);
       return;
     }
 
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    const recognition = new SpeechRecognition();
-    recognition.lang = selectedLanguage;
-    recognition.continuous = false;
-    recognition.interimResults = true;
-    recognition.maxAlternatives = 1;
+    const newRecognition = new SpeechRecognition();
+    newRecognition.lang = selectedLanguage;
+    newRecognition.continuous = true; // Mudado para true para captura contínua
+    newRecognition.interimResults = true;
+    newRecognition.maxAlternatives = 1;
 
     let finalTranscript = '';
 
-    recognition.onstart = () => {
+    newRecognition.onstart = () => {
       setIsListening(true);
       setTranscript('🎤 Listening...');
       setFeedback('');
     };
 
-    recognition.onresult = (event) => {
+    newRecognition.onresult = (event) => {
       let interimTranscript = '';
 
       for (let i = event.resultIndex; i < event.results.length; i++) {
@@ -348,9 +357,10 @@ export default function NumberSpeechTrainer() {
       }
     };
 
-    recognition.onerror = (event) => {
+    newRecognition.onerror = (event) => {
       const t = getTranslation();
       setIsListening(false);
+      setRecognition(null);
 
       if (event.error === 'no-speech') {
         setFeedback(t.noSpeech);
@@ -359,15 +369,17 @@ export default function NumberSpeechTrainer() {
       }
     };
 
-    recognition.onend = () => {
+    newRecognition.onend = () => {
       setIsListening(false);
+      setRecognition(null);
 
       if (finalTranscript && finalTranscript.trim()) {
         checkAnswer(finalTranscript);
       }
     };
 
-    recognition.start();
+    setRecognition(newRecognition);
+    newRecognition.start();
   };
 
   if (loadingVoices) {
@@ -445,11 +457,14 @@ export default function NumberSpeechTrainer() {
               Hear It
             </button>
             <button
-              onClick={startListening}
-              disabled={isListening}
-              className="flex items-center gap-2 bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold transition shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
+              onClick={toggleListening}
+              className={`flex items-center gap-2 ${
+                isListening
+                  ? 'bg-red-500 hover:bg-red-600'
+                  : 'bg-blue-500 hover:bg-blue-600'
+              } text-white px-6 py-3 rounded-lg font-semibold transition shadow-md`}
             >
-              {isListening ? '🎤 Listening...' : '🎤 Speak'}
+              {isListening ? '⏹️ Send' : '🎤 Speak'}
             </button>
             <button
               onClick={generateNewNumber}
