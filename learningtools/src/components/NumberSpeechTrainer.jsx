@@ -562,7 +562,7 @@ export default function NumberSpeechTrainer() {
               >
                 {availableVoices.map((lang) => (
                   <option key={lang.code} value={lang.code}>
-                    {getLanguageFlag(lang.code)} {lang.localName}
+                    {lang.localName}
                   </option>
                 ))}
               </select>
