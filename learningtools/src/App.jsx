@@ -1,7 +1,16 @@
 import NumberSpeechTrainer from './components/NumberSpeechTrainer'
+import { Analytics } from '@vercel/analytics/react';
 
 function App() {
-  return <NumberSpeechTrainer />
+  return  (
+
+        <div className="App">
+          <NumberSpeechTrainer />
+          <Analytics />
+        </div>
+
+
+    );
 }
 
 export default App
