@@ -109,56 +109,6 @@ export const colors = {
       fr: 'gris',
       de: 'grau'
     }
-  },
-  gold: {
-    hex: '#FFD700',
-    translations: {
-      en: 'gold',
-      pt: 'dourado',
-      es: 'dorado',
-      fr: 'or',
-      de: 'gold'
-    }
-  },
-  silver: {
-    hex: '#C0C0C0',
-    translations: {
-      en: 'silver',
-      pt: 'prateado',
-      es: 'plateado',
-      fr: 'argent',
-      de: 'silber'
-    }
-  },
-  cyan: {
-    hex: '#00FFFF',
-    translations: {
-      en: 'cyan',
-      pt: 'ciano',
-      es: 'cian',
-      fr: 'cyan',
-      de: 'cyan'
-    }
-  },
-  magenta: {
-    hex: '#FF00FF',
-    translations: {
-      en: 'magenta',
-      pt: 'magenta',
-      es: 'magenta',
-      fr: 'magenta',
-      de: 'magenta'
-    }
-  },
-  lime: {
-    hex: '#00FF00',
-    translations: {
-      en: 'lime',
-      pt: 'lima',
-      es: 'lima',
-      fr: 'citron vert',
-      de: 'limette'
-    }
   }
 };
 
