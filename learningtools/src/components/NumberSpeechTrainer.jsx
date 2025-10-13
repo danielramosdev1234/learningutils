@@ -47,17 +47,53 @@ export default function NumberSpeechTrainer() {
           if (!languageMap[langCode]) {
             let displayName = langCode;
 
-            try {
-              const [baseLang, region] = langCode.split('-');  // ['en', 'US']
+            // Mapeamento manual dos idiomas mais comuns
+                        const languageNames = {
+                          'en-US': 'English (United States)',
+                          'en-GB': 'English (United Kingdom)',
+                          'pt-BR': 'Português (Brasil)',
+                          'pt-PT': 'Português (Portugal)',
+                          'es-ES': 'Español (España)',
+                          'es-MX': 'Español (México)',
+                          'fr-FR': 'Français (France)',
+                          'de-DE': 'Deutsch (Deutschland)',
+                          'it-IT': 'Italiano (Italia)',
+                          'ja-JP': '日本語 (日本)',
+                          'ko-KR': '한국어 (대한민국)',
+                          'zh-CN': '中文 (中国)',
+                          'zh-TW': '中文 (台灣)',
+                          'ru-RU': 'Русский (Россия)',
+                          'ar-SA': 'العربية (السعودية)',
+                          'hi-IN': 'हिन्दी (भारत)',
+                          'nl-NL': 'Nederlands (Nederland)',
+                          'pl-PL': 'Polski (Polska)',
+                          'tr-TR': 'Türkçe (Türkiye)',
+                          'sv-SE': 'Svenska (Sverige)',
+                          'no-NO': 'Norsk (Norge)',
+                          'da-DK': 'Dansk (Danmark)',
+                          'fi-FI': 'Suomi (Suomi)',
+                          'cs-CZ': 'Čeština (Česko)',
+                          'el-GR': 'Ελληνικά (Ελλάδα)',
+                          'he-IL': 'עברית (ישראל)',
+                          'th-TH': 'ไทย (ไทย)',
+                          'vi-VN': 'Tiếng Việt (Việt Nam)',
+                          'id-ID': 'Bahasa Indonesia (Indonesia)'
+                        };
 
-              const langName = new Intl.DisplayNames(['en'], { type: 'language' }).of(baseLang);
-
-              const regionName = region ? new Intl.DisplayNames(['en'], { type: 'region' }).of(region.toUpperCase()) : '';
-
-              displayName = regionName ? `${langName} (${regionName})` : langName;
-            } catch (e) {
-              displayName = langCode;
-            }
+                        // Tenta usar o mapeamento manual primeiro
+                        if (languageNames[langCode]) {
+                          displayName = languageNames[langCode];
+                        } else {
+                          // Fallback: tenta usar Intl.DisplayNames
+                          try {
+                            const [baseLang, region] = langCode.split('-');
+                            const langName = new Intl.DisplayNames(['en'], { type: 'language' }).of(baseLang);
+                            const regionName = region ? new Intl.DisplayNames(['en'], { type: 'region' }).of(region.toUpperCase()) : '';
+                            displayName = regionName ? `${langName} (${regionName})` : langName;
+                          } catch (e) {
+                            displayName = langCode;
+                          }
+                        }
 
             languageMap[langCode] = {
               code: langCode,
