@@ -105,39 +105,175 @@ export default function NumberSpeechTrainer() {
     return flagMap[baseLang] || '🌐';
   };
 
-  const numberToWordsSimple = (num) => {
-    const words = {
-      0: 'zero', 1: 'one', 2: 'two', 3: 'three', 4: 'four',
-      5: 'five', 6: 'six', 7: 'seven', 8: 'eight', 9: 'nine',
-      10: 'ten', 11: 'eleven', 12: 'twelve', 13: 'thirteen', 14: 'fourteen',
-      15: 'fifteen', 16: 'sixteen', 17: 'seventeen', 18: 'eighteen', 19: 'nineteen',
-      20: 'twenty', 30: 'thirty', 40: 'forty', 50: 'fifty',
-      60: 'sixty', 70: 'seventy', 80: 'eighty', 90: 'ninety',
-      100: 'hundred', 1000: 'thousand'
+  const getTranslation = (key) => {
+    const translations = {
+      'en': {
+        correct: '✓ Correct! Well done! 🎉',
+        notQuite: 'Not quite. You said',
+        correctAnswer: 'The correct answer is',
+        noSpeech: '⚠️ No speech detected. Speak louder and closer to the mic.',
+        notSupported: 'Speech recognition is not supported in your browser. Try Chrome or Edge.',
+        youSaid: 'You said:',
+        score: 'Score:',
+        howToUse: 'How to use:',
+        step1: 'Select your language and number range above',
+        step2: 'Click "Hear It" to listen to the number pronunciation',
+        step3: 'Click "Speak" and say the number out loud',
+        step4: 'Get instant feedback on your pronunciation',
+        step5: 'Click "Next" for a new number'
+      },
+      'pt': {
+        correct: '✓ Correto! Muito bem! 🎉',
+        notQuite: 'Não está correto. Você disse',
+        correctAnswer: 'A resposta correta é',
+        noSpeech: '⚠️ Nenhuma fala detectada. Fale mais alto e próximo ao microfone.',
+        notSupported: 'Reconhecimento de voz não suportado no seu navegador. Use Chrome ou Edge.',
+        youSaid: 'Você disse:',
+        score: 'Pontuação:',
+        howToUse: 'Como usar:',
+        step1: 'Selecione seu idioma e intervalo de números acima',
+        step2: 'Clique em "Ouvir" para escutar a pronúncia do número',
+        step3: 'Clique em "Falar" e diga o número em voz alta',
+        step4: 'Receba feedback instantâneo sobre sua pronúncia',
+        step5: 'Clique em "Próximo" para um novo número'
+      },
+      'es': {
+        correct: '✓ ¡Correcto! ¡Bien hecho! 🎉',
+        notQuite: 'No es correcto. Dijiste',
+        correctAnswer: 'La respuesta correcta es',
+        noSpeech: '⚠️ No se detectó habla. Habla más alto y cerca del micrófono.',
+        notSupported: 'El reconocimiento de voz no es compatible con tu navegador. Prueba Chrome o Edge.',
+        youSaid: 'Dijiste:',
+        score: 'Puntuación:',
+        howToUse: 'Cómo usar:',
+        step1: 'Selecciona tu idioma y rango de números arriba',
+        step2: 'Haz clic en "Escuchar" para oír la pronunciación del número',
+        step3: 'Haz clic en "Hablar" y di el número en voz alta',
+        step4: 'Obtén retroalimentación instantánea sobre tu pronunciación',
+        step5: 'Haz clic en "Siguiente" para un nuevo número'
+      },
+      'fr': {
+        correct: '✓ Correct! Bien joué! 🎉',
+        notQuite: 'Pas tout à fait. Vous avez dit',
+        correctAnswer: 'La bonne réponse est',
+        noSpeech: '⚠️ Aucune parole détectée. Parlez plus fort et plus près du micro.',
+        notSupported: 'La reconnaissance vocale n\'est pas prise en charge par votre navigateur. Essayez Chrome ou Edge.',
+        youSaid: 'Vous avez dit:',
+        score: 'Score:',
+        howToUse: 'Comment utiliser:',
+        step1: 'Sélectionnez votre langue et plage de nombres ci-dessus',
+        step2: 'Cliquez sur "Écouter" pour entendre la prononciation du nombre',
+        step3: 'Cliquez sur "Parler" et dites le nombre à voix haute',
+        step4: 'Obtenez un retour instantané sur votre prononciation',
+        step5: 'Cliquez sur "Suivant" pour un nouveau nombre'
+      },
+      'de': {
+        correct: '✓ Richtig! Gut gemacht! 🎉',
+        notQuite: 'Nicht ganz. Sie sagten',
+        correctAnswer: 'Die richtige Antwort ist',
+        noSpeech: '⚠️ Keine Sprache erkannt. Sprechen Sie lauter und näher am Mikrofon.',
+        notSupported: 'Spracherkennung wird von Ihrem Browser nicht unterstützt. Versuchen Sie Chrome oder Edge.',
+        youSaid: 'Sie sagten:',
+        score: 'Punktzahl:',
+        howToUse: 'So verwenden:',
+        step1: 'Wählen Sie oben Ihre Sprache und Zahlenbereich',
+        step2: 'Klicken Sie auf "Hören", um die Aussprache zu hören',
+        step3: 'Klicken Sie auf "Sprechen" und sagen Sie die Zahl laut',
+        step4: 'Erhalten Sie sofortiges Feedback zu Ihrer Aussprache',
+        step5: 'Klicken Sie auf "Weiter" für eine neue Zahl'
+      }
     };
 
-    if (words[num]) return words[num];
+    const baseLang = selectedLanguage.split('-')[0];
+    return translations[baseLang] || translations['en'];
+  };
 
-    if (num < 100) {
-      const tens = Math.floor(num / 10) * 10;
-      const ones = num % 10;
-      return words[tens] + (ones ? ' ' + words[ones] : '');
+  const numberToWordsSimple = (num) => {
+    const lang = selectedLanguage.split('-')[0];
+
+    // English
+    if (lang === 'en') {
+      const words = {
+        0: 'zero', 1: 'one', 2: 'two', 3: 'three', 4: 'four',
+        5: 'five', 6: 'six', 7: 'seven', 8: 'eight', 9: 'nine',
+        10: 'ten', 11: 'eleven', 12: 'twelve', 13: 'thirteen', 14: 'fourteen',
+        15: 'fifteen', 16: 'sixteen', 17: 'seventeen', 18: 'eighteen', 19: 'nineteen',
+        20: 'twenty', 30: 'thirty', 40: 'forty', 50: 'fifty',
+        60: 'sixty', 70: 'seventy', 80: 'eighty', 90: 'ninety'
+      };
+
+      if (words[num]) return words[num];
+      if (num < 100) {
+        const tens = Math.floor(num / 10) * 10;
+        const ones = num % 10;
+        return words[tens] + (ones ? ' ' + words[ones] : '');
+      }
+      if (num < 1000) {
+        const hundreds = Math.floor(num / 100);
+        const remainder = num % 100;
+        return words[hundreds] + ' hundred' + (remainder ? ' ' + numberToWordsSimple(remainder) : '');
+      }
     }
 
-    if (num < 1000) {
-      const hundreds = Math.floor(num / 100);
-      const remainder = num % 100;
-      return words[hundreds] + ' hundred' + (remainder ? ' ' + numberToWordsSimple(remainder) : '');
+    // Spanish
+    if (lang === 'es') {
+      const words = {
+        0: 'cero', 1: 'uno', 2: 'dos', 3: 'tres', 4: 'cuatro',
+        5: 'cinco', 6: 'seis', 7: 'siete', 8: 'ocho', 9: 'nueve',
+        10: 'diez', 11: 'once', 12: 'doce', 13: 'trece', 14: 'catorce',
+        15: 'quince', 16: 'dieciséis', 17: 'diecisiete', 18: 'dieciocho', 19: 'diecinueve',
+        20: 'veinte', 30: 'treinta', 40: 'cuarenta', 50: 'cincuenta',
+        60: 'sesenta', 70: 'setenta', 80: 'ochenta', 90: 'noventa'
+      };
+
+      if (words[num]) return words[num];
+      if (num < 100) {
+        const tens = Math.floor(num / 10) * 10;
+        const ones = num % 10;
+        return words[tens] + (ones ? ' y ' + words[ones] : '');
+      }
+      if (num < 1000) {
+        const hundreds = Math.floor(num / 100);
+        const remainder = num % 100;
+        const hundredWord = hundreds === 1 ? 'cien' : words[hundreds] + 'cientos';
+        return remainder === 0 ? hundredWord : hundredWord + ' ' + numberToWordsSimple(remainder);
+      }
+    }
+
+    // Portuguese
+    if (lang === 'pt') {
+      const words = {
+        0: 'zero', 1: 'um', 2: 'dois', 3: 'três', 4: 'quatro',
+        5: 'cinco', 6: 'seis', 7: 'sete', 8: 'oito', 9: 'nove',
+        10: 'dez', 11: 'onze', 12: 'doze', 13: 'treze', 14: 'quatorze',
+        15: 'quinze', 16: 'dezesseis', 17: 'dezessete', 18: 'dezoito', 19: 'dezenove',
+        20: 'vinte', 30: 'trinta', 40: 'quarenta', 50: 'cinquenta',
+        60: 'sessenta', 70: 'setenta', 80: 'oitenta', 90: 'noventa'
+      };
+
+      if (words[num]) return words[num];
+      if (num < 100) {
+        const tens = Math.floor(num / 10) * 10;
+        const ones = num % 10;
+        return words[tens] + (ones ? ' e ' + words[ones] : '');
+      }
+      if (num < 1000) {
+        const hundreds = Math.floor(num / 100);
+        const remainder = num % 100;
+        const hundredWord = num === 100 ? 'cem' : words[hundreds] + 'centos';
+        return remainder === 0 ? hundredWord : hundredWord + ' e ' + numberToWordsSimple(remainder);
+      }
     }
 
     return num.toString();
   };
 
   const checkAnswer = (spokenText) => {
+    const t = getTranslation();
     const trimmed = spokenText ? spokenText.trim() : '';
 
     if (!trimmed) {
-      setFeedback('⚠️ No speech detected. Please try again.');
+      setFeedback(t.noSpeech);
       return;
     }
 
@@ -157,18 +293,20 @@ export default function NumberSpeechTrainer() {
     }));
 
     if (isCorrect) {
-      setFeedback('✓ Correct! Well done! 🎉');
+      setFeedback(t.correct);
       setTimeout(() => {
         generateNewNumber();
       }, 1500);
     } else {
-      setFeedback(`✗ Not quite. You said "${trimmed}". The correct answer is: ${currentNumber} (${numberToWordsSimple(currentNumber)})`);
+      setFeedback(`✗ ${t.notQuite} "${trimmed}". ${t.correctAnswer}: ${currentNumber} (${numberToWordsSimple(currentNumber)})`);
     }
   };
 
   const startListening = () => {
+    const t = getTranslation();
+
     if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
-      setFeedback('Speech recognition is not supported in your browser. Try Chrome or Edge.');
+      setFeedback(t.notSupported);
       return;
     }
 
@@ -204,10 +342,11 @@ export default function NumberSpeechTrainer() {
     };
 
     recognition.onerror = (event) => {
+      const t = getTranslation();
       setIsListening(false);
 
       if (event.error === 'no-speech') {
-        setFeedback('⚠️ No speech detected. Speak louder and closer to the mic.');
+        setFeedback(t.noSpeech);
       } else if (event.error !== 'aborted') {
         setFeedback('Error: ' + event.error);
       }
@@ -236,6 +375,7 @@ export default function NumberSpeechTrainer() {
   }
 
   const currentLang = availableVoices.find(l => l.code === selectedLanguage);
+  const t = getTranslation();
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-4 md:p-8">
@@ -315,7 +455,7 @@ export default function NumberSpeechTrainer() {
 
           {transcript && transcript !== '🎤 Listening...' && (
             <div className="mb-4 p-4 bg-blue-50 rounded-lg">
-              <p className="text-sm text-gray-600 mb-1">You said:</p>
+              <p className="text-sm text-gray-600 mb-1">{t.youSaid}</p>
               <p className="text-lg font-semibold text-gray-800">{transcript}</p>
             </div>
           )}
@@ -331,7 +471,7 @@ export default function NumberSpeechTrainer() {
           <div className="text-center mb-6">
             <div className="inline-block bg-gray-100 rounded-lg px-6 py-3">
               <p className="text-gray-600">
-                Score: <span className="font-bold text-gray-800">{score.correct} / {score.total}</span>
+                {t.score} <span className="font-bold text-gray-800">{score.correct} / {score.total}</span>
                 {score.total > 0 && (
                   <span className="ml-2 text-sm">
                     ({Math.round((score.correct / score.total) * 100)}%)
@@ -342,13 +482,13 @@ export default function NumberSpeechTrainer() {
           </div>
 
           <div className="p-4 bg-blue-50 rounded-lg">
-            <h3 className="font-semibold text-gray-700 mb-2">How to use:</h3>
+            <h3 className="font-semibold text-gray-700 mb-2">{t.howToUse}</h3>
             <ol className="text-sm text-gray-600 space-y-1">
-              <li>1. Select your language and number range above</li>
-              <li>2. Click "Hear It" to listen to the number pronunciation</li>
-              <li>3. Click "Speak" and say the number out loud</li>
-              <li>4. Get instant feedback on your pronunciation</li>
-              <li>5. Click "Next" for a new number</li>
+              <li>1. {t.step1}</li>
+              <li>2. {t.step2}</li>
+              <li>3. {t.step3}</li>
+              <li>4. {t.step4}</li>
+              <li>5. {t.step5}</li>
             </ol>
           </div>
         </div>
