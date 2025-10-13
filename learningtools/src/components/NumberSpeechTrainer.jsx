@@ -1,5 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import { Volume2, RotateCw, Globe, Loader } from 'lucide-react';
+import { Volume2, RotateCw, Globe, Loader, Trophy, Award } from 'lucide-react';
+import { initializeApp } from 'firebase/app';
+import { getFirestore, collection, addDoc, query, orderBy, limit, getDocs, where } from 'firebase/firestore';
+
+// Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyAt2pGCDu7UgdRBGvOFb98jwdUNE_vydiI",
+  authDomain: "learnfun-2e26f.firebaseapp.com",
+  projectId: "learnfun-2e26f",
+  storageBucket: "learnfun-2e26f.firebasestorage.app",
+  messagingSenderId: "620241304009",
+  appId: "1:620241304009:web:0ba10caafa660e99a89018",
+  measurementId: "G-KB84MN7XFX"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
 export default function NumberSpeechTrainer() {
   const [currentNumber, setCurrentNumber] = useState(0);
@@ -13,6 +30,11 @@ export default function NumberSpeechTrainer() {
   const [score, setScore] = useState({ correct: 0, total: 0 });
   const [loadingVoices, setLoadingVoices] = useState(true);
   const [recognition, setRecognition] = useState(null);
+   const [showRecordModal, setShowRecordModal] = useState(false);
+    const [playerName, setPlayerName] = useState('');
+    const [leaderboard, setLeaderboard] = useState([]);
+    const [loadingLeaderboard, setLoadingLeaderboard] = useState(false);
+    const [canRegisterRecord, setCanRegisterRecord] = useState(false);
 
   useEffect(() => {
     const loadVoices = () => {
@@ -23,19 +45,24 @@ export default function NumberSpeechTrainer() {
         voices.forEach(voice => {
           const langCode = voice.lang;
           if (!languageMap[langCode]) {
-            const baseLang = langCode.split('-')[0];
-            let localName = langCode;
+            let displayName = langCode;
 
             try {
-              localName = new Intl.DisplayNames([langCode], { type: 'language' }).of(baseLang) || langCode;
+              const [baseLang, region] = langCode.split('-');  // ['en', 'US']
+
+              const langName = new Intl.DisplayNames(['en'], { type: 'language' }).of(baseLang);
+
+              const regionName = region ? new Intl.DisplayNames(['en'], { type: 'region' }).of(region.toUpperCase()) : '';
+
+              displayName = regionName ? `${langName} (${regionName})` : langName;
             } catch (e) {
-              localName = langCode;
+              displayName = langCode;
             }
 
             languageMap[langCode] = {
               code: langCode,
               name: voice.name,
-              localName: localName,
+              localName: displayName,
               voices: []
             };
           }
@@ -66,8 +93,82 @@ export default function NumberSpeechTrainer() {
   }, []);
 
   useEffect(() => {
-    generateNewNumber();
-  }, [minRange, maxRange]);
+      generateNewNumber();
+    }, [minRange, maxRange]);
+
+    useEffect(() => {
+      loadLeaderboard();
+    }, [selectedLanguage]);
+
+    const loadLeaderboard = async () => {
+          try {
+            setLoadingLeaderboard(true);
+            // Busca todos os documentos do idioma e ordena no cliente
+            const q = query(
+              collection(db, 'leaderboard'),
+              where('language', '==', selectedLanguage)
+            );
+            const querySnapshot = await getDocs(q);
+            const leaders = querySnapshot.docs
+              .map(doc => ({
+                id: doc.id,
+                ...doc.data()
+              }))
+              .sort((a, b) => b.score - a.score) // Ordena no cliente
+              .slice(0, 10); // Limita a 10
+            setLeaderboard(leaders);
+          } catch (error) {
+            console.error('Error loading leaderboard:', error);
+            // Fallback: busca todos e filtra/ordena no cliente
+            try {
+              const allDocs = await getDocs(collection(db, 'leaderboard'));
+              const leaders = allDocs.docs
+                .map(doc => ({ id: doc.id, ...doc.data() }))
+                .filter(doc => doc.language === selectedLanguage)
+                .sort((a, b) => b.score - a.score)
+                .slice(0, 10);
+              setLeaderboard(leaders);
+            } catch (fallbackError) {
+              console.error('Fallback error:', fallbackError);
+            }
+          } finally {
+            setLoadingLeaderboard(false);
+          }
+        };
+
+    const checkIfNewRecord = () => {
+      if (score.total < 10) return false; // Mínimo 10 tentativas
+      const percentage = (score.correct / score.total) * 100;
+      if (percentage < 80) return false; // Mínimo 80% de acerto
+
+      // Verifica se é melhor que o 10º lugar ou se há menos de 10 no ranking
+      if (leaderboard.length < 10) return true;
+      const lowestScore = leaderboard[leaderboard.length - 1]?.score || 0;
+      return percentage > lowestScore;
+    };
+
+    const saveRecord = async () => {
+        if (!playerName.trim()) return;
+
+        try {
+          const percentage = Math.round((score.correct / score.total) * 100);
+          await addDoc(collection(db, 'leaderboard'), {
+            name: playerName.trim().slice(0, 30),
+            score: percentage,
+            correct: score.correct,
+            total: score.total,
+            language: selectedLanguage,
+            timestamp: new Date()
+          });
+
+          setShowRecordModal(false);
+          setPlayerName('');
+          setCanRegisterRecord(false);
+          await loadLeaderboard();
+        } catch (error) {
+          console.error('Error saving record:', error);
+        }
+      };
 
   const generateNewNumber = () => {
     const newNum = Math.floor(Math.random() * (maxRange - minRange + 1)) + minRange;
@@ -301,11 +402,18 @@ export default function NumberSpeechTrainer() {
       }));
 
       if (isCorrect) {
-        setFeedback(t.correct);
-        setTimeout(() => {
-          generateNewNumber();
-        }, 1500);
-      } else {
+              setFeedback(t.correct);
+              setTimeout(() => {
+                generateNewNumber();
+
+                // Verifica se atingiu um recorde após atualizar o score
+                setTimeout(() => {
+                  if (checkIfNewRecord()) {
+                    setCanRegisterRecord(true);
+                  }
+                }, 100);
+              }, 1500);
+            } else {
         setFeedback(`✗ ${t.notQuite} "${trimmed}". ${t.correctAnswer}: ${currentNumber} (${numberToWordsSimple(currentNumber)})`);
       }
     };
@@ -400,7 +508,10 @@ export default function NumberSpeechTrainer() {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-4 md:p-8">
       <div className="max-w-4xl mx-auto">
         <div className="bg-white rounded-2xl shadow-xl p-6 md:p-8">
-          <h1 className="text-2xl md:text-3xl font-bold text-gray-800 mb-6 text-center">Number Speech Trainer</h1>
+          <div className="flex items-center justify-between mb-6">
+                      <h1 className="text-2xl md:text-3xl font-bold text-gray-800">Number Speech Trainer</h1>
+
+                    </div>
 
           <div className="grid md:grid-cols-3 gap-4 mb-8 p-4 bg-gray-50 rounded-lg">
             <div>
@@ -447,6 +558,27 @@ export default function NumberSpeechTrainer() {
               <p className="text-7xl font-bold">{currentNumber}</p>
             </div>
           </div>
+
+          {canRegisterRecord && (
+            <div className="mb-6 p-4 bg-gradient-to-r from-yellow-100 to-amber-100 border-2 border-yellow-400 rounded-xl">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                <div className="flex items-center gap-3">
+                  <Trophy className="w-8 h-8 text-yellow-600 flex-shrink-0" />
+                  <div>
+                    <p className="font-bold text-gray-800 text-lg">🎉 Você alcançou um recorde!</p>
+                    <p className="text-sm text-gray-600">Registre seu nome ou continue jogando</p>
+                  </div>
+                </div>
+                <button
+                  onClick={() => setShowRecordModal(true)}
+                  className="bg-yellow-500 hover:bg-yellow-600 text-white px-6 py-3 rounded-lg font-bold transition shadow-md whitespace-nowrap w-full sm:w-auto"
+                >
+                  Registrar Recorde
+                </button>
+              </div>
+            </div>
+          )}
+
 
           <div className="flex flex-wrap gap-3 justify-center mb-6">
             <button
@@ -504,17 +636,131 @@ export default function NumberSpeechTrainer() {
           </div>
 
           <div className="p-4 bg-blue-50 rounded-lg">
-            <h3 className="font-semibold text-gray-700 mb-2">{t.howToUse}</h3>
-            <ol className="text-sm text-gray-600 space-y-1">
-              <li>1. {t.step1}</li>
-              <li>2. {t.step2}</li>
-              <li>3. {t.step3}</li>
-              <li>4. {t.step4}</li>
-              <li>5. {t.step5}</li>
-            </ol>
-          </div>
-        </div>
-      </div>
-    </div>
+                      <h3 className="font-semibold text-gray-700 mb-2">{t.howToUse}</h3>
+                      <ol className="text-sm text-gray-600 space-y-1">
+                        <li>1. {t.step1}</li>
+                        <li>2. {t.step2}</li>
+                        <li>3. {t.step3}</li>
+                        <li>4. {t.step4}</li>
+                        <li>5. {t.step5}</li>
+                      </ol>
+                    </div>
+                  </div>
+
+                  {/* Leaderboard */}
+
+                    <div className="bg-white rounded-2xl shadow-xl p-6 lg:sticky lg:top-8 lg:self-start lg:max-h-[calc(100vh-4rem)] lg:overflow-y-auto">
+                      <div className="flex items-center gap-3 mb-6">
+                        <Trophy className="w-8 h-8 text-yellow-500" />
+                        <h2 className="text-2xl font-bold text-gray-800">Top 10 - {currentLang?.localName || 'Ranking'}</h2>
+                      </div>
+
+                      {loadingLeaderboard ? (
+                        <div className="text-center py-8">
+                          <Loader className="w-8 h-8 animate-spin text-blue-500 mx-auto" />
+                        </div>
+                      ) : leaderboard.length === 0 ? (
+                        <div className="text-center py-8 text-gray-500">
+                          <Award className="w-16 h-16 mx-auto mb-3 text-gray-300" />
+                          <p>Nenhum recorde ainda. Seja o primeiro! 🎯</p>
+                          <p className="text-sm mt-2">Consiga 80%+ de acertos com pelo menos 10 tentativas</p>
+                        </div>
+                      ) : (
+                        <div className="overflow-x-auto">
+                          <table className="w-full">
+                            <thead>
+                              <tr className="border-b-2 border-gray-200">
+                                <th className="text-left py-3 px-2 text-gray-600 font-semibold">#</th>
+                                <th className="text-left py-3 px-4 text-gray-600 font-semibold">Nome</th>
+                                <th className="text-center py-3 px-4 text-gray-600 font-semibold">Score</th>
+                                <th className="text-center py-3 px-4 text-gray-600 font-semibold">Acertos</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {leaderboard.map((entry, index) => (
+                                <tr
+                                  key={entry.id}
+                                  className={`border-b border-gray-100 ${
+                                    index < 3 ? 'bg-gradient-to-r from-yellow-50 to-amber-50' : ''
+                                  }`}
+                                >
+                                  <td className="py-3 px-2">
+                                    {index === 0 && <span className="text-2xl">🥇</span>}
+                                    {index === 1 && <span className="text-2xl">🥈</span>}
+                                    {index === 2 && <span className="text-2xl">🥉</span>}
+                                    {index > 2 && <span className="text-gray-500 font-semibold">{index + 1}</span>}
+                                  </td>
+                                  <td className="py-3 px-4 font-medium text-gray-800">{entry.name}</td>
+                                  <td className="py-3 px-4 text-center">
+                                    <span className="inline-block bg-blue-100 text-blue-800 px-3 py-1 rounded-full font-bold">
+                                      {entry.score}%
+                                    </span>
+                                  </td>
+                                  <td className="py-3 px-4 text-center text-gray-600">
+                                    {entry.correct}/{entry.total}
+                                  </td>
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        </div>
+                      )}
+                    </div>
+
+
+                  {/* Modal de Novo Recorde */}
+                  {showRecordModal && (
+                    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+                      <div className="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full animate-bounce-in">
+                        <div className="text-center mb-6">
+                          <Trophy className="w-16 h-16 text-yellow-500 mx-auto mb-3" />
+                          <h2 className="text-3xl font-bold text-gray-800 mb-2">🎉 Novo Recorde! 🎉</h2>
+                          <p className="text-gray-600">
+                            Você conseguiu {Math.round((score.correct / score.total) * 100)}% de acerto!
+                          </p>
+                          <p className="text-sm text-gray-500 mt-1">
+                            {score.correct} corretos de {score.total} tentativas
+                          </p>
+                        </div>
+
+                        <div className="mb-6">
+                          <label className="block text-sm font-semibold text-gray-700 mb-2">
+                            Digite seu nome para o ranking:
+                          </label>
+                          <input
+                            type="text"
+                            value={playerName}
+                            onChange={(e) => setPlayerName(e.target.value)}
+                            onKeyPress={(e) => e.key === 'Enter' && saveRecord()}
+                            maxLength={30}
+                            placeholder="Seu nome aqui..."
+                            className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none text-lg"
+                            autoFocus
+                          />
+                        </div>
+
+                        <div className="flex gap-3">
+                          <button
+                            onClick={() => {
+                              setShowRecordModal(false);
+                              setPlayerName('');
+                            }}
+                            className="flex-1 px-4 py-3 bg-gray-300 hover:bg-gray-400 text-gray-800 rounded-lg font-semibold transition"
+                          >
+                            Cancelar
+                          </button>
+                          <button
+                            onClick={saveRecord}
+                            disabled={!playerName.trim()}
+                            className="flex-1 px-4 py-3 bg-blue-500 hover:bg-blue-600 disabled:bg-gray-300 disabled:cursor-not-allowed text-white rounded-lg font-semibold transition"
+                          >
+                            Salvar
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
   );
 }
