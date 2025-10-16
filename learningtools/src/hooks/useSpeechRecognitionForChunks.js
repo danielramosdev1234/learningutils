@@ -10,11 +10,8 @@ export const useSpeechRecognitionForChunks = () => {
   const mediaRecorderRef = useRef(null);
   const audioChunksRef = useRef([]);
   const streamRef = useRef(null);
-  const finalTranscriptRef = useRef('');
-  const interimTranscriptRef = useRef(''); // ✅ NOVO: Também guarda interim
-  const hasStartedRef = useRef(false); // ✅ NOVO: Flag para saber se começou
-  const processingTimeoutRef = useRef(null); // ✅ NOVO: Timeout para processing
-  const silenceTimerRef = useRef(null);
+  const finalTranscriptRef = useRef(''); // ✅ CRÍTICO: Ref para persistir texto final
+  const silenceTimerRef = useRef(null); // ✅ Timer para detectar silêncio
 
   useEffect(() => {
     if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
@@ -26,126 +23,74 @@ export const useSpeechRecognitionForChunks = () => {
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     recognitionRef.current = new SpeechRecognition();
 
-    // ✅ CONFIGURAÇÃO OTIMIZADA PARA MOBILE
-    recognitionRef.current.continuous = true; // ✅ MUDANÇA CRÍTICA: false para mobile
+    // CONFIGURAÇÃO OTIMIZADA PARA MOBILE
+    recognitionRef.current.continuous = true;
     recognitionRef.current.interimResults = true;
     recognitionRef.current.lang = 'en-US';
     recognitionRef.current.maxAlternatives = 1;
 
-    recognitionRef.current.onstart = () => {
-      console.log('🎙️ Recognition started');
-      hasStartedRef.current = true;
-      setTranscript('🎤 Listening...');
-    };
-
     recognitionRef.current.onresult = (event) => {
-      console.log('📊 onresult triggered, results:', event.results.length);
-
       let interimText = '';
-      let finalText = '';
+      let hasFinal = false;
 
-      for (let i = 0; i < event.results.length; i++) {
-        const result = event.results[i];
-        const text = result[0].transcript;
+      for (let i = event.resultIndex; i < event.results.length; i++) {
+        const text = event.results[i][0].transcript;
 
-        console.log(`Result ${i}: "${text}" (final: ${result.isFinal})`);
-
-        if (result.isFinal) {
-          if (finalText) {
-            finalText += ' ' + text;
+        if (event.results[i].isFinal) {
+          // ✅ Acumula texto final em ref (persiste entre renders)
+          if (finalTranscriptRef.current) {
+            finalTranscriptRef.current += ' ' + text;
           } else {
-            finalText = text;
+            finalTranscriptRef.current = text;
           }
+          hasFinal = true;
+          console.log('🎤 Final text captured:', finalTranscriptRef.current);
         } else {
-          if (interimText) {
-            interimText += ' ' + text;
-          } else {
-            interimText = text;
-          }
+          interimText = text;
+          console.log('⏳ Interim:', text);
         }
       }
 
-      // ✅ ATUALIZA REFS
-      if (finalText) {
-        if (finalTranscriptRef.current) {
-          finalTranscriptRef.current += ' ' + finalText;
-        } else {
-          finalTranscriptRef.current = finalText;
-        }
-        console.log('✅ Final accumulated:', finalTranscriptRef.current);
+      // Atualiza state com texto final ou interim
+      if (hasFinal) {
+        setTranscript(finalTranscriptRef.current);
+        // ✅ Reset timer de silêncio quando há fala final
+        resetSilenceTimer();
+      } else if (interimText) {
+        setTranscript(interimText);
+        // ✅ Reset timer quando há fala interim
+        resetSilenceTimer();
       }
-
-      if (interimText) {
-        interimTranscriptRef.current = interimText;
-      }
-
-      // ✅ ATUALIZA STATE (mostra final ou interim)
-      const displayText = finalTranscriptRef.current || interimText;
-      if (displayText) {
-        setTranscript(displayText);
-        console.log('📝 Display text set:', displayText);
-      }
-
-      if (silenceTimerRef.current) {
-        clearTimeout(silenceTimerRef.current);
-      }
-
-      silenceTimerRef.current = setTimeout(() => {
-        if (recognitionRef.current && isListening) {
-          console.log('🛑 Silêncio detectado, parando...');
-          recognitionRef.current.stop();
-        }
-      }, 2000); // Para após 2 segundos de silêncio
     };
 
     recognitionRef.current.onend = () => {
+      console.log('🛑 Recognition ended');
+      setIsListening(false);
+
+      // Para a gravação quando o reconhecimento terminar
+      if (mediaRecorderRef.current && mediaRecorderRef.current.state === 'recording') {
+        mediaRecorderRef.current.stop();
+      }
+
+      // ✅ Garante que transcript final está no state
+      if (finalTranscriptRef.current && finalTranscriptRef.current.trim()) {
+        setTranscript(finalTranscriptRef.current);
+        console.log('✅ Final transcript set:', finalTranscriptRef.current);
+      }
+
+      // Limpa timer
       if (silenceTimerRef.current) {
         clearTimeout(silenceTimerRef.current);
         silenceTimerRef.current = null;
       }
-      console.log('🛑 Recognition ended');
-      console.log('Final transcript ref:', finalTranscriptRef.current);
-      console.log('Interim transcript ref:', interimTranscriptRef.current);
-
-      // ✅ PROCESSAMENTO FINAL COM DELAY
-      // Espera um pouco para garantir que onresult terminou
-      processingTimeoutRef.current = setTimeout(() => {
-        const finalText = finalTranscriptRef.current || interimTranscriptRef.current;
-
-        if (finalText && finalText.trim() && finalText !== '🎤 Listening...') {
-          console.log('✅ Setting final transcript:', finalText);
-          setTranscript(finalText);
-        } else {
-          console.warn('⚠️ No transcript captured!');
-          setTranscript(''); // Limpa se não há texto
-        }
-
-        setIsListening(false);
-
-        // Para a gravação
-        if (mediaRecorderRef.current && mediaRecorderRef.current.state === 'recording') {
-          console.log('🎬 Stopping MediaRecorder from onend');
-          mediaRecorderRef.current.stop();
-        }
-      }, 300); // ✅ 300ms de delay para garantir processamento
     };
 
     recognitionRef.current.onerror = (event) => {
       console.error('❌ Recognition error:', event.error);
 
-      // Limpa timeout se houver
-      if (processingTimeoutRef.current) {
-        clearTimeout(processingTimeoutRef.current);
-      }
-
       if (event.error === 'no-speech') {
-        console.log('No speech detected');
-        setError('No speech detected. Please try again.');
-        // ✅ Usa transcript interim se houver
-        const lastText = interimTranscriptRef.current || finalTranscriptRef.current;
-        if (lastText && lastText !== '🎤 Listening...') {
-          setTranscript(lastText);
-        }
+        // Não é um erro crítico no mobile
+        console.log('No speech detected (normal on mobile)');
       } else if (event.error === 'aborted') {
         console.log('Recognition aborted (normal)');
       } else if (event.error === 'audio-capture') {
@@ -164,6 +109,11 @@ export const useSpeechRecognitionForChunks = () => {
       }
     };
 
+    recognitionRef.current.onstart = () => {
+      console.log('🎙️ Recognition started');
+      setTranscript('🎤 Listening...');
+    };
+
     return () => {
       if (recognitionRef.current) {
         try {
@@ -177,27 +127,40 @@ export const useSpeechRecognitionForChunks = () => {
         streamRef.current.getTracks().forEach(track => track.stop());
       }
 
-      if (processingTimeoutRef.current) {
-        clearTimeout(processingTimeoutRef.current);
-      }
       if (silenceTimerRef.current) {
-          clearTimeout(silenceTimerRef.current);
-        }
+        clearTimeout(silenceTimerRef.current);
+      }
     };
   }, []);
+
+  // ✅ NOVO: Função para auto-stop após silêncio (importante para mobile)
+  const resetSilenceTimer = useCallback(() => {
+    if (silenceTimerRef.current) {
+      clearTimeout(silenceTimerRef.current);
+    }
+
+    // Auto-stop após 2 segundos de silêncio
+    silenceTimerRef.current = setTimeout(() => {
+      console.log('⏱️ Silence detected, auto-stopping...');
+      if (recognitionRef.current && isListening) {
+        try {
+          recognitionRef.current.stop();
+        } catch (e) {
+          console.log('Auto-stop error:', e);
+        }
+      }
+    }, 2000);
+  }, [isListening]);
 
   const startListening = useCallback(async () => {
     console.log('▶️ Start listening called');
 
     if (recognitionRef.current && !isListening) {
-      // ✅ RESET COMPLETO
       setTranscript('');
       setError(null);
       setAudioBlob(null);
       audioChunksRef.current = [];
-      finalTranscriptRef.current = '';
-      interimTranscriptRef.current = '';
-      hasStartedRef.current = false;
+      finalTranscriptRef.current = ''; // ✅ Reset ref
 
       try {
         // Solicita permissão do microfone
@@ -205,81 +168,68 @@ export const useSpeechRecognitionForChunks = () => {
           audio: {
             echoCancellation: true,
             noiseSuppression: true,
-            autoGainControl: true,
+            autoGainControl: true, // ✅ Importante para mobile
             sampleRate: 44100
           }
         });
 
         streamRef.current = stream;
 
-        // ✅ Detecta o melhor MIME type
+        // Detecta o tipo MIME suportado
         let mimeType = 'audio/webm';
-        const types = [
-          'audio/webm;codecs=opus',
-          'audio/webm',
-          'audio/ogg;codecs=opus',
-          'audio/mp4',
-          'audio/wav'
-        ];
 
-        for (const type of types) {
-          if (MediaRecorder.isTypeSupported(type)) {
-            mimeType = type;
-            break;
-          }
+        if (MediaRecorder.isTypeSupported('audio/webm;codecs=opus')) {
+          mimeType = 'audio/webm;codecs=opus';
+        } else if (MediaRecorder.isTypeSupported('audio/webm')) {
+          mimeType = 'audio/webm';
+        } else if (MediaRecorder.isTypeSupported('audio/mp4')) {
+          mimeType = 'audio/mp4';
+        } else if (MediaRecorder.isTypeSupported('audio/ogg;codecs=opus')) {
+          mimeType = 'audio/ogg;codecs=opus';
         }
 
         console.log('📱 Using MIME type:', mimeType);
 
-        mediaRecorderRef.current = new MediaRecorder(stream, { mimeType });
+        mediaRecorderRef.current = new MediaRecorder(stream, {
+          mimeType: mimeType
+        });
 
         mediaRecorderRef.current.ondataavailable = (event) => {
           if (event.data.size > 0) {
             audioChunksRef.current.push(event.data);
-            console.log('📼 Chunk:', event.data.size, 'bytes');
+            console.log('📼 Audio chunk recorded:', event.data.size, 'bytes');
           }
         };
 
         mediaRecorderRef.current.onstop = () => {
-          console.log('🎬 Recording stopped');
+          console.log('🎬 Recording stopped, creating blob...');
+          const blob = new Blob(audioChunksRef.current, { type: mimeType });
+          setAudioBlob(blob);
+          console.log('✅ Audio blob created:', blob.size, 'bytes');
 
-          if (audioChunksRef.current.length > 0) {
-            const blob = new Blob(audioChunksRef.current, { type: mimeType });
-            setAudioBlob(blob);
-            console.log('✅ Audio blob:', blob.size, 'bytes');
-          } else {
-            console.warn('⚠️ No audio chunks recorded!');
-          }
-
-          // Para o stream
+          // Para o stream do microfone
           if (streamRef.current) {
             streamRef.current.getTracks().forEach(track => track.stop());
             streamRef.current = null;
           }
         };
 
-        // ✅ Inicia gravação
-        mediaRecorderRef.current.start(100);
+        // ✅ Inicia gravação com chunks pequenos (melhor para mobile)
+        mediaRecorderRef.current.start(100); // 100ms chunks
         console.log('🔴 Recording started');
 
-        // ✅ Delay antes de iniciar reconhecimento
+        // ✅ Delay maior para garantir que MediaRecorder está pronto
         await new Promise(resolve => setTimeout(resolve, 200));
 
-        // ✅ Inicia reconhecimento
-        console.log('🎤 Starting speech recognition...');
+        // Inicia o reconhecimento de voz
         recognitionRef.current.start();
         setIsListening(true);
 
-        // ✅ FALLBACK: Auto-stop após 10 segundos (segurança)
-        setTimeout(() => {
-          if (isListening) {
-            console.log('⏱️ Auto-stopping after 10s');
-            stopListening();
-          }
-        }, 10000);
+        // ✅ Inicia timer de silêncio
+        resetSilenceTimer();
 
       } catch (err) {
-        console.error('❌ Error starting:', err);
+        console.error('Error starting recording:', err);
         setError(err.message || 'Failed to start recording');
 
         if (streamRef.current) {
@@ -288,34 +238,33 @@ export const useSpeechRecognitionForChunks = () => {
         }
       }
     }
-  }, [isListening]);
+  }, [isListening, resetSilenceTimer]);
 
   const stopListening = useCallback(() => {
     console.log('⏸️ Stop listening called');
 
-    if (processingTimeoutRef.current) {
-      clearTimeout(processingTimeoutRef.current);
+    // Limpa timer de silêncio
+    if (silenceTimerRef.current) {
+      clearTimeout(silenceTimerRef.current);
+      silenceTimerRef.current = null;
     }
 
     if (recognitionRef.current && isListening) {
       try {
         recognitionRef.current.stop();
-        console.log('✅ Recognition.stop() called');
       } catch (e) {
-        console.log('Stop error:', e);
+        console.log('Stop error (ignorable):', e);
       }
     }
   }, [isListening]);
 
   const resetTranscript = useCallback(() => {
-    console.log('🧹 Reset');
+    console.log('🧹 Resetting transcript and audio');
     setTranscript('');
     setError(null);
     setAudioBlob(null);
     audioChunksRef.current = [];
-    finalTranscriptRef.current = '';
-    interimTranscriptRef.current = '';
-    hasStartedRef.current = false;
+    finalTranscriptRef.current = ''; // ✅ Reset ref
   }, []);
 
   return {
