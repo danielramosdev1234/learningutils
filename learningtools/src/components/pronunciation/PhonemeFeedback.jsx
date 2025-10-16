@@ -1,14 +1,19 @@
 // src/components/pronunciation/PhonemeFeedback.jsx
 
-import React from 'react';
-import { CheckCircle, XCircle, AlertCircle, Lightbulb } from 'lucide-react';
+import React, { useState, useRef } from 'react';
+import { CheckCircle, XCircle, AlertCircle, Lightbulb, Volume2, User } from 'lucide-react';
 import { usePhonemeAnalysis } from '../../hooks/usePhonemeAnalysis';
+import { useTextToSpeech } from '../../hooks/useTextToSpeech';
 
 /**
  * Componente que mostra feedback detalhado palavra por palavra
  */
-export const PhonemeFeedback = ({ expectedText, spokenText }) => {
+export const PhonemeFeedback = ({ expectedText, spokenText, userAudioBlob }) => {
   const { analyze } = usePhonemeAnalysis();
+  const { speak } = useTextToSpeech();
+  const [playingWord, setPlayingWord] = useState(null);
+  const [playingUserAudio, setPlayingUserAudio] = useState(null);
+  const audioRef = useRef(null);
 
   if (!expectedText || !spokenText) return null;
 
@@ -17,6 +22,55 @@ export const PhonemeFeedback = ({ expectedText, spokenText }) => {
   if (!analysis) return null;
 
   const { wordAnalysis, feedback, tips, accuracy } = analysis;
+
+  /**
+   * Toca a pronúncia correta de uma palavra específica
+   */
+  const playCorrectWord = (word, index) => {
+    setPlayingWord(index);
+    speak(word, () => {
+      setPlayingWord(null);
+    });
+    setPlayingWord(null);
+  };
+
+  /**
+   * Toca a pronúncia do usuário para uma palavra específica
+   * Nota: Isso é uma aproximação - idealmente você teria segmentação de áudio por palavra
+   */
+  const playUserWord = (index) => {
+    if (!userAudioBlob) {
+      console.log('No user audio available');
+      return;
+    }
+
+    // Para a reprodução anterior se houver
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+    }
+
+    setPlayingUserAudio(index);
+
+    const audioUrl = URL.createObjectURL(userAudioBlob);
+    const audio = new Audio(audioUrl);
+    audioRef.current = audio;
+
+    audio.onended = () => {
+      setPlayingUserAudio(null);
+      URL.revokeObjectURL(audioUrl);
+    };
+
+    audio.onerror = () => {
+      setPlayingUserAudio(null);
+      URL.revokeObjectURL(audioUrl);
+    };
+
+    audio.play().catch(err => {
+      console.error('Error playing user audio:', err);
+      setPlayingUserAudio(null);
+    });
+  };
 
   return (
     <div className="mt-6 space-y-4 animate-fadeIn">
@@ -52,6 +106,7 @@ export const PhonemeFeedback = ({ expectedText, spokenText }) => {
           {wordAnalysis.map((word, index) => {
             let colorClass = '';
             let icon = null;
+            const showAudioButtons = word.confidence < 80; // Mostra botões se não for excelente
 
             if (word.confidence >= 80) {
               colorClass = 'bg-green-100 border-green-400 text-green-800';
@@ -67,7 +122,7 @@ export const PhonemeFeedback = ({ expectedText, spokenText }) => {
             return (
               <div
                 key={index}
-                className={`px-4 py-3 rounded-lg border-2 ${colorClass} transition-all hover:scale-105 cursor-default`}
+                className={`px-4 py-3 rounded-lg border-2 ${colorClass} transition-all hover:scale-105`}
               >
                 <div className="flex items-center gap-2 mb-1">
                   {icon}
@@ -87,7 +142,58 @@ export const PhonemeFeedback = ({ expectedText, spokenText }) => {
                   <div className="opacity-75">
                     Confidence: {word.confidence}%
                   </div>
+
+                  {/* IPA Display */}
+                  {word.expectedIPA && !word.expectedIPA.includes('[') && (
+                    <div className="mt-2 pt-2 border-t border-gray-300 space-y-1">
+                      <div className="text-purple-700 font-mono text-xs">
+                        Expected: {word.expectedIPA}
+                      </div>
+                      {word.spokenIPA && !word.spokenIPA.includes('[') && (
+                        <div className="text-purple-600 font-mono text-xs">
+                          You said: {word.spokenIPA}
+                        </div>
+                      )}
+                    </div>
+                  )}
                 </div>
+
+                {/* Audio Buttons for problematic words */}
+                {showAudioButtons && (
+                  <div className="mt-3 flex gap-2 pt-2 border-t border-gray-300">
+                    {/* Correct pronunciation button */}
+                    <button
+                      onClick={() => playCorrectWord(word.expected, index)}
+                      disabled={playingWord === index}
+                      className={`flex items-center gap-1 px-3 py-1.5 rounded-md text-xs font-semibold transition-all ${
+                        playingWord === index
+                          ? 'bg-blue-600 text-white animate-pulse'
+                          : 'bg-blue-500 hover:bg-blue-600 text-white'
+                      }`}
+                      title="Hear correct pronunciation"
+                    >
+                      <Volume2 size={14} />
+                      <span>{playingWord === index ? 'Playing...' : 'Correct'}</span>
+                    </button>
+
+                    {/* User pronunciation button */}
+                    {userAudioBlob && (
+                      <button
+                        onClick={() => playUserWord(index)}
+                        disabled={playingUserAudio === index}
+                        className={`flex items-center gap-1 px-3 py-1.5 rounded-md text-xs font-semibold transition-all ${
+                          playingUserAudio === index
+                            ? 'bg-purple-600 text-white animate-pulse'
+                            : 'bg-purple-500 hover:bg-purple-600 text-white'
+                        }`}
+                        title="Hear your pronunciation"
+                      >
+                        <User size={14} />
+                        <span>{playingUserAudio === index ? 'Playing...' : 'Yours'}</span>
+                      </button>
+                    )}
+                  </div>
+                )}
               </div>
             );
           })}
@@ -114,6 +220,12 @@ export const PhonemeFeedback = ({ expectedText, spokenText }) => {
                 <span>Needs Practice (&lt;60%)</span>
               </div>
             </div>
+            {userAudioBlob && (
+              <div className="mt-3 text-gray-500 italic flex items-center gap-2">
+                <Volume2 size={12} />
+                <span>Click the audio buttons on red/yellow words to compare pronunciations</span>
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -138,7 +250,7 @@ export const PhonemeFeedback = ({ expectedText, spokenText }) => {
                   </div>
                   <div className="flex-1">
                     <p className="text-sm text-gray-700 mb-1">
-                      <strong>Sound:</strong> {tip.sound}
+                      <strong>Sound:</strong> {tip.name || tip.sound}
                     </p>
                     <p className="text-sm text-gray-700 mb-1">
                       <strong>Tip:</strong> {tip.tip}
@@ -146,6 +258,11 @@ export const PhonemeFeedback = ({ expectedText, spokenText }) => {
                     <p className="text-xs text-gray-600">
                       <strong>Example in phrase:</strong> "{tip.example}"
                     </p>
+                    {tip.examples && tip.examples.length > 0 && (
+                      <p className="text-xs text-gray-600 mt-1">
+                        <strong>Practice with:</strong> {tip.examples.join(', ')}
+                      </p>
+                    )}
                   </div>
                 </div>
               </div>

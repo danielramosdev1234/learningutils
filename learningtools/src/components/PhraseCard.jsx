@@ -204,6 +204,7 @@ export const PhraseCard = ({ phrase, onSpeak, onCorrectAnswer, isActive }) => {
         <PhonemeFeedback
           expectedText={phrase.text}
           spokenText={transcript}
+          userAudioBlob={audioBlob}
         />
       )}
 
