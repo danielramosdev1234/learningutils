@@ -199,6 +199,45 @@ export const PhraseCard = ({ phrase, onSpeak, onCorrectAnswer, isActive }) => {
         </div>
       )}
 
+  {/* Feedback resumido original (mantido para compatibilidade) */}
+        {showFeedback && result && (
+          <div className={`mt-6 p-5 rounded-lg transition-all ${
+            result.similarity > 80
+              ? 'bg-green-50 border-2 border-green-400 shadow-lg'
+              : 'bg-orange-50 border-2 border-orange-400 shadow-lg'
+          }`}>
+            <div className="flex items-center gap-3 mb-3">
+              {result.similarity > 80 ? (
+                <CheckCircle className="text-green-600" size={32} />
+              ) : (
+                <XCircle className="text-orange-600" size={32} />
+              )}
+              <h3 className={`font-bold text-xl ${result.similarity > 80 ? 'text-green-700' : 'text-orange-700'}`}>
+                {result.similarity > 80 ? 'Perfect! 🎉' : 'Keep Practicing! 💪'}
+              </h3>
+            </div>
+
+            <div className="space-y-2">
+              <div className="bg-white bg-opacity-60 p-3 rounded-lg">
+                <p className="text-gray-700">
+                  <span className="font-semibold">You said:</span> <span className="text-gray-900">"{transcript}"</span>
+                </p>
+              </div>
+
+              <div className="flex items-center justify-between bg-white bg-opacity-60 p-3 rounded-lg">
+                <span className="font-semibold text-gray-700">Accuracy:</span>
+                <span className={`text-2xl font-bold ${
+                  result.similarity > 80 ? 'text-green-600' : 'text-orange-600'
+                }`}>
+                  {result.similarity}%
+                </span>
+              </div>
+
+
+            </div>
+          </div>
+        )}
+
       {/* NOVO: Phoneme Feedback - Mostra análise detalhada */}
       {transcript && !isListening && (
         <PhonemeFeedback
@@ -208,44 +247,7 @@ export const PhraseCard = ({ phrase, onSpeak, onCorrectAnswer, isActive }) => {
         />
       )}
 
-      {/* Feedback resumido original (mantido para compatibilidade) */}
-      {showFeedback && result && (
-        <div className={`mt-6 p-5 rounded-lg transition-all ${
-          result.similarity > 80
-            ? 'bg-green-50 border-2 border-green-400 shadow-lg'
-            : 'bg-orange-50 border-2 border-orange-400 shadow-lg'
-        }`}>
-          <div className="flex items-center gap-3 mb-3">
-            {result.similarity > 80 ? (
-              <CheckCircle className="text-green-600" size={32} />
-            ) : (
-              <XCircle className="text-orange-600" size={32} />
-            )}
-            <h3 className={`font-bold text-xl ${result.similarity > 80 ? 'text-green-700' : 'text-orange-700'}`}>
-              {result.similarity > 80 ? 'Perfect! 🎉' : 'Keep Practicing! 💪'}
-            </h3>
-          </div>
 
-          <div className="space-y-2">
-            <div className="bg-white bg-opacity-60 p-3 rounded-lg">
-              <p className="text-gray-700">
-                <span className="font-semibold">You said:</span> <span className="text-gray-900">"{transcript}"</span>
-              </p>
-            </div>
-
-            <div className="flex items-center justify-between bg-white bg-opacity-60 p-3 rounded-lg">
-              <span className="font-semibold text-gray-700">Accuracy:</span>
-              <span className={`text-2xl font-bold ${
-                result.similarity > 80 ? 'text-green-600' : 'text-orange-600'
-              }`}>
-                {result.similarity}%
-              </span>
-            </div>
-
-
-          </div>
-        </div>
-      )}
 
       {/* Indicador de gravação */}
       {isListening && (

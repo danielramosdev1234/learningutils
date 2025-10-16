@@ -43,9 +43,9 @@ const ChunkTrainer = () => {
 
   const handleCorrectAnswer = () => {
     console.log('✅ Correct answer! Moving to next phrase...');
-    setTimeout(() => {
-      handleNextPhrase();
-    }, 5000); // 5 segundos para ver o feedback
+   // setTimeout(() => {
+    //  handleNextPhrase();
+    //}, 5000); // 5 segundos para ver o feedback
   };
 
   const handleJumpToPhrase = (e) => {

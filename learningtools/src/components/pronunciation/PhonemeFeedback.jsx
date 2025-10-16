@@ -74,26 +74,6 @@ export const PhonemeFeedback = ({ expectedText, spokenText, userAudioBlob }) => 
 
   return (
     <div className="mt-6 space-y-4 animate-fadeIn">
-      {/* Overall Feedback Banner */}
-      <div className={`p-4 rounded-xl border-2 ${
-        feedback.level === 'excellent' || feedback.level === 'great'
-          ? 'bg-green-50 border-green-300'
-          : feedback.level === 'good' || feedback.level === 'fair'
-          ? 'bg-blue-50 border-blue-300'
-          : 'bg-orange-50 border-orange-300'
-      }`}>
-        <div className="flex items-center gap-3">
-          <span className="text-3xl">{feedback.emoji}</span>
-          <div className="flex-1">
-            <h3 className="font-bold text-lg text-gray-800">
-              {feedback.message}
-            </h3>
-            <p className="text-sm text-gray-600 mt-1">
-              Accuracy: <span className="font-bold">{accuracy}%</span>
-            </p>
-          </div>
-        </div>
-      </div>
 
       {/* Word-by-Word Analysis */}
       <div className="bg-white p-5 rounded-xl shadow-md border-2 border-gray-200">
