@@ -14,6 +14,7 @@ export const useSpeechRecognitionForChunks = () => {
   const interimTranscriptRef = useRef(''); // ✅ NOVO: Também guarda interim
   const hasStartedRef = useRef(false); // ✅ NOVO: Flag para saber se começou
   const processingTimeoutRef = useRef(null); // ✅ NOVO: Timeout para processing
+  const silenceTimerRef = useRef(null);
 
   useEffect(() => {
     if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
@@ -26,7 +27,7 @@ export const useSpeechRecognitionForChunks = () => {
     recognitionRef.current = new SpeechRecognition();
 
     // ✅ CONFIGURAÇÃO OTIMIZADA PARA MOBILE
-    recognitionRef.current.continuous = false; // ✅ MUDANÇA CRÍTICA: false para mobile
+    recognitionRef.current.continuous = true; // ✅ MUDANÇA CRÍTICA: false para mobile
     recognitionRef.current.interimResults = true;
     recognitionRef.current.lang = 'en-US';
     recognitionRef.current.maxAlternatives = 1;
@@ -84,9 +85,24 @@ export const useSpeechRecognitionForChunks = () => {
         setTranscript(displayText);
         console.log('📝 Display text set:', displayText);
       }
+
+      if (silenceTimerRef.current) {
+        clearTimeout(silenceTimerRef.current);
+      }
+
+      silenceTimerRef.current = setTimeout(() => {
+        if (recognitionRef.current && isListening) {
+          console.log('🛑 Silêncio detectado, parando...');
+          recognitionRef.current.stop();
+        }
+      }, 2000); // Para após 2 segundos de silêncio
     };
 
     recognitionRef.current.onend = () => {
+      if (silenceTimerRef.current) {
+        clearTimeout(silenceTimerRef.current);
+        silenceTimerRef.current = null;
+      }
       console.log('🛑 Recognition ended');
       console.log('Final transcript ref:', finalTranscriptRef.current);
       console.log('Interim transcript ref:', interimTranscriptRef.current);
@@ -164,6 +180,9 @@ export const useSpeechRecognitionForChunks = () => {
       if (processingTimeoutRef.current) {
         clearTimeout(processingTimeoutRef.current);
       }
+      if (silenceTimerRef.current) {
+          clearTimeout(silenceTimerRef.current);
+        }
     };
   }, []);
 
@@ -244,7 +263,7 @@ export const useSpeechRecognitionForChunks = () => {
         console.log('🔴 Recording started');
 
         // ✅ Delay antes de iniciar reconhecimento
-        await new Promise(resolve => setTimeout(resolve, 500));
+        await new Promise(resolve => setTimeout(resolve, 200));
 
         // ✅ Inicia reconhecimento
         console.log('🎤 Starting speech recognition...');
