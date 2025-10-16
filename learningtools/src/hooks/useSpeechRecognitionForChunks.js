@@ -109,10 +109,6 @@ export const useSpeechRecognitionForChunks = () => {
       }
     };
 
-    recognitionRef.current.onstart = () => {
-      console.log('🎙️ Recognition started');
-      setTranscript('🎤 Listening...');
-    };
 
     return () => {
       if (recognitionRef.current) {
