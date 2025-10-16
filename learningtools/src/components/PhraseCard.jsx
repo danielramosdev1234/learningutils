@@ -1,13 +1,19 @@
+// src/components/PhraseCard.jsx (ATUALIZADO)
+
 import React, { useState, useEffect, useRef } from 'react';
 import { Volume2, Mic, MicOff, CheckCircle, XCircle, Loader, AlertCircle, Play, Pause } from 'lucide-react';
 import { useSpeechRecognitionForChunks } from '../hooks/useSpeechRecognitionForChunks';
 import { compareTexts } from '../utils/textComparison';
 
+// Novos imports
+import { IPATranscription } from './pronunciation/IPATranscription';
+import { PhonemeFeedback } from './pronunciation/PhonemeFeedback';
+
 export const PhraseCard = ({ phrase, onSpeak, onCorrectAnswer, isActive }) => {
   const {
     isListening,
     transcript,
-    audioBlob, // Novo: recebe o áudio gravado
+    audioBlob,
     startListening,
     stopListening,
     error: speechError
@@ -17,8 +23,9 @@ export const PhraseCard = ({ phrase, onSpeak, onCorrectAnswer, isActive }) => {
   const [showFeedback, setShowFeedback] = useState(false);
   const [hasProcessed, setHasProcessed] = useState(false);
   const [isPlayingUserAudio, setIsPlayingUserAudio] = useState(false);
+  const [showIPA, setShowIPA] = useState(false); // NOVO: Estado para toggle IPA
 
-  const audioRef = useRef(null); // Ref para o elemento de áudio
+  const audioRef = useRef(null);
 
   // Processa o resultado quando terminar de ouvir
   useEffect(() => {
@@ -59,7 +66,6 @@ export const PhraseCard = ({ phrase, onSpeak, onCorrectAnswer, isActive }) => {
     }
   };
 
-  // Reproduz o áudio gravado do usuário
   const playUserAudio = () => {
     if (!audioBlob) {
       console.log('⚠️ No audio to play');
@@ -68,16 +74,12 @@ export const PhraseCard = ({ phrase, onSpeak, onCorrectAnswer, isActive }) => {
 
     console.log('🔊 Playing recorded audio...');
 
-    // Para qualquer áudio tocando
     if (audioRef.current) {
       audioRef.current.pause();
       audioRef.current.currentTime = 0;
     }
 
-    // Cria URL do blob
     const audioUrl = URL.createObjectURL(audioBlob);
-
-    // Cria elemento de áudio
     const audio = new Audio(audioUrl);
     audioRef.current = audio;
 
@@ -96,7 +98,6 @@ export const PhraseCard = ({ phrase, onSpeak, onCorrectAnswer, isActive }) => {
       console.error('❌ Audio error:', e);
       setIsPlayingUserAudio(false);
       URL.revokeObjectURL(audioUrl);
-      alert('Error playing audio');
     };
 
     audio.play().catch(err => {
@@ -115,13 +116,25 @@ export const PhraseCard = ({ phrase, onSpeak, onCorrectAnswer, isActive }) => {
 
   return (
     <div className={`bg-white rounded-xl shadow-lg p-8 transition-all duration-300 ${isActive ? 'ring-4 ring-blue-400' : ''}`}>
+
+      {/* Header com frase e controles */}
       <div className="text-center mb-6">
-        <h2 className="text-3xl font-bold text-gray-800 mb-2">{phrase.text}</h2>
+        <div className="flex items-center justify-center gap-3 mb-2">
+          <h2 className="text-3xl font-bold text-gray-800">{phrase.text}</h2>
+        </div>
+
         {phrase.translation && (
-          <p className="text-gray-500 text-lg italic">{phrase.translation}</p>
+          <p className="text-gray-500 text-lg italic mb-3">{phrase.translation}</p>
         )}
+
+     {/* NOVO: IPA Transcription */}
+          <IPATranscription text={phrase.text} show={showIPA} />
+
       </div>
 
+
+
+      {/* Error Display */}
       {speechError && (
         <div className="mb-4 p-4 bg-red-50 border-2 border-red-300 rounded-lg flex items-center gap-2">
           <AlertCircle className="text-red-600" size={20} />
@@ -134,6 +147,7 @@ export const PhraseCard = ({ phrase, onSpeak, onCorrectAnswer, isActive }) => {
         </div>
       )}
 
+      {/* Botões principais */}
       <div className="flex justify-center gap-4 mb-6">
         <button
           onClick={() => onSpeak(phrase.text)}
@@ -159,7 +173,7 @@ export const PhraseCard = ({ phrase, onSpeak, onCorrectAnswer, isActive }) => {
         </button>
       </div>
 
-      {/* Botão para ouvir a GRAVAÇÃO REAL do usuário */}
+      {/* Botão para ouvir gravação */}
       {audioBlob && (
         <div className="flex justify-center mb-6">
           <button
@@ -185,6 +199,15 @@ export const PhraseCard = ({ phrase, onSpeak, onCorrectAnswer, isActive }) => {
         </div>
       )}
 
+      {/* NOVO: Phoneme Feedback - Mostra análise detalhada */}
+      {transcript && !isListening && (
+        <PhonemeFeedback
+          expectedText={phrase.text}
+          spokenText={transcript}
+        />
+      )}
+
+      {/* Feedback resumido original (mantido para compatibilidade) */}
       {showFeedback && result && (
         <div className={`mt-6 p-5 rounded-lg transition-all ${
           result.similarity > 80
@@ -218,18 +241,12 @@ export const PhraseCard = ({ phrase, onSpeak, onCorrectAnswer, isActive }) => {
               </span>
             </div>
 
-            {result.similarity > 80 && (
-              <div className="bg-green-100 border border-green-300 p-3 rounded-lg flex items-center gap-2 animate-pulse">
-                <span className="text-2xl">➡️</span>
-                <p className="text-green-700 font-semibold">
-                  Moving to next phrase in 2s...
-                </p>
-              </div>
-            )}
+
           </div>
         </div>
       )}
 
+      {/* Indicador de gravação */}
       {isListening && (
         <div className="mt-6 flex items-center justify-center gap-3 text-red-600 bg-red-50 p-4 rounded-lg border-2 border-red-200">
           <Loader className="animate-spin" size={28} />
