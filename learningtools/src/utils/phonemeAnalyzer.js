@@ -115,31 +115,72 @@ const phoneticLevenshtein = (ipa1, ipa2) => {
  * Usa IPA quando disponível, fallback para texto normal
  */
 const calculatePhoneticSimilarity = (word1, word2) => {
-  // Tenta converter para IPA
-  const ipa1 = convertWordToIPA(word1);
-  const ipa2 = convertWordToIPA(word2);
+  const clean1 = word1.trim().toLowerCase();
+  const clean2 = word2.trim().toLowerCase();
 
-  // Se ambas têm IPA, usa análise fonética
-  const useIPA = !ipa1.includes('[') && !ipa2.includes('[');
-
-  if (useIPA) {
-    // Remove barras do IPA
-    const cleanIPA1 = ipa1.replace(/[\/\[\]]/g, '');
-    const cleanIPA2 = ipa2.replace(/[\/\[\]]/g, '');
-
-    const maxLen = Math.max(cleanIPA1.length, cleanIPA2.length);
-    if (maxLen === 0) return 1.0;
-
-    const distance = phoneticLevenshtein(cleanIPA1, cleanIPA2);
-    return Math.max(0, (maxLen - distance) / maxLen);
-  } else {
-    // Fallback: Levenshtein normal para palavras sem IPA
-    const maxLen = Math.max(word1.length, word2.length);
-    if (maxLen === 0) return 1.0;
-
-    const distance = simpleLevenshtein(word1, word2);
-    return (maxLen - distance) / maxLen;
+  // Se são iguais, retorna 1.0 imediatamente
+  if (clean1 === clean2) {
+    console.log(`      💯 "${clean1}" === "${clean2}" → 100%`);
+    return 1.0;
   }
+
+  // Separa em palavras se houver espaço
+  const words1 = clean1.split(/\s+/);
+  const words2 = clean2.split(/\s+/);
+
+  // Se ambas são palavra única, tenta IPA
+  if (words1.length === 1 && words2.length === 1) {
+    const ipa1 = convertWordToIPA(clean1);
+    const ipa2 = convertWordToIPA(clean2);
+
+    console.log(`      🔬 IPA: "${clean1}" → ${ipa1}`);
+    console.log(`      🔬 IPA: "${clean2}" → ${ipa2}`);
+
+    const useIPA = !ipa1.includes('[') && !ipa2.includes('[');
+
+    if (useIPA) {
+      const cleanIPA1 = ipa1.replace(/[\/\[\]]/g, '');
+      const cleanIPA2 = ipa2.replace(/[\/\[\]]/g, '');
+
+      const maxLen = Math.max(cleanIPA1.length, cleanIPA2.length);
+      if (maxLen === 0) return 1.0;
+
+      const distance = phoneticLevenshtein(cleanIPA1, cleanIPA2);
+      const similarity = Math.max(0, (maxLen - distance) / maxLen);
+
+      console.log(`      ✨ IPA similarity: ${Math.round(similarity * 100)}%`);
+      return similarity;
+    } else {
+      console.log(`      ⚠️ IPA não disponível, usando fallback`);
+    }
+  }
+
+  // ✅ Fallback para múltiplas palavras - converte cada palavra individualmente
+  console.log(`      🔄 Fallback multi-word: "${clean1}" vs "${clean2}"`);
+
+  const ipa1Parts = words1.map(w => {
+    const wordIPA = convertWordToIPA(w);
+    return wordIPA.includes('[') ? w : wordIPA.replace(/[\/\[\]]/g, '');
+  });
+  const ipa2Parts = words2.map(w => {
+    const wordIPA = convertWordToIPA(w);
+    return wordIPA.includes('[') ? w : wordIPA.replace(/[\/\[\]]/g, '');
+  });
+
+  const cleanIPA1 = ipa1Parts.join('');
+  const cleanIPA2 = ipa2Parts.join('');
+
+  console.log(`      🔬 IPA parts: "${words1.join(' ')}" → ${cleanIPA1}`);
+  console.log(`      🔬 IPA parts: "${words2.join(' ')}" → ${cleanIPA2}`);
+
+  const maxLen = Math.max(cleanIPA1.length, cleanIPA2.length);
+  if (maxLen === 0) return 1.0;
+
+  const distance = phoneticLevenshtein(cleanIPA1, cleanIPA2);
+  const similarity = Math.max(0, (maxLen - distance) / maxLen);
+
+  console.log(`      ✨ Multi-word IPA similarity: ${Math.round(similarity * 100)}%`);
+  return similarity;
 };
 
 /**
@@ -168,42 +209,151 @@ const simpleLevenshtein = (str1, str2) => {
 };
 
 /**
- * Analisa palavra por palavra com análise fonética
- * @param {string} expectedText - Texto esperado
- * @param {string} spokenText - Texto falado pelo usuário
- * @returns {Array} - Array de objetos com análise de cada palavra
+ * 🆕 Alinha palavras esperadas com palavras faladas
+ * Permite que múltiplas palavras faladas correspondam a uma palavra esperada
  */
+const alignWords = (expectedWords, spokenWords) => {
+  console.log('🎯 STARTING DYNAMIC ALIGNMENT');
+  console.log('Expected:', expectedWords);
+  console.log('Spoken:', spokenWords);
+
+  const m = expectedWords.length;
+  const n = spokenWords.length;
+
+  // Matriz de custos (menor custo = melhor alinhamento)
+  const cost = Array(m + 1).fill(null).map(() => Array(n + 1).fill(Infinity));
+  const path = Array(m + 1).fill(null).map(() => Array(n + 1).fill(null));
+
+  // Caso base
+  cost[0][0] = 0;
+
+  // Inicializa bordas (palavras omitidas/extras)
+  for (let i = 1; i <= m; i++) {
+    cost[i][0] = cost[i - 1][0] + 1; // Palavra esperada omitida
+    path[i][0] = { type: 'skip', i: i - 1, j: -1 };
+  }
+
+  for (let j = 1; j <= n; j++) {
+    cost[0][j] = cost[0][j - 1] + 1; // Palavra falada extra
+    path[0][j] = { type: 'extra', i: -1, j: j - 1 };
+  }
+
+  // Preenche matriz com alinhamentos possíveis
+  for (let i = 1; i <= m; i++) {
+    for (let j = 1; j <= n; j++) {
+      const expectedWord = expectedWords[i - 1];
+      const spokenWord = spokenWords[j - 1];
+
+      // Opção 1: Match 1:1
+      const sim1to1 = calculatePhoneticSimilarity(expectedWord, spokenWord);
+      const cost1to1 = cost[i - 1][j - 1] + (1 - sim1to1); // Menor similaridade = maior custo
+
+      // Opção 2: Match 1:2 (se possível)
+      let cost1to2 = Infinity;
+      if (j >= 2) {
+        const spokenPair = `${spokenWords[j - 2]} ${spokenWords[j - 1]}`;
+        const sim1to2 = calculatePhoneticSimilarity(expectedWord, spokenPair);
+        cost1to2 = cost[i - 1][j - 2] + (1 - sim1to2);
+      }
+
+      // Opção 3: Palavra esperada omitida
+      const costSkip = cost[i - 1][j] + 1;
+
+      // Opção 4: Palavra falada extra
+      const costExtra = cost[i][j - 1] + 1;
+
+      // Escolhe o menor custo
+      const minCost = Math.min(cost1to1, cost1to2, costSkip, costExtra);
+
+      cost[i][j] = minCost;
+
+      if (minCost === cost1to2) {
+        path[i][j] = { type: '1:2', i: i - 1, j: j - 2, similarity: 1 - (cost1to2 - cost[i - 1][j - 2]) };
+      } else if (minCost === cost1to1) {
+        path[i][j] = { type: '1:1', i: i - 1, j: j - 1, similarity: sim1to1 };
+      } else if (minCost === costSkip) {
+        path[i][j] = { type: 'skip', i: i - 1, j };
+      } else {
+        path[i][j] = { type: 'extra', i, j: j - 1 };
+      }
+    }
+  }
+
+  // Reconstrói alinhamento seguindo o caminho
+  const alignments = [];
+  let i = m, j = n;
+
+  while (i > 0 || j > 0) {
+    const step = path[i][j];
+
+    if (step.type === '1:1') {
+      alignments.unshift({
+        expected: expectedWords[step.i],
+        spoken: spokenWords[step.j],
+        similarity: step.similarity,
+        matchType: '1:1'
+      });
+      i = step.i;
+      j = step.j;
+    } else if (step.type === '1:2') {
+      alignments.unshift({
+        expected: expectedWords[step.i],
+        spoken: `${spokenWords[step.j]} ${spokenWords[step.j + 1]}`,
+        similarity: step.similarity,
+        matchType: '1:2'
+      });
+      i = step.i;
+      j = step.j;
+    } else if (step.type === 'skip') {
+      alignments.unshift({
+        expected: expectedWords[step.i],
+        spoken: '',
+        similarity: 0,
+        matchType: 'missing'
+      });
+      i = step.i;
+    } else if (step.type === 'extra') {
+      // Palavra extra não corresponde a nenhuma esperada
+      // Pode ser ignorada ou marcada
+      j = step.j;
+    }
+  }
+
+  console.log('🏁 DYNAMIC ALIGNMENT COMPLETE');
+  console.log('Resultado:', alignments);
+
+  return alignments;
+};
 export const analyzeWords = (expectedText, spokenText) => {
   const expectedWords = normalizeText(expectedText).split(/\s+/);
   const spokenWords = normalizeText(spokenText).split(/\s+/);
 
-  const analysis = expectedWords.map((expectedWord, index) => {
-    const spokenWord = spokenWords[index] || '';
+  // 🔄 USA ALINHAMENTO
+  const alignments = alignWords(expectedWords, spokenWords);
 
-    // Comparação exata
-    const isExactMatch = expectedWord === spokenWord;
+  const analysis = alignments.map((alignment, index) => {
+    const { expected, spoken, similarity: alignedSimilarity } = alignment;
 
-    // Similaridade fonética
-    const phoneticSimilarity = calculatePhoneticSimilarity(expectedWord, spokenWord);
+    // ✅ CRUCIAL: Usa a similaridade JÁ CALCULADA no alinhamento
+    const finalSimilarity = alignedSimilarity !== undefined
+      ? alignedSimilarity
+      : calculatePhoneticSimilarity(expected, spoken);
 
-    // Converte para porcentagem
-    const confidence = Math.round(phoneticSimilarity * 100);
+    const isExactMatch = expected.toLowerCase() === spoken.toLowerCase();
+    const confidence = Math.round(finalSimilarity * 100);
+    const isCorrect = isExactMatch || finalSimilarity >= 0.75;
 
-    // Obtém IPA para ambas as palavras
-    const expectedIPA = convertWordToIPA(expectedWord);
-    const spokenIPA = spokenWord ? convertWordToIPA(spokenWord) : '';
-
-    // Considera correto se similaridade > 85% OU match exato
-    const isCorrect = isExactMatch || phoneticSimilarity >= 0.85;
+    const expectedIPA = convertWordToIPA(expected);
+    const spokenIPA = spoken ? convertWordToIPA(spoken) : '';
 
     return {
-      expected: expectedWord,
-      spoken: spokenWord,
+      expected,
+      spoken,
       expectedIPA,
       spokenIPA,
       isCorrect,
       isExactMatch,
-      similarity: phoneticSimilarity,
+      similarity: finalSimilarity,
       confidence,
       position: index
     };
@@ -211,7 +361,6 @@ export const analyzeWords = (expectedText, spokenText) => {
 
   return analysis;
 };
-
 /**
  * Calcula métricas gerais da pronúncia
  * @param {string} expectedText - Texto esperado
