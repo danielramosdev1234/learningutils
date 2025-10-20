@@ -1,5 +1,5 @@
 import { db } from '../config/firebase';
-import { collection, getDocs, query, where } from 'firebase/firestore';
+import { collection, getDocs, query, where, orderBy } from 'firebase/firestore';
 
 export class PhraseRepository {
   /**
@@ -29,7 +29,11 @@ export class PhraseRepository {
       // Busca TODAS as frases (não podemos filtrar no query do Firestore
       // porque algumas frases antigas não têm o campo 'environment')
       console.log('📖 Carregando frases do banco de dados...');
-      const querySnapshot = await getDocs(collection(db, 'phrases'));
+      const phrasesQuery = query(
+        collection(db, 'phrases'),
+        orderBy('createdAt', 'asc')
+      );
+      const querySnapshot = await getDocs(phrasesQuery);
 
       const allPhrases = querySnapshot.docs.map(doc => ({
         id: doc.id,
@@ -41,7 +45,9 @@ export class PhraseRepository {
 
       if (isLocal) {
         // Em localhost: mostra TODAS as frases
-        phrases = allPhrases;
+        phrases = allPhrases.filter(phrase =>
+                                      phrase.environment == 'development'
+                                    );
         console.log('✅ LOCALHOST: Mostrando TODAS as frases');
       } else {
         // Em produção: mostra apenas frases que NÃO são 'development'
