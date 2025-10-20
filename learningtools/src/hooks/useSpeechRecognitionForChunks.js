@@ -169,6 +169,20 @@ export const useSpeechRecognitionForChunks = () => {
           }
         });
 
+         const isMobileAndroid = /Android/i.test(navigator.userAgent);
+
+          if (isMobileAndroid) {
+            // No Android, não grave áudio, apenas use SpeechRecognition
+            streamRef.current = stream;
+
+            await new Promise(resolve => setTimeout(resolve, 200));
+            recognitionRef.current.start();
+            setIsListening(true);
+            resetSilenceTimer();
+
+            return; // Sai aqui, não cria MediaRecorder
+          }
+
         streamRef.current = stream;
 
         // Detecta o tipo MIME suportado
