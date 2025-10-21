@@ -1,23 +1,64 @@
 // src/components/PhraseCard.jsx (ATUALIZADO)
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo  } from 'react';
 import { Volume2, Mic, MicOff, CheckCircle, XCircle, Loader, AlertCircle, Play, Pause } from 'lucide-react';
 import { useSpeechRecognitionForChunks } from '../hooks/useSpeechRecognitionForChunks';
 import { compareTexts } from '../utils/textComparison';
-
-// Novos imports
+import { useSpeechRecognition } from '../hooks/useSpeechRecognition';
 import { IPATranscription } from './pronunciation/IPATranscription';
 import { PhonemeFeedback } from './pronunciation/PhonemeFeedback';
 
+const isAndroidDevice = () => {
+  const ua = navigator.userAgent.toLowerCase();
+  return /android/.test(ua);
+};
+
 export const PhraseCard = ({ phrase, onSpeak, onCorrectAnswer, isActive }) => {
-  const {
-    isListening,
-    transcript,
-    audioBlob,
-    startListening,
-    stopListening,
-    error: speechError
-  } = useSpeechRecognitionForChunks();
+
+ // ✅ Detecta se é Android
+ const isAndroid = useMemo(() => isAndroidDevice(), []);
+
+ // ✅ Hook para Desktop/iOS (com gravação de áudio)
+ const chunksHook = useSpeechRecognitionForChunks();
+
+ // ✅ Hook para Android (sem gravação)
+ const [androidTranscript, setAndroidTranscript] = useState('');
+ const [androidError, setAndroidError] = useState('');
+ const simpleHook = useSpeechRecognition('en-US', (text, err) => {
+   if (err) {
+     setAndroidError(err);
+   } else {
+     setAndroidTranscript(text);
+   }
+ });
+
+ // ✅ Seleciona o hook apropriado
+ const {
+   isListening,
+   transcript,
+   audioBlob,
+   startListening,
+   stopListening,
+   error: speechError
+ } = isAndroid
+   ? {
+       isListening: simpleHook.isListening,
+       transcript: androidTranscript,
+       audioBlob: null,
+       startListening: simpleHook.toggleListening,
+       stopListening: simpleHook.toggleListening,
+       error: androidError
+     }
+   : {
+       isListening: chunksHook.isListening,
+       transcript: chunksHook.transcript,
+       audioBlob: chunksHook.audioBlob,
+       startListening: chunksHook.startListening,
+       stopListening: chunksHook.stopListening,
+       error: chunksHook.error
+     };
+
+ console.log('📱 Using hook for:', isAndroid ? 'Android' : 'Desktop/iOS');
 
   const [result, setResult] = useState(null);
   const [showFeedback, setShowFeedback] = useState(false);
