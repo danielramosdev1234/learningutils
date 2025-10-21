@@ -170,39 +170,45 @@ export const useSpeechRecognitionForChunks = () => {
         });
 
         const isMobile = (
-          /Android/i.test(navigator.userAgent) ||
-          /webOS/i.test(navigator.userAgent) ||
-          /iPhone/i.test(navigator.userAgent) ||
-          /iPad/i.test(navigator.userAgent) ||
-          /iPod/i.test(navigator.userAgent) ||
-          /BlackBerry/i.test(navigator.userAgent) ||
-          /Windows Phone/i.test(navigator.userAgent) ||
-          // Detecta pelo touch
-          (navigator.maxTouchPoints && navigator.maxTouchPoints > 2) ||
-          // Detecta pelo tamanho da tela
-          window.innerWidth <= 768
-        );
+            /Android/i.test(navigator.userAgent) ||
+            /iPhone/i.test(navigator.userAgent) ||
+            /iPad/i.test(navigator.userAgent) ||
+            (navigator.maxTouchPoints && navigator.maxTouchPoints > 2) ||
+            window.innerWidth <= 768
+          );
 
-         const isMobileAndroid = /Android/i.test(navigator.userAgent);
+          const isAndroid = /Android/i.test(navigator.userAgent);
 
-         console.log('📱 Is Mobile?', isMobile);
-         console.log('🤖 Is Android?', isMobileAndroid);
-         console.log('👆 Touch Points:', navigator.maxTouchPoints);
-         console.log('📏 Window Width:', window.innerWidth);
+          console.log('📱 Is Mobile?', isMobile);
+          console.log('🤖 Is Android?', isAndroid);
+          console.log('👆 Touch Points:', navigator.maxTouchPoints);
+          console.log('📏 Window Width:', window.innerWidth);
 
-          if (isMobile || isMobileAndroid) {
-            // No Android, não grave áudio, apenas use SpeechRecognition
+
+
+          streamRef.current = stream;
+
+          // ✅ SE FOR MOBILE, SÓ USA SPEECH RECOGNITION (SEM GRAVAR)
+          if (isMobile || isAndroid) {
             console.log('🚫 Mobile device detected - Skipping MediaRecorder');
-            streamRef.current = stream;
 
-            await new Promise(resolve => setTimeout(resolve, 200));
+            // ⚠️ CRITICAL: Delay para garantir que o microfone está pronto
+            await new Promise(resolve => setTimeout(resolve, 300));
+
+            console.log('🎤 Starting SpeechRecognition for mobile...');
+
+            // Inicia o reconhecimento
             recognitionRef.current.start();
             setIsListening(true);
             resetSilenceTimer();
 
-            return; // Sai aqui, não cria MediaRecorder
+            console.log('✅ SpeechRecognition started successfully');
+
+            return; // ⚠️ SAI AQUI - Não cria MediaRecorder
           }
 
+          // 👇 DAQUI PRA BAIXO SÓ EXECUTA NO DESKTOP
+          console.log('💻 Desktop detected - Using MediaRecorder + SpeechRecognition');
         streamRef.current = stream;
 
         // Detecta o tipo MIME suportado
