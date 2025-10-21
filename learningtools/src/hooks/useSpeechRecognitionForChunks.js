@@ -169,10 +169,30 @@ export const useSpeechRecognitionForChunks = () => {
           }
         });
 
+        const isMobile = (
+          /Android/i.test(navigator.userAgent) ||
+          /webOS/i.test(navigator.userAgent) ||
+          /iPhone/i.test(navigator.userAgent) ||
+          /iPad/i.test(navigator.userAgent) ||
+          /iPod/i.test(navigator.userAgent) ||
+          /BlackBerry/i.test(navigator.userAgent) ||
+          /Windows Phone/i.test(navigator.userAgent) ||
+          // Detecta pelo touch
+          (navigator.maxTouchPoints && navigator.maxTouchPoints > 2) ||
+          // Detecta pelo tamanho da tela
+          window.innerWidth <= 768
+        );
+
          const isMobileAndroid = /Android/i.test(navigator.userAgent);
 
-          if (isMobileAndroid) {
+         console.log('📱 Is Mobile?', isMobile);
+         console.log('🤖 Is Android?', isMobileAndroid);
+         console.log('👆 Touch Points:', navigator.maxTouchPoints);
+         console.log('📏 Window Width:', window.innerWidth);
+
+          if (isMobile || isMobileAndroid) {
             // No Android, não grave áudio, apenas use SpeechRecognition
+            console.log('🚫 Mobile device detected - Skipping MediaRecorder');
             streamRef.current = stream;
 
             await new Promise(resolve => setTimeout(resolve, 200));
