@@ -423,70 +423,70 @@ const PHONEME_CHALLENGES = {
     graphemes: ['th'],
     name: 'voiceless th',
     commonErrors: ['t', 's', 'f'],
-    tip: 'Place tongue between teeth, blow air gently (no voice)',
+    tip: 'Place tongue between teeth, blow air gently (no voice) (Coloque a língua entre os dentes, sopre o ar suavemente sem voz)',
     examples: ['think', 'three', 'math', 'teeth']
   },
   'ð': { // voiced th (this)
     graphemes: ['th'],
     name: 'voiced th',
     commonErrors: ['d', 'z', 'v'],
-    tip: 'Place tongue between teeth, add voice',
+    tip: 'Place tongue between teeth, add voice (Coloque a língua entre os dentes, adicione voz)',
     examples: ['this', 'that', 'mother', 'breathe']
   },
   'ɹ': { // r sound
     graphemes: ['r'],
     name: 'American r',
     commonErrors: ['l', 'ʁ'],
-    tip: 'Curl tongue back, don\'t touch roof of mouth',
+    tip: 'Curl tongue back, don\'t touch roof of mouth (Curve a língua para trás, não toque o céu da boca)',
     examples: ['red', 'car', 'three', 'brown']
   },
   'l': {
     graphemes: ['l'],
     name: 'l sound',
     commonErrors: ['r', 'w'],
-    tip: 'Touch tip of tongue to ridge behind upper teeth',
+    tip: 'Touch tip of tongue to ridge behind upper teeth (Toque a ponta da língua na crista atrás dos dentes superiores)',
     examples: ['light', 'ball', 'please', 'cold']
   },
   'v': {
     graphemes: ['v'],
     name: 'v sound',
     commonErrors: ['b', 'f', 'w'],
-    tip: 'Upper teeth touch lower lip, add voice',
+    tip: 'Upper teeth touch lower lip, add voice (Dentes superiores tocam o lábio inferior, adicione voz)',
     examples: ['very', 'have', 'voice', 'five']
   },
   'w': {
     graphemes: ['w'],
     name: 'w sound',
     commonErrors: ['v', 'u'],
-    tip: 'Round lips like whistling, then voice',
+    tip: 'Round lips like whistling, then voice (Arredonde os lábios como para assobiar, depois adicione voz)',
     examples: ['water', 'away', 'sweet', 'wonder']
   },
   'ʃ': { // sh
     graphemes: ['sh', 'ti', 'ci'],
     name: 'sh sound',
     commonErrors: ['s', 'tʃ'],
-    tip: 'Lips rounded, tongue behind teeth, push air',
+    tip: 'Lips rounded, tongue behind teeth, push air (Lábios arredondados, língua atrás dos dentes, empurre o ar)',
     examples: ['she', 'fish', 'nation', 'special']
   },
   'ʒ': { // zh
     graphemes: ['s', 'si', 'ge'],
     name: 'zh sound',
     commonErrors: ['z', 'dʒ', 'ʃ'],
-    tip: 'Like "sh" but with voice',
+    tip: 'Like "sh" but with voice (Como "sh" mas com voz)',
     examples: ['measure', 'vision', 'beige', 'usual']
   },
   'tʃ': { // ch
     graphemes: ['ch', 'tch'],
     name: 'ch sound',
     commonErrors: ['ʃ', 't'],
-    tip: 'Start with "t", end with "sh"',
+    tip: 'Start with "t", end with "sh" (Comece com "t", termine com "sh")',
     examples: ['church', 'watch', 'nature', 'future']
   },
   'dʒ': { // j
     graphemes: ['j', 'g', 'dge'],
     name: 'j sound',
     commonErrors: ['tʃ', 'ʒ'],
-    tip: 'Start with "d", end with "zh"',
+    tip: 'Start with "d", end with "zh" (Comece com "d", termine com "zh")',
     examples: ['judge', 'magic', 'edge', 'joy']
   }
 };
