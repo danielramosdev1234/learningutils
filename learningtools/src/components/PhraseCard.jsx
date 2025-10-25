@@ -251,7 +251,7 @@ export const PhraseCard = ({ phrase, onSpeak, onCorrectAnswer, isActive }) => {
       )}
 
   {/* Feedback resumido original (mantido para compatibilidade) */}
-        {showFeedback && result && (
+        {showFeedback && result && !isListening && (
           <div className={`mt-6 p-5 rounded-lg transition-all ${
             result.similarity > 80
               ? 'bg-green-50 border-2 border-green-400 shadow-lg'
