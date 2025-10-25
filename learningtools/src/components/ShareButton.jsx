@@ -237,28 +237,65 @@ Pratique gratuitamente: ${appUrl}
            const blob = await (await fetch(cardDataUrl)).blob();
            const file = new File([blob], 'learnfun-result.png', { type: 'image/png' });
 
-           const shareData = {
+           // ✅ TENTA COM TEXTO + IMAGEM PRIMEIRO
+           const shareDataWithFile = {
              text: shareText,
              files: [file]
            };
 
-            alert('✅ Image and text ready!\n\n📱 Choose WhatsApp in the next screen\n💡 The text and image will be sent together!\n\n(✅ Imagem e texto prontos!\n\n📱 Escolha WhatsApp na próxima tela\n💡 O texto e a imagem serão enviados juntos!)');
+           if (navigator.canShare && navigator.canShare(shareDataWithFile)) {
+             alert('✅ Image and text ready!\n\n📱 Choose WhatsApp in the next screen\n💡 The text and image will be sent together!\n\n(✅ Imagem e texto prontos!\n\n📱 Escolha WhatsApp na próxima tela\n💡 O texto e a imagem serão enviados juntos!)');
 
-           if (navigator.canShare && navigator.canShare(shareData)) {
-             await navigator.share(shareData);
-           } else {
-             await navigator.share({ text: shareText });
-             downloadImage(cardDataUrl, accuracy);
+             await navigator.share(shareDataWithFile);
+
+             setShowSuccess(true);
+             setTimeout(() => setShowSuccess(false), 3000);
+             return;
            }
+
+           // ✅ SE NÃO SUPORTAR ARQUIVO + TEXTO, USA URL DO WHATSAPP
+           alert('📱 Opening WhatsApp with your message!\n💡 The image was downloaded, send it manually.\n\n(📱 Abrindo WhatsApp com sua mensagem!\n💡 A imagem foi baixada, envie manualmente.)');
+
+           downloadImage(cardDataUrl, accuracy);
+
+           // Limpa emojis problemáticos
+           const urlSafeText = shareText
+             .replace(/🥇|🥈|🥉/g, '🏆')
+             .replace(/🏅/g, '⭐')
+             .replace(/💎/g, '✨')
+             .replace(/🔒|🔓|🔑/g, '🔐')
+             .replace(/🛤️/g, '🚀')
+             .replace(/🏋️/g, '💪');
+
+           const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(urlSafeText)}`;
+           window.open(whatsappUrl, '_blank');
 
            setShowSuccess(true);
            setTimeout(() => setShowSuccess(false), 3000);
            return;
+
          } catch (err) {
            if (err.name === 'AbortError') {
              return; // Usuário cancelou
            }
-           console.log('Native share failed');
+
+           console.log('Native share failed, using WhatsApp URL');
+
+           // ✅ FALLBACK FINAL: URL do WhatsApp
+           alert('📱 Opening WhatsApp with your message!\n💡 The image was downloaded, send it manually.\n\n(📱 Abrindo WhatsApp com sua mensagem!\n💡 A imagem foi baixada, envie manualmente.)');
+
+           downloadImage(cardDataUrl, accuracy);
+
+           const urlSafeText = shareText
+             .replace(/🥇|🥈|🥉/g, '🏆')
+             .replace(/🏅/g, '⭐')
+             .replace(/💎/g, '✨')
+             .replace(/🔒|🔓|🔑/g, '🔐')
+             .replace(/🛤️/g, '🚀')
+             .replace(/🏋️/g, '💪');
+
+           const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(urlSafeText)}`;
+           window.open(whatsappUrl, '_blank');
          }
        }
 
