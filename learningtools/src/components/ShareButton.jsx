@@ -242,6 +242,8 @@ Pratique gratuitamente: ${appUrl}
              files: [file]
            };
 
+            alert('✅ Image and text ready!\n\n📱 Choose WhatsApp in the next screen\n💡 The text and image will be sent together!\n\n(✅ Imagem e texto prontos!\n\n📱 Escolha WhatsApp na próxima tela\n💡 O texto e a imagem serão enviados juntos!)');
+
            if (navigator.canShare && navigator.canShare(shareData)) {
              await navigator.share(shareData);
            } else {
