@@ -7,6 +7,7 @@ import { compareTexts } from '../utils/textComparison';
 import { useSpeechRecognition } from '../hooks/useSpeechRecognition';
 import { IPATranscription } from './pronunciation/IPATranscription';
 import { PhonemeFeedback } from './pronunciation/PhonemeFeedback';
+import { ShareButton } from './ShareButton';
 
 const isAndroidDevice = () => {
   const ua = navigator.userAgent.toLowerCase();
@@ -66,6 +67,11 @@ export const PhraseCard = ({ phrase, onSpeak, onCorrectAnswer, isActive }) => {
   const [isPlayingUserAudio, setIsPlayingUserAudio] = useState(false);
   const [showIPA, setShowIPA] = useState(false); // NOVO: Estado para toggle IPA
 
+  const [totalPracticed, setTotalPracticed] = useState(() => {
+    const stored = localStorage.getItem('learnfun_total_practiced');
+    return stored ? parseInt(stored) : 0;
+  });
+
   const audioRef = useRef(null);
 
   // Processa o resultado quando terminar de ouvir
@@ -79,6 +85,10 @@ export const PhraseCard = ({ phrase, onSpeak, onCorrectAnswer, isActive }) => {
       setResult(comparison);
       setShowFeedback(true);
       setHasProcessed(true);
+
+      const newTotal = totalPracticed + 1;
+      setTotalPracticed(newTotal);
+      localStorage.setItem('learnfun_total_practiced', newTotal);
 
       if (comparison.similarity > 80 && onCorrectAnswer) {
         console.log(`🎉 ${comparison.similarity}% - Auto advancing!`);
@@ -273,6 +283,15 @@ export const PhraseCard = ({ phrase, onSpeak, onCorrectAnswer, isActive }) => {
                   {result.similarity}%
                 </span>
               </div>
+
+              {result.similarity > 70 && (
+                    <ShareButton
+                      phraseText={phrase.text}
+                      accuracy={result.similarity}
+                      totalPracticed={totalPracticed}
+                      variant={result.similarity >= 80 ? 'celebration' : 'default'}
+                    />
+                  )}
 
 
             </div>
