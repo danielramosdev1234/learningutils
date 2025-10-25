@@ -103,6 +103,20 @@ export const PhraseCard = ({ phrase, onSpeak, onCorrectAnswer, isActive }) => {
     }
   }, [transcript, isListening, hasProcessed, phrase.text, onCorrectAnswer]);
 
+useEffect(() => {
+  console.log('🔄 Phrase changed, resetting states');
+  setResult(null);
+  setShowFeedback(false);
+  setHasProcessed(false);
+  setIsPlayingUserAudio(false);
+
+  // Limpa estados do Android
+  if (isAndroid) {
+    setAndroidTranscript('');
+    setAndroidError('');
+  }
+}, [phrase.text, phrase.id, isAndroid]);
+
   const handleMicClick = () => {
     if (isListening) {
       console.log('🛑 Stopping...');
@@ -113,6 +127,13 @@ export const PhraseCard = ({ phrase, onSpeak, onCorrectAnswer, isActive }) => {
       setShowFeedback(false);
       setHasProcessed(false);
       setIsPlayingUserAudio(false);
+
+      // ✅ ADICIONAR ESTAS LINHAS PARA ANDROID:
+      if (isAndroid) {
+        setAndroidTranscript('');  // Limpa transcript do Android
+        setAndroidError('');       // Limpa erro do Android
+      }
+
       startListening();
     }
   };
