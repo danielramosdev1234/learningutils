@@ -9,7 +9,10 @@ import { PhraseRepository } from '../services/phraseRepository';
 
 const ChunkTrainer = () => {
   const [phrases, setPhrases] = useState([]);
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(() => {
+    const saved = localStorage.getItem('learnfun_current_phrase_index');
+    return saved ? parseInt(saved) : 0;
+  });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [jumpToInput, setJumpToInput] = useState('');
@@ -18,6 +21,12 @@ const ChunkTrainer = () => {
   useEffect(() => {
     loadPhrases();
   }, []);
+
+// Salva o índice atual sempre que mudar
+useEffect(() => {
+  localStorage.setItem('learnfun_current_phrase_index', currentIndex);
+  console.log('💾 Progress saved: phrase', currentIndex + 1);
+}, [currentIndex]);
 
   const loadPhrases = async () => {
     try {
