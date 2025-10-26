@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
-import { Hash, Palette } from 'lucide-react';
+import { Hash, Mic, Zap } from 'lucide-react';
 import NumberSpeechTrainer from './NumberSpeechTrainer';
-import ColorSpeechTrainer from './ColorSpeechTrainer';
 import ChunkTrainer from './ChunkTrainer';
-import { Mic } from 'lucide-react';
-
+import ChallengeTrainer from './ChallengeTrainer'; // ← IMPORTAR O NOVO COMPONENTE
 
 export default function TrainerSelector() {
-  const [activeTrainer, setActiveTrainer] = useState('chunk'); // 'numbers' ou 'chunk'
+  const [activeTrainer, setActiveTrainer] = useState('chunk'); // 'chunk', 'numbers', ou 'challenge'
 
   return (
     <div className="min-h-screen">
@@ -16,6 +14,7 @@ export default function TrainerSelector() {
         <div className="max-w-6xl mx-auto px-4">
           <div className="flex justify-center gap-4 py-4">
 
+            {/* Chunk Trainer Button */}
             <button
               onClick={() => setActiveTrainer('chunk')}
               className={`flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all ${
@@ -27,28 +26,42 @@ export default function TrainerSelector() {
               <Mic className="w-5 h-5" />
               Speak Chunk Trainer
             </button>
-             <button
-                          onClick={() => setActiveTrainer('numbers')}
-                          className={`flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all ${
-                            activeTrainer === 'numbers'
-                              ? 'bg-blue-500 text-white shadow-lg scale-105'
-                              : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                          }`}
-                        >
-                          <Hash className="w-5 h-5" />
-                          Number Trainer
-                        </button>
+
+            {/* Number Trainer Button */}
+            <button
+              onClick={() => setActiveTrainer('numbers')}
+              className={`flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all ${
+                activeTrainer === 'numbers'
+                  ? 'bg-blue-500 text-white shadow-lg scale-105'
+                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+              }`}
+            >
+              <Hash className="w-5 h-5" />
+              Number Trainer
+            </button>
+
+            {/* ← NOVO: Challenge Mode Button */}
+            <button
+              onClick={() => setActiveTrainer('challenge')}
+              className={`flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all ${
+                activeTrainer === 'challenge'
+                  ? 'bg-gradient-to-r from-yellow-500 to-orange-500 text-white shadow-lg scale-105'
+                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+              }`}
+            >
+              <Zap className="w-5 h-5" />
+              Challenge Mode
+            </button>
+
           </div>
         </div>
       </nav>
 
       {/* Active Trainer Component */}
       <div className="transition-opacity duration-300">
-        {activeTrainer === 'chunk' ? (
-          <ChunkTrainer />
-        ) : (
-          <NumberSpeechTrainer />
-        )}
+        {activeTrainer === 'chunk' && <ChunkTrainer />}
+        {activeTrainer === 'numbers' && <NumberSpeechTrainer />}
+        {activeTrainer === 'challenge' && <ChallengeTrainer />} {/* ← NOVO */}
       </div>
     </div>
   );
