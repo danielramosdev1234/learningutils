@@ -30,8 +30,7 @@ export const PhonemeFeedback = ({ expectedText, spokenText, userAudioBlob }) => 
     setPlayingWord(index);
     speak(word, () => {
       setPlayingWord(null);
-    });
-    setPlayingWord(null);
+    }, 0.50);
   };
 
   /**

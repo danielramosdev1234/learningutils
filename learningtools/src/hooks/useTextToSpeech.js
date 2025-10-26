@@ -14,7 +14,7 @@ export const useTextToSpeech = () => {
     }
   }, []);
 
-  const speak = useCallback((text) => {
+  const speak = useCallback((text, onEnd = null, rate = 0.9) => {
     if (!('speechSynthesis' in window)) {
       console.error('Speech synthesis not supported');
       alert('Your browser does not support text-to-speech');
@@ -31,7 +31,7 @@ export const useTextToSpeech = () => {
 
         // Configurações
         utterance.lang = 'en-US';
-        utterance.rate = 0.9;
+        utterance.rate = rate;  // ⭐ USA O PARÂMETRO rate
         utterance.pitch = 1;
         utterance.volume = 1;
 
@@ -44,11 +44,13 @@ export const useTextToSpeech = () => {
         utterance.onend = () => {
           console.log('✅ Finished speaking');
           setIsSpeaking(false);
+          if (onEnd) onEnd();
         };
 
         utterance.onerror = (event) => {
           console.error('❌ Speech error:', event);
           setIsSpeaking(false);
+          if (onEnd) onEnd();
         };
 
         // Inicia a fala
