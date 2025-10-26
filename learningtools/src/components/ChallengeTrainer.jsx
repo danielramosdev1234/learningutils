@@ -121,7 +121,7 @@ const ChallengeTrainer = () => {
   const startGame = () => {
     setGameState('playing');
     setTimeLeft(60);
-    setCurrentPhraseIndex(0);
+    setCurrentPhraseIndex(Math.floor(Math.random() * DEMO_PHRASES.length));
     setCompletedPhrases(0);
     setLastResult(null);
     setTranscript('');
