@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Timer, Trophy, Zap, Volume2, Mic, MicOff, CheckCircle, XCircle, Play, Hash } from 'lucide-react';
+import { loadChallengeLeaderboard, saveChallengeRecord, checkIfMakesTop10 } from '../services/challengeLeaderboardService';
 
 // Versão integrada para o TrainerSelector
 const TrainerSelector = () => {
@@ -93,13 +94,15 @@ const ChallengeTrainer = () => {
   const timerRef = useRef(null);
   const recognitionRef = useRef(null);
 
-  // Carregar leaderboard
-  useEffect(() => {
-    const stored = localStorage.getItem('challenge_leaderboard');
-    if (stored) {
-      setLeaderboard(JSON.parse(stored));
-    }
-  }, []);
+  // Carregar leaderboard do Firebase
+    useEffect(() => {
+      loadLeaderboardData();
+    }, []);
+
+    const loadLeaderboardData = async () => {
+      const leaders = await loadChallengeLeaderboard();
+      setLeaderboard(leaders);
+    };
 
   // Cronômetro
   useEffect(() => {
@@ -128,42 +131,38 @@ const ChallengeTrainer = () => {
   };
 
   const endGame = () => {
-    setGameState('finished');
-    if (recognitionRef.current) {
-      recognitionRef.current.stop();
-    }
-    setIsListening(false);
+      setGameState('finished');
+      if (recognitionRef.current) {
+        recognitionRef.current.stop();
+      }
+      setIsListening(false);
 
-    // Verificar se é um novo recorde (top 10)
-    const newScore = completedPhrases;
-    const wouldMakeTop10 = leaderboard.length < 10 || newScore > leaderboard[leaderboard.length - 1]?.score;
+      // Verificar se é um novo recorde (top 10)
+      const wouldMakeTop10 = checkIfMakesTop10(completedPhrases, leaderboard);
 
-    if (wouldMakeTop10 && newScore > 0) {
-      setShowNameInput(true);
-    }
-  };
-
-  const saveToLeaderboard = () => {
-    if (!playerName.trim()) {
-      alert('Please enter your name!');
-      return;
-    }
-
-    const newEntry = {
-      name: playerName.trim().slice(0, 20),
-      score: completedPhrases,
-      timestamp: new Date().toISOString()
+      if (wouldMakeTop10) {
+        setShowNameInput(true);
+      }
     };
 
-    const updated = [...leaderboard, newEntry]
-      .sort((a, b) => b.score - a.score)
-      .slice(0, 10);
+  const saveToLeaderboard = async () => {
+      if (!playerName.trim()) {
+        alert('Please enter your name!');
+        return;
+      }
 
-    setLeaderboard(updated);
-    localStorage.setItem('challenge_leaderboard', JSON.stringify(updated));
-    setShowNameInput(false);
-    setPlayerName('');
-  };
+      const success = await saveChallengeRecord(playerName, completedPhrases);
+
+      if (success) {
+        // Recarregar leaderboard
+        await loadLeaderboardData();
+        setShowNameInput(false);
+        setPlayerName('');
+        alert('🎉 Score saved successfully!');
+      } else {
+        alert('❌ Error saving score. Please try again.');
+      }
+    };
 
   const handleMicClick = () => {
     if (isListening) {
