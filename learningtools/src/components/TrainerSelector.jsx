@@ -5,7 +5,24 @@ import ChunkTrainer from './ChunkTrainer';
 import ChallengeTrainer from './ChallengeTrainer'; // ← IMPORTAR O NOVO COMPONENTE
 
 export default function TrainerSelector() {
-  const [activeTrainer, setActiveTrainer] = useState('chunk'); // 'chunk', 'numbers', ou 'challenge'
+  // Ler o parâmetro da URL ao carregar
+  const getInitialTrainer = () => {
+    const params = new URLSearchParams(window.location.search);
+    const mode = params.get('mode');
+    if (mode === 'challenge') return 'challenge';
+    if (mode === 'numbers') return 'numbers';
+    return 'chunk'; // padrão
+  };
+
+  const [activeTrainer, setActiveTrainer] = useState(getInitialTrainer());
+
+  // Atualizar URL quando mudar de trainer
+  const handleTrainerChange = (trainer) => {
+    setActiveTrainer(trainer);
+    const url = new URL(window.location);
+    url.searchParams.set('mode', trainer);
+    window.history.pushState({}, '', url);
+  };
 
   return (
     <div className="min-h-screen">
@@ -16,7 +33,7 @@ export default function TrainerSelector() {
 
             {/* Chunk Trainer Button */}
             <button
-              onClick={() => setActiveTrainer('chunk')}
+              onClick={() => handleTrainerChange('chunk')}
               className={`flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all ${
                 activeTrainer === 'chunk'
                   ? 'bg-purple-500 text-white shadow-lg scale-105'
@@ -29,7 +46,7 @@ export default function TrainerSelector() {
 
             {/* Number Trainer Button */}
             <button
-              onClick={() => setActiveTrainer('numbers')}
+              onClick={() => handleTrainerChange('numbers')}
               className={`flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all ${
                 activeTrainer === 'numbers'
                   ? 'bg-blue-500 text-white shadow-lg scale-105'
@@ -40,9 +57,9 @@ export default function TrainerSelector() {
               Number Trainer
             </button>
 
-            {/* ← NOVO: Challenge Mode Button */}
+            {/* Challenge Mode Button */}
             <button
-              onClick={() => setActiveTrainer('challenge')}
+              onClick={() => handleTrainerChange('challenge')}
               className={`flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all ${
                 activeTrainer === 'challenge'
                   ? 'bg-gradient-to-r from-yellow-500 to-orange-500 text-white shadow-lg scale-105'

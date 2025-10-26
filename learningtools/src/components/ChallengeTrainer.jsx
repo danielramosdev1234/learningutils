@@ -282,32 +282,40 @@ const ChallengeTrainer = () => {
   };
 
 const shareScore = () => {
+    // Construir URL com query parameter
+    const baseUrl = window.location.origin + window.location.pathname;
+    const challengeUrl = `${baseUrl}?mode=challenge`;
     const text = `🏆 I just completed ${completedPhrases} phrases in 60 seconds on Challenge Mode! Can you beat my score? 🎯`;
 
     if (navigator.share) {
       navigator.share({
         title: 'Challenge Mode Score',
         text: text,
-        url: window.location.href
+        url: challengeUrl
       }).catch(() => {});
     } else {
-      navigator.clipboard.writeText(text);
-      alert('Score copied to clipboard! 📋');
+      const fullText = `${text}\n${challengeUrl}`;
+      navigator.clipboard.writeText(fullText);
+      alert('Score and link copied to clipboard! 📋');
     }
   };
 
   const challengeFriend = () => {
+    // Construir URL com query parameter
+    const baseUrl = window.location.origin + window.location.pathname;
+    const challengeUrl = `${baseUrl}?mode=challenge`;
     const text = `🎮 I challenge you to beat my score of ${completedPhrases} phrases in Challenge Mode! Think you can do better? 💪`;
 
     if (navigator.share) {
       navigator.share({
         title: 'Challenge Your Friend',
         text: text,
-        url: window.location.href
+        url: challengeUrl
       }).catch(() => {});
     } else {
-      navigator.clipboard.writeText(text);
-      alert('Challenge copied to clipboard! Send it to your friends! 📋');
+      const fullText = `${text}\n${challengeUrl}`;
+      navigator.clipboard.writeText(fullText);
+      alert('Challenge and link copied to clipboard! Send it to your friends! 📋');
     }
   };
 
