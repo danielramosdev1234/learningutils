@@ -1,7 +1,7 @@
 // src/components/FireworksCelebration.jsx
 
 import React, { useEffect, useRef } from 'react';
-import aplausosSound from '../assets/aplausos.wav';
+import aplausosSound from '../assets/respostacerta.mp3';
 
 export const FireworksCelebration = ({ show }) => {
   const canvasRef = useRef(null);
