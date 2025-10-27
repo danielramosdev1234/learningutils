@@ -8,6 +8,7 @@ import { useSpeechRecognition } from '../hooks/useSpeechRecognition';
 import { IPATranscription } from './pronunciation/IPATranscription';
 import { PhonemeFeedback } from './pronunciation/PhonemeFeedback';
 import { ShareButton } from './ShareButton';
+import { FireworksCelebration } from './FireworksCelebration';
 
 const isAndroidDevice = () => {
   const ua = navigator.userAgent.toLowerCase();
@@ -66,6 +67,7 @@ export const PhraseCard = ({ phrase, onSpeak, onCorrectAnswer, isActive }) => {
   const [hasProcessed, setHasProcessed] = useState(false);
   const [isPlayingUserAudio, setIsPlayingUserAudio] = useState(false);
   const [showIPA, setShowIPA] = useState(false); // NOVO: Estado para toggle IPA
+  const [showFireworks, setShowFireworks] = useState(false);
 
   const [totalPracticed, setTotalPracticed] = useState(() => {
     const stored = localStorage.getItem('learnfun_total_practiced');
@@ -77,7 +79,7 @@ export const PhraseCard = ({ phrase, onSpeak, onCorrectAnswer, isActive }) => {
   // Processa o resultado quando terminar de ouvir
   useEffect(() => {
     if (transcript && !isListening && !hasProcessed && transcript.trim() !== '') {
-      console.log('📊 Processing - Phrase:', phrase.text, '| Said:', transcript);
+      console.log('🔊 Processing - Phrase:', phrase.text, '| Said:', transcript);
 
       const comparison = compareTexts(phrase.text, transcript);
       console.log('📈 Result:', comparison.similarity + '%');
@@ -85,6 +87,12 @@ export const PhraseCard = ({ phrase, onSpeak, onCorrectAnswer, isActive }) => {
       setResult(comparison);
       setShowFeedback(true);
       setHasProcessed(true);
+
+      // ✨ ADICIONE ESTAS LINHAS:
+      if (comparison.similarity === 100) {
+        setShowFireworks(true);
+        setTimeout(() => setShowFireworks(false), 5000);
+      }
 
       const newTotal = totalPracticed + 1;
       setTotalPracticed(newTotal);
@@ -337,6 +345,9 @@ useEffect(() => {
           <span className="font-bold text-lg">🎙️ Recording & Listening...</span>
         </div>
       )}
+
+  {/* Fogos de artifício para 100% */}
+        <FireworksCelebration show={showFireworks} />
     </div>
   );
 };
