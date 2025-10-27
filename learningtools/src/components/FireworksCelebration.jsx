@@ -18,7 +18,7 @@ export const FireworksCelebration = ({ show }) => {
       }
 
       const audio = new Audio(aplausosSound);
-      audio.volume = 0.7;
+      audio.volume = 0.2;
       audioRef.current = audio;
       audio.play().catch(err => console.log('Audio play error:', err));
     } catch (error) {
