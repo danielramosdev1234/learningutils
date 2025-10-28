@@ -7,9 +7,6 @@ import { numberToWordsSimple } from '../utils/numberConverter';
 import { loadLeaderboard, saveRecord as saveRecordService, checkIfNewRecord } from '../services/leaderboardService';
 import { RecordModal } from './RecordModal';
 import { Leaderboard } from './Leaderboard';
-import { Analytics } from '@vercel/analytics/react';
-
-<Analytics />
 
 export default function NumberSpeechTrainer() {
   const [currentNumber, setCurrentNumber] = useState(0);

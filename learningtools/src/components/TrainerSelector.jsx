@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Hash, Mic, Zap, Video } from 'lucide-react';
 import NumberSpeechTrainer from './NumberSpeechTrainer';
 import ChunkTrainer from './ChunkTrainer';
 import ChallengeTrainer from './ChallengeTrainer';
 import VideoLearningApp from './VideoListener';
 import WhatsAppFloatingButton from './WhatsAppFloatingButton';
-
 
 export default function TrainerSelector() {
   // Ler o parâmetro da URL ao carregar
@@ -20,12 +19,28 @@ export default function TrainerSelector() {
 
   const [activeTrainer, setActiveTrainer] = useState(getInitialTrainer());
 
+  // Rastrear mudanças de página no Analytics
+  useEffect(() => {
+    if (window.va) {
+      const path = window.location.pathname + window.location.search;
+      window.va('pageview', { path });
+    }
+  }, [activeTrainer]);
+
   // Atualizar URL quando mudar de trainer
   const handleTrainerChange = (trainer) => {
     setActiveTrainer(trainer);
     const url = new URL(window.location);
     url.searchParams.set('mode', trainer);
     window.history.pushState({}, '', url);
+
+    // Rastrear evento de mudança de trainer
+    if (window.va) {
+      window.va('event', {
+        name: 'trainer_selected',
+        data: { mode: trainer }
+      });
+    }
   };
 
   return (
@@ -75,17 +90,17 @@ export default function TrainerSelector() {
             </button>
 
             {/* VideoLearningApp Button */}
-                        <button
-                          onClick={() => handleTrainerChange('VideoLearningApp')}
-                          className={`flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all ${
-                            activeTrainer === 'VideoLearningApp'
-                              ? 'bg-gradient-to-r from-yellow-500 to-orange-500 text-white shadow-lg scale-105'
-                              : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                          }`}
-                        >
-                          <Video className="w-5 h-5" />
-                          Video
-                        </button>
+            <button
+              onClick={() => handleTrainerChange('VideoLearningApp')}
+              className={`flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all ${
+                activeTrainer === 'VideoLearningApp'
+                  ? 'bg-gradient-to-r from-yellow-500 to-orange-500 text-white shadow-lg scale-105'
+                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+              }`}
+            >
+              <Video className="w-5 h-5" />
+              Video
+            </button>
 
           </div>
         </div>
@@ -97,11 +112,10 @@ export default function TrainerSelector() {
         {activeTrainer === 'numbers' && <NumberSpeechTrainer />}
         {activeTrainer === 'challenge' && <ChallengeTrainer />}
         {activeTrainer === 'VideoLearningApp' && <VideoLearningApp />}
-
       </div>
 
       {/* Botão Flutuante WhatsApp */}
-       <WhatsAppFloatingButton />
+      <WhatsAppFloatingButton />
 
     </div>
   );
