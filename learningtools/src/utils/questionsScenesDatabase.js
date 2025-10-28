@@ -643,7 +643,202 @@ const questions = [
     ],
     correctIndex: 2,
     category: "Movies"
-  }
+  },
+  {
+      videoId: "Ma1x7ikpid8",
+      startTime: 0,
+      endTime: 6,
+      audioText: "This... is the only pure thing in this world.",
+      level: "advanced",
+      options: [
+        "This... is the only pure thing in this world.",
+        "This... is the only pure things in this world.",
+        "This... is an only pure thing in this world.",
+        "This... is the only pure thing on this world."
+      ],
+      correctIndex: 0,
+      category: "Movies"
+    },
+    {
+      videoId: "Ma1x7ikpid8",
+      startTime: 6,
+      endTime: 13,
+      audioText: "The fire came from the mountain. Burnt our forests.",
+      level: "advanced",
+      options: [
+        "The fire come from the mountain. Burnt our forests.",
+        "The fire came from the mountain. Burnt our forests.",
+        "The fire came from the mountain. Burned our forest.",
+        "A fire came from the mountain. Burnt our forests."
+      ],
+      correctIndex: 1,
+      category: "Movies"
+    },
+    {
+      videoId: "Ma1x7ikpid8",
+      startTime: 12,
+      endTime: 22,
+      audioText: "My people... cried for help... but Eywa did not come.",
+      level: "advanced",
+      options: [
+        "My people... cried for help... but Eywa does not come.",
+        "My peoples... cried for help... but Eywa did not come.",
+        "My people... cried for help... but Eywa did not come.",
+        "My people... cried to help... but Eywa did not come."
+      ],
+      correctIndex: 2,
+      category: "Movies"
+    },
+    {
+      videoId: "Ma1x7ikpid8",
+      startTime: 40,
+      endTime: 45,
+      audioText: "This world goes much deeper than you imagine.",
+      level: "advanced",
+      options: [
+        "This world go much deeper than you imagine.",
+        "This world goes much deeper than you imagine.",
+        "This world goes more deeper than you imagine.",
+        "This world goes much deeper then you imagine."
+      ],
+      correctIndex: 1,
+      category: "Movies"
+    },
+    {
+      videoId: "Ma1x7ikpid8",
+      startTime: 62,
+      endTime: 65,
+      audioText: "Protect your sisters. Stay under cover.",
+      level: "advanced",
+      options: [
+        "Protect your sisters. Stay under the cover.",
+        "Protect your sister. Stay under cover.",
+        "Protect your sisters. Stay under cover.",
+        "Protect your sisters. Stay in cover."
+      ],
+      correctIndex: 2,
+      category: "Movies"
+    },
+    {
+      videoId: "Ma1x7ikpid8",
+      startTime: 74,
+      endTime: 79,
+      audioText: "What does Dad always say? Sullys stick together.",
+      level: "advanced",
+      options: [
+        "What does Dad always say? Sullys stick together.",
+        "What do Dad always say? Sullys stick together.",
+        "What does Dad always says? Sullys stick together.",
+        "What does Dad always say? Sullys sticks together."
+      ],
+      correctIndex: 0,
+      category: "Movies"
+    },
+    {
+      videoId: "Ma1x7ikpid8",
+      startTime: 77,
+      endTime: 81,
+      audioText: "Sullys never quit. That's right. Sullys never quit.",
+      level: "advanced",
+      options: [
+        "Sullys never quit. That's right. Sullys never quits.",
+        "Sullys never quit. That's right. Sullys never quit.",
+        "Sullys never quits. That's right. Sullys never quit.",
+        "Sully never quit. That's right. Sullys never quit."
+      ],
+      correctIndex: 1,
+      category: "Movies"
+    },
+    {
+      videoId: "Ma1x7ikpid8",
+      startTime: 82,
+      endTime: 90,
+      audioText: "How do you still live? What if every human being on Earth could live here without a mask?",
+      level: "advanced",
+      options: [
+        "How do you still live? What if every human being on Earth could live here without mask?",
+        "How do you still live? What if every human being in Earth could live here without a mask?",
+        "How do you still live? What if every human being on Earth could live here without a mask?",
+        "How does you still live? What if every human being on Earth could live here without a mask?"
+      ],
+      correctIndex: 2,
+      category: "Movies"
+    },
+    {
+      videoId: "Ma1x7ikpid8",
+      startTime: 90,
+      endTime: 94,
+      audioText: "Then the Na'vi people will be gone.",
+      level: "advanced",
+      options: [
+        "Then the Na'vi people will be gone.",
+        "Then the Na'vi peoples will be gone.",
+        "Then a Na'vi people will be gone.",
+        "Then the Na'vi people will gone."
+      ],
+      correctIndex: 0,
+      category: "Movies"
+    },
+    {
+      videoId: "Ma1x7ikpid8",
+      startTime: 100,
+      endTime: 106,
+      audioText: "You wanna spread your fire across the world, you need me.",
+      level: "advanced",
+      options: [
+        "You wanna spread your fire across the world, you need me.",
+        "You wanna spread your fire through the world, you need me.",
+        "You want spread your fire across the world, you need me.",
+        "You wanna spread your fire across a world, you need me."
+      ],
+      correctIndex: 0,
+      category: "Movies"
+    },
+    {
+      videoId: "Ma1x7ikpid8",
+      startTime: 109,
+      endTime: 112,
+      audioText: "We must fight!",
+      level: "advanced",
+      options: [
+        "We must to fight!",
+        "We must fight!",
+        "We must fights!",
+        "We must fighting!"
+      ],
+      correctIndex: 1,
+      category: "Movies"
+    },
+    {
+      videoId: "Ma1x7ikpid8",
+      startTime: 115,
+      endTime: 117,
+      audioText: "I call upon the warrior mother.",
+      level: "advanced",
+      options: [
+        "I call upon a warrior mother.",
+        "I call upon the warrior mother.",
+        "I call on the warrior mother.",
+        "I call upon the warrior mothers."
+      ],
+      correctIndex: 1,
+      category: "Movies"
+    },
+    {
+      videoId: "Ma1x7ikpid8",
+      startTime: 135,
+      endTime: 138,
+      audioText: "I'll kill you, I swear!",
+      level: "advanced",
+      options: [
+        "I kill you, I swear!",
+        "I'll kill you, I swear!",
+        "I'll kill you, I swears!",
+        "I will kills you, I swear!"
+      ],
+      correctIndex: 1,
+      category: "Movies"
+    }
 ];
 
 export default questions;
