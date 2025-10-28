@@ -418,6 +418,231 @@ const questions = [
     ],
     correctIndex: 2,
     category: "Movies"
+  },
+  {
+    videoId: "SyWKhDYf-w8",
+    startTime: 2,
+    endTime: 5,
+    audioText: "So, what are we driving?",
+    level: "beginner",
+    options: [
+      "So, what are we driving?",
+      "So, what we are driving?",
+      "So, what are we driven?",
+      "So, what are we drive?"
+    ],
+    correctIndex: 0,
+    category: "Movies"
+  },
+  {
+    videoId: "SyWKhDYf-w8",
+    startTime: 4,
+    endTime: 7,
+    audioText: "If you can guess, I'll give you the keys to it",
+    level: "intermediate",
+    options: [
+      "If you can guest, I'll give you the keys to it",
+      "If you can guess, I'll give you the keys to it",
+      "If you can guess, I'll gave you the keys to it",
+      "If you can guess, I give you the keys to it"
+    ],
+    correctIndex: 1,
+    category: "Movies"
+  },
+  {
+    videoId: "SyWKhDYf-w8",
+    startTime: 11,
+    endTime: 15,
+    audioText: "That is a beautiful car. I need to be in your line and work",
+    level: "intermediate",
+    options: [
+      "That is a beautiful car. I need to be in your line and work",
+      "That is the beautiful car. I need to be in your line and work",
+      "That is a beautiful car. I need to been your line and work",
+      "That is a beautiful car. I need be in your line and work"
+    ],
+    correctIndex: 0,
+    category: "Movies"
+  },
+  {
+    videoId: "SyWKhDYf-w8",
+    startTime: 23,
+    endTime: 26,
+    audioText: "I'm real good at reading people",
+    level: "beginner",
+    options: [
+      "I'm real good at read people",
+      "I'm really good at reading people",
+      "I'm real good at reading people",
+      "I'm real good in reading people"
+    ],
+    correctIndex: 2,
+    category: "Movies"
+  },
+  {
+    videoId: "SyWKhDYf-w8",
+    startTime: 29,
+    endTime: 33,
+    audioText: "You look like a person who has secrets",
+    level: "intermediate",
+    options: [
+      "You look like the person who has secrets",
+      "You look like a person who have secrets",
+      "You look like a person who has secret",
+      "You look like a person who has secrets"
+    ],
+    correctIndex: 3,
+    category: "Movies"
+  },
+  {
+    videoId: "SyWKhDYf-w8",
+    startTime: 32,
+    endTime: 38,
+    audioText: "You got the cars, the clothes. You can't seem to look me in the eye",
+    level: "advanced",
+    options: [
+      "You got the cars, the clothes. You can't seem to look me in the eye",
+      "You got the cars, the clothes. You can't seems to look me in the eye",
+      "You got the cars, the clothes. You can't seem to looking me in the eye",
+      "You got the cars, the cloth. You can't seem to look me in the eye"
+    ],
+    correctIndex: 0,
+    category: "Movies"
+  },
+  {
+    videoId: "SyWKhDYf-w8",
+    startTime: 42,
+    endTime: 48,
+    audioText: "You're looking at robberies of jewels, money, or high value items in the last four years",
+    level: "advanced",
+    options: [
+      "You're looking at robberies of jewels, money, or high value items in the last four year",
+      "You're looking at robberies of jewel, money, or high value items in the last four years",
+      "You're looking at robberies of jewels, money, or high value items in the last four years",
+      "You're looking at robbery of jewels, money, or high value items in the last four years"
+    ],
+    correctIndex: 2,
+    category: "Movies"
+  },
+  {
+    videoId: "SyWKhDYf-w8",
+    startTime: 50,
+    endTime: 55,
+    audioText: "Now remove every robbery where there was DNA left at the scene",
+    level: "advanced",
+    options: [
+      "Now remove every robbery where there was DNA left at the scene",
+      "Now remove every robbery where there were DNA left at the scene",
+      "Now remove every robbery where there was DNA leave at the scene",
+      "Now removes every robbery where there was DNA left at the scene"
+    ],
+    correctIndex: 0,
+    category: "Movies"
+  },
+  {
+    videoId: "SyWKhDYf-w8",
+    startTime: 58,
+    endTime: 62,
+    audioText: "I think all of these are the same guy",
+    level: "intermediate",
+    options: [
+      "I think all of this are the same guy",
+      "I think all of these is the same guy",
+      "I think all of these are the same guy",
+      "I think all these are the same guy"
+    ],
+    correctIndex: 2,
+    category: "Movies"
+  },
+  {
+    videoId: "SyWKhDYf-w8",
+    startTime: 60,
+    endTime: 65,
+    audioText: "and he hits every time along the 101 freeway",
+    level: "intermediate",
+    options: [
+      "and he hit every time along the 101 freeway",
+      "and he hits every time along the 101 freeway",
+      "and he hits every time alone the 101 freeway",
+      "and he hits everytime along the 101 freeway"
+    ],
+    correctIndex: 1,
+    category: "Movies"
+  },
+  {
+    videoId: "SyWKhDYf-w8",
+    startTime: 108,
+    endTime: 114,
+    audioText: "I came here to make you a business proposition",
+    level: "intermediate",
+    options: [
+      "I came here to make you the business proposition",
+      "I come here to make you a business proposition",
+      "I came here to make you a business proposition",
+      "I came here to made you a business proposition"
+    ],
+    correctIndex: 2,
+    category: "Movies"
+  },
+  {
+    videoId: "SyWKhDYf-w8",
+    startTime: 119,
+    endTime: 124,
+    audioText: "I easily make them disappear and no one gets hurt",
+    level: "intermediate",
+    options: [
+      "I easily make them disappear and no one get hurt",
+      "I easily make them disappear and no one gets hurt",
+      "I easy make them disappear and no one gets hurt",
+      "I easily made them disappear and no one gets hurt"
+    ],
+    correctIndex: 1,
+    category: "Movies"
+  },
+  {
+    videoId: "SyWKhDYf-w8",
+    startTime: 123,
+    endTime: 127,
+    audioText: "I wouldn't die for an insurance company",
+    level: "beginner",
+    options: [
+      "I wouldn't die for the insurance company",
+      "I wouldn't died for an insurance company",
+      "I won't die for an insurance company",
+      "I wouldn't die for an insurance company"
+    ],
+    correctIndex: 3,
+    category: "Movies"
+  },
+  {
+    videoId: "SyWKhDYf-w8",
+    startTime: 39,
+    endTime: 42,
+    audioText: "Doesn't matter how much money you make, it's never enough",
+    level: "advanced",
+    options: [
+      "Doesn't matter how much money you make, it's never enough",
+      "Doesn't matter how many money you make, it's never enough",
+      "Don't matter how much money you make, it's never enough",
+      "Doesn't matters how much money you make, it's never enough"
+    ],
+    correctIndex: 0,
+    category: "Movies"
+  },
+  {
+    videoId: "SyWKhDYf-w8",
+    startTime: 158,
+    endTime: 161,
+    audioText: "As smart as that guy is, he can't help but form a pattern",
+    level: "advanced",
+    options: [
+      "As smart as that guy are, he can't help but form a pattern",
+      "As smart as that guy is, he can't help but form the pattern",
+      "As smart as that guy is, he can't help but form a pattern",
+      "As smart as that guy is, he can't helps but form a pattern"
+    ],
+    correctIndex: 2,
+    category: "Movies"
   }
 ];
 
