@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Play, SkipForward, Trophy, Zap, Volume2, Check, X } from 'lucide-react';
 import questionsImportadas from '../utils/questionsDatabase.js';
+import questionsScenesDatabase from '../utils/questionsScenesDatabase.js';
 
 const VideoLearningApp = () => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -10,7 +11,12 @@ const VideoLearningApp = () => {
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [isCorrect, setIsCorrect] = useState(false);
   const [videoPlayed, setVideoPlayed] = useState(false);
-  const questions = window.questionsDatabase || questionsImportadas;
+  const [gameMode, setGameMode] = useState(null);
+  const questions = gameMode === 'phrases'
+    ? questionsImportadas
+    : gameMode === 'scenes'
+    ? questionsScenesDatabase
+    : [];
 
 
 
@@ -47,6 +53,20 @@ const VideoLearningApp = () => {
     }
   };
 
+    const handleModeSelect = (mode) => {
+      setGameMode(mode);
+      setCurrentQuestion(0);
+      setScore(0);
+      setStreak(0);
+    };
+
+    const handleBackToMenu = () => {
+      setGameMode(null);
+      setCurrentQuestion(0);
+      setScore(0);
+      setStreak(0);
+    };
+
   const getLevelColor = (level) => {
     switch(level) {
       case 'beginner': return 'bg-green-500';
@@ -55,6 +75,38 @@ const VideoLearningApp = () => {
       default: return 'bg-gray-500';
     }
   };
+
+    // Tela de seleção - adicionar ANTES do return principal
+    if (!gameMode) {
+      return (
+        <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4 flex items-center justify-center">
+          <div className="max-w-4xl w-full text-center">
+            <h1 className="text-5xl font-bold mb-8">🎬 Video Learning</h1>
+            <div className="grid md:grid-cols-2 gap-8 px-4">
+              {/* Card Phrases */}
+              <button
+                onClick={() => handleModeSelect('phrases')}
+                className="bg-gradient-to-br from-purple-500 to-blue-600 bg-opacity-80 hover:bg-opacity-90 backdrop-blur-lg p-12 rounded-3xl transition-all transform hover:scale-105 shadow-2xl border border-white border-opacity-30"
+              >
+                <div className="text-8xl mb-6">💬</div>
+                <h2 className="text-3xl font-bold mb-3 text-white">Phrases</h2>
+                <p className="text-lg text-gray-200">Frases famosas de filmes</p>
+              </button>
+
+              {/* Card Scenes */}
+              <button
+                onClick={() => handleModeSelect('scenes')}
+                className="bg-gradient-to-br from-purple-500 to-blue-600 bg-opacity-80 hover:bg-opacity-90 backdrop-blur-lg p-12 rounded-3xl transition-all transform hover:scale-105 shadow-2xl border border-white border-opacity-30"
+              >
+                <div className="text-8xl mb-6">🎬</div>
+                <h2 className="text-3xl font-bold mb-3 text-white">Scenes</h2>
+                <p className="text-lg text-gray-200">Cenas completas</p>
+              </button>
+            </div>
+          </div>
+        </div>
+      );
+    }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 text-white p-4">
@@ -75,6 +127,12 @@ const VideoLearningApp = () => {
             Questão {currentQuestion + 1} de {questions.length}
           </div>
         </div>
+        <button
+          onClick={handleBackToMenu}
+          className="bg-blue-500 px-3 py-1 rounded-full text-xs font-semibold"
+        >
+          ← Menu
+        </button>
       </div>
 
       {/* Container Principal */}
