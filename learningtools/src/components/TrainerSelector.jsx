@@ -4,6 +4,7 @@ import NumberSpeechTrainer from './NumberSpeechTrainer';
 import ChunkTrainer from './ChunkTrainer';
 import ChallengeTrainer from './ChallengeTrainer';
 import VideoLearningApp from './VideoListener';
+import WhatsAppFloatingButton from './WhatsAppFloatingButton';
 
 
 export default function TrainerSelector() {
@@ -98,6 +99,10 @@ export default function TrainerSelector() {
         {activeTrainer === 'VideoLearningApp' && <VideoLearningApp />}
 
       </div>
+
+      {/* Botão Flutuante WhatsApp */}
+       <WhatsAppFloatingButton />
+
     </div>
   );
 }
