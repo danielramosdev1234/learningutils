@@ -83,12 +83,14 @@ const VideoLearningApp = () => {
         <div className="bg-black rounded-2xl overflow-hidden shadow-2xl mb-6">
           <div className="relative" style={{ paddingBottom: '56.25%', height: 0 }}>
             <iframe
-              src={`https://www.youtube.com/embed/${currentQ.videoId}?start=${currentQ.startTime}&end=${currentQ.endTime}&autoplay=${videoPlayed ? 1 : 0}`}
+              src={`https://www.youtube.com/embed/${currentQ.videoId}?start=${currentQ.startTime}&end=${currentQ.endTime}&autoplay=${videoPlayed ? 1 : 0}&modestbranding=1&rel=0&showinfo=0`}
               className="absolute top-0 left-0 w-full h-full"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
               title="Video Question"
             />
+            <div className="absolute top-0 left-0 right-0 h-16 bg-black pointer-events-none z-10"></div>
+                <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-black to-transparent pointer-events-none z-10"></div>
           </div>
         </div>
 
