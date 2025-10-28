@@ -10,8 +10,33 @@ export const useSpeechRecognitionForChunks = () => {
   const mediaRecorderRef = useRef(null);
   const audioChunksRef = useRef([]);
   const streamRef = useRef(null);
-  const finalTranscriptRef = useRef(''); // ✅ CRÍTICO: Ref para persistir texto final
-  const silenceTimerRef = useRef(null); // ✅ Timer para detectar silêncio
+  const finalTranscriptRef = useRef('');
+  const silenceTimerRef = useRef(null);
+  const isListeningRef = useRef(false); // ✅ NOVO: Ref para isListening
+
+  // ✅ Sincroniza ref com state
+  useEffect(() => {
+    isListeningRef.current = isListening;
+  }, [isListening]);
+
+  // ✅ CORREÇÃO: Função sem dependências para evitar recriação
+  const resetSilenceTimer = useCallback(() => {
+    if (silenceTimerRef.current) {
+      clearTimeout(silenceTimerRef.current);
+    }
+
+    // Auto-stop após 2 segundos de silêncio
+    silenceTimerRef.current = setTimeout(() => {
+      console.log('⏱️ Silence detected, auto-stopping...');
+      if (recognitionRef.current && isListeningRef.current) {
+        try {
+          recognitionRef.current.stop();
+        } catch (e) {
+          console.log('Auto-stop error:', e);
+        }
+      }
+    }, 2000);
+  }, []); // ✅ Sem dependências
 
   useEffect(() => {
     if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
@@ -89,7 +114,6 @@ export const useSpeechRecognitionForChunks = () => {
       console.error('❌ Recognition error:', event.error);
 
       if (event.error === 'no-speech') {
-        // Não é um erro crítico no mobile
         console.log('No speech detected (normal on mobile)');
       } else if (event.error === 'aborted') {
         console.log('Recognition aborted (normal)');
@@ -109,7 +133,6 @@ export const useSpeechRecognitionForChunks = () => {
       }
     };
 
-
     return () => {
       if (recognitionRef.current) {
         try {
@@ -127,26 +150,7 @@ export const useSpeechRecognitionForChunks = () => {
         clearTimeout(silenceTimerRef.current);
       }
     };
-  }, []);
-
-  // ✅ NOVO: Função para auto-stop após silêncio (importante para mobile)
-  const resetSilenceTimer = useCallback(() => {
-    if (silenceTimerRef.current) {
-      clearTimeout(silenceTimerRef.current);
-    }
-
-    // Auto-stop após 2 segundos de silêncio
-    silenceTimerRef.current = setTimeout(() => {
-      console.log('⏱️ Silence detected, auto-stopping...');
-      if (recognitionRef.current && isListening) {
-        try {
-          recognitionRef.current.stop();
-        } catch (e) {
-          console.log('Auto-stop error:', e);
-        }
-      }
-    }, 2000);
-  }, [isListening]);
+  }, [resetSilenceTimer]); // ✅ Agora pode incluir resetSilenceTimer
 
   const startListening = useCallback(async () => {
     console.log('▶️ Start listening called');
@@ -156,22 +160,20 @@ export const useSpeechRecognitionForChunks = () => {
       setError(null);
       setAudioBlob(null);
       audioChunksRef.current = [];
-      finalTranscriptRef.current = ''; // ✅ Reset ref
+      finalTranscriptRef.current = '';
 
       try {
-        // Solicita permissão do microfone
         const stream = await navigator.mediaDevices.getUserMedia({
           audio: {
             echoCancellation: true,
             noiseSuppression: true,
-            autoGainControl: true, // ✅ Importante para mobile
+            autoGainControl: true,
             sampleRate: 44100
           }
         });
 
         streamRef.current = stream;
 
-        // Detecta o tipo MIME suportado
         let mimeType = 'audio/webm';
 
         if (MediaRecorder.isTypeSupported('audio/webm;codecs=opus')) {
@@ -203,21 +205,17 @@ export const useSpeechRecognitionForChunks = () => {
           setAudioBlob(blob);
           console.log('✅ Audio blob created:', blob.size, 'bytes');
 
-          // Para o stream do microfone
           if (streamRef.current) {
             streamRef.current.getTracks().forEach(track => track.stop());
             streamRef.current = null;
           }
         };
 
-        // ✅ Inicia gravação com chunks pequenos (melhor para mobile)
-        mediaRecorderRef.current.start(100); // 100ms chunks
+        mediaRecorderRef.current.start(100);
         console.log('🔴 Recording started');
 
-        // ✅ Delay maior para garantir que MediaRecorder está pronto
         await new Promise(resolve => setTimeout(resolve, 200));
 
-        // Inicia o reconhecimento de voz
         recognitionRef.current.start();
         setIsListening(true);
 
@@ -239,7 +237,6 @@ export const useSpeechRecognitionForChunks = () => {
   const stopListening = useCallback(() => {
     console.log('⏸️ Stop listening called');
 
-    // Limpa timer de silêncio
     if (silenceTimerRef.current) {
       clearTimeout(silenceTimerRef.current);
       silenceTimerRef.current = null;
@@ -260,7 +257,7 @@ export const useSpeechRecognitionForChunks = () => {
     setError(null);
     setAudioBlob(null);
     audioChunksRef.current = [];
-    finalTranscriptRef.current = ''; // ✅ Reset ref
+    finalTranscriptRef.current = '';
   }, []);
 
   return {
