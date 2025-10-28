@@ -45,7 +45,7 @@ export default function TrainerSelector() {
               }`}
             >
               <Mic className="w-5 h-5" />
-              Speak Chunk Trainer
+              Speak
             </button>
 
             {/* Number Trainer Button */}
@@ -58,7 +58,7 @@ export default function TrainerSelector() {
               }`}
             >
               <Hash className="w-5 h-5" />
-              Number Trainer
+              Number
             </button>
 
             {/* Challenge Mode Button */}
@@ -71,7 +71,7 @@ export default function TrainerSelector() {
               }`}
             >
               <Zap className="w-5 h-5" />
-              Challenge Mode
+              Challenge
             </button>
 
             {/* VideoLearningApp Button */}
@@ -84,7 +84,7 @@ export default function TrainerSelector() {
                           }`}
                         >
                           <Video className="w-5 h-5" />
-                          Video Listening
+                          Video
                         </button>
 
           </div>
