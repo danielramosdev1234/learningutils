@@ -17,6 +17,7 @@ const VideoLearningApp = () => {
   const [currentVideoId, setCurrentVideoId] = useState(null);
   const [showFinalResults, setShowFinalResults] = useState(false);
   const [shuffledQuestions, setShuffledQuestions] = useState([]);
+  const [showTranslations, setShowTranslations] = useState(false);
 
    const questions = gameMode === 'phrases'
       ? questionsImportadas
@@ -101,6 +102,7 @@ const VideoLearningApp = () => {
       setShowResult(false);
       setSelectedAnswer(null);
       setVideoPlayCount(0);
+      setShowTranslations(false);
     } else {
       // Mostrar resultados finais no modo scenes
       if (gameMode === 'scenes') {
@@ -147,6 +149,14 @@ const VideoLearningApp = () => {
       default: return 'bg-gray-500';
     }
   };
+
+const processOptionText = (text) => {
+  if (showTranslations) {
+    return text; // Mostra tudo, incluindo parênteses
+  }
+  // Remove texto entre parênteses
+  return text.replace(/\s*\([^)]*\)/g, '');
+};
 
   // Tela de seleção
   if (!gameMode) {
@@ -363,6 +373,17 @@ const VideoLearningApp = () => {
           </h2>
         </div>
 
+        {/* Botão de Tradução */}
+        <div className="mb-4 flex justify-center">
+          <button
+            onClick={() => setShowTranslations(!showTranslations)}
+            className="bg-blue-500 hover:bg-blue-600 px-6 py-3 rounded-xl font-semibold transition-all transform hover:scale-105 shadow-lg flex items-center gap-2"
+          >
+            <span>{showTranslations ? '🔤 Ocultar Traduções' : '🌐 Mostrar Traduções'}</span>
+          </button>
+        </div>
+
+
         {/* Opções */}
         <div className="space-y-3 mb-6">
           {currentQ.options.map((option, index) => {
@@ -393,7 +414,7 @@ const VideoLearningApp = () => {
                 className={buttonClass}
               >
                 <div className="flex items-center justify-between">
-                  <span className="text-black">{option}</span>
+                  <span className="text-black">{processOptionText(option)}</span>
                   {showResult && isSelected && (
                     isCorrect ?
                     <Check className="text-white" size={24} /> :

@@ -8,10 +8,10 @@ const questions = [
     audioText: "May the Force be with you",
     level: "beginner",
     options: [
-      "May the Force be with you",
-      "May the force stay with you",
-      "May your force be with you",
-      "May the Force be within you"
+      "May the Force be with you (Que a Força esteja com você)",
+      "May the force stay with you (Que a força fique com você)",
+      "May your force be with you (Que sua força esteja com você)",
+      "May the Force be within you (Que a Força esteja dentro de você)"
     ],
     correctIndex: 0,
     category: "Movies"
@@ -23,10 +23,10 @@ const questions = [
     audioText: "I'm gonna make him an offer he can't refuse",
     level: "intermediate",
     options: [
-      "I'm gonna make him an offer he can refuse",
-      "I'm gonna make him an offer he can't refuse",
-      "I'm gonna take him an offer he can't refuse",
-      "I'm gonna make him an offer he can't reduce"
+      "I'm gonna make him an offer he can refuse (Vou fazer-lhe uma oferta que ele pode recusar)",
+      "I'm gonna make him an offer he can't refuse (Vou fazer-lhe uma oferta que ele não pode recusar)",
+      "I'm gonna take him an offer he can't refuse (Vou levar-lhe uma oferta que ele não pode recusar)",
+      "I'm gonna make him an offer he can't reduce (Vou fazer-lhe uma oferta que ele não pode reduzir)"
     ],
     correctIndex: 1,
     category: "Movies"
@@ -38,10 +38,10 @@ const questions = [
     audioText: "You shall not pass",
     level: "beginner",
     options: [
-      "You shall not pass",
-      "You shall not past",
-      "You should not pass",
-      "You shall not passed"
+      "You shall not pass (Você não passará)",
+      "You shall not past (Você não passado)",
+      "You should not pass (Você não deveria passar)",
+      "You shall not passed (Você não passou)"
     ],
     correctIndex: 0,
     category: "Movies"
@@ -53,10 +53,10 @@ const questions = [
     audioText: "I'll be back",
     level: "beginner",
     options: [
-      "I'll be back",
-      "I'll be bag",
-      "I'll be black",
-      "I'll be bad"
+      "I'll be back (Eu voltarei)",
+      "I'll be bag (Eu serei bolsa)",
+      "I'll be black (Eu serei preto)",
+      "I'll be bad (Eu serei mau)"
     ],
     correctIndex: 0,
     category: "Movies"
@@ -68,10 +68,10 @@ const questions = [
     audioText: "Here's looking at you, kid",
     level: "advanced",
     options: [
-      "Here's looking at you, kid",
-      "Here's looking at ya, kid",
-      "Here's looking out for you, kid",
-      "Here's looking after you, kid"
+      "Here's looking at you, kid (Eis que olho para você, garota)",
+      "Here's looking at ya, kid (Eis que olho pra você, garota)",
+      "Here's looking out for you, kid (Eis que cuido de você, garota)",
+      "Here's looking after you, kid (Eis que tomo conta de você, garota)"
     ],
     correctIndex: 0,
     category: "Movies"
@@ -83,10 +83,10 @@ const questions = [
     audioText: "To infinity and beyond",
     level: "beginner",
     options: [
-      "To infinity and beyond",
-      "To infinity and the end",
-      "Through infinity and beyond",
-      "To infinity and be on"
+      "To infinity and beyond (Ao infinito e além)",
+      "To infinity and the end (Ao infinito e o fim)",
+      "Through infinity and beyond (Através do infinito e além)",
+      "To infinity and be on (Ao infinito e estar ligado)"
     ],
     correctIndex: 0,
     category: "Movies"
@@ -98,10 +98,10 @@ const questions = [
     audioText: "Life is like a box of chocolates",
     level: "intermediate",
     options: [
-      "Life is like a box of chocolates",
-      "Life is like a box of chocolate",
-      "Life is like the box of chocolates",
-      "Life is liked a box of chocolates"
+      "Life is like a box of chocolates (A vida é como uma caixa de chocolates)",
+      "Life is like a box of chocolate (A vida é como uma caixa de chocolate)",
+      "Life is like the box of chocolates (A vida é como a caixa de chocolates)",
+      "Life is liked a box of chocolates (A vida é gostada uma caixa de chocolates)"
     ],
     correctIndex: 0,
     category: "Movies"
@@ -113,10 +113,10 @@ const questions = [
     audioText: "Houston, we have a problem",
     level: "intermediate",
     options: [
-      "Houston, we have a problem",
-      "Houston, we have the problem",
-      "Houston, we had a problem",
-      "Houston, we have problem"
+      "Houston, we have a problem (Houston, temos um problema)",
+      "Houston, we have the problem (Houston, temos o problema)",
+      "Houston, we had a problem (Houston, tivemos um problema)",
+      "Houston, we have problem (Houston, temos problema)"
     ],
     correctIndex: 0,
     category: "Movies"
@@ -128,10 +128,10 @@ const questions = [
     audioText: "Just keep swimming",
     level: "beginner",
     options: [
-      "Just keep swimming",
-      "Just keep on swimming",
-      "Just keep swinging",
-      "Just keep swimmin"
+      "Just keep swimming (Apenas continue nadando)",
+      "Just keep on swimming (Apenas continue em natação)",
+      "Just keep swinging (Apenas continue balançando)",
+      "Just keep swimmin (Apenas continue nadando - informal)"
     ],
     correctIndex: 0,
     category: "Movies"
@@ -143,10 +143,10 @@ const questions = [
     audioText: "Winter is coming",
     level: "beginner",
     options: [
-      "Winter is coming",
-      "Winter is gonna come",
-      "The winter is coming",
-      "Winter is comma"
+      "Winter is coming (O inverno está chegando)",
+      "Winter is gonna come (O inverno vai vir)",
+      "The winter is coming (O inverno está chegando)",
+      "Winter is comma (Inverno é vírgula)"
     ],
     correctIndex: 0,
     category: "Series"
@@ -158,10 +158,10 @@ const questions = [
     audioText: "I am Iron Man",
     level: "beginner",
     options: [
-      "I am Iron Man",
-      "I am the Iron Man",
-      "I am an Iron Man",
-      "I am Ironing Man"
+      "I am Iron Man (Eu sou o Homem de Ferro)",
+      "I am the Iron Man (Eu sou o Homem de Ferro)",
+      "I am an Iron Man (Eu sou um Homem de Ferro)",
+      "I am Ironing Man (Eu sou o Homem Passando)"
     ],
     correctIndex: 0,
     category: "Movies"
@@ -173,10 +173,10 @@ const questions = [
     audioText: "Why so serious?",
     level: "beginner",
     options: [
-      "Why so serious?",
-      "Why so seriously?",
-      "Why are so serious?",
-      "Why so curious?"
+      "Why so serious? (Por que tão sério?)",
+      "Why so seriously? (Por que tão seriamente?)",
+      "Why are so serious? (Por que está tão sério? - gramática errada)",
+      "Why so curious? (Por que tão curioso?)"
     ],
     correctIndex: 0,
     category: "Movies"
@@ -188,10 +188,10 @@ const questions = [
     audioText: "Let it go, let it go",
     level: "beginner",
     options: [
-      "Let it go, let it go",
-      "Let it go, let it gone",
-      "Let it grow, let it grow",
-      "Let it go, let's it go"
+      "Let it go, let it go (Deixa pra lá, deixa pra lá)",
+      "Let it go, let it gone (Deixa pra lá, deixa pra ido)",
+      "Let it grow, let it grow (Deixa crescer, deixa crescer)",
+      "Let it go, let's it go (Deixa pra lá, vamos pra lá)"
     ],
     correctIndex: 0,
     category: "Movies"
@@ -203,10 +203,10 @@ const questions = [
     audioText: "I love you three thousand",
     level: "beginner",
     options: [
-      "I love you through thousand",
-      "I love you three thousand",
-      "I love you three thousands",
-      "I love you tree thousand"
+      "I love you through thousand (Eu te amo através de mil)",
+      "I love you three thousand (Eu te amo três mil)",
+      "I love you three thousands (Eu te amo três milhares)",
+      "I love you tree thousand (Eu te amo árvore mil)"
     ],
     correctIndex: 1,
     category: "Movies"
@@ -218,10 +218,10 @@ const questions = [
     audioText: "With great power comes great responsibility",
     level: "intermediate",
     options: [
-      "With great power comes great responsibility",
-      "With great power come great responsibility",
-      "With great power comes a great responsibility",
-      "With great power comes great respond ability"
+      "With great power comes great responsibility (Com grandes poderes vêm grandes responsabilidades)",
+      "With great power come great responsibility (Com grande poder vem grande responsabilidade - plural incorreto)",
+      "With great power comes a great responsibility (Com grande poder vem uma grande responsabilidade)",
+      "With great power comes great respond ability (Com grande poder vem grande capacidade de responder)"
     ],
     correctIndex: 0,
     category: "Movies"
@@ -233,10 +233,10 @@ const questions = [
     audioText: "This is Sparta",
     level: "beginner",
     options: [
-      "This is Sparta",
-      "This is a Sparta",
-      "This is the Sparta",
-      "This is Spartan"
+      "This is Sparta (Isto é Esparta)",
+      "This is a Sparta (Isto é uma Esparta)",
+      "This is the Sparta (Isto é a Esparta)",
+      "This is Spartan (Isto é espartano)"
     ],
     correctIndex: 0,
     category: "Movies"
@@ -248,10 +248,10 @@ const questions = [
     audioText: "There's no place like home",
     level: "intermediate",
     options: [
-      "There's no place like home",
-      "There's no place liked home",
-      "There's no place likes home",
-      "There's no place like Rome"
+      "There's no place like home (Não há lugar como o lar)",
+      "There's no place liked home (Não há lugar gostado lar)",
+      "There's no place likes home (Não há lugar gosta lar)",
+      "There's no place like Rome (Não há lugar como Roma)"
     ],
     correctIndex: 0,
     category: "Movies"
@@ -263,10 +263,10 @@ const questions = [
     audioText: "You talking to me?",
     level: "beginner",
     options: [
-      "You talking to me?",
-      "You talking with me?",
-      "You're talk to me?",
-      "You talked to me?"
+      "You talking to me? (Você está falando comigo?)",
+      "You talking with me? (Você está falando com eu?)",
+      "You're talk to me? (Você está fala comigo? - gramática errada)",
+      "You talked to me? (Você falou comigo?)"
     ],
     correctIndex: 0,
     category: "Movies"
@@ -278,10 +278,10 @@ const questions = [
     audioText: "Run, Forrest, run",
     level: "beginner",
     options: [
-      "Run, Forrest, run",
-      "Run, Forest, run",
-      "Ran, Forrest, run",
-      "Run, Forrest, ran"
+      "Run, Forrest, run (Corra, Forrest, corra)",
+      "Run, Forest, run (Corra, Floresta, corra)",
+      "Ran, Forrest, run (Correu, Forrest, corra)",
+      "Run, Forrest, ran (Corra, Forrest, correu)"
     ],
     correctIndex: 0,
     category: "Movies"
