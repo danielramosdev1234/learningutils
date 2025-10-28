@@ -16,12 +16,39 @@ const VideoLearningApp = () => {
   const [gameMode, setGameMode] = useState(null);
   const [currentVideoId, setCurrentVideoId] = useState(null);
   const [showFinalResults, setShowFinalResults] = useState(false);
+  const [shuffledQuestions, setShuffledQuestions] = useState([]);
 
-  const questions = gameMode === 'phrases'
-    ? questionsImportadas
-    : gameMode === 'scenes' && currentVideoId
-    ? questionsScenesDatabase.filter(q => q.videoId === currentVideoId)
-    : [];
+   const questions = gameMode === 'phrases'
+      ? questionsImportadas
+      : gameMode === 'scenes' && currentVideoId
+      ? questionsScenesDatabase.filter(q => q.videoId === currentVideoId)
+      : [];
+
+  useEffect(() => {
+    if (questions.length > 0) {
+      const shuffled = questions.map(q => {
+        const shuffledOptions = [...q.options];
+        const correctAnswer = shuffledOptions[q.correctIndex];
+
+        // Embaralhar array (Fisher-Yates)
+        for (let i = shuffledOptions.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [shuffledOptions[i], shuffledOptions[j]] = [shuffledOptions[j], shuffledOptions[i]];
+        }
+
+        return {
+          ...q,
+          options: shuffledOptions,
+          correctIndex: shuffledOptions.indexOf(correctAnswer)
+        };
+      });
+      setShuffledQuestions(shuffled);
+    }
+  }, [questions.length, gameMode, currentVideoId]);
+
+
+
+
 
   // Selecionar vídeo aleatório ao escolher modo scenes
   useEffect(() => {
@@ -46,7 +73,8 @@ const VideoLearningApp = () => {
       setVideoPlayCount(0);
   };
 
-  const currentQ = questions[currentQuestion];
+  const questionsToUse = shuffledQuestions.length > 0 ? shuffledQuestions : questions;
+  const currentQ = questionsToUse[currentQuestion];
 
 
   const handleAnswerSelect = (index) => {
@@ -68,7 +96,7 @@ const VideoLearningApp = () => {
   };
 
   const handleNext = () => {
-    if (currentQuestion < questions.length - 1) {
+    if (currentQuestion < questionsToUse.length - 1) {
       setCurrentQuestion(currentQuestion + 1);
       setShowResult(false);
       setSelectedAnswer(null);
@@ -164,7 +192,7 @@ const VideoLearningApp = () => {
 
   // Tela de resultados finais (apenas para modo scenes)
   if (showFinalResults && gameMode === 'scenes') {
-    const totalQuestions = questions.length;
+    const totalQuestions = questionsToUse.length;
     const percentage = Math.round((correctAnswers / totalQuestions) * 100);
 
     return (
@@ -280,7 +308,7 @@ const VideoLearningApp = () => {
             </div>
           </div>
           <div className="text-sm text-gray-300">
-            Questão {currentQuestion + 1} de {questions.length}
+            Questão {currentQuestion + 1} de {questionsToUse.length}
           </div>
         </div>
         <button
@@ -400,7 +428,7 @@ const VideoLearningApp = () => {
               className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 p-4 rounded-xl font-bold text-lg transition-all transform hover:scale-105 shadow-xl flex items-center justify-center gap-2"
             >
               <SkipForward size={24} />
-              {currentQuestion < questions.length - 1 ? 'Próxima Questão' : 'Ver Resultados'}
+              {currentQuestion < questionsToUse.length - 1 ? 'Próxima Questão' : 'Ver Resultados'}
             </button>
           </div>
         )}
