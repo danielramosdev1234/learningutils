@@ -5,6 +5,9 @@ import { LoadingScreen } from './LoadingScreen';
 import { ErrorScreen } from './ErrorScreen';
 import { useTextToSpeech } from '../hooks/useTextToSpeech';
 import { PhraseRepository } from '../services/phraseRepository';
+import { Analytics } from '@vercel/analytics/react';
+
+<Analytics />
 
 
 const ChunkTrainer = () => {

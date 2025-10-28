@@ -1,6 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Timer, Trophy, Zap, Volume2, Mic, MicOff, CheckCircle, XCircle, Play, Hash } from 'lucide-react';
 import { loadChallengeLeaderboard, saveChallengeRecord, checkIfMakesTop10 } from '../services/challengeLeaderboardService';
+import { Analytics } from '@vercel/analytics/react';
+
+<Analytics />
 
 // Versão integrada para o TrainerSelector
 const TrainerSelector = () => {
