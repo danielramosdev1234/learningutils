@@ -9,9 +9,9 @@ const questions = [
     level: "beginner",
     options: [
       "May the Force be with you",
-      "The power should stay near you",
-      "Let the strength accompany you",
-      "Force must remain by your side"
+      "May the force stay with you",
+      "May your force be with you",
+      "May the Force be within you"
     ],
     correctIndex: 0,
     category: "Movies"
@@ -23,10 +23,10 @@ const questions = [
     audioText: "I'm gonna make him an offer he can't refuse",
     level: "intermediate",
     options: [
-      "I will present a proposal he must accept",
+      "I'm gonna make him an offer he can refuse",
       "I'm gonna make him an offer he can't refuse",
-      "I shall give him a deal impossible to decline",
-      "He will receive an irresistible proposition"
+      "I'm gonna take him an offer he can't refuse",
+      "I'm gonna make him an offer he can't reduce"
     ],
     correctIndex: 1,
     category: "Movies"
@@ -38,12 +38,12 @@ const questions = [
     audioText: "You shall not pass",
     level: "beginner",
     options: [
-      "You cannot go through here",
       "You shall not pass",
-      "Passing is forbidden for you",
-      "You are not allowed to cross"
+      "You shall not past",
+      "You should not pass",
+      "You shall not passed"
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     category: "Movies"
   },
   {
@@ -53,12 +53,12 @@ const questions = [
     audioText: "I'll be back",
     level: "beginner",
     options: [
-      "I will return soon",
-      "I'm coming back later",
       "I'll be back",
-      "I shall return here"
+      "I'll be bag",
+      "I'll be black",
+      "I'll be bad"
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     category: "Movies"
   },
   {
@@ -68,12 +68,12 @@ const questions = [
     audioText: "Here's looking at you, kid",
     level: "advanced",
     options: [
-      "I am watching you, child",
       "Here's looking at you, kid",
-      "I'm observing you, young one",
-      "My eyes are on you, kiddo"
+      "Here's looking at ya, kid",
+      "Here's looking out for you, kid",
+      "Here's looking after you, kid"
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     category: "Movies"
   },
   {
@@ -83,12 +83,12 @@ const questions = [
     audioText: "To infinity and beyond",
     level: "beginner",
     options: [
-      "Towards endless space and further",
       "To infinity and beyond",
-      "Into the unlimited and past it",
-      "To boundless space and more"
+      "To infinity and the end",
+      "Through infinity and beyond",
+      "To infinity and be on"
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     category: "Movies"
   },
   {
@@ -98,12 +98,12 @@ const questions = [
     audioText: "Life is like a box of chocolates",
     level: "intermediate",
     options: [
-      "Existence resembles chocolate assortment",
       "Life is like a box of chocolates",
-      "Living is similar to candy collection",
-      "Life compares to a chocolate container"
+      "Life is like a box of chocolate",
+      "Life is like the box of chocolates",
+      "Life is liked a box of chocolates"
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     category: "Movies"
   },
   {
@@ -114,9 +114,9 @@ const questions = [
     level: "intermediate",
     options: [
       "Houston, we have a problem",
-      "Mission control, there is an issue",
-      "Houston, something went wrong",
-      "Ground control, we face difficulties"
+      "Houston, we have the problem",
+      "Houston, we had a problem",
+      "Houston, we have problem"
     ],
     correctIndex: 0,
     category: "Movies"
@@ -128,12 +128,12 @@ const questions = [
     audioText: "Just keep swimming",
     level: "beginner",
     options: [
-      "Continue to swim forward",
       "Just keep swimming",
-      "Don't stop moving in water",
-      "Keep going through the water"
+      "Just keep on swimming",
+      "Just keep swinging",
+      "Just keep swimmin"
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     category: "Movies"
   },
   {
@@ -143,12 +143,12 @@ const questions = [
     audioText: "Winter is coming",
     level: "beginner",
     options: [
-      "The cold season approaches",
       "Winter is coming",
-      "Cold weather will arrive soon",
-      "Winter season is near"
+      "Winter is gonna come",
+      "The winter is coming",
+      "Winter is comma"
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     category: "Series"
   },
   {
@@ -158,12 +158,12 @@ const questions = [
     audioText: "I am Iron Man",
     level: "beginner",
     options: [
-      "My identity is Iron Man",
       "I am Iron Man",
-      "Iron Man is who I am",
-      "I'm the one called Iron Man"
+      "I am the Iron Man",
+      "I am an Iron Man",
+      "I am Ironing Man"
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     category: "Movies"
   },
   {
@@ -173,12 +173,12 @@ const questions = [
     audioText: "Why so serious?",
     level: "beginner",
     options: [
-      "What makes you so grave?",
       "Why so serious?",
-      "Why are you being so solemn?",
-      "What causes your seriousness?"
+      "Why so seriously?",
+      "Why are so serious?",
+      "Why so curious?"
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     category: "Movies"
   },
   {
@@ -188,12 +188,12 @@ const questions = [
     audioText: "Let it go, let it go",
     level: "beginner",
     options: [
-      "Release it, release it",
       "Let it go, let it go",
-      "Allow it to leave, allow it to leave",
-      "Set it free, set it free"
+      "Let it go, let it gone",
+      "Let it grow, let it grow",
+      "Let it go, let's it go"
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     category: "Movies"
   },
   {
@@ -203,10 +203,10 @@ const questions = [
     audioText: "I love you three thousand",
     level: "beginner",
     options: [
-      "My love for you is three thousand",
+      "I love you through thousand",
       "I love you three thousand",
-      "I adore you three thousand times",
-      "You have three thousand of my love"
+      "I love you three thousands",
+      "I love you tree thousand"
     ],
     correctIndex: 1,
     category: "Movies"
@@ -218,12 +218,12 @@ const questions = [
     audioText: "With great power comes great responsibility",
     level: "intermediate",
     options: [
-      "Great power brings great responsibility",
       "With great power comes great responsibility",
-      "Significant power creates significant duty",
-      "Much power requires much responsibility"
+      "With great power come great responsibility",
+      "With great power comes a great responsibility",
+      "With great power comes great respond ability"
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     category: "Movies"
   },
   {
@@ -233,12 +233,12 @@ const questions = [
     audioText: "This is Sparta",
     level: "beginner",
     options: [
-      "We are in Sparta",
       "This is Sparta",
-      "This place is Sparta",
-      "Here we have Sparta"
+      "This is a Sparta",
+      "This is the Sparta",
+      "This is Spartan"
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     category: "Movies"
   },
   {
@@ -249,9 +249,9 @@ const questions = [
     level: "intermediate",
     options: [
       "There's no place like home",
-      "Home is the best place",
-      "No location compares to home",
-      "Home is unmatched by anywhere"
+      "There's no place liked home",
+      "There's no place likes home",
+      "There's no place like Rome"
     ],
     correctIndex: 0,
     category: "Movies"
@@ -263,12 +263,12 @@ const questions = [
     audioText: "You talking to me?",
     level: "beginner",
     options: [
-      "Are you speaking to me?",
       "You talking to me?",
-      "Is your conversation directed at me?",
-      "Are you addressing me?"
+      "You talking with me?",
+      "You're talk to me?",
+      "You talked to me?"
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     category: "Movies"
   },
   {
@@ -279,9 +279,9 @@ const questions = [
     level: "beginner",
     options: [
       "Run, Forrest, run",
-      "Forrest, you should run",
-      "Start running, Forrest",
-      "Forrest, run quickly"
+      "Run, Forest, run",
+      "Ran, Forrest, run",
+      "Run, Forrest, ran"
     ],
     correctIndex: 0,
     category: "Movies"
