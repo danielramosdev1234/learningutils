@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import { Hash, Mic, Zap } from 'lucide-react';
+import { Hash, Mic, Zap, Video } from 'lucide-react';
 import NumberSpeechTrainer from './NumberSpeechTrainer';
 import ChunkTrainer from './ChunkTrainer';
-import ChallengeTrainer from './ChallengeTrainer'; // ← IMPORTAR O NOVO COMPONENTE
+import ChallengeTrainer from './ChallengeTrainer';
+import VideoLearningApp from './VideoListener';
+
 
 export default function TrainerSelector() {
   // Ler o parâmetro da URL ao carregar
@@ -11,6 +13,7 @@ export default function TrainerSelector() {
     const mode = params.get('mode');
     if (mode === 'challenge') return 'challenge';
     if (mode === 'numbers') return 'numbers';
+    if (mode === 'VideoLearningApp') return 'VideoLearningApp';
     return 'chunk'; // padrão
   };
 
@@ -70,6 +73,19 @@ export default function TrainerSelector() {
               Challenge Mode
             </button>
 
+            {/* VideoLearningApp Button */}
+                        <button
+                          onClick={() => handleTrainerChange('VideoLearningApp')}
+                          className={`flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all ${
+                            activeTrainer === 'VideoLearningApp'
+                              ? 'bg-gradient-to-r from-yellow-500 to-orange-500 text-white shadow-lg scale-105'
+                              : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                          }`}
+                        >
+                          <Video className="w-5 h-5" />
+                          Video Listening
+                        </button>
+
           </div>
         </div>
       </nav>
@@ -78,7 +94,9 @@ export default function TrainerSelector() {
       <div className="transition-opacity duration-300">
         {activeTrainer === 'chunk' && <ChunkTrainer />}
         {activeTrainer === 'numbers' && <NumberSpeechTrainer />}
-        {activeTrainer === 'challenge' && <ChallengeTrainer />} {/* ← NOVO */}
+        {activeTrainer === 'challenge' && <ChallengeTrainer />}
+        {activeTrainer === 'VideoLearningApp' && <VideoLearningApp />}
+
       </div>
     </div>
   );
