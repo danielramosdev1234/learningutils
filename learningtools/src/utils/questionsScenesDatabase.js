@@ -838,7 +838,412 @@ const questions = [
       ],
       correctIndex: 1,
       category: "Movies"
-    }
+    },
+    {
+        videoId: "82xS4goDWZY",
+        startTime: 5,
+        endTime: 7,
+        audioText: "A great stirring is underway",
+        level: "intermediate",
+        options: [
+          "A great stirring are underway (Uma grande agitação estão em andamento)",
+          "An great stirring is underway (Um grande agitação está em andamento)",
+          "A great stirring is underway (Uma grande agitação está em andamento)",
+          "A great stirring is on underway (Uma grande agitação está sobre andamento)"
+        ],
+        correctIndex: 2,
+        category: "Movies"
+      },
+      {
+        videoId: "82xS4goDWZY",
+        startTime: 14,
+        endTime: 16,
+        audioText: "War is inevitable",
+        level: "beginner",
+        options: [
+          "War is inevitable (A guerra é inevitável)",
+          "War are inevitable (A guerra são inevitável)",
+          "The war is inevitable (A guerra é inevitável)",
+          "War is inevitably (A guerra é inevitavelmente)"
+        ],
+        correctIndex: 0,
+        category: "Movies"
+      },
+      {
+        videoId: "82xS4goDWZY",
+        startTime: 26,
+        endTime: 33,
+        audioText: "There are forces more powerful than the will of the gods, my son",
+        level: "advanced",
+        options: [
+          "There is forces more powerful than the will of the gods, my son (Há forças mais poderosa que a vontade dos deuses, meu filho)",
+          "There are forces more powerful than the will of the gods, my son (Há forças mais poderosas que a vontade dos deuses, meu filho)",
+          "There are force more powerful than the will of the gods, my son (Há força mais poderosa que a vontade dos deuses, meu filho)",
+          "There are forces more powerful then the will of the gods, my son (Há forças mais poderosas então a vontade dos deuses, meu filho)"
+        ],
+        correctIndex: 1,
+        category: "Movies"
+      },
+      {
+        videoId: "82xS4goDWZY",
+        startTime: 37,
+        endTime: 39,
+        audioText: "Brace yourself",
+        level: "beginner",
+        options: [
+          "Brace yourselves (Preparem-se)",
+          "Brace yourself (Prepare-se)",
+          "Braces yourself (Prepara-se)",
+          "Brace you self (Prepare você mesmo)"
+        ],
+        correctIndex: 1,
+        category: "Movies"
+      },
+      {
+        videoId: "82xS4goDWZY",
+        startTime: 42,
+        endTime: 49,
+        audioText: "Look, Peter, we all know that last year you did something cool",
+        level: "intermediate",
+        options: [
+          "Look, Peter, we all know that last year you did something cool (Olha, Peter, nós todos sabemos que no ano passado você fez algo legal)",
+          "Look, Peter, we all knows that last year you did something cool (Olha, Peter, nós todos sabe que no ano passado você fez algo legal)",
+          "Look, Peter, we all know what last year you did something cool (Olha, Peter, nós todos sabemos o que no ano passado você fez algo legal)",
+          "Look, Peter, we all known that last year you did something cool (Olha, Peter, nós todos sabido que no ano passado você fez algo legal)"
+        ],
+        correctIndex: 0,
+        category: "Movies"
+      },
+      {
+        videoId: "82xS4goDWZY",
+        startTime: 47,
+        endTime: 50,
+        audioText: "But honestly, I don't even remember what it was",
+        level: "intermediate",
+        options: [
+          "But honestly, I doesn't even remember what it was (Mas honestamente, eu não até lembro o que era)",
+          "But honestly, I don't even remember what it was (Mas honestamente, eu nem lembro o que era)",
+          "But honestly, I don't even remember what it were (Mas honestamente, eu nem lembro o que eram)",
+          "But honestly, I don't even remembered what it was (Mas honestamente, eu não até lembrado o que era)"
+        ],
+        correctIndex: 1,
+        category: "Movies"
+      },
+      {
+        videoId: "82xS4goDWZY",
+        startTime: 54,
+        endTime: 58,
+        audioText: "We're headed into the sea of monsters",
+        level: "intermediate",
+        options: [
+          "We're headed into a sea of monsters (Estamos indo para um mar de monstros)",
+          "We're headed into the sea of monsters (Estamos indo para o mar de monstros)",
+          "We're headed in the sea of monsters (Estamos indo em o mar de monstros)",
+          "We're heading into the sea of monsters (Estamos indo para o mar de monstros)"
+        ],
+        correctIndex: 1,
+        category: "Movies"
+      },
+      {
+        videoId: "82xS4goDWZY",
+        startTime: 57,
+        endTime: 65,
+        audioText: "You sure you're okay to do this?",
+        level: "beginner",
+        options: [
+          "You sure you're okay for do this? (Você tem certeza que está bem para fazer isso?)",
+          "You sure you're okay to doing this? (Você tem certeza que está bem para fazendo isso?)",
+          "You sure you're okay to do this? (Você tem certeza que está bem para fazer isso?)",
+          "You sure your okay to do this? (Você tem certeza você está bem para fazer isso?)"
+        ],
+        correctIndex: 2,
+        category: "Movies"
+      },
+      {
+        videoId: "82xS4goDWZY",
+        startTime: 64,
+        endTime: 79,
+        audioText: "Let's go do the impossible",
+        level: "intermediate",
+        options: [
+          "Let's go do the impossible (Vamos fazer o impossível)",
+          "Let's go do an impossible (Vamos fazer um impossível)",
+          "Let's go does the impossible (Vamos fazer o impossível)",
+          "Let's go doing the impossible (Vamos fazendo o impossível)"
+        ],
+        correctIndex: 0,
+        category: "Movies"
+      },
+      {
+        videoId: "82xS4goDWZY",
+        startTime: 83,
+        endTime: 85,
+        audioText: "So, this is your boyfriend, huh?",
+        level: "beginner",
+        options: [
+          "So, these is your boyfriend, huh? (Então, esses é seu namorado, né?)",
+          "So, this are your boyfriend, huh? (Então, isso são seu namorado, né?)",
+          "So, this is you boyfriend, huh? (Então, isso é você namorado, né?)",
+          "So, this is your boyfriend, huh? (Então, esse é seu namorado, né?)"
+        ],
+        correctIndex: 3,
+        category: "Movies"
+      },
+      {
+        videoId: "82xS4goDWZY",
+        startTime: 84,
+        endTime: 88,
+        audioText: "I never said boyfriend. I never said boyfriend",
+        level: "beginner",
+        options: [
+          "I never said boyfriend. I never said boyfriend (Eu nunca disse namorado. Eu nunca disse namorado)",
+          "I never say boyfriend. I never say boyfriend (Eu nunca dizer namorado. Eu nunca dizer namorado)",
+          "I never sayed boyfriend. I never sayed boyfriend (Eu nunca disse namorado. Eu nunca disse namorado)",
+          "I ever said boyfriend. I ever said boyfriend (Eu sempre disse namorado. Eu sempre disse namorado)"
+        ],
+        correctIndex: 0,
+        category: "Movies"
+      },
+      {
+        videoId: "82xS4goDWZY",
+        startTime: 87,
+        endTime: 91,
+        audioText: "I believe you",
+        level: "beginner",
+        options: [
+          "I believes you (Eu acredita em você)",
+          "I believe in you (Eu acredito em você)",
+          "I believe you (Eu acredito em você)",
+          "I believed you (Eu acreditei em você)"
+        ],
+        correctIndex: 2,
+        category: "Movies"
+      },
+      {
+          videoId: "VWqJifMMgZE",
+          startTime: 2,
+          endTime: 6,
+          audioText: "We have apprehended a dangerous experimental",
+          level: "intermediate",
+          options: [
+            "We has apprehended a dangerous experimental (Nós temos apreendido um experimental perigoso)",
+            "We have apprehended a dangerous experimental (Nós apreendemos um experimental perigoso)",
+            "We have apprehend a dangerous experimental (Nós apreender um experimental perigoso)",
+            "We have apprehended an dangerous experimental (Nós apreendemos um experimental perigoso)"
+          ],
+          correctIndex: 1,
+          category: "Movies"
+        },
+        {
+          videoId: "VWqJifMMgZE",
+          startTime: 6,
+          endTime: 10,
+          audioText: "Where is he? He escaped",
+          level: "beginner",
+          options: [
+            "Where is he? He escaped (Onde ele está? Ele escapou)",
+            "Where are he? He escaped (Onde está ele? Ele escapou)",
+            "Where is he? He escape (Onde ele está? Ele escapar)",
+            "Where is him? He escaped (Onde está ele? Ele escapou)"
+          ],
+          correctIndex: 0,
+          category: "Movies"
+        },
+        {
+          videoId: "VWqJifMMgZE",
+          startTime: 9,
+          endTime: 12,
+          audioText: "He's trying to find the police cruisers",
+          level: "intermediate",
+          options: [
+            "He's trying find the police cruisers (Ele está tentando encontrar os cruzadores policiais)",
+            "He's trying to find the police cruisers (Ele está tentando encontrar os cruzadores policiais)",
+            "He's trying to find a police cruisers (Ele está tentando encontrar os cruzadores policiais)",
+            "He's try to find the police cruisers (Ele está tentar encontrar os cruzadores policiais)"
+          ],
+          correctIndex: 1,
+          category: "Movies"
+        },
+        {
+          videoId: "VWqJifMMgZE",
+          startTime: 12,
+          endTime: 17,
+          audioText: "He took the red one",
+          level: "beginner",
+          options: [
+            "He take the red one (Ele pegar o vermelho)",
+            "He took a red one (Ele pegou um vermelho)",
+            "He took the red one (Ele pegou o vermelho)",
+            "He taked the red one (Ele pegou o vermelho)"
+          ],
+          correctIndex: 2,
+          category: "Movies"
+        },
+        {
+          videoId: "VWqJifMMgZE",
+          startTime: 16,
+          endTime: 22,
+          audioText: "What hideous planet is caught in your crosshairs?",
+          level: "advanced",
+          options: [
+            "What hideous planet is caught in your crosshairs? (Que planeta hediondo está preso na sua mira?)",
+            "What hideous planet are caught in your crosshairs? (Que planeta hediondo estão preso na sua mira?)",
+            "What hideous planet is catched in your crosshairs? (Que planeta hediondo está pegado na sua mira?)",
+            "What hideous planet is caught on your crosshairs? (Que planeta hediondo está preso sobre sua mira?)"
+          ],
+          correctIndex: 0,
+          category: "Movies"
+        },
+        {
+          videoId: "VWqJifMMgZE",
+          startTime: 24,
+          endTime: 30,
+          audioText: "I wish for a friend, like a best friend",
+          level: "beginner",
+          options: [
+            "I wish of a friend, like a best friend (Eu desejo de um amigo, como um melhor amigo)",
+            "I wish for an friend, like a best friend (Eu desejo por um amigo, como um melhor amigo)",
+            "I wish for a friend, like a best friend (Eu desejo um amigo, como um melhor amigo)",
+            "I wish for a friend, like the best friend (Eu desejo um amigo, como o melhor amigo)"
+          ],
+          correctIndex: 2,
+          category: "Movies"
+        },
+        {
+          videoId: "VWqJifMMgZE",
+          startTime: 43,
+          endTime: 47,
+          audioText: "He's so cute and fluffy",
+          level: "beginner",
+          options: [
+            "He's so cute and fluffy (Ele é tão fofo e peludo)",
+            "He's so cute and fluffies (Ele é tão fofo e peludos)",
+            "His so cute and fluffy (Dele tão fofo e peludo)",
+            "He so cute and fluffy (Ele tão fofo e peludo)"
+          ],
+          correctIndex: 0,
+          category: "Movies"
+        },
+        {
+          videoId: "VWqJifMMgZE",
+          startTime: 46,
+          endTime: 51,
+          audioText: "He is your responsibility, got it?",
+          level: "intermediate",
+          options: [
+            "He are your responsibility, got it? (Ele são sua responsabilidade, entendeu?)",
+            "He is your responsibility, got it? (Ele é sua responsabilidade, entendeu?)",
+            "He is you responsibility, got it? (Ele é você responsabilidade, entendeu?)",
+            "He is your responsibility, get it? (Ele é sua responsabilidade, pegar isso?)"
+          ],
+          correctIndex: 1,
+          category: "Movies"
+        },
+        {
+          videoId: "VWqJifMMgZE",
+          startTime: 51,
+          endTime: 57,
+          audioText: "Get down from there",
+          level: "beginner",
+          options: [
+            "Get down of there (Descer de lá)",
+            "Get down from there (Desça de lá)",
+            "Gets down from there (Desce de lá)",
+            "Get down from their (Desça de lá)"
+          ],
+          correctIndex: 1,
+          category: "Movies"
+        },
+        {
+          videoId: "VWqJifMMgZE",
+          startTime: 64,
+          endTime: 71,
+          audioText: "No dogs on the table",
+          level: "beginner",
+          options: [
+            "No dog on the table (Nenhum cachorro na mesa)",
+            "No dogs in the table (Nenhum cachorro dentro da mesa)",
+            "No dogs on the table (Nenhum cachorro na mesa)",
+            "Not dogs on the table (Não cachorros na mesa)"
+          ],
+          correctIndex: 2,
+          category: "Movies"
+        },
+        {
+          videoId: "VWqJifMMgZE",
+          startTime: 78,
+          endTime: 82,
+          audioText: "We are not keeping this thing",
+          level: "intermediate",
+          options: [
+            "We are not keep this thing (Nós não estamos manter essa coisa)",
+            "We are not keeping this thing (Nós não vamos ficar com essa coisa)",
+            "We is not keeping this thing (Nós não está ficando com essa coisa)",
+            "We are not keeping these thing (Nós não estamos ficando com essas coisa)"
+          ],
+          correctIndex: 1,
+          category: "Movies"
+        },
+        {
+          videoId: "VWqJifMMgZE",
+          startTime: 81,
+          endTime: 89,
+          audioText: "Family means nobody gets left behind or forgotten",
+          level: "intermediate",
+          options: [
+            "Family means nobody gets left behind or forgotten (Família significa que ninguém fica para trás ou esquecido)",
+            "Family mean nobody gets left behind or forgotten (Família significar que ninguém fica para trás ou esquecido)",
+            "Family means nobody get left behind or forgotten (Família significa que ninguém ficar para trás ou esquecido)",
+            "Family means nobody gets leaved behind or forgotten (Família significa que ninguém fica deixado para trás ou esquecido)"
+          ],
+          correctIndex: 0,
+          category: "Movies"
+        },
+        {
+          videoId: "VWqJifMMgZE",
+          startTime: 88,
+          endTime: 97,
+          audioText: "Sometimes family isn't perfect",
+          level: "intermediate",
+          options: [
+            "Sometimes family aren't perfect (Às vezes família não são perfeitos)",
+            "Sometimes family isn't perfect (Às vezes a família não é perfeita)",
+            "Sometimes family doesn't perfect (Às vezes família não perfeita)",
+            "Sometimes families isn't perfect (Às vezes famílias não é perfeita)"
+          ],
+          correctIndex: 1,
+          category: "Movies"
+        },
+        {
+          videoId: "VWqJifMMgZE",
+          startTime: 92,
+          endTime: 97,
+          audioText: "That doesn't mean they aren't good",
+          level: "intermediate",
+          options: [
+            "That doesn't mean they aren't good (Isso não significa que eles não são bons)",
+            "That don't mean they aren't good (Isso não significam que eles não são bons)",
+            "That doesn't mean they isn't good (Isso não significa que eles não é bons)",
+            "That doesn't mean they aren't goods (Isso não significa que eles não são bons)"
+          ],
+          correctIndex: 0,
+          category: "Movies"
+        },
+        {
+          videoId: "VWqJifMMgZE",
+          startTime: 98,
+          endTime: 106,
+          audioText: "I don't think you're supposed to drink that",
+          level: "advanced",
+          options: [
+            "I don't think you're suppose to drink that (Eu não acho que você é supor de beber isso)",
+            "I don't think you're supposed to drink that (Eu não acho que você deveria beber isso)",
+            "I don't think you're supposed to drank that (Eu não acho que você é suposto de bebeu isso)",
+            "I don't think you supposed to drink that (Eu não acho você suposto de beber isso)"
+          ],
+          correctIndex: 1,
+          category: "Movies"
+        }
   ];
 
   export default questions;
