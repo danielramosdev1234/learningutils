@@ -5,6 +5,8 @@ import ChunkTrainer from './ChunkTrainer';
 import ChallengeTrainer from './ChallengeTrainer';
 import VideoLearningApp from './VideoListener';
 import WhatsAppFloatingButton from './WhatsAppFloatingButton';
+import AuthButton from './AuthButton';
+import GuestBanner from './GuestBanner';
 
 export default function TrainerSelector() {
   // Ler o parâmetro da URL ao carregar
@@ -45,11 +47,16 @@ export default function TrainerSelector() {
 
   return (
     <div className="min-h-screen">
+
+        {/* Banner para Guests */}
+        <GuestBanner variant="minimal" />
+
       {/* Navigation Bar */}
       <nav className="bg-white shadow-md sticky top-0 z-50">
         <div className="max-w-6xl mx-auto px-4">
-          <div className="flex justify-center gap-4 py-4">
+          <div className="flex justify-between items-center py-4">
 
+            <div className="flex justify-center gap-4 flex-1">
             {/* Chunk Trainer Button */}
             <button
               onClick={() => handleTrainerChange('chunk')}
@@ -101,6 +108,11 @@ export default function TrainerSelector() {
               <Video className="w-5 h-5" />
               Video
             </button>
+
+            </div>
+
+            {/* Botão de Auth (direita) */}
+            <AuthButton />
 
           </div>
         </div>

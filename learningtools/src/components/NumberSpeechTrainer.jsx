@@ -7,8 +7,14 @@ import { numberToWordsSimple } from '../utils/numberConverter';
 import { loadLeaderboard, saveRecord as saveRecordService, checkIfNewRecord } from '../services/leaderboardService';
 import { RecordModal } from './RecordModal';
 import { Leaderboard } from './Leaderboard';
+import { useSelector, useDispatch } from 'react-redux';
+import { incrementPhraseCompleted, incrementIncorrectAttempt } from '../store/slices/userSlice';
+import ProtectedLeaderboardSave from './ProtectedLeaderboardSave';
 
 export default function NumberSpeechTrainer() {
+
+  const dispatch = useDispatch();
+  const { mode, profile } = useSelector(state => state.user);
   const [currentNumber, setCurrentNumber] = useState(0);
   const [minRange, setMinRange] = useState(1);
   const [maxRange, setMaxRange] = useState(100);
@@ -107,6 +113,7 @@ export default function NumberSpeechTrainer() {
 
     if (isCorrect) {
       setFeedback(t.correct);
+      dispatch(incrementPhraseCompleted());
       setTimeout(() => {
         generateNewNumber();
 
@@ -118,11 +125,13 @@ export default function NumberSpeechTrainer() {
       }, 1500);
     } else {
       setFeedback(`✗ ${t.notQuite} "${trimmed}". ${t.correctAnswer}: ${currentNumber} (${numberToWordsSimple(currentNumber, selectedLanguage)})`);
+      dispatch(incrementIncorrectAttempt());
     }
   };
 
   const handleSaveRecord = async () => {
-    const success = await saveRecordService(playerName, score, selectedLanguage);
+    const name = mode === 'authenticated' ? profile.displayName : playerName;
+    const success = await saveRecordService(name, score, selectedLanguage);
     if (success) {
       setShowRecordModal(false);
       setPlayerName('');
@@ -206,15 +215,29 @@ export default function NumberSpeechTrainer() {
                     <p className="text-sm text-gray-600">Registre seu nome ou continue jogando</p>
                   </div>
                 </div>
-                <button
-                  onClick={() => setShowRecordModal(true)}
-                  className="bg-yellow-500 hover:bg-yellow-600 text-white px-6 py-3 rounded-lg font-bold transition shadow-md whitespace-nowrap w-full sm:w-auto"
-                >
-                  Registrar Recorde
-                </button>
-              </div>
-            </div>
-          )}
+               {mode === 'authenticated' ? (
+                             // Autenticado: abre modal direto
+                             <button
+                               onClick={() => setShowRecordModal(true)}
+                               className="bg-yellow-500..."
+                             >
+                               Registrar Recorde
+                             </button>
+                           ) : (
+                             // Guest: precisa login
+                             <ProtectedLeaderboardSave
+                               score={Math.round((score.correct / score.total) * 100)}
+                               scoreLabel="Accuracy"
+                               onSave={() => setShowRecordModal(true)}
+                             >
+                               <button className="bg-yellow-500...">
+                                 Registrar Recorde
+                               </button>
+                             </ProtectedLeaderboardSave>
+                           )}
+                         </div>
+                       </div>
+                     )}
 
           <div className="flex flex-wrap gap-3 justify-center mb-6">
             <button

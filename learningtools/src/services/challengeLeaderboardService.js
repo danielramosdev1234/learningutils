@@ -1,5 +1,6 @@
 import { collection, addDoc, query, orderBy, limit, getDocs } from 'firebase/firestore';
 import { db } from '../config/firebase';
+import { getCurrentUser } from './authService';
 
 export const loadChallengeLeaderboard = async () => {
   try {
@@ -24,11 +25,18 @@ export const saveChallengeRecord = async (playerName, score) => {
   if (!playerName.trim() || score === 0) return false;
 
   try {
+    const currentUser = getCurrentUser();
+
     await addDoc(collection(db, 'challenge_leaderboard'), {
       name: playerName.trim().slice(0, 20),
       score: score,
-      timestamp: new Date()
+      timestamp: new Date(),
+      // Adiciona campos de usuário
+      userId: currentUser?.uid || null,
+      isGuest: !currentUser,
+      userEmail: currentUser?.email || null
     });
+
     return true;
   } catch (error) {
     console.error('Error saving challenge record:', error);

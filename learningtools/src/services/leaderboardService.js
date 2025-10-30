@@ -1,5 +1,7 @@
 import { collection, addDoc, query, where, getDocs } from 'firebase/firestore';
 import { db } from '../config/firebase';
+import { getCurrentUser } from './authService';
+
 
 export const loadLeaderboard = async (selectedLanguage) => {
   try {
@@ -37,14 +39,19 @@ export const saveRecord = async (playerName, score, selectedLanguage) => {
   if (!playerName.trim()) return false;
 
   try {
+    const currentUser = getCurrentUser(); // ← NOVO
     const percentage = Math.round((score.correct / score.total) * 100);
+
     await addDoc(collection(db, 'leaderboard'), {
       name: playerName.trim().slice(0, 30),
       score: percentage,
       correct: score.correct,
       total: score.total,
       language: selectedLanguage,
-      timestamp: new Date()
+      timestamp: new Date(),
+      userId: currentUser?.uid || null,
+      isGuest: !currentUser,
+      userEmail: currentUser?.email || null
     });
     return true;
   } catch (error) {

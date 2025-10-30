@@ -5,14 +5,21 @@ import { LoadingScreen } from './LoadingScreen';
 import { ErrorScreen } from './ErrorScreen';
 import { useTextToSpeech } from '../hooks/useTextToSpeech';
 import { PhraseRepository } from '../services/phraseRepository';
+import { useSelector, useDispatch } from 'react-redux';
+import {
+  updateChunkProgress,
+  incrementPhraseCompleted,
+  saveProgress
+} from '../store/slices/userSlice';
 
 
 const ChunkTrainer = () => {
-  const [phrases, setPhrases] = useState([]);
-  const [currentIndex, setCurrentIndex] = useState(() => {
-    const saved = localStorage.getItem('learnfun_current_phrase_index');
-    return saved ? parseInt(saved) : 0;
-  });
+    const dispatch = useDispatch();
+
+    const { progress, mode } = useSelector(state => state.user);
+    const currentIndex = progress.chunkTrainer.currentIndex;
+
+    const [phrases, setPhrases] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [jumpToInput, setJumpToInput] = useState('');
@@ -22,11 +29,6 @@ const ChunkTrainer = () => {
     loadPhrases();
   }, []);
 
-// Salva o índice atual sempre que mudar
-useEffect(() => {
-  localStorage.setItem('learnfun_current_phrase_index', currentIndex);
-  console.log('💾 Progress saved: phrase', currentIndex + 1);
-}, [currentIndex]);
 
   const loadPhrases = async () => {
     try {
@@ -46,30 +48,54 @@ useEffect(() => {
     }
   };
 
-  const handleNextPhrase = () => {
-    setCurrentIndex((prev) => (prev + 1) % phrases.length);
-  };
+   // Ao trocar de frase
+    const handleNextPhrase = () => {
+      const newIndex = (currentIndex + 1) % phrases.length;
 
-  const handleCorrectAnswer = () => {
-    console.log('✅ Correct answer! Moving to next phrase...');
-   // setTimeout(() => {
-    //  handleNextPhrase();
-    //}, 5000); // 5 segundos para ver o feedback
-  };
+      // Atualiza no Redux (que auto-salva)
+      dispatch(updateChunkProgress({
+        currentIndex: newIndex,
+        completedPhrases: progress.chunkTrainer.completedPhrases
+      }));
+    };
+
+  // Ao acertar uma frase
+    const handleCorrectAnswer = () => {
+        console.log('✅ Correct answer! Moving to next phrase...');
+
+        // Adiciona frase às completadas
+        const completedPhrases = [
+          ...progress.chunkTrainer.completedPhrases,
+          currentIndex
+        ];
+
+        dispatch(updateChunkProgress({
+          currentIndex,
+          completedPhrases
+        }));
+
+        // Incrementa contador global
+        dispatch(incrementPhraseCompleted());
+      };
 
   const handleJumpToPhrase = (e) => {
-    e.preventDefault();
-    const targetPhrase = parseInt(jumpToInput);
+      e.preventDefault();
+      const targetPhrase = parseInt(jumpToInput);
 
-    if (isNaN(targetPhrase) || targetPhrase < 1 || targetPhrase > phrases.length) {
-      alert(`Please enter a number between 1 and ${phrases.length}`);
-      return;
-    }
+      if (isNaN(targetPhrase) || targetPhrase < 1 || targetPhrase > phrases.length) {
+        alert(`Please enter a number between 1 and ${phrases.length}`);
+        return;
+      }
 
-    setCurrentIndex(targetPhrase - 1);
-    setJumpToInput('');
-    console.log(`🎯 Jumped to phrase ${targetPhrase}`);
-  };
+      // Atualiza Redux
+      dispatch(updateChunkProgress({
+        currentIndex: targetPhrase - 1,
+        completedPhrases: progress.chunkTrainer.completedPhrases
+      }));
+
+      setJumpToInput('');
+      console.log(`🎯 Jumped to phrase ${targetPhrase}`);
+    };
 
   if (loading) return <LoadingScreen />;
   if (error) return <ErrorScreen error={error} onRetry={loadPhrases} />;

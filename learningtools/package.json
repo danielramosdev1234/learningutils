@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^2.9.2",
     "@vercel/analytics": "^1.5.0",
     "firebase": "^12.4.0",
     "ipa-parser": "^1.0.3",
@@ -17,6 +18,7 @@
     "phonemize": "^1.1.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
+    "react-redux": "^9.2.0",
     "text-to-ipa": "^1.0.0"
   },
   "devDependencies": {

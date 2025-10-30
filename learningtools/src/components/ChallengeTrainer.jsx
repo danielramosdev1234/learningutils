@@ -1,6 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Timer, Trophy, Zap, Volume2, Mic, MicOff, CheckCircle, XCircle, Play, Hash } from 'lucide-react';
 import { loadChallengeLeaderboard, saveChallengeRecord, checkIfMakesTop10 } from '../services/challengeLeaderboardService';
+import { useSelector, useDispatch } from 'react-redux';
+import { updateChallengeHighScore } from '../store/slices/userSlice';
+import ProtectedLeaderboardSave from './ProtectedLeaderboardSave';
 
 // Versão integrada para o TrainerSelector
 const TrainerSelector = () => {
@@ -80,16 +83,20 @@ const DEMO_PHRASES = [
 ];
 
 const ChallengeTrainer = () => {
+
+  const dispatch = useDispatch();
+  const { mode, profile } = useSelector(state => state.user);
+
+  const [completedPhrases, setCompletedPhrases] = useState(0);
+  const [showNameInput, setShowNameInput] = useState(false);
   const [gameState, setGameState] = useState('ready'); // 'ready', 'playing', 'finished'
   const [timeLeft, setTimeLeft] = useState(60);
   const [currentPhraseIndex, setCurrentPhraseIndex] = useState(0);
-  const [completedPhrases, setCompletedPhrases] = useState(0);
   const [isListening, setIsListening] = useState(false);
   const [transcript, setTranscript] = useState('');
   const [lastResult, setLastResult] = useState(null);
   const [playerName, setPlayerName] = useState('');
   const [leaderboard, setLeaderboard] = useState([]);
-  const [showNameInput, setShowNameInput] = useState(false);
 
   const timerRef = useRef(null);
   const recognitionRef = useRef(null);
@@ -137,24 +144,22 @@ const ChallengeTrainer = () => {
       }
       setIsListening(false);
 
-      // Verificar se é um novo recorde (top 10)
-      const wouldMakeTop10 = checkIfMakesTop10(completedPhrases, leaderboard);
+      // ↓ ADICIONAR: atualiza high score no Redux
+      dispatch(updateChallengeHighScore(completedPhrases));
 
+      const wouldMakeTop10 = checkIfMakesTop10(completedPhrases, leaderboard);
       if (wouldMakeTop10) {
         setShowNameInput(true);
       }
     };
 
   const saveToLeaderboard = async () => {
-      if (!playerName.trim()) {
-        alert('Please enter your name!');
-        return;
-      }
+      // Remove validação de playerName, usa do Redux
+      const name = mode === 'authenticated' ? profile.displayName : 'Anonymous';
 
-      const success = await saveChallengeRecord(playerName, completedPhrases);
+      const success = await saveChallengeRecord(name, completedPhrases);
 
       if (success) {
-        // Recarregar leaderboard
         await loadLeaderboardData();
         setShowNameInput(false);
         setPlayerName('');
@@ -545,38 +550,50 @@ const shareScore = () => {
                       </button>
                     </div>
 
-          {showNameInput ? (
-            <div className="mb-6">
-              <div className="bg-yellow-50 border-2 border-yellow-400 rounded-lg p-6 mb-4">
-                <p className="text-yellow-800 font-bold text-lg mb-4">
-                  🎉 Congratulations! You made it to the Top 10!
-                </p>
-                <input
-                  type="text"
-                  value={playerName}
-                  onChange={(e) => setPlayerName(e.target.value)}
-                  placeholder="Enter your name"
-                  maxLength={20}
-                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg text-center font-bold text-xl focus:border-purple-500 focus:ring-2 focus:ring-purple-200 focus:outline-none mb-4"
-                />
-                <button
-                  onClick={saveToLeaderboard}
-                  className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white text-xl font-bold py-4 rounded-lg transition-all shadow-lg flex items-center justify-center gap-2"
-                >
-                  <Trophy size={24} />
-                  Save to Leaderboard
-                </button>
-              </div>
-            </div>
-          ) : (
-            <button
-              onClick={() => setGameState('ready')}
-              className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white text-xl font-bold py-4 rounded-lg transition-all shadow-lg flex items-center justify-center gap-2"
-            >
-              <Play size={24} />
-              Play Again
-            </button>
-          )}
+          {showNameInput && (
+                      <>
+                        {mode === 'authenticated' ? (
+                          // Usuário autenticado: salva direto
+                          <div className="mb-6">
+                            <div className="bg-green-50 border-2 border-green-400 rounded-lg p-6 mb-4">
+                              <p className="text-green-800 font-bold text-lg mb-4">
+                                🎉 Você fez {completedPhrases} frases!
+                              </p>
+                              <button
+                                onClick={saveToLeaderboard}
+                                className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white text-xl font-bold py-4 rounded-lg transition-all shadow-lg flex items-center justify-center gap-2"
+                              >
+                                <Trophy size={24} />
+                                Salvar no Leaderboard
+                              </button>
+                            </div>
+                          </div>
+                        ) : (
+                          // Guest: precisa fazer login
+                          <div className="mb-6">
+                            <ProtectedLeaderboardSave
+                              score={completedPhrases}
+                              scoreLabel="Frases"
+                              onSave={saveToLeaderboard}
+                            >
+                              <button className="w-full bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-500 hover:to-orange-600 text-white text-xl font-bold py-4 rounded-lg transition-all shadow-lg flex items-center justify-center gap-2">
+                                <Trophy size={24} />
+                                Salvar no Leaderboard (requer login)
+                              </button>
+                            </ProtectedLeaderboardSave>
+                          </div>
+                        )}
+                      </>
+                    )}
+
+                    {/* ↓ Botão Play Again permanece igual */}
+                    <button
+                      onClick={() => setGameState('ready')}
+                      className="w-full bg-gradient-to-r from-purple-500 to-pink-500..."
+                    >
+                      <Play size={24} />
+                      Play Again
+                    </button>
 
           <button
             onClick={() => setGameState('ready')}
@@ -584,6 +601,24 @@ const shareScore = () => {
           >
             Back to Menu
           </button>
+
+          {showNameInput && mode === 'authenticated' && (
+                  <button onClick={saveToLeaderboard}>
+                    💾 Save to Leaderboard
+                  </button>
+                )}
+
+                {showNameInput && mode === 'guest' && (
+                  <ProtectedLeaderboardSave
+                    score={completedPhrases}
+                    scoreLabel="Phrases"
+                    onSave={saveToLeaderboard}
+                  >
+                    <button className="bg-yellow-500...">
+                      🏆 Save to Leaderboard
+                    </button>
+                  </ProtectedLeaderboardSave>
+                )}
         </div>
       </div>
     </div>
