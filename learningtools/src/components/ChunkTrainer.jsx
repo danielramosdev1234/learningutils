@@ -16,7 +16,7 @@ import {
 const ChunkTrainer = () => {
     const dispatch = useDispatch();
 
-    const { progress, mode } = useSelector(state => state.user);
+    const { progress, mode, loading: userLoading } = useSelector(state => state.user);
     const currentIndex = progress.chunkTrainer.currentIndex;
 
     const [phrases, setPhrases] = useState([]);
@@ -47,6 +47,10 @@ const ChunkTrainer = () => {
       setLoading(false);
     }
   };
+
+useEffect(() => {
+  console.log('📍 Current Index:', currentIndex);
+}, [currentIndex]);
 
    // Ao trocar de frase
     const handleNextPhrase = () => {
@@ -97,6 +101,8 @@ const ChunkTrainer = () => {
       console.log(`🎯 Jumped to phrase ${targetPhrase}`);
     };
 
+
+  if (userLoading) return <LoadingScreen />;
   if (loading) return <LoadingScreen />;
   if (error) return <ErrorScreen error={error} onRetry={loadPhrases} />;
 

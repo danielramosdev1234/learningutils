@@ -9,13 +9,17 @@ import { observeAuthState } from './services/authService';
 function App() {
   const dispatch = useDispatch();
   const [authChecked, setAuthChecked] = useState(false);
+  const [userInitialized, setUserInitialized] = useState(false);
 
   useEffect(() => {
     // Aguarda o Firebase verificar o estado de autenticação
     const unsubscribe = observeAuthState((authState) => {
       // Só inicializa após o Firebase verificar a autenticação
       if (!authChecked) {
-        dispatch(initializeUser());
+        // Inicializa e aguarda conclusão
+        dispatch(initializeUser()).then(() => {
+          setUserInitialized(true);
+        });
         setAuthChecked(true);
       }
     });
@@ -24,8 +28,8 @@ function App() {
     return () => unsubscribe();
   }, [dispatch, authChecked]);
 
-  // Mostra loading enquanto verifica autenticação
-  if (!authChecked) {
+  // Mostra loading enquanto verifica autenticação E inicializa usuário
+  if (!authChecked || !userInitialized) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-50 to-pink-50">
         <div className="text-center">

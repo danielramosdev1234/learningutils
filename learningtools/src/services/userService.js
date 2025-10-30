@@ -137,7 +137,33 @@ export const migrateGuestToAuth = async (authUserId, authProfile) => {
     const guestData = loadGuestData();
     const guestId = localStorage.getItem('learnfun_guest_id');
 
-    // 2. Verifica se tem dados pra migrar
+    console.log('👤 Guest Data:', guestData);
+    console.log('📊 Total Phrases:', guestData.stats.totalPhrases);
+    console.log('📍 Current Index:', guestData.progress.chunkTrainer.currentIndex);
+    console.log('✅ Completed:', guestData.progress.chunkTrainer.completedCount);
+
+    // 2. Carrega dados existentes do Firestore
+    const existingData = await loadAuthUserData(authUserId);
+
+    // 3. Se JÁ tem dados no Firestore, NÃO migra nada do guest
+    if (existingData && existingData.stats && existingData.stats.totalPhrases > 0) {
+      console.log('ℹ️ Usuário já tem dados no Firestore. Mantendo dados existentes.');
+      console.log(`   📊 Firestore: ${existingData.stats.totalPhrases} frases`);
+      console.log(`   👤 Guest: ${guestData.stats.totalPhrases} frases (ignorado)`);
+
+      // Limpa dados guest do localStorage
+      localStorage.removeItem('learnfun_guest_progress');
+      localStorage.removeItem('learnfun_guest_stats');
+      localStorage.removeItem('learnfun_guest_id');
+
+      return {
+        migrated: false,
+        reason: 'user_has_data',
+        phrasesCount: existingData.stats.totalPhrases
+      };
+    }
+
+    // 4. Se guest tem dados significativos, migra
     const hasMeaningfulData =
       guestData.stats.totalPhrases > 0 ||
       guestData.progress.chunkTrainer.completedCount > 0;
@@ -150,7 +176,7 @@ export const migrateGuestToAuth = async (authUserId, authProfile) => {
       return { migrated: false, phrasesCount: 0 };
     }
 
-    // 3. Salva no Firestore com dados do guest
+    // 5. Salva no Firestore com dados do guest
     await setDoc(doc(db, 'users', authUserId), {
       profile: authProfile,
       progress: guestData.progress,
@@ -160,7 +186,7 @@ export const migrateGuestToAuth = async (authUserId, authProfile) => {
       createdAt: serverTimestamp()
     });
 
-    // 4. Limpa dados guest do localStorage
+    // 6. Limpa dados guest do localStorage
     localStorage.removeItem('learnfun_guest_progress');
     localStorage.removeItem('learnfun_guest_stats');
     localStorage.removeItem('learnfun_guest_id');

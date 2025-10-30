@@ -161,8 +161,15 @@ export const loginWithGoogle = createAsyncThunk(
  */
 export const logout = createAsyncThunk(
   'user/logout',
-  async (_, { rejectWithValue }) => {
+  async (_, { getState, rejectWithValue }) => {  // ← adicione getState
     try {
+      // ⬇️ ADICIONE: Salva dados atuais como guest ANTES de deslogar
+      const currentState = getState().user;
+      if (currentState.mode === 'authenticated') {
+        // Salva progresso atual no localStorage como guest
+        saveGuestData(currentState.progress, currentState.stats);
+      }
+
       await authSignOut();
 
       // Cria novo guest
