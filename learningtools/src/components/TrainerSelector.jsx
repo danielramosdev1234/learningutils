@@ -7,6 +7,7 @@ import VideoLearningApp from './VideoListener';
 import WhatsAppFloatingButton from './WhatsAppFloatingButton';
 import AuthButton from './AuthButton';
 import GuestBanner from './GuestBanner';
+import { LevelIndicator } from './LevelIndicator';
 
 export default function TrainerSelector() {
   // Ler o parâmetro da URL ao carregar
@@ -110,6 +111,9 @@ export default function TrainerSelector() {
             </button>
 
             </div>
+
+            {/* Level Badge */}
+              <LevelIndicator variant="compact" />
 
             {/* Botão de Auth (direita) */}
             <AuthButton />

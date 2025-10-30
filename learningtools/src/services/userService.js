@@ -13,6 +13,7 @@ const generateGuestId = () => {
  */
 export const getOrCreateGuestId = () => {
   let guestId = localStorage.getItem('learnfun_guest_id');
+  const levelSystemStr = localStorage.getItem('learnfun_guest_levelsystem');
 
   if (!guestId) {
     guestId = generateGuestId();
@@ -30,6 +31,7 @@ export const loadGuestData = () => {
   try {
     const progressStr = localStorage.getItem('learnfun_guest_progress');
     const statsStr = localStorage.getItem('learnfun_guest_stats');
+    const levelSystemStr = localStorage.getItem('learnfun_guest_levelsystem');
 
     return {
       progress: progressStr ? JSON.parse(progressStr) : {
@@ -46,7 +48,11 @@ export const loadGuestData = () => {
         accuracy: 0,
         streak: 0,
         challengeHighScore: 0
-      }
+      },
+      levelSystem: levelSystemStr ? JSON.parse(levelSystemStr) : {
+          currentLevel: 1,
+          globalCompletedPhrases: []
+        }
     };
   } catch (error) {
     console.error('❌ Erro ao carregar dados guest:', error);
@@ -65,6 +71,10 @@ export const loadGuestData = () => {
         accuracy: 0,
         streak: 0,
         challengeHighScore: 0
+      },
+      levelSystem: {
+        currentLevel: 1,
+        globalCompletedPhrases: []
       }
     };
   }
@@ -73,10 +83,11 @@ export const loadGuestData = () => {
 /**
  * Salva dados do guest no localStorage
  */
-export const saveGuestData = (progress, stats) => {
+export const saveGuestData = (progress, stats, levelSystem) => {
   try {
     localStorage.setItem('learnfun_guest_progress', JSON.stringify(progress));
     localStorage.setItem('learnfun_guest_stats', JSON.stringify(stats));
+    localStorage.setItem('learnfun_guest_levelsystem', JSON.stringify(levelSystem));
   } catch (error) {
     console.error('❌ Erro ao salvar dados guest:', error);
   }
@@ -107,7 +118,7 @@ export const loadAuthUserData = async (userId) => {
 /**
  * Salva dados do usuário autenticado no Firestore
  */
-export const saveAuthUserData = async (userId, profile, progress, stats) => {
+export const saveAuthUserData = async (userId, profile, progress, stats, levelSystem) => {
   try {
     const userDocRef = doc(db, 'users', userId);
 
@@ -115,6 +126,7 @@ export const saveAuthUserData = async (userId, profile, progress, stats) => {
       profile,
       progress,
       stats,
+      levelSystem,
       lastUpdated: serverTimestamp()
     }, { merge: true });
 
@@ -136,11 +148,13 @@ export const migrateGuestToAuth = async (authUserId, authProfile) => {
     // 1. Carrega dados do guest
     const guestData = loadGuestData();
     const guestId = localStorage.getItem('learnfun_guest_id');
+    const levelSystemStr = localStorage.getItem('learnfun_guest_levelsystem');
 
     console.log('👤 Guest Data:', guestData);
     console.log('📊 Total Phrases:', guestData.stats.totalPhrases);
     console.log('📍 Current Index:', guestData.progress.chunkTrainer.currentIndex);
     console.log('✅ Completed:', guestData.progress.chunkTrainer.completedCount);
+    console.log('✅ progress:', guestData.progress);
 
     // 2. Carrega dados existentes do Firestore
     const existingData = await loadAuthUserData(authUserId);
@@ -181,6 +195,7 @@ export const migrateGuestToAuth = async (authUserId, authProfile) => {
       profile: authProfile,
       progress: guestData.progress,
       stats: guestData.stats,
+      levelSystem: guestData.levelSystem,
       migratedFrom: guestId,
       migratedAt: serverTimestamp(),
       createdAt: serverTimestamp()
@@ -189,6 +204,7 @@ export const migrateGuestToAuth = async (authUserId, authProfile) => {
     // 6. Limpa dados guest do localStorage
     localStorage.removeItem('learnfun_guest_progress');
     localStorage.removeItem('learnfun_guest_stats');
+    localStorage.removeItem('learnfun_guest_levelsystem');
     localStorage.removeItem('learnfun_guest_id');
 
     console.log('✅ Migração concluída!');
@@ -213,6 +229,7 @@ export const clearAllUserData = () => {
   localStorage.removeItem('learnfun_guest_id');
   localStorage.removeItem('learnfun_guest_progress');
   localStorage.removeItem('learnfun_guest_stats');
+  localStorage.removeItem('learnfun_guest_levelsystem');
   localStorage.removeItem('learnfun_current_phrase_index');
   console.log('🗑️ Todos os dados locais limpos');
 };

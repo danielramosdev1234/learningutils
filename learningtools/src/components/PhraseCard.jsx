@@ -9,6 +9,8 @@ import { IPATranscription } from './pronunciation/IPATranscription';
 import { PhonemeFeedback } from './pronunciation/PhonemeFeedback';
 import { ShareButton } from './ShareButton';
 import { FireworksCelebration } from './FireworksCelebration';
+import { markPhraseCompleted } from '../store/slices/userSlice';
+import { useDispatch } from 'react-redux';
 
 const isAndroidDevice = () => {
   const ua = navigator.userAgent.toLowerCase();
@@ -22,6 +24,8 @@ export const PhraseCard = ({ phrase, onSpeak, onCorrectAnswer, isActive }) => {
 
  // ✅ Hook para Desktop/iOS (com gravação de áudio)
  const chunksHook = useSpeechRecognitionForChunks();
+
+ const dispatch = useDispatch();
 
  // ✅ Hook para Android (sem gravação)
  const [androidTranscript, setAndroidTranscript] = useState('');
@@ -88,7 +92,21 @@ export const PhraseCard = ({ phrase, onSpeak, onCorrectAnswer, isActive }) => {
       setShowFeedback(true);
       setHasProcessed(true);
 
-      // ✨ ADICIONE ESTAS LINHAS:
+      if (comparison.similarity >= 80) {
+            console.log(`✅ ${comparison.similarity}% - Marking phrase as completed!`);
+
+            // Marca frase como completada no Redux
+            dispatch(markPhraseCompleted({
+              phraseId: phrase.id,
+              phraseIndex: phrase.index
+            }));
+
+            if (onCorrectAnswer) {
+              console.log(`🎉 Auto advancing!`);
+              onCorrectAnswer();
+            }
+          }
+
       if (comparison.similarity === 100) {
         setShowFireworks(true);
         setTimeout(() => setShowFireworks(false), 5000);

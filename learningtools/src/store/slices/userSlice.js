@@ -26,6 +26,14 @@ const initialState = {
     photoURL: null
   },
 
+  levelSystem: {
+    currentLevel: 1,
+    globalCompletedPhrases: [],  // IDs das frases
+    globalCompletedIndices: [],  // ✅ NOVO: Índices das frases (para exibição)
+    showLevelUpModal: false,
+    pendingLevelUp: null
+  },
+
   // Progresso
   progress: {
     chunkTrainer: {
@@ -79,7 +87,8 @@ export const initializeUser = createAsyncThunk(
             userId: currentUser.uid,
             profile: userData.profile,
             progress: userData.progress,
-            stats: userData.stats
+            stats: userData.stats,
+            levelSystem: userData.levelSystem || initialState.levelSystem
           };
         } else {
           // Primeira vez - retorna dados vazios
@@ -92,7 +101,8 @@ export const initializeUser = createAsyncThunk(
               photoURL: currentUser.photoURL
             },
             progress: initialState.progress,
-            stats: initialState.stats
+            stats: initialState.stats,
+            levelSystem: initialState.levelSystem
           };
         }
       } else {
@@ -105,7 +115,8 @@ export const initializeUser = createAsyncThunk(
           userId: guestId,
           profile: initialState.profile,
           progress: guestData.progress,
-          stats: guestData.stats
+          stats: guestData.stats,
+          levelSystem: guestData.levelSystem
         };
       }
     } catch (error) {
@@ -148,6 +159,7 @@ export const loginWithGoogle = createAsyncThunk(
         },
         progress: userData?.progress || initialState.progress,
         stats: userData?.stats || initialState.stats,
+        levelSystem: userData?.levelSystem || initialState.levelSystem,
         migrationResult
       };
     } catch (error) {
@@ -161,13 +173,17 @@ export const loginWithGoogle = createAsyncThunk(
  */
 export const logout = createAsyncThunk(
   'user/logout',
-  async (_, { getState, rejectWithValue }) => {  // ← adicione getState
+  async (_, { getState, rejectWithValue }) => {
     try {
-      // ⬇️ ADICIONE: Salva dados atuais como guest ANTES de deslogar
+      // Salva dados atuais como guest ANTES de deslogar
       const currentState = getState().user;
       if (currentState.mode === 'authenticated') {
         // Salva progresso atual no localStorage como guest
-        saveGuestData(currentState.progress, currentState.stats);
+        saveGuestData(
+          currentState.progress,
+          currentState.stats,
+          currentState.levelSystem
+        );
       }
 
       await authSignOut();
@@ -198,11 +214,12 @@ export const saveProgress = createAsyncThunk(
         state.userId,
         state.profile,
         state.progress,
-        state.stats
+        state.stats,
+        state.levelSystem
       );
     } else {
       // Salva no localStorage
-      saveGuestData(state.progress, state.stats);
+      saveGuestData(state.progress, state.stats, state.levelSystem);
     }
 
     return true;
@@ -214,6 +231,55 @@ const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
+
+    markPhraseCompleted: (state, action) => {
+      const { phraseId, phraseIndex } = action.payload;
+      const { currentLevel } = state.levelSystem;
+
+      // Inicializa arrays se não existirem
+      if (!state.levelSystem.globalCompletedPhrases) {
+        state.levelSystem.globalCompletedPhrases = [];
+      }
+      if (!state.levelSystem.globalCompletedIndices) {
+        state.levelSystem.globalCompletedIndices = [];
+      }
+
+      // ✅ Adiciona frase ao array global de completadas (se não estiver)
+      if (!state.levelSystem.globalCompletedPhrases.includes(phraseId)) {
+        state.levelSystem.globalCompletedPhrases.push(phraseId);
+
+        // Só adiciona o índice se não estiver presente
+        if (!state.levelSystem.globalCompletedIndices.includes(phraseIndex)) {
+          state.levelSystem.globalCompletedIndices.push(phraseIndex);
+        }
+
+        console.log(`✅ Phrase ${phraseIndex + 1} completed! Total: ${state.levelSystem.globalCompletedPhrases.length}`);
+      }
+
+      // Calcula quantas frases são necessárias para o nível atual
+      const phrasesNeededForCurrentLevel = currentLevel * 10; // Nível 1=10, Nível 2=20, Nível 3=30...
+      const totalCompleted = state.levelSystem.globalCompletedPhrases.length;
+
+      // Verifica se completou o nível atual
+      if (totalCompleted >= phrasesNeededForCurrentLevel) {
+        console.log(`🎉 Level ${currentLevel} completed! (${totalCompleted}/${phrasesNeededForCurrentLevel})`);
+
+        // Desbloqueia próximo nível
+        const nextLevel = currentLevel + 1;
+        state.levelSystem.currentLevel = nextLevel;
+
+        state.levelSystem.showLevelUpModal = true;
+        state.levelSystem.pendingLevelUp = nextLevel;
+
+        console.log(`🔓 Level ${nextLevel} unlocked! Need ${nextLevel * 10} total phrases.`);
+      }
+    },
+
+    closeLevelUpModal: (state) => {
+      state.levelSystem.showLevelUpModal = false;
+      state.levelSystem.pendingLevelUp = null;
+    },
+
     // Atualiza progresso do ChunkTrainer
     updateChunkProgress: (state, action) => {
       const { currentIndex, completedPhrases } = action.payload;
@@ -256,6 +322,13 @@ const userSlice = createSlice({
     // Reset do incentivo (para mostrar novamente depois)
     resetIncentive: (state) => {
       state.incentives.phrasesUntilPrompt = 5;
+    },
+
+    // 🔄 NOVO: Atualiza globalCompletedIndices (para migração de dados antigos)
+    updateLevelSystemIndices: (state, action) => {
+      const { indices } = action.payload;
+      state.levelSystem.globalCompletedIndices = indices;
+      console.log('✅ Level system indices updated:', indices);
     }
   },
   extraReducers: (builder) => {
@@ -271,6 +344,7 @@ const userSlice = createSlice({
         state.profile = action.payload.profile;
         state.progress = action.payload.progress;
         state.stats = action.payload.stats;
+        state.levelSystem = action.payload.levelSystem;
       })
       .addCase(initializeUser.rejected, (state, action) => {
         state.loading = false;
@@ -290,6 +364,7 @@ const userSlice = createSlice({
         state.profile = action.payload.profile;
         state.progress = action.payload.progress;
         state.stats = action.payload.stats;
+        state.levelSystem = action.payload.levelSystem;
       })
       .addCase(loginWithGoogle.rejected, (state, action) => {
         state.loading = false;
@@ -327,7 +402,10 @@ export const {
   incrementIncorrectAttempt,
   updateChallengeHighScore,
   markIncentiveAsSeen,
-  resetIncentive
+  resetIncentive,
+  markPhraseCompleted,
+  closeLevelUpModal,
+  updateLevelSystemIndices  // ✅ NOVO
 } = userSlice.actions;
 
 export default userSlice.reducer;

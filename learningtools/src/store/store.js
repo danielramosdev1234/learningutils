@@ -10,7 +10,8 @@ const autoSaveMiddleware = store => next => action => {
     'user/updateChunkProgress',
     'user/incrementPhraseCompleted',
     'user/incrementIncorrectAttempt',
-    'user/updateChallengeHighScore'
+    'user/updateChallengeHighScore',
+    'user/markPhraseCompleted'
   ];
 
   // Se a action está na lista, salva automaticamente (debounced)
