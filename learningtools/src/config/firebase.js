@@ -3,13 +3,12 @@ import { getFirestore } from 'firebase/firestore';
 import { getAuth, GoogleAuthProvider } from 'firebase/auth';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAt2pGCDu7UgdRBGvOFb98jwdUNE_vydiI",
-  authDomain: "learnfun-2e26f.firebaseapp.com",
-  projectId: "learnfun-2e26f",
-  storageBucket: "learnfun-2e26f.firebasestorage.app",
-  messagingSenderId: "620241304009",
-  appId: "1:620241304009:web:0ba10caafa660e99a89018",
-  measurementId: "G-KB84MN7XFX"
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
 };
 
 const app = initializeApp(firebaseConfig);
@@ -20,5 +19,5 @@ export const googleProvider = new GoogleAuthProvider();
 
 // Configurar provider do Google
 googleProvider.setCustomParameters({
-  prompt: 'select_account' // Sempre mostra seletor de conta
+  prompt: 'select_account'
 });
