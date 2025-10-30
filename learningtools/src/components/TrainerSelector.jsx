@@ -31,7 +31,7 @@ export default function TrainerSelector() {
 
   const handleTrainerChange = (trainer) => {
     setActiveTrainer(trainer);
-    setShowMoreMenu(false); // Fecha o menu More ao selecionar
+    setShowMoreMenu(false);
     const url = new URL(window.location);
     url.searchParams.set('mode', trainer);
     window.history.pushState({}, '', url);
@@ -66,6 +66,19 @@ export default function TrainerSelector() {
         <div className="max-w-6xl mx-auto px-4">
           <div className="flex justify-between items-center py-4">
             <div className="flex justify-center gap-4 flex-1">
+                 <div className="flex items-center gap-3">
+                            {/* Logo LearnFun com Zap icon */}
+                            <div className="flex items-center gap-2">
+                                <div className="bg-gradient-to-br from-purple-500 to-pink-500 p-1 rounded-md">
+                                                <Zap className="w-4 h-4 text-white fill-white" />
+                                              </div>
+                              <h1 className="text-xl font-bold tracking-tight">
+                                <span className="text-gray-800">Learn</span>
+                                <span className="text-purple-600">Fun</span>
+                              </h1>
+
+                            </div>
+                            </div>
               {/* Chunk Trainer Button */}
               <button
                 onClick={() => handleTrainerChange('chunk')}
@@ -120,19 +133,31 @@ export default function TrainerSelector() {
             </div>
 
             {/* Level Badge */}
-            <LevelIndicator variant="compact" />
+            <div className="flex items-center gap-3">
+                <LevelIndicator variant="compact" />
 
             {/* Botão de Auth (direita) */}
-            <AuthButton />
+                <AuthButton />
+            </div>
           </div>
         </div>
       </nav>
 
-      {/* MOBILE Top Bar - Simple header */}
+      {/* MOBILE Top Bar - Simple header with Logo */}
       <nav className="bg-white shadow-sm sticky top-0 z-50 md:hidden">
         <div className="flex justify-between items-center px-4 py-3">
           <div className="flex items-center gap-3">
-            <h1 className="text-lg font-bold text-gray-800">English Practice</h1>
+            {/* Logo LearnFun com Zap icon */}
+            <div className="flex items-center gap-2">
+                <div className="bg-gradient-to-br from-purple-500 to-pink-500 p-1 rounded-md">
+                                <Zap className="w-4 h-4 text-white fill-white" />
+                              </div>
+              <h1 className="text-xl font-bold tracking-tight">
+                <span className="text-gray-800">Learn</span>
+                <span className="text-purple-600">Fun</span>
+              </h1>
+
+            </div>
             <LevelIndicator variant="compact" />
           </div>
           <AuthButton />
