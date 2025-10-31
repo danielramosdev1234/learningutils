@@ -201,7 +201,7 @@ export default function NumberSpeechTrainer() {
 
           <div className="text-center mb-6 md:mb-8">
             <div className="inline-block bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-xl md:rounded-2xl px-8 py-6 md:px-16 md:py-12 shadow-lg">
-              <p className="text-4xl md:text-7xl font-bold">{currentNumber}</p>
+              <p className="text-4xl md:text-7xl font-bold">{currentNumber.toLocaleString('pt-BR')}</p>
             </div>
           </div>
 
