@@ -134,7 +134,7 @@ export default function StreakModal({ isOpen, onClose }) {
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="sticky top-0 bg-gradient-to-r from-orange-500 to-red-500 text-white p-6 rounded-t-2xl">
+        <div className="bg-gradient-to-r from-orange-500 to-red-500 text-white p-6 rounded-t-2xl">
           <div className="flex justify-between items-start mb-4">
             <div className="flex items-center gap-3">
               <div className=" bg-opacity-20 p-3 rounded-xl">
