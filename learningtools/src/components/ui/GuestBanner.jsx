@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { AlertCircle, CheckCircle, Sparkles } from 'lucide-react';
-import { loginWithGoogle } from '../store/slices/userSlice';
+import { loginWithGoogle } from '../../store/slices/userSlice';
 
 const GuestBanner = ({ variant = 'minimal' }) => {
   const dispatch = useDispatch();

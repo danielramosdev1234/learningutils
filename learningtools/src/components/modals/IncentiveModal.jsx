@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { X, Trophy, TrendingUp, Shield, Zap } from 'lucide-react';
-import { loginWithGoogle, markIncentiveAsSeen } from '../store/slices/userSlice';
+import { loginWithGoogle, markIncentiveAsSeen } from '../../store/slices/userSlice';
 
 const IncentiveModal = () => {
   const dispatch = useDispatch();

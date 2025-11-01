@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Hash, Mic, Zap, Video, MoreHorizontal, X, MessageCircle } from 'lucide-react';
-import NumberSpeechTrainer from './NumberSpeechTrainer';
-import ChunkTrainer from './ChunkTrainer';
-import ChallengeTrainer from './ChallengeTrainer';
-import VideoLearningApp from './VideoListener';
-import WhatsAppFloatingButton from './WhatsAppFloatingButton';
-import AuthButton from './AuthButton';
-import GuestBanner from './GuestBanner';
-import { LevelIndicator } from './LevelIndicator';
+import NumberSpeechTrainer from './training/NumberSpeechTrainer';
+import ChunkTrainer from './training/ChunkTrainer';
+import ChallengeTrainer from './training/ChallengeTrainer';
+import VideoLearningApp from './training/VideoListener';
+import WhatsAppFloatingButton from './ui/WhatsAppFloatingButton';
+import AuthButton from './auth/AuthButton';
+import GuestBanner from './ui/GuestBanner';
+import { LevelIndicator } from './leaderboard/LevelIndicator';
 
 export default function TrainerSelector() {
   const getInitialTrainer = () => {

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Play, SkipForward, Trophy, Zap, Volume2, Check, X } from 'lucide-react';
-import questionsImportadas from '../utils/questionsDatabase.js';
-import questionsScenesDatabase from '../utils/questionsScenesDatabase.js';
+import questionsImportadas from '../../utils/questionsDatabase.js';
+import questionsScenesDatabase from '../../utils/questionsScenesDatabase.js';
 
 const VideoLearningApp = () => {
   const [currentQuestion, setCurrentQuestion] = useState(0);

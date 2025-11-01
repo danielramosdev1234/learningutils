@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { initializeUser } from './store/slices/userSlice';
 import TrainerSelector from './components/TrainerSelector';
-import IncentiveModal from './components/IncentiveModal';
+import IncentiveModal from './components/modals/IncentiveModal';
 import { Analytics } from '@vercel/analytics/react';
 import { observeAuthState } from './services/authService';
 

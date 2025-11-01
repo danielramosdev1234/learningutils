@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Trophy, Lock, Sparkles } from 'lucide-react';
-import { loginWithGoogle } from '../store/slices/userSlice';
+import { loginWithGoogle } from '../../store/slices/userSlice';
 
 /**
  * Componente que envolve o botão de salvar no leaderboard

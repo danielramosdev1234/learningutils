@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Volume2, RotateCw, Loader, Trophy } from 'lucide-react';
-import { useVoices } from '../hooks/useVoices';
-import { useSpeechRecognition } from '../hooks/useSpeechRecognition';
-import { getTranslation } from '../utils/translations';
-import { numberToWordsSimple } from '../utils/numberConverter';
-import { loadLeaderboard, saveRecord as saveRecordService, checkIfNewRecord } from '../services/leaderboardService';
-import { RecordModal } from './RecordModal';
-import { Leaderboard } from './Leaderboard';
+import { useVoices } from '../../hooks/useVoices';
+import { useSpeechRecognition } from '../../hooks/useSpeechRecognition';
+import { getTranslation } from '../../utils/translations';
+import { numberToWordsSimple } from '../../utils/numberConverter';
+import { loadLeaderboard, saveRecord as saveRecordService, checkIfNewRecord } from '../../services/leaderboardService';
+import { RecordModal } from '../modals/RecordModal';
+import { Leaderboard } from '../leaderboard/Leaderboard';
 import { useSelector, useDispatch } from 'react-redux';
-import { incrementPhraseCompleted, incrementIncorrectAttempt } from '../store/slices/userSlice';
-import ProtectedLeaderboardSave from './ProtectedLeaderboardSave';
+import { incrementPhraseCompleted, incrementIncorrectAttempt } from '../../store/slices/userSlice';
+import ProtectedLeaderboardSave from '../leaderboard/ProtectedLeaderboardSave';
 
 export default function NumberSpeechTrainer() {
 

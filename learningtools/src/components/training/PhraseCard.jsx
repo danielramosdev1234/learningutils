@@ -2,14 +2,14 @@
 
 import React, { useState, useEffect, useRef, useMemo  } from 'react';
 import { Volume2, Mic, MicOff, CheckCircle, XCircle, Loader, AlertCircle, Play, Pause } from 'lucide-react';
-import { useSpeechRecognitionForChunks } from '../hooks/useSpeechRecognitionForChunks';
-import { compareTexts } from '../utils/textComparison';
-import { useSpeechRecognition } from '../hooks/useSpeechRecognition';
-import { IPATranscription } from './pronunciation/IPATranscription';
-import { PhonemeFeedback } from './pronunciation/PhonemeFeedback';
-import { ShareButton } from './ShareButton';
-import { FireworksCelebration } from './FireworksCelebration';
-import { markPhraseCompleted } from '../store/slices/userSlice';
+import { useSpeechRecognitionForChunks } from '../../hooks/useSpeechRecognitionForChunks';
+import { compareTexts } from '../../utils/textComparison';
+import { useSpeechRecognition } from '../../hooks/useSpeechRecognition';
+import { IPATranscription } from '../pronunciation/IPATranscription';
+import { PhonemeFeedback } from '../pronunciation/PhonemeFeedback';
+import { ShareButton } from '../ui/ShareButton';
+import { FireworksCelebration } from '../celebrations/FireworksCelebration';
+import { markPhraseCompleted } from '../../store/slices/userSlice';
 import { useDispatch } from 'react-redux';
 
 const isAndroidDevice = () => {

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { LogIn, LogOut, User } from 'lucide-react';
-import { loginWithGoogle, logout } from '../store/slices/userSlice';
+import { loginWithGoogle, logout } from '../../store/slices/userSlice';
 
 const AuthButton = () => {
   const dispatch = useDispatch();

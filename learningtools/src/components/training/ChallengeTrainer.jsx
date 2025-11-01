@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Timer, Trophy, Zap, Volume2, Mic, MicOff, CheckCircle, XCircle, Play, Hash } from 'lucide-react';
-import { loadChallengeLeaderboard, saveChallengeRecord, checkIfMakesTop10 } from '../services/challengeLeaderboardService';
+import { loadChallengeLeaderboard, saveChallengeRecord, checkIfMakesTop10 } from '../../services/challengeLeaderboardService';
 import { useSelector, useDispatch } from 'react-redux';
-import { updateChallengeHighScore } from '../store/slices/userSlice';
-import ProtectedLeaderboardSave from './ProtectedLeaderboardSave';
+import { updateChallengeHighScore } from '../../store/slices/userSlice';
+import ProtectedLeaderboardSave from '../leaderboard/ProtectedLeaderboardSave';
 
 // Versão integrada para o TrainerSelector
 const TrainerSelector = () => {

@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Trophy, Star, Sparkles, X, ArrowRight, Volume2, VolumeX } from 'lucide-react';
-import applausosSound from '../assets/aplausos.wav';
-import musicaVitoriaSound from '../assets/musicadavitoria.mp3';
+import applausosSound from '../../assets/aplausos.wav';
+import musicaVitoriaSound from '../../assets/musicadavitoria.mp3';
 
 /**
  * Modal de celebração quando passa de nível

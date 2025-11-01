@@ -1,20 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { RefreshCw, ArrowRight } from 'lucide-react';
 import { PhraseCard } from './PhraseCard';
-import { LoadingScreen } from './LoadingScreen';
-import { ErrorScreen } from './ErrorScreen';
-import { LevelIndicator } from './LevelIndicator';
-import { useTextToSpeech } from '../hooks/useTextToSpeech';
-import { PhraseRepository } from '../services/phraseRepository';
+import { LoadingScreen } from '../screens/LoadingScreen';
+import { ErrorScreen } from '../screens/ErrorScreen';
+import { LevelIndicator } from '../leaderboard/LevelIndicator';
+import { useTextToSpeech } from '../../hooks/useTextToSpeech';
+import { PhraseRepository } from '../../services/phraseRepository';
 import { useSelector, useDispatch } from 'react-redux';
-import { LevelUpModal } from './LevelUpModal';
+import { LevelUpModal } from '../modals/LevelUpModal';
 import {
   updateChunkProgress,
   incrementPhraseCompleted,
   saveProgress,
   closeLevelUpModal,
   updateLevelSystemIndices
-} from '../store/slices/userSlice';
+} from '../../store/slices/userSlice';
 
 
 const ChunkTrainer = () => {

@@ -1,7 +1,7 @@
 // src/components/ShareButton.jsx
 import React, { useState } from 'react';
 import { Share2, Download, Check, Copy } from 'lucide-react';
-import { generateShareCard } from '../utils/shareCardGenerator';
+import { generateShareCard } from '../../utils/shareCardGenerator';
 
 export const ShareButton = ({
   phraseText,

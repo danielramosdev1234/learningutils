@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Volume2, RotateCw, Loader, Trophy, Palette } from 'lucide-react';
-import { useVoices } from '../hooks/useVoices';
-import { useSpeechRecognition } from '../hooks/useSpeechRecognition';
-import { getColorTranslation } from '../utils/colorTranslations';
-import { getRandomColor, getColorName, normalizeColorAnswer } from '../utils/colorData';
-import { loadLeaderboard, saveRecord as saveRecordService, checkIfNewRecord } from '../services/leaderboardService';
-import { RecordModal } from './RecordModal';
-import { Leaderboard } from './Leaderboard';
+import { useVoices } from '../../hooks/useVoices';
+import { useSpeechRecognition } from '../../hooks/useSpeechRecognition';
+import { getColorTranslation } from '../../utils/colorTranslations';
+import { getRandomColor, getColorName, normalizeColorAnswer } from '../../utils/colorData';
+import { loadLeaderboard, saveRecord as saveRecordService, checkIfNewRecord } from '../../services/leaderboardService';
+import { RecordModal } from '../modals/RecordModal';
+import { Leaderboard } from '../leaderboard/Leaderboard';
 
 export default function ColorSpeechTrainer() {
   const [currentColor, setCurrentColor] = useState(null);
