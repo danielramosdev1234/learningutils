@@ -8,6 +8,7 @@ import WhatsAppFloatingButton from './ui/WhatsAppFloatingButton';
 import AuthButton from './auth/AuthButton';
 import GuestBanner from './ui/GuestBanner';
 import { LevelIndicator } from './leaderboard/LevelIndicator';
+import StreakIndicator from './ui/StreakIndicator';
 
 export default function TrainerSelector() {
   const getInitialTrainer = () => {
@@ -134,6 +135,7 @@ export default function TrainerSelector() {
 
             {/* Level Badge */}
             <div className="flex items-center gap-3">
+                <StreakIndicator variant="compact" />
                 <LevelIndicator variant="compact" />
 
             {/* Botão de Auth (direita) */}
@@ -158,6 +160,7 @@ export default function TrainerSelector() {
               </h1>
 
             </div>
+            <StreakIndicator variant="compact" />
             <LevelIndicator variant="compact" />
           </div>
           <AuthButton />

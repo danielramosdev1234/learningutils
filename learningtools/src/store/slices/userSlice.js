@@ -49,9 +49,22 @@ const initialState = {
     totalAttempts: 0,
     correctCount: 0,
     accuracy: 0,
-    streak: 0,
+    streak: {
+        current: 0,
+        longest: 0,
+        lastActivityDate: null,
+        history: [],
+        freezes: 0,
+        freezesUsed: [],
+        nextRewardAt: 7,
+        rewardsEarned: [],
+        showRewardModal: false,
+        pendingReward: null
+      },
     challengeHighScore: 0
   },
+
+
 
   // Incentivos
   incentives: {
@@ -295,6 +308,25 @@ const userSlice = createSlice({
       state.stats.correctCount += 1;
       state.stats.accuracy = Math.round((state.stats.correctCount / state.stats.totalAttempts) * 100);
 
+      // ✅ NOVO: Atualiza streak quando completa frase
+      const today = new Date().toISOString().split('T')[0];
+      const lastDate = state.stats.streak?.lastActivityDate;
+
+      // Inicializa streak se não existir (migração de dados antigos)
+      if (!state.stats.streak || typeof state.stats.streak === 'number') {
+        state.stats.streak = {
+          current: 0,
+          longest: 0,
+          lastActivityDate: null,
+          history: []
+        };
+      }
+
+      if (lastDate !== today) {
+        // Só atualiza se ainda não praticou hoje
+        userSlice.caseReducers.updateStreak(state);
+      }
+
       // Controle de incentivo
       state.incentives.phrasesUntilPrompt -= 1;
     },
@@ -323,6 +355,122 @@ const userSlice = createSlice({
     resetIncentive: (state) => {
       state.incentives.phrasesUntilPrompt = 5;
     },
+
+    closeRewardModal: (state) => {
+      state.stats.streak.showRewardModal = false;
+      state.stats.streak.pendingReward = null;
+    },
+
+
+    useFreeze: (state, action) => {
+      const { missedDate } = action.payload;
+
+      if (state.stats.streak.freezes <= 0) {
+        console.log('❌ Sem freezes disponíveis');
+        return;
+      }
+
+      // Usa 1 freeze
+      state.stats.streak.freezes -= 1;
+      state.stats.streak.freezesUsed.push(missedDate);
+
+      // Adiciona o dia perdido ao histórico (como se tivesse praticado)
+      if (!state.stats.streak.history.includes(missedDate)) {
+        state.stats.streak.history.push(missedDate);
+      }
+
+      // Mantém o streak
+      const today = new Date().toISOString().split('T')[0];
+      state.stats.streak.lastActivityDate = today;
+
+      console.log(`❄️ Freeze usado! Restam: ${state.stats.streak.freezes}`);
+    },
+
+    updateStreak: (state) => {
+      const today = new Date().toISOString().split('T')[0];
+      const lastDate = state.stats.streak.lastActivityDate;
+
+      // Inicializa arrays se não existirem
+      if (!state.stats.streak.history) state.stats.streak.history = [];
+      if (!state.stats.streak.freezes) state.stats.streak.freezes = 0;
+      if (!state.stats.streak.freezesUsed) state.stats.streak.freezesUsed = [];
+      if (!state.stats.streak.nextRewardAt) state.stats.streak.nextRewardAt = 7;
+      if (!state.stats.streak.rewardsEarned) state.stats.streak.rewardsEarned = [];
+
+      // Primeira vez
+      if (!lastDate) {
+        state.stats.streak.current = 1;
+        state.stats.streak.longest = 1;
+        state.stats.streak.lastActivityDate = today;
+        state.stats.streak.history = [today];
+        state.stats.streak.nextRewardAt = 7;
+        console.log('🔥 Streak iniciado: Dia 1');
+        return;
+      }
+
+      // Já praticou hoje
+      if (lastDate === today) return;
+
+      // Calcula diferença de dias
+      const lastDateObj = new Date(lastDate + 'T00:00:00');
+      const todayObj = new Date(today + 'T00:00:00');
+      const diffDays = Math.floor((todayObj - lastDateObj) / (1000 * 60 * 60 * 24));
+
+      if (diffDays === 1) {
+        // ✅ CONSECUTIVO!
+        state.stats.streak.current += 1;
+        state.stats.streak.lastActivityDate = today;
+
+        if (!state.stats.streak.history.includes(today)) {
+          state.stats.streak.history.push(today);
+        }
+
+        // Atualiza longest
+        if (state.stats.streak.current > state.stats.streak.longest) {
+          state.stats.streak.longest = state.stats.streak.current;
+        }
+
+        // 🎁 VERIFICA RECOMPENSA (múltiplos de 7)
+        if (state.stats.streak.current % 7 === 0 && state.stats.streak.current >= 7) {
+          const milestone = state.stats.streak.current;
+          const alreadyRewarded = state.stats.streak.rewardsEarned.some(r => r.day === milestone);
+
+          if (!alreadyRewarded) {
+            state.stats.streak.freezes += 1;
+            state.stats.streak.nextRewardAt = milestone + 7;
+            state.stats.streak.rewardsEarned.push({
+              day: milestone,
+              date: today,
+              claimed: true
+            });
+            state.stats.streak.showRewardModal = true;
+            state.stats.streak.pendingReward = milestone;
+            console.log(`🎁 RECOMPENSA! ${milestone} dias - Ganhou 1 freeze! Total: ${state.stats.streak.freezes}`);
+          }
+        }
+
+        console.log(`🔥 Streak: ${state.stats.streak.current} dias!`);
+
+      } else if (diffDays === 2 && state.stats.streak.freezes > 0) {
+        // ❄️ PODE USAR FREEZE (perdeu 1 dia, mas tem freeze)
+        // Não faz nada aqui - será tratado no modal
+        console.log(`⚠️ Perdeu 1 dia! Você tem ${state.stats.streak.freezes} freeze(s) disponível(is)`);
+
+      } else {
+        // ❌ QUEBROU O STREAK (sem freezes ou perdeu 2+ dias)
+        console.log(`💔 Streak quebrado: ${state.stats.streak.current} dias`);
+        state.stats.streak.current = 1;
+        state.stats.streak.lastActivityDate = today;
+
+        if (!state.stats.streak.history.includes(today)) {
+          state.stats.streak.history.push(today);
+        }
+
+        // Reseta o próximo milestone
+        state.stats.streak.nextRewardAt = 7;
+      }
+    },
+
 
     // 🔄 NOVO: Atualiza globalCompletedIndices (para migração de dados antigos)
     updateLevelSystemIndices: (state, action) => {
@@ -405,7 +553,10 @@ export const {
   resetIncentive,
   markPhraseCompleted,
   closeLevelUpModal,
-  updateLevelSystemIndices  // ✅ NOVO
+  updateLevelSystemIndices ,
+  updateStreak,
+  useFreeze,
+  closeRewardModal
 } = userSlice.actions;
 
 export default userSlice.reducer;
