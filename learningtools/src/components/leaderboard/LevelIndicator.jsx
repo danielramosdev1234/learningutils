@@ -44,9 +44,6 @@ export const LevelIndicator = ({ variant = 'full' }) => {
         <span className="font-bold text-white text-sm">
           Lvl {currentLevel}
         </span>
-        <span className="text-white text-xs">
-          {totalCompleted}/{totalNeededForLevel}
-        </span>
         {isLevelComplete && (
           <CheckCircle size={14} className="text-white animate-pulse" />
         )}
