@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Hash, Mic, Zap, Video, MoreHorizontal, X, MessageCircle } from 'lucide-react';
+import { Hash, Mic, Zap, Video, MoreHorizontal, X, MessageCircle, Globe  } from 'lucide-react';
 import NumberSpeechTrainer from './training/NumberSpeechTrainer';
 import ChunkTrainer from './training/ChunkTrainer';
 import ChallengeTrainer from './training/ChallengeTrainer';
@@ -9,11 +9,13 @@ import AuthButton from './auth/AuthButton';
 import GuestBanner from './ui/GuestBanner';
 import { LevelIndicator } from './leaderboard/LevelIndicator';
 import StreakIndicator from './ui/StreakIndicator';
+import TranslateTrainer from './training/TranslateTrainer';
 
 export default function TrainerSelector() {
   const getInitialTrainer = () => {
     const params = new URLSearchParams(window.location.search);
     const mode = params.get('mode');
+    if (mode === 'translate') return 'translate';
     if (mode === 'challenge') return 'challenge';
     if (mode === 'numbers') return 'numbers';
     if (mode === 'VideoLearningApp') return 'VideoLearningApp';
@@ -93,6 +95,19 @@ export default function TrainerSelector() {
                 Speak
               </button>
 
+              {/* Translate Trainer Button - NOVO */}
+              <button
+                onClick={() => handleTrainerChange('translate')}
+                className={`flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all ${
+                  activeTrainer === 'translate'
+                    ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg scale-105'
+                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                }`}
+              >
+                <Globe className="w-5 h-5" />
+                Translate
+              </button>
+
               {/* Number Trainer Button */}
               <button
                 onClick={() => handleTrainerChange('numbers')}
@@ -170,6 +185,7 @@ export default function TrainerSelector() {
       {/* Active Trainer Component */}
       <div className="transition-opacity duration-300">
         {activeTrainer === 'chunk' && <ChunkTrainer />}
+        {activeTrainer === 'translate' && <TranslateTrainer />}
         {activeTrainer === 'numbers' && <NumberSpeechTrainer />}
         {activeTrainer === 'challenge' && <ChallengeTrainer />}
         {activeTrainer === 'VideoLearningApp' && <VideoLearningApp />}
@@ -254,7 +270,7 @@ export default function TrainerSelector() {
 
       {/* BOTTOM Navigation Bar - Mobile Only */}
       <nav className="fixed bottom-0 left-0 right-0 bg-white border-t-2 shadow-lg z-40 md:hidden">
-        <div className="grid grid-cols-4 gap-1 px-2">
+        <div className="grid grid-cols-5 gap-1 px-2">
           {/* Speak Button */}
           <button
             onClick={() => handleTrainerChange('chunk')}
@@ -268,6 +284,20 @@ export default function TrainerSelector() {
               <div className="w-8 h-1 bg-purple-600 rounded-full mt-1" />
             )}
           </button>
+
+           {/* Translate Button - NOVO */}
+            <button
+              onClick={() => handleTrainerChange('translate')}
+              className={`flex flex-col items-center gap-1 py-3 transition-all ${
+                activeTrainer === 'translate' ? 'text-purple-600' : 'text-gray-400'
+              }`}
+            >
+              <Globe className={`w-6 h-6 ${activeTrainer === 'translate' ? 'scale-110' : ''}`} />
+              <span className="text-xs font-semibold">Translate</span>
+              {activeTrainer === 'translate' && (
+                <div className="w-8 h-1 bg-purple-600 rounded-full mt-1" />
+              )}
+            </button>
 
           {/* Number Button */}
           <button
