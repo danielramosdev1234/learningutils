@@ -39,7 +39,7 @@ useEffect(() => {
     const { globalCompletedPhrases = [], globalCompletedIndices = [] } = levelSystem;
 
     // Se tem IDs mas não tem índices, faz migração
-    if (globalCompletedPhrases.length > 0 && globalCompletedIndices.length < globalCompletedPhrases.length) {
+    if (globalCompletedPhrases.length > 0 && globalCompletedIndices.length === 0) {
       console.log('🔄 Migrando dados antigos...');
       console.log(`  - IDs: ${globalCompletedPhrases.length}`);
       console.log(`  - Índices: ${globalCompletedIndices.length}`);
@@ -64,8 +64,7 @@ useEffect(() => {
       }
     }
   }
-}, [phrases, levelSystem?.globalCompletedPhrases, levelSystem?.globalCompletedIndices, dispatch]);
-
+}, [phrases, levelSystem?.globalCompletedPhrases.length, dispatch]);
 
   const loadPhrases = async () => {
     try {
@@ -113,38 +112,7 @@ useEffect(() => {
   }
 }, [phrases, levelSystem, currentIndex, dispatch, progress.chunkTrainer.completedPhrases]);
 
-useEffect(() => {
-  // 🔄 MIGRAÇÃO: Reconstrói globalCompletedIndices baseado nos IDs
-  if (phrases.length > 0 && levelSystem) {
-    const { globalCompletedPhrases = [], globalCompletedIndices = [] } = levelSystem;
 
-    // Se tem frases completadas mas o array de índices está vazio, faz migração
-    if (globalCompletedPhrases.length > 0 && globalCompletedIndices.length === 0) {
-      console.log('🔄 Migrating old data: Reconstructing indices from phrase IDs...');
-
-      const newIndices = [];
-
-      // Para cada frase completada, encontra seu índice na lista completa
-      globalCompletedPhrases.forEach(completedId => {
-        const foundIndex = phrases.findIndex(p => p.id === completedId);
-        if (foundIndex !== -1 && !newIndices.includes(foundIndex)) {
-          newIndices.push(foundIndex);
-        }
-      });
-
-      // Atualiza o Redux com os índices reconstruídos
-      if (newIndices.length > 0) {
-        console.log(`✅ Migrated ${newIndices.length} indices:`, newIndices.map(i => i + 1));
-
-        // Atualiza o levelSystem com os índices migrados
-        dispatch({
-          type: 'user/updateLevelSystemIndices',
-          payload: { indices: newIndices }
-        });
-      }
-    }
-  }
-}, [phrases, levelSystem, dispatch]);
 
 useEffect(() => {
   console.log('📍 Current Index:', currentIndex);
