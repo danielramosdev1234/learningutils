@@ -279,19 +279,7 @@ if (!currentPhrase) {
                 </button>
               </div>
 
-              {/* Progress Bar */}
-              <div className="mt-6">
-                <div className="bg-gray-200 rounded-full h-3 overflow-hidden shadow-inner">
-                  <div
-                    className="bg-gradient-to-r from-blue-500 to-indigo-500 h-full transition-all duration-500 ease-out"
-                    style={{ width: `${((currentIndex + 1) / filteredPhrases.length) * 100}%` }}
-                  />
-                </div>
-                <p className="text-center text-gray-600 text-sm font-semibold mt-2">
-                  {Math.round(((currentIndex + 1) / filteredPhrases.length) * 100)}% completed
-                  ({currentIndex + 1} / {filteredPhrases.length})
-                </p>
-              </div>
+
             </div>
           </>
         )}
