@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Languages, Sparkles, Trash2, History, Volume2 } from 'lucide-react';
+import { Languages, Sparkles, Trash2, History, Volume2, Mic, MicOff } from 'lucide-react';
 import { useTranslation } from '../../hooks/useTranslation';
 import { PhraseCard } from './PhraseCard';
 import { useTextToSpeech } from '../../hooks/useTextToSpeech';
+import { useSpeechRecognition } from '../../hooks/useSpeechRecognition'; // ✅ IMPORT
 import { useSelector, useDispatch } from 'react-redux';
 import {
   incrementPhraseCompleted,
@@ -29,18 +30,41 @@ const TranslateTrainer = () => {
 
   const { speak } = useTextToSpeech();
 
+  // ✅ NOVO: Hook de reconhecimento de voz para português
+  const {
+    isListening,
+    transcript,
+    setTranscript,
+    toggleListening
+  } = useSpeechRecognition('pt-BR', (finalText, error) => {
+    if (error) {
+      console.error('Speech recognition error:', error);
+      // Você pode mostrar o erro na UI se quiser
+    } else if (finalText) {
+      setPortugueseText(finalText);
+      console.log('✅ Texto capturado em português:', finalText);
+    }
+  });
+
   // Carrega histórico do localStorage
   useEffect(() => {
     const stored = localStorage.getItem('learnfun_translation_history');
     if (stored) {
       try {
         const history = JSON.parse(stored);
-        setTranslationHistory(history.slice(0, 10)); // Mantém últimas 10
+        setTranslationHistory(history.slice(0, 10));
       } catch (e) {
         console.error('Error loading history:', e);
       }
     }
   }, []);
+
+  // ✅ NOVO: Atualiza textarea quando transcript muda
+  useEffect(() => {
+    if (transcript && transcript !== '🎤 Listening...') {
+      setPortugueseText(transcript);
+    }
+  }, [transcript]);
 
   // Salva histórico no localStorage
   const saveToHistory = (original, translated) => {
@@ -66,11 +90,10 @@ const TranslateTrainer = () => {
     const result = await translateToEnglish(portugueseText);
 
     if (result && result.success) {
-      // Cria objeto de frase compatível com PhraseCard
       const newPhrase = {
         id: `translate-${Date.now()}`,
         text: result.translated,
-        translation: result.original, // Mostra o português como "tradução"
+        translation: result.original,
         category: 'user-translation',
         difficulty: 'custom',
         index: 0
@@ -86,22 +109,18 @@ const TranslateTrainer = () => {
   const handleCorrectAnswer = () => {
     console.log('✅ User completed the translated phrase!');
 
-    // Incrementa estatísticas gerais
     dispatch(incrementPhraseCompleted());
 
-    // Marca como completada no sistema de níveis
     if (currentPhrase) {
       dispatch(markPhraseCompleted({
         phraseId: currentPhrase.id,
-        phraseIndex: 0 // Custom phrases não têm índice fixo
+        phraseIndex: 0
       }));
     }
 
-    // Salva progresso
     setTimeout(() => {
       dispatch(saveProgress());
     }, 500);
-
   };
 
   const loadFromHistory = (entry) => {
@@ -138,7 +157,7 @@ const TranslateTrainer = () => {
             </h1>
           </div>
           <p className="text-gray-600 text-lg">
-            Digite uma frase em português, traduza para inglês e pratique a pronúncia!
+            Digite ou fale uma frase em português, traduza para inglês e pratique a pronúncia!
           </p>
         </div>
 
@@ -147,7 +166,7 @@ const TranslateTrainer = () => {
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-xl font-bold text-gray-800 flex items-center gap-2">
               <span className="text-2xl">🇧🇷</span>
-              Digite em Português
+              Digite ou Fale em Português
             </h3>
             {translationHistory.length > 0 && (
               <button
@@ -157,6 +176,38 @@ const TranslateTrainer = () => {
                 <History size={20} />
                 <span className="text-sm font-semibold">Histórico</span>
               </button>
+            )}
+          </div>
+
+          {/* ✅ NOVO: Botão de Speech-to-Text */}
+          <div className="mb-3 flex items-center gap-2">
+            <button
+              onClick={toggleListening}
+              disabled={isTranslating}
+              className={`flex items-center gap-2 px-4 py-3 rounded-lg font-semibold transition-all shadow-md ${
+                isListening
+                  ? 'bg-red-500 hover:bg-red-600 text-white animate-pulse'
+                  : 'bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white'
+              }`}
+            >
+              {isListening ? (
+                <>
+                  <MicOff size={20} />
+                  <span>Parar de Gravar</span>
+                </>
+              ) : (
+                <>
+                  <Mic size={20} />
+                  <span>🎤 Falar em Português</span>
+                </>
+              )}
+            </button>
+
+            {isListening && (
+              <div className="flex items-center gap-2 text-red-600 animate-pulse">
+                <div className="w-3 h-3 bg-red-500 rounded-full"></div>
+                <span className="text-sm font-semibold">Gravando...</span>
+              </div>
             )}
           </div>
 
@@ -173,7 +224,7 @@ const TranslateTrainer = () => {
             placeholder="Ex: Olá, como você está hoje?"
             className="w-full p-4 border-2 border-gray-300 rounded-lg text-lg focus:border-purple-500 focus:ring-2 focus:ring-purple-200 focus:outline-none transition-all resize-none"
             rows={3}
-            disabled={isTranslating}
+            disabled={isTranslating || isListening}
           />
 
           {/* Error Message */}
@@ -199,21 +250,16 @@ const TranslateTrainer = () => {
                 </ul>
               </div>
 
-              <button
-                onClick={() => window.open('https://script.google.com/macros/s/AKfycbysOB84CsL8runDYDTzekLBwkF76XBtW1sTk0sFRopeAg-O4vHMB72H204ZlZYlECYg/exec?text=hello&target=pt', '_blank')}
-                className="mt-3 w-full text-xs text-blue-600 hover:text-blue-700 underline"
-              >
-                🔗 Testar API manualmente (abre em nova aba)
-              </button>
+
             </div>
           )}
 
           {/* Translate Button */}
           <button
             onClick={handleTranslate}
-            disabled={!portugueseText.trim() || isTranslating}
+            disabled={!portugueseText.trim() || isTranslating || isListening}
             className={`w-full mt-4 flex items-center justify-center gap-2 px-6 py-4 rounded-lg font-bold text-lg transition-all shadow-md ${
-              !portugueseText.trim() || isTranslating
+              !portugueseText.trim() || isTranslating || isListening
                 ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
                 : 'bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white transform hover:scale-105'
             }`}
@@ -232,11 +278,18 @@ const TranslateTrainer = () => {
             )}
           </button>
 
-          {/* Quick Tip */}
-          <div className="mt-4 p-3 bg-purple-50 border border-purple-200 rounded-lg">
-            <p className="text-sm text-purple-700">
-              💡 <strong>Dica:</strong> Pressione <kbd className="px-2 py-1 bg-white rounded border">Enter</kbd> para traduzir rapidamente!
-            </p>
+          {/* Quick Tips */}
+          <div className="mt-4 space-y-2">
+            <div className="p-3 bg-purple-50 border border-purple-200 rounded-lg">
+              <p className="text-sm text-purple-700">
+                💡 <strong>Dica:</strong> Pressione <kbd className="px-2 py-1 bg-white rounded border">Enter</kbd> para traduzir rapidamente!
+              </p>
+            </div>
+            <div className="p-3 bg-blue-50 border border-blue-200 rounded-lg">
+              <p className="text-sm text-blue-700">
+                🎤 <strong>Novo:</strong> Clique no botão do microfone para falar em português e o texto será escrito automaticamente!
+              </p>
+            </div>
           </div>
         </div>
 
@@ -320,7 +373,7 @@ const TranslateTrainer = () => {
               <div className="flex items-start gap-3">
                 <span className="text-2xl flex-shrink-0">1️⃣</span>
                 <p className="text-gray-700">
-                  Digite uma frase em <strong>português</strong> que você quer aprender
+                  <strong>Digite ou fale</strong> uma frase em português que você quer aprender
                 </p>
               </div>
               <div className="flex items-start gap-3">
