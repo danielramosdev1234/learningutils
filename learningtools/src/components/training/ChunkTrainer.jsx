@@ -13,7 +13,8 @@ import {
   incrementPhraseCompleted,
   saveProgress,
   closeLevelUpModal,
-  updateLevelSystemIndices
+  updateLevelSystemIndices,
+  markPhraseCompleted
 } from '../../store/slices/userSlice';
 
 
@@ -29,16 +30,17 @@ const ChunkTrainer = () => {
   const [jumpToInput, setJumpToInput] = useState('');
   const [filteredPhrases, setFilteredPhrases] = useState([]);
   const { speak } = useTextToSpeech();
+  const [hasMigrated, setHasMigrated] = useState(false);
 
   useEffect(() => {
     loadPhrases();
   }, []);
 
 useEffect(() => {
-  if (phrases.length > 0 && levelSystem) {
+  if (phrases.length > 0 && levelSystem && !hasMigrated) {
     const { globalCompletedPhrases = [], globalCompletedIndices = [] } = levelSystem;
 
-    // Se tem IDs mas não tem índices, faz migração
+    // Verifica se precisa migrar
     if (globalCompletedPhrases.length > 0 && globalCompletedIndices.length === 0) {
       console.log('🔄 Migrando dados antigos...');
       console.log(`  - IDs: ${globalCompletedPhrases.length}`);
@@ -61,10 +63,12 @@ useEffect(() => {
         setTimeout(() => {
           dispatch(saveProgress());
         }, 1000);
+
+        setHasMigrated(true); // ✅ Marca como migrado
       }
     }
   }
-}, [phrases, levelSystem?.globalCompletedPhrases.length, dispatch]);
+}, [phrases, levelSystem, hasMigrated, dispatch]);
 
   const loadPhrases = async () => {
     try {
@@ -130,22 +134,37 @@ useEffect(() => {
 
   // Ao acertar uma frase
     const handleCorrectAnswer = () => {
-        console.log('✅ Correct answer! Moving to next phrase...');
+      console.log('✅ Correct answer! Moving to next phrase...');
 
-        // Adiciona frase às completadas
-        const completedPhrases = [
-          ...progress.chunkTrainer.completedPhrases,
-          currentIndex
-        ];
+      const currentPhrase = filteredPhrases[currentIndex];
 
-        dispatch(updateChunkProgress({
-          currentIndex,
-          completedPhrases
-        }));
+      // 1️⃣ Marca a frase no levelSystem (CRÍTICO!)
+      dispatch(markPhraseCompleted({
+        phraseId: currentPhrase.id,
+        phraseIndex: currentIndex
+      }));
 
-        // Incrementa contador global
-        dispatch(incrementPhraseCompleted());
-      };
+      // 2️⃣ Atualiza progresso local do ChunkTrainer
+      const completedPhrases = [
+        ...progress.chunkTrainer.completedPhrases,
+        currentIndex
+      ];
+
+      dispatch(updateChunkProgress({
+        currentIndex,
+        completedPhrases
+      }));
+
+      // 3️⃣ Incrementa estatísticas gerais
+      dispatch(incrementPhraseCompleted());
+
+      // 4️⃣ Salva progresso (auto-sync)
+      setTimeout(() => {
+        dispatch(saveProgress());
+      }, 500);
+
+      console.log(`📊 Frase ${currentIndex + 1} (ID: ${currentPhrase.id}) marcada como completa`);
+    };
 
   const handleJumpToPhrase = (e) => {
       e.preventDefault();

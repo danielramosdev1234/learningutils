@@ -11,14 +11,13 @@ export const LevelIndicator = ({ variant = 'full' }) => {
 
   if (!levelSystem) return null;
 
-  const { currentLevel, globalCompletedPhrases = [], globalCompletedIndices = [] } = levelSystem;
+  const { currentLevel, globalCompletedIndices = [] } = levelSystem;
 
-  // Sistema cumulativo: Nível 1=10, Nível 2=20, Nível 3=30...
-  const totalNeededForLevel = currentLevel * 10;
-  const totalCompleted = globalCompletedPhrases.length;
+  const totalNeededForLevel = currentLevel * 10; // 40
+  const totalCompleted = globalCompletedIndices.length; // 29 (único!)
   const progressPercent = (totalCompleted / totalNeededForLevel) * 100;
+  const remaining = totalNeededForLevel - totalCompleted; // 11
   const isLevelComplete = totalCompleted >= totalNeededForLevel;
-  const remaining = totalNeededForLevel - totalCompleted;
 
   // ✅ NOVO: Calcula quais frases ainda faltam
   // Cria array de TODOS os índices possíveis (0 a totalNeededForLevel-1)
@@ -29,6 +28,8 @@ export const LevelIndicator = ({ variant = 'full' }) => {
     .filter(idx => !globalCompletedIndices.includes(idx))
     .map(idx => idx + 1) // Converte para 1-indexed (1, 2, 3...)
     .sort((a, b) => a - b); // Ordena numericamente
+
+    const displayIndices = remainingIndices.map(idx => idx);
 
   console.log('🔍 Debug Level Indicator:');
   console.log('  Total needed:', totalNeededForLevel);
@@ -116,18 +117,17 @@ export const LevelIndicator = ({ variant = 'full' }) => {
           <p className="text-2xl font-bold text-orange-600">{Math.max(remaining, 0)}</p>
 
           {/* ✅ NOVO: Mostra índices das frases faltantes (máximo 10 para não poluir) */}
-          {remainingIndices.length > 0 && remainingIndices.length <= 10 && (
-            <p className="text-xs text-gray-600 mt-2 leading-relaxed">
-              ({remainingIndices.join(', ')})
-            </p>
-          )}
+          {displayIndices.length > 0 && displayIndices.length <= 10 && (
+              <p className="text-xs text-gray-600 mt-2 leading-relaxed">
+                ({displayIndices.join(', ')})
+              </p>
+            )}
 
-          {/* Se tiver mais de 10, mostra os primeiros 10 + "..." */}
-          {remainingIndices.length > 10 && (
-            <p className="text-xs text-gray-600 mt-2 leading-relaxed">
-              ({remainingIndices.slice(0, 10).join(', ')}, ...)
-            </p>
-          )}
+            {displayIndices.length > 10 && (
+              <p className="text-xs text-gray-600 mt-2 leading-relaxed">
+                ({displayIndices.slice(0, 10).join(', ')}, ...)
+              </p>
+            )}
         </div>
       </div>
 

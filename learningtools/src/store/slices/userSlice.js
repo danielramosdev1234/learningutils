@@ -257,21 +257,25 @@ const userSlice = createSlice({
         state.levelSystem.globalCompletedIndices = [];
       }
 
-      // ✅ Adiciona frase ao array global de completadas (se não estiver)
+      // ✅ Adiciona ID (permite duplicatas para contar total de práticas)
       if (!state.levelSystem.globalCompletedPhrases.includes(phraseId)) {
         state.levelSystem.globalCompletedPhrases.push(phraseId);
-
-        // Só adiciona o índice se não estiver presente
-        if (!state.levelSystem.globalCompletedIndices.includes(phraseIndex)) {
-          state.levelSystem.globalCompletedIndices.push(phraseIndex);
-        }
-
-        console.log(`✅ Phrase ${phraseIndex + 1} completed! Total: ${state.levelSystem.globalCompletedPhrases.length}`);
+        console.log(`✅ Frase ${phraseIndex + 1} (ID: ${phraseId}) adicionada!`);
+      } else {
+        console.log(`ℹ️ Frase ${phraseIndex + 1} já estava completada (prática adicional)`);
       }
 
-      // Calcula quantas frases são necessárias para o nível atual
-      const phrasesNeededForCurrentLevel = currentLevel * 10; // Nível 1=10, Nível 2=20, Nível 3=30...
-      const totalCompleted = state.levelSystem.globalCompletedPhrases.length;
+      // ✅ Adiciona índice (ÚNICO - para progresso real)
+      if (!state.levelSystem.globalCompletedIndices.includes(phraseIndex)) {
+        state.levelSystem.globalCompletedIndices.push(phraseIndex);
+        console.log(`📊 Índice ${phraseIndex} registrado nos completados`);
+      }
+
+      // ✅ IMPORTANTE: Usar globalCompletedIndices para cálculo de level up
+      const phrasesNeededForCurrentLevel = currentLevel * 10;
+      const totalCompleted = state.levelSystem.globalCompletedIndices.length; // ✅ Usar índices únicos!
+
+      console.log(`📈 Progresso: ${totalCompleted}/${phrasesNeededForCurrentLevel} frases únicas`);
 
       // Verifica se completou o nível atual
       if (totalCompleted >= phrasesNeededForCurrentLevel) {
@@ -280,7 +284,6 @@ const userSlice = createSlice({
         // Desbloqueia próximo nível
         const nextLevel = currentLevel + 1;
         state.levelSystem.currentLevel = nextLevel;
-
         state.levelSystem.showLevelUpModal = true;
         state.levelSystem.pendingLevelUp = nextLevel;
 
