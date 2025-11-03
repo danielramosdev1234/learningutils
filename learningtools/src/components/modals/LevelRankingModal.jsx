@@ -141,9 +141,11 @@ export default function LevelRankingModal({ isOpen, onClose, currentUserId }) {
                               {top3[1].displayName?.charAt(0).toUpperCase() || '?'}
                             </div>
                           )}
-                          <div className="absolute -top-2 -right-2 bg-gray-400 rounded-full p-1.5 shadow-md">
-                            <Medal className="w-5 h-5 text-white" fill="currentColor" />
-                          </div>
+                          <div className="absolute -top-2 -right-2 bg-gray-300 rounded-full p-1.5 shadow-lg border-2 border-white">
+                                  <svg className="w-5 h-5 text-gray-600" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+                                  </svg>
+                                </div>
                         </div>
                         <p className="font-bold text-gray-800 text-sm text-center truncate w-full px-1">
                           {top3[1].displayName}
@@ -219,9 +221,11 @@ export default function LevelRankingModal({ isOpen, onClose, currentUserId }) {
                               {top3[2].displayName?.charAt(0).toUpperCase() || '?'}
                             </div>
                           )}
-                          <div className="absolute -top-2 -right-2 bg-orange-500 rounded-full p-1.5 shadow-md">
-                            <Medal className="w-5 h-5 text-white" fill="currentColor" />
-                          </div>
+                          <div className="absolute -top-2 -right-2 bg-orange-400 rounded-full p-1.5 shadow-lg border-2 border-white">
+                                  <svg className="w-5 h-5 text-orange-800" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+                                  </svg>
+                                </div>
                         </div>
                         <p className="font-bold text-gray-800 text-sm text-center truncate w-full px-1">
                           {top3[2].displayName}
