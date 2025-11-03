@@ -79,7 +79,7 @@ export default function LevelRankingModal({ isOpen, onClose, currentUserId }) {
 
   return (
     <div
-      className="fixed inset-0 bg-gradient-to-br from-indigo-900 via-purple-900 to-blue-900 bg-opacity-95 z-[100] flex items-center justify-center p-4"
+      className="fixed inset-0 bg-gradient-to-br from-blue-50 to-indigo-100  bg-opacity-95 z-[100] flex items-center justify-center p-4"
       onClick={onClose}
     >
       <div
