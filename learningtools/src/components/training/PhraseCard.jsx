@@ -20,7 +20,7 @@ const isAndroidDevice = () => {
 export const PhraseCard = ({ phrase, onSpeak, onCorrectAnswer, isActive }) => {
 
  // ✅ Detecta se é Android
- const isAndroid = useMemo(() => isAndroidDevice(), []);
+ const isAndroid = useMemo(() => true, []);// teste
 
  // ✅ Hook para Desktop/iOS (com gravação de áudio)
  const chunksHook = useSpeechRecognitionForChunks();
