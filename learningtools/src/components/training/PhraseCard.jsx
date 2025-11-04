@@ -1,7 +1,7 @@
-// src/components/PhraseCard.jsx (ATUALIZADO)
+// src/components/PhraseCard.jsx (UPDATED - Next button appears at 80%+)
 
 import React, { useState, useEffect, useRef, useMemo  } from 'react';
-import { Volume2, Mic, MicOff, CheckCircle, XCircle, Loader, AlertCircle, Play, Pause } from 'lucide-react';
+import { Volume2, Mic, MicOff, CheckCircle, XCircle, Loader, AlertCircle, Play, Pause, ArrowRight } from 'lucide-react';
 import { useSpeechRecognitionForChunks } from '../../hooks/useSpeechRecognitionForChunks';
 import { compareTexts } from '../../utils/textComparison';
 import { useSpeechRecognition } from '../../hooks/useSpeechRecognition';
@@ -17,7 +17,7 @@ const isAndroidDevice = () => {
   return /android/.test(ua);
 };
 
-export const PhraseCard = ({ phrase, onSpeak, onCorrectAnswer, isActive }) => {
+export const PhraseCard = ({ phrase, onSpeak, onCorrectAnswer, onNextPhrase, isActive }) => {
 
  // ✅ Detecta se é Android
  const isAndroid = useMemo(() => true, []);// teste
@@ -83,7 +83,7 @@ export const PhraseCard = ({ phrase, onSpeak, onCorrectAnswer, isActive }) => {
   // Processa o resultado quando terminar de ouvir
   useEffect(() => {
     if (transcript && !isListening && !hasProcessed && transcript.trim() !== '') {
-      console.log('🔊 Processing - Phrase:', phrase.text, '| Said:', transcript);
+      console.log('📊 Processing - Phrase:', phrase.text, '| Said:', transcript);
 
       const comparison = compareTexts(phrase.text, transcript);
       console.log('📈 Result:', comparison.similarity + '%');
@@ -269,6 +269,17 @@ useEffect(() => {
           {isListening ? <MicOff size={24} /> : <Mic size={24} />}
           <span>{isListening ? 'Stop' : 'Speak'}</span>
         </button>
+
+        {/* 🎯 Botão Next Phrase - Aparece apenas com accuracy ≥ 80% */}
+        {result && result.similarity >= 80 && !isListening && (
+          <button
+            onClick={onNextPhrase}
+            className="flex items-center gap-2 bg-indigo-500 hover:bg-indigo-600 text-white px-6 py-3 rounded-lg transition-all shadow-md font-semibold animate-bounce"
+          >
+            <ArrowRight size={24} />
+            <span>Next</span>
+          </button>
+        )}
       </div>
 
       {/* Botão para ouvir gravação */}
