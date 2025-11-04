@@ -118,13 +118,18 @@ export const initializeUser = createAsyncThunk(
   async (_, { rejectWithValue, dispatch }) => {
     try {
       const currentUser = getCurrentUser();
-      const referredByCode = getReferredBy(); // Pega ANTES de qualquer operação
+      const referredByCode = getReferredBy(); // Detecta ANTES
+
+      console.log('🔍 Inicializando usuário...');
+      console.log('   Autenticado:', !!currentUser);
+      console.log('   Código de convite detectado:', referredByCode || 'Nenhum');
 
       if (currentUser) {
         // ✅ USUÁRIO AUTENTICADO
+        console.log('👤 Carregando dados do Firestore...');
         const userData = await loadAuthUserData(currentUser.uid);
 
-        // Inicializa referral
+        // 1️⃣ Inicializa referral
         await dispatch(initializeReferral({
           userId: currentUser.uid,
           displayName: currentUser.displayName,
@@ -132,15 +137,41 @@ export const initializeUser = createAsyncThunk(
           existingReferredBy: userData?.referral?.referredBy
         }));
 
-        // ⭐ PROCESSA REFERRAL SE EXISTIR
+        // 2️⃣ ⭐ PROCESSA REFERRAL SE EXISTIR E NÃO FOI PROCESSADO
         if (referredByCode && !userData?.referral?.referredBy) {
-          console.log('🎯 Processando referral code:', referredByCode);
+          console.log('🎯 PROCESSANDO CÓDIGO DE CONVITE:', referredByCode);
 
-          await registerReferralUsage(currentUser.uid, referredByCode);
+          try {
+            const result = await registerReferralUsage(currentUser.uid, referredByCode);
 
-          // Limpa localStorage
+            if (result && result.success) {
+              console.log('✅ Referral registrado com sucesso!');
+              console.log('   Referrer ID:', result.referrerId);
+              console.log('   Você foi adicionado aos pending dele!');
+
+              // Limpa localStorage
+              clearReferredBy();
+              markReferralAsProcessed();
+
+              // ⭐ ATUALIZA userData para incluir referredBy
+              if (userData) {
+                userData.referral = userData.referral || {};
+                userData.referral.referredBy = referredByCode;
+              }
+            } else {
+              console.error('❌ Falha ao registrar referral');
+              console.error('   Código pode ser inválido:', referredByCode);
+            }
+          } catch (error) {
+            console.error('❌ ERRO ao processar referral:', error);
+            console.error('   Verifique:');
+            console.error('   1. Índice do Firestore foi criado?');
+            console.error('   2. Código existe no banco?');
+            console.error('   3. Regras do Firestore permitem update?');
+          }
+        } else if (referredByCode && userData?.referral?.referredBy) {
+          console.log('ℹ️ Referral já foi processado anteriormente');
           clearReferredBy();
-          markReferralAsProcessed();
         }
 
         if (userData) {
@@ -177,6 +208,9 @@ export const initializeUser = createAsyncThunk(
         const guestId = getOrCreateGuestId();
         const guestData = loadGuestData();
 
+        console.log('🎭 Modo Guest');
+        console.log('   Guest ID:', guestId);
+
         await dispatch(initializeReferral({
           userId: guestId,
           displayName: 'Anonymous'
@@ -196,6 +230,7 @@ export const initializeUser = createAsyncThunk(
         };
       }
     } catch (error) {
+      console.error('❌ ERRO CRÍTICO em initializeUser:', error);
       return rejectWithValue(error.message);
     }
   }
