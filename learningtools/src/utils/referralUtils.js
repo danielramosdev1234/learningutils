@@ -369,3 +369,39 @@ export const trackReferralEvent = (eventName, data = {}) => {
     console.log('📊 Analytics:', eventName, data);
   }
 };
+
+/**
+ * Salva código de referral do usuário (persistente)
+ */
+export const saveMyReferralCode = (code) => {
+  if (!code) return;
+  try {
+    localStorage.setItem('learnfun_my_referral_code', code);
+    console.log('💾 Meu código salvo:', code);
+  } catch (error) {
+    console.error('Erro ao salvar meu código:', error);
+  }
+};
+
+/**
+ * Recupera código de referral do usuário
+ */
+export const getMyReferralCode = () => {
+  try {
+    return localStorage.getItem('learnfun_my_referral_code');
+  } catch (error) {
+    return null;
+  }
+};
+
+/**
+ * Remove código salvo (útil para debug)
+ */
+export const clearMyReferralCode = () => {
+  try {
+    localStorage.removeItem('learnfun_my_referral_code');
+    console.log('🗑️ Meu código removido');
+  } catch (error) {
+    console.error('Erro ao limpar código:', error);
+  }
+};

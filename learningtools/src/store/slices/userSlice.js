@@ -12,13 +12,16 @@ import {
   saveAuthUserData,
   migrateGuestToAuth
 } from '../../services/userService';
-import {  generateReferralCode,
+import {
+  generateReferralCode,
   getReferredBy,
   clearReferredBy,
   hasProcessedReferral,
   markReferralAsProcessed,
   trackReferralEvent,
-  calculateRewards
+  calculateRewards,
+  saveMyReferralCode,
+  getMyReferralCode
 } from '../../utils/referralUtils';
 
 // Estado inicial
@@ -183,8 +186,17 @@ export const initializeReferral = createAsyncThunk(
   'user/initializeReferral',
   async ({ userId, displayName, existingCode }, { rejectWithValue }) => {
     try {
-      // ✅ Usa código existente OU gera novo
-      const code = existingCode || generateReferralCode(displayName, userId);
+      // ✅ Prioridade: existingCode > localStorage > gera novo
+      let code = existingCode || getMyReferralCode();
+
+      if (!code) {
+        // Gera novo apenas se não existir
+        code = generateReferralCode(displayName, userId);
+        saveMyReferralCode(code); // Salva no localStorage
+        console.log('🎉 Novo código gerado e salvo:', code);
+      } else {
+        console.log('♻️ Código existente recuperado:', code);
+      }
 
       const referredBy = getReferredBy();
 
