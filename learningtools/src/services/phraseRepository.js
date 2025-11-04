@@ -1,5 +1,5 @@
-import { db } from '../config/firebase';
-import { collection, getDocs, query, where, orderBy } from 'firebase/firestore';
+// ✅ NOVO: Importa JSON local em vez do Firestore
+import phrasesData from '../data/phrases.json';
 
 export class PhraseRepository {
   /**
@@ -18,80 +18,71 @@ export class PhraseRepository {
   }
 
   /**
-   * Busca frases baseado no ambiente
+   * Busca frases do JSON local (SEM Firestore!)
+   * ✅ ZERO custo, ZERO quota, carregamento instantâneo
    */
   static async fetchPhrases() {
     try {
       const isLocal = this.isLocalhost();
 
-      console.log(`🌍 Ambiente detectado: ${isLocal ? 'LOCALHOST (Development)' : 'PRODUCTION'}`);
+      console.log(`🌎 Ambiente detectado: ${isLocal ? 'LOCALHOST (Development)' : 'PRODUCTION'}`);
 
-      // Busca TODAS as frases (não podemos filtrar no query do Firestore
-      // porque algumas frases antigas não têm o campo 'environment')
-      console.log('📖 Carregando frases do banco de dados...');
-      const phrasesQuery = query(
-        collection(db, 'phrases'),
-        orderBy('createdAt', 'asc')
-      );
-      const querySnapshot = await getDocs(phrasesQuery);
+      // ✅ NOVO: Carrega do JSON local (instantâneo!)
+      console.log('📖 Carregando frases do arquivo local...');
+      const allPhrases = phrasesData;
 
-      const allPhrases = querySnapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
+      // Adiciona IDs se não existirem (para compatibilidade)
+      const phrasesWithIds = allPhrases.map((phrase, index) => ({
+        id: phrase.id || `phrase_${index}`,
+        ...phrase
       }));
 
-      // Filtra baseado no ambiente
+      // Filtra baseado no ambiente (se você ainda usa esse campo)
       let phrases;
 
       if (isLocal) {
-        // Em localhost: mostra TODAS as frases
-        phrases = allPhrases.filter(phrase =>
-                                      phrase.environment == 'development'
-                                    );
-        console.log('✅ LOCALHOST: Mostrando TODAS as frases');
+        // Em localhost: mostra TODAS as frases OU apenas de development
+        // (ajuste conforme sua necessidade)
+        phrases = phrasesWithIds.filter(phrase =>
+          !phrase.environment || phrase.environment === 'development' || phrase.environment === 'production'
+        );
+        console.log('✅ LOCALHOST: Mostrando todas as frases');
       } else {
         // Em produção: mostra apenas frases que NÃO são 'development'
-        // (inclui frases antigas sem campo 'environment' e frases 'production')
-        phrases = allPhrases.filter(phrase =>
-          phrase.environment !== 'development'
+        phrases = phrasesWithIds.filter(phrase =>
+          !phrase.environment || phrase.environment !== 'development'
         );
         console.log('✅ PRODUCTION: Ocultando frases de desenvolvimento');
       }
 
-      console.log(`📊 ${phrases.length} frases carregadas com sucesso`);
+      console.log(`📊 ${phrases.length} frases carregadas do JSON local`);
 
       // Log detalhado para debug
       if (isLocal) {
         const devPhrases = phrases.filter(p => p.environment === 'development').length;
         const prodPhrases = phrases.filter(p => p.environment === 'production').length;
         const legacyPhrases = phrases.filter(p => !p.environment).length;
-        console.log(`   📊 Development: ${devPhrases} | Production: ${prodPhrases} | Legacy (sem tag): ${legacyPhrases}`);
+        console.log(`   📊 Development: ${devPhrases} | Production: ${prodPhrases} | Sem tag: ${legacyPhrases}`);
       }
 
       return phrases;
 
     } catch (error) {
-      console.error('❌ Error fetching phrases:', error);
+      console.error('❌ Erro ao carregar frases do JSON:', error);
       throw error;
     }
   }
 
   /**
-   * Método auxiliar para adicionar frases de produção
-   * (útil para criar frases que aparecem em ambos os ambientes)
+   * ✅ OPCIONAL: Se você quiser buscar apenas uma frase por ID
    */
-  static async addProductionPhrase(phraseData) {
-    try {
-      const docRef = await addDoc(collection(db, 'phrases'), {
-        ...phraseData,
-        environment: 'production',
-        createdAt: new Date().toISOString()
-      });
-      console.log('✅ Frase de produção adicionada:', docRef.id);
-      return docRef;
-    } catch (error) {
-      console.error('❌ Erro ao adicionar frase de produção:', error);
-      throw error;
-    }
+  static async getPhraseById(phraseId) {
+    const phrases = await this.fetchPhrases();
+    return phrases.find(p => p.id === phraseId) || null;
   }
+
+
 }
+
+// ✅ Mantém compatibilidade com código antigo
+export default PhraseRepository;
