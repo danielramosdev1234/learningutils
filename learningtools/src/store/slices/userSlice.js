@@ -120,6 +120,7 @@ export const initializeUser = createAsyncThunk(
         await dispatch(initializeReferral({
           userId: currentUser.uid,
           displayName: currentUser.displayName
+          existingCode: userData?.referral?.code
         }));
 
         if (userData) {
@@ -180,12 +181,11 @@ export const initializeUser = createAsyncThunk(
  */
 export const initializeReferral = createAsyncThunk(
   'user/initializeReferral',
-  async ({ userId, displayName }, { rejectWithValue }) => {
+  async ({ userId, displayName, existingCode }, { rejectWithValue }) => {
     try {
-      // Gera código se não existir
-      const code = generateReferralCode(displayName, userId);
+      // ✅ Usa código existente OU gera novo
+      const code = existingCode || generateReferralCode(displayName, userId);
 
-      // Verifica se foi convidado por alguém
       const referredBy = getReferredBy();
 
       trackReferralEvent('initialized', { code, referredBy });

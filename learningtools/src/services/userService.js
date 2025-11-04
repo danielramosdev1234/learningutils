@@ -13,7 +13,6 @@ const generateGuestId = () => {
  */
 export const getOrCreateGuestId = () => {
   let guestId = localStorage.getItem('learnfun_guest_id');
-  const levelSystemStr = localStorage.getItem('learnfun_guest_levelsystem');
 
   if (!guestId) {
     guestId = generateGuestId();
@@ -32,6 +31,7 @@ export const loadGuestData = () => {
     const progressStr = localStorage.getItem('learnfun_guest_progress');
     const statsStr = localStorage.getItem('learnfun_guest_stats');
     const levelSystemStr = localStorage.getItem('learnfun_guest_levelsystem');
+    const referralStr = localStorage.getItem('learnfun_guest_referral'); // ✅ NOVO
 
     return {
       progress: progressStr ? JSON.parse(progressStr) : {
@@ -50,9 +50,10 @@ export const loadGuestData = () => {
         challengeHighScore: 0
       },
       levelSystem: levelSystemStr ? JSON.parse(levelSystemStr) : {
-          currentLevel: 1,
-          globalCompletedPhrases: []
-        }
+        currentLevel: 1,
+        globalCompletedPhrases: []
+      },
+      referral: referralStr ? JSON.parse(referralStr) : null // ✅ NOVO
     };
   } catch (error) {
     console.error('❌ Erro ao carregar dados guest:', error);
@@ -75,7 +76,8 @@ export const loadGuestData = () => {
       levelSystem: {
         currentLevel: 1,
         globalCompletedPhrases: []
-      }
+      },
+      referral: null // ✅ NOVO
     };
   }
 };
@@ -83,11 +85,18 @@ export const loadGuestData = () => {
 /**
  * Salva dados do guest no localStorage
  */
-export const saveGuestData = (progress, stats, levelSystem) => {
+export const saveGuestData = (progress, stats, levelSystem, referral) => { // ✅ ADICIONADO referral
   try {
     localStorage.setItem('learnfun_guest_progress', JSON.stringify(progress));
     localStorage.setItem('learnfun_guest_stats', JSON.stringify(stats));
     localStorage.setItem('learnfun_guest_levelsystem', JSON.stringify(levelSystem));
+
+    // ✅ NOVO: Salva referral
+    if (referral) {
+      localStorage.setItem('learnfun_guest_referral', JSON.stringify(referral));
+    }
+
+    console.log('✅ Dados guest salvos (incluindo referral)');
   } catch (error) {
     console.error('❌ Erro ao salvar dados guest:', error);
   }
@@ -118,19 +127,21 @@ export const loadAuthUserData = async (userId) => {
 /**
  * Salva dados do usuário autenticado no Firestore
  */
-export const saveAuthUserData = async (userId, profile, progress, stats, levelSystem) => {
+export const saveAuthUserData = async (userId, profile, progress, stats, levelSystem, referral) => { // ✅ ADICIONADO referral
   try {
     const userDocRef = doc(db, 'users', userId);
 
+    // ✅ INCLUIR referral no documento
     await setDoc(userDocRef, {
       profile,
       progress,
       stats,
       levelSystem,
+      referral, // ✅ NOVO: Salva dados de referral
       lastUpdated: serverTimestamp()
     }, { merge: true });
 
-    console.log('✅ Dados salvos no Firestore');
+    console.log('✅ Dados salvos no Firestore (incluindo referral)');
     return true;
   } catch (error) {
     console.error('❌ Erro ao salvar no Firestore:', error);
@@ -148,13 +159,10 @@ export const migrateGuestToAuth = async (authUserId, authProfile) => {
     // 1. Carrega dados do guest
     const guestData = loadGuestData();
     const guestId = localStorage.getItem('learnfun_guest_id');
-    const levelSystemStr = localStorage.getItem('learnfun_guest_levelsystem');
 
     console.log('👤 Guest Data:', guestData);
     console.log('📊 Total Phrases:', guestData.stats.totalPhrases);
-    console.log('📍 Current Index:', guestData.progress.chunkTrainer.currentIndex);
-    console.log('✅ Completed:', guestData.progress.chunkTrainer.completedCount);
-    console.log('✅ progress:', guestData.progress);
+    console.log('🎁 Referral:', guestData.referral);
 
     // 2. Carrega dados existentes do Firestore
     const existingData = await loadAuthUserData(authUserId);
@@ -168,6 +176,8 @@ export const migrateGuestToAuth = async (authUserId, authProfile) => {
       // Limpa dados guest do localStorage
       localStorage.removeItem('learnfun_guest_progress');
       localStorage.removeItem('learnfun_guest_stats');
+      localStorage.removeItem('learnfun_guest_levelsystem');
+      localStorage.removeItem('learnfun_guest_referral'); // ✅ NOVO
       localStorage.removeItem('learnfun_guest_id');
 
       return {
@@ -185,8 +195,16 @@ export const migrateGuestToAuth = async (authUserId, authProfile) => {
     if (!hasMeaningfulData) {
       console.log('ℹ️ Sem dados significativos para migrar');
 
-      // Cria perfil novo vazio
-      await saveAuthUserData(authUserId, authProfile, guestData.progress, guestData.stats);
+      // Cria perfil novo vazio (MAS MANTÉM REFERRAL SE EXISTIR)
+      await saveAuthUserData(
+        authUserId,
+        authProfile,
+        guestData.progress,
+        guestData.stats,
+        guestData.levelSystem,
+        guestData.referral // ✅ NOVO: Migra referral mesmo sem dados
+      );
+
       return { migrated: false, phrasesCount: 0 };
     }
 
@@ -196,6 +214,7 @@ export const migrateGuestToAuth = async (authUserId, authProfile) => {
       progress: guestData.progress,
       stats: guestData.stats,
       levelSystem: guestData.levelSystem,
+      referral: guestData.referral, // ✅ NOVO: Migra referral
       migratedFrom: guestId,
       migratedAt: serverTimestamp(),
       createdAt: serverTimestamp()
@@ -205,6 +224,7 @@ export const migrateGuestToAuth = async (authUserId, authProfile) => {
     localStorage.removeItem('learnfun_guest_progress');
     localStorage.removeItem('learnfun_guest_stats');
     localStorage.removeItem('learnfun_guest_levelsystem');
+    localStorage.removeItem('learnfun_guest_referral'); // ✅ NOVO
     localStorage.removeItem('learnfun_guest_id');
 
     console.log('✅ Migração concluída!');
@@ -230,6 +250,7 @@ export const clearAllUserData = () => {
   localStorage.removeItem('learnfun_guest_progress');
   localStorage.removeItem('learnfun_guest_stats');
   localStorage.removeItem('learnfun_guest_levelsystem');
+  localStorage.removeItem('learnfun_guest_referral'); // ✅ NOVO
   localStorage.removeItem('learnfun_current_phrase_index');
   console.log('🗑️ Todos os dados locais limpos');
 };
