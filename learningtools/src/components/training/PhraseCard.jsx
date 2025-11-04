@@ -246,19 +246,19 @@ useEffect(() => {
       )}
 
       {/* Botões principais */}
-      <div className="flex justify-center gap-4 mb-6">
+      <div className="flex justify-center gap-2 sm:gap-4 mb-6 flex-wrap">
         <button
           onClick={() => onSpeak(phrase.text)}
-          className="flex items-center gap-2 bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg transition-colors shadow-md font-semibold"
+          className="flex items-center gap-1 sm:gap-2 bg-blue-500 hover:bg-blue-600 text-white px-3 sm:px-6 py-2 sm:py-3 rounded-lg transition-colors shadow-md font-semibold text-sm sm:text-base"
         >
-          <Volume2 size={24} />
+          <Volume2 size={20} className="sm:w-6 sm:h-6" />
           <span>Hear</span>
         </button>
 
         <button
           onClick={handleMicClick}
           disabled={!!speechError}
-          className={`flex items-center gap-2 px-6 py-3 rounded-lg transition-all shadow-md font-semibold ${
+          className={`flex items-center gap-1 sm:gap-2 px-3 sm:px-6 py-2 sm:py-3 rounded-lg transition-all shadow-md font-semibold text-sm sm:text-base ${
             speechError
               ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
               : isListening
@@ -266,7 +266,7 @@ useEffect(() => {
               : 'bg-green-500 hover:bg-green-600 text-white'
           }`}
         >
-          {isListening ? <MicOff size={24} /> : <Mic size={24} />}
+          {isListening ? <MicOff size={20} className="sm:w-6 sm:h-6" /> : <Mic size={20} className="sm:w-6 sm:h-6" />}
           <span>{isListening ? 'Stop' : 'Speak'}</span>
         </button>
 
@@ -274,9 +274,9 @@ useEffect(() => {
         {result && result.similarity >= 80 && !isListening && (
           <button
             onClick={onNextPhrase}
-            className="flex items-center gap-2 bg-indigo-500 hover:bg-indigo-600 text-white px-6 py-3 rounded-lg transition-all shadow-md font-semibold animate-bounce"
+            className="flex items-center gap-1 sm:gap-2 bg-indigo-500 hover:bg-indigo-600 text-white px-3 sm:px-6 py-2 sm:py-3 rounded-lg transition-all shadow-md font-semibold text-sm sm:text-base animate-bounce"
           >
-            <ArrowRight size={24} />
+            <ArrowRight size={20} className="sm:w-6 sm:h-6" />
             <span>Next</span>
           </button>
         )}
