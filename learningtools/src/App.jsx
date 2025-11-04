@@ -13,6 +13,8 @@ import {
   cleanReferralFromURL
 } from './utils/referralUtils';
 import { ReferralWelcomeBonusHandler } from './components/referral/ReferralWelcomeBonusHandler';
+import { ReferralFieldInitializer } from './components/referral/ReferralFieldInitializer';
+
 
 
 function App() {
@@ -70,6 +72,7 @@ function App() {
 
   return (
     <>
+      <ReferralFieldInitializer />
       <ReferralWelcomeBonusHandler />
       <TrainerSelector />
       <IncentiveModal />

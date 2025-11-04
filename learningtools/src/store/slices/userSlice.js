@@ -394,24 +394,49 @@ export const saveProgress = createAsyncThunk(
   async (_, { getState }) => {
     const state = getState().user;
 
+    console.log('💾 Salvando progresso...');
+    console.log('   Mode:', state.mode);
+    console.log('   User ID:', state.userId);
+    console.log('   Referral Code:', state.referral?.code);
+
     if (state.mode === 'authenticated') {
-      // Salva no Firestore (INCLUINDO REFERRAL)
+      // ✅ SEMPRE inclui referral ao salvar
+      const referralToSave = state.referral || {
+        code: null,
+        referredBy: null,
+        totalInvites: 0,
+        successfulInvites: [],
+        pending: [],
+        rewards: {
+          skipPhrases: 0,
+          totalEarned: 0
+        },
+        hasReceivedWelcomeBonus: false
+      };
+
+      console.log('📊 Dados de referral a salvar:', referralToSave);
+
+      // Salva no Firestore
       await saveAuthUserData(
         state.userId,
         state.profile,
         state.progress,
         state.stats,
         state.levelSystem,
-        state.referral // ✅ NOVO
+        referralToSave // ✅ SEMPRE inclui referral
       );
+
+      console.log('✅ Dados salvos no Firestore (incluindo referral)');
     } else {
-      // Salva no localStorage (INCLUINDO REFERRAL)
+      // Guest
       saveGuestData(
         state.progress,
         state.stats,
         state.levelSystem,
-        state.referral // ✅ NOVO
+        state.referral
       );
+
+      console.log('✅ Dados guest salvos (incluindo referral)');
     }
 
     return true;
