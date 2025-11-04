@@ -119,7 +119,7 @@ export const initializeUser = createAsyncThunk(
         // ✅ NOVO: Inicializa referral
         await dispatch(initializeReferral({
           userId: currentUser.uid,
-          displayName: currentUser.displayName
+          displayName: currentUser.displayName,
           existingCode: userData?.referral?.code
         }));
 
