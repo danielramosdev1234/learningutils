@@ -23,6 +23,10 @@ import {
   saveMyReferralCode,
   getMyReferralCode
 } from '../../utils/referralUtils';
+import {
+  registerReferralUsage,
+  checkAndProcessFirstPhraseReferral
+} from '../../services/referralService';
 
 // Estado inicial
 const initialState = {
@@ -114,17 +118,30 @@ export const initializeUser = createAsyncThunk(
   async (_, { rejectWithValue, dispatch }) => {
     try {
       const currentUser = getCurrentUser();
+      const referredByCode = getReferredBy(); // Pega ANTES de qualquer operação
 
       if (currentUser) {
-        // Usuário autenticado
+        // ✅ USUÁRIO AUTENTICADO
         const userData = await loadAuthUserData(currentUser.uid);
 
-        // ✅ NOVO: Inicializa referral
+        // Inicializa referral
         await dispatch(initializeReferral({
           userId: currentUser.uid,
           displayName: currentUser.displayName,
-          existingCode: userData?.referral?.code
+          existingCode: userData?.referral?.code,
+          existingReferredBy: userData?.referral?.referredBy
         }));
+
+        // ⭐ PROCESSA REFERRAL SE EXISTIR
+        if (referredByCode && !userData?.referral?.referredBy) {
+          console.log('🎯 Processando referral code:', referredByCode);
+
+          await registerReferralUsage(currentUser.uid, referredByCode);
+
+          // Limpa localStorage
+          clearReferredBy();
+          markReferralAsProcessed();
+        }
 
         if (userData) {
           return {
@@ -134,7 +151,7 @@ export const initializeUser = createAsyncThunk(
             progress: userData.progress,
             stats: userData.stats,
             levelSystem: userData.levelSystem || initialState.levelSystem,
-            referral: userData.referral || initialState.referral // ✅ NOVO
+            referral: userData.referral || initialState.referral
           };
         } else {
           // Primeira vez
@@ -149,15 +166,17 @@ export const initializeUser = createAsyncThunk(
             progress: initialState.progress,
             stats: initialState.stats,
             levelSystem: initialState.levelSystem,
-            referral: initialState.referral // ✅ NOVO
+            referral: {
+              ...initialState.referral,
+              referredBy: referredByCode || null
+            }
           };
         }
       } else {
-        // Guest
+        // ✅ GUEST
         const guestId = getOrCreateGuestId();
         const guestData = loadGuestData();
 
-        // ✅ NOVO: Inicializa referral para guest
         await dispatch(initializeReferral({
           userId: guestId,
           displayName: 'Anonymous'
@@ -170,7 +189,10 @@ export const initializeUser = createAsyncThunk(
           progress: guestData.progress,
           stats: guestData.stats,
           levelSystem: guestData.levelSystem,
-          referral: guestData.referral || initialState.referral // ✅ NOVO
+          referral: {
+            ...guestData.referral || initialState.referral,
+            referredBy: referredByCode || null
+          }
         };
       }
     } catch (error) {
@@ -184,21 +206,21 @@ export const initializeUser = createAsyncThunk(
  */
 export const initializeReferral = createAsyncThunk(
   'user/initializeReferral',
-  async ({ userId, displayName, existingCode }, { rejectWithValue }) => {
+  async ({ userId, displayName, existingCode, existingReferredBy }, { rejectWithValue }) => {
     try {
       // ✅ Prioridade: existingCode > localStorage > gera novo
       let code = existingCode || getMyReferralCode();
 
       if (!code) {
-        // Gera novo apenas se não existir
         code = generateReferralCode(displayName, userId);
-        saveMyReferralCode(code); // Salva no localStorage
+        saveMyReferralCode(code);
         console.log('🎉 Novo código gerado e salvo:', code);
       } else {
         console.log('♻️ Código existente recuperado:', code);
       }
 
-      const referredBy = getReferredBy();
+      // ✅ Mantém referredBy se já existir no Firestore
+      const referredBy = existingReferredBy || getReferredBy();
 
       trackReferralEvent('initialized', { code, referredBy });
 
@@ -413,6 +435,19 @@ const userSlice = createSlice({
       }
     },
 
+    giveWelcomeBonus: (state) => {
+      if (!state.referral.hasReceivedWelcomeBonus && state.referral.referredBy) {
+        state.referral.rewards.skipPhrases += 3;
+        state.referral.hasReceivedWelcomeBonus = true;
+
+        console.log('🎁 Bônus de boas-vindas: +3 frases!');
+
+        trackReferralEvent('welcome_bonus_received', {
+          referredBy: state.referral.referredBy
+        });
+      }
+    },
+
     // ✅ NOVO: Usar "pular frase"
       useSkipPhrase: (state) => {
         if (state.referral.rewards.skipPhrases > 0) {
@@ -503,11 +538,26 @@ const userSlice = createSlice({
       state.stats.correctCount += 1;
       state.stats.accuracy = Math.round((state.stats.correctCount / state.stats.totalAttempts) * 100);
 
-      // ✅ NOVO: Atualiza streak quando completa frase
+      // ⭐ VERIFICA REFERRAL NA PRIMEIRA FRASE
+      if (state.stats.totalPhrases === 1 && state.referral.referredBy) {
+        console.log('🎯 Primeira frase! Disparando processamento de referral...');
+
+        // Dispara async function (será tratado no componente via useEffect)
+        checkAndProcessFirstPhraseReferral(
+          state.userId,
+          state.stats.totalPhrases,
+          state.referral.referredBy
+        ).then(() => {
+          console.log('✅ Referral processado com sucesso');
+        }).catch(err => {
+          console.error('❌ Erro ao processar referral:', err);
+        });
+      }
+
+      // Atualiza streak
       const today = new Date().toISOString().split('T')[0];
       const lastDate = state.stats.streak?.lastActivityDate;
 
-      // Inicializa streak se não existir (migração de dados antigos)
       if (!state.stats.streak || typeof state.stats.streak === 'number') {
         state.stats.streak = {
           current: 0,
@@ -518,7 +568,6 @@ const userSlice = createSlice({
       }
 
       if (lastDate !== today) {
-        // Só atualiza se ainda não praticou hoje
         userSlice.caseReducers.updateStreak(state);
       }
 

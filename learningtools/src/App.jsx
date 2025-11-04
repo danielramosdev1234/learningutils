@@ -12,6 +12,8 @@ import {
   saveReferredBy,
   cleanReferralFromURL
 } from './utils/referralUtils';
+import { ReferralWelcomeBonusHandler } from './components/referral/ReferralWelcomeBonusHandler';
+
 
 function App() {
   const dispatch = useDispatch();
@@ -68,6 +70,7 @@ function App() {
 
   return (
     <>
+      <ReferralWelcomeBonusHandler />
       <TrainerSelector />
       <IncentiveModal />
       <Analytics />
