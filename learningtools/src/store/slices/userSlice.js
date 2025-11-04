@@ -12,6 +12,14 @@ import {
   saveAuthUserData,
   migrateGuestToAuth
 } from '../../services/userService';
+import {  generateReferralCode,
+  getReferredBy,
+  clearReferredBy,
+  hasProcessedReferral,
+  markReferralAsProcessed,
+  trackReferralEvent,
+  calculateRewards
+} from '../../utils/referralUtils';
 
 // Estado inicial
 const initialState = {
@@ -25,6 +33,20 @@ const initialState = {
     email: null,
     photoURL: null
   },
+
+  // ✅ NOVO: Sistema de Referral
+    referral: {
+      code: null,              // Código único do usuário (ex: DANIEL-XK7P)
+      referredBy: null,        // Código de quem convidou
+      totalInvites: 0,         // Total de amigos convidados
+      successfulInvites: [],   // IDs dos amigos que completaram primeira frase
+      pending: [],             // IDs dos amigos que ainda não completaram
+      rewards: {
+        skipPhrases: 0,        // Quantas frases pode pular
+        totalEarned: 0         // Total acumulado de recompensas
+      },
+      hasReceivedWelcomeBonus: false  // Se já recebeu bônus inicial
+    },
 
   levelSystem: {
     currentLevel: 1,
@@ -86,13 +108,19 @@ const initialState = {
  */
 export const initializeUser = createAsyncThunk(
   'user/initialize',
-  async (_, { rejectWithValue }) => {
+  async (_, { rejectWithValue, dispatch }) => {
     try {
       const currentUser = getCurrentUser();
 
       if (currentUser) {
         // Usuário autenticado
         const userData = await loadAuthUserData(currentUser.uid);
+
+        // ✅ NOVO: Inicializa referral
+        await dispatch(initializeReferral({
+          userId: currentUser.uid,
+          displayName: currentUser.displayName
+        }));
 
         if (userData) {
           return {
@@ -101,10 +129,11 @@ export const initializeUser = createAsyncThunk(
             profile: userData.profile,
             progress: userData.progress,
             stats: userData.stats,
-            levelSystem: userData.levelSystem || initialState.levelSystem
+            levelSystem: userData.levelSystem || initialState.levelSystem,
+            referral: userData.referral || initialState.referral // ✅ NOVO
           };
         } else {
-          // Primeira vez - retorna dados vazios
+          // Primeira vez
           return {
             mode: 'authenticated',
             userId: currentUser.uid,
@@ -115,13 +144,20 @@ export const initializeUser = createAsyncThunk(
             },
             progress: initialState.progress,
             stats: initialState.stats,
-            levelSystem: initialState.levelSystem
+            levelSystem: initialState.levelSystem,
+            referral: initialState.referral // ✅ NOVO
           };
         }
       } else {
-        // Usuário guest
+        // Guest
         const guestId = getOrCreateGuestId();
         const guestData = loadGuestData();
+
+        // ✅ NOVO: Inicializa referral para guest
+        await dispatch(initializeReferral({
+          userId: guestId,
+          displayName: 'Anonymous'
+        }));
 
         return {
           mode: 'guest',
@@ -129,7 +165,8 @@ export const initializeUser = createAsyncThunk(
           profile: initialState.profile,
           progress: guestData.progress,
           stats: guestData.stats,
-          levelSystem: guestData.levelSystem
+          levelSystem: guestData.levelSystem,
+          referral: guestData.referral || initialState.referral // ✅ NOVO
         };
       }
     } catch (error) {
@@ -137,6 +174,73 @@ export const initializeUser = createAsyncThunk(
     }
   }
 );
+
+/**
+ * Inicializa sistema de referral para o usuário
+ */
+export const initializeReferral = createAsyncThunk(
+  'user/initializeReferral',
+  async ({ userId, displayName }, { rejectWithValue }) => {
+    try {
+      // Gera código se não existir
+      const code = generateReferralCode(displayName, userId);
+
+      // Verifica se foi convidado por alguém
+      const referredBy = getReferredBy();
+
+      trackReferralEvent('initialized', { code, referredBy });
+
+      return {
+        code,
+        referredBy: referredBy || null
+      };
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+/**
+ * Processa recompensa quando novo usuário completa primeira frase
+ */
+export const processReferralReward = createAsyncThunk(
+  'user/processReferralReward',
+  async ({ newUserId }, { getState, rejectWithValue }) => {
+    try {
+      const state = getState().user;
+
+      // Verifica se já processou
+      if (hasProcessedReferral()) {
+        console.log('⚠️ Referral já processado anteriormente');
+        return null;
+      }
+
+      const referredBy = getReferredBy();
+      if (!referredBy) {
+        console.log('ℹ️ Usuário não foi convidado por ninguém');
+        return null;
+      }
+
+      // Marca como processado (evita duplicatas)
+      markReferralAsProcessed();
+      clearReferredBy();
+
+      trackReferralEvent('reward_earned', {
+        referrer: referredBy,
+        newUser: newUserId
+      });
+
+      return {
+        referrerCode: referredBy,
+        newUserId,
+        reward: 5 // +5 pular frases para quem convidou
+      };
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
 
 /**
  * Faz login com Google
@@ -222,17 +326,23 @@ export const saveProgress = createAsyncThunk(
     const state = getState().user;
 
     if (state.mode === 'authenticated') {
-      // Salva no Firestore
+      // Salva no Firestore (INCLUINDO REFERRAL)
       await saveAuthUserData(
         state.userId,
         state.profile,
         state.progress,
         state.stats,
-        state.levelSystem
+        state.levelSystem,
+        state.referral // ✅ NOVO
       );
     } else {
-      // Salva no localStorage
-      saveGuestData(state.progress, state.stats, state.levelSystem);
+      // Salva no localStorage (INCLUINDO REFERRAL)
+      saveGuestData(
+        state.progress,
+        state.stats,
+        state.levelSystem,
+        state.referral // ✅ NOVO
+      );
     }
 
     return true;
@@ -290,6 +400,76 @@ const userSlice = createSlice({
         console.log(`🔓 Level ${nextLevel} unlocked! Need ${nextLevel * 10} total phrases.`);
       }
     },
+
+    // ✅ NOVO: Usar "pular frase"
+      useSkipPhrase: (state) => {
+        if (state.referral.rewards.skipPhrases > 0) {
+          state.referral.rewards.skipPhrases -= 1;
+          console.log(`🎁 Frase pulada! Restam: ${state.referral.rewards.skipPhrases}`);
+
+          trackReferralEvent('skip_phrase_used', {
+            remaining: state.referral.rewards.skipPhrases
+          });
+        } else {
+          console.log('⚠️ Sem frases para pular disponíveis');
+        }
+      },
+
+       // ✅ NOVO: Adicionar convite pendente
+        addPendingInvite: (state, action) => {
+          const { userId } = action.payload;
+
+          if (!state.referral.pending.includes(userId)) {
+            state.referral.pending.push(userId);
+            console.log(`📝 Convite pendente adicionado: ${userId}`);
+          }
+        },
+
+        // ✅ NOVO: Converter pendente em sucesso (quando amigo completa frase)
+          confirmInviteSuccess: (state, action) => {
+            const { userId } = action.payload;
+
+            // Remove dos pendentes
+            state.referral.pending = state.referral.pending.filter(id => id !== userId);
+
+            // Adiciona aos sucessos
+            if (!state.referral.successfulInvites.includes(userId)) {
+              state.referral.successfulInvites.push(userId);
+              state.referral.totalInvites += 1;
+
+              // Adiciona recompensa
+              const baseReward = 5; // +5 por amigo
+              state.referral.rewards.skipPhrases += baseReward;
+              state.referral.rewards.totalEarned += baseReward;
+
+              // Verifica milestone
+              const { skipPhrases } = calculateRewards(state.referral.totalInvites);
+              state.referral.rewards.skipPhrases = skipPhrases;
+
+              console.log(`✅ Amigo confirmado! Total: ${state.referral.totalInvites}`);
+              console.log(`🎁 Nova recompensa: ${state.referral.rewards.skipPhrases} frases`);
+
+              trackReferralEvent('invite_confirmed', {
+                totalInvites: state.referral.totalInvites,
+                totalRewards: state.referral.rewards.skipPhrases
+              });
+            }
+          },
+
+          // ✅ NOVO: Dar bônus de boas-vindas para novo usuário
+            giveWelcomeBonus: (state) => {
+              if (!state.referral.hasReceivedWelcomeBonus && state.referral.referredBy) {
+                state.referral.rewards.skipPhrases += 3; // +3 bônus inicial
+                state.referral.hasReceivedWelcomeBonus = true;
+
+                console.log('🎁 Bônus de boas-vindas: +3 frases!');
+
+                trackReferralEvent('welcome_bonus_received', {
+                  referredBy: state.referral.referredBy
+                });
+              }
+            },
+
 
     closeLevelUpModal: (state) => {
       state.levelSystem.showLevelUpModal = false;
@@ -533,6 +713,23 @@ const userSlice = createSlice({
         state.incentives = initialState.incentives;
       });
 
+      // ✅ Initialize Referral
+        builder.addCase(initializeReferral.fulfilled, (state, action) => {
+          state.referral.code = action.payload.code;
+          state.referral.referredBy = action.payload.referredBy;
+
+          console.log('✅ Referral inicializado:', action.payload);
+        });
+
+        // ✅ Process Referral Reward
+        builder.addCase(processReferralReward.fulfilled, (state, action) => {
+          if (action.payload) {
+            // Esta ação seria disparada no backend/Firestore
+            // para atualizar o usuário que convidou
+            console.log('💰 Recompensa de referral processada:', action.payload);
+          }
+        });
+
     // Save Progress
     builder
       .addCase(saveProgress.pending, (state) => {
@@ -559,7 +756,11 @@ export const {
   updateLevelSystemIndices ,
   updateStreak,
   useFreeze,
-  closeRewardModal
+  closeRewardModal,
+  useSkipPhrase,
+    addPendingInvite,
+    confirmInviteSuccess,
+    giveWelcomeBonus
 } = userSlice.actions;
 
 export default userSlice.reducer;

@@ -39,7 +39,7 @@ const GuestBanner = ({ variant = 'minimal' }) => {
   // Variante card (para usar em modais ou seções)
   if (variant === 'card') {
     return (
-      <div className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-xl p-6 border-2 border-purple-200">
+      <div className="bg-gradient-to-br from-blue-50 to-indigo-100 rounded-xl p-6 border-2 border-purple-200">
         <div className="flex items-start gap-4">
           <div className="bg-purple-100 p-3 rounded-full">
             <Sparkles className="text-purple-600" size={24} />

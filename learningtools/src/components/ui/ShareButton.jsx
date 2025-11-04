@@ -1,7 +1,11 @@
 // src/components/ShareButton.jsx
 import React, { useState } from 'react';
-import { Share2, Download, Check, Copy } from 'lucide-react';
+import { Share2, Download, Check, Copy, Gift } from 'lucide-react';
 import { generateShareCard } from '../../utils/shareCardGenerator';
+import { useSelector } from 'react-redux';
+import { generateReferralShareText, trackReferralEvent } from '../../utils/referralUtils';
+import { InviteFriendsScreen } from '../referral/InviteFriendsScreen';
+
 
 export const ShareButton = ({
   phraseText,
@@ -13,6 +17,37 @@ export const ShareButton = ({
   const [isGenerating, setIsGenerating] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const [shareUrl, setShareUrl] = useState('');
+  const referral = useSelector(state => state.user.referral);
+    const mode = useSelector(state => state.user.mode);
+    const [showInviteModal, setShowInviteModal] = useState(false);
+
+    const handleShareReferral = (platform) => {
+            if (!referral?.code) {
+              alert('⚠️ Faça login para ganhar seu código de convite!');
+              return;
+            }
+
+            const texts = generateReferralShareText(referral.code);
+            const link = `${window.location.origin}/?ref=${referral.code}`;
+
+            trackReferralEvent('referral_shared_from_result', {
+              platform,
+              code: referral.code,
+              accuracy
+            });
+
+            if (platform === 'whatsapp') {
+              const whatsappText = encodeURIComponent(texts.whatsapp);
+              window.open(`https://wa.me/?text=${whatsappText}`, '_blank');
+            } else if (platform === 'telegram') {
+              const telegramText = encodeURIComponent(texts.telegram);
+              window.open(`https://t.me/share/url?url=${encodeURIComponent(link)}&text=${telegramText}`, '_blank');
+            } else {
+              // Copia link
+              navigator.clipboard.writeText(link);
+              alert('✅ Link de convite copiado! Cole no WhatsApp, Instagram ou onde quiser!');
+            }
+          };
 
   // ⭐ ADICIONAR TODA ESTA FUNÇÃO AQUI (entre linha 14 e 16)
   const generateShareText = (platform) => {
@@ -65,6 +100,8 @@ export const ShareButton = ({
       if (accuracy >= 80) return 'good';
       return 'improving';
     };
+
+
 
     const category = getPhraseCategory();
     const phrases = motivationalPhrases[category];
@@ -442,27 +479,53 @@ Pratique gratuitamente: ${appUrl}
   if (variant === 'compact') {
     return (
       <div className="relative">
-        <button
-          onClick={() => setShowSuccess(!showSuccess)}
-          disabled={isGenerating}
-          className="flex items-center justify-center w-10 h-10 bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 text-white rounded-full transition-all shadow-lg hover:shadow-xl disabled:opacity-50"
-          title="Share result"
-        >
-          <Share2 size={20} />
-        </button>
+         {/* ✅ NOVO: Seção de Referral */}
+                              {mode === 'authenticated' && referral?.code && (
+                                <>
 
-        {showSuccess && (
-          <div className="absolute top-12 right-0 bg-white rounded-lg shadow-xl p-2 z-50 min-w-[200px]">
-            <button onClick={() => handleShare('whatsapp')} className="flex items-center gap-2 w-full px-4 py-2 hover:bg-green-50 rounded">
-              <span className="text-2xl">💬</span>
-              <span>WhatsApp</span>
-            </button>
-            <button onClick={() => handleShare('download')} className="flex items-center gap-2 w-full px-4 py-2 hover:bg-blue-50 rounded">
-              <Download size={20} />
-              <span>Download</span>
-            </button>
-          </div>
-        )}
+
+                                  <div className="bg-gradient-to-r from-blue-50 to-indigo-100 rounded-xl p-4 border-2 border-purple-200">
+                                    <div className="flex items-center gap-2 mb-3">
+                                      <Gift className="text-purple-600" size={20} />
+                                      <h4 className="font-bold text-gray-800">Convide Amigos</h4>
+                                    </div>
+
+                                    <p className="text-sm text-gray-600 mb-3">
+                                      Ganhe <span className="font-bold text-purple-600">+5 skip frases</span> a cada amigo!
+                                    </p>
+
+                                    <div className="grid grid-cols-2 gap-2">
+                                      <button
+                                        onClick={() => handleShareReferral('whatsapp')}
+                                        className="flex items-center justify-center gap-2 bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg transition-all font-semibold text-sm"
+                                      >
+                                        💬 WhatsApp
+                                      </button>
+
+                                      <button
+                                        onClick={() => handleShareReferral('telegram')}
+                                        className="flex items-center justify-center gap-2 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition-all font-semibold text-sm"
+                                      >
+                                        ✈️ Telegram
+                                      </button>
+                                    </div>
+
+                                    <button
+                                      onClick={() => { setShowInviteModal(true); }}
+                                      className="w-full mt-2 flex items-center justify-center gap-2 bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded-lg transition-all font-semibold text-sm"
+                                    >
+                                      Gerenciar Convites
+                                    </button>
+                                  </div>
+                                </>
+                              )}
+
+                          {/* Modal Invite Friends */}
+                                    {showInviteModal && (
+                                      <div className="fixed inset-0 z-50 bg-white overflow-y-auto">
+                                        <InviteFriendsScreen onBack={() => setShowInviteModal(false)} />
+                                      </div>
+                                    )}
       </div>
     );
   }
@@ -471,72 +534,56 @@ Pratique gratuitamente: ${appUrl}
   if (variant === 'celebration') {
     return (
       <div className="mt-4 space-y-3">
-        <button
-          onClick={() => handleShare('download')}
-          disabled={isGenerating}
-          className="w-full flex items-center justify-center gap-3 bg-gradient-to-r from-green-500 via-emerald-500 to-teal-500 hover:from-green-600 hover:via-emerald-600 hover:to-teal-600 text-white px-6 py-4 rounded-xl transition-all shadow-lg hover:shadow-xl font-bold text-lg disabled:opacity-50"
-        >
-          {isGenerating ? (
-            <>
-              <div className="animate-spin rounded-full h-6 w-6 border-3 border-white border-t-transparent" />
-              <span>Creating card...</span>
-            </>
-          ) : (
-            <>
-              <Download size={24} />
-              <span>Download & Share! 🎉</span>
-            </>
-          )}
-        </button>
 
-        {/* Botões de redes sociais */}
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
 
-          <button
-            onClick={() => handleShare('whatsapp')}
-            disabled={isGenerating}
-            className="flex items-center justify-center gap-2 bg-green-500 hover:bg-green-600 text-white px-4 py-3 rounded-lg transition-all shadow-md font-semibold disabled:opacity-50"
-          >
-            <span className="text-xl">💬</span>
-            <span>WhatsApp</span>
-          </button>
 
-          <button
-            onClick={() => handleShare('telegram')}
-            disabled={isGenerating}
-            className="flex items-center justify-center gap-2 bg-blue-500 hover:bg-blue-600 text-white px-4 py-3 rounded-lg transition-all shadow-md font-semibold disabled:opacity-50"
-          >
-            <span className="text-xl">✈️</span>
-            <span>Telegram</span>
-          </button>
+         {/* ✅ NOVO: Seção de Referral */}
+                {mode === 'authenticated' && referral?.code && (
+                  <>
 
-          <button
-            onClick={() => handleShare('twitter')}
-            disabled={isGenerating}
-            className="flex items-center justify-center gap-2 bg-black hover:bg-gray-800 text-white px-4 py-3 rounded-lg transition-all shadow-md font-semibold disabled:opacity-50"
-          >
-            <span className="text-xl">𝕏</span>
-            <span>Twitter</span>
-          </button>
 
-          <button
-            onClick={() => handleShare('facebook')}
-            disabled={isGenerating}
-            className="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-3 rounded-lg transition-all shadow-md font-semibold disabled:opacity-50"
-          >
-            <span className="text-xl">📘</span>
-            <span>Facebook</span>
-          </button>
+                    <div className="bg-gradient-to-r from-blue-50 to-indigo-100 rounded-xl p-4 border-2 border-purple-200">
+                      <div className="flex items-center gap-2 mb-3">
+                        <Gift className="text-purple-600" size={20} />
+                        <h4 className="font-bold text-gray-800">Convide Amigos</h4>
+                      </div>
 
-          <button
-            onClick={() => handleShare('linkedin')}
-            disabled={isGenerating}
-            className="flex items-center justify-center gap-2 bg-blue-700 hover:bg-blue-800 text-white px-4 py-3 rounded-lg transition-all shadow-md font-semibold disabled:opacity-50"
-          >
-            <span className="text-xl">💼</span>
-            <span>LinkedIn</span>
-          </button>
-        </div>
+                      <p className="text-sm text-gray-600 mb-3">
+                        Ganhe <span className="font-bold text-purple-600">+5 skip frases</span> a cada amigo!
+                      </p>
+
+                      <div className="grid grid-cols-2 gap-2">
+                        <button
+                          onClick={() => handleShareReferral('whatsapp')}
+                          className="flex items-center justify-center gap-2 bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg transition-all font-semibold text-sm"
+                        >
+                          💬 WhatsApp
+                        </button>
+
+                        <button
+                          onClick={() => handleShareReferral('telegram')}
+                          className="flex items-center justify-center gap-2 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition-all font-semibold text-sm"
+                        >
+                          ✈️ Telegram
+                        </button>
+                      </div>
+
+                      <button
+                        onClick={() => { setShowInviteModal(true); }}
+                        className="w-full mt-2 flex items-center justify-center gap-2 bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded-lg transition-all font-semibold text-sm"
+                      >
+                        Gerenciar Convites
+                      </button>
+                    </div>
+                  </>
+                )}
+
+            {/* Modal Invite Friends */}
+                      {showInviteModal && (
+                        <div className="fixed inset-0 z-50 bg-white overflow-y-auto">
+                          <InviteFriendsScreen onBack={() => setShowInviteModal(false)} />
+                        </div>
+                      )}
 
         {showSuccess && (
           <div className="text-center p-3 bg-green-50 border border-green-300 rounded-lg animate-fade-in">
@@ -550,34 +597,53 @@ Pratique gratuitamente: ${appUrl}
   // Variante padrão
   return (
     <div className="space-y-2">
-      <button
-        onClick={() => handleShare('download')}
-        disabled={isGenerating}
-        className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white px-5 py-3 rounded-lg transition-all shadow-md font-semibold disabled:opacity-50"
-      >
-        {isGenerating ? (
-          <>
-            <div className="animate-spin rounded-full h-5 w-5 border-2 border-white border-t-transparent" />
-            <span>Creating...</span>
-          </>
-        ) : (
-          <>
-            <Share2 size={20} />
-            <span>Share Result</span>
-          </>
-        )}
-      </button>
+      {/* ✅ NOVO: Seção de Referral */}
+                      {mode === 'authenticated' && referral?.code && (
+                        <>
 
-      {!isGenerating && (
-        <div className="flex gap-2">
-          <button onClick={() => handleShare('whatsapp')} className="flex-1 py-2 bg-green-100 hover:bg-green-200 rounded text-green-700 font-medium">
-            💬 WhatsApp
-          </button>
-          <button onClick={() => handleShare('telegram')} className="flex-1 py-2 bg-blue-100 hover:bg-blue-200 rounded text-blue-700 font-medium">
-            ✈️ Telegram
-          </button>
-        </div>
-      )}
+
+                          <div className="bg-gradient-to-r from-blue-50 to-indigo-100 rounded-xl p-4 border-2 border-purple-200">
+                            <div className="flex items-center gap-2 mb-3">
+                              <Gift className="text-purple-600" size={20} />
+                              <h4 className="font-bold text-gray-800">Convide Amigos</h4>
+                            </div>
+
+                            <p className="text-sm text-gray-600 mb-3">
+                              Ganhe <span className="font-bold text-purple-600">+5 skip frases</span> a cada amigo!
+                            </p>
+
+                            <div className="grid grid-cols-2 gap-2">
+                              <button
+                                onClick={() => handleShareReferral('whatsapp')}
+                                className="flex items-center justify-center gap-2 bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg transition-all font-semibold text-sm"
+                              >
+                                💬 WhatsApp
+                              </button>
+
+                              <button
+                                onClick={() => handleShareReferral('telegram')}
+                                className="flex items-center justify-center gap-2 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition-all font-semibold text-sm"
+                              >
+                                ✈️ Telegram
+                              </button>
+                            </div>
+
+                            <button
+                              onClick={() => { setShowInviteModal(true); }}
+                              className="w-full mt-2 flex items-center justify-center gap-2 bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded-lg transition-all font-semibold text-sm"
+                            >
+                              Gerenciar Convites
+                            </button>
+                          </div>
+                        </>
+                      )}
+
+                  {/* Modal Invite Friends */}
+                            {showInviteModal && (
+                              <div className="fixed inset-0 z-50 bg-white overflow-y-auto">
+                                <InviteFriendsScreen onBack={() => setShowInviteModal(false)} />
+                              </div>
+                            )}
     </div>
   );
 };

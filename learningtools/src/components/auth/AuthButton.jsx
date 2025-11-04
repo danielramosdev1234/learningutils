@@ -76,7 +76,7 @@ const AuthButton = () => {
 
           {/* Menu */}
           <div className="absolute right-0 mt-2 w-64 bg-white rounded-lg shadow-xl border-2 border-gray-200 z-50 overflow-hidden">
-            <div className="p-4 border-b border-gray-200 bg-gradient-to-br from-purple-50 to-pink-50">
+            <div className="p-4 border-b border-gray-200 bg-gradient-to-br from-blue-50 to-indigo-100">
               <p className="font-bold text-gray-800">{profile.displayName}</p>
               <p className="text-sm text-gray-600">{profile.email}</p>
             </div>

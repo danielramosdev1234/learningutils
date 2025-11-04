@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Hash, Mic, Zap, Video, MoreHorizontal, X, MessageCircle, Globe  } from 'lucide-react';
+import { Hash, Mic, Zap, Video, MoreHorizontal, X, MessageCircle, Globe, Gift  } from 'lucide-react';
 import NumberSpeechTrainer from './training/NumberSpeechTrainer';
 import ChunkTrainer from './training/ChunkTrainer';
 import ChallengeTrainer from './training/ChallengeTrainer';
@@ -10,6 +10,8 @@ import GuestBanner from './ui/GuestBanner';
 import { LevelIndicator } from './leaderboard/LevelIndicator';
 import StreakIndicator from './ui/StreakIndicator';
 import TranslateTrainer from './training/TranslateTrainer';
+import { ReferralButton } from './referral/ReferralButton';
+import { InviteFriendsScreen } from './referral/InviteFriendsScreen';
 
 export default function TrainerSelector() {
   const getInitialTrainer = () => {
@@ -24,6 +26,7 @@ export default function TrainerSelector() {
 
   const [activeTrainer, setActiveTrainer] = useState(getInitialTrainer());
   const [showMoreMenu, setShowMoreMenu] = useState(false);
+  const [showInviteModal, setShowInviteModal] = useState(false);
 
   useEffect(() => {
     if (window.va) {
@@ -153,6 +156,7 @@ export default function TrainerSelector() {
                 <StreakIndicator variant="compact" />
                 <LevelIndicator variant="compact" />
 
+
             {/* Botão de Auth (direita) */}
                 <AuthButton />
             </div>
@@ -177,6 +181,7 @@ export default function TrainerSelector() {
             </div>
             <StreakIndicator variant="compact" />
             <LevelIndicator variant="compact" />
+
           </div>
           <AuthButton />
         </div>
@@ -263,10 +268,41 @@ export default function TrainerSelector() {
                   </svg>
                 </div>
               </button>
+
+              {/* ✅ NOVO: Invite Friends */}
+              <button
+                    onClick={() => {
+                      setShowMoreMenu(false);
+                      setShowInviteModal(true);
+                    }}
+                    className="w-full flex items-center gap-4 p-4 rounded-xl bg-purple-50 hover:bg-purple-100 text-gray-800 transition-all"
+                  >
+                    <div className="p-3 rounded-full bg-gradient-to-r from-purple-500 to-pink-500">
+                      <Gift className="w-6 h-6 text-white" />
+                    </div>
+                    <div className="text-left flex-1">
+                      <div className="font-bold text-lg">Convide Amigos</div>
+                      <div className="text-sm text-gray-600">
+                        Ganhe +5 pular frases • Grátis
+                      </div>
+                    </div>
+                    <div className="text-purple-600">
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      </svg>
+                    </div>
+                  </button>
             </div>
           </div>
         </div>
       )}
+
+        {/* Modal Invite Friends */}
+          {showInviteModal && (
+            <div className="fixed inset-0 z-50 bg-white overflow-y-auto">
+              <InviteFriendsScreen onBack={() => setShowInviteModal(false)} />
+            </div>
+          )}
 
       {/* BOTTOM Navigation Bar - Mobile Only */}
       <nav className="fixed bottom-0 left-0 right-0 bg-white border-t-2 shadow-lg z-40 md:hidden">
@@ -326,6 +362,8 @@ export default function TrainerSelector() {
               <div className="w-8 h-1 bg-red-600 rounded-full mt-1" />
             )}
           </button>
+
+
 
           {/* More Button */}
           <button

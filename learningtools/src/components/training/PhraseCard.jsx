@@ -1,7 +1,7 @@
 // src/components/PhraseCard.jsx (UPDATED - Next button appears at 80%+)
 
 import React, { useState, useEffect, useRef, useMemo  } from 'react';
-import { Volume2, Mic, MicOff, CheckCircle, XCircle, Loader, AlertCircle, Play, Pause, ArrowRight } from 'lucide-react';
+import { Volume2, Mic, MicOff, CheckCircle, XCircle, Loader, AlertCircle, Play, Pause, ArrowRight, Gift  } from 'lucide-react';
 import { useSpeechRecognitionForChunks } from '../../hooks/useSpeechRecognitionForChunks';
 import { compareTexts } from '../../utils/textComparison';
 import { useSpeechRecognition } from '../../hooks/useSpeechRecognition';
@@ -9,8 +9,19 @@ import { IPATranscription } from '../pronunciation/IPATranscription';
 import { PhonemeFeedback } from '../pronunciation/PhonemeFeedback';
 import { ShareButton } from '../ui/ShareButton';
 import { FireworksCelebration } from '../celebrations/FireworksCelebration';
-import { markPhraseCompleted } from '../../store/slices/userSlice';
-import { useDispatch } from 'react-redux';
+import {
+  markPhraseCompleted,
+  useSkipPhrase,
+  giveWelcomeBonus,
+  confirmInviteSuccess
+} from '../../store/slices/userSlice';
+import {
+  generateReferralShareText,
+  trackReferralEvent,
+  hasProcessedReferral,
+  markReferralAsProcessed // ✅ ADICIONAR
+} from '../../utils/referralUtils';
+import { useDispatch, useSelector } from 'react-redux';
 
 const isAndroidDevice = () => {
   const ua = navigator.userAgent.toLowerCase();
@@ -26,6 +37,14 @@ export const PhraseCard = ({ phrase, onSpeak, onCorrectAnswer, onNextPhrase, isA
  const chunksHook = useSpeechRecognitionForChunks();
 
  const dispatch = useDispatch();
+
+  const { referral, mode } = useSelector((state) => ({
+     referral: state.user.referral,
+     mode: state.user.mode
+   }));
+
+   const canSkipPhrase = referral?.rewards?.skipPhrases > 0;
+   const [showSkipConfirm, setShowSkipConfirm] = useState(false);
 
  // ✅ Hook para Android (sem gravação)
  const [androidTranscript, setAndroidTranscript] = useState('');
@@ -142,6 +161,72 @@ useEffect(() => {
     setAndroidError('');
   }
 }, [phrase.text, phrase.id, isAndroid]);
+
+ // ✅ 3. ADICIONAR EFEITO: Dar bônus de boas-vindas na primeira frase
+  useEffect(() => {
+    // Se foi convidado e ainda não recebeu bônus
+    if (
+      referral?.referredBy &&
+      !referral.hasReceivedWelcomeBonus &&
+      mode === 'authenticated'
+    ) {
+      console.log('🎁 Dando bônus de boas-vindas ao novo usuário!');
+      dispatch(giveWelcomeBonus());
+    }
+  }, [referral, mode, dispatch]);
+
+
+  // ✅ 4. ADICIONAR EFEITO: Processar recompensa de referral ao completar primeira frase
+  useEffect(() => {
+    if (result && result.similarity >= 80) {
+      // Verifica se foi convidado e ainda não processou
+      if (
+        referral?.referredBy &&
+        !hasProcessedReferral() &&
+        mode === 'authenticated'
+      ) {
+        console.log('💰 Processando recompensa de referral...');
+
+        // TODO: Aqui você implementaria a lógica no backend para
+        // dar +5 skip phrases para quem convidou
+        // Por ora, apenas marca como processado
+
+        trackReferralEvent('first_phrase_completed', {
+          referredBy: referral.referredBy
+        });
+      }
+    }
+  }, [result, referral, mode]);
+
+const handleSkipPhrase = () => {
+    setShowSkipConfirm(true);
+  };
+
+const confirmSkipPhrase = () => {
+    if (!canSkipPhrase) return;
+
+    // Usa 1 skip phrase
+    dispatch(useSkipPhrase());
+
+    // Marca frase como completada
+    dispatch(markPhraseCompleted({
+      phraseId: phrase.id,
+      phraseIndex: phrase.index
+    }));
+
+    // Avança para próxima
+    if (onCorrectAnswer) {
+      onCorrectAnswer();
+    }
+
+    setShowSkipConfirm(false);
+
+    // Analytics
+    trackReferralEvent('phrase_skipped', {
+      phraseIndex: phrase.index,
+      remaining: referral.rewards.skipPhrases - 1
+    });
+  };
 
   const handleMicClick = () => {
     if (isListening) {
@@ -269,6 +354,18 @@ useEffect(() => {
           {isListening ? <MicOff size={20} className="sm:w-6 sm:h-6" /> : <Mic size={20} className="sm:w-6 sm:h-6" />}
           <span>{isListening ? 'Stop' : 'Speak'}</span>
         </button>
+
+        {/* ✅ NOVO: Botão Skip Phrase */}
+                {canSkipPhrase && !isListening && (
+                  <button
+                    onClick={handleSkipPhrase}
+                    className="flex items-center gap-1 sm:gap-2 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white px-3 sm:px-6 py-2 sm:py-3 rounded-lg transition-all shadow-md font-semibold text-sm sm:text-base"
+                    title={`Você tem ${referral.rewards.skipPhrases} frases para pular`}
+                  >
+                    <Gift size={20} className="sm:w-6 sm:h-6" />
+                    <span>Skip ({referral.rewards.skipPhrases})</span>
+                  </button>
+                )}
 
         {/* 🎯 Botão Next Phrase - Aparece apenas com accuracy ≥ 80% */}
         {result && result.similarity >= 80 && !isListening && (
