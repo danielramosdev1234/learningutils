@@ -167,11 +167,13 @@ useEffect(() => {
 
 const handleSkipPhrase = () => {
     setShowSkipConfirm(true);
+    confirmSkipPhrase()
   };
 
 const confirmSkipPhrase = () => {
+    console.log('confirmSkipPhrase!');
     if (!canSkipPhrase) return;
-
+console.log('if (!canSkipPhrase) return;!');
     dispatch(useSkipPhrase());
 
     dispatch(markPhraseCompleted({
@@ -182,6 +184,8 @@ const confirmSkipPhrase = () => {
     if (onCorrectAnswer) {
       onCorrectAnswer();
     }
+    onNextPhrase();
+
 
     setShowSkipConfirm(false);
 
