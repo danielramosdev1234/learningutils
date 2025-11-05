@@ -1,15 +1,18 @@
 // src/components/referral/InviteFriendsScreen.jsx
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { ArrowLeft, Gift, Sparkles } from 'lucide-react';
+import { ArrowLeft, Gift, Sparkles,   } from 'lucide-react';
 import { ReferralCard } from './ReferralCard';
 import { ReferralStats } from './ReferralStats';
 import { generateReferralShareText, trackReferralEvent } from '../../utils/referralUtils';
 import { loginWithGoogle } from '../../store/slices/userSlice';
+import { loadAuthUserData } from '../../services/userService';
+
 
 export const InviteFriendsScreen = ({ onBack }) => {
   const dispatch = useDispatch();
   const { mode, referral, profile } = useSelector(state => state.user);
+
 
   const handleShare = (platform) => {
     if (!referral?.code) return;
@@ -47,6 +50,8 @@ export const InviteFriendsScreen = ({ onBack }) => {
             </button>
             <h1 className="text-3xl font-bold text-gray-800">Convide Amigos</h1>
           </div>
+
+
 
           {/* Login Prompt */}
           <div className="bg-white rounded-2xl shadow-xl p-8 text-center">
@@ -153,11 +158,15 @@ export const InviteFriendsScreen = ({ onBack }) => {
           onShare={handleShare}
         />
 
+
+
         {/* Estatísticas */}
         <div className="mt-6">
           <h2 className="text-2xl font-bold text-gray-800 mb-4">Suas Estatísticas</h2>
           <ReferralStats referralData={referral} />
         </div>
+
+
 
         {/* Milestones */}
         <div className="mt-6 bg-gradient-to-r from-yellow-50 to-orange-50 rounded-2xl p-6 border-2 border-yellow-200">

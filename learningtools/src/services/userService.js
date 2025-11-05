@@ -107,12 +107,38 @@ export const saveGuestData = (progress, stats, levelSystem, referral) => { // �
  */
 export const loadAuthUserData = async (userId) => {
   try {
+    if (!userId) {
+      console.error('❌ userId é obrigatório');
+      return null;
+    }
+
     const userDocRef = doc(db, 'users', userId);
     const userDoc = await getDoc(userDocRef);
 
     if (userDoc.exists()) {
       const data = userDoc.data();
       console.log('✅ Dados carregados do Firestore');
+
+      // ✅ Valida estrutura de referral
+      if (data.referral) {
+        data.referral = {
+          code: data.referral.code || null,
+          referredBy: data.referral.referredBy || null,
+          totalInvites: data.referral.totalInvites || 0,
+          successfulInvites: Array.isArray(data.referral.successfulInvites)
+            ? data.referral.successfulInvites
+            : [],
+          pending: Array.isArray(data.referral.pending)
+            ? data.referral.pending
+            : [],
+          rewards: {
+            skipPhrases: data.referral.rewards?.skipPhrases || 0,
+            totalEarned: data.referral.rewards?.totalEarned || 0
+          },
+          hasReceivedWelcomeBonus: data.referral.hasReceivedWelcomeBonus || false
+        };
+      }
+
       return data;
     } else {
       console.log('ℹ️ Primeira vez deste usuário');
@@ -120,6 +146,7 @@ export const loadAuthUserData = async (userId) => {
     }
   } catch (error) {
     console.error('❌ Erro ao carregar dados do Firestore:', error);
+    console.error('   Stack:', error.stack);
     return null;
   }
 };

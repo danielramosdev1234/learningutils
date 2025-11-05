@@ -1,7 +1,14 @@
 // src/components/referral/ReferralStats.jsx
-import React from 'react';
-import { Users, Gift, Target, TrendingUp } from 'lucide-react';
+import React, { useState } from 'react';
+import { Users, Gift, Target, TrendingUp,RefreshCw } from 'lucide-react';
+import { useSelector, useDispatch } from 'react-redux';
 import { calculateRewards } from '../../utils/referralUtils';
+import {
+  signInWithGoogle,
+  signOut as authSignOut,
+  getCurrentUser
+} from '../../services/authService';
+import { loadAuthUserData } from '../../services/userService';
 
 export const ReferralStats = ({ referralData }) => {
   const {
@@ -12,11 +19,44 @@ export const ReferralStats = ({ referralData }) => {
   } = referralData;
 
   const { nextMilestone, milestoneRewards } = calculateRewards(totalInvites);
+  const currentUser = getCurrentUser();
+     const [refreshing, setRefreshing] = useState(false);
+     const dispatch = useDispatch();
+
+      // ⭐ Função de refresh
+      const handleRefreshStats = async () => {
+        setRefreshing(true);
+
+        try {
+          const userData = await loadAuthUserData(currentUser.uid);
+
+          if (userData?.referral) {
+            dispatch({
+              type: 'user/updateReferralData',
+              payload: userData.referral
+            });
+            console.log('✅ Stats refreshed!');
+          }
+        } catch (error) {
+          console.error('❌ Error refreshing:', error);
+        } finally {
+          setRefreshing(false);
+        }
+      };
 
   return (
     <div className="space-y-4">
       {/* Estatísticas Principais */}
       <div className="grid grid-cols-2 gap-4">
+          {/* ⭐ BOTÃO DE REFRESH */}
+                                              <button
+                                                onClick={handleRefreshStats}
+                                                disabled={refreshing}
+                                                className="bg-white p-2 rounded-lg shadow-md hover:bg-gray-50 transition-all disabled:opacity-50"
+                                              >
+                                                <RefreshCw size={24} className={refreshing ? 'animate-spin' : ''} />
+                                                <span className="text-xs font-semibold text-blue-700">Atualizar</span>
+                                              </button>
         {/* Total Convidados */}
         <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-4 border-2 border-blue-200">
           <div className="flex items-center gap-2 mb-2">

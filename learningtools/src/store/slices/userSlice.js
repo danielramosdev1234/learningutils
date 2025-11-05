@@ -495,6 +495,14 @@ const userSlice = createSlice({
       }
     },
 
+    updateReferralData: (state, action) => {
+        state.referral = {
+          ...state.referral,
+          ...action.payload
+        };
+        console.log('✅ Referral data updated:', action.payload);
+      },
+
     giveWelcomeBonus: (state) => {
       if (!state.referral.hasReceivedWelcomeBonus && state.referral.referredBy) {
         state.referral.rewards.skipPhrases += 3;
@@ -881,7 +889,8 @@ export const {
   useSkipPhrase,
     addPendingInvite,
     confirmInviteSuccess,
-    giveWelcomeBonus
+    giveWelcomeBonus,
+    updateReferralData
 } = userSlice.actions;
 
 export default userSlice.reducer;
