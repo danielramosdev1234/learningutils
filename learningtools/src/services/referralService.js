@@ -63,22 +63,18 @@ export const confirmInviteAndReward = async (referrerId, newUserId) => {
     }
 
     const referrerData = referrerDoc.data();
-    const successful = referrerData.referral?.successfulInvites || [];
+    const referralData = referrerData.referral || {};
+    const successful = referralData.successfulInvites || [];
 
-    // ⭐ MUDANÇA: Verifica se já foi processado (evita duplicatas)
     if (successful.includes(newUserId)) {
       console.log('⚠️ Recompensa já processada para este usuário');
       return false;
     }
 
-    // Calcula recompensas
-    const currentInvites = referrerData.referral?.totalInvites || 0;
+    const currentInvites = referralData.totalInvites || 0;
     const newTotalInvites = currentInvites + 1;
-
-    // +5 base por amigo
     const baseReward = 5;
 
-    // Verifica milestone bonus
     let milestoneBonus = 0;
     const MILESTONES = { 5: 10, 10: 25, 25: 100 };
 
@@ -86,22 +82,27 @@ export const confirmInviteAndReward = async (referrerId, newUserId) => {
       const m = parseInt(milestone);
       if (newTotalInvites === m) {
         milestoneBonus = bonus;
-        console.log(`🎉 MILESTONE ATINGIDO: ${m} amigos = +${bonus} frases extras!`);
       }
     });
 
     const totalReward = baseReward + milestoneBonus;
 
-    // ⭐ ATUALIZA: Agora vai direto para successfulInvites (sem pending)
+    // ⭐ ATUALIZA O OBJETO REFERRAL COMPLETO (não subcampos)
+    const updatedReferral = {
+      ...referralData,
+      totalInvites: newTotalInvites,
+      successfulInvites: [...successful, newUserId],
+      rewards: {
+        skipPhrases: (referralData.rewards?.skipPhrases || 0) + totalReward,
+        totalEarned: (referralData.rewards?.totalEarned || 0) + totalReward
+      }
+    };
+
     await updateDoc(referrerDocRef, {
-      'referral.totalInvites': increment(1),
-      'referral.successfulInvites': arrayUnion(newUserId),
-      'referral.rewards.skipPhrases': increment(totalReward),
-      'referral.rewards.totalEarned': increment(totalReward)
+      referral: updatedReferral  // Atualiza o objeto inteiro
     });
 
-    console.log(`✅ Recompensa processada: +${totalReward} frases (${baseReward} base + ${milestoneBonus} milestone)`);
-    console.log(`📊 Total de amigos: ${newTotalInvites}`);
+    console.log(`✅ Recompensa processada: +${totalReward} frases`);
 
     return {
       success: true,
