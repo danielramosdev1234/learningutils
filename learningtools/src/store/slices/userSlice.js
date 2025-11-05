@@ -134,7 +134,7 @@ export const initializeUser = createAsyncThunk(
           existingReferredBy: userData?.referral?.referredBy
         }));
 
-        // 2️⃣ ⭐ PROCESSA REFERRAL IMEDIATAMENTE NO LOGIN
+        // ⭐ MOVIDO PARA FORA: Processa referral SEMPRE, mesmo na primeira vez
         if (referredByCode && !userData?.referral?.referredBy) {
           console.log('🎯 PROCESSANDO CÓDIGO DE CONVITE:', referredByCode);
 
@@ -145,9 +145,11 @@ export const initializeUser = createAsyncThunk(
               console.log('✅ Referral registrado com sucesso!');
               console.log('   Referrer ID:', result.referrerId);
 
-              // ⭐ NOVA LÓGICA: Processa recompensa IMEDIATAMENTE
+              // Processa recompensa IMEDIATAMENTE
               console.log('💰 Processando recompensa para quem convidou...');
               const rewardResult = await confirmInviteAndReward(result.referrerId, currentUser.uid);
+
+              console.log('🎁 RESULTADO DA RECOMPENSA:', rewardResult);
 
               if (rewardResult && rewardResult.success) {
                 console.log('🎉 RECOMPENSA ENTREGUE!');
@@ -157,13 +159,15 @@ export const initializeUser = createAsyncThunk(
                 if (rewardResult.milestoneReached) {
                   console.log('🏆 MILESTONE ALCANÇADO!');
                 }
+              } else {
+                console.error('❌ FALHA NA RECOMPENSA:', rewardResult);
               }
 
               // Limpa localStorage
               clearReferredBy();
               markReferralAsProcessed();
 
-              // ⭐ Atualiza userData para incluir referredBy
+              // Atualiza userData para incluir referredBy
               if (userData) {
                 userData.referral = userData.referral || {};
                 userData.referral.referredBy = referredByCode;
@@ -180,6 +184,7 @@ export const initializeUser = createAsyncThunk(
           clearReferredBy();
         }
 
+        // ⭐ RETORNA OS DADOS (com ou sem userData)
         if (userData) {
           return {
             mode: 'authenticated',
@@ -188,10 +193,13 @@ export const initializeUser = createAsyncThunk(
             progress: userData.progress,
             stats: userData.stats,
             levelSystem: userData.levelSystem || initialState.levelSystem,
-            referral: userData.referral || initialState.referral
+            referral: userData.referral || {
+              ...initialState.referral,
+              referredBy: referredByCode || null
+            }
           };
         } else {
-          // Primeira vez
+          // ⭐ PRIMEIRA VEZ: Inclui referredBy no estado inicial
           return {
             mode: 'authenticated',
             userId: currentUser.uid,

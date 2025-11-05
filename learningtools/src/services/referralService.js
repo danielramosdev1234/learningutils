@@ -59,16 +59,22 @@ export const confirmInviteAndReward = async (referrerId, newUserId) => {
 
     if (!referrerDoc.exists()) {
       console.error('❌ Referrer não encontrado');
-      return false;
+      return { success: false, error: 'Referrer não encontrado' };
     }
 
     const referrerData = referrerDoc.data();
     const referralData = referrerData.referral || {};
     const successful = referralData.successfulInvites || [];
 
+    console.log('📊 Dados atuais do referrer:', {
+      totalInvites: referralData.totalInvites,
+      successfulInvites: successful,
+      skipPhrases: referralData.rewards?.skipPhrases
+    });
+
     if (successful.includes(newUserId)) {
       console.log('⚠️ Recompensa já processada para este usuário');
-      return false;
+      return { success: false, error: 'Já processado' };
     }
 
     const currentInvites = referralData.totalInvites || 0;
@@ -87,7 +93,15 @@ export const confirmInviteAndReward = async (referrerId, newUserId) => {
 
     const totalReward = baseReward + milestoneBonus;
 
-    // ⭐ ATUALIZA O OBJETO REFERRAL COMPLETO (não subcampos)
+    console.log('💎 Calculando recompensa:', {
+      currentInvites,
+      newTotalInvites,
+      baseReward,
+      milestoneBonus,
+      totalReward
+    });
+
+    // Atualiza o objeto referral completo
     const updatedReferral = {
       ...referralData,
       totalInvites: newTotalInvites,
@@ -98,11 +112,29 @@ export const confirmInviteAndReward = async (referrerId, newUserId) => {
       }
     };
 
-    await updateDoc(referrerDocRef, {
-      referral: updatedReferral  // Atualiza o objeto inteiro
-    });
+    console.log('📝 Tentando atualizar com:', updatedReferral);
+
+    // ⭐ TENTA ATUALIZAR E CAPTURA O ERRO EXATO
+    try {
+      await updateDoc(referrerDocRef, {
+        referral: updatedReferral
+      });
+
+      console.log('✅ Atualização bem-sucedida!');
+    } catch (updateError) {
+      console.error('❌ ERRO NA ATUALIZAÇÃO DO FIRESTORE:', updateError);
+      console.error('   Código:', updateError.code);
+      console.error('   Mensagem:', updateError.message);
+
+      return {
+        success: false,
+        error: updateError.message,
+        code: updateError.code
+      };
+    }
 
     console.log(`✅ Recompensa processada: +${totalReward} frases`);
+    console.log(`📊 Total de amigos: ${newTotalInvites}`);
 
     return {
       success: true,
@@ -112,8 +144,12 @@ export const confirmInviteAndReward = async (referrerId, newUserId) => {
     };
 
   } catch (error) {
-    console.error('❌ Erro ao processar recompensa:', error);
-    return false;
+    console.error('❌ ERRO GERAL ao processar recompensa:', error);
+    console.error('   Stack:', error.stack);
+    return {
+      success: false,
+      error: error.message
+    };
   }
 };
 
