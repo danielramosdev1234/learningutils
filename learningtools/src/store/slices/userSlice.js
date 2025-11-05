@@ -25,7 +25,7 @@ import {
 } from '../../utils/referralUtils';
 import {
   registerReferralUsage,
-  checkAndProcessFirstPhraseReferral
+  confirmInviteAndReward
 } from '../../services/referralService';
 
 // Estado inicial
@@ -41,24 +41,23 @@ const initialState = {
     photoURL: null
   },
 
-  // ✅ NOVO: Sistema de Referral
-    referral: {
-      code: null,              // Código único do usuário (ex: DANIEL-XK7P)
-      referredBy: null,        // Código de quem convidou
-      totalInvites: 0,         // Total de amigos convidados
-      successfulInvites: [],   // IDs dos amigos que completaram primeira frase
-      pending: [],             // IDs dos amigos que ainda não completaram
-      rewards: {
-        skipPhrases: 0,        // Quantas frases pode pular
-        totalEarned: 0         // Total acumulado de recompensas
-      },
-      hasReceivedWelcomeBonus: false  // Se já recebeu bônus inicial
+  // ✅ Sistema de Referral
+  referral: {
+    code: null,
+    referredBy: null,
+    totalInvites: 0,
+    successfulInvites: [],
+    rewards: {
+      skipPhrases: 0,
+      totalEarned: 0
     },
+    hasReceivedWelcomeBonus: false
+  },
 
   levelSystem: {
     currentLevel: 1,
-    globalCompletedPhrases: [],  // IDs das frases
-    globalCompletedIndices: [],  // ✅ NOVO: Índices das frases (para exibição)
+    globalCompletedPhrases: [],
+    globalCompletedIndices: [],
     showLevelUpModal: false,
     pendingLevelUp: null
   },
@@ -79,25 +78,23 @@ const initialState = {
     correctCount: 0,
     accuracy: 0,
     streak: {
-        current: 0,
-        longest: 0,
-        lastActivityDate: null,
-        history: [],
-        freezes: 0,
-        freezesUsed: [],
-        nextRewardAt: 7,
-        rewardsEarned: [],
-        showRewardModal: false,
-        pendingReward: null
-      },
+      current: 0,
+      longest: 0,
+      lastActivityDate: null,
+      history: [],
+      freezes: 0,
+      freezesUsed: [],
+      nextRewardAt: 7,
+      rewardsEarned: [],
+      showRewardModal: false,
+      pendingReward: null
+    },
     challengeHighScore: 0
   },
 
-
-
   // Incentivos
   incentives: {
-    phrasesUntilPrompt: 5, // Mostra modal após 5 frases
+    phrasesUntilPrompt: 5,
     hasSeenPrompt: false,
     lastPromptAt: null
   },
@@ -105,7 +102,7 @@ const initialState = {
   // Status
   loading: false,
   error: null,
-  syncStatus: 'synced' // 'synced' | 'syncing' | 'error'
+  syncStatus: 'synced'
 };
 
 // Thunks Assíncronos
@@ -118,7 +115,7 @@ export const initializeUser = createAsyncThunk(
   async (_, { rejectWithValue, dispatch }) => {
     try {
       const currentUser = getCurrentUser();
-      const referredByCode = getReferredBy(); // Detecta ANTES
+      const referredByCode = getReferredBy();
 
       console.log('🔍 Inicializando usuário...');
       console.log('   Autenticado:', !!currentUser);
@@ -137,7 +134,7 @@ export const initializeUser = createAsyncThunk(
           existingReferredBy: userData?.referral?.referredBy
         }));
 
-        // 2️⃣ ⭐ PROCESSA REFERRAL SE EXISTIR E NÃO FOI PROCESSADO
+        // 2️⃣ ⭐ PROCESSA REFERRAL IMEDIATAMENTE NO LOGIN
         if (referredByCode && !userData?.referral?.referredBy) {
           console.log('🎯 PROCESSANDO CÓDIGO DE CONVITE:', referredByCode);
 
@@ -147,13 +144,26 @@ export const initializeUser = createAsyncThunk(
             if (result && result.success) {
               console.log('✅ Referral registrado com sucesso!');
               console.log('   Referrer ID:', result.referrerId);
-              console.log('   Você foi adicionado aos pending dele!');
+
+              // ⭐ NOVA LÓGICA: Processa recompensa IMEDIATAMENTE
+              console.log('💰 Processando recompensa para quem convidou...');
+              const rewardResult = await confirmInviteAndReward(result.referrerId, currentUser.uid);
+
+              if (rewardResult && rewardResult.success) {
+                console.log('🎉 RECOMPENSA ENTREGUE!');
+                console.log(`   +${rewardResult.reward} frases para quem convidou`);
+                console.log(`   Total de amigos: ${rewardResult.totalInvites}`);
+
+                if (rewardResult.milestoneReached) {
+                  console.log('🏆 MILESTONE ALCANÇADO!');
+                }
+              }
 
               // Limpa localStorage
               clearReferredBy();
               markReferralAsProcessed();
 
-              // ⭐ ATUALIZA userData para incluir referredBy
+              // ⭐ Atualiza userData para incluir referredBy
               if (userData) {
                 userData.referral = userData.referral || {};
                 userData.referral.referredBy = referredByCode;
@@ -164,10 +174,6 @@ export const initializeUser = createAsyncThunk(
             }
           } catch (error) {
             console.error('❌ ERRO ao processar referral:', error);
-            console.error('   Verifique:');
-            console.error('   1. Índice do Firestore foi criado?');
-            console.error('   2. Código existe no banco?');
-            console.error('   3. Regras do Firestore permitem update?');
           }
         } else if (referredByCode && userData?.referral?.referredBy) {
           console.log('ℹ️ Referral já foi processado anteriormente');
@@ -243,7 +249,6 @@ export const initializeReferral = createAsyncThunk(
   'user/initializeReferral',
   async ({ userId, displayName, existingCode, existingReferredBy }, { rejectWithValue }) => {
     try {
-      // ✅ Prioridade: existingCode > localStorage > gera novo
       let code = existingCode || getMyReferralCode();
 
       if (!code) {
@@ -254,7 +259,6 @@ export const initializeReferral = createAsyncThunk(
         console.log('♻️ Código existente recuperado:', code);
       }
 
-      // ✅ Mantém referredBy se já existir no Firestore
       const referredBy = existingReferredBy || getReferredBy();
 
       trackReferralEvent('initialized', { code, referredBy });
@@ -268,48 +272,6 @@ export const initializeReferral = createAsyncThunk(
     }
   }
 );
-
-/**
- * Processa recompensa quando novo usuário completa primeira frase
- */
-export const processReferralReward = createAsyncThunk(
-  'user/processReferralReward',
-  async ({ newUserId }, { getState, rejectWithValue }) => {
-    try {
-      const state = getState().user;
-
-      // Verifica se já processou
-      if (hasProcessedReferral()) {
-        console.log('⚠️ Referral já processado anteriormente');
-        return null;
-      }
-
-      const referredBy = getReferredBy();
-      if (!referredBy) {
-        console.log('ℹ️ Usuário não foi convidado por ninguém');
-        return null;
-      }
-
-      // Marca como processado (evita duplicatas)
-      markReferralAsProcessed();
-      clearReferredBy();
-
-      trackReferralEvent('reward_earned', {
-        referrer: referredBy,
-        newUser: newUserId
-      });
-
-      return {
-        referrerCode: referredBy,
-        newUserId,
-        reward: 5 // +5 pular frases para quem convidou
-      };
-    } catch (error) {
-      return rejectWithValue(error.message);
-    }
-  }
-);
-
 
 /**
  * Faz login com Google
@@ -361,10 +323,8 @@ export const logout = createAsyncThunk(
   'user/logout',
   async (_, { getState, rejectWithValue }) => {
     try {
-      // Salva dados atuais como guest ANTES de deslogar
       const currentState = getState().user;
       if (currentState.mode === 'authenticated') {
-        // Salva progresso atual no localStorage como guest
         saveGuestData(
           currentState.progress,
           currentState.stats,
@@ -373,8 +333,6 @@ export const logout = createAsyncThunk(
       }
 
       await authSignOut();
-
-      // Cria novo guest
       const newGuestId = getOrCreateGuestId();
 
       return {
@@ -400,13 +358,11 @@ export const saveProgress = createAsyncThunk(
     console.log('   Referral Code:', state.referral?.code);
 
     if (state.mode === 'authenticated') {
-      // ✅ SEMPRE inclui referral ao salvar
       const referralToSave = state.referral || {
         code: null,
         referredBy: null,
         totalInvites: 0,
         successfulInvites: [],
-        pending: [],
         rewards: {
           skipPhrases: 0,
           totalEarned: 0
@@ -416,19 +372,17 @@ export const saveProgress = createAsyncThunk(
 
       console.log('📊 Dados de referral a salvar:', referralToSave);
 
-      // Salva no Firestore
       await saveAuthUserData(
         state.userId,
         state.profile,
         state.progress,
         state.stats,
         state.levelSystem,
-        referralToSave // ✅ SEMPRE inclui referral
+        referralToSave
       );
 
       console.log('✅ Dados salvos no Firestore (incluindo referral)');
     } else {
-      // Guest
       saveGuestData(
         state.progress,
         state.stats,
@@ -453,7 +407,6 @@ const userSlice = createSlice({
       const { phraseId, phraseIndex } = action.payload;
       const { currentLevel } = state.levelSystem;
 
-      // Inicializa arrays se não existirem
       if (!state.levelSystem.globalCompletedPhrases) {
         state.levelSystem.globalCompletedPhrases = [];
       }
@@ -461,7 +414,6 @@ const userSlice = createSlice({
         state.levelSystem.globalCompletedIndices = [];
       }
 
-      // ✅ Adiciona ID (permite duplicatas para contar total de práticas)
       if (!state.levelSystem.globalCompletedPhrases.includes(phraseId)) {
         state.levelSystem.globalCompletedPhrases.push(phraseId);
         console.log(`✅ Frase ${phraseIndex + 1} (ID: ${phraseId}) adicionada!`);
@@ -469,23 +421,19 @@ const userSlice = createSlice({
         console.log(`ℹ️ Frase ${phraseIndex + 1} já estava completada (prática adicional)`);
       }
 
-      // ✅ Adiciona índice (ÚNICO - para progresso real)
       if (!state.levelSystem.globalCompletedIndices.includes(phraseIndex)) {
         state.levelSystem.globalCompletedIndices.push(phraseIndex);
         console.log(`📊 Índice ${phraseIndex} registrado nos completados`);
       }
 
-      // ✅ IMPORTANTE: Usar globalCompletedIndices para cálculo de level up
       const phrasesNeededForCurrentLevel = currentLevel * 10;
-      const totalCompleted = state.levelSystem.globalCompletedIndices.length; // ✅ Usar índices únicos!
+      const totalCompleted = state.levelSystem.globalCompletedIndices.length;
 
       console.log(`📈 Progresso: ${totalCompleted}/${phrasesNeededForCurrentLevel} frases únicas`);
 
-      // Verifica se completou o nível atual
       if (totalCompleted >= phrasesNeededForCurrentLevel) {
         console.log(`🎉 Level ${currentLevel} completed! (${totalCompleted}/${phrasesNeededForCurrentLevel})`);
 
-        // Desbloqueia próximo nível
         const nextLevel = currentLevel + 1;
         state.levelSystem.currentLevel = nextLevel;
         state.levelSystem.showLevelUpModal = true;
@@ -496,12 +444,12 @@ const userSlice = createSlice({
     },
 
     updateReferralData: (state, action) => {
-        state.referral = {
-          ...state.referral,
-          ...action.payload
-        };
-        console.log('✅ Referral data updated:', action.payload);
-      },
+      state.referral = {
+        ...state.referral,
+        ...action.payload
+      };
+      console.log('✅ Referral data updated:', action.payload);
+    },
 
     giveWelcomeBonus: (state) => {
       if (!state.referral.hasReceivedWelcomeBonus && state.referral.referredBy) {
@@ -516,82 +464,48 @@ const userSlice = createSlice({
       }
     },
 
-    // ✅ NOVO: Usar "pular frase"
-      useSkipPhrase: (state) => {
-        if (state.referral.rewards.skipPhrases > 0) {
-          state.referral.rewards.skipPhrases -= 1;
-          console.log(`🎁 Frase pulada! Restam: ${state.referral.rewards.skipPhrases}`);
+    useSkipPhrase: (state) => {
+      if (state.referral.rewards.skipPhrases > 0) {
+        state.referral.rewards.skipPhrases -= 1;
+        console.log(`🎁 Frase pulada! Restam: ${state.referral.rewards.skipPhrases}`);
 
-          trackReferralEvent('skip_phrase_used', {
-            remaining: state.referral.rewards.skipPhrases
-          });
-        } else {
-          console.log('⚠️ Sem frases para pular disponíveis');
-        }
-      },
+        trackReferralEvent('skip_phrase_used', {
+          remaining: state.referral.rewards.skipPhrases
+        });
+      } else {
+        console.log('⚠️ Sem frases para pular disponíveis');
+      }
+    },
 
-       // ✅ NOVO: Adicionar convite pendente
-        addPendingInvite: (state, action) => {
-          const { userId } = action.payload;
+    confirmInviteSuccess: (state, action) => {
+      const { userId } = action.payload;
 
-          if (!state.referral.pending.includes(userId)) {
-            state.referral.pending.push(userId);
-            console.log(`📝 Convite pendente adicionado: ${userId}`);
-          }
-        },
+      if (!state.referral.successfulInvites.includes(userId)) {
+        state.referral.successfulInvites.push(userId);
+        state.referral.totalInvites += 1;
 
-        // ✅ NOVO: Converter pendente em sucesso (quando amigo completa frase)
-          confirmInviteSuccess: (state, action) => {
-            const { userId } = action.payload;
+        const baseReward = 5;
+        state.referral.rewards.skipPhrases += baseReward;
+        state.referral.rewards.totalEarned += baseReward;
 
-            // Remove dos pendentes
-            state.referral.pending = state.referral.pending.filter(id => id !== userId);
+        const { skipPhrases } = calculateRewards(state.referral.totalInvites);
+        state.referral.rewards.skipPhrases = skipPhrases;
 
-            // Adiciona aos sucessos
-            if (!state.referral.successfulInvites.includes(userId)) {
-              state.referral.successfulInvites.push(userId);
-              state.referral.totalInvites += 1;
+        console.log(`✅ Amigo confirmado! Total: ${state.referral.totalInvites}`);
+        console.log(`🎁 Nova recompensa: ${state.referral.rewards.skipPhrases} frases`);
 
-              // Adiciona recompensa
-              const baseReward = 5; // +5 por amigo
-              state.referral.rewards.skipPhrases += baseReward;
-              state.referral.rewards.totalEarned += baseReward;
-
-              // Verifica milestone
-              const { skipPhrases } = calculateRewards(state.referral.totalInvites);
-              state.referral.rewards.skipPhrases = skipPhrases;
-
-              console.log(`✅ Amigo confirmado! Total: ${state.referral.totalInvites}`);
-              console.log(`🎁 Nova recompensa: ${state.referral.rewards.skipPhrases} frases`);
-
-              trackReferralEvent('invite_confirmed', {
-                totalInvites: state.referral.totalInvites,
-                totalRewards: state.referral.rewards.skipPhrases
-              });
-            }
-          },
-
-          // ✅ NOVO: Dar bônus de boas-vindas para novo usuário
-            giveWelcomeBonus: (state) => {
-              if (!state.referral.hasReceivedWelcomeBonus && state.referral.referredBy) {
-                state.referral.rewards.skipPhrases += 3; // +3 bônus inicial
-                state.referral.hasReceivedWelcomeBonus = true;
-
-                console.log('🎁 Bônus de boas-vindas: +3 frases!');
-
-                trackReferralEvent('welcome_bonus_received', {
-                  referredBy: state.referral.referredBy
-                });
-              }
-            },
-
+        trackReferralEvent('invite_confirmed', {
+          totalInvites: state.referral.totalInvites,
+          totalRewards: state.referral.rewards.skipPhrases
+        });
+      }
+    },
 
     closeLevelUpModal: (state) => {
       state.levelSystem.showLevelUpModal = false;
       state.levelSystem.pendingLevelUp = null;
     },
 
-    // Atualiza progresso do ChunkTrainer
     updateChunkProgress: (state, action) => {
       const { currentIndex, completedPhrases } = action.payload;
       state.progress.chunkTrainer.currentIndex = currentIndex;
@@ -599,28 +513,11 @@ const userSlice = createSlice({
       state.progress.chunkTrainer.completedCount = completedPhrases.length;
     },
 
-    // Incrementa contadores de estatísticas
     incrementPhraseCompleted: (state) => {
       state.stats.totalPhrases += 1;
       state.stats.totalAttempts += 1;
       state.stats.correctCount += 1;
       state.stats.accuracy = Math.round((state.stats.correctCount / state.stats.totalAttempts) * 100);
-
-      // ⭐ VERIFICA REFERRAL NA PRIMEIRA FRASE
-      if (state.stats.totalPhrases === 1 && state.referral.referredBy) {
-        console.log('🎯 Primeira frase! Disparando processamento de referral...');
-
-        // Dispara async function (será tratado no componente via useEffect)
-        checkAndProcessFirstPhraseReferral(
-          state.userId,
-          state.stats.totalPhrases,
-          state.referral.referredBy
-        ).then(() => {
-          console.log('✅ Referral processado com sucesso');
-        }).catch(err => {
-          console.error('❌ Erro ao processar referral:', err);
-        });
-      }
 
       // Atualiza streak
       const today = new Date().toISOString().split('T')[0];
@@ -639,31 +536,26 @@ const userSlice = createSlice({
         userSlice.caseReducers.updateStreak(state);
       }
 
-      // Controle de incentivo
       state.incentives.phrasesUntilPrompt -= 1;
     },
 
-    // Registra tentativa incorreta
     incrementIncorrectAttempt: (state) => {
       state.stats.totalAttempts += 1;
       state.stats.accuracy = Math.round((state.stats.correctCount / state.stats.totalAttempts) * 100);
     },
 
-    // Atualiza high score do challenge
     updateChallengeHighScore: (state, action) => {
       if (action.payload > state.stats.challengeHighScore) {
         state.stats.challengeHighScore = action.payload;
       }
     },
 
-    // Marca que viu o modal de incentivo
     markIncentiveAsSeen: (state) => {
       state.incentives.hasSeenPrompt = true;
       state.incentives.lastPromptAt = Date.now();
-      state.incentives.phrasesUntilPrompt = 10; // Reseta contador
+      state.incentives.phrasesUntilPrompt = 10;
     },
 
-    // Reset do incentivo (para mostrar novamente depois)
     resetIncentive: (state) => {
       state.incentives.phrasesUntilPrompt = 5;
     },
@@ -673,7 +565,6 @@ const userSlice = createSlice({
       state.stats.streak.pendingReward = null;
     },
 
-
     useFreeze: (state, action) => {
       const { missedDate } = action.payload;
 
@@ -682,16 +573,13 @@ const userSlice = createSlice({
         return;
       }
 
-      // Usa 1 freeze
       state.stats.streak.freezes -= 1;
       state.stats.streak.freezesUsed.push(missedDate);
 
-      // Adiciona o dia perdido ao histórico (como se tivesse praticado)
       if (!state.stats.streak.history.includes(missedDate)) {
         state.stats.streak.history.push(missedDate);
       }
 
-      // Mantém o streak
       const today = new Date().toISOString().split('T')[0];
       state.stats.streak.lastActivityDate = today;
 
@@ -702,14 +590,12 @@ const userSlice = createSlice({
       const today = new Date().toISOString().split('T')[0];
       const lastDate = state.stats.streak.lastActivityDate;
 
-      // Inicializa arrays se não existirem
       if (!state.stats.streak.history) state.stats.streak.history = [];
       if (!state.stats.streak.freezes) state.stats.streak.freezes = 0;
       if (!state.stats.streak.freezesUsed) state.stats.streak.freezesUsed = [];
       if (!state.stats.streak.nextRewardAt) state.stats.streak.nextRewardAt = 7;
       if (!state.stats.streak.rewardsEarned) state.stats.streak.rewardsEarned = [];
 
-      // Primeira vez
       if (!lastDate) {
         state.stats.streak.current = 1;
         state.stats.streak.longest = 1;
@@ -720,16 +606,13 @@ const userSlice = createSlice({
         return;
       }
 
-      // Já praticou hoje
       if (lastDate === today) return;
 
-      // Calcula diferença de dias
       const lastDateObj = new Date(lastDate + 'T00:00:00');
       const todayObj = new Date(today + 'T00:00:00');
       const diffDays = Math.floor((todayObj - lastDateObj) / (1000 * 60 * 60 * 24));
 
       if (diffDays === 1) {
-        // ✅ CONSECUTIVO!
         state.stats.streak.current += 1;
         state.stats.streak.lastActivityDate = today;
 
@@ -737,12 +620,10 @@ const userSlice = createSlice({
           state.stats.streak.history.push(today);
         }
 
-        // Atualiza longest
         if (state.stats.streak.current > state.stats.streak.longest) {
           state.stats.streak.longest = state.stats.streak.current;
         }
 
-        // 🎁 VERIFICA RECOMPENSA (múltiplos de 7)
         if (state.stats.streak.current % 7 === 0 && state.stats.streak.current >= 7) {
           const milestone = state.stats.streak.current;
           const alreadyRewarded = state.stats.streak.rewardsEarned.some(r => r.day === milestone);
@@ -764,12 +645,9 @@ const userSlice = createSlice({
         console.log(`🔥 Streak: ${state.stats.streak.current} dias!`);
 
       } else if (diffDays === 2 && state.stats.streak.freezes > 0) {
-        // ❄️ PODE USAR FREEZE (perdeu 1 dia, mas tem freeze)
-        // Não faz nada aqui - será tratado no modal
         console.log(`⚠️ Perdeu 1 dia! Você tem ${state.stats.streak.freezes} freeze(s) disponível(is)`);
 
       } else {
-        // ❌ QUEBROU O STREAK (sem freezes ou perdeu 2+ dias)
         console.log(`💔 Streak quebrado: ${state.stats.streak.current} dias`);
         state.stats.streak.current = 1;
         state.stats.streak.lastActivityDate = today;
@@ -778,13 +656,10 @@ const userSlice = createSlice({
           state.stats.streak.history.push(today);
         }
 
-        // Reseta o próximo milestone
         state.stats.streak.nextRewardAt = 7;
       }
     },
 
-
-    // 🔄 NOVO: Atualiza globalCompletedIndices (para migração de dados antigos)
     updateLevelSystemIndices: (state, action) => {
       const { indices } = action.payload;
       state.levelSystem.globalCompletedIndices = indices;
@@ -792,7 +667,6 @@ const userSlice = createSlice({
     }
   },
   extraReducers: (builder) => {
-    // Initialize
     builder
       .addCase(initializeUser.pending, (state) => {
         state.loading = true;
@@ -811,7 +685,6 @@ const userSlice = createSlice({
         state.error = action.payload;
       });
 
-    // Login
     builder
       .addCase(loginWithGoogle.pending, (state) => {
         state.loading = true;
@@ -831,7 +704,6 @@ const userSlice = createSlice({
         state.error = action.payload;
       });
 
-    // Logout
     builder
       .addCase(logout.fulfilled, (state, action) => {
         state.mode = 'guest';
@@ -842,24 +714,13 @@ const userSlice = createSlice({
         state.incentives = initialState.incentives;
       });
 
-      // ✅ Initialize Referral
-        builder.addCase(initializeReferral.fulfilled, (state, action) => {
-          state.referral.code = action.payload.code;
-          state.referral.referredBy = action.payload.referredBy;
+    builder.addCase(initializeReferral.fulfilled, (state, action) => {
+      state.referral.code = action.payload.code;
+      state.referral.referredBy = action.payload.referredBy;
 
-          console.log('✅ Referral inicializado:', action.payload);
-        });
+      console.log('✅ Referral inicializado:', action.payload);
+    });
 
-        // ✅ Process Referral Reward
-        builder.addCase(processReferralReward.fulfilled, (state, action) => {
-          if (action.payload) {
-            // Esta ação seria disparada no backend/Firestore
-            // para atualizar o usuário que convidou
-            console.log('💰 Recompensa de referral processada:', action.payload);
-          }
-        });
-
-    // Save Progress
     builder
       .addCase(saveProgress.pending, (state) => {
         state.syncStatus = 'syncing';
@@ -882,15 +743,14 @@ export const {
   resetIncentive,
   markPhraseCompleted,
   closeLevelUpModal,
-  updateLevelSystemIndices ,
+  updateLevelSystemIndices,
   updateStreak,
   useFreeze,
   closeRewardModal,
   useSkipPhrase,
-    addPendingInvite,
-    confirmInviteSuccess,
-    giveWelcomeBonus,
-    updateReferralData
+  confirmInviteSuccess,
+  giveWelcomeBonus,
+  updateReferralData
 } = userSlice.actions;
 
 export default userSlice.reducer;

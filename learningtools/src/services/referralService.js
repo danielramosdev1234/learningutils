@@ -1,5 +1,4 @@
 // src/services/referralService.js
-// ⚠️ SALVAR EM: src/services/referralService.js
 
 import {
   collection,
@@ -47,34 +46,13 @@ export const findUserByReferralCode = async (referralCode) => {
 };
 
 /**
- * Adiciona novo usuário à lista de pendentes do referrer
- * @param {string} referrerId - ID do usuário que convidou
- * @param {string} newUserId - ID do novo usuário
- */
-export const addPendingInvite = async (referrerId, newUserId) => {
-  try {
-    const referrerDocRef = doc(db, 'users', referrerId);
-
-    await updateDoc(referrerDocRef, {
-      'referral.pending': arrayUnion(newUserId)
-    });
-
-    console.log(`✅ ${newUserId} adicionado aos pendentes de ${referrerId}`);
-    return true;
-  } catch (error) {
-    console.error('❌ Erro ao adicionar pendente:', error);
-    return false;
-  }
-};
-
-/**
- * Processa recompensa quando amigo completa primeira frase
+ * ⭐ ATUALIZADO: Processa recompensa IMEDIATAMENTE quando amigo faz login
  * @param {string} referrerId - ID de quem convidou
  * @param {string} newUserId - ID do novo usuário
  */
 export const confirmInviteAndReward = async (referrerId, newUserId) => {
   try {
-    console.log('🎁 Processando recompensa:', { referrerId, newUserId });
+    console.log('🎁 Processando recompensa IMEDIATA:', { referrerId, newUserId });
 
     const referrerDocRef = doc(db, 'users', referrerId);
     const referrerDoc = await getDoc(referrerDocRef);
@@ -85,16 +63,9 @@ export const confirmInviteAndReward = async (referrerId, newUserId) => {
     }
 
     const referrerData = referrerDoc.data();
-    const pending = referrerData.referral?.pending || [];
     const successful = referrerData.referral?.successfulInvites || [];
 
-    // Verifica se está nos pendentes
-    if (!pending.includes(newUserId)) {
-      console.log('⚠️ Usuário não está nos pendentes');
-      return false;
-    }
-
-    // Verifica se já foi processado
+    // ⭐ MUDANÇA: Verifica se já foi processado (evita duplicatas)
     if (successful.includes(newUserId)) {
       console.log('⚠️ Recompensa já processada para este usuário');
       return false;
@@ -113,7 +84,6 @@ export const confirmInviteAndReward = async (referrerId, newUserId) => {
 
     Object.entries(MILESTONES).forEach(([milestone, bonus]) => {
       const m = parseInt(milestone);
-      // Se acabou de atingir o milestone
       if (newTotalInvites === m) {
         milestoneBonus = bonus;
         console.log(`🎉 MILESTONE ATINGIDO: ${m} amigos = +${bonus} frases extras!`);
@@ -122,11 +92,10 @@ export const confirmInviteAndReward = async (referrerId, newUserId) => {
 
     const totalReward = baseReward + milestoneBonus;
 
-    // Atualiza Firestore
+    // ⭐ ATUALIZA: Agora vai direto para successfulInvites (sem pending)
     await updateDoc(referrerDocRef, {
       'referral.totalInvites': increment(1),
       'referral.successfulInvites': arrayUnion(newUserId),
-      'referral.pending': referrerData.referral.pending.filter(id => id !== newUserId),
       'referral.rewards.skipPhrases': increment(totalReward),
       'referral.rewards.totalEarned': increment(totalReward)
     });
@@ -154,7 +123,7 @@ export const confirmInviteAndReward = async (referrerId, newUserId) => {
  */
 export const registerReferralUsage = async (newUserId, referrerCode) => {
   try {
-    console.log('📝 Registrando uso de referral:', { newUserId, referrerCode });
+    console.log('🔖 Registrando uso de referral:', { newUserId, referrerCode });
 
     // 1. Busca quem convidou
     const referrerData = await findUserByReferralCode(referrerCode);
@@ -164,10 +133,7 @@ export const registerReferralUsage = async (newUserId, referrerCode) => {
       return false;
     }
 
-    // 2. Adiciona aos pendentes
-    await addPendingInvite(referrerData.userId, newUserId);
-
-    // 3. Atualiza documento do novo usuário
+    // 2. Atualiza documento do novo usuário
     const newUserDocRef = doc(db, 'users', newUserId);
     await updateDoc(newUserDocRef, {
       'referral.referredBy': referrerCode
@@ -183,57 +149,5 @@ export const registerReferralUsage = async (newUserId, referrerCode) => {
   } catch (error) {
     console.error('❌ Erro ao registrar referral:', error);
     return false;
-  }
-};
-
-/**
- * Verifica e processa referral quando usuário completa primeira frase
- * Deve ser chamado no incrementPhraseCompleted
- * @param {string} userId - ID do usuário atual
- * @param {number} totalPhrases - Total de frases completadas
- */
-export const checkAndProcessFirstPhraseReferral = async (userId, totalPhrases, referredBy) => {
-  // Só processa na primeira frase
-  if (totalPhrases !== 1) return;
-
-  if (!referredBy) {
-    console.log('ℹ️ Usuário não foi convidado por ninguém');
-    return;
-  }
-
-  console.log('🎯 Primeira frase completada! Processando referral...');
-
-  try {
-    // Busca quem convidou
-    const referrerData = await findUserByReferralCode(referredBy);
-
-    if (!referrerData) {
-      console.error('❌ Referrer não encontrado');
-      return;
-    }
-
-    // Processa recompensa
-    const result = await confirmInviteAndReward(referrerData.userId, userId);
-
-    if (result.success) {
-      console.log('🎉 Recompensa entregue ao referrer!');
-
-      // Analytics
-      if (window.va) {
-        window.va('event', {
-          name: 'referral_reward_earned',
-          data: {
-            referrerId: referrerData.userId,
-            newUserId: userId,
-            reward: result.reward,
-            totalInvites: result.totalInvites,
-            milestoneReached: result.milestoneReached
-          }
-        });
-      }
-    }
-
-  } catch (error) {
-    console.error('❌ Erro ao processar referral de primeira frase:', error);
   }
 };

@@ -1,4 +1,4 @@
-// src/components/PhraseCard.jsx (UPDATED - Next button appears at 80%+)
+// src/components/PhraseCard.jsx (ATUALIZADO - Referral processado no login)
 
 import React, { useState, useEffect, useRef, useMemo  } from 'react';
 import { Volume2, Mic, MicOff, CheckCircle, XCircle, Loader, AlertCircle, Play, Pause, ArrowRight, Gift  } from 'lucide-react';
@@ -12,14 +12,11 @@ import { FireworksCelebration } from '../celebrations/FireworksCelebration';
 import {
   markPhraseCompleted,
   useSkipPhrase,
-  giveWelcomeBonus,
-  confirmInviteSuccess
+  giveWelcomeBonus
 } from '../../store/slices/userSlice';
 import {
   generateReferralShareText,
-  trackReferralEvent,
-  hasProcessedReferral,
-  markReferralAsProcessed // ✅ ADICIONAR
+  trackReferralEvent
 } from '../../utils/referralUtils';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -30,10 +27,8 @@ const isAndroidDevice = () => {
 
 export const PhraseCard = ({ phrase, onSpeak, onCorrectAnswer, onNextPhrase, isActive }) => {
 
- // ✅ Detecta se é Android
- const isAndroid = useMemo(() => true, []);// teste
+ const isAndroid = useMemo(() => true, []);
 
- // ✅ Hook para Desktop/iOS (com gravação de áudio)
  const chunksHook = useSpeechRecognitionForChunks();
 
  const dispatch = useDispatch();
@@ -46,7 +41,6 @@ export const PhraseCard = ({ phrase, onSpeak, onCorrectAnswer, onNextPhrase, isA
    const canSkipPhrase = referral?.rewards?.skipPhrases > 0;
    const [showSkipConfirm, setShowSkipConfirm] = useState(false);
 
- // ✅ Hook para Android (sem gravação)
  const [androidTranscript, setAndroidTranscript] = useState('');
  const [androidError, setAndroidError] = useState('');
  const simpleHook = useSpeechRecognition('en-US', (text, err) => {
@@ -57,7 +51,6 @@ export const PhraseCard = ({ phrase, onSpeak, onCorrectAnswer, onNextPhrase, isA
    }
  });
 
- // ✅ Seleciona o hook apropriado
  const {
    isListening,
    transcript,
@@ -89,7 +82,7 @@ export const PhraseCard = ({ phrase, onSpeak, onCorrectAnswer, onNextPhrase, isA
   const [showFeedback, setShowFeedback] = useState(false);
   const [hasProcessed, setHasProcessed] = useState(false);
   const [isPlayingUserAudio, setIsPlayingUserAudio] = useState(false);
-  const [showIPA, setShowIPA] = useState(false); // NOVO: Estado para toggle IPA
+  const [showIPA, setShowIPA] = useState(false);
   const [showFireworks, setShowFireworks] = useState(false);
 
   const [totalPracticed, setTotalPracticed] = useState(() => {
@@ -102,7 +95,7 @@ export const PhraseCard = ({ phrase, onSpeak, onCorrectAnswer, onNextPhrase, isA
   // Processa o resultado quando terminar de ouvir
   useEffect(() => {
     if (transcript && !isListening && !hasProcessed && transcript.trim() !== '') {
-      console.log('📊 Processing - Phrase:', phrase.text, '| Said:', transcript);
+      console.log('🔊 Processing - Phrase:', phrase.text, '| Said:', transcript);
 
       const comparison = compareTexts(phrase.text, transcript);
       console.log('📈 Result:', comparison.similarity + '%');
@@ -112,19 +105,18 @@ export const PhraseCard = ({ phrase, onSpeak, onCorrectAnswer, onNextPhrase, isA
       setHasProcessed(true);
 
       if (comparison.similarity >= 80) {
-            console.log(`✅ ${comparison.similarity}% - Marking phrase as completed!`);
+        console.log(`✅ ${comparison.similarity}% - Marking phrase as completed!`);
 
-            // Marca frase como completada no Redux
-            dispatch(markPhraseCompleted({
-              phraseId: phrase.id,
-              phraseIndex: phrase.index
-            }));
+        dispatch(markPhraseCompleted({
+          phraseId: phrase.id,
+          phraseIndex: phrase.index
+        }));
 
-            if (onCorrectAnswer) {
-              console.log(`🎉 Auto advancing!`);
-              onCorrectAnswer();
-            }
-          }
+        if (onCorrectAnswer) {
+          console.log(`🎉 Auto advancing!`);
+          onCorrectAnswer();
+        }
+      }
 
       if (comparison.similarity === 100) {
         setShowFireworks(true);
@@ -155,16 +147,14 @@ useEffect(() => {
   setHasProcessed(false);
   setIsPlayingUserAudio(false);
 
-  // Limpa estados do Android
   if (isAndroid) {
     setAndroidTranscript('');
     setAndroidError('');
   }
 }, [phrase.text, phrase.id, isAndroid]);
 
- // ✅ 3. ADICIONAR EFEITO: Dar bônus de boas-vindas na primeira frase
+ // ✅ Dar bônus de boas-vindas na primeira frase (mantido)
   useEffect(() => {
-    // Se foi convidado e ainda não recebeu bônus
     if (
       referral?.referredBy &&
       !referral.hasReceivedWelcomeBonus &&
@@ -175,29 +165,6 @@ useEffect(() => {
     }
   }, [referral, mode, dispatch]);
 
-
-  // ✅ 4. ADICIONAR EFEITO: Processar recompensa de referral ao completar primeira frase
-  useEffect(() => {
-    if (result && result.similarity >= 80) {
-      // Verifica se foi convidado e ainda não processou
-      if (
-        referral?.referredBy &&
-        !hasProcessedReferral() &&
-        mode === 'authenticated'
-      ) {
-        console.log('💰 Processando recompensa de referral...');
-
-        // TODO: Aqui você implementaria a lógica no backend para
-        // dar +5 skip phrases para quem convidou
-        // Por ora, apenas marca como processado
-
-        trackReferralEvent('first_phrase_completed', {
-          referredBy: referral.referredBy
-        });
-      }
-    }
-  }, [result, referral, mode]);
-
 const handleSkipPhrase = () => {
     setShowSkipConfirm(true);
   };
@@ -205,23 +172,19 @@ const handleSkipPhrase = () => {
 const confirmSkipPhrase = () => {
     if (!canSkipPhrase) return;
 
-    // Usa 1 skip phrase
     dispatch(useSkipPhrase());
 
-    // Marca frase como completada
     dispatch(markPhraseCompleted({
       phraseId: phrase.id,
       phraseIndex: phrase.index
     }));
 
-    // Avança para próxima
     if (onCorrectAnswer) {
       onCorrectAnswer();
     }
 
     setShowSkipConfirm(false);
 
-    // Analytics
     trackReferralEvent('phrase_skipped', {
       phraseIndex: phrase.index,
       remaining: referral.rewards.skipPhrases - 1
@@ -239,10 +202,9 @@ const confirmSkipPhrase = () => {
       setHasProcessed(false);
       setIsPlayingUserAudio(false);
 
-      // ✅ ADICIONAR ESTAS LINHAS PARA ANDROID:
       if (isAndroid) {
-        setAndroidTranscript('');  // Limpa transcript do Android
-        setAndroidError('');       // Limpa erro do Android
+        setAndroidTranscript('');
+        setAndroidError('');
       }
 
       startListening();
@@ -300,7 +262,6 @@ const confirmSkipPhrase = () => {
   return (
     <div className={`bg-white rounded-xl shadow-lg p-8 transition-all duration-300 ${isActive ? 'ring-4 ring-blue-400' : ''}`}>
 
-      {/* Header com frase e controles */}
       <div className="text-center mb-6">
         <div className="flex items-center justify-center gap-3 mb-2">
           <h2 className="text-3xl font-bold text-gray-800">{phrase.text}</h2>
@@ -310,14 +271,9 @@ const confirmSkipPhrase = () => {
           <p className="text-gray-500 text-lg italic mb-3">{phrase.translation}</p>
         )}
 
-     {/* NOVO: IPA Transcription */}
-          <IPATranscription text={phrase.text} show={showIPA} />
-
+        <IPATranscription text={phrase.text} show={showIPA} />
       </div>
 
-
-
-      {/* Error Display */}
       {speechError && (
         <div className="mb-4 p-4 bg-red-50 border-2 border-red-300 rounded-lg flex items-center gap-2">
           <AlertCircle className="text-red-600" size={20} />
@@ -330,7 +286,6 @@ const confirmSkipPhrase = () => {
         </div>
       )}
 
-      {/* Botões principais */}
       <div className="flex justify-center gap-2 sm:gap-4 mb-6 flex-wrap">
         <button
           onClick={() => onSpeak(phrase.text)}
@@ -355,19 +310,17 @@ const confirmSkipPhrase = () => {
           <span>{isListening ? 'Stop' : 'Speak'}</span>
         </button>
 
-        {/* ✅ NOVO: Botão Skip Phrase */}
-                {canSkipPhrase && !isListening && (
-                  <button
-                    onClick={handleSkipPhrase}
-                    className="flex items-center gap-1 sm:gap-2 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white px-3 sm:px-6 py-2 sm:py-3 rounded-lg transition-all shadow-md font-semibold text-sm sm:text-base"
-                    title={`Você tem ${referral.rewards.skipPhrases} frases para pular`}
-                  >
-                    <Gift size={20} className="sm:w-6 sm:h-6" />
-                    <span>Skip ({referral.rewards.skipPhrases})</span>
-                  </button>
-                )}
+        {canSkipPhrase && !isListening && (
+          <button
+            onClick={handleSkipPhrase}
+            className="flex items-center gap-1 sm:gap-2 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white px-3 sm:px-6 py-2 sm:py-3 rounded-lg transition-all shadow-md font-semibold text-sm sm:text-base"
+            title={`Você tem ${referral.rewards.skipPhrases} frases para pular`}
+          >
+            <Gift size={20} className="sm:w-6 sm:h-6" />
+            <span>Skip ({referral.rewards.skipPhrases})</span>
+          </button>
+        )}
 
-        {/* 🎯 Botão Next Phrase - Aparece apenas com accuracy ≥ 80% */}
         {result && result.similarity >= 80 && !isListening && (
           <button
             onClick={onNextPhrase}
@@ -379,7 +332,6 @@ const confirmSkipPhrase = () => {
         )}
       </div>
 
-      {/* Botão para ouvir gravação */}
       {audioBlob && (
         <div className="flex justify-center mb-6">
           <button
@@ -405,55 +357,51 @@ const confirmSkipPhrase = () => {
         </div>
       )}
 
-  {/* Feedback resumido original (mantido para compatibilidade) */}
-        {showFeedback && result && !isListening && (
-          <div className={`mt-6 p-5 rounded-lg transition-all ${
-            result.similarity > 80
-              ? 'bg-green-50 border-2 border-green-400 shadow-lg'
-              : 'bg-orange-50 border-2 border-orange-400 shadow-lg'
-          }`}>
-            <div className="flex items-center gap-3 mb-3">
-              {result.similarity > 80 ? (
-                <CheckCircle className="text-green-600" size={32} />
-              ) : (
-                <XCircle className="text-orange-600" size={32} />
-              )}
-              <h3 className={`font-bold text-xl ${result.similarity > 80 ? 'text-green-700' : 'text-orange-700'}`}>
-                {result.similarity > 80 ? 'Perfect! 🎉' : 'Keep Practicing! 💪'}
-              </h3>
-            </div>
-
-            <div className="space-y-2">
-              <div className="bg-white bg-opacity-60 p-3 rounded-lg">
-                <p className="text-gray-700">
-                  <span className="font-semibold">You said:</span> <span className="text-gray-900">"{transcript}"</span>
-                </p>
-              </div>
-
-              <div className="flex items-center justify-between bg-white bg-opacity-60 p-3 rounded-lg">
-                <span className="font-semibold text-gray-700">Accuracy:</span>
-                <span className={`text-2xl font-bold ${
-                  result.similarity > 80 ? 'text-green-600' : 'text-orange-600'
-                }`}>
-                  {result.similarity}%
-                </span>
-              </div>
-
-              {result.similarity > 70 && (
-                    <ShareButton
-                      phraseText={phrase.text}
-                      accuracy={result.similarity}
-                      totalPracticed={totalPracticed}
-                      variant={result.similarity >= 80 ? 'celebration' : 'default'}
-                    />
-                  )}
-
-
-            </div>
+      {showFeedback && result && !isListening && (
+        <div className={`mt-6 p-5 rounded-lg transition-all ${
+          result.similarity > 80
+            ? 'bg-green-50 border-2 border-green-400 shadow-lg'
+            : 'bg-orange-50 border-2 border-orange-400 shadow-lg'
+        }`}>
+          <div className="flex items-center gap-3 mb-3">
+            {result.similarity > 80 ? (
+              <CheckCircle className="text-green-600" size={32} />
+            ) : (
+              <XCircle className="text-orange-600" size={32} />
+            )}
+            <h3 className={`font-bold text-xl ${result.similarity > 80 ? 'text-green-700' : 'text-orange-700'}`}>
+              {result.similarity > 80 ? 'Perfect! 🎉' : 'Keep Practicing! 💪'}
+            </h3>
           </div>
-        )}
 
-      {/* NOVO: Phoneme Feedback - Mostra análise detalhada */}
+          <div className="space-y-2">
+            <div className="bg-white bg-opacity-60 p-3 rounded-lg">
+              <p className="text-gray-700">
+                <span className="font-semibold">You said:</span> <span className="text-gray-900">"{transcript}"</span>
+              </p>
+            </div>
+
+            <div className="flex items-center justify-between bg-white bg-opacity-60 p-3 rounded-lg">
+              <span className="font-semibold text-gray-700">Accuracy:</span>
+              <span className={`text-2xl font-bold ${
+                result.similarity > 80 ? 'text-green-600' : 'text-orange-600'
+              }`}>
+                {result.similarity}%
+              </span>
+            </div>
+
+            {result.similarity > 70 && (
+              <ShareButton
+                phraseText={phrase.text}
+                accuracy={result.similarity}
+                totalPracticed={totalPracticed}
+                variant={result.similarity >= 80 ? 'celebration' : 'default'}
+              />
+            )}
+          </div>
+        </div>
+      )}
+
       {transcript && !isListening && (
         <PhonemeFeedback
           expectedText={phrase.text}
@@ -462,9 +410,6 @@ const confirmSkipPhrase = () => {
         />
       )}
 
-
-
-      {/* Indicador de gravação */}
       {isListening && (
         <div className="mt-6 flex items-center justify-center gap-3 text-red-600 bg-red-50 p-4 rounded-lg border-2 border-red-200">
           <Loader className="animate-spin" size={28} />
@@ -472,8 +417,7 @@ const confirmSkipPhrase = () => {
         </div>
       )}
 
-  {/* Fogos de artifício para 100% */}
-        <FireworksCelebration show={showFireworks} />
+      <FireworksCelebration show={showFireworks} />
     </div>
   );
 };
