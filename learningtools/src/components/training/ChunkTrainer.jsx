@@ -163,8 +163,8 @@ const ChunkTrainer = ({ onOpenInvite }) => {
     const newCount = phrasesCompletedSincePrompt + 1;
     setPhrasesCompletedSincePrompt(newCount);
 
-    // Mostra modal a cada 4 frases completadas
-    if (newCount >= 4) {
+    // Mostra modal a cada 7 frases completadas
+    if (newCount >= 7) {
       setShowInviteModal(true);
       setPhrasesCompletedSincePrompt(0); // Reseta contador
 
