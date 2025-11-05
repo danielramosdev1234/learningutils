@@ -105,6 +105,24 @@ export const saveGuestData = (progress, stats, levelSystem, referral) => {
 };
 
 /**
+ * Gera código de referral baseado no displayName
+ */
+const generateReferralCode = (displayName) => {
+  if (!displayName) {
+    return `USER-${Math.random().toString(36).substr(2, 4).toUpperCase()}`;
+  }
+
+  const cleanName = displayName
+    .toUpperCase()
+    .replace(/[^A-Z0-9]/g, '')
+    .substr(0, 8);
+
+  const randomChars = Math.random().toString(36).substr(2, 4).toUpperCase();
+
+  return `${cleanName}-${randomChars}`;
+};
+
+/**
  * Carrega dados do usuário autenticado do Firestore
  */
 export const loadAuthUserData = async (userId) => {
@@ -123,8 +141,10 @@ export const loadAuthUserData = async (userId) => {
 
       // Valida estrutura de referral
       if (data.referral) {
+        const referralCode = data.referral.code || generateReferralCode(data.profile?.displayName);
+
         data.referral = {
-          code: data.referral.code || null,
+          code: referralCode,
           referredBy: data.referral.referredBy || null,
           totalInvites: data.referral.totalInvites || 0,
           successfulInvites: Array.isArray(data.referral.successfulInvites)
@@ -140,6 +160,14 @@ export const loadAuthUserData = async (userId) => {
           hasReceivedWelcomeBonus: data.referral.hasReceivedWelcomeBonus || false
         };
       }
+
+      // Salva o código gerado no Firestore se foi gerado agora
+            if (!data.referral.code) {
+              await updateDoc(userDocRef, {
+                'referral.code': referralCode
+              });
+              console.log('✅ Código de referral gerado:', referralCode);
+            }
 
       return data;
     } else {
@@ -166,12 +194,26 @@ export const saveAuthUserData = async (userId, profile, progress, stats, levelSy
 
     const userDocRef = doc(db, 'users', userId);
 
+    // ✅ Verifica se já tem código no Firestore antes de gerar novo
+    if (referral && !referral.code) {
+      const existingDoc = await getDoc(userDocRef);
+      const existingCode = existingDoc.exists() ? existingDoc.data()?.referral?.code : null;
+
+      if (existingCode) {
+        referral.code = existingCode; // Mantém o código existente
+        console.log('🔄 Usando código existente:', existingCode);
+      } else {
+        referral.code = generateReferralCode(profile?.displayName);
+        console.log('🎁 Código de referral gerado:', referral.code);
+      }
+    }
+
     const dataToSave = {
       profile,
       progress,
       stats,
       levelSystem,
-      referral, // ✅ Inclui referral
+      referral, // ✅ Inclui referral com código gerado
       lastUpdated: serverTimestamp()
     };
 
