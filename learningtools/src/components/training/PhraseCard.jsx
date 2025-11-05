@@ -291,6 +291,17 @@ console.log('if (!canSkipPhrase) return;!');
       )}
 
       <div className="flex justify-center gap-2 sm:gap-4 mb-6 flex-wrap">
+          {canSkipPhrase && !isListening && (
+                    <button
+                      onClick={handleSkipPhrase}
+                      className="flex items-center gap-1 sm:gap-2 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white px-3 sm:px-6 py-2 sm:py-3 rounded-lg transition-all shadow-md font-semibold text-sm sm:text-base"
+                      title={`Você tem ${referral.rewards.skipPhrases} frases para pular`}
+                    >
+                      <Gift size={20} className="sm:w-6 sm:h-6" />
+                      <span>Skip ({referral.rewards.skipPhrases})</span>
+                    </button>
+                  )}
+
         <button
           onClick={() => onSpeak(phrase.text)}
           className="flex items-center gap-1 sm:gap-2 bg-blue-500 hover:bg-blue-600 text-white px-3 sm:px-6 py-2 sm:py-3 rounded-lg transition-colors shadow-md font-semibold text-sm sm:text-base"
@@ -314,16 +325,7 @@ console.log('if (!canSkipPhrase) return;!');
           <span>{isListening ? 'Stop' : 'Speak'}</span>
         </button>
 
-        {canSkipPhrase && !isListening && (
-          <button
-            onClick={handleSkipPhrase}
-            className="flex items-center gap-1 sm:gap-2 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white px-3 sm:px-6 py-2 sm:py-3 rounded-lg transition-all shadow-md font-semibold text-sm sm:text-base"
-            title={`Você tem ${referral.rewards.skipPhrases} frases para pular`}
-          >
-            <Gift size={20} className="sm:w-6 sm:h-6" />
-            <span>Skip ({referral.rewards.skipPhrases})</span>
-          </button>
-        )}
+
 
         {result && result.similarity >= 80 && !isListening && (
           <button
