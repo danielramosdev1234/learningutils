@@ -1,5 +1,8 @@
-import { doc, setDoc, getDoc, serverTimestamp } from 'firebase/firestore';
+// userService.js - CORREÇÃO COMPLETA
+
+import { doc, setDoc, getDoc, serverTimestamp, updateDoc } from 'firebase/firestore';
 import { db } from '../config/firebase';
+import { getReferredBy } from '../utils/referralUtils'; // ✅ ADICIONADO
 
 /**
  * Gera ID único para guest
@@ -31,7 +34,7 @@ export const loadGuestData = () => {
     const progressStr = localStorage.getItem('learnfun_guest_progress');
     const statsStr = localStorage.getItem('learnfun_guest_stats');
     const levelSystemStr = localStorage.getItem('learnfun_guest_levelsystem');
-    const referralStr = localStorage.getItem('learnfun_guest_referral'); // ✅ NOVO
+    const referralStr = localStorage.getItem('learnfun_guest_referral');
 
     return {
       progress: progressStr ? JSON.parse(progressStr) : {
@@ -53,7 +56,7 @@ export const loadGuestData = () => {
         currentLevel: 1,
         globalCompletedPhrases: []
       },
-      referral: referralStr ? JSON.parse(referralStr) : null // ✅ NOVO
+      referral: referralStr ? JSON.parse(referralStr) : null
     };
   } catch (error) {
     console.error('❌ Erro ao carregar dados guest:', error);
@@ -77,7 +80,7 @@ export const loadGuestData = () => {
         currentLevel: 1,
         globalCompletedPhrases: []
       },
-      referral: null // ✅ NOVO
+      referral: null
     };
   }
 };
@@ -85,13 +88,12 @@ export const loadGuestData = () => {
 /**
  * Salva dados do guest no localStorage
  */
-export const saveGuestData = (progress, stats, levelSystem, referral) => { // ✅ ADICIONADO referral
+export const saveGuestData = (progress, stats, levelSystem, referral) => {
   try {
     localStorage.setItem('learnfun_guest_progress', JSON.stringify(progress));
     localStorage.setItem('learnfun_guest_stats', JSON.stringify(stats));
     localStorage.setItem('learnfun_guest_levelsystem', JSON.stringify(levelSystem));
 
-    // ✅ NOVO: Salva referral
     if (referral) {
       localStorage.setItem('learnfun_guest_referral', JSON.stringify(referral));
     }
@@ -119,7 +121,7 @@ export const loadAuthUserData = async (userId) => {
       const data = userDoc.data();
       console.log('✅ Dados carregados do Firestore');
 
-      // ✅ Valida estrutura de referral
+      // Valida estrutura de referral
       if (data.referral) {
         data.referral = {
           code: data.referral.code || null,
@@ -146,7 +148,6 @@ export const loadAuthUserData = async (userId) => {
     }
   } catch (error) {
     console.error('❌ Erro ao carregar dados do Firestore:', error);
-    console.error('   Stack:', error.stack);
     return null;
   }
 };
@@ -154,24 +155,35 @@ export const loadAuthUserData = async (userId) => {
 /**
  * Salva dados do usuário autenticado no Firestore
  */
-export const saveAuthUserData = async (userId, profile, progress, stats, levelSystem, referral) => { // ✅ ADICIONADO referral
+export const saveAuthUserData = async (userId, profile, progress, stats, levelSystem, referral) => {
   try {
+    console.log('💾 === DEBUG SAVE AUTH USER DATA ===');
+    console.log('   User ID:', userId);
+    console.log('   Referral recebido:', referral);
+    console.log('   Tipo:', typeof referral);
+    console.log('   É null?', referral === null);
+    console.log('   É undefined?', referral === undefined);
+
     const userDocRef = doc(db, 'users', userId);
 
-    // ✅ INCLUIR referral no documento
-    await setDoc(userDocRef, {
+    const dataToSave = {
       profile,
       progress,
       stats,
       levelSystem,
-      referral, // ✅ NOVO: Salva dados de referral
+      referral, // ✅ Inclui referral
       lastUpdated: serverTimestamp()
-    }, { merge: true });
+    };
+
+    console.log('   Objeto a ser salvo:', JSON.stringify(dataToSave, null, 2));
+
+    await setDoc(userDocRef, dataToSave, { merge: true });
 
     console.log('✅ Dados salvos no Firestore (incluindo referral)');
     return true;
   } catch (error) {
     console.error('❌ Erro ao salvar no Firestore:', error);
+    console.error('   Stack:', error.stack);
     return false;
   }
 };
@@ -183,29 +195,39 @@ export const migrateGuestToAuth = async (authUserId, authProfile) => {
   try {
     console.log('🔄 Iniciando migração de dados...');
 
-    // 1. Carrega dados do guest
     const guestData = loadGuestData();
     const guestId = localStorage.getItem('learnfun_guest_id');
+    const referredByCode = getReferredBy(); // ✅ AGORA FUNCIONA
 
     console.log('👤 Guest Data:', guestData);
-    console.log('📊 Total Phrases:', guestData.stats.totalPhrases);
-    console.log('🎁 Referral:', guestData.referral);
+    console.log('🎁 Referral do guest:', guestData.referral);
+    console.log('🎯 Código de convite (URL):', referredByCode);
 
-    // 2. Carrega dados existentes do Firestore
+    // Carrega dados existentes do Firestore
     const existingData = await loadAuthUserData(authUserId);
 
-    // 3. Se JÁ tem dados no Firestore, NÃO migra nada do guest
+    // Se JÁ tem dados no Firestore, NÃO migra
     if (existingData && existingData.stats && existingData.stats.totalPhrases > 0) {
       console.log('ℹ️ Usuário já tem dados no Firestore. Mantendo dados existentes.');
       console.log(`   📊 Firestore: ${existingData.stats.totalPhrases} frases`);
       console.log(`   👤 Guest: ${guestData.stats.totalPhrases} frases (ignorado)`);
 
-      // Limpa dados guest do localStorage
-      localStorage.removeItem('learnfun_guest_progress');
-      localStorage.removeItem('learnfun_guest_stats');
-      localStorage.removeItem('learnfun_guest_levelsystem');
-      localStorage.removeItem('learnfun_guest_referral'); // ✅ NOVO
-      localStorage.removeItem('learnfun_guest_id');
+      // ⚠️ MAS PRESERVA O REFERRAL SE VEIO DA URL
+      if (referredByCode && !existingData.referral?.referredBy) {
+        console.log('⭐ Atualizando apenas o referredBy...');
+
+        try {
+          await updateDoc(doc(db, 'users', authUserId), {
+            'referral.referredBy': referredByCode
+          });
+          console.log('✅ ReferredBy atualizado no Firestore');
+        } catch (updateError) {
+          console.error('❌ Erro ao atualizar referredBy:', updateError);
+        }
+      }
+
+      // Limpa dados guest
+      clearAllUserData();
 
       return {
         migrated: false,
@@ -214,48 +236,98 @@ export const migrateGuestToAuth = async (authUserId, authProfile) => {
       };
     }
 
-    // 4. Se guest tem dados significativos, migra
+    // ✅ PREPARA REFERRAL CORRETAMENTE
+    // Define um referral padrão
+    const defaultReferral = {
+      code: null,
+      referredBy: null,
+      totalInvites: 0,
+      successfulInvites: [],
+      rewards: {
+        skipPhrases: 0,
+        totalEarned: 0
+      },
+      hasReceivedWelcomeBonus: false
+    };
+
+    let referralToMigrate = {
+      ...defaultReferral,
+      ...(guestData.referral || {})
+    };
+
+    // Se tem código de convite na URL, usa ele
+    if (referredByCode && !referralToMigrate.referredBy) {
+      referralToMigrate.referredBy = referredByCode;
+    }
+
+    console.log('📦 Referral a ser migrado:', referralToMigrate);
+
     const hasMeaningfulData =
       guestData.stats.totalPhrases > 0 ||
       guestData.progress.chunkTrainer.completedCount > 0;
 
     if (!hasMeaningfulData) {
-      console.log('ℹ️ Sem dados significativos para migrar');
+      console.log('ℹ️ Sem dados significativos, mas criando perfil com referral');
 
-      // Cria perfil novo vazio (MAS MANTÉM REFERRAL SE EXISTIR)
+      // Cria perfil inicial com referral
       await saveAuthUserData(
         authUserId,
         authProfile,
-        guestData.progress,
-        guestData.stats,
-        guestData.levelSystem,
-        guestData.referral // ✅ NOVO: Migra referral mesmo sem dados
+        {
+          chunkTrainer: {
+            currentIndex: 0,
+            completedPhrases: [],
+            completedCount: 0
+          }
+        },
+        {
+          totalPhrases: 0,
+          totalAttempts: 0,
+          correctCount: 0,
+          accuracy: 0,
+          streak: {
+            current: 0,
+            longest: 0,
+            lastActivityDate: null,
+            history: [],
+            freezes: 0,
+            freezesUsed: [],
+            nextRewardAt: 7,
+            rewardsEarned: [],
+            showRewardModal: false,
+            pendingReward: null
+          },
+          challengeHighScore: 0
+        },
+        {
+          currentLevel: 1,
+          globalCompletedPhrases: [],
+          globalCompletedIndices: [],
+          showLevelUpModal: false,
+          pendingLevelUp: null
+        },
+        referralToMigrate
       );
 
+      clearAllUserData();
       return { migrated: false, phrasesCount: 0 };
     }
 
-    // 5. Salva no Firestore com dados do guest
-    await setDoc(doc(db, 'users', authUserId), {
-      profile: authProfile,
-      progress: guestData.progress,
-      stats: guestData.stats,
-      levelSystem: guestData.levelSystem,
-      referral: guestData.referral, // ✅ NOVO: Migra referral
-      migratedFrom: guestId,
-      migratedAt: serverTimestamp(),
-      createdAt: serverTimestamp()
-    });
+    // Migra dados do guest
+    await saveAuthUserData(
+      authUserId,
+      authProfile,
+      guestData.progress,
+      guestData.stats,
+      guestData.levelSystem,
+      referralToMigrate
+    );
 
-    // 6. Limpa dados guest do localStorage
-    localStorage.removeItem('learnfun_guest_progress');
-    localStorage.removeItem('learnfun_guest_stats');
-    localStorage.removeItem('learnfun_guest_levelsystem');
-    localStorage.removeItem('learnfun_guest_referral'); // ✅ NOVO
-    localStorage.removeItem('learnfun_guest_id');
+    clearAllUserData();
 
     console.log('✅ Migração concluída!');
     console.log(`   📊 ${guestData.stats.totalPhrases} frases migradas`);
+    console.log('   🎁 Referral:', referralToMigrate);
 
     return {
       migrated: true,
@@ -265,6 +337,7 @@ export const migrateGuestToAuth = async (authUserId, authProfile) => {
 
   } catch (error) {
     console.error('❌ Erro na migração:', error);
+    console.error('   Stack:', error.stack);
     return { migrated: false, error: error.message };
   }
 };
@@ -277,7 +350,7 @@ export const clearAllUserData = () => {
   localStorage.removeItem('learnfun_guest_progress');
   localStorage.removeItem('learnfun_guest_stats');
   localStorage.removeItem('learnfun_guest_levelsystem');
-  localStorage.removeItem('learnfun_guest_referral'); // ✅ NOVO
+  localStorage.removeItem('learnfun_guest_referral');
   localStorage.removeItem('learnfun_current_phrase_index');
   console.log('🗑️ Todos os dados locais limpos');
 };

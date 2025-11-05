@@ -126,16 +126,29 @@ export const initializeUser = createAsyncThunk(
         console.log('👤 Carregando dados do Firestore...');
         const userData = await loadAuthUserData(currentUser.uid);
 
+        // ✅ IMPORTANTE: Prepara o objeto referral que será usado
+        let referralData = null;
+
+        if (userData?.referral) {
+          referralData = userData.referral;
+        } else {
+          // Primeira vez: cria estrutura inicial
+          referralData = {
+            ...initialState.referral,
+            referredBy: referredByCode || null
+          };
+        }
+
         // 1️⃣ Inicializa referral
         await dispatch(initializeReferral({
           userId: currentUser.uid,
           displayName: currentUser.displayName,
-          existingCode: userData?.referral?.code,
-          existingReferredBy: userData?.referral?.referredBy
+          existingCode: referralData.code,
+          existingReferredBy: referralData.referredBy
         }));
 
-        // ⭐ MOVIDO PARA FORA: Processa referral SEMPRE, mesmo na primeira vez
-        if (referredByCode && !userData?.referral?.referredBy) {
+        // ⭐ Processa referral se necessário
+        if (referredByCode && !referralData.referredBy) {
           console.log('🎯 PROCESSANDO CÓDIGO DE CONVITE:', referredByCode);
 
           try {
@@ -143,87 +156,60 @@ export const initializeUser = createAsyncThunk(
 
             if (result && result.success) {
               console.log('✅ Referral registrado com sucesso!');
-              console.log('   Referrer ID:', result.referrerId);
 
-              // Processa recompensa IMEDIATAMENTE
-              console.log('💰 Processando recompensa para quem convidou...');
               const rewardResult = await confirmInviteAndReward(result.referrerId, currentUser.uid);
-
-              console.log('🎁 RESULTADO DA RECOMPENSA:', rewardResult);
 
               if (rewardResult && rewardResult.success) {
                 console.log('🎉 RECOMPENSA ENTREGUE!');
-                console.log(`   +${rewardResult.reward} frases para quem convidou`);
-                console.log(`   Total de amigos: ${rewardResult.totalInvites}`);
-
-                if (rewardResult.milestoneReached) {
-                  console.log('🏆 MILESTONE ALCANÇADO!');
-                }
-              } else {
-                console.error('❌ FALHA NA RECOMPENSA:', rewardResult);
               }
 
-              // Limpa localStorage
               clearReferredBy();
               markReferralAsProcessed();
 
-              // Atualiza userData para incluir referredBy
-              if (userData) {
-                userData.referral = userData.referral || {};
-                userData.referral.referredBy = referredByCode;
-              }
-            } else {
-              console.error('❌ Falha ao registrar referral');
-              console.error('   Código pode ser inválido:', referredByCode);
+              // ✅ CORREÇÃO: Atualiza referralData localmente
+              referralData.referredBy = referredByCode;
+
+              // ✅ NOVO: Salva imediatamente no Firestore
+              await saveAuthUserData(
+                currentUser.uid,
+                {
+                  displayName: currentUser.displayName,
+                  email: currentUser.email,
+                  photoURL: currentUser.photoURL
+                },
+                userData?.progress || initialState.progress,
+                userData?.stats || initialState.stats,
+                userData?.levelSystem || initialState.levelSystem,
+                referralData // ✅ Salva com referredBy atualizado
+              );
+
+              console.log('✅ Referral salvo no Firestore');
             }
           } catch (error) {
             console.error('❌ ERRO ao processar referral:', error);
           }
-        } else if (referredByCode && userData?.referral?.referredBy) {
-          console.log('ℹ️ Referral já foi processado anteriormente');
-          clearReferredBy();
         }
 
-        // ⭐ RETORNA OS DADOS (com ou sem userData)
-        if (userData) {
-          return {
-            mode: 'authenticated',
-            userId: currentUser.uid,
-            profile: userData.profile,
-            progress: userData.progress,
-            stats: userData.stats,
-            levelSystem: userData.levelSystem || initialState.levelSystem,
-            referral: userData.referral || {
-              ...initialState.referral,
-              referredBy: referredByCode || null
-            }
-          };
-        } else {
-          // ⭐ PRIMEIRA VEZ: Inclui referredBy no estado inicial
-          return {
-            mode: 'authenticated',
-            userId: currentUser.uid,
-            profile: {
-              displayName: currentUser.displayName,
-              email: currentUser.email,
-              photoURL: currentUser.photoURL
-            },
-            progress: initialState.progress,
-            stats: initialState.stats,
-            levelSystem: initialState.levelSystem,
-            referral: {
-              ...initialState.referral,
-              referredBy: referredByCode || null
-            }
-          };
-        }
+        // ⭐ RETORNA OS DADOS com referral garantido
+        return {
+          mode: 'authenticated',
+          userId: currentUser.uid,
+          profile: {
+            displayName: currentUser.displayName,
+            email: currentUser.email,
+            photoURL: currentUser.photoURL
+          },
+          progress: userData?.progress || initialState.progress,
+          stats: userData?.stats || initialState.stats,
+          levelSystem: userData?.levelSystem || initialState.levelSystem,
+          referral: referralData // ✅ Sempre presente
+        };
       } else {
         // ✅ GUEST
         const guestId = getOrCreateGuestId();
         const guestData = loadGuestData();
 
         console.log('🎭 Modo Guest');
-        console.log('   Guest ID:', guestId);
 
         await dispatch(initializeReferral({
           userId: guestId,
@@ -286,7 +272,7 @@ export const initializeReferral = createAsyncThunk(
  */
 export const loginWithGoogle = createAsyncThunk(
   'user/loginWithGoogle',
-  async (_, { getState, rejectWithValue }) => {
+  async (_, { getState, dispatch, rejectWithValue }) => {
     try {
       const result = await signInWithGoogle();
 
@@ -303,9 +289,10 @@ export const loginWithGoogle = createAsyncThunk(
         photoURL: user.photoURL
       });
 
-      // Carrega dados do Firestore (agora com dados migrados)
+      // ✅ CORREÇÃO: Carrega dados do Firestore APÓS migração
       const userData = await loadAuthUserData(user.uid);
 
+      // ✅ CORREÇÃO: Garante que referral esteja presente no retorno
       return {
         userId: user.uid,
         profile: {
@@ -316,6 +303,7 @@ export const loginWithGoogle = createAsyncThunk(
         progress: userData?.progress || initialState.progress,
         stats: userData?.stats || initialState.stats,
         levelSystem: userData?.levelSystem || initialState.levelSystem,
+        referral: userData?.referral || initialState.referral, // ✅ ADICIONADO
         migrationResult
       };
     } catch (error) {
@@ -687,6 +675,21 @@ const userSlice = createSlice({
         state.progress = action.payload.progress;
         state.stats = action.payload.stats;
         state.levelSystem = action.payload.levelSystem;
+
+        // ✅ Garante estrutura completa do referral
+        if (action.payload.referral) {
+          state.referral = {
+            ...initialState.referral,
+            ...action.payload.referral,
+            rewards: {
+              ...initialState.referral.rewards,
+              ...(action.payload.referral.rewards || {})
+            },
+            successfulInvites: action.payload.referral.successfulInvites || []
+          };
+        } else {
+          state.referral = { ...initialState.referral };
+        }
       })
       .addCase(initializeUser.rejected, (state, action) => {
         state.loading = false;
@@ -706,11 +709,28 @@ const userSlice = createSlice({
         state.progress = action.payload.progress;
         state.stats = action.payload.stats;
         state.levelSystem = action.payload.levelSystem;
+
+        // ✅ Garante estrutura completa do referral
+        if (action.payload.referral) {
+          state.referral = {
+            ...initialState.referral,
+            ...action.payload.referral,
+            rewards: {
+              ...initialState.referral.rewards,
+              ...(action.payload.referral.rewards || {})
+            },
+            successfulInvites: action.payload.referral.successfulInvites || []
+          };
+        } else {
+          state.referral = { ...initialState.referral };
+        }
       })
       .addCase(loginWithGoogle.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });
+
+
 
     builder
       .addCase(logout.fulfilled, (state, action) => {
@@ -720,6 +740,8 @@ const userSlice = createSlice({
         state.progress = initialState.progress;
         state.stats = initialState.stats;
         state.incentives = initialState.incentives;
+        // ✅ Reseta referral no logout
+        state.referral = initialState.referral;
       });
 
     builder.addCase(initializeReferral.fulfilled, (state, action) => {
