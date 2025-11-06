@@ -4,6 +4,7 @@ import {
   collection,
   doc,
   setDoc,
+  getDoc,
   getDocs,
   query,
   orderBy,
@@ -39,35 +40,7 @@ const generateBackupId = () => {
   return `${year}-${month}-${day}_${hours}-${minutes}`;
 };
 
-/**
- * Remove campos desnecessários para economizar espaço
- */
-const compactData = (data) => {
-  return {
-    stats: {
-      totalPhrases: data.stats.totalPhrases,
-      accuracy: data.stats.accuracy,
-      streak: {
-        current: data.stats.streak?.current || 0,
-        longest: data.stats.streak?.longest || 0
-      },
-      challengeHighScore: data.stats.challengeHighScore
-    },
-    levelSystem: {
-      currentLevel: data.levelSystem.currentLevel,
-      globalCompletedIndices: data.levelSystem.globalCompletedIndices
-    },
-    progress: {
-      completedCount: data.progress?.chunkTrainer?.completedCount || 0
-    },
-    referral: {
-      totalInvites: data.referral?.totalInvites || 0,
-      rewards: {
-        skipPhrases: data.referral?.rewards?.skipPhrases || 0
-      }
-    }
-  };
-};
+// ✅ REMOVIDO: Não compacta mais nada, salva TUDO!
 
 /**
  * ⭐ Cria backup dos dados do usuário
@@ -93,14 +66,17 @@ export const createBackup = async (userId, userData) => {
     // Gera ID do backup
     const backupId = generateBackupId();
 
-    // Compacta dados
-    const compactedData = compactData(userData);
+    // ✅ SALVA TUDO SEM COMPACTAR
+    console.log('📦 Dados completos do backup:', userData);
 
     // Salva backup no Firestore
     const backupRef = doc(db, 'backups', userId, 'snapshots', backupId);
 
     await setDoc(backupRef, {
-      ...compactedData,
+      stats: userData.stats,
+      levelSystem: userData.levelSystem,
+      progress: userData.progress,
+      referral: userData.referral,
       createdAt: serverTimestamp(),
       timestamp: new Date().toISOString()
     });
@@ -187,6 +163,8 @@ export const listBackups = async (userId) => {
         timestamp: data.timestamp,
         stats: data.stats,
         levelSystem: data.levelSystem,
+        progress: data.progress,
+        referral: data.referral,
         createdAt: data.createdAt
       };
     });
@@ -202,7 +180,7 @@ export const listBackups = async (userId) => {
 };
 
 /**
- * Restaura backup específico
+ * ✅ CORRIGIDO: Restaura backup específico com TODOS os dados
  */
 export const restoreBackup = async (userId, backupId) => {
   try {
@@ -220,12 +198,20 @@ export const restoreBackup = async (userId, backupId) => {
 
     console.log('📊 Dados do backup:', {
       totalPhrases: backupData.stats.totalPhrases,
-      currentLevel: backupData.levelSystem.currentLevel
+      currentLevel: backupData.levelSystem.currentLevel,
+      streak: backupData.stats.streak.current,
+      skipPhrases: backupData.referral?.rewards?.skipPhrases
     });
 
+    // ✅ Retorna TODOS os dados
     return {
       success: true,
-      data: backupData
+      data: {
+        stats: backupData.stats,
+        levelSystem: backupData.levelSystem,
+        progress: backupData.progress,
+        referral: backupData.referral
+      }
     };
 
   } catch (error) {

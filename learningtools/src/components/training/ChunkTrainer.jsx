@@ -112,7 +112,6 @@ const ChunkTrainer = ({ onOpenInvite }) => {
       if (currentIndex >= levelPhrases.length) {
         console.log(`⚠️ Current index ${currentIndex} out of range, resetting to 0`);
         dispatch(updateChunkProgress({
-          currentIndex: 0,
           completedPhrases: progress.chunkTrainer.completedPhrases
         }));
       }
@@ -207,7 +206,6 @@ const ChunkTrainer = ({ onOpenInvite }) => {
   if (!currentPhrase) {
     console.error(`⚠️ No phrase at index ${currentIndex}, resetting...`);
     dispatch(updateChunkProgress({
-      currentIndex: 0,
       completedPhrases: progress.chunkTrainer.completedPhrases
     }));
     return <LoadingScreen />;

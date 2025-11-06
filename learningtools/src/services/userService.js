@@ -2,7 +2,7 @@
 
 import { doc, setDoc, getDoc, serverTimestamp, updateDoc } from 'firebase/firestore';
 import { db } from '../config/firebase';
-import { getReferredBy } from '../utils/referralUtils'; // ✅ ADICIONADO
+import { getReferredBy } from '../utils/referralUtils';
 
 /**
  * Gera ID único para guest
@@ -138,6 +138,7 @@ export const loadAuthUserData = async (userId) => {
     if (userDoc.exists()) {
       const data = userDoc.data();
       console.log('✅ Dados carregados do Firestore');
+      console.log('📍 CurrentIndex do Firebase:', data.progress?.chunkTrainer?.currentIndex);
 
       // Valida estrutura de referral
       if (data.referral) {
@@ -159,15 +160,15 @@ export const loadAuthUserData = async (userId) => {
           },
           hasReceivedWelcomeBonus: data.referral.hasReceivedWelcomeBonus || false
         };
-      }
 
-      // Salva o código gerado no Firestore se foi gerado agora
-            if (!data.referral.code) {
-              await updateDoc(userDocRef, {
-                'referral.code': referralCode
-              });
-              console.log('✅ Código de referral gerado:', referralCode);
-            }
+        // Salva o código gerado no Firestore se foi gerado agora
+        if (!userDoc.data().referral.code) {
+          await updateDoc(userDocRef, {
+            'referral.code': referralCode
+          });
+          console.log('✅ Código de referral gerado:', referralCode);
+        }
+      }
 
       return data;
     } else {
@@ -187,10 +188,8 @@ export const saveAuthUserData = async (userId, profile, progress, stats, levelSy
   try {
     console.log('💾 === DEBUG SAVE AUTH USER DATA ===');
     console.log('   User ID:', userId);
-    console.log('   Referral recebido:', referral);
-    console.log('   Tipo:', typeof referral);
-    console.log('   É null?', referral === null);
-    console.log('   É undefined?', referral === undefined);
+    console.log('   Progress:', progress);
+    console.log('   CurrentIndex sendo salvo:', progress?.chunkTrainer?.currentIndex);
 
     const userDocRef = doc(db, 'users', userId);
 
@@ -200,7 +199,7 @@ export const saveAuthUserData = async (userId, profile, progress, stats, levelSy
       const existingCode = existingDoc.exists() ? existingDoc.data()?.referral?.code : null;
 
       if (existingCode) {
-        referral.code = existingCode; // Mantém o código existente
+        referral.code = existingCode;
         console.log('🔄 Usando código existente:', existingCode);
       } else {
         referral.code = generateReferralCode(profile?.displayName);
@@ -213,15 +212,14 @@ export const saveAuthUserData = async (userId, profile, progress, stats, levelSy
       progress,
       stats,
       levelSystem,
-      referral, // ✅ Inclui referral com código gerado
+      referral,
       lastUpdated: serverTimestamp()
     };
 
-    console.log('   Objeto a ser salvo:', JSON.stringify(dataToSave, null, 2));
-
     await setDoc(userDocRef, dataToSave, { merge: true });
 
-    console.log('✅ Dados salvos no Firestore (incluindo referral)');
+    console.log('✅ Dados salvos no Firestore');
+    console.log('📍 CurrentIndex salvo:', progress?.chunkTrainer?.currentIndex);
     return true;
   } catch (error) {
     console.error('❌ Erro ao salvar no Firestore:', error);
@@ -231,27 +229,27 @@ export const saveAuthUserData = async (userId, profile, progress, stats, levelSy
 };
 
 /**
- * Migra dados de guest para usuário autenticado
+ * ✅ CORRIGIDO: Migra dados de guest para usuário autenticado
  */
 export const migrateGuestToAuth = async (authUserId, authProfile) => {
   try {
     console.log('🔄 Iniciando migração de dados...');
 
     const guestData = loadGuestData();
-    const guestId = localStorage.getItem('learnfun_guest_id');
-    const referredByCode = getReferredBy(); // ✅ AGORA FUNCIONA
+    const referredByCode = getReferredBy();
 
     console.log('👤 Guest Data:', guestData);
-    console.log('🎁 Referral do guest:', guestData.referral);
+    console.log('📍 CurrentIndex do guest:', guestData.progress?.chunkTrainer?.currentIndex);
     console.log('🎯 Código de convite (URL):', referredByCode);
 
-    // Carrega dados existentes do Firestore
+    // ✅ Carrega dados existentes do Firestore
     const existingData = await loadAuthUserData(authUserId);
 
-    // Se JÁ tem dados no Firestore, NÃO migra
+    // ✅ Se JÁ tem dados no Firestore, NÃO migra
     if (existingData && existingData.stats && existingData.stats.totalPhrases > 0) {
       console.log('ℹ️ Usuário já tem dados no Firestore. Mantendo dados existentes.');
       console.log(`   📊 Firestore: ${existingData.stats.totalPhrases} frases`);
+      console.log(`   📍 Firestore CurrentIndex: ${existingData.progress?.chunkTrainer?.currentIndex}`);
       console.log(`   👤 Guest: ${guestData.stats.totalPhrases} frases (ignorado)`);
 
       // ⚠️ MAS PRESERVA O REFERRAL SE VEIO DA URL
@@ -279,7 +277,6 @@ export const migrateGuestToAuth = async (authUserId, authProfile) => {
     }
 
     // ✅ PREPARA REFERRAL CORRETAMENTE
-    // Define um referral padrão
     const defaultReferral = {
       code: null,
       referredBy: null,
@@ -309,15 +306,27 @@ export const migrateGuestToAuth = async (authUserId, authProfile) => {
       guestData.progress.chunkTrainer.completedCount > 0;
 
     if (!hasMeaningfulData) {
-      console.log('ℹ️ Sem dados significativos, mas criando perfil com referral');
+      console.log('ℹ️ Sem dados significativos, criando perfil inicial com dados do Firebase (se existir)');
 
-      // Cria perfil inicial com referral
+      // ✅ CORRIGIDO: Se não tem dados de guest mas tem no Firebase, MANTÉM os dados do Firebase
+      if (existingData) {
+        console.log('🔵 Usando dados existentes do Firebase');
+        clearAllUserData();
+        return {
+          migrated: false,
+          reason: 'no_guest_data_but_has_firebase',
+          phrasesCount: existingData.stats.totalPhrases
+        };
+      }
+
+      // ✅ Só cria perfil ZERADO se realmente não tem nada
+      console.log('🆕 Criando perfil inicial zerado');
       await saveAuthUserData(
         authUserId,
         authProfile,
         {
           chunkTrainer: {
-            currentIndex: 0,
+            currentIndex: 0, // ✅ Começa do zero SÓ se for primeira vez
             completedPhrases: [],
             completedCount: 0
           }
@@ -355,11 +364,14 @@ export const migrateGuestToAuth = async (authUserId, authProfile) => {
       return { migrated: false, phrasesCount: 0 };
     }
 
-    // Migra dados do guest
+    // ✅ Migra dados do guest COM currentIndex preservado
+    console.log('🚀 Migrando dados do guest para Firebase');
+    console.log('📍 CurrentIndex a ser migrado:', guestData.progress.chunkTrainer.currentIndex);
+
     await saveAuthUserData(
       authUserId,
       authProfile,
-      guestData.progress,
+      guestData.progress, // ✅ Migra progress COMPLETO (com currentIndex)
       guestData.stats,
       guestData.levelSystem,
       referralToMigrate
@@ -369,6 +381,7 @@ export const migrateGuestToAuth = async (authUserId, authProfile) => {
 
     console.log('✅ Migração concluída!');
     console.log(`   📊 ${guestData.stats.totalPhrases} frases migradas`);
+    console.log(`   📍 CurrentIndex migrado: ${guestData.progress.chunkTrainer.currentIndex}`);
     console.log('   🎁 Referral:', referralToMigrate);
 
     return {
