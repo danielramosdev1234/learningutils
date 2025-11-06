@@ -27,7 +27,7 @@ const isAndroidDevice = () => {
 
 export const PhraseCard = ({ phrase, onSpeak, onCorrectAnswer, onNextPhrase, isActive }) => {
 
- const isAndroid = useMemo(() => true, []);
+ const isAndroid = useMemo(() => isAndroidDevice(), []);
 
  const chunksHook = useSpeechRecognitionForChunks();
 
