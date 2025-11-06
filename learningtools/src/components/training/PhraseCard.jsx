@@ -90,6 +90,7 @@ export const PhraseCard = ({ phrase, onSpeak, onCorrectAnswer, onNextPhrase, isA
     return stored ? parseInt(stored) : 0;
   });
 
+  const [isDisabled, setIsDisabled] = useState(false)
   const audioRef = useRef(null);
 
   // Processa o resultado quando terminar de ouvir
@@ -166,6 +167,9 @@ useEffect(() => {
   }, [referral, mode, dispatch]);
 
 const handleSkipPhrase = () => {
+
+    setIsDisabled(true);
+
     setShowSkipConfirm(true);
     confirmSkipPhrase()
   };
@@ -184,7 +188,8 @@ console.log('if (!canSkipPhrase) return;!');
     if (onCorrectAnswer) {
       onCorrectAnswer();
     }
-    onNextPhrase();
+    handleNextSkip();
+
 
 
     setShowSkipConfirm(false);
@@ -194,6 +199,10 @@ console.log('if (!canSkipPhrase) return;!');
       remaining: referral.rewards.skipPhrases - 1
     });
   };
+const handleNextSkip = () => {
+        onNextPhrase()
+        setIsDisabled(false);
+    }
 
   const handleMicClick = () => {
     if (isListening) {
@@ -296,6 +305,7 @@ console.log('if (!canSkipPhrase) return;!');
                       onClick={handleSkipPhrase}
                       className="flex items-center gap-1 sm:gap-2 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white px-3 sm:px-6 py-2 sm:py-3 rounded-lg transition-all shadow-md font-semibold text-sm sm:text-base"
                       title={`Você tem ${referral.rewards.skipPhrases} frases para pular`}
+                      disabled={isDisabled}
                     >
                       <Gift size={20} className="sm:w-6 sm:h-6" />
                       <span>Skip ({referral.rewards.skipPhrases})</span>

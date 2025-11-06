@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { PhraseCard } from './PhraseCard';
 import { LoadingScreen } from '../screens/LoadingScreen';
 import { ErrorScreen } from '../screens/ErrorScreen';
@@ -32,8 +32,8 @@ const ChunkTrainer = ({ onOpenInvite }) => {
   const [showInviteModal, setShowInviteModal] = useState(false);
   const [phrasesCompletedSincePrompt, setPhrasesCompletedSincePrompt] = useState(0);
 
-  // ❌ REMOVIDO: Código que causava loop infinito
-  // Movido para dentro de handleCorrectAnswer
+  // ✅ NOVO: Ref para evitar loop infinito ao corrigir index
+  const isCorrectingIndex = useRef(false);
 
   useEffect(() => {
     loadPhrases();
@@ -108,12 +108,22 @@ const ChunkTrainer = ({ onOpenInvite }) => {
       setFilteredPhrases(levelPhrases);
       console.log(`📚 Level ${currentLevel}: Showing ${totalPhrasesToShow} phrases (${globalCompletedPhrases.length} completed)`);
 
-      // Reseta índice se fora do range
-      if (currentIndex >= levelPhrases.length) {
-        console.log(`⚠️ Current index ${currentIndex} out of range, resetting to 0`);
-        dispatch(updateChunkProgress({
-          completedPhrases: progress.chunkTrainer.completedPhrases
-        }));
+      // ✅ CORRIGIDO: Corrige index SOMENTE se necessário e SOMENTE UMA VEZ
+      if (currentIndex >= levelPhrases.length && !isCorrectingIndex.current) {
+        isCorrectingIndex.current = true;
+        console.log(`⚠️ Current index ${currentIndex} out of range, adjusting to ${levelPhrases.length - 1}`);
+
+        setTimeout(() => {
+          dispatch(updateChunkProgress({
+            currentIndex: Math.max(0, levelPhrases.length - 1),
+            completedPhrases: progress.chunkTrainer.completedPhrases
+          }));
+
+          // Permite nova correção no futuro
+          setTimeout(() => {
+            isCorrectingIndex.current = false;
+          }, 100);
+        }, 0);
       }
     }
   }, [phrases, levelSystem, currentIndex, dispatch, progress.chunkTrainer.completedPhrases]);
@@ -124,7 +134,8 @@ const ChunkTrainer = ({ onOpenInvite }) => {
 
   // Ao trocar de frase
   const handleNextPhrase = () => {
-    const newIndex = (currentIndex + 1) % filteredPhrases.length;
+    // ✅ CORREÇÃO: Avança sem módulo para preservar posição ao subir de nível
+    const newIndex = currentIndex + 1;
 
     dispatch(updateChunkProgress({
       currentIndex: newIndex,
@@ -158,7 +169,7 @@ const ChunkTrainer = ({ onOpenInvite }) => {
     // 3️⃣ Incrementa estatísticas gerais
     dispatch(incrementPhraseCompleted());
 
-    // ✅ NOVO: Verifica se deve mostrar modal de convite (AGORA NO LUGAR CERTO!)
+    // ✅ Verifica se deve mostrar modal de convite
     const newCount = phrasesCompletedSincePrompt + 1;
     setPhrasesCompletedSincePrompt(newCount);
 
@@ -191,8 +202,8 @@ const ChunkTrainer = ({ onOpenInvite }) => {
   const handleOpenInviteScreen = () => {
     setShowInviteModal(false);
     if (onOpenInvite) {
-          onOpenInvite(); // ✅ Chama a função do TrainerSelector
-        }
+      onOpenInvite();
+    }
   };
 
   if (userLoading) return <LoadingScreen />;
@@ -202,12 +213,12 @@ const ChunkTrainer = ({ onOpenInvite }) => {
     return <LoadingScreen />;
   }
 
-  const currentPhrase = filteredPhrases[currentIndex];
+  // ✅ MELHORADO: Usa última frase disponível se index inválido
+  const safeIndex = Math.min(currentIndex, filteredPhrases.length - 1);
+  const currentPhrase = filteredPhrases[safeIndex];
+
   if (!currentPhrase) {
-    console.error(`⚠️ No phrase at index ${currentIndex}, resetting...`);
-    dispatch(updateChunkProgress({
-      completedPhrases: progress.chunkTrainer.completedPhrases
-    }));
+    console.error(`⚠️ No phrase available, loading...`);
     return <LoadingScreen />;
   }
 
@@ -219,7 +230,6 @@ const ChunkTrainer = ({ onOpenInvite }) => {
         newLevel={levelSystem?.pendingLevelUp || 1}
       />
 
-      {/* ✅ NOVO: Modal de Convite */}
       <InvitePromptModal
         isOpen={showInviteModal}
         onClose={() => setShowInviteModal(false)}
@@ -242,7 +252,7 @@ const ChunkTrainer = ({ onOpenInvite }) => {
 
         {filteredPhrases.length > 0 && (
           <PhraseCard
-            key={`phrase-${currentIndex}-${filteredPhrases[currentIndex]?.id || currentIndex}`}
+            key={`phrase-${safeIndex}-${currentPhrase.id}`}
             phrase={currentPhrase}
             onSpeak={speak}
             onCorrectAnswer={handleCorrectAnswer}
