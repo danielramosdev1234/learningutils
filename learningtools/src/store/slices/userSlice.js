@@ -27,21 +27,21 @@ import {
   registerReferralUsage,
   confirmInviteAndReward
 } from '../../services/referralService';
+import { doc, updateDoc } from 'firebase/firestore';
+import { db } from '../../config/firebase';
+import { checkAndCreateBackup } from '../../services/backupService';
 
 // Estado inicial
 const initialState = {
-  // Modo do usuário
-  mode: 'guest', // 'guest' | 'authenticated'
+  mode: 'guest',
   userId: null,
 
-  // Perfil
   profile: {
     displayName: 'Anonymous',
     email: null,
     photoURL: null
   },
 
-  // ✅ Sistema de Referral
   referral: {
     code: null,
     referredBy: null,
@@ -62,7 +62,6 @@ const initialState = {
     pendingLevelUp: null
   },
 
-  // Progresso
   progress: {
     chunkTrainer: {
       currentIndex: 0,
@@ -71,7 +70,6 @@ const initialState = {
     }
   },
 
-  // Estatísticas
   stats: {
     totalPhrases: 0,
     totalAttempts: 0,
@@ -92,23 +90,19 @@ const initialState = {
     challengeHighScore: 0
   },
 
-  // Incentivos
   incentives: {
     phrasesUntilPrompt: 5,
     hasSeenPrompt: false,
     lastPromptAt: null
   },
 
-  // Status
   loading: false,
   error: null,
   syncStatus: 'synced'
 };
 
-// Thunks Assíncronos
-
 /**
- * Inicializa usuário (carrega dados)
+ * ⭐ REFATORADO: Inicializa usuário (Firebase First)
  */
 export const initializeUser = createAsyncThunk(
   'user/initialize',
@@ -117,29 +111,46 @@ export const initializeUser = createAsyncThunk(
       const currentUser = getCurrentUser();
       const referredByCode = getReferredBy();
 
-      console.log('🔍 Inicializando usuário...');
+      console.log('🔐 === INICIALIZANDO USUÁRIO ===');
       console.log('   Autenticado:', !!currentUser);
-      console.log('   Código de convite detectado:', referredByCode || 'Nenhum');
+      console.log('   Código de convite na URL:', referredByCode || 'Nenhum');
 
       if (currentUser) {
         // ✅ USUÁRIO AUTENTICADO
-        console.log('👤 Carregando dados do Firestore...');
-        const userData = await loadAuthUserData(currentUser.uid);
+        console.log('👤 Usuário autenticado:', currentUser.uid);
 
-        // ✅ IMPORTANTE: Prepara o objeto referral que será usado
-        let referralData = null;
+        // ✅ PASSO 1: Carrega dados do Firebase (com retry automático)
+        const userData = await loadAuthUserData(currentUser.uid, 3);
 
-        if (userData?.referral) {
-          referralData = userData.referral;
-        } else {
-          // Primeira vez: cria estrutura inicial
-          referralData = {
-            ...initialState.referral,
-            referredBy: referredByCode || null
+        if (!userData) {
+          console.log('🆕 Primeira vez deste usuário - será criado no login');
+
+          // Retorna estado inicial, perfil será criado no loginWithGoogle
+          return {
+            mode: 'authenticated',
+            userId: currentUser.uid,
+            profile: {
+              displayName: currentUser.displayName,
+              email: currentUser.email,
+              photoURL: currentUser.photoURL
+            },
+            progress: initialState.progress,
+            stats: initialState.stats,
+            levelSystem: initialState.levelSystem,
+            referral: {
+              ...initialState.referral,
+              referredBy: referredByCode || null
+            }
           };
         }
 
-        // 1️⃣ Inicializa referral
+        // ✅ PASSO 2: Prepara referral
+        let referralData = userData.referral || {
+          ...initialState.referral,
+          referredBy: referredByCode || null
+        };
+
+        // ✅ PASSO 3: Inicializa sistema de referral
         await dispatch(initializeReferral({
           userId: currentUser.uid,
           displayName: currentUser.displayName,
@@ -147,50 +158,43 @@ export const initializeUser = createAsyncThunk(
           existingReferredBy: referralData.referredBy
         }));
 
-        // ⭐ Processa referral se necessário
-        if (referredByCode && !referralData.referredBy) {
-          console.log('🎯 PROCESSANDO CÓDIGO DE CONVITE:', referredByCode);
+        // ✅ PASSO 4: Processa código de convite (se existir e ainda não foi processado)
+        if (referredByCode && !referralData.referredBy && !hasProcessedReferral()) {
+          console.log('🎯 Processando código de convite:', referredByCode);
 
           try {
             const result = await registerReferralUsage(currentUser.uid, referredByCode);
 
             if (result && result.success) {
-              console.log('✅ Referral registrado com sucesso!');
+              console.log('✅ Referral registrado!');
 
+              // Dá recompensa para quem convidou
               const rewardResult = await confirmInviteAndReward(result.referrerId, currentUser.uid);
 
               if (rewardResult && rewardResult.success) {
-                console.log('🎉 RECOMPENSA ENTREGUE!');
+                console.log('🎉 Recompensa entregue ao convidador!');
               }
 
+              // Atualiza APENAS o campo referredBy no Firebase
+              await updateDoc(doc(db, 'users', currentUser.uid), {
+                'referral.referredBy': referredByCode
+              });
+
+              // Atualiza localmente
+              referralData.referredBy = referredByCode;
+
+              // Limpa flags
               clearReferredBy();
               markReferralAsProcessed();
 
-              // ✅ CORREÇÃO: Atualiza referralData localmente
-              referralData.referredBy = referredByCode;
-
-              // ✅ NOVO: Salva imediatamente no Firestore
-              await saveAuthUserData(
-                currentUser.uid,
-                {
-                  displayName: currentUser.displayName,
-                  email: currentUser.email,
-                  photoURL: currentUser.photoURL
-                },
-                userData?.progress || initialState.progress,
-                userData?.stats || initialState.stats,
-                userData?.levelSystem || initialState.levelSystem,
-                referralData // ✅ Salva com referredBy atualizado
-              );
-
-              console.log('✅ Referral salvo no Firestore');
+              console.log('✅ Código de convite processado com sucesso!');
             }
           } catch (error) {
-            console.error('❌ ERRO ao processar referral:', error);
+            console.error('❌ Erro ao processar referral:', error);
           }
         }
 
-        // ⭐ RETORNA OS DADOS com referral garantido
+        // ✅ RETORNA DADOS DO FIREBASE (nunca sobrescreve)
         return {
           mode: 'authenticated',
           userId: currentUser.uid,
@@ -199,10 +203,10 @@ export const initializeUser = createAsyncThunk(
             email: currentUser.email,
             photoURL: currentUser.photoURL
           },
-          progress: userData?.progress || initialState.progress,
-          stats: userData?.stats || initialState.stats,
-          levelSystem: userData?.levelSystem || initialState.levelSystem,
-          referral: referralData // ✅ Sempre presente
+          progress: userData.progress,
+          stats: userData.stats,
+          levelSystem: userData.levelSystem,
+          referral: referralData
         };
       } else {
         // ✅ GUEST
@@ -268,12 +272,14 @@ export const initializeReferral = createAsyncThunk(
 );
 
 /**
- * Faz login com Google
+ * ⭐ REFATORADO: Login com Google (Firebase First)
  */
 export const loginWithGoogle = createAsyncThunk(
   'user/loginWithGoogle',
   async (_, { getState, dispatch, rejectWithValue }) => {
     try {
+      console.log('🔐 === LOGIN COM GOOGLE ===');
+
       const result = await signInWithGoogle();
 
       if (!result.success) {
@@ -281,18 +287,28 @@ export const loginWithGoogle = createAsyncThunk(
       }
 
       const { user } = result;
+      console.log('✅ Autenticação Google bem-sucedida:', user.uid);
 
-      // Migra dados do guest
+      // ✅ MIGRAÇÃO (só acontece se Firebase estiver vazio)
       const migrationResult = await migrateGuestToAuth(user.uid, {
         displayName: user.displayName,
         email: user.email,
         photoURL: user.photoURL
       });
 
-      // ✅ CORREÇÃO: Carrega dados do Firestore APÓS migração
-      const userData = await loadAuthUserData(user.uid);
+      console.log('📊 Resultado da migração:', migrationResult);
 
-      // ✅ CORREÇÃO: Garante que referral esteja presente no retorno
+      // ✅ CARREGA DADOS DO FIREBASE (já salvos pela migração)
+      const userData = await loadAuthUserData(user.uid, 3);
+
+      if (!userData) {
+        throw new Error('Falha ao carregar dados após login');
+      }
+
+      console.log('✅ Dados carregados do Firebase:');
+      console.log(`   Frases: ${userData.stats?.totalPhrases || 0}`);
+      console.log(`   Level: ${userData.levelSystem?.currentLevel || 1}`);
+
       return {
         userId: user.uid,
         profile: {
@@ -300,13 +316,14 @@ export const loginWithGoogle = createAsyncThunk(
           email: user.email,
           photoURL: user.photoURL
         },
-        progress: userData?.progress || initialState.progress,
-        stats: userData?.stats || initialState.stats,
-        levelSystem: userData?.levelSystem || initialState.levelSystem,
-        referral: userData?.referral || initialState.referral, // ✅ ADICIONADO
+        progress: userData.progress,
+        stats: userData.stats,
+        levelSystem: userData.levelSystem,
+        referral: userData.referral || initialState.referral,
         migrationResult
       };
     } catch (error) {
+      console.error('❌ Erro no login:', error);
       return rejectWithValue(error.message);
     }
   }
@@ -341,7 +358,7 @@ export const logout = createAsyncThunk(
 );
 
 /**
- * Salva progresso (auto-sync)
+ * ⭐ REFATORADO: Salva progresso (auto-sync)
  */
 export const saveProgress = createAsyncThunk(
   'user/saveProgress',
@@ -351,7 +368,8 @@ export const saveProgress = createAsyncThunk(
     console.log('💾 Salvando progresso...');
     console.log('   Mode:', state.mode);
     console.log('   User ID:', state.userId);
-    console.log('   Referral Code:', state.referral?.code);
+    console.log('   Total Frases:', state.stats.totalPhrases);
+    console.log('   Level:', state.levelSystem.currentLevel);
 
     if (state.mode === 'authenticated') {
       const referralToSave = state.referral || {
@@ -366,18 +384,21 @@ export const saveProgress = createAsyncThunk(
         hasReceivedWelcomeBonus: false
       };
 
-      console.log('📊 Dados de referral a salvar:', referralToSave);
+      try {
+        await saveAuthUserData(
+          state.userId,
+          state.profile,
+          state.progress,
+          state.stats,
+          state.levelSystem,
+          referralToSave
+        );
 
-      await saveAuthUserData(
-        state.userId,
-        state.profile,
-        state.progress,
-        state.stats,
-        state.levelSystem,
-        referralToSave
-      );
-
-      console.log('✅ Dados salvos no Firestore (incluindo referral)');
+        console.log('✅ Dados salvos no Firestore');
+      } catch (error) {
+        console.error('❌ Erro ao salvar no Firestore:', error);
+        throw error;
+      }
     } else {
       saveGuestData(
         state.progress,
@@ -386,10 +407,38 @@ export const saveProgress = createAsyncThunk(
         state.referral
       );
 
-      console.log('✅ Dados guest salvos (incluindo referral)');
+      console.log('✅ Dados guest salvos');
     }
 
     return true;
+  }
+);
+
+// ⭐ NOVO THUNK: Verifica e cria backup diário
+export const checkDailyBackup = createAsyncThunk(
+  'user/checkDailyBackup',
+  async (_, { getState }) => {
+    const state = getState().user;
+
+    // Só faz backup para usuários autenticados
+    if (state.mode !== 'authenticated') {
+      return { success: false, reason: 'not_authenticated' };
+    }
+
+    const userData = {
+      stats: state.stats,
+      levelSystem: state.levelSystem,
+      progress: state.progress,
+      referral: state.referral
+    };
+
+    const result = await checkAndCreateBackup(state.userId, userData);
+
+    if (result.success) {
+      console.log('✅ Backup diário criado com sucesso!');
+    }
+
+    return result;
   }
 );
 
@@ -398,7 +447,6 @@ const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-
     markPhraseCompleted: (state, action) => {
       const { phraseId, phraseIndex } = action.payload;
       const { currentLevel } = state.levelSystem;
@@ -509,13 +557,12 @@ const userSlice = createSlice({
       state.progress.chunkTrainer.completedCount = completedPhrases.length;
     },
 
-    incrementPhraseCompleted: (state) => {
+    incrementPhraseCompleted: (state, action) => {
       state.stats.totalPhrases += 1;
       state.stats.totalAttempts += 1;
       state.stats.correctCount += 1;
       state.stats.accuracy = Math.round((state.stats.correctCount / state.stats.totalAttempts) * 100);
 
-      // Atualiza streak
       const today = new Date().toISOString().split('T')[0];
       const lastDate = state.stats.streak?.lastActivityDate;
 
@@ -528,8 +575,12 @@ const userSlice = createSlice({
         };
       }
 
+      // ⭐ NOVO: Se é primeira atividade do dia, marca para fazer backup
       if (lastDate !== today) {
         userSlice.caseReducers.updateStreak(state);
+
+        // Flag para disparar backup
+        state.needsBackup = true;
       }
 
       state.incentives.phrasesUntilPrompt -= 1;
@@ -676,7 +727,6 @@ const userSlice = createSlice({
         state.stats = action.payload.stats;
         state.levelSystem = action.payload.levelSystem;
 
-        // ✅ Garante estrutura completa do referral
         if (action.payload.referral) {
           state.referral = {
             ...initialState.referral,
@@ -710,7 +760,6 @@ const userSlice = createSlice({
         state.stats = action.payload.stats;
         state.levelSystem = action.payload.levelSystem;
 
-        // ✅ Garante estrutura completa do referral
         if (action.payload.referral) {
           state.referral = {
             ...initialState.referral,
@@ -730,8 +779,6 @@ const userSlice = createSlice({
         state.error = action.payload;
       });
 
-
-
     builder
       .addCase(logout.fulfilled, (state, action) => {
         state.mode = 'guest';
@@ -740,7 +787,6 @@ const userSlice = createSlice({
         state.progress = initialState.progress;
         state.stats = initialState.stats;
         state.incentives = initialState.incentives;
-        // ✅ Reseta referral no logout
         state.referral = initialState.referral;
       });
 
@@ -749,6 +795,13 @@ const userSlice = createSlice({
       state.referral.referredBy = action.payload.referredBy;
 
       console.log('✅ Referral inicializado:', action.payload);
+    });
+
+    builder.addCase(checkDailyBackup.fulfilled, (state, action) => {
+      if (action.payload.success) {
+        state.needsBackup = false;
+        console.log('✅ Flag de backup limpa');
+      }
     });
 
     builder

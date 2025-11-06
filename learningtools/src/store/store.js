@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import userReducer, { saveProgress } from './slices/userSlice';
+import userReducer, { saveProgress, checkDailyBackup } from './slices/userSlice';
 
 // Middleware para auto-save
 const autoSaveMiddleware = store => next => action => {
@@ -30,6 +30,28 @@ const autoSaveMiddleware = store => next => action => {
   return result;
 };
 
+// ⭐ NOVO: Middleware para backup automático diário
+const autoBackupMiddleware = store => next => action => {
+  const result = next(action);
+
+  // Verifica se completou uma frase
+  if (action.type === 'user/incrementPhraseCompleted') {
+    const state = store.getState().user;
+
+    // Se está marcado para fazer backup (primeira atividade do dia)
+    if (state.needsBackup && state.mode === 'authenticated') {
+      console.log('🔔 Primeira atividade do dia detectada, criando backup...');
+
+      // Dispara backup após 2 segundos (espera salvar progresso primeiro)
+      setTimeout(() => {
+        store.dispatch(checkDailyBackup());
+      }, 2000);
+    }
+  }
+
+  return result;
+};
+
 export const store = configureStore({
   reducer: {
     user: userReducer
@@ -38,10 +60,10 @@ export const store = configureStore({
     getDefaultMiddleware({
       serializableCheck: {
         // Ignora checks de serialização para timestamps do Firebase
-        ignoredActions: ['user/saveProgress/fulfilled'],
+        ignoredActions: ['user/saveProgress/fulfilled', 'user/checkDailyBackup/fulfilled'],
         ignoredPaths: ['user.progress', 'user.stats']
       }
-    }).concat(autoSaveMiddleware)
+    }).concat(autoSaveMiddleware, autoBackupMiddleware) // ⭐ Adiciona middleware de backup
 });
 
 export default store;
