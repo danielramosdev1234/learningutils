@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Hash, Mic, Zap, Video, MoreHorizontal, X, MessageCircle, Globe, Gift  } from 'lucide-react';
+import { Hash, Mic, Zap, Video, MoreHorizontal, X, MessageCircle, Globe, Gift, Radio  } from 'lucide-react';
 import NumberSpeechTrainer from './training/NumberSpeechTrainer';
 import ChunkTrainer from './training/ChunkTrainer';
 import ChallengeTrainer from './training/ChallengeTrainer';
@@ -12,11 +12,13 @@ import StreakIndicator from './ui/StreakIndicator';
 import TranslateTrainer from './training/TranslateTrainer';
 import { ReferralButton } from './referral/ReferralButton';
 import { InviteFriendsScreen } from './referral/InviteFriendsScreen';
+import LiveRooms from './social/LiveRooms';
 
 export default function TrainerSelector() {
   const getInitialTrainer = () => {
     const params = new URLSearchParams(window.location.search);
     const mode = params.get('mode');
+    if (mode === 'live-rooms') return 'live-rooms';
     if (mode === 'translate') return 'translate';
     if (mode === 'challenge') return 'challenge';
     if (mode === 'numbers') return 'numbers';
@@ -27,6 +29,7 @@ export default function TrainerSelector() {
   const [activeTrainer, setActiveTrainer] = useState(getInitialTrainer());
   const [showMoreMenu, setShowMoreMenu] = useState(false);
   const [showInviteModal, setShowInviteModal] = useState(false);
+  const [showSpeakMenu, setShowSpeakMenu] = useState(false);
 
   useEffect(() => {
     if (window.va) {
@@ -124,6 +127,18 @@ export default function TrainerSelector() {
                 Number
               </button>
 
+              <button
+                onClick={() => handleTrainerChange('live-rooms')}
+                className={`flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all ${
+                  activeTrainer === 'live-rooms'
+                    ? 'bg-gradient-to-r from-green-500 to-teal-500 text-white shadow-lg scale-105'
+                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                }`}
+              >
+                <Radio className="w-5 h-5" />
+                Live Rooms
+              </button>
+
               {/* Challenge Mode Button */}
               <button
                 onClick={() => handleTrainerChange('challenge')}
@@ -194,7 +209,128 @@ export default function TrainerSelector() {
         {activeTrainer === 'numbers' && <NumberSpeechTrainer />}
         {activeTrainer === 'challenge' && <ChallengeTrainer />}
         {activeTrainer === 'VideoLearningApp' && <VideoLearningApp />}
+        {activeTrainer === 'live-rooms' && <LiveRooms />}
       </div>
+
+      {showSpeakMenu && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 z-50 md:hidden"
+          onClick={() => setShowSpeakMenu(false)}
+        >
+          <div
+            className="absolute bottom-20 left-0 right-0  rounded-t-3xl shadow-2xl animate-slide-up"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex justify-between items-center p-4 border-b">
+              <h3 className="text-lg font-bold text-gray-800">Speak Options</h3>
+              <button
+                onClick={() => setShowSpeakMenu(false)}
+                className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+              >
+                <X className="w-5 h-5 text-gray-600" />
+              </button>
+            </div>
+
+            <div className="p-4 space-y-3">
+              {/* Speak Phrases */}
+              <button
+                onClick={() => {
+                  handleTrainerChange('chunk');
+                  setShowSpeakMenu(false);
+                }}
+                className={`w-full flex items-center gap-4 p-4 rounded-xl transition-all ${
+                  activeTrainer === 'chunk'
+                    ? 'bg-purple-500 text-white shadow-lg'
+                    : 'bg-gray-50 hover:bg-gray-100 text-gray-800'
+                }`}
+              >
+                <div className={`p-3 rounded-full ${
+                  activeTrainer === 'chunk' ? ' bg-opacity-20' : 'bg-purple-100'
+                }`}>
+                  <Mic className={`w-6 h-6 ${
+                    activeTrainer === 'chunk' ? 'text-white' : 'text-purple-600'
+                  }`} />
+                </div>
+                <div className="text-left flex-1">
+                  <div className="font-bold text-lg">Speak Phrases</div>
+                  <div className={`text-sm ${
+                    activeTrainer === 'chunk' ? 'text-white text-opacity-90' : 'text-gray-600'
+                  }`}>
+                    Practice pronunciation
+                  </div>
+                </div>
+                {activeTrainer === 'chunk' && (
+                  <div className="w-2 h-2  rounded-full" />
+                )}
+              </button>
+
+              {/* Translate */}
+              <button
+                 onClick={() => {
+                   handleTrainerChange('translate');
+                   setShowSpeakMenu(false);
+                 }}
+                 className={`w-full flex items-center gap-4 p-4 rounded-xl transition-all ${
+                   activeTrainer === 'translate'
+                     ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg'
+                     : 'bg-gray-50 hover:bg-gray-100 text-gray-800'
+                 }`}
+               >
+                 <div className={`p-3 rounded-full ${
+                   activeTrainer === 'translate' ? ' bg-opacity-20' : 'bg-pink-100'
+                 }`}>
+                   <Globe className={`w-6 h-6 ${
+                     activeTrainer === 'translate' ? 'text-white' : 'text-pink-600'
+                   }`} />
+                 </div>
+                 <div className="text-left flex-1">
+                   <div className="font-bold text-lg">Translate</div>
+                   <div className={`text-sm ${
+                     activeTrainer === 'translate' ? 'text-white text-opacity-90' : 'text-gray-600'
+                   }`}>
+                     Translate sentences
+                   </div>
+                 </div>
+                 {activeTrainer === 'translate' && (
+                   <div className="w-2 h-2  rounded-full" />
+                 )}
+               </button>
+
+              {/* Challenge Mode */}
+              <button
+                onClick={() => {
+                  handleTrainerChange('challenge');
+                  setShowSpeakMenu(false);
+                }}
+                className={`w-full flex items-center gap-4 p-4 rounded-xl transition-all ${
+                  activeTrainer === 'challenge'
+                    ? 'bg-gradient-to-r from-yellow-500 to-orange-500 text-white shadow-lg'
+                    : 'bg-gray-50 hover:bg-gray-100 text-gray-800'
+                }`}
+              >
+                <div className={`p-3 rounded-full ${
+                  activeTrainer === 'challenge' ? ' bg-opacity-20' : 'bg-orange-100'
+                }`}>
+                  <Zap className={`w-6 h-6 ${
+                    activeTrainer === 'challenge' ? 'text-white' : 'text-orange-600'
+                  }`} />
+                </div>
+                <div className="text-left flex-1">
+                  <div className="font-bold text-lg">Challenge Mode</div>
+                  <div className={`text-sm ${
+                    activeTrainer === 'challenge' ? 'text-white text-opacity-90' : 'text-gray-600'
+                  }`}>
+                    Test your skills!
+                  </div>
+                </div>
+                {activeTrainer === 'challenge' && (
+                  <div className="w-2 h-2  rounded-full" />
+                )}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* MORE MENU Modal - Mobile Only */}
       {showMoreMenu && (
@@ -219,34 +355,7 @@ export default function TrainerSelector() {
 
             {/* Menu Items */}
             <div className="p-4 space-y-3">
-              {/* Challenge Mode */}
-              <button
-                onClick={() => handleTrainerChange('challenge')}
-                className={`w-full flex items-center gap-4 p-4 rounded-xl transition-all ${
-                  activeTrainer === 'challenge'
-                    ? 'bg-gradient-to-r from-yellow-500 to-orange-500 text-white shadow-lg'
-                    : 'bg-gray-50 hover:bg-gray-100 text-gray-800'
-                }`}
-              >
-                <div className={`p-3 rounded-full ${
-                  activeTrainer === 'challenge' ? 'bg-white bg-opacity-20' : 'bg-orange-100'
-                }`}>
-                  <Zap className={`w-6 h-6 ${
-                    activeTrainer === 'challenge' ? 'text-white' : 'text-orange-600'
-                  }`} />
-                </div>
-                <div className="text-left flex-1">
-                  <div className="font-bold text-lg">Challenge Mode</div>
-                  <div className={`text-sm ${
-                    activeTrainer === 'challenge' ? 'text-white text-opacity-90' : 'text-gray-600'
-                  }`}>
-                    Test your skills!
-                  </div>
-                </div>
-                {activeTrainer === 'challenge' && (
-                  <div className="w-2 h-2 bg-white rounded-full" />
-                )}
-              </button>
+
 
               {/* WhatsApp Community */}
               <button
@@ -309,9 +418,11 @@ export default function TrainerSelector() {
         <div className="grid grid-cols-5 gap-1 px-2">
           {/* Speak Button */}
           <button
-            onClick={() => handleTrainerChange('chunk')}
+            onClick={() => setShowSpeakMenu(!showSpeakMenu)}
             className={`flex flex-col items-center gap-1 py-3 transition-all ${
-              activeTrainer === 'chunk' ? 'text-purple-600' : 'text-gray-400'
+              showSpeakMenu || activeTrainer === 'chunk' || activeTrainer === 'translate' || activeTrainer === 'challenge'
+                ? 'text-purple-600'
+                : 'text-gray-400'
             }`}
           >
             <Mic className={`w-6 h-6 ${activeTrainer === 'chunk' ? 'scale-110' : ''}`} />
@@ -321,17 +432,18 @@ export default function TrainerSelector() {
             )}
           </button>
 
-           {/* Translate Button - NOVO */}
+
+
             <button
-              onClick={() => handleTrainerChange('translate')}
+              onClick={() => handleTrainerChange('live-rooms')}
               className={`flex flex-col items-center gap-1 py-3 transition-all ${
-                activeTrainer === 'translate' ? 'text-purple-600' : 'text-gray-400'
+                activeTrainer === 'live-rooms' ? 'text-green-600' : 'text-gray-400'
               }`}
             >
-              <Globe className={`w-6 h-6 ${activeTrainer === 'translate' ? 'scale-110' : ''}`} />
-              <span className="text-xs font-semibold">Translate</span>
-              {activeTrainer === 'translate' && (
-                <div className="w-8 h-1 bg-purple-600 rounded-full mt-1" />
+              <Radio className={`w-6 h-6 ${activeTrainer === 'live-rooms' ? 'scale-110' : ''}`} />
+              <span className="text-xs font-semibold">Live</span>
+              {activeTrainer === 'live-rooms' && (
+                <div className="w-8 h-1 bg-green-600 rounded-full mt-1" />
               )}
             </button>
 

@@ -1,9 +1,9 @@
-// ✅ SUBSTITUIR App.jsx COMPLETO
-
 import { useEffect, useState } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { initializeUser } from './store/slices/userSlice';
 import TrainerSelector from './components/TrainerSelector';
+import Room from './components/social/Room';
 import IncentiveModal from './components/modals/IncentiveModal';
 import { Analytics } from '@vercel/analytics/react';
 import { observeAuthState } from './services/authService';
@@ -14,15 +14,14 @@ import {
 } from './utils/referralUtils';
 import { ReferralWelcomeBonusHandler } from './components/referral/ReferralWelcomeBonusHandler';
 import { ReferralFieldInitializer } from './components/referral/ReferralFieldInitializer';
-
-
+import MeetRoom from './components/social/MeetRoom';
 
 function App() {
   const dispatch = useDispatch();
   const [authChecked, setAuthChecked] = useState(false);
   const [userInitialized, setUserInitialized] = useState(false);
 
-  // ✅ NOVO: Detecta referral na URL ANTES de inicializar
+  // Detecta referral na URL ANTES de inicializar
   useEffect(() => {
     const refCode = detectReferralFromURL();
 
@@ -71,13 +70,21 @@ function App() {
   }
 
   return (
-    <>
+    <BrowserRouter>
       <ReferralFieldInitializer />
       <ReferralWelcomeBonusHandler />
-      <TrainerSelector />
+
+      <Routes>
+        {/* Rota principal com todos os trainers */}
+        <Route path="/" element={<TrainerSelector />} />
+
+        {/* Rota para entrar em uma sala específica */}
+        <Route path="/jitsi-room/:roomId" element={<MeetRoom />} />
+      </Routes>
+
       <IncentiveModal />
       <Analytics />
-    </>
+    </BrowserRouter>
   );
 }
 
