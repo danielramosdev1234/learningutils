@@ -3,7 +3,6 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { initializeUser } from './store/slices/userSlice';
 import TrainerSelector from './components/TrainerSelector';
-import Room from './components/social/Room';
 import IncentiveModal from './components/modals/IncentiveModal';
 import { Analytics } from '@vercel/analytics/react';
 import { observeAuthState } from './services/authService';
