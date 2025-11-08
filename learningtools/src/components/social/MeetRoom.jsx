@@ -111,15 +111,20 @@ export default function MeetRoom() {
 
       setTimeout(() => {
         setActiveEmotions(prev => {
-          const newEmotions = { ... prev};
-          if(prev[participantKey].emotion!=='✋'){
+          const newEmotions = { ...prev };
+
+          // ✅ Verificar se existe antes de acessar
+          if (newEmotions[participantKey]) {
+            // Se não for "raise hand", remove
+            if (newEmotions[participantKey].emotion !== '✋') {
               delete newEmotions[participantKey];
-                        console.log('🗑️ Removed emotion for:', participantKey);
-              }
+              console.log('🗑️ Removed emotion for:', participantKey);
+            }
+          }
 
           return newEmotions;
         });
-      }, 3000);
+      }, 5000);
     });
 
       socketService.joinRoom(roomId);
