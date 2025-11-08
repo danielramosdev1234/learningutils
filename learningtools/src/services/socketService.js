@@ -146,6 +146,20 @@ class SocketService {
     });
   }
 
+
+  sendEmotion(roomId, emotion, userId) {
+    if (!this.socket) {
+      console.error('❌ Socket not connected');
+      return;
+    }
+    console.log('😊 Sending emotion to room:', roomId, emotion);
+    this.socket.emit('send-emotion', {
+      roomId,
+      emotion,
+      userId
+    });
+  }
+
   // Event listeners
   on(event, callback) {
     if (!this.socket) {

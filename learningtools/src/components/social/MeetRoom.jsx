@@ -24,6 +24,8 @@ export default function MeetRoom() {
   const [livekitToken, setLivekitToken] = useState(null);
   const [livekitUrl, setLivekitUrl] = useState(null);
   const [showChat, setShowChat] = useState(false); // Para mobile
+  const [showEmotions, setShowEmotions] = useState(false);
+  const [activeEmotions, setActiveEmotions] = useState({});
 
   const isCreator = user.userId === room?.creator_id;
   const messagesEndRef = useRef(null);
@@ -53,6 +55,7 @@ export default function MeetRoom() {
           socketService.off('user-left');
           socketService.off('room-closed');
           socketService.off('room-error');
+          socketService.off('emotion');
 
       socketService.on('room-joined', async (roomData) => {
         console.log('✅ Room joined:', roomData);
@@ -87,6 +90,38 @@ export default function MeetRoom() {
         navigate('/?mode=live-rooms');
       });
 
+    socketService.on('emotion', (emotionData) => {
+      console.log('🎭 EMOTION RECEIVED:', emotionData);
+      console.log('📋 Identity:', emotionData.identity);
+
+      // ✅ Usar identity como chave
+      const participantKey = emotionData.identity;
+
+      setActiveEmotions(prev => {
+        const updated = {
+          ...prev,
+          [participantKey]: {
+            emotion: emotionData.emotion,
+            timestamp: Date.now()
+          }
+        };
+        console.log('🔄 Updated activeEmotions:', updated);
+        return updated;
+      });
+
+      setTimeout(() => {
+        setActiveEmotions(prev => {
+          const newEmotions = { ... prev};
+          if(prev[participantKey].emotion!=='✋'){
+              delete newEmotions[participantKey];
+                        console.log('🗑️ Removed emotion for:', participantKey);
+              }
+
+          return newEmotions;
+        });
+      }, 3000);
+    });
+
       socketService.joinRoom(roomId);
     };
 
@@ -99,6 +134,7 @@ export default function MeetRoom() {
       socketService.off('user-left');
       socketService.off('room-closed');
       socketService.off('room-error');
+      socketService.off('emotion');
 
       if (room && !isCreator) {
             socketService.leaveRoom(roomId);
@@ -180,6 +216,23 @@ export default function MeetRoom() {
     socketService.leaveRoom(roomId);
     navigate('/?mode=live-rooms');
   };
+
+const handleSendEmotion = (emotion) => {
+  socketService.sendEmotion(roomId, emotion, user.userId); // ✅ CORRETO
+  setShowEmotions(false);
+};
+
+const emotions = [
+  { icon: '👋', label: 'Wave' },
+  { icon: '✋', label: 'Raise Hand' },
+  { icon: '✊', label: 'Down Hand' },
+  { icon: '😂', label: 'Laugh' },
+  { icon: '❤️', label: 'Heart' },
+  { icon: '👏', label: 'Clap' },
+  { icon: '👍', label: 'Thumbs Up' },
+  { icon: '🤔', label: 'Thinking' },
+  { icon: '✅', label: 'Check' }
+];
 
   if (loading) {
     return (
@@ -269,6 +322,10 @@ export default function MeetRoom() {
           <VoiceRoomContent
             roomTitle={room.title}
             isCreator={isCreator}
+            activeEmotions={activeEmotions}
+              onSendEmotion={handleSendEmotion}
+              emotions={emotions}
+              currentUserId={user.userId}
           />
         </div>
 
@@ -287,6 +344,33 @@ export default function MeetRoom() {
         )}
         <MessageCircle className="w-6 h-6" />
       </button>
+
+      {/* ✅ NOVO: Botão Emotions Mobile */}
+      <button
+        onClick={() => setShowEmotions(!showEmotions)}
+        className="md:hidden fixed bottom-4 right-20 z-40 p-4 bg-yellow-500 text-white rounded-full shadow-2xl hover:bg-yellow-600 transition-all active:scale-95 flex items-center justify-center"
+      >
+        <span className="text-2xl">😊</span>
+      </button>
+
+      {/* ✅ NOVO: Emotions Popup Mobile */}
+      {showEmotions && (
+        <div className="md:hidden fixed bottom-24 right-4 z-50 bg-gray-800 rounded-2xl shadow-2xl p-4 animate-in fade-in slide-in-from-bottom-5">
+          <div className="grid grid-cols-4 gap-3">
+            {emotions.map((emo) => (
+              <button
+                key={emo.icon}
+                onClick={() => handleSendEmotion(emo.icon)}
+                className="flex flex-col items-center gap-1 p-2 hover:bg-gray-700 rounded-lg transition-colors active:scale-95"
+                title={emo.label}
+              >
+                <span className="text-2xl">{emo.icon}</span>
+                <span className="text-[10px] text-gray-400">{emo.label}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* Chat Sidebar - Desktop sempre visível, Mobile como overlay */}
       <div className={`
@@ -345,12 +429,13 @@ export default function MeetRoom() {
 }
 
 // Componente de Conteúdo da Sala de Voz - RESPONSIVO
-function VoiceRoomContent({ roomTitle, isCreator }) {
+function VoiceRoomContent({ roomTitle, isCreator, activeEmotions, onSendEmotion, emotions, currentUserId }) {
   const participants = useParticipants();
   const { localParticipant } = useLocalParticipant();
 
   const [isMuted, setIsMuted] = useState(false);
   const [isSpeakerMuted, setIsSpeakerMuted] = useState(false);
+  const [showEmotionsDesktop, setShowEmotionsDesktop] = useState(false);
 
   const toggleMic = async () => {
     if (localParticipant) {
@@ -374,12 +459,27 @@ function VoiceRoomContent({ roomTitle, isCreator }) {
 
       {/* Grid de Participantes - Responsivo */}
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-4 mb-4 md:mb-8 max-h-[50vh] md:max-h-none overflow-y-auto">
-        {participants.map((participant) => (
-          <ParticipantCard
-            key={participant.sid}
-            participant={participant}
-          />
-        ))}
+
+        {participants.map((participant) => {
+          const metadata = participant.metadata ? JSON.parse(participant.metadata) : {};
+
+          // ✅ Usar identity como chave (que é o displayName)
+          const participantKey = participant.identity;
+
+          console.log('👤 Mapping participant:', {
+            identity: participant.identity,
+            hasEmotion: !!activeEmotions[participantKey],
+            emotion: activeEmotions[participantKey]
+          });
+
+          return (
+            <ParticipantCard
+              key={participant.sid}
+              participant={participant}
+              activeEmotion={activeEmotions[participantKey]}  // ✅ Usar identity
+            />
+          );
+        })}
       </div>
 
       {/* Controles de Áudio - Responsivo */}
@@ -413,6 +513,37 @@ function VoiceRoomContent({ roomTitle, isCreator }) {
             <Volume2 className="w-5 h-5 md:w-6 md:h-6 text-white" />
           )}
         </button>
+
+        {/* ✅ Botão Emotions Desktop */}
+        <div className="hidden md:block relative">
+          <button
+            onClick={() => setShowEmotionsDesktop(!showEmotionsDesktop)}
+            className="p-3 md:p-4 rounded-full transition-all shadow-lg bg-yellow-500 hover:bg-yellow-600"
+          >
+            <span className="text-2xl md:text-3xl">😊</span>
+          </button>
+
+          {showEmotionsDesktop && (
+            <div className="bottom-full mb-2 left-1/2 transform -translate-x-1/2 bg-gray-800 rounded-2xl shadow-2xl p-4 z-50">
+              <div className="grid grid-cols-4 gap-3">
+                {emotions.map((emo) => (
+                  <button
+                    key={emo.icon}
+                    onClick={() => {
+                      onSendEmotion(emo.icon);
+                      setShowEmotionsDesktop(false);
+                    }}
+                    className="flex flex-col items-center gap-1 p-2 hover:bg-gray-700 rounded-lg transition-colors"
+                    title={emo.label}
+                  >
+                    <span className="text-2xl">{emo.icon}</span>
+                    <span className="text-[10px] text-gray-400 whitespace-nowrap">{emo.label}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
       </div>
 
       {/* Dica - Responsivo */}
@@ -427,8 +558,16 @@ function VoiceRoomContent({ roomTitle, isCreator }) {
 }
 
 // Card de Participante - RESPONSIVO
-function ParticipantCard({ participant }) {
+function ParticipantCard({ participant, activeEmotion }) {
   const [isSpeaking, setIsSpeaking] = useState(false);
+
+  const metadata2 = participant.metadata ? JSON.parse(participant.metadata) : {};
+    console.log('🎴 ParticipantCard render:', {
+      identity: participant.identity,
+      userId: metadata2.userId,
+      hasActiveEmotion: !!activeEmotion,
+      emotion: activeEmotion
+    });
 
   useEffect(() => {
     participant.on('isSpeakingChanged', (speaking) => {
@@ -452,6 +591,13 @@ function ParticipantCard({ participant }) {
     <div className={`relative bg-gray-800 rounded-lg md:rounded-xl p-2 md:p-4 transition-all ${
       isSpeaking ? 'ring-2 md:ring-4 ring-purple-500 shadow-lg md:shadow-xl shadow-purple-500/50' : 'ring-1 md:ring-2 ring-gray-700'
     }`}>
+
+        {/* ✅ NOVO: Emotion Display */}
+            {activeEmotion && (
+              <div className=" -top-2 -right-2 md:-top-3 md:-right-3 z-10  rounded-full p-1 md:p-2 shadow-lg animate-bounce">
+                <span className="text-xl md:text-2xl">{activeEmotion.emotion}</span>
+              </div>
+            )}
       <div className="flex flex-col items-center">
         <div className="relative mb-2 md:mb-3">
           <img
