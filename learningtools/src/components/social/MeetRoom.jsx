@@ -109,6 +109,10 @@ export default function MeetRoom() {
   const fetchLiveKitToken = async (roomId) => {
     try {
       const BACKEND_URL = import.meta.env.VITE_SOCKET_URL || 'http://localhost:3001';
+
+      console.log('🔗 Backend URL:', BACKEND_URL);
+      console.log('🎤 Requesting LiveKit token for room:', roomId);
+
       const response = await fetch(`${BACKEND_URL}/api/livekit/token`, {
         method: 'POST',
         headers: {
@@ -125,12 +129,22 @@ export default function MeetRoom() {
         })
       });
 
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error('❌ Token fetch failed:', response.status, errorText);
+        throw new Error(`HTTP ${response.status}: ${errorText}`);
+      }
+
       const data = await response.json();
+
+      console.log('✅ Token received');
+      console.log('🌐 LiveKit URL:', data.serverUrl);
+
       setLivekitToken(data.token);
       setLivekitUrl(data.serverUrl);
     } catch (error) {
       console.error('❌ Error fetching LiveKit token:', error);
-      alert('Failed to connect to voice room');
+      alert(`Failed to connect: ${error.message}`);
       navigate('/?mode=live-rooms');
     }
   };
