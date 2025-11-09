@@ -72,7 +72,7 @@ export default function TrainerSelector() {
 
       {/* TOP Navigation Bar - Desktop Only */}
       <nav className="bg-white shadow-md sticky top-0 z-50 hidden md:block">
-        <div className="max-w-6xl mx-auto px-4">
+        <div className=" mx-auto px-4">
           <div className="flex justify-between items-center py-4">
             <div className="flex justify-center gap-4 flex-1">
                  <div className="flex items-center gap-3">
