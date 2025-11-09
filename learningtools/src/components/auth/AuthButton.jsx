@@ -83,26 +83,7 @@ const AuthButton = () => {
               <p className="text-sm text-gray-600">{profile.email}</p>
             </div>
 
-            {/* ✅ NOVO: Invite Friends */}
-                          <button
-                                onClick={() => {
-                                  setShowBackupModal(true);
-                                }}
-                                className="w-full flex items-center gap-4 p-4 rounded-xl bg-indigo-50 hover:bg-indigo-100 text-gray-800 transition-all"
-                              >
-                                <div className="p-3 rounded-full bg-gradient-to-r from-blue-500 to-indigo-500">
 
-                                </div>
-                                <div className="text-left flex-1">
-                                  <div className="font-bold text-lg">Gerenciar Backup</div>
-
-                                </div>
-                                <div className="text-purple-600">
-                                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                                  </svg>
-                                </div>
-                              </button>
 
             {/* Modal Backup */}
                       {showBackupModal && (
