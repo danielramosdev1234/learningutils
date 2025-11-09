@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Hash, Mic, Zap, Video, MoreHorizontal, X, MessageCircle, Globe, Gift, Radio  } from 'lucide-react';
+import { useSelector } from 'react-redux';
+import { Hash, Mic, Zap, Video, MoreHorizontal, X, MessageCircle, Globe, Gift, Radio, House, ArrowUp01 } from 'lucide-react';
 import NumberSpeechTrainer from './training/NumberSpeechTrainer';
 import ChunkTrainer from './training/ChunkTrainer';
 import ChallengeTrainer from './training/ChallengeTrainer';
@@ -13,23 +14,31 @@ import TranslateTrainer from './training/TranslateTrainer';
 import { ReferralButton } from './referral/ReferralButton';
 import { InviteFriendsScreen } from './referral/InviteFriendsScreen';
 import LiveRooms from './social/LiveRooms';
+import Dashboard from './Dashboard';
 
 export default function TrainerSelector() {
   const getInitialTrainer = () => {
     const params = new URLSearchParams(window.location.search);
     const mode = params.get('mode');
     if (mode === 'live-rooms') return 'live-rooms';
+    if (mode === 'chunk') return 'chunk';
     if (mode === 'translate') return 'translate';
     if (mode === 'challenge') return 'challenge';
     if (mode === 'numbers') return 'numbers';
     if (mode === 'VideoLearningApp') return 'VideoLearningApp';
-    return 'chunk';
+    if (mode === 'dashboard') return 'dashboard';
+    return 'dashboard';
   };
 
-  const [activeTrainer, setActiveTrainer] = useState(getInitialTrainer());
+   const [activeTrainer, setActiveTrainer] = useState(
+      getInitialTrainer() || 'dashboard'
+    );
   const [showMoreMenu, setShowMoreMenu] = useState(false);
   const [showInviteModal, setShowInviteModal] = useState(false);
   const [showSpeakMenu, setShowSpeakMenu] = useState(false);
+  const { levelSystem, stats, profile } = useSelector(state => state.user);
+
+
 
   useEffect(() => {
     if (window.va) {
@@ -88,6 +97,19 @@ export default function TrainerSelector() {
 
                             </div>
                             </div>
+
+                             {/* Home Button */}
+                                                        <button
+                                                          onClick={() => handleTrainerChange('dashboard')}
+                                                          className={`flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all ${
+                                                            activeTrainer === 'dashboard'
+                                                              ? 'bg-purple-500 text-white shadow-lg scale-105'
+                                                              : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                                                          }`}
+                                                        >
+                                                          <House className="w-5 h-5" />
+                                                          Home
+                                                        </button>
               {/* Chunk Trainer Button */}
               <button
                 onClick={() => handleTrainerChange('chunk')}
@@ -126,6 +148,8 @@ export default function TrainerSelector() {
                 <Hash className="w-5 h-5" />
                 Number
               </button>
+
+
 
               <button
                 onClick={() => handleTrainerChange('live-rooms')}
@@ -204,6 +228,7 @@ export default function TrainerSelector() {
 
       {/* Active Trainer Component */}
       <div className="transition-opacity duration-300">
+        {activeTrainer === 'dashboard' && <Dashboard onNavigate={handleTrainerChange} />}
         {activeTrainer === 'chunk' && <ChunkTrainer />}
         {activeTrainer === 'translate' && <TranslateTrainer />}
         {activeTrainer === 'numbers' && <NumberSpeechTrainer />}
@@ -288,13 +313,45 @@ export default function TrainerSelector() {
                    <div className={`text-sm ${
                      activeTrainer === 'translate' ? 'text-white text-opacity-90' : 'text-gray-600'
                    }`}>
-                     Translate sentences
+                     Translate and practice
                    </div>
                  </div>
                  {activeTrainer === 'translate' && (
                    <div className="w-2 h-2  rounded-full" />
                  )}
                </button>
+
+               {/* Numbers */}
+                             <button
+                               onClick={() => {
+                                 handleTrainerChange('numbers');
+                                 setShowSpeakMenu(false);
+                               }}
+                               className={`w-full flex items-center gap-4 p-4 rounded-xl transition-all ${
+                                 activeTrainer === 'numbers'
+                                   ? 'bg-purple-500 text-white shadow-lg'
+                                   : 'bg-gray-50 hover:bg-gray-100 text-gray-800'
+                               }`}
+                             >
+                               <div className={`p-3 rounded-full ${
+                                 activeTrainer === 'numbers' ? ' bg-opacity-20' : 'bg-purple-100'
+                               }`}>
+                                 <ArrowUp01 className={`w-6 h-6 ${
+                                   activeTrainer === 'numbers' ? 'text-white' : 'text-purple-600'
+                                 }`} />
+                               </div>
+                               <div className="text-left flex-1">
+                                 <div className="font-bold text-lg">Numbers</div>
+                                 <div className={`text-sm ${
+                                   activeTrainer === 'numbers' ? 'text-white text-opacity-90' : 'text-gray-600'
+                                 }`}>
+                                   Practice Numbers pronunciation
+                                 </div>
+                               </div>
+                               {activeTrainer === 'numbers' && (
+                                 <div className="w-2 h-2  rounded-full" />
+                               )}
+                             </button>
 
               {/* Challenge Mode */}
               <button
@@ -447,16 +504,16 @@ export default function TrainerSelector() {
               )}
             </button>
 
-          {/* Number Button */}
+          {/* Home Button */}
           <button
-            onClick={() => handleTrainerChange('numbers')}
+            onClick={() => handleTrainerChange('dashboard')}
             className={`flex flex-col items-center gap-1 py-3 transition-all ${
-              activeTrainer === 'numbers' ? 'text-blue-600' : 'text-gray-400'
+              activeTrainer === 'dashboard' ? 'text-blue-600' : 'text-gray-400'
             }`}
           >
-            <Hash className={`w-6 h-6 ${activeTrainer === 'numbers' ? 'scale-110' : ''}`} />
-            <span className="text-xs font-semibold">Number</span>
-            {activeTrainer === 'numbers' && (
+            <House className={`w-6 h-6 ${activeTrainer === 'dashboard' ? 'scale-110' : ''}`} />
+            <span className="text-xs font-semibold">Home</span>
+            {activeTrainer === 'dashboard' && (
               <div className="w-8 h-1 bg-blue-600 rounded-full mt-1" />
             )}
           </button>
