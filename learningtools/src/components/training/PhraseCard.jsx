@@ -319,7 +319,7 @@ const handleNextSkip = () => {
                 title="Change voice"
               >
                 <Settings size={20} className="sm:w-6 sm:h-6" />
-                <span className="hidden sm:inline">Voice</span>
+                <span className=" sm:inline">Voice</span>
               </button>
 
         <button
