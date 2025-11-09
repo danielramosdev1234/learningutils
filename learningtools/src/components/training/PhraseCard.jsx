@@ -313,14 +313,7 @@ const handleNextSkip = () => {
                     </button>
                   )}
 
-              <button
-                onClick={() => setShowVoiceSelector(!showVoiceSelector)}
-                className="flex items-center gap-1 sm:gap-2 bg-gray-500 hover:bg-gray-600 text-white px-3 sm:px-6 py-2 sm:py-3 rounded-lg transition-colors shadow-md font-semibold text-sm sm:text-base"
-                title="Change voice"
-              >
-                <Settings size={20} className="sm:w-6 sm:h-6" />
-                <span className=" sm:inline">Voice</span>
-              </button>
+
 
         <button
           onClick={() => onSpeak(phrase.text)}
