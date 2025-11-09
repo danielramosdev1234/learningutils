@@ -16,6 +16,7 @@ import {
   markPhraseCompleted
 } from '../../store/slices/userSlice';
 import { InvitePromptModal } from '../modals/InvitePromptModal';
+import { Volume2, Mic, MicOff, CheckCircle, XCircle, Loader, AlertCircle, Play, Pause, ArrowRight, Gift, Settings } from 'lucide-react';
 
 const ChunkTrainer = ({ onOpenInvite }) => {
   const dispatch = useDispatch();
@@ -27,7 +28,9 @@ const ChunkTrainer = ({ onOpenInvite }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [filteredPhrases, setFilteredPhrases] = useState([]);
-  const { speak } = useTextToSpeech();
+  const textToSpeech = useTextToSpeech();
+  const { speak2, voices, selectedVoice, setSelectedVoice } = textToSpeech;
+  const [showVoiceSelector, setShowVoiceSelector] = useState(false);
   const [hasMigrated, setHasMigrated] = useState(false);
   const [showInviteModal, setShowInviteModal] = useState(false);
   const [phrasesCompletedSincePrompt, setPhrasesCompletedSincePrompt] = useState(0);
@@ -254,7 +257,8 @@ const ChunkTrainer = ({ onOpenInvite }) => {
           <PhraseCard
             key={`phrase-${safeIndex}-${currentPhrase.id}`}
             phrase={currentPhrase}
-            onSpeak={speak}
+            onSpeak={speak2}
+            textToSpeech={textToSpeech}
             onCorrectAnswer={handleCorrectAnswer}
             onNextPhrase={handleNextPhrase}
             isActive={true}

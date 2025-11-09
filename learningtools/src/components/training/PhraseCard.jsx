@@ -1,7 +1,7 @@
 // src/components/PhraseCard.jsx (ATUALIZADO - Referral processado no login)
 
 import React, { useState, useEffect, useRef, useMemo  } from 'react';
-import { Volume2, Mic, MicOff, CheckCircle, XCircle, Loader, AlertCircle, Play, Pause, ArrowRight, Gift  } from 'lucide-react';
+import { Volume2, Mic, MicOff, CheckCircle, XCircle, Loader, AlertCircle, Play, Pause, ArrowRight, Gift, Settings  } from 'lucide-react';
 import { useSpeechRecognitionForChunks } from '../../hooks/useSpeechRecognitionForChunks';
 import { compareTexts } from '../../utils/textComparison';
 import { useSpeechRecognition } from '../../hooks/useSpeechRecognition';
@@ -25,8 +25,7 @@ const isAndroidDevice = () => {
   return /android/.test(ua);
 };
 
-export const PhraseCard = ({ phrase, onSpeak, onCorrectAnswer, onNextPhrase, isActive }) => {
-
+export const PhraseCard = ({ phrase, onSpeak, onCorrectAnswer, onNextPhrase, isActive, textToSpeech }) => {
  const isAndroid = useMemo(() => isAndroidDevice(), []);
 
  const chunksHook = useSpeechRecognitionForChunks();
@@ -84,6 +83,8 @@ export const PhraseCard = ({ phrase, onSpeak, onCorrectAnswer, onNextPhrase, isA
   const [isPlayingUserAudio, setIsPlayingUserAudio] = useState(false);
   const [showIPA, setShowIPA] = useState(false);
   const [showFireworks, setShowFireworks] = useState(false);
+  const [showVoiceSelector, setShowVoiceSelector] = useState(false);
+  const { speak, voices, selectedVoice, setSelectedVoice } = textToSpeech || useTextToSpeech();
 
   const [totalPracticed, setTotalPracticed] = useState(() => {
     const stored = localStorage.getItem('learnfun_total_practiced');
@@ -312,6 +313,15 @@ const handleNextSkip = () => {
                     </button>
                   )}
 
+              <button
+                onClick={() => setShowVoiceSelector(!showVoiceSelector)}
+                className="flex items-center gap-1 sm:gap-2 bg-gray-500 hover:bg-gray-600 text-white px-3 sm:px-6 py-2 sm:py-3 rounded-lg transition-colors shadow-md font-semibold text-sm sm:text-base"
+                title="Change voice"
+              >
+                <Settings size={20} className="sm:w-6 sm:h-6" />
+                <span className="hidden sm:inline">Voice</span>
+              </button>
+
         <button
           onClick={() => onSpeak(phrase.text)}
           className="flex items-center gap-1 sm:gap-2 bg-blue-500 hover:bg-blue-600 text-white px-3 sm:px-6 py-2 sm:py-3 rounded-lg transition-colors shadow-md font-semibold text-sm sm:text-base"
@@ -347,6 +357,51 @@ const handleNextSkip = () => {
           </button>
         )}
       </div>
+
+      {showVoiceSelector && voices.length > 0 && (
+        <div className="mb-6 p-4 bg-white rounded-lg shadow-md border-2 border-blue-300">
+          <h3 className="font-bold text-gray-700 mb-3 flex items-center gap-2">
+            <Settings size={20} />
+            Choose Voice ({voices.length} available in your device)
+          </h3>
+
+          <div className="space-y-2 max-h-64 overflow-y-auto">
+              <button
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    speak("Hello! This is a test.", null, 0.9);
+                                  }}
+                                  className="ml-2 px-3 py-1 bg-blue-500 hover:bg-blue-600 text-white rounded text-sm font-semibold"
+                                >
+                                  Select the voice and click here for Test
+                                </button>
+            {voices.map((voice) => (
+              <div
+                key={voice.name}
+                className={`p-3 rounded-lg cursor-pointer transition-all border-2 ${
+                  selectedVoice?.name === voice.name
+                    ? 'bg-blue-100 border-blue-500 shadow-md'
+                    : 'bg-gray-50 border-gray-200 hover:bg-gray-100'
+                }`}
+                onClick={() => {
+                  setSelectedVoice(voice);
+                  localStorage.setItem('learnfun_preferred_voice', voice.name);
+                  console.log('✅ Voice saved:', voice.name);
+                }}
+              >
+                <div className="flex items-center justify-between">
+                  <div className="flex-1">
+                    <p className="font-semibold text-gray-800">{voice.name}</p>
+                    <p className="text-xs text-gray-500">{voice.lang}</p>
+                  </div>
+
+
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       {audioBlob && (
         <div className="flex justify-center mb-6">

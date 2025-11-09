@@ -19,6 +19,8 @@ const TranslateTrainer = () => {
   const [currentPhrase, setCurrentPhrase] = useState(null);
   const [translationHistory, setTranslationHistory] = useState([]);
   const [showHistory, setShowHistory] = useState(false);
+  const textToSpeech = useTextToSpeech();
+  const { speak } = textToSpeech;
 
   const {
     translateToEnglish,
@@ -28,7 +30,6 @@ const TranslateTrainer = () => {
     clearError
   } = useTranslation();
 
-  const { speak } = useTextToSpeech();
 
   // ✅ NOVO: Hook de reconhecimento de voz para português
   const {
@@ -356,6 +357,7 @@ const TranslateTrainer = () => {
               key={currentPhrase.id}
               phrase={currentPhrase}
               onSpeak={speak}
+              textToSpeech={textToSpeech}
               onCorrectAnswer={handleCorrectAnswer}
               isActive={true}
             />
