@@ -8,6 +8,12 @@ import {
 import { useSelector } from 'react-redux';
 import LevelRankingModal from './modals/LevelRankingModal';
 import StreakModal from './modals/StreakModal';
+import wordByWordImg from '../assets/wordbyword.png';
+import translatePracticeImg from '../assets/translatepractice.png';
+import numerosImg from '../assets/numeros.png';
+import challengeImg from '../assets/challenge.png';
+import videoListenerImg from '../assets/videolistener.png';
+import liveRoomImg from '../assets/liveroom.png';
 
 
 
@@ -73,7 +79,7 @@ const Dashboard = () => {
       icon: Globe,
       gradient: 'from-blue-500 to-cyan-500',
       path: '/?mode=translate',
-                                    src: 'src/assets/translatepractice.png',
+                                    src: translatePracticeImg,
                                           alt: 'exemplo word by word'
     },
     {
@@ -103,7 +109,7 @@ description: (
     ),      icon: Hash,
       gradient: 'from-green-500 to-teal-500',
       path: '/?mode=numbers',
-                                  src: 'src/assets/numeros.png',
+                                  src: numerosImg ,
                                         alt: 'exemplo word by word'
     },
     {
@@ -134,7 +140,7 @@ description: (
       gradient: 'from-yellow-500 to-orange-500',
       path: '/?mode=challenge',
       highlight: true,
-                           src: 'src/assets/challenge.png',
+                           src: challengeImg ,
                                  alt: 'exemplo word by word'
     },
     {
@@ -164,7 +170,7 @@ description: (
     ),      icon: Video,
       gradient: 'from-red-500 to-pink-500',
       path: '/?mode=VideoLearningApp',
-                                           src: 'src/assets/videolistener.png',
+                                           src: videoListenerImg  ,
                                                  alt: 'exemplo word by word'
     },
     {
@@ -195,7 +201,7 @@ description: (
       gradient: 'from-indigo-500 to-purple-500',
       path: '/?mode=live-rooms',
       badge: 'NEW',
-                        src: 'src/assets/liveroom.png',
+                        src: liveRoomImg   ,
                               alt: 'exemplo word by word'
     }
   ];
@@ -341,7 +347,7 @@ description: (
 
           {/* Mobile Buttons - Below Card */}
                           <div className="md:hidden grid grid-cols-2 gap-2 mb-8 px-4 botoespadding" >
-                              <style jsx>{`
+                              <style >{`
                                       .botoespadding {
                                         padding-top: 20px;
                                       }`}</style>
@@ -393,13 +399,13 @@ description: (
                                           </ul>
 
                               {/* Imagem do exemplo */}
-                              <div class="imagemexemplo">
-                                  <style jsx>{`
+                              <div className="imagemexemplo">
+                                  <style >{`
                                                                         .imagemexemplo {
                                                                           padding-top: 20px;
                                                                         }`}</style>
                                 <img
-                                  src="src/assets/wordbyword.png"
+                                  src={wordByWordImg}
                                   alt="Pronunciation Feedback Example"
                                   className="w-full h-auto rounded-lg shadow-md"
                                 />
