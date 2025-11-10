@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   Mic, Globe, Hash, Zap, Video, Radio,
   TrendingUp, Target, Flame, Trophy,
   ArrowRight, Star, Clock, Users,
-  CheckCircle, Award, MessageCircle, Gift, BookOpen
+  CheckCircle, Award, MessageCircle, Gift, BookOpen, ChevronLeft, ChevronRight
 } from 'lucide-react';
 import { useSelector } from 'react-redux';
 import LevelRankingModal from './modals/LevelRankingModal';
@@ -27,6 +27,20 @@ const Dashboard = () => {
 
     const [showRankingModal, setShowRankingModal] = useState(false);
     const [showModal, setShowModal] = useState(false);
+    const [currentSlide, setCurrentSlide] = useState(0);
+    const carouselRef = useRef(null);
+    const [isMobile, setIsMobile] = useState(false);
+
+    // Detecta se é mobile
+    useEffect(() => {
+      const checkMobile = () => {
+        setIsMobile(window.innerWidth < 768); // md breakpoint
+      };
+      
+      checkMobile();
+      window.addEventListener('resize', checkMobile);
+      return () => window.removeEventListener('resize', checkMobile);
+    }, []);
 
     if (!levelSystem) return null;
 
@@ -274,6 +288,46 @@ description: (
     window.location.href = path;
   };
 
+  const scrollToSlide = (index) => {
+    if (carouselRef.current) {
+      const container = carouselRef.current;
+      // Largura do card = calc(100vw - 4rem) = viewport width - 64px (padding do container)
+      const cardWidth = window.innerWidth - 64;
+      const gap = 16; // gap-4 = 1rem = 16px
+      const scrollPosition = index * (cardWidth + gap);
+      
+      container.scrollTo({
+        left: scrollPosition,
+        behavior: 'smooth'
+      });
+      setCurrentSlide(index);
+    }
+  };
+
+  const handleScroll = () => {
+    if (carouselRef.current) {
+      const container = carouselRef.current;
+      const scrollLeft = container.scrollLeft;
+      // Largura do card = calc(100vw - 4rem) = viewport width - 64px (padding do container)
+      const cardWidth = window.innerWidth - 64;
+      const gap = 16;
+      const slideIndex = Math.round(scrollLeft / (cardWidth + gap));
+      setCurrentSlide(Math.min(Math.max(0, slideIndex), features.length - 1));
+    }
+  };
+
+  const nextSlide = () => {
+    if (currentSlide < features.length - 1) {
+      scrollToSlide(currentSlide + 1);
+    }
+  };
+
+  const prevSlide = () => {
+    if (currentSlide > 0) {
+      scrollToSlide(currentSlide - 1);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-pink-50">
 
@@ -379,16 +433,88 @@ description: (
 
 
 
-        {/* Features Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {features.map((feature) => (
-            <FeatureCard
-              key={feature.id}
-              feature={feature}
-              onNavigate={handleNavigate}
-            />
-          ))}
-        </div>
+        {/* Features - Grid no Desktop, Carrossel no Mobile */}
+        {isMobile ? (
+          <div className="relative">
+            {/* Carrossel Mobile */}
+            <div
+              ref={carouselRef}
+              onScroll={handleScroll}
+              className="flex overflow-x-auto snap-x snap-mandatory gap-4 pb-4 scrollbar-hide -mx-4 px-4"
+              style={{
+                scrollbarWidth: 'none',
+                msOverflowStyle: 'none',
+                WebkitOverflowScrolling: 'touch'
+              }}
+            >
+              {features.map((feature, index) => (
+                <div
+                  key={feature.id}
+                  className="flex-shrink-0 snap-center"
+                  style={{ width: 'calc(100vw - 4rem)' }}
+                >
+                  <FeatureCard
+                    feature={feature}
+                    onNavigate={handleNavigate}
+                  />
+                </div>
+              ))}
+            </div>
+
+            {/* Botões de navegação */}
+            <div className="flex items-center justify-between mt-4">
+              <button
+                onClick={prevSlide}
+                disabled={currentSlide === 0}
+                className={`p-2 rounded-full ${
+                  currentSlide === 0
+                    ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                    : 'bg-purple-600 text-white hover:bg-purple-700'
+                } transition-all`}
+              >
+                <ChevronLeft className="w-6 h-6" />
+              </button>
+
+              {/* Indicadores */}
+              <div className="flex gap-2">
+                {features.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => scrollToSlide(index)}
+                    className={`h-2 rounded-full transition-all ${
+                      index === currentSlide
+                        ? 'w-8 bg-purple-600'
+                        : 'w-2 bg-gray-300'
+                    }`}
+                    aria-label={`Go to slide ${index + 1}`}
+                  />
+                ))}
+              </div>
+
+              <button
+                onClick={nextSlide}
+                disabled={currentSlide === features.length - 1}
+                className={`p-2 rounded-full ${
+                  currentSlide === features.length - 1
+                    ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                    : 'bg-purple-600 text-white hover:bg-purple-700'
+                } transition-all`}
+              >
+                <ChevronRight className="w-6 h-6" />
+              </button>
+            </div>
+          </div>
+        ) : (
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {features.map((feature) => (
+              <FeatureCard
+                key={feature.id}
+                feature={feature}
+                onNavigate={handleNavigate}
+              />
+            ))}
+          </div>
+        )}
 
         {/* Bottom CTA */}
         <div className="mt-12 bg-white rounded-2xl p-8 shadow-lg text-center">
@@ -500,5 +626,17 @@ style.textContent = `
   .animate-fadeOut {
     animation: fadeOut 3s ease-in-out forwards;
   }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
 `;
-document.head.appendChild(style);
+if (!document.head.querySelector('style[data-dashboard]')) {
+  style.setAttribute('data-dashboard', 'true');
+  document.head.appendChild(style);
+}
