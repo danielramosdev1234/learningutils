@@ -91,7 +91,7 @@ const Dashboard = () => {
                       ),
               icon: BookOpen,
               gradient: 'from-indigo-500 to-purple-500 ',
-              path: '/?mode=chunk',
+              path: '/?mode=categories',
                                             src: categoriesImg,
                                                   alt: 'exemplo word by word'
             },{
