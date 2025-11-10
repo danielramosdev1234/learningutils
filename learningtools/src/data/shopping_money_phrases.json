@@ -1,0 +1,722 @@
+[
+  {
+    "text": "How much is this?",
+    "translation": "Quanto custa isso?",
+    "category": "shopping_money",
+    "theme": "prices",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "shop_001"
+  },
+  {
+    "text": "That's too expensive.",
+    "translation": "Isso é muito caro.",
+    "category": "shopping_money",
+    "theme": "prices",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "shop_002"
+  },
+  {
+    "text": "Do you have anything cheaper?",
+    "translation": "Você tem algo mais barato?",
+    "category": "shopping_money",
+    "theme": "prices",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "shop_003"
+  },
+  {
+    "text": "Is this on sale?",
+    "translation": "Isso está em promoção?",
+    "category": "shopping_money",
+    "theme": "prices",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "shop_004"
+  },
+  {
+    "text": "What's the price?",
+    "translation": "Qual é o preço?",
+    "category": "shopping_money",
+    "theme": "prices",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "shop_005"
+  },
+  {
+    "text": "That's a good deal!",
+    "translation": "Isso é um bom negócio!",
+    "category": "shopping_money",
+    "theme": "prices",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "shop_006"
+  },
+  {
+    "text": "Is there a discount?",
+    "translation": "Tem desconto?",
+    "category": "shopping_money",
+    "theme": "prices",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "shop_007"
+  },
+  {
+    "text": "What's the total?",
+    "translation": "Qual é o total?",
+    "category": "shopping_money",
+    "theme": "prices",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "shop_008"
+  },
+  {
+    "text": "Can you give me a discount?",
+    "translation": "Você pode me dar um desconto?",
+    "category": "shopping_money",
+    "theme": "negotiation",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "shop_009"
+  },
+  {
+    "text": "That's still too much.",
+    "translation": "Isso ainda é demais.",
+    "category": "shopping_money",
+    "theme": "negotiation",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "shop_010"
+  },
+  {
+    "text": "What's your best price?",
+    "translation": "Qual é seu melhor preço?",
+    "category": "shopping_money",
+    "theme": "negotiation",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "shop_011"
+  },
+  {
+    "text": "I'll take it!",
+    "translation": "Vou levar!",
+    "category": "shopping_money",
+    "theme": "negotiation",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "shop_012"
+  },
+  {
+    "text": "I'll think about it.",
+    "translation": "Vou pensar sobre isso.",
+    "category": "shopping_money",
+    "theme": "negotiation",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "shop_013"
+  },
+  {
+    "text": "Can I pay with cash?",
+    "translation": "Posso pagar com dinheiro?",
+    "category": "shopping_money",
+    "theme": "payment",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "shop_014"
+  },
+  {
+    "text": "Do you accept credit cards?",
+    "translation": "Vocês aceitam cartão de crédito?",
+    "category": "shopping_money",
+    "theme": "payment",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "shop_015"
+  },
+  {
+    "text": "Can I use my debit card?",
+    "translation": "Posso usar meu cartão de débito?",
+    "category": "shopping_money",
+    "theme": "payment",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "shop_016"
+  },
+  {
+    "text": "Do you take Apple Pay?",
+    "translation": "Vocês aceitam Apple Pay?",
+    "category": "shopping_money",
+    "theme": "payment",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "shop_017"
+  },
+  {
+    "text": "Can I split the payment?",
+    "translation": "Posso dividir o pagamento?",
+    "category": "shopping_money",
+    "theme": "payment",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "shop_018"
+  },
+  {
+    "text": "Here's my card.",
+    "translation": "Aqui está meu cartão.",
+    "category": "shopping_money",
+    "theme": "payment",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "shop_019"
+  },
+  {
+    "text": "Do I need to sign?",
+    "translation": "Preciso assinar?",
+    "category": "shopping_money",
+    "theme": "payment",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "shop_020"
+  },
+  {
+    "text": "Can I have a receipt?",
+    "translation": "Posso ter um recibo?",
+    "category": "shopping_money",
+    "theme": "payment",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "shop_021"
+  },
+  {
+    "text": "Keep the change.",
+    "translation": "Fique com o troco.",
+    "category": "shopping_money",
+    "theme": "payment",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "shop_022"
+  },
+  {
+    "text": "Do you have this in blue?",
+    "translation": "Você tem isso em azul?",
+    "category": "shopping_money",
+    "theme": "sizes_colors",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "shop_023"
+  },
+  {
+    "text": "What colors do you have?",
+    "translation": "Que cores você tem?",
+    "category": "shopping_money",
+    "theme": "sizes_colors",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "shop_024"
+  },
+  {
+    "text": "Do you have a size small?",
+    "translation": "Você tem tamanho pequeno?",
+    "category": "shopping_money",
+    "theme": "sizes_colors",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "shop_025"
+  },
+  {
+    "text": "I need a medium.",
+    "translation": "Preciso de um médio.",
+    "category": "shopping_money",
+    "theme": "sizes_colors",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "shop_026"
+  },
+  {
+    "text": "This is too big.",
+    "translation": "Isso é muito grande.",
+    "category": "shopping_money",
+    "theme": "sizes_colors",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "shop_027"
+  },
+  {
+    "text": "This is too small.",
+    "translation": "Isso é muito pequeno.",
+    "category": "shopping_money",
+    "theme": "sizes_colors",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "shop_028"
+  },
+  {
+    "text": "Can I try this on?",
+    "translation": "Posso experimentar isso?",
+    "category": "shopping_money",
+    "theme": "sizes_colors",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "shop_029"
+  },
+  {
+    "text": "Where's the fitting room?",
+    "translation": "Onde fica o provador?",
+    "category": "shopping_money",
+    "theme": "sizes_colors",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "shop_030"
+  },
+  {
+    "text": "It fits perfectly!",
+    "translation": "Serve perfeitamente!",
+    "category": "shopping_money",
+    "theme": "sizes_colors",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "shop_031"
+  },
+  {
+    "text": "I'm just looking.",
+    "translation": "Estou apenas olhando.",
+    "category": "shopping_money",
+    "theme": "browsing",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "shop_032"
+  },
+  {
+    "text": "Can I help you?",
+    "translation": "Posso ajudá-lo?",
+    "category": "shopping_money",
+    "theme": "browsing",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "shop_033"
+  },
+  {
+    "text": "I'm looking for a gift.",
+    "translation": "Estou procurando um presente.",
+    "category": "shopping_money",
+    "theme": "browsing",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "shop_034"
+  },
+  {
+    "text": "Where can I find shoes?",
+    "translation": "Onde posso encontrar sapatos?",
+    "category": "shopping_money",
+    "theme": "browsing",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "shop_035"
+  },
+  {
+    "text": "Do you have this in stock?",
+    "translation": "Você tem isso em estoque?",
+    "category": "shopping_money",
+    "theme": "browsing",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "shop_036"
+  },
+  {
+    "text": "When will you restock?",
+    "translation": "Quando vocês vão repor?",
+    "category": "shopping_money",
+    "theme": "browsing",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "shop_037"
+  },
+  {
+    "text": "Can you check in the back?",
+    "translation": "Pode verificar nos fundos?",
+    "category": "shopping_money",
+    "theme": "browsing",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "shop_038"
+  },
+  {
+    "text": "I'll come back later.",
+    "translation": "Voltarei mais tarde.",
+    "category": "shopping_money",
+    "theme": "browsing",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "shop_039"
+  },
+  {
+    "text": "I'd like to return this.",
+    "translation": "Gostaria de devolver isso.",
+    "category": "shopping_money",
+    "theme": "returns",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "shop_040"
+  },
+  {
+    "text": "Can I get a refund?",
+    "translation": "Posso ter um reembolso?",
+    "category": "shopping_money",
+    "theme": "returns",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "shop_041"
+  },
+  {
+    "text": "It doesn't work properly.",
+    "translation": "Não funciona corretamente.",
+    "category": "shopping_money",
+    "theme": "returns",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "shop_042"
+  },
+  {
+    "text": "Here's my receipt.",
+    "translation": "Aqui está meu recibo.",
+    "category": "shopping_money",
+    "theme": "returns",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "shop_043"
+  },
+  {
+    "text": "Can I exchange this?",
+    "translation": "Posso trocar isso?",
+    "category": "shopping_money",
+    "theme": "returns",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "shop_044"
+  },
+  {
+    "text": "What's your return policy?",
+    "translation": "Qual é sua política de devolução?",
+    "category": "shopping_money",
+    "theme": "returns",
+    "difficulty": 3,
+    "environment": "production",
+    "id": "shop_045"
+  },
+  {
+    "text": "It's damaged.",
+    "translation": "Está danificado.",
+    "category": "shopping_money",
+    "theme": "returns",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "shop_046"
+  },
+  {
+    "text": "I changed my mind.",
+    "translation": "Mudei de ideia.",
+    "category": "shopping_money",
+    "theme": "returns",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "shop_047"
+  },
+  {
+    "text": "Where's the grocery store?",
+    "translation": "Onde fica o supermercado?",
+    "category": "shopping_money",
+    "theme": "stores",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "shop_048"
+  },
+  {
+    "text": "Is there a pharmacy nearby?",
+    "translation": "Tem uma farmácia por perto?",
+    "category": "shopping_money",
+    "theme": "stores",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "shop_049"
+  },
+  {
+    "text": "Where's the shopping mall?",
+    "translation": "Onde fica o shopping?",
+    "category": "shopping_money",
+    "theme": "stores",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "shop_050"
+  },
+  {
+    "text": "What time do you close?",
+    "translation": "Que horas vocês fecham?",
+    "category": "shopping_money",
+    "theme": "stores",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "shop_051"
+  },
+  {
+    "text": "Are you open on Sundays?",
+    "translation": "Vocês abrem aos domingos?",
+    "category": "shopping_money",
+    "theme": "stores",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "shop_052"
+  },
+  {
+    "text": "I need a bag.",
+    "translation": "Preciso de uma sacola.",
+    "category": "shopping_money",
+    "theme": "bags",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "shop_053"
+  },
+  {
+    "text": "Can I have a bag, please?",
+    "translation": "Posso ter uma sacola, por favor?",
+    "category": "shopping_money",
+    "theme": "bags",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "shop_054"
+  },
+  {
+    "text": "Do bags cost extra?",
+    "translation": "Sacolas custam extra?",
+    "category": "shopping_money",
+    "theme": "bags",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "shop_055"
+  },
+  {
+    "text": "I have my own bag.",
+    "translation": "Tenho minha própria sacola.",
+    "category": "shopping_money",
+    "theme": "bags",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "shop_056"
+  },
+  {
+    "text": "Where's the ATM?",
+    "translation": "Onde fica o caixa eletrônico?",
+    "category": "shopping_money",
+    "theme": "money",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "shop_057"
+  },
+  {
+    "text": "I need to withdraw money.",
+    "translation": "Preciso sacar dinheiro.",
+    "category": "shopping_money",
+    "theme": "money",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "shop_058"
+  },
+  {
+    "text": "What's the exchange rate?",
+    "translation": "Qual é a taxa de câmbio?",
+    "category": "shopping_money",
+    "theme": "money",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "shop_059"
+  },
+  {
+    "text": "Can I exchange this currency?",
+    "translation": "Posso trocar esta moeda?",
+    "category": "shopping_money",
+    "theme": "money",
+    "difficulty": 3,
+    "environment": "production",
+    "id": "shop_060"
+  },
+  {
+    "text": "Do you have change for this?",
+    "translation": "Você tem troco para isso?",
+    "category": "shopping_money",
+    "theme": "money",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "shop_061"
+  },
+  {
+    "text": "This looks nice!",
+    "translation": "Isso parece bonito!",
+    "category": "shopping_money",
+    "theme": "opinions",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "shop_062"
+  },
+  {
+    "text": "I like this one.",
+    "translation": "Eu gosto deste.",
+    "category": "shopping_money",
+    "theme": "opinions",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "shop_063"
+  },
+  {
+    "text": "What do you think?",
+    "translation": "O que você acha?",
+    "category": "shopping_money",
+    "theme": "opinions",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "shop_064"
+  },
+  {
+    "text": "It looks great on you!",
+    "translation": "Fica ótimo em você!",
+    "category": "shopping_money",
+    "theme": "opinions",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "shop_065"
+  },
+  {
+    "text": "I'm not sure about this.",
+    "translation": "Não tenho certeza sobre isso.",
+    "category": "shopping_money",
+    "theme": "opinions",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "shop_066"
+  },
+  {
+    "text": "Can you wrap this as a gift?",
+    "translation": "Você pode embrulhar isso como presente?",
+    "category": "shopping_money",
+    "theme": "services",
+    "difficulty": 3,
+    "environment": "production",
+    "id": "shop_067"
+  },
+  {
+    "text": "Do you offer gift wrapping?",
+    "translation": "Vocês oferecem embrulho para presente?",
+    "category": "shopping_money",
+    "theme": "services",
+    "difficulty": 3,
+    "environment": "production",
+    "id": "shop_068"
+  },
+  {
+    "text": "Can you ship this?",
+    "translation": "Vocês podem enviar isso?",
+    "category": "shopping_money",
+    "theme": "services",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "shop_069"
+  },
+  {
+    "text": "How long is shipping?",
+    "translation": "Quanto tempo leva o envio?",
+    "category": "shopping_money",
+    "theme": "services",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "shop_070"
+  },
+  {
+    "text": "Do you have a loyalty card?",
+    "translation": "Vocês têm cartão de fidelidade?",
+    "category": "shopping_money",
+    "theme": "services",
+    "difficulty": 3,
+    "environment": "production",
+    "id": "shop_071"
+  },
+  {
+    "text": "I'll take two of these.",
+    "translation": "Vou levar dois destes.",
+    "category": "shopping_money",
+    "theme": "quantities",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "shop_072"
+  },
+  {
+    "text": "Just one, please.",
+    "translation": "Apenas um, por favor.",
+    "category": "shopping_money",
+    "theme": "quantities",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "shop_073"
+  },
+  {
+    "text": "How many do you want?",
+    "translation": "Quantos você quer?",
+    "category": "shopping_money",
+    "theme": "quantities",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "shop_074"
+  },
+  {
+    "text": "Is there a limit?",
+    "translation": "Há um limite?",
+    "category": "shopping_money",
+    "theme": "quantities",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "shop_075"
+  },
+  {
+    "text": "Can I get a sample?",
+    "translation": "Posso pegar uma amostra?",
+    "category": "shopping_money",
+    "theme": "samples",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "shop_076"
+  },
+  {
+    "text": "Do you have samples?",
+    "translation": "Vocês têm amostras?",
+    "category": "shopping_money",
+    "theme": "samples",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "shop_077"
+  },
+  {
+    "text": "Can I test this?",
+    "translation": "Posso testar isso?",
+    "category": "shopping_money",
+    "theme": "samples",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "shop_078"
+  },
+  {
+    "text": "That's all for today.",
+    "translation": "É tudo por hoje.",
+    "category": "shopping_money",
+    "theme": "checkout",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "shop_079"
+  },
+  {
+    "text": "Have a great day!",
+    "translation": "Tenha um ótimo dia!",
+    "category": "shopping_money",
+    "theme": "checkout",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "shop_080"
+  }
+]

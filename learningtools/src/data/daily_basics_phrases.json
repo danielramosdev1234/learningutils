@@ -1,0 +1,452 @@
+[
+  {
+    "text": "Hello!",
+    "translation": "Olá!",
+    "category": "daily_basics",
+    "theme": "greetings",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "daily_001"
+  },
+  {
+    "text": "Good morning!",
+    "translation": "Bom dia!",
+    "category": "daily_basics",
+    "theme": "greetings",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "daily_002"
+  },
+  {
+    "text": "Good afternoon!",
+    "translation": "Boa tarde!",
+    "category": "daily_basics",
+    "theme": "greetings",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "daily_003"
+  },
+  {
+    "text": "Good evening!",
+    "translation": "Boa noite!",
+    "category": "daily_basics",
+    "theme": "greetings",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "daily_004"
+  },
+  {
+    "text": "How are you?",
+    "translation": "Como você está?",
+    "category": "daily_basics",
+    "theme": "greetings",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "daily_005"
+  },
+  {
+    "text": "I'm fine, thanks.",
+    "translation": "Estou bem, obrigado.",
+    "category": "daily_basics",
+    "theme": "greetings",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "daily_006"
+  },
+  {
+    "text": "I'm doing great!",
+    "translation": "Estou indo muito bem!",
+    "category": "daily_basics",
+    "theme": "greetings",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "daily_007"
+  },
+  {
+    "text": "Not bad, and you?",
+    "translation": "Nada mal, e você?",
+    "category": "daily_basics",
+    "theme": "greetings",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "daily_008"
+  },
+  {
+    "text": "Nice to meet you.",
+    "translation": "Prazer em conhecê-lo.",
+    "category": "daily_basics",
+    "theme": "introductions",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "daily_009"
+  },
+  {
+    "text": "What's your name?",
+    "translation": "Qual é o seu nome?",
+    "category": "daily_basics",
+    "theme": "introductions",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "daily_010"
+  },
+  {
+    "text": "My name is John.",
+    "translation": "Meu nome é John.",
+    "category": "daily_basics",
+    "theme": "introductions",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "daily_011"
+  },
+  {
+    "text": "Where are you from?",
+    "translation": "De onde você é?",
+    "category": "daily_basics",
+    "theme": "introductions",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "daily_012"
+  },
+  {
+    "text": "I'm from Brazil.",
+    "translation": "Eu sou do Brasil.",
+    "category": "daily_basics",
+    "theme": "introductions",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "daily_013"
+  },
+  {
+    "text": "Nice to meet you too.",
+    "translation": "Prazer em conhecê-lo também.",
+    "category": "daily_basics",
+    "theme": "introductions",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "daily_014"
+  },
+  {
+    "text": "Thank you!",
+    "translation": "Obrigado!",
+    "category": "daily_basics",
+    "theme": "gratitude",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "daily_015"
+  },
+  {
+    "text": "Thanks a lot!",
+    "translation": "Muito obrigado!",
+    "category": "daily_basics",
+    "theme": "gratitude",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "daily_016"
+  },
+  {
+    "text": "Thank you so much!",
+    "translation": "Muitíssimo obrigado!",
+    "category": "daily_basics",
+    "theme": "gratitude",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "daily_017"
+  },
+  {
+    "text": "You're welcome.",
+    "translation": "De nada.",
+    "category": "daily_basics",
+    "theme": "gratitude",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "daily_018"
+  },
+  {
+    "text": "No problem!",
+    "translation": "Sem problema!",
+    "category": "daily_basics",
+    "theme": "gratitude",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "daily_019"
+  },
+  {
+    "text": "My pleasure!",
+    "translation": "É um prazer!",
+    "category": "daily_basics",
+    "theme": "gratitude",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "daily_020"
+  },
+  {
+    "text": "I appreciate it.",
+    "translation": "Eu agradeço.",
+    "category": "daily_basics",
+    "theme": "gratitude",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "daily_021"
+  },
+  {
+    "text": "Sorry!",
+    "translation": "Desculpe!",
+    "category": "daily_basics",
+    "theme": "apologies",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "daily_022"
+  },
+  {
+    "text": "I'm sorry.",
+    "translation": "Me desculpe.",
+    "category": "daily_basics",
+    "theme": "apologies",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "daily_023"
+  },
+  {
+    "text": "Excuse me.",
+    "translation": "Com licença.",
+    "category": "daily_basics",
+    "theme": "apologies",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "daily_024"
+  },
+  {
+    "text": "I apologize.",
+    "translation": "Peço desculpas.",
+    "category": "daily_basics",
+    "theme": "apologies",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "daily_025"
+  },
+  {
+    "text": "That's okay.",
+    "translation": "Tudo bem.",
+    "category": "daily_basics",
+    "theme": "apologies",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "daily_026"
+  },
+  {
+    "text": "No worries!",
+    "translation": "Sem preocupações!",
+    "category": "daily_basics",
+    "theme": "apologies",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "daily_027"
+  },
+  {
+    "text": "It's fine.",
+    "translation": "Está tudo bem.",
+    "category": "daily_basics",
+    "theme": "apologies",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "daily_028"
+  },
+  {
+    "text": "Please.",
+    "translation": "Por favor.",
+    "category": "daily_basics",
+    "theme": "politeness",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "daily_029"
+  },
+  {
+    "text": "Could you help me?",
+    "translation": "Você poderia me ajudar?",
+    "category": "daily_basics",
+    "theme": "politeness",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "daily_030"
+  },
+  {
+    "text": "May I ask a question?",
+    "translation": "Posso fazer uma pergunta?",
+    "category": "daily_basics",
+    "theme": "politeness",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "daily_031"
+  },
+  {
+    "text": "Sure, go ahead.",
+    "translation": "Claro, pode ir.",
+    "category": "daily_basics",
+    "theme": "politeness",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "daily_032"
+  },
+  {
+    "text": "Of course!",
+    "translation": "É claro!",
+    "category": "daily_basics",
+    "theme": "politeness",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "daily_033"
+  },
+  {
+    "text": "Goodbye!",
+    "translation": "Adeus!",
+    "category": "daily_basics",
+    "theme": "farewells",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "daily_034"
+  },
+  {
+    "text": "See you later!",
+    "translation": "Até mais tarde!",
+    "category": "daily_basics",
+    "theme": "farewells",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "daily_035"
+  },
+  {
+    "text": "See you soon!",
+    "translation": "Até breve!",
+    "category": "daily_basics",
+    "theme": "farewells",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "daily_036"
+  },
+  {
+    "text": "See you tomorrow!",
+    "translation": "Até amanhã!",
+    "category": "daily_basics",
+    "theme": "farewells",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "daily_037"
+  },
+  {
+    "text": "Have a nice day!",
+    "translation": "Tenha um bom dia!",
+    "category": "daily_basics",
+    "theme": "farewells",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "daily_038"
+  },
+  {
+    "text": "Take care!",
+    "translation": "Se cuide!",
+    "category": "daily_basics",
+    "theme": "farewells",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "daily_039"
+  },
+  {
+    "text": "Good night!",
+    "translation": "Boa noite!",
+    "category": "daily_basics",
+    "theme": "farewells",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "daily_040"
+  },
+  {
+    "text": "Yes.",
+    "translation": "Sim.",
+    "category": "daily_basics",
+    "theme": "basic_responses",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "daily_041"
+  },
+  {
+    "text": "No.",
+    "translation": "Não.",
+    "category": "daily_basics",
+    "theme": "basic_responses",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "daily_042"
+  },
+  {
+    "text": "Maybe.",
+    "translation": "Talvez.",
+    "category": "daily_basics",
+    "theme": "basic_responses",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "daily_043"
+  },
+  {
+    "text": "I don't know.",
+    "translation": "Eu não sei.",
+    "category": "daily_basics",
+    "theme": "basic_responses",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "daily_044"
+  },
+  {
+    "text": "I understand.",
+    "translation": "Eu entendo.",
+    "category": "daily_basics",
+    "theme": "basic_responses",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "daily_045"
+  },
+  {
+    "text": "I don't understand.",
+    "translation": "Eu não entendo.",
+    "category": "daily_basics",
+    "theme": "basic_responses",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "daily_046"
+  },
+  {
+    "text": "Can you repeat that?",
+    "translation": "Pode repetir isso?",
+    "category": "daily_basics",
+    "theme": "basic_responses",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "daily_047"
+  },
+  {
+    "text": "I think so.",
+    "translation": "Eu acho que sim.",
+    "category": "daily_basics",
+    "theme": "basic_responses",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "daily_048"
+  },
+  {
+    "text": "I hope so.",
+    "translation": "Espero que sim.",
+    "category": "daily_basics",
+    "theme": "basic_responses",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "daily_049"
+  },
+  {
+    "text": "That sounds good!",
+    "translation": "Isso parece bom!",
+    "category": "daily_basics",
+    "theme": "basic_responses",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "daily_050"
+  }
+]

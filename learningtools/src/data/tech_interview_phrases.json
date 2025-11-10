@@ -1,0 +1,902 @@
+[
+  {
+    "text": "Tell me about yourself.",
+    "translation": "Fale sobre você.",
+    "category": "tech_interview",
+    "theme": "introduction",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "tech_001"
+  },
+  {
+    "text": "I'm a fullstack developer.",
+    "translation": "Sou um desenvolvedor fullstack.",
+    "category": "tech_interview",
+    "theme": "introduction",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "tech_002"
+  },
+  {
+    "text": "I have five years of experience.",
+    "translation": "Tenho cinco anos de experiência.",
+    "category": "tech_interview",
+    "theme": "introduction",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "tech_003"
+  },
+  {
+    "text": "I work with Java and React.",
+    "translation": "Trabalho com Java e React.",
+    "category": "tech_interview",
+    "theme": "introduction",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "tech_004"
+  },
+  {
+    "text": "I'm passionate about technology.",
+    "translation": "Sou apaixonado por tecnologia.",
+    "category": "tech_interview",
+    "theme": "introduction",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "tech_005"
+  },
+  {
+    "text": "I enjoy learning new things.",
+    "translation": "Gosto de aprender coisas novas.",
+    "category": "tech_interview",
+    "theme": "introduction",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "tech_006"
+  },
+  {
+    "text": "I'm a quick learner.",
+    "translation": "Aprendo rápido.",
+    "category": "tech_interview",
+    "theme": "introduction",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "tech_007"
+  },
+  {
+    "text": "I work well in teams.",
+    "translation": "Trabalho bem em equipes.",
+    "category": "tech_interview",
+    "theme": "introduction",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "tech_008"
+  },
+  {
+    "text": "What technologies do you use?",
+    "translation": "Quais tecnologias você usa?",
+    "category": "tech_interview",
+    "theme": "technologies",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "tech_009"
+  },
+  {
+    "text": "I work with Spring Boot.",
+    "translation": "Trabalho com Spring Boot.",
+    "category": "tech_interview",
+    "theme": "technologies",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "tech_010"
+  },
+  {
+    "text": "I use React for frontend.",
+    "translation": "Uso React para frontend.",
+    "category": "tech_interview",
+    "theme": "technologies",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "tech_011"
+  },
+  {
+    "text": "I have experience with Angular.",
+    "translation": "Tenho experiência com Angular.",
+    "category": "tech_interview",
+    "theme": "technologies",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "tech_012"
+  },
+  {
+    "text": "I know Node.js well.",
+    "translation": "Conheço bem Node.js.",
+    "category": "tech_interview",
+    "theme": "technologies",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "tech_013"
+  },
+  {
+    "text": "I work with REST APIs.",
+    "translation": "Trabalho com APIs REST.",
+    "category": "tech_interview",
+    "theme": "technologies",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "tech_014"
+  },
+  {
+    "text": "I use PostgreSQL database.",
+    "translation": "Uso banco de dados PostgreSQL.",
+    "category": "tech_interview",
+    "theme": "technologies",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "tech_015"
+  },
+  {
+    "text": "I'm familiar with MongoDB.",
+    "translation": "Estou familiarizado com MongoDB.",
+    "category": "tech_interview",
+    "theme": "technologies",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "tech_016"
+  },
+  {
+    "text": "I use Git for version control.",
+    "translation": "Uso Git para controle de versão.",
+    "category": "tech_interview",
+    "theme": "technologies",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "tech_017"
+  },
+  {
+    "text": "I work with Docker containers.",
+    "translation": "Trabalho com containers Docker.",
+    "category": "tech_interview",
+    "theme": "technologies",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "tech_018"
+  },
+  {
+    "text": "I know microservices architecture.",
+    "translation": "Conheço arquitetura de microsserviços.",
+    "category": "tech_interview",
+    "theme": "technologies",
+    "difficulty": 3,
+    "environment": "production",
+    "id": "tech_019"
+  },
+  {
+    "text": "Can you explain your project?",
+    "translation": "Você pode explicar seu projeto?",
+    "category": "tech_interview",
+    "theme": "projects",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "tech_020"
+  },
+  {
+    "text": "I built an e-commerce platform.",
+    "translation": "Construí uma plataforma de e-commerce.",
+    "category": "tech_interview",
+    "theme": "projects",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "tech_021"
+  },
+  {
+    "text": "I developed a payment system.",
+    "translation": "Desenvolvi um sistema de pagamento.",
+    "category": "tech_interview",
+    "theme": "projects",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "tech_022"
+  },
+  {
+    "text": "The project used React and Java.",
+    "translation": "O projeto usou React e Java.",
+    "category": "tech_interview",
+    "theme": "projects",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "tech_023"
+  },
+  {
+    "text": "I worked on the backend.",
+    "translation": "Trabalhei no backend.",
+    "category": "tech_interview",
+    "theme": "projects",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "tech_024"
+  },
+  {
+    "text": "I handled the frontend development.",
+    "translation": "Cuidei do desenvolvimento frontend.",
+    "category": "tech_interview",
+    "theme": "projects",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "tech_025"
+  },
+  {
+    "text": "I integrated third-party APIs.",
+    "translation": "Integrei APIs de terceiros.",
+    "category": "tech_interview",
+    "theme": "projects",
+    "difficulty": 3,
+    "environment": "production",
+    "id": "tech_026"
+  },
+  {
+    "text": "I implemented authentication.",
+    "translation": "Implementei autenticação.",
+    "category": "tech_interview",
+    "theme": "projects",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "tech_027"
+  },
+  {
+    "text": "I optimized the database queries.",
+    "translation": "Otimizei as consultas do banco de dados.",
+    "category": "tech_interview",
+    "theme": "projects",
+    "difficulty": 3,
+    "environment": "production",
+    "id": "tech_028"
+  },
+  {
+    "text": "The project was successful.",
+    "translation": "O projeto foi bem-sucedido.",
+    "category": "tech_interview",
+    "theme": "projects",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "tech_029"
+  },
+  {
+    "text": "What is your experience with React?",
+    "translation": "Qual é sua experiência com React?",
+    "category": "tech_interview",
+    "theme": "react",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "tech_030"
+  },
+  {
+    "text": "I use React hooks daily.",
+    "translation": "Uso React hooks diariamente.",
+    "category": "tech_interview",
+    "theme": "react",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "tech_031"
+  },
+  {
+    "text": "I understand component lifecycle.",
+    "translation": "Entendo o ciclo de vida dos componentes.",
+    "category": "tech_interview",
+    "theme": "react",
+    "difficulty": 3,
+    "environment": "production",
+    "id": "tech_032"
+  },
+  {
+    "text": "I work with Redux for state management.",
+    "translation": "Trabalho com Redux para gerenciamento de estado.",
+    "category": "tech_interview",
+    "theme": "react",
+    "difficulty": 3,
+    "environment": "production",
+    "id": "tech_033"
+  },
+  {
+    "text": "I create reusable components.",
+    "translation": "Crio componentes reutilizáveis.",
+    "category": "tech_interview",
+    "theme": "react",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "tech_034"
+  },
+  {
+    "text": "I use Context API.",
+    "translation": "Uso Context API.",
+    "category": "tech_interview",
+    "theme": "react",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "tech_035"
+  },
+  {
+    "text": "I optimize React performance.",
+    "translation": "Otimizo performance do React.",
+    "category": "tech_interview",
+    "theme": "react",
+    "difficulty": 3,
+    "environment": "production",
+    "id": "tech_036"
+  },
+  {
+    "text": "I work with React Router.",
+    "translation": "Trabalho com React Router.",
+    "category": "tech_interview",
+    "theme": "react",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "tech_037"
+  },
+  {
+    "text": "Tell me about your Java experience.",
+    "translation": "Fale sobre sua experiência com Java.",
+    "category": "tech_interview",
+    "theme": "java",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "tech_038"
+  },
+  {
+    "text": "I work with Java 17.",
+    "translation": "Trabalho com Java 17.",
+    "category": "tech_interview",
+    "theme": "java",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "tech_039"
+  },
+  {
+    "text": "I use Spring Framework.",
+    "translation": "Uso Spring Framework.",
+    "category": "tech_interview",
+    "theme": "java",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "tech_040"
+  },
+  {
+    "text": "I understand object-oriented programming.",
+    "translation": "Entendo programação orientada a objetos.",
+    "category": "tech_interview",
+    "theme": "java",
+    "difficulty": 3,
+    "environment": "production",
+    "id": "tech_041"
+  },
+  {
+    "text": "I work with Hibernate ORM.",
+    "translation": "Trabalho com Hibernate ORM.",
+    "category": "tech_interview",
+    "theme": "java",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "tech_042"
+  },
+  {
+    "text": "I implement design patterns.",
+    "translation": "Implemento padrões de projeto.",
+    "category": "tech_interview",
+    "theme": "java",
+    "difficulty": 3,
+    "environment": "production",
+    "id": "tech_043"
+  },
+  {
+    "text": "I use JUnit for testing.",
+    "translation": "Uso JUnit para testes.",
+    "category": "tech_interview",
+    "theme": "java",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "tech_044"
+  },
+  {
+    "text": "I handle exceptions properly.",
+    "translation": "Trato exceções adequadamente.",
+    "category": "tech_interview",
+    "theme": "java",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "tech_045"
+  },
+  {
+    "text": "I work with Java Streams.",
+    "translation": "Trabalho com Java Streams.",
+    "category": "tech_interview",
+    "theme": "java",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "tech_046"
+  },
+  {
+    "text": "What about your Node.js skills?",
+    "translation": "E suas habilidades em Node.js?",
+    "category": "tech_interview",
+    "theme": "nodejs",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "tech_047"
+  },
+  {
+    "text": "I build REST APIs with Node.",
+    "translation": "Construo APIs REST com Node.",
+    "category": "tech_interview",
+    "theme": "nodejs",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "tech_048"
+  },
+  {
+    "text": "I use Express framework.",
+    "translation": "Uso o framework Express.",
+    "category": "tech_interview",
+    "theme": "nodejs",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "tech_049"
+  },
+  {
+    "text": "I work with asynchronous code.",
+    "translation": "Trabalho com código assíncrono.",
+    "category": "tech_interview",
+    "theme": "nodejs",
+    "difficulty": 3,
+    "environment": "production",
+    "id": "tech_050"
+  },
+  {
+    "text": "I understand promises and async await.",
+    "translation": "Entendo promises e async await.",
+    "category": "tech_interview",
+    "theme": "nodejs",
+    "difficulty": 3,
+    "environment": "production",
+    "id": "tech_051"
+  },
+  {
+    "text": "I use NPM packages.",
+    "translation": "Uso pacotes NPM.",
+    "category": "tech_interview",
+    "theme": "nodejs",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "tech_052"
+  },
+  {
+    "text": "I implement middleware functions.",
+    "translation": "Implemento funções middleware.",
+    "category": "tech_interview",
+    "theme": "nodejs",
+    "difficulty": 3,
+    "environment": "production",
+    "id": "tech_053"
+  },
+  {
+    "text": "I work with websockets.",
+    "translation": "Trabalho com websockets.",
+    "category": "tech_interview",
+    "theme": "nodejs",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "tech_054"
+  },
+  {
+    "text": "Do you know Angular?",
+    "translation": "Você conhece Angular?",
+    "category": "tech_interview",
+    "theme": "angular",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "tech_055"
+  },
+  {
+    "text": "I have experience with Angular.",
+    "translation": "Tenho experiência com Angular.",
+    "category": "tech_interview",
+    "theme": "angular",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "tech_056"
+  },
+  {
+    "text": "I use Angular components.",
+    "translation": "Uso componentes Angular.",
+    "category": "tech_interview",
+    "theme": "angular",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "tech_057"
+  },
+  {
+    "text": "I work with Angular services.",
+    "translation": "Trabalho com serviços Angular.",
+    "category": "tech_interview",
+    "theme": "angular",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "tech_058"
+  },
+  {
+    "text": "I understand dependency injection.",
+    "translation": "Entendo injeção de dependência.",
+    "category": "tech_interview",
+    "theme": "angular",
+    "difficulty": 3,
+    "environment": "production",
+    "id": "tech_059"
+  },
+  {
+    "text": "I use RxJS observables.",
+    "translation": "Uso observables RxJS.",
+    "category": "tech_interview",
+    "theme": "angular",
+    "difficulty": 3,
+    "environment": "production",
+    "id": "tech_060"
+  },
+  {
+    "text": "I work with Angular routing.",
+    "translation": "Trabalho com roteamento Angular.",
+    "category": "tech_interview",
+    "theme": "angular",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "tech_061"
+  },
+  {
+    "text": "How do you handle databases?",
+    "translation": "Como você lida com bancos de dados?",
+    "category": "tech_interview",
+    "theme": "databases",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "tech_062"
+  },
+  {
+    "text": "I write SQL queries.",
+    "translation": "Escrevo consultas SQL.",
+    "category": "tech_interview",
+    "theme": "databases",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "tech_063"
+  },
+  {
+    "text": "I design database schemas.",
+    "translation": "Projeto esquemas de banco de dados.",
+    "category": "tech_interview",
+    "theme": "databases",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "tech_064"
+  },
+  {
+    "text": "I use database indexing.",
+    "translation": "Uso indexação de banco de dados.",
+    "category": "tech_interview",
+    "theme": "databases",
+    "difficulty": 3,
+    "environment": "production",
+    "id": "tech_065"
+  },
+  {
+    "text": "I work with both SQL and NoSQL.",
+    "translation": "Trabalho com SQL e NoSQL.",
+    "category": "tech_interview",
+    "theme": "databases",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "tech_066"
+  },
+  {
+    "text": "I optimize database performance.",
+    "translation": "Otimizo performance do banco de dados.",
+    "category": "tech_interview",
+    "theme": "databases",
+    "difficulty": 3,
+    "environment": "production",
+    "id": "tech_067"
+  },
+  {
+    "text": "I understand transactions.",
+    "translation": "Entendo transações.",
+    "category": "tech_interview",
+    "theme": "databases",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "tech_068"
+  },
+  {
+    "text": "What is your testing approach?",
+    "translation": "Qual é sua abordagem de testes?",
+    "category": "tech_interview",
+    "theme": "testing",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "tech_069"
+  },
+  {
+    "text": "I write unit tests.",
+    "translation": "Escrevo testes unitários.",
+    "category": "tech_interview",
+    "theme": "testing",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "tech_070"
+  },
+  {
+    "text": "I do integration testing.",
+    "translation": "Faço testes de integração.",
+    "category": "tech_interview",
+    "theme": "testing",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "tech_071"
+  },
+  {
+    "text": "I use Jest for testing.",
+    "translation": "Uso Jest para testes.",
+    "category": "tech_interview",
+    "theme": "testing",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "tech_072"
+  },
+  {
+    "text": "I write test-driven code.",
+    "translation": "Escrevo código orientado a testes.",
+    "category": "tech_interview",
+    "theme": "testing",
+    "difficulty": 3,
+    "environment": "production",
+    "id": "tech_073"
+  },
+  {
+    "text": "I test edge cases.",
+    "translation": "Testo casos extremos.",
+    "category": "tech_interview",
+    "theme": "testing",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "tech_074"
+  },
+  {
+    "text": "I ensure code coverage.",
+    "translation": "Garanto cobertura de código.",
+    "category": "tech_interview",
+    "theme": "testing",
+    "difficulty": 3,
+    "environment": "production",
+    "id": "tech_075"
+  },
+  {
+    "text": "How do you debug code?",
+    "translation": "Como você debuga código?",
+    "category": "tech_interview",
+    "theme": "debugging",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "tech_076"
+  },
+  {
+    "text": "I use browser developer tools.",
+    "translation": "Uso ferramentas de desenvolvedor do navegador.",
+    "category": "tech_interview",
+    "theme": "debugging",
+    "difficulty": 3,
+    "environment": "production",
+    "id": "tech_077"
+  },
+  {
+    "text": "I read error messages carefully.",
+    "translation": "Leio mensagens de erro cuidadosamente.",
+    "category": "tech_interview",
+    "theme": "debugging",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "tech_078"
+  },
+  {
+    "text": "I use console logs.",
+    "translation": "Uso logs no console.",
+    "category": "tech_interview",
+    "theme": "debugging",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "tech_079"
+  },
+  {
+    "text": "I set breakpoints.",
+    "translation": "Defino breakpoints.",
+    "category": "tech_interview",
+    "theme": "debugging",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "tech_080"
+  },
+  {
+    "text": "What are your strengths?",
+    "translation": "Quais são seus pontos fortes?",
+    "category": "tech_interview",
+    "theme": "soft_skills",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "tech_081"
+  },
+  {
+    "text": "I'm a problem solver.",
+    "translation": "Sou um solucionador de problemas.",
+    "category": "tech_interview",
+    "theme": "soft_skills",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "tech_082"
+  },
+  {
+    "text": "I communicate well with teams.",
+    "translation": "Me comunico bem com equipes.",
+    "category": "tech_interview",
+    "theme": "soft_skills",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "tech_083"
+  },
+  {
+    "text": "I'm detail-oriented.",
+    "translation": "Sou atento aos detalhes.",
+    "category": "tech_interview",
+    "theme": "soft_skills",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "tech_084"
+  },
+  {
+    "text": "I adapt to new technologies quickly.",
+    "translation": "Me adapto rapidamente a novas tecnologias.",
+    "category": "tech_interview",
+    "theme": "soft_skills",
+    "difficulty": 3,
+    "environment": "production",
+    "id": "tech_085"
+  },
+  {
+    "text": "I meet deadlines consistently.",
+    "translation": "Cumpro prazos consistentemente.",
+    "category": "tech_interview",
+    "theme": "soft_skills",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "tech_086"
+  },
+  {
+    "text": "I mentor junior developers.",
+    "translation": "Oriento desenvolvedores juniores.",
+    "category": "tech_interview",
+    "theme": "soft_skills",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "tech_087"
+  },
+  {
+    "text": "What are your salary expectations?",
+    "translation": "Quais são suas expectativas salariais?",
+    "category": "tech_interview",
+    "theme": "negotiation",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "tech_088"
+  },
+  {
+    "text": "I'm flexible with salary.",
+    "translation": "Sou flexível com salário.",
+    "category": "tech_interview",
+    "theme": "negotiation",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "tech_089"
+  },
+  {
+    "text": "What benefits do you offer?",
+    "translation": "Quais benefícios vocês oferecem?",
+    "category": "tech_interview",
+    "theme": "negotiation",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "tech_090"
+  },
+  {
+    "text": "Is this position remote?",
+    "translation": "Esta posição é remota?",
+    "category": "tech_interview",
+    "theme": "negotiation",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "tech_091"
+  },
+  {
+    "text": "When can I start?",
+    "translation": "Quando posso começar?",
+    "category": "tech_interview",
+    "theme": "negotiation",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "tech_092"
+  },
+  {
+    "text": "Do you have any questions for me?",
+    "translation": "Você tem alguma pergunta para mim?",
+    "category": "tech_interview",
+    "theme": "closing",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "tech_093"
+  },
+  {
+    "text": "What's the team structure?",
+    "translation": "Qual é a estrutura da equipe?",
+    "category": "tech_interview",
+    "theme": "closing",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "tech_094"
+  },
+  {
+    "text": "What are the next steps?",
+    "translation": "Quais são os próximos passos?",
+    "category": "tech_interview",
+    "theme": "closing",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "tech_095"
+  },
+  {
+    "text": "What's the company culture like?",
+    "translation": "Como é a cultura da empresa?",
+    "category": "tech_interview",
+    "theme": "closing",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "tech_096"
+  },
+  {
+    "text": "Thank you for your time.",
+    "translation": "Obrigado pelo seu tempo.",
+    "category": "tech_interview",
+    "theme": "closing",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "tech_097"
+  },
+  {
+    "text": "I'm excited about this opportunity.",
+    "translation": "Estou empolgado com esta oportunidade.",
+    "category": "tech_interview",
+    "theme": "closing",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "tech_098"
+  },
+  {
+    "text": "I look forward to hearing from you.",
+    "translation": "Aguardo seu retorno.",
+    "category": "tech_interview",
+    "theme": "closing",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "tech_099"
+  },
+  {
+    "text": "I believe I'm a good fit for this role.",
+    "translation": "Acredito que sou adequado para esta função.",
+    "category": "tech_interview",
+    "theme": "closing",
+    "difficulty": 3,
+    "environment": "production",
+    "id": "tech_100"
+  }
+]

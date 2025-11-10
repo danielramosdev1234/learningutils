@@ -1,0 +1,902 @@
+[
+  {
+    "text": "Where is the airport?",
+    "translation": "Onde fica o aeroporto?",
+    "category": "travel_survival",
+    "theme": "airport",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "travel_001"
+  },
+  {
+    "text": "I need to check in.",
+    "translation": "Preciso fazer check-in.",
+    "category": "travel_survival",
+    "theme": "airport",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "travel_002"
+  },
+  {
+    "text": "Here's my passport.",
+    "translation": "Aqui está meu passaporte.",
+    "category": "travel_survival",
+    "theme": "airport",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "travel_003"
+  },
+  {
+    "text": "Where is gate fifteen?",
+    "translation": "Onde fica o portão quinze?",
+    "category": "travel_survival",
+    "theme": "airport",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "travel_004"
+  },
+  {
+    "text": "What time is boarding?",
+    "translation": "Que horas é o embarque?",
+    "category": "travel_survival",
+    "theme": "airport",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "travel_005"
+  },
+  {
+    "text": "Is this flight delayed?",
+    "translation": "Este voo está atrasado?",
+    "category": "travel_survival",
+    "theme": "airport",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "travel_006"
+  },
+  {
+    "text": "I have one suitcase.",
+    "translation": "Tenho uma mala.",
+    "category": "travel_survival",
+    "theme": "airport",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "travel_007"
+  },
+  {
+    "text": "Can I have a window seat?",
+    "translation": "Posso ter um assento na janela?",
+    "category": "travel_survival",
+    "theme": "airport",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "travel_008"
+  },
+  {
+    "text": "Where is baggage claim?",
+    "translation": "Onde fica a retirada de bagagem?",
+    "category": "travel_survival",
+    "theme": "airport",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "travel_009"
+  },
+  {
+    "text": "My luggage is missing.",
+    "translation": "Minha bagagem está perdida.",
+    "category": "travel_survival",
+    "theme": "airport",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "travel_010"
+  },
+  {
+    "text": "I have a reservation.",
+    "translation": "Tenho uma reserva.",
+    "category": "travel_survival",
+    "theme": "hotel",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "travel_011"
+  },
+  {
+    "text": "Can I check in now?",
+    "translation": "Posso fazer check-in agora?",
+    "category": "travel_survival",
+    "theme": "hotel",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "travel_012"
+  },
+  {
+    "text": "What time is checkout?",
+    "translation": "Que horas é o checkout?",
+    "category": "travel_survival",
+    "theme": "hotel",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "travel_013"
+  },
+  {
+    "text": "Here's my ID.",
+    "translation": "Aqui está minha identidade.",
+    "category": "travel_survival",
+    "theme": "hotel",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "travel_014"
+  },
+  {
+    "text": "Can I have the key?",
+    "translation": "Posso ter a chave?",
+    "category": "travel_survival",
+    "theme": "hotel",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "travel_015"
+  },
+  {
+    "text": "What floor is my room?",
+    "translation": "Qual andar fica meu quarto?",
+    "category": "travel_survival",
+    "theme": "hotel",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "travel_016"
+  },
+  {
+    "text": "Is breakfast included?",
+    "translation": "O café da manhã está incluído?",
+    "category": "travel_survival",
+    "theme": "hotel",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "travel_017"
+  },
+  {
+    "text": "The WiFi isn't working.",
+    "translation": "O WiFi não está funcionando.",
+    "category": "travel_survival",
+    "theme": "hotel",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "travel_018"
+  },
+  {
+    "text": "Can I have extra towels?",
+    "translation": "Posso ter toalhas extras?",
+    "category": "travel_survival",
+    "theme": "hotel",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "travel_019"
+  },
+  {
+    "text": "I'd like to extend my stay.",
+    "translation": "Gostaria de estender minha estadia.",
+    "category": "travel_survival",
+    "theme": "hotel",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "travel_020"
+  },
+  {
+    "text": "Can I see the menu?",
+    "translation": "Posso ver o cardápio?",
+    "category": "travel_survival",
+    "theme": "restaurant",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "travel_021"
+  },
+  {
+    "text": "I'd like water, please.",
+    "translation": "Gostaria de água, por favor.",
+    "category": "travel_survival",
+    "theme": "restaurant",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "travel_022"
+  },
+  {
+    "text": "What do you recommend?",
+    "translation": "O que você recomenda?",
+    "category": "travel_survival",
+    "theme": "restaurant",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "travel_023"
+  },
+  {
+    "text": "I'll have this one.",
+    "translation": "Vou querer este.",
+    "category": "travel_survival",
+    "theme": "restaurant",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "travel_024"
+  },
+  {
+    "text": "Is this spicy?",
+    "translation": "Isso é picante?",
+    "category": "travel_survival",
+    "theme": "restaurant",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "travel_025"
+  },
+  {
+    "text": "Can I get the check?",
+    "translation": "Posso pegar a conta?",
+    "category": "travel_survival",
+    "theme": "restaurant",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "travel_026"
+  },
+  {
+    "text": "The bill, please.",
+    "translation": "A conta, por favor.",
+    "category": "travel_survival",
+    "theme": "restaurant",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "travel_027"
+  },
+  {
+    "text": "Do you accept credit cards?",
+    "translation": "Vocês aceitam cartão de crédito?",
+    "category": "travel_survival",
+    "theme": "restaurant",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "travel_028"
+  },
+  {
+    "text": "This was delicious!",
+    "translation": "Estava delicioso!",
+    "category": "travel_survival",
+    "theme": "restaurant",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "travel_029"
+  },
+  {
+    "text": "I'm allergic to peanuts.",
+    "translation": "Sou alérgico a amendoim.",
+    "category": "travel_survival",
+    "theme": "restaurant",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "travel_030"
+  },
+  {
+    "text": "Take me to this address.",
+    "translation": "Me leve a este endereço.",
+    "category": "travel_survival",
+    "theme": "transportation",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "travel_031"
+  },
+  {
+    "text": "How much is the fare?",
+    "translation": "Quanto custa a corrida?",
+    "category": "travel_survival",
+    "theme": "transportation",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "travel_032"
+  },
+  {
+    "text": "Stop here, please.",
+    "translation": "Pare aqui, por favor.",
+    "category": "travel_survival",
+    "theme": "transportation",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "travel_033"
+  },
+  {
+    "text": "Can you wait for me?",
+    "translation": "Pode me esperar?",
+    "category": "travel_survival",
+    "theme": "transportation",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "travel_034"
+  },
+  {
+    "text": "Where is the train station?",
+    "translation": "Onde fica a estação de trem?",
+    "category": "travel_survival",
+    "theme": "transportation",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "travel_035"
+  },
+  {
+    "text": "One ticket, please.",
+    "translation": "Um bilhete, por favor.",
+    "category": "travel_survival",
+    "theme": "transportation",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "travel_036"
+  },
+  {
+    "text": "Which platform is it?",
+    "translation": "Qual plataforma é?",
+    "category": "travel_survival",
+    "theme": "transportation",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "travel_037"
+  },
+  {
+    "text": "Does this go downtown?",
+    "translation": "Isso vai para o centro?",
+    "category": "travel_survival",
+    "theme": "transportation",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "travel_038"
+  },
+  {
+    "text": "I need to go to the airport.",
+    "translation": "Preciso ir ao aeroporto.",
+    "category": "travel_survival",
+    "theme": "transportation",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "travel_039"
+  },
+  {
+    "text": "Is this the right bus?",
+    "translation": "Este é o ônibus certo?",
+    "category": "travel_survival",
+    "theme": "transportation",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "travel_040"
+  },
+  {
+    "text": "Where is the nearest ATM?",
+    "translation": "Onde fica o caixa eletrônico mais próximo?",
+    "category": "travel_survival",
+    "theme": "money",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "travel_041"
+  },
+  {
+    "text": "I need to exchange money.",
+    "translation": "Preciso trocar dinheiro.",
+    "category": "travel_survival",
+    "theme": "money",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "travel_042"
+  },
+  {
+    "text": "What's the exchange rate?",
+    "translation": "Qual é a taxa de câmbio?",
+    "category": "travel_survival",
+    "theme": "money",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "travel_043"
+  },
+  {
+    "text": "Do you have change?",
+    "translation": "Você tem troco?",
+    "category": "travel_survival",
+    "theme": "money",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "travel_044"
+  },
+  {
+    "text": "Can I pay with card?",
+    "translation": "Posso pagar com cartão?",
+    "category": "travel_survival",
+    "theme": "money",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "travel_045"
+  },
+  {
+    "text": "Cash or credit?",
+    "translation": "Dinheiro ou crédito?",
+    "category": "travel_survival",
+    "theme": "money",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "travel_046"
+  },
+  {
+    "text": "How much does it cost?",
+    "translation": "Quanto custa?",
+    "category": "travel_survival",
+    "theme": "money",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "travel_047"
+  },
+  {
+    "text": "That's too expensive.",
+    "translation": "Isso é muito caro.",
+    "category": "travel_survival",
+    "theme": "money",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "travel_048"
+  },
+  {
+    "text": "Can I get a receipt?",
+    "translation": "Posso ter um recibo?",
+    "category": "travel_survival",
+    "theme": "money",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "travel_049"
+  },
+  {
+    "text": "Keep the change.",
+    "translation": "Fique com o troco.",
+    "category": "travel_survival",
+    "theme": "money",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "travel_050"
+  },
+  {
+    "text": "I need help!",
+    "translation": "Preciso de ajuda!",
+    "category": "travel_survival",
+    "theme": "emergency",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "travel_051"
+  },
+  {
+    "text": "Call the police!",
+    "translation": "Chame a polícia!",
+    "category": "travel_survival",
+    "theme": "emergency",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "travel_052"
+  },
+  {
+    "text": "Where's the hospital?",
+    "translation": "Onde fica o hospital?",
+    "category": "travel_survival",
+    "theme": "emergency",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "travel_053"
+  },
+  {
+    "text": "I need a doctor.",
+    "translation": "Preciso de um médico.",
+    "category": "travel_survival",
+    "theme": "emergency",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "travel_054"
+  },
+  {
+    "text": "I lost my passport.",
+    "translation": "Perdi meu passaporte.",
+    "category": "travel_survival",
+    "theme": "emergency",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "travel_055"
+  },
+  {
+    "text": "Someone stole my bag.",
+    "translation": "Alguém roubou minha bolsa.",
+    "category": "travel_survival",
+    "theme": "emergency",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "travel_056"
+  },
+  {
+    "text": "Call an ambulance!",
+    "translation": "Chame uma ambulância!",
+    "category": "travel_survival",
+    "theme": "emergency",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "travel_057"
+  },
+  {
+    "text": "I don't feel well.",
+    "translation": "Não me sinto bem.",
+    "category": "travel_survival",
+    "theme": "emergency",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "travel_058"
+  },
+  {
+    "text": "Where's the embassy?",
+    "translation": "Onde fica a embaixada?",
+    "category": "travel_survival",
+    "theme": "emergency",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "travel_059"
+  },
+  {
+    "text": "This is an emergency.",
+    "translation": "Isso é uma emergência.",
+    "category": "travel_survival",
+    "theme": "emergency",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "travel_060"
+  },
+  {
+    "text": "Where is the bathroom?",
+    "translation": "Onde fica o banheiro?",
+    "category": "travel_survival",
+    "theme": "directions",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "travel_061"
+  },
+  {
+    "text": "How do I get there?",
+    "translation": "Como eu chego lá?",
+    "category": "travel_survival",
+    "theme": "directions",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "travel_062"
+  },
+  {
+    "text": "Is it far from here?",
+    "translation": "É longe daqui?",
+    "category": "travel_survival",
+    "theme": "directions",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "travel_063"
+  },
+  {
+    "text": "Can you show me on the map?",
+    "translation": "Pode me mostrar no mapa?",
+    "category": "travel_survival",
+    "theme": "directions",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "travel_064"
+  },
+  {
+    "text": "Turn left here.",
+    "translation": "Vire à esquerda aqui.",
+    "category": "travel_survival",
+    "theme": "directions",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "travel_065"
+  },
+  {
+    "text": "Turn right there.",
+    "translation": "Vire à direita lá.",
+    "category": "travel_survival",
+    "theme": "directions",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "travel_066"
+  },
+  {
+    "text": "Go straight ahead.",
+    "translation": "Vá em frente.",
+    "category": "travel_survival",
+    "theme": "directions",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "travel_067"
+  },
+  {
+    "text": "It's on the corner.",
+    "translation": "Fica na esquina.",
+    "category": "travel_survival",
+    "theme": "directions",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "travel_068"
+  },
+  {
+    "text": "It's next to the bank.",
+    "translation": "Fica ao lado do banco.",
+    "category": "travel_survival",
+    "theme": "directions",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "travel_069"
+  },
+  {
+    "text": "I think we're lost.",
+    "translation": "Acho que estamos perdidos.",
+    "category": "travel_survival",
+    "theme": "directions",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "travel_070"
+  },
+  {
+    "text": "Where can I buy tickets?",
+    "translation": "Onde posso comprar ingressos?",
+    "category": "travel_survival",
+    "theme": "attractions",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "travel_071"
+  },
+  {
+    "text": "What time does it open?",
+    "translation": "Que horas abre?",
+    "category": "travel_survival",
+    "theme": "attractions",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "travel_072"
+  },
+  {
+    "text": "What time does it close?",
+    "translation": "Que horas fecha?",
+    "category": "travel_survival",
+    "theme": "attractions",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "travel_073"
+  },
+  {
+    "text": "How long is the tour?",
+    "translation": "Quanto tempo dura o passeio?",
+    "category": "travel_survival",
+    "theme": "attractions",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "travel_074"
+  },
+  {
+    "text": "Can I take photos?",
+    "translation": "Posso tirar fotos?",
+    "category": "travel_survival",
+    "theme": "attractions",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "travel_075"
+  },
+  {
+    "text": "Is there a discount?",
+    "translation": "Tem desconto?",
+    "category": "travel_survival",
+    "theme": "attractions",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "travel_076"
+  },
+  {
+    "text": "Two tickets, please.",
+    "translation": "Dois ingressos, por favor.",
+    "category": "travel_survival",
+    "theme": "attractions",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "travel_077"
+  },
+  {
+    "text": "This place is beautiful!",
+    "translation": "Este lugar é lindo!",
+    "category": "travel_survival",
+    "theme": "attractions",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "travel_078"
+  },
+  {
+    "text": "Where's the gift shop?",
+    "translation": "Onde fica a loja de presentes?",
+    "category": "travel_survival",
+    "theme": "attractions",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "travel_079"
+  },
+  {
+    "text": "Can I get a guide?",
+    "translation": "Posso ter um guia?",
+    "category": "travel_survival",
+    "theme": "attractions",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "travel_080"
+  },
+  {
+    "text": "Do you speak English?",
+    "translation": "Você fala inglês?",
+    "category": "travel_survival",
+    "theme": "communication",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "travel_081"
+  },
+  {
+    "text": "I speak a little English.",
+    "translation": "Falo um pouco de inglês.",
+    "category": "travel_survival",
+    "theme": "communication",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "travel_082"
+  },
+  {
+    "text": "Can you speak slower?",
+    "translation": "Pode falar mais devagar?",
+    "category": "travel_survival",
+    "theme": "communication",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "travel_083"
+  },
+  {
+    "text": "I don't understand.",
+    "translation": "Eu não entendo.",
+    "category": "travel_survival",
+    "theme": "communication",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "travel_084"
+  },
+  {
+    "text": "Can you write it down?",
+    "translation": "Pode escrever isso?",
+    "category": "travel_survival",
+    "theme": "communication",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "travel_085"
+  },
+  {
+    "text": "What does this mean?",
+    "translation": "O que isso significa?",
+    "category": "travel_survival",
+    "theme": "communication",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "travel_086"
+  },
+  {
+    "text": "How do you say this?",
+    "translation": "Como se diz isso?",
+    "category": "travel_survival",
+    "theme": "communication",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "travel_087"
+  },
+  {
+    "text": "Can you help me?",
+    "translation": "Pode me ajudar?",
+    "category": "travel_survival",
+    "theme": "communication",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "travel_088"
+  },
+  {
+    "text": "One moment, please.",
+    "translation": "Um momento, por favor.",
+    "category": "travel_survival",
+    "theme": "communication",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "travel_089"
+  },
+  {
+    "text": "I need a translator.",
+    "translation": "Preciso de um tradutor.",
+    "category": "travel_survival",
+    "theme": "communication",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "travel_090"
+  },
+  {
+    "text": "Where can I find WiFi?",
+    "translation": "Onde posso encontrar WiFi?",
+    "category": "travel_survival",
+    "theme": "technology",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "travel_091"
+  },
+  {
+    "text": "What's the WiFi password?",
+    "translation": "Qual é a senha do WiFi?",
+    "category": "travel_survival",
+    "theme": "technology",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "travel_092"
+  },
+  {
+    "text": "My phone isn't working.",
+    "translation": "Meu telefone não está funcionando.",
+    "category": "travel_survival",
+    "theme": "technology",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "travel_093"
+  },
+  {
+    "text": "I need to charge my phone.",
+    "translation": "Preciso carregar meu telefone.",
+    "category": "travel_survival",
+    "theme": "technology",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "travel_094"
+  },
+  {
+    "text": "Do you have a charger?",
+    "translation": "Você tem um carregador?",
+    "category": "travel_survival",
+    "theme": "technology",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "travel_095"
+  },
+  {
+    "text": "Where's an internet cafe?",
+    "translation": "Onde fica uma lan house?",
+    "category": "travel_survival",
+    "theme": "technology",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "travel_096"
+  },
+  {
+    "text": "Can I use your phone?",
+    "translation": "Posso usar seu telefone?",
+    "category": "travel_survival",
+    "theme": "technology",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "travel_097"
+  },
+  {
+    "text": "I need a SIM card.",
+    "translation": "Preciso de um chip.",
+    "category": "travel_survival",
+    "theme": "technology",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "travel_098"
+  },
+  {
+    "text": "How do I connect?",
+    "translation": "Como eu conecto?",
+    "category": "travel_survival",
+    "theme": "technology",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "travel_099"
+  },
+  {
+    "text": "The connection is slow.",
+    "translation": "A conexão está lenta.",
+    "category": "travel_survival",
+    "theme": "technology",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "travel_100"
+  }
+]

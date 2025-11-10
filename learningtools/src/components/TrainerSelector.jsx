@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { Hash, Mic, Zap, Video, MoreHorizontal, X, MessageCircle, Globe, Gift, Radio, House, ArrowUp01 } from 'lucide-react';
+import { Hash, Mic, Zap, Video, MoreHorizontal, X, MessageCircle, Globe, Gift, Radio, House, BookOpen, ArrowUp01 } from 'lucide-react';
 import NumberSpeechTrainer from './training/NumberSpeechTrainer';
 import ChunkTrainer from './training/ChunkTrainer';
 import ChallengeTrainer from './training/ChallengeTrainer';
@@ -15,11 +15,13 @@ import { ReferralButton } from './referral/ReferralButton';
 import { InviteFriendsScreen } from './referral/InviteFriendsScreen';
 import LiveRooms from './social/LiveRooms';
 import Dashboard from './Dashboard';
+import CategoryTrainer from './training/CategoryTrainer';
 
 export default function TrainerSelector() {
   const getInitialTrainer = () => {
     const params = new URLSearchParams(window.location.search);
     const mode = params.get('mode');
+    if (mode === 'categories') return 'categories';
     if (mode === 'live-rooms') return 'live-rooms';
     if (mode === 'chunk') return 'chunk';
     if (mode === 'translate') return 'translate';
@@ -110,6 +112,18 @@ export default function TrainerSelector() {
                                                           <House className="w-5 h-5" />
                                                           Home
                                                         </button>
+                {/* Categories Button */}
+                <button
+                                                           onClick={() => handleTrainerChange('categories')}
+                                                           className={`flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all ${
+                                                             activeTrainer === 'categories'
+                                                               ? 'bg-gradient-to-r from-indigo-500 to-purple-500 text-white shadow-lg scale-105'
+                                                               : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                                                           }`}
+                                                         >
+                                                           <BookOpen className="w-5 h-5" />
+                                                           Categories
+                                                         </button>
               {/* Chunk Trainer Button */}
               <button
                 onClick={() => handleTrainerChange('chunk')}
@@ -120,7 +134,7 @@ export default function TrainerSelector() {
                 }`}
               >
                 <Mic className="w-5 h-5" />
-                Speak
+                Speak phrases
               </button>
 
               {/* Translate Trainer Button - NOVO */}
@@ -228,6 +242,7 @@ export default function TrainerSelector() {
 
       {/* Active Trainer Component */}
       <div className="transition-opacity duration-300">
+          {activeTrainer === 'categories' && <CategoryTrainer />}
         {activeTrainer === 'dashboard' && <Dashboard onNavigate={handleTrainerChange} />}
         {activeTrainer === 'chunk' && <ChunkTrainer />}
         {activeTrainer === 'translate' && <TranslateTrainer />}
@@ -257,6 +272,37 @@ export default function TrainerSelector() {
             </div>
 
             <div className="p-4 space-y-3">
+                {/* Categories Phrases */}
+                                            <button
+                                              onClick={() => {
+                                                handleTrainerChange('categories');
+                                                setShowSpeakMenu(false);
+                                              }}
+                                              className={`w-full flex items-center gap-4 p-4 rounded-xl transition-all ${
+                                                activeTrainer === 'categories'
+                                                  ? 'bg-purple-500 text-white shadow-lg'
+                                                  : 'bg-gray-50 hover:bg-gray-100 text-gray-800'
+                                              }`}
+                                            >
+                                              <div className={`p-3 rounded-full ${
+                                                activeTrainer === 'categories' ? ' bg-opacity-20' : 'bg-purple-100'
+                                              }`}>
+                                                <BookOpen  className={`w-6 h-6 ${
+                                                  activeTrainer === 'categories' ? 'text-white' : 'text-purple-600'
+                                                }`} />
+                                              </div>
+                                              <div className="text-left flex-1">
+                                                <div className="font-bold text-lg">Categories</div>
+                                                <div className={`text-sm ${
+                                                  activeTrainer === 'categories' ? 'text-white text-opacity-90' : 'text-gray-600'
+                                                }`}>
+                                                  Escolha frases por situações.
+                                                </div>
+                                              </div>
+                                              {activeTrainer === 'categories' && (
+                                                <div className="w-2 h-2  rounded-full" />
+                                              )}
+                                            </button>
               {/* Speak Phrases */}
               <button
                 onClick={() => {
@@ -288,6 +334,8 @@ export default function TrainerSelector() {
                   <div className="w-2 h-2  rounded-full" />
                 )}
               </button>
+
+
 
               {/* Translate */}
               <button

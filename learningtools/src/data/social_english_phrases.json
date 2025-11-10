@@ -1,0 +1,1082 @@
+[
+  {
+    "text": "What do you do for fun?",
+    "translation": "O que você faz por diversão?",
+    "category": "social_english",
+    "theme": "hobbies",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "social_001"
+  },
+  {
+    "text": "I love playing soccer.",
+    "translation": "Adoro jogar futebol.",
+    "category": "social_english",
+    "theme": "hobbies",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "social_002"
+  },
+  {
+    "text": "I enjoy reading books.",
+    "translation": "Gosto de ler livros.",
+    "category": "social_english",
+    "theme": "hobbies",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "social_003"
+  },
+  {
+    "text": "Do you like sports?",
+    "translation": "Você gosta de esportes?",
+    "category": "social_english",
+    "theme": "hobbies",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "social_004"
+  },
+  {
+    "text": "I'm into photography.",
+    "translation": "Eu curto fotografia.",
+    "category": "social_english",
+    "theme": "hobbies",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "social_005"
+  },
+  {
+    "text": "What are your hobbies?",
+    "translation": "Quais são seus hobbies?",
+    "category": "social_english",
+    "theme": "hobbies",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "social_006"
+  },
+  {
+    "text": "I like cooking.",
+    "translation": "Gosto de cozinhar.",
+    "category": "social_english",
+    "theme": "hobbies",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "social_007"
+  },
+  {
+    "text": "I play guitar.",
+    "translation": "Toco violão.",
+    "category": "social_english",
+    "theme": "hobbies",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "social_008"
+  },
+  {
+    "text": "I enjoy hiking.",
+    "translation": "Gosto de fazer trilhas.",
+    "category": "social_english",
+    "theme": "hobbies",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "social_009"
+  },
+  {
+    "text": "Have you tried that?",
+    "translation": "Você já tentou isso?",
+    "category": "social_english",
+    "theme": "hobbies",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "social_010"
+  },
+  {
+    "text": "What do you think about it?",
+    "translation": "O que você acha disso?",
+    "category": "social_english",
+    "theme": "opinions",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "social_011"
+  },
+  {
+    "text": "I think it's great!",
+    "translation": "Acho que é ótimo!",
+    "category": "social_english",
+    "theme": "opinions",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "social_012"
+  },
+  {
+    "text": "In my opinion...",
+    "translation": "Na minha opinião...",
+    "category": "social_english",
+    "theme": "opinions",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "social_013"
+  },
+  {
+    "text": "I totally agree!",
+    "translation": "Concordo totalmente!",
+    "category": "social_english",
+    "theme": "opinions",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "social_014"
+  },
+  {
+    "text": "I'm not sure about that.",
+    "translation": "Não tenho certeza sobre isso.",
+    "category": "social_english",
+    "theme": "opinions",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "social_015"
+  },
+  {
+    "text": "That's interesting!",
+    "translation": "Isso é interessante!",
+    "category": "social_english",
+    "theme": "opinions",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "social_016"
+  },
+  {
+    "text": "I disagree with that.",
+    "translation": "Discordo disso.",
+    "category": "social_english",
+    "theme": "opinions",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "social_017"
+  },
+  {
+    "text": "That makes sense.",
+    "translation": "Isso faz sentido.",
+    "category": "social_english",
+    "theme": "opinions",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "social_018"
+  },
+  {
+    "text": "I feel the same way.",
+    "translation": "Sinto o mesmo.",
+    "category": "social_english",
+    "theme": "opinions",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "social_019"
+  },
+  {
+    "text": "You have a point.",
+    "translation": "Você tem razão.",
+    "category": "social_english",
+    "theme": "opinions",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "social_020"
+  },
+  {
+    "text": "Would you like to hang out?",
+    "translation": "Você gostaria de sair?",
+    "category": "social_english",
+    "theme": "invitations",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "social_021"
+  },
+  {
+    "text": "Let's grab coffee sometime.",
+    "translation": "Vamos tomar um café alguma hora.",
+    "category": "social_english",
+    "theme": "invitations",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "social_022"
+  },
+  {
+    "text": "Want to come with me?",
+    "translation": "Quer vir comigo?",
+    "category": "social_english",
+    "theme": "invitations",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "social_023"
+  },
+  {
+    "text": "Are you free this weekend?",
+    "translation": "Você está livre neste fim de semana?",
+    "category": "social_english",
+    "theme": "invitations",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "social_024"
+  },
+  {
+    "text": "Let's go to the movies!",
+    "translation": "Vamos ao cinema!",
+    "category": "social_english",
+    "theme": "invitations",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "social_025"
+  },
+  {
+    "text": "Do you want to join us?",
+    "translation": "Quer se juntar a nós?",
+    "category": "social_english",
+    "theme": "invitations",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "social_026"
+  },
+  {
+    "text": "I'd love to!",
+    "translation": "Adoraria!",
+    "category": "social_english",
+    "theme": "invitations",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "social_027"
+  },
+  {
+    "text": "Sorry, I can't make it.",
+    "translation": "Desculpe, não posso ir.",
+    "category": "social_english",
+    "theme": "invitations",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "social_028"
+  },
+  {
+    "text": "Maybe another time.",
+    "translation": "Talvez outra hora.",
+    "category": "social_english",
+    "theme": "invitations",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "social_029"
+  },
+  {
+    "text": "That sounds fun!",
+    "translation": "Isso parece divertido!",
+    "category": "social_english",
+    "theme": "invitations",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "social_030"
+  },
+  {
+    "text": "What are you doing tonight?",
+    "translation": "O que você vai fazer hoje à noite?",
+    "category": "social_english",
+    "theme": "plans",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "social_031"
+  },
+  {
+    "text": "I'm staying home tonight.",
+    "translation": "Vou ficar em casa hoje à noite.",
+    "category": "social_english",
+    "theme": "plans",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "social_032"
+  },
+  {
+    "text": "I have plans already.",
+    "translation": "Já tenho planos.",
+    "category": "social_english",
+    "theme": "plans",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "social_033"
+  },
+  {
+    "text": "I'm meeting some friends.",
+    "translation": "Vou encontrar alguns amigos.",
+    "category": "social_english",
+    "theme": "plans",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "social_034"
+  },
+  {
+    "text": "Nothing special, why?",
+    "translation": "Nada especial, por quê?",
+    "category": "social_english",
+    "theme": "plans",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "social_035"
+  },
+  {
+    "text": "What time should we meet?",
+    "translation": "Que horas devemos nos encontrar?",
+    "category": "social_english",
+    "theme": "plans",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "social_036"
+  },
+  {
+    "text": "Where should we go?",
+    "translation": "Onde devemos ir?",
+    "category": "social_english",
+    "theme": "plans",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "social_037"
+  },
+  {
+    "text": "Let's decide later.",
+    "translation": "Vamos decidir depois.",
+    "category": "social_english",
+    "theme": "plans",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "social_038"
+  },
+  {
+    "text": "I'm not sure yet.",
+    "translation": "Ainda não tenho certeza.",
+    "category": "social_english",
+    "theme": "plans",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "social_039"
+  },
+  {
+    "text": "Keep me posted!",
+    "translation": "Me mantenha informado!",
+    "category": "social_english",
+    "theme": "plans",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "social_040"
+  },
+  {
+    "text": "Have you seen the new movie?",
+    "translation": "Você viu o novo filme?",
+    "category": "social_english",
+    "theme": "entertainment",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "social_041"
+  },
+  {
+    "text": "I love this song!",
+    "translation": "Amo essa música!",
+    "category": "social_english",
+    "theme": "entertainment",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "social_042"
+  },
+  {
+    "text": "What kind of music do you like?",
+    "translation": "Que tipo de música você gosta?",
+    "category": "social_english",
+    "theme": "entertainment",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "social_043"
+  },
+  {
+    "text": "That movie was amazing!",
+    "translation": "Aquele filme foi incrível!",
+    "category": "social_english",
+    "theme": "entertainment",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "social_044"
+  },
+  {
+    "text": "I'm watching a series.",
+    "translation": "Estou assistindo uma série.",
+    "category": "social_english",
+    "theme": "entertainment",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "social_045"
+  },
+  {
+    "text": "Have you heard this band?",
+    "translation": "Você conhece essa banda?",
+    "category": "social_english",
+    "theme": "entertainment",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "social_046"
+  },
+  {
+    "text": "I prefer comedies.",
+    "translation": "Prefiro comédias.",
+    "category": "social_english",
+    "theme": "entertainment",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "social_047"
+  },
+  {
+    "text": "The concert was incredible!",
+    "translation": "O show foi incrível!",
+    "category": "social_english",
+    "theme": "entertainment",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "social_048"
+  },
+  {
+    "text": "I can't wait for the next episode!",
+    "translation": "Mal posso esperar pelo próximo episódio!",
+    "category": "social_english",
+    "theme": "entertainment",
+    "difficulty": 3,
+    "environment": "production",
+    "id": "social_049"
+  },
+  {
+    "text": "Who's your favorite artist?",
+    "translation": "Quem é seu artista favorito?",
+    "category": "social_english",
+    "theme": "entertainment",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "social_050"
+  },
+  {
+    "text": "That's so funny!",
+    "translation": "Isso é tão engraçado!",
+    "category": "social_english",
+    "theme": "reactions",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "social_051"
+  },
+  {
+    "text": "I can't believe it!",
+    "translation": "Não posso acreditar!",
+    "category": "social_english",
+    "theme": "reactions",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "social_052"
+  },
+  {
+    "text": "No way!",
+    "translation": "De jeito nenhum!",
+    "category": "social_english",
+    "theme": "reactions",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "social_053"
+  },
+  {
+    "text": "That's crazy!",
+    "translation": "Isso é loucura!",
+    "category": "social_english",
+    "theme": "reactions",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "social_054"
+  },
+  {
+    "text": "Really?",
+    "translation": "Sério?",
+    "category": "social_english",
+    "theme": "reactions",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "social_055"
+  },
+  {
+    "text": "That's awesome!",
+    "translation": "Isso é demais!",
+    "category": "social_english",
+    "theme": "reactions",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "social_056"
+  },
+  {
+    "text": "I'm so happy for you!",
+    "translation": "Estou tão feliz por você!",
+    "category": "social_english",
+    "theme": "reactions",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "social_057"
+  },
+  {
+    "text": "That's terrible!",
+    "translation": "Isso é terrível!",
+    "category": "social_english",
+    "theme": "reactions",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "social_058"
+  },
+  {
+    "text": "Oh my god!",
+    "translation": "Meu Deus!",
+    "category": "social_english",
+    "theme": "reactions",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "social_059"
+  },
+  {
+    "text": "You're kidding!",
+    "translation": "Você está brincando!",
+    "category": "social_english",
+    "theme": "reactions",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "social_060"
+  },
+  {
+    "text": "Tell me more!",
+    "translation": "Me conta mais!",
+    "category": "social_english",
+    "theme": "conversation",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "social_061"
+  },
+  {
+    "text": "How did it go?",
+    "translation": "Como foi?",
+    "category": "social_english",
+    "theme": "conversation",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "social_062"
+  },
+  {
+    "text": "What happened next?",
+    "translation": "O que aconteceu depois?",
+    "category": "social_english",
+    "theme": "conversation",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "social_063"
+  },
+  {
+    "text": "I see what you mean.",
+    "translation": "Entendo o que você quer dizer.",
+    "category": "social_english",
+    "theme": "conversation",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "social_064"
+  },
+  {
+    "text": "Let me tell you something.",
+    "translation": "Deixa eu te contar uma coisa.",
+    "category": "social_english",
+    "theme": "conversation",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "social_065"
+  },
+  {
+    "text": "Guess what?",
+    "translation": "Adivinha o quê?",
+    "category": "social_english",
+    "theme": "conversation",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "social_066"
+  },
+  {
+    "text": "You won't believe this.",
+    "translation": "Você não vai acreditar nisso.",
+    "category": "social_english",
+    "theme": "conversation",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "social_067"
+  },
+  {
+    "text": "Long story short...",
+    "translation": "Resumindo a história...",
+    "category": "social_english",
+    "theme": "conversation",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "social_068"
+  },
+  {
+    "text": "To be honest...",
+    "translation": "Para ser honesto...",
+    "category": "social_english",
+    "theme": "conversation",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "social_069"
+  },
+  {
+    "text": "Anyway...",
+    "translation": "De qualquer forma...",
+    "category": "social_english",
+    "theme": "conversation",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "social_070"
+  },
+  {
+    "text": "I'm so tired today.",
+    "translation": "Estou tão cansado hoje.",
+    "category": "social_english",
+    "theme": "feelings",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "social_071"
+  },
+  {
+    "text": "I'm feeling great!",
+    "translation": "Estou me sentindo ótimo!",
+    "category": "social_english",
+    "theme": "feelings",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "social_072"
+  },
+  {
+    "text": "I'm a bit stressed.",
+    "translation": "Estou um pouco estressado.",
+    "category": "social_english",
+    "theme": "feelings",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "social_073"
+  },
+  {
+    "text": "I'm so excited!",
+    "translation": "Estou tão empolgado!",
+    "category": "social_english",
+    "theme": "feelings",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "social_074"
+  },
+  {
+    "text": "I'm not in the mood.",
+    "translation": "Não estou no clima.",
+    "category": "social_english",
+    "theme": "feelings",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "social_075"
+  },
+  {
+    "text": "I feel much better now.",
+    "translation": "Me sinto muito melhor agora.",
+    "category": "social_english",
+    "theme": "feelings",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "social_076"
+  },
+  {
+    "text": "Don't worry about it.",
+    "translation": "Não se preocupe com isso.",
+    "category": "social_english",
+    "theme": "feelings",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "social_077"
+  },
+  {
+    "text": "Cheer up!",
+    "translation": "Anime-se!",
+    "category": "social_english",
+    "theme": "feelings",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "social_078"
+  },
+  {
+    "text": "I'm so bored.",
+    "translation": "Estou tão entediado.",
+    "category": "social_english",
+    "theme": "feelings",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "social_079"
+  },
+  {
+    "text": "That made my day!",
+    "translation": "Isso fez meu dia!",
+    "category": "social_english",
+    "theme": "feelings",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "social_080"
+  },
+  {
+    "text": "Where do you live?",
+    "translation": "Onde você mora?",
+    "category": "social_english",
+    "theme": "personal_info",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "social_081"
+  },
+  {
+    "text": "How long have you been here?",
+    "translation": "Há quanto tempo você está aqui?",
+    "category": "social_english",
+    "theme": "personal_info",
+    "difficulty": 3,
+    "environment": "production",
+    "id": "social_082"
+  },
+  {
+    "text": "Do you have any siblings?",
+    "translation": "Você tem irmãos?",
+    "category": "social_english",
+    "theme": "personal_info",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "social_083"
+  },
+  {
+    "text": "I have one brother.",
+    "translation": "Tenho um irmão.",
+    "category": "social_english",
+    "theme": "personal_info",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "social_084"
+  },
+  {
+    "text": "I'm an only child.",
+    "translation": "Sou filho único.",
+    "category": "social_english",
+    "theme": "personal_info",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "social_085"
+  },
+  {
+    "text": "What do you study?",
+    "translation": "O que você estuda?",
+    "category": "social_english",
+    "theme": "personal_info",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "social_086"
+  },
+  {
+    "text": "I work in marketing.",
+    "translation": "Trabalho com marketing.",
+    "category": "social_english",
+    "theme": "personal_info",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "social_087"
+  },
+  {
+    "text": "I'm a student.",
+    "translation": "Sou estudante.",
+    "category": "social_english",
+    "theme": "personal_info",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "social_088"
+  },
+  {
+    "text": "I'm from São Paulo.",
+    "translation": "Sou de São Paulo.",
+    "category": "social_english",
+    "theme": "personal_info",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "social_089"
+  },
+  {
+    "text": "How old are you?",
+    "translation": "Quantos anos você tem?",
+    "category": "social_english",
+    "theme": "personal_info",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "social_090"
+  },
+  {
+    "text": "Nice talking to you!",
+    "translation": "Foi bom conversar com você!",
+    "category": "social_english",
+    "theme": "farewells",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "social_091"
+  },
+  {
+    "text": "Let's keep in touch!",
+    "translation": "Vamos manter contato!",
+    "category": "social_english",
+    "theme": "farewells",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "social_092"
+  },
+  {
+    "text": "See you around!",
+    "translation": "Te vejo por aí!",
+    "category": "social_english",
+    "theme": "farewells",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "social_093"
+  },
+  {
+    "text": "Catch you later!",
+    "translation": "Te pego depois!",
+    "category": "social_english",
+    "theme": "farewells",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "social_094"
+  },
+  {
+    "text": "Talk to you soon!",
+    "translation": "Falo com você em breve!",
+    "category": "social_english",
+    "theme": "farewells",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "social_095"
+  },
+  {
+    "text": "It was nice meeting you!",
+    "translation": "Foi um prazer conhecê-lo!",
+    "category": "social_english",
+    "theme": "farewells",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "social_096"
+  },
+  {
+    "text": "Take care of yourself!",
+    "translation": "Cuide-se!",
+    "category": "social_english",
+    "theme": "farewells",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "social_097"
+  },
+  {
+    "text": "Have a good one!",
+    "translation": "Tenha um bom dia!",
+    "category": "social_english",
+    "theme": "farewells",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "social_098"
+  },
+  {
+    "text": "I had a great time!",
+    "translation": "Me diverti muito!",
+    "category": "social_english",
+    "theme": "farewells",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "social_099"
+  },
+  {
+    "text": "Let's do this again!",
+    "translation": "Vamos fazer isso de novo!",
+    "category": "social_english",
+    "theme": "farewells",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "social_100"
+  },
+  {
+    "text": "Can you help me with something?",
+    "translation": "Você pode me ajudar com algo?",
+    "category": "social_english",
+    "theme": "requests",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "social_101"
+  },
+  {
+    "text": "Could you do me a favor?",
+    "translation": "Você poderia me fazer um favor?",
+    "category": "social_english",
+    "theme": "requests",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "social_102"
+  },
+  {
+    "text": "Sure, no problem!",
+    "translation": "Claro, sem problema!",
+    "category": "social_english",
+    "theme": "requests",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "social_103"
+  },
+  {
+    "text": "I need your advice.",
+    "translation": "Preciso do seu conselho.",
+    "category": "social_english",
+    "theme": "requests",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "social_104"
+  },
+  {
+    "text": "Can I borrow this?",
+    "translation": "Posso pegar isso emprestado?",
+    "category": "social_english",
+    "theme": "requests",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "social_105"
+  },
+  {
+    "text": "Would you mind helping me?",
+    "translation": "Você se importaria de me ajudar?",
+    "category": "social_english",
+    "theme": "requests",
+    "difficulty": 3,
+    "environment": "production",
+    "id": "social_106"
+  },
+  {
+    "text": "I owe you one!",
+    "translation": "Te devo uma!",
+    "category": "social_english",
+    "theme": "requests",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "social_107"
+  },
+  {
+    "text": "Thanks for your help!",
+    "translation": "Obrigado pela ajuda!",
+    "category": "social_english",
+    "theme": "requests",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "social_108"
+  },
+  {
+    "text": "I appreciate it!",
+    "translation": "Eu agradeço!",
+    "category": "social_english",
+    "theme": "requests",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "social_109"
+  },
+  {
+    "text": "Anytime!",
+    "translation": "Quando quiser!",
+    "category": "social_english",
+    "theme": "requests",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "social_110"
+  },
+  {
+    "text": "I'm sorry to hear that.",
+    "translation": "Sinto muito em ouvir isso.",
+    "category": "social_english",
+    "theme": "sympathy",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "social_111"
+  },
+  {
+    "text": "That's tough.",
+    "translation": "Isso é difícil.",
+    "category": "social_english",
+    "theme": "sympathy",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "social_112"
+  },
+  {
+    "text": "I understand how you feel.",
+    "translation": "Entendo como você se sente.",
+    "category": "social_english",
+    "theme": "sympathy",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "social_113"
+  },
+  {
+    "text": "Everything will be okay.",
+    "translation": "Tudo vai ficar bem.",
+    "category": "social_english",
+    "theme": "sympathy",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "social_114"
+  },
+  {
+    "text": "I'm here for you.",
+    "translation": "Estou aqui por você.",
+    "category": "social_english",
+    "theme": "sympathy",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "social_115"
+  },
+  {
+    "text": "Let me know if you need anything.",
+    "translation": "Me avise se precisar de algo.",
+    "category": "social_english",
+    "theme": "sympathy",
+    "difficulty": 3,
+    "environment": "production",
+    "id": "social_116"
+  },
+  {
+    "text": "Hang in there!",
+    "translation": "Aguenta firme!",
+    "category": "social_english",
+    "theme": "sympathy",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "social_117"
+  },
+  {
+    "text": "Things will get better.",
+    "translation": "As coisas vão melhorar.",
+    "category": "social_english",
+    "theme": "sympathy",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "social_118"
+  },
+  {
+    "text": "You can do it!",
+    "translation": "Você consegue!",
+    "category": "social_english",
+    "theme": "sympathy",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "social_119"
+  },
+  {
+    "text": "Stay strong!",
+    "translation": "Seja forte!",
+    "category": "social_english",
+    "theme": "sympathy",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "social_120"
+  }
+]
