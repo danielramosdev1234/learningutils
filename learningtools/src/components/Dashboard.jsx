@@ -14,6 +14,7 @@ import numerosImg from '../assets/numeros.png';
 import challengeImg from '../assets/challenge.png';
 import videoListenerImg from '../assets/videolistener.png';
 import liveRoomImg from '../assets/liveroom.png';
+import categoriesImg from '../assets/categories.png';
 import { LevelIndicator } from './leaderboard/LevelIndicator';
 
 
@@ -91,7 +92,7 @@ const Dashboard = () => {
               icon: BookOpen,
               gradient: 'from-indigo-500 to-purple-500 ',
               path: '/?mode=chunk',
-                                            src: wordByWordImg,
+                                            src: categoriesImg,
                                                   alt: 'exemplo word by word'
             },{
           id: 'speak',
