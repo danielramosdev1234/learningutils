@@ -6,6 +6,7 @@ import { useTextToSpeech } from '../../hooks/useTextToSpeech';
 import { PhraseRepository } from '../../services/phraseRepository';
 import {
   markPhraseCompleted,
+  markCategoryPhraseCompleted,
   incrementPhraseCompleted,
   saveProgress
 } from '../../store/slices/userSlice';
@@ -64,7 +65,7 @@ const CATEGORIES = [
 
 const CategoryTrainer = () => {
   const dispatch = useDispatch();
-  const { levelSystem } = useSelector(state => state.user);
+  const { levelSystem, progress, userId, mode } = useSelector(state => state.user);
   const textToSpeech = useTextToSpeech();
 
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -95,10 +96,13 @@ const CategoryTrainer = () => {
       const filtered = allPhrases.filter(p => p.category === selectedCategory);
       setCategoryPhrases(filtered);
       
-      // Encontra a primeira frase não completada (só calcula quando categoria muda)
-      const completedPhrases = levelSystem?.globalCompletedPhrases || [];
+      // Carrega progresso da categoria do Redux (só quando categoria muda)
+      const categoryProgress = progress?.categories?.[selectedCategory];
+      const completedPhrasesInCategory = categoryProgress?.completedPhrases || [];
+      
+      // Encontra a primeira frase não completada nesta categoria
       const firstIncompleteIndex = filtered.findIndex(
-        phrase => !completedPhrases.includes(phrase.id)
+        phrase => !completedPhrasesInCategory.includes(phrase.id)
       );
       
       // Se todas foram completadas, começa do início; senão, começa da primeira não completada
@@ -106,8 +110,8 @@ const CategoryTrainer = () => {
       setCurrentIndex(startIndex);
       setCompletedInSession([]);
     }
-    // Removido levelSystem?.globalCompletedPhrases das dependências para evitar
-    // que o índice seja recalculado quando uma frase é completada
+    // IMPORTANTE: Não incluir progress?.categories nas dependências para evitar
+    // que o índice seja recalculado quando uma frase é completada (causaria avanço automático)
   }, [selectedCategory, allPhrases]);
 
   const handleCategorySelect = (categoryId) => {
@@ -129,15 +133,25 @@ const CategoryTrainer = () => {
       phraseIndex: currentIndex
     }));
 
+    // Marca como completa no progresso da categoria
+    dispatch(markCategoryPhraseCompleted({
+      categoryId: selectedCategory,
+      phraseId: currentPhrase.id,
+      currentIndex: currentIndex
+    }));
+
     dispatch(incrementPhraseCompleted());
 
     // Adiciona à lista de completadas nesta sessão
     setCompletedInSession([...completedInSession, currentPhrase.id]);
 
-    // Salva progresso
-    setTimeout(() => {
-      dispatch(saveProgress());
-    }, 500);
+    // Salva progresso no Firebase (aguarda um pouco mais para garantir que o Redux atualizou)
+    if (mode === 'authenticated' && userId) {
+      setTimeout(() => {
+        dispatch(saveProgress());
+        console.log('💾 Progresso de categoria salvo:', selectedCategory, currentPhrase.id);
+      }, 1000);
+    }
   };
 
   const handleNextPhrase = () => {
@@ -152,10 +166,18 @@ const CategoryTrainer = () => {
   // Calcula estatísticas da categoria
   const getCategoryStats = (categoryId) => {
     const categoryPhrasesCount = allPhrases.filter(p => p.category === categoryId).length;
-    const completedCount = allPhrases.filter(p =>
-      p.category === categoryId &&
-      levelSystem?.globalCompletedPhrases?.includes(p.id)
-    ).length;
+    
+    // Usa progresso específico da categoria se disponível, senão usa global
+    const categoryProgress = progress?.categories?.[categoryId];
+    const completedPhrasesInCategory = categoryProgress?.completedPhrases || [];
+    
+    // Fallback para globalCompletedPhrases se não houver progresso específico
+    const completedCount = completedPhrasesInCategory.length > 0 
+      ? completedPhrasesInCategory.length
+      : allPhrases.filter(p =>
+          p.category === categoryId &&
+          levelSystem?.globalCompletedPhrases?.includes(p.id)
+        ).length;
 
     return {
       total: categoryPhrasesCount,
@@ -273,7 +295,7 @@ const CategoryTrainer = () => {
   // Tela de prática
   const currentCategory = CATEGORIES.find(c => c.id === selectedCategory);
   const currentPhrase = categoryPhrases[currentIndex];
-  const progress = Math.round(((currentIndex + 1) / categoryPhrases.length) * 100);
+  const progressPercent = Math.round(((currentIndex + 1) / categoryPhrases.length) * 100);
 
   if (!currentPhrase) {
     return (
@@ -320,12 +342,12 @@ const CategoryTrainer = () => {
             <div className="space-y-2">
               <div className="flex items-center justify-between text-sm">
                 <span>Phrase {currentIndex + 1} of {categoryPhrases.length}</span>
-                <span className="font-bold">{progress}%</span>
+                <span className="font-bold">{progressPercent}%</span>
               </div>
               <div className="w-full bg-white/20 rounded-full h-2 overflow-hidden">
                 <div
                   className="h-full bg-white transition-all duration-300"
-                  style={{ width: `${progress}%` }}
+                  style={{ width: `${progressPercent}%` }}
                 />
               </div>
             </div>
@@ -348,6 +370,7 @@ const CategoryTrainer = () => {
           onCorrectAnswer={handleCorrectAnswer}
           onNextPhrase={handleNextPhrase}
           isActive={true}
+          autoAdvance={false}
         />
       </div>
     </div>

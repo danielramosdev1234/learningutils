@@ -26,7 +26,7 @@ const isAndroidDevice = () => {
   return /android/.test(ua);
 };
 
-export const PhraseCard = ({ phrase, onSpeak, onCorrectAnswer, onNextPhrase, isActive, textToSpeech }) => {
+export const PhraseCard = ({ phrase, onSpeak, onCorrectAnswer, onNextPhrase, isActive, textToSpeech, autoAdvance = true }) => {
  const isAndroid = useMemo(() => isAndroidDevice(), []);
 
  const chunksHook = useSpeechRecognitionForChunks();
@@ -123,9 +123,18 @@ export const PhraseCard = ({ phrase, onSpeak, onCorrectAnswer, onNextPhrase, isA
           phraseIndex: phrase.index
         }));
 
+        // Chama onCorrectAnswer para marcar como completa
         if (onCorrectAnswer) {
-          console.log(`🎉 Auto advancing!`);
           onCorrectAnswer();
+        }
+
+        // Só avança automaticamente se autoAdvance estiver habilitado
+        if (autoAdvance && onNextPhrase) {
+          console.log(`🎉 Auto advancing!`);
+          // Aguarda um pouco antes de avançar para mostrar o feedback
+          setTimeout(() => {
+            onNextPhrase();
+          }, 2000);
         }
       }
 
@@ -137,11 +146,6 @@ export const PhraseCard = ({ phrase, onSpeak, onCorrectAnswer, onNextPhrase, isA
       const newTotal = totalPracticed + 1;
       setTotalPracticed(newTotal);
       localStorage.setItem('learnfun_total_practiced', newTotal);
-
-      if (comparison.similarity > 80 && onCorrectAnswer) {
-        console.log(`🎉 ${comparison.similarity}% - Auto advancing!`);
-        onCorrectAnswer();
-      }
 
       const timer = setTimeout(() => {
         setShowFeedback(false);

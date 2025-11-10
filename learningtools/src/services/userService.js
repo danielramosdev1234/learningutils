@@ -182,6 +182,41 @@ export const loadAuthUserData = async (userId) => {
 };
 
 /**
+ * Remove valores undefined de um objeto (recursivo)
+ * Firebase não aceita undefined, apenas null ou valores válidos
+ * Preserva funções especiais do Firebase (como serverTimestamp)
+ */
+const removeUndefined = (obj) => {
+  if (obj === null || obj === undefined) {
+    return null;
+  }
+  
+  // Preserva funções (como serverTimestamp do Firebase)
+  if (typeof obj === 'function') {
+    return obj;
+  }
+  
+  if (Array.isArray(obj)) {
+    return obj.map(item => removeUndefined(item));
+  }
+  
+  if (typeof obj === 'object' && obj.constructor === Object) {
+    const cleaned = {};
+    for (const key in obj) {
+      if (obj.hasOwnProperty(key)) {
+        const value = obj[key];
+        if (value !== undefined) {
+          cleaned[key] = removeUndefined(value);
+        }
+      }
+    }
+    return cleaned;
+  }
+  
+  return obj;
+};
+
+/**
  * Salva dados do usuário autenticado no Firestore
  */
 export const saveAuthUserData = async (userId, profile, progress, stats, levelSystem, referral) => {
@@ -190,6 +225,7 @@ export const saveAuthUserData = async (userId, profile, progress, stats, levelSy
     console.log('   User ID:', userId);
     console.log('   Progress:', progress);
     console.log('   CurrentIndex sendo salvo:', progress?.chunkTrainer?.currentIndex);
+    console.log('   Categories progress:', progress?.categories);
 
     const userDocRef = doc(db, 'users', userId);
 
@@ -216,7 +252,10 @@ export const saveAuthUserData = async (userId, profile, progress, stats, levelSy
       lastUpdated: serverTimestamp()
     };
 
-    await setDoc(userDocRef, dataToSave, { merge: true });
+    // Remove valores undefined antes de salvar
+    const cleanedData = removeUndefined(dataToSave);
+
+    await setDoc(userDocRef, cleanedData, { merge: true });
 
     console.log('✅ Dados salvos no Firestore');
     console.log('📍 CurrentIndex salvo:', progress?.chunkTrainer?.currentIndex);

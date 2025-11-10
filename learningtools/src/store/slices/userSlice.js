@@ -68,6 +68,9 @@ const initialState = {
       currentIndex: 0,
       completedPhrases: [],
       completedCount: 0
+    },
+    categories: {
+      // Estrutura: { categoryId: { completedPhrases: [phraseId1, phraseId2, ...], lastIndex: 0 } }
     }
   },
 
@@ -407,6 +410,7 @@ export const saveProgress = createAsyncThunk(
     console.log('   User ID:', state.userId);
     console.log('   Total Frases:', state.stats.totalPhrases);
     console.log('   Level:', state.levelSystem.currentLevel);
+    console.log('   Categories progress:', state.progress?.categories);
 
     if (state.mode === 'authenticated') {
       const referralToSave = state.referral || {
@@ -594,6 +598,31 @@ const userSlice = createSlice({
       state.progress.chunkTrainer.completedCount = completedPhrases.length;
     },
 
+    markCategoryPhraseCompleted: (state, action) => {
+      const { categoryId, phraseId, currentIndex } = action.payload;
+      
+      // Inicializa categories se não existir
+      if (!state.progress.categories) {
+        state.progress.categories = {};
+      }
+      
+      // Inicializa a categoria se não existir
+      if (!state.progress.categories[categoryId]) {
+        state.progress.categories[categoryId] = {
+          completedPhrases: [],
+          lastIndex: 0
+        };
+      }
+      
+      // Adiciona a frase se ainda não estiver completada
+      if (!state.progress.categories[categoryId].completedPhrases.includes(phraseId)) {
+        state.progress.categories[categoryId].completedPhrases.push(phraseId);
+      }
+      
+      // Atualiza o último índice
+      state.progress.categories[categoryId].lastIndex = currentIndex;
+    },
+
     incrementPhraseCompleted: (state, action) => {
       state.stats.totalPhrases += 1;
       state.stats.totalAttempts += 1;
@@ -760,7 +789,11 @@ const userSlice = createSlice({
         state.mode = action.payload.mode;
         state.userId = action.payload.userId;
         state.profile = action.payload.profile;
-        state.progress = action.payload.progress;
+        state.progress = {
+          ...action.payload.progress,
+          chunkTrainer: action.payload.progress?.chunkTrainer || initialState.progress.chunkTrainer,
+          categories: action.payload.progress?.categories || {}
+        };
         state.stats = action.payload.stats;
         state.levelSystem = action.payload.levelSystem;
 
@@ -793,7 +826,11 @@ const userSlice = createSlice({
         state.mode = 'authenticated';
         state.userId = action.payload.userId;
         state.profile = action.payload.profile;
-        state.progress = action.payload.progress;
+        state.progress = {
+          ...action.payload.progress,
+          chunkTrainer: action.payload.progress?.chunkTrainer || initialState.progress.chunkTrainer,
+          categories: action.payload.progress?.categories || {}
+        };
         state.stats = action.payload.stats;
         state.levelSystem = action.payload.levelSystem;
 
@@ -856,6 +893,7 @@ const userSlice = createSlice({
 
 export const {
   updateChunkProgress,
+  markCategoryPhraseCompleted,
   incrementPhraseCompleted,
   incrementIncorrectAttempt,
   updateChallengeHighScore,
