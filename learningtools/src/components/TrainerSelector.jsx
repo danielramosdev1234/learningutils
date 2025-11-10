@@ -16,6 +16,15 @@ import { InviteFriendsScreen } from './referral/InviteFriendsScreen';
 import LiveRooms from './social/LiveRooms';
 import Dashboard from './Dashboard';
 import CategoryTrainer from './training/CategoryTrainer';
+import { LevelUpModal } from './modals/LevelUpModal';
+import {
+  updateChunkProgress,
+  incrementPhraseCompleted,
+  saveProgress,
+  closeLevelUpModal,
+  updateLevelSystemIndices,
+  markPhraseCompleted
+} from '../store/slices/userSlice';
 
 export default function TrainerSelector() {
   const getInitialTrainer = () => {
@@ -48,6 +57,10 @@ export default function TrainerSelector() {
       window.va('pageview', { path });
     }
   }, [activeTrainer]);
+
+const handleCloseLevelUpModal = () => {
+    dispatch(closeLevelUpModal());
+  };
 
   const handleTrainerChange = (trainer) => {
     setActiveTrainer(trainer);
@@ -510,6 +523,12 @@ export default function TrainerSelector() {
           </div>
         </div>
       )}
+
+  <LevelUpModal
+          isOpen={levelSystem?.showLevelUpModal || false}
+          onClose={handleCloseLevelUpModal}
+          newLevel={levelSystem?.pendingLevelUp || 1}
+        />
 
         {/* Modal Invite Friends */}
           {showInviteModal && (

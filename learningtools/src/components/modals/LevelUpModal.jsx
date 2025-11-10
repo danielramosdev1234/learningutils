@@ -2,11 +2,12 @@ import React, { useEffect, useState, useRef } from 'react';
 import { Trophy, Star, Sparkles, X, ArrowRight, Volume2, VolumeX } from 'lucide-react';
 import applausosSound from '../../assets/aplausos.wav';
 import musicaVitoriaSound from '../../assets/musicadavitoria.mp3';
+import { XP_CONFIG, calculateXPForNextLevel } from '../../store/slices/xpSlice';
 
 /**
- * Modal de celebração quando passa de nível
+ * Modal de celebração quando passa de nível (XP System)
  */
-export const LevelUpModal = ({ isOpen, onClose, newLevel }) => {
+export const LevelUpModal = ({ isOpen, onClose, newLevel, totalXP = 0 }) => {
   const [showConfetti, setShowConfetti] = useState(false);
   const [isPlayingMusic, setIsPlayingMusic] = useState(false);
   const [audioStarted, setAudioStarted] = useState(false); // ✅ NOVO: Controla se já tentou tocar
@@ -234,12 +235,12 @@ export const LevelUpModal = ({ isOpen, onClose, newLevel }) => {
           {/* Estatísticas */}
           <div className="grid grid-cols-2 gap-4 mb-6">
             <div className="bg-green-50 rounded-lg p-4 border-2 border-green-200 text-center">
-              <p className="text-green-600 font-semibold text-sm mb-1">Frases Dominadas</p>
-              <p className="text-green-700 font-bold text-3xl">{(newLevel - 1) * 10}</p>
+              <p className="text-green-600 font-semibold text-sm mb-1">XP Total</p>
+              <p className="text-green-700 font-bold text-3xl">{totalXP}</p>
             </div>
             <div className="bg-purple-50 rounded-lg p-4 border-2 border-purple-200 text-center">
-              <p className="text-purple-600 font-semibold text-sm mb-1">Próximo Objetivo</p>
-              <p className="text-purple-700 font-bold text-3xl">{newLevel * 10}</p>
+              <p className="text-purple-600 font-semibold text-sm mb-1">Próximo Nível</p>
+              <p className="text-purple-700 font-bold text-3xl">{calculateXPForNextLevel(totalXP)} XP</p>
             </div>
           </div>
 

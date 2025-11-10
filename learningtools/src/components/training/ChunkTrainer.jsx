@@ -6,7 +6,6 @@ import { LevelIndicator } from '../leaderboard/LevelIndicator';
 import { useTextToSpeech } from '../../hooks/useTextToSpeech';
 import { PhraseRepository } from '../../services/phraseRepository';
 import { useSelector, useDispatch } from 'react-redux';
-import { LevelUpModal } from '../modals/LevelUpModal';
 import {
   updateChunkProgress,
   incrementPhraseCompleted,
@@ -203,9 +202,7 @@ const ChunkTrainer = ({ onOpenInvite }) => {
     console.log(`📊 Frase ${currentIndex + 1} (ID: ${currentPhrase.id}) marcada como completa`);
   };
 
-  const handleCloseLevelUpModal = () => {
-    dispatch(closeLevelUpModal());
-  };
+
 
   const handleOpenInviteScreen = () => {
     setShowInviteModal(false);
@@ -232,11 +229,7 @@ const ChunkTrainer = ({ onOpenInvite }) => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4">
-      <LevelUpModal
-        isOpen={levelSystem?.showLevelUpModal || false}
-        onClose={handleCloseLevelUpModal}
-        newLevel={levelSystem?.pendingLevelUp || 1}
-      />
+
 
       <InvitePromptModal
         isOpen={showInviteModal}

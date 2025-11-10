@@ -93,11 +93,21 @@ const CategoryTrainer = () => {
   useEffect(() => {
     if (selectedCategory && allPhrases.length > 0) {
       const filtered = allPhrases.filter(p => p.category === selectedCategory);
-
       setCategoryPhrases(filtered);
-      setCurrentIndex(0);
+      
+      // Encontra a primeira frase não completada (só calcula quando categoria muda)
+      const completedPhrases = levelSystem?.globalCompletedPhrases || [];
+      const firstIncompleteIndex = filtered.findIndex(
+        phrase => !completedPhrases.includes(phrase.id)
+      );
+      
+      // Se todas foram completadas, começa do início; senão, começa da primeira não completada
+      const startIndex = firstIncompleteIndex !== -1 ? firstIncompleteIndex : 0;
+      setCurrentIndex(startIndex);
       setCompletedInSession([]);
     }
+    // Removido levelSystem?.globalCompletedPhrases das dependências para evitar
+    // que o índice seja recalculado quando uma frase é completada
   }, [selectedCategory, allPhrases]);
 
   const handleCategorySelect = (categoryId) => {

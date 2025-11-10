@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { initializeUser } from './store/slices/userSlice';
 import TrainerSelector from './components/TrainerSelector';
 import IncentiveModal from './components/modals/IncentiveModal';
+import { LevelUpModal } from './components/modals/LevelUpModal';
+import { closeLevelUpModal } from './store/slices/xpSlice';
 import { Analytics } from '@vercel/analytics/react';
 import { observeAuthState } from './services/authService';
 import {
@@ -19,6 +21,9 @@ function App() {
   const dispatch = useDispatch();
   const [authChecked, setAuthChecked] = useState(false);
   const [userInitialized, setUserInitialized] = useState(false);
+  
+  // Estado do XP System para o LevelUpModal
+  const { showLevelUpModal, pendingLevelUp, totalXP } = useSelector(state => state.xp);
 
   // Detecta referral na URL ANTES de inicializar
   useEffect(() => {
@@ -82,6 +87,12 @@ function App() {
       </Routes>
 
       <IncentiveModal />
+      <LevelUpModal
+        isOpen={showLevelUpModal}
+        onClose={() => dispatch(closeLevelUpModal())}
+        newLevel={pendingLevelUp}
+        totalXP={totalXP}
+      />
       <Analytics />
     </BrowserRouter>
   );
