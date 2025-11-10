@@ -19,6 +19,7 @@ import {
   trackReferralEvent
 } from '../../utils/referralUtils';
 import { useDispatch, useSelector } from 'react-redux';
+import { useXP } from '../../hooks/useXP';
 
 const isAndroidDevice = () => {
   const ua = navigator.userAgent.toLowerCase();
@@ -31,6 +32,8 @@ export const PhraseCard = ({ phrase, onSpeak, onCorrectAnswer, onNextPhrase, isA
  const chunksHook = useSpeechRecognitionForChunks();
 
  const dispatch = useDispatch();
+
+ const { earnXP } = useXP();
 
   const { referral, mode } = useSelector((state) => ({
      referral: state.user.referral,
@@ -108,6 +111,12 @@ export const PhraseCard = ({ phrase, onSpeak, onCorrectAnswer, onNextPhrase, isA
 
       if (comparison.similarity >= 80) {
         console.log(`✅ ${comparison.similarity}% - Marking phrase as completed!`);
+
+        // Ganha XP ao acertar frase
+        earnXP('phrases', {
+          phraseId: phrase.id,
+          accuracy: comparison.similarity
+        });
 
         dispatch(markPhraseCompleted({
           phraseId: phrase.id,

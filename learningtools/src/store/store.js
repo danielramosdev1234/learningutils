@@ -1,5 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import userReducer, { saveProgress, checkDailyBackup } from './slices/userSlice';
+import xpReducer from './slices/xpSlice';
 
 // Middleware para auto-save
 const autoSaveMiddleware = store => next => action => {
@@ -11,7 +12,8 @@ const autoSaveMiddleware = store => next => action => {
     'user/incrementPhraseCompleted',
     'user/incrementIncorrectAttempt',
     'user/updateChallengeHighScore',
-    'user/markPhraseCompleted'
+    'user/markPhraseCompleted',
+    'xp/addXP/fulfilled'
   ];
 
   // Se a action está na lista, salva automaticamente (debounced)
@@ -23,9 +25,10 @@ const autoSaveMiddleware = store => next => action => {
 
     // Salva após 1 segundo de inatividade
     window.autoSaveTimeout = setTimeout(() => {
-      store.dispatch(saveProgress());
-    }, 1000);
-  }
+          // XP já é salvo automaticamente, não precisa dispatch
+          console.log('💾 Auto-save triggered');
+        }, 1000);
+      }
 
   return result;
 };
@@ -54,14 +57,17 @@ const autoBackupMiddleware = store => next => action => {
 
 export const store = configureStore({
   reducer: {
-    user: userReducer
+    user: userReducer,
+    xp: xpReducer
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
         // Ignora checks de serialização para timestamps do Firebase
-        ignoredActions: ['user/saveProgress/fulfilled', 'user/checkDailyBackup/fulfilled'],
-        ignoredPaths: ['user.progress', 'user.stats']
+        ignoredActions: ['user/saveProgress/fulfilled', 'user/checkDailyBackup/fulfilled',
+                                                                                                   'xp/addXP/fulfilled',
+                                                                                                   'xp/loadXPData/fulfilled'],
+        ignoredPaths: ['user.progress', 'user.stats', 'xp.lastUpdated']
       }
     }).concat(autoSaveMiddleware, autoBackupMiddleware) // ⭐ Adiciona middleware de backup
 });

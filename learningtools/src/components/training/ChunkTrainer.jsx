@@ -17,8 +17,11 @@ import {
 } from '../../store/slices/userSlice';
 import { InvitePromptModal } from '../modals/InvitePromptModal';
 import { Volume2, Mic, MicOff, CheckCircle, XCircle, Loader, AlertCircle, Play, Pause, ArrowRight, Gift, Settings } from 'lucide-react';
+import { useXP } from '../../hooks/useXP';
+import { XPIndicator  } from '../xp/XPIndicator';
 
 const ChunkTrainer = ({ onOpenInvite }) => {
+
   const dispatch = useDispatch();
 
   const { progress, mode, loading: userLoading, levelSystem } = useSelector(state => state.user);
@@ -147,10 +150,12 @@ const ChunkTrainer = ({ onOpenInvite }) => {
   };
 
   // Ao acertar uma frase
-  const handleCorrectAnswer = () => {
+  const handleCorrectAnswer = async () => {
     console.log('✅ Correct answer! Moving to next phrase...');
 
     const currentPhrase = filteredPhrases[currentIndex];
+
+
 
     // 1️⃣ Marca a frase no levelSystem
     dispatch(markPhraseCompleted({
@@ -252,6 +257,7 @@ const ChunkTrainer = ({ onOpenInvite }) => {
             Listen, speak, and improve your English!
           </p>
         </div>
+        <XPIndicator variant="compact" />
 
         {filteredPhrases.length > 0 && (
           <PhraseCard

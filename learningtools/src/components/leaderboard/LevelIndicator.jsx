@@ -1,34 +1,25 @@
 import React, { useState } from 'react';
-import { Trophy, Lock, CheckCircle, Target, TrendingUp } from 'lucide-react';
+import { Trophy, Lock, CheckCircle, Target, TrendingUp, Zap } from 'lucide-react';
 import { useSelector } from 'react-redux';
 import LevelRankingModal from '../modals/LevelRankingModal';
 
 /**
- * Componente que mostra o progresso do nível atual (CUMULATIVO)
+ * Componente que mostra o progresso do nível atual usando XP System
  * Variantes: 'full' (ChunkTrainer) | 'compact' (Navbar)
  */
 export const LevelIndicator = ({ variant = 'full' }) => {
-  const { levelSystem, userId } = useSelector(state => state.user);
+  const { userId } = useSelector(state => state.user);
+  const { totalXP, currentLevel, xpProgress, xpToday, xpBreakdown } = useSelector(state => state.xp);
   const [showRankingModal, setShowRankingModal] = useState(false);
 
-  if (!levelSystem) return null;
+  if (!totalXP && totalXP !== 0) return null;
 
-  const { currentLevel, globalCompletedIndices = [] } = levelSystem;
+  const progressPercent = xpProgress.percentage;
+  const remaining = xpProgress.needed - xpProgress.current;
+  const isLevelComplete = xpProgress.current >= xpProgress.needed;
 
-  const totalNeededForLevel = currentLevel * 10;
-  const totalCompleted = globalCompletedIndices.length;
-  const progressPercent = (totalCompleted / totalNeededForLevel) * 100;
-  const remaining = totalNeededForLevel - totalCompleted;
-  const isLevelComplete = totalCompleted >= totalNeededForLevel;
-
-  // Calcula quais frases ainda faltam
-  const allIndices = Array.from({ length: totalNeededForLevel }, (_, i) => i);
-  const remainingIndices = allIndices
-    .filter(idx => !globalCompletedIndices.includes(idx))
-    .map(idx => idx + 1)
-    .sort((a, b) => a - b);
-
-  const displayIndices = remainingIndices;
+  // Calcula frases completadas baseado no XP (cada frase = 10 XP)
+  const phrasesCompleted = Math.floor(xpBreakdown.phrases / 10);
 
   // Compact variant (para Navbar) - CLICÁVEL
   if (variant === 'compact') {
@@ -74,12 +65,24 @@ export const LevelIndicator = ({ variant = 'full' }) => {
                 Level {currentLevel}
               </h3>
               <p className="text-sm text-gray-600">
-                Complete {totalNeededForLevel} phrases total to advance
+                {totalXP.toLocaleString()} XP Total • Earn {xpProgress.needed} XP to advance
               </p>
             </div>
           </div>
 
           <div className="flex items-center gap-2">
+            {xpToday > 0 && (
+              <div className="bg-green-50 px-4 py-2 rounded-lg border border-green-200">
+                <div className="flex items-center gap-2">
+                  <TrendingUp size={16} className="text-green-600" />
+                  <div>
+                    <p className="text-xs text-green-700 font-semibold">Today</p>
+                    <p className="text-sm font-bold text-green-600">+{xpToday} XP</p>
+                  </div>
+                </div>
+              </div>
+            )}
+
             {isLevelComplete && (
               <div className="bg-green-500 text-white px-4 py-2 rounded-lg font-bold flex items-center gap-2 animate-bounce">
                 <CheckCircle size={20} />
@@ -103,8 +106,8 @@ export const LevelIndicator = ({ variant = 'full' }) => {
         {/* Progress Bar */}
         <div className="mb-3">
           <div className="flex justify-between text-sm font-semibold text-gray-700 mb-2">
-            <span>Progress</span>
-            <span>{totalCompleted} / {totalNeededForLevel} phrases</span>
+            <span>Progress to Level {currentLevel + 1}</span>
+            <span>{xpProgress.current} / {xpProgress.needed} XP</span>
           </div>
           <div className="bg-gray-200 rounded-full h-4 overflow-hidden shadow-inner">
             <div
@@ -121,13 +124,13 @@ export const LevelIndicator = ({ variant = 'full' }) => {
         </div>
 
         {/* Stats */}
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-3 gap-3">
           <div className="bg-white bg-opacity-70 p-3 rounded-lg border border-yellow-200">
             <div className="flex items-center gap-2 mb-1">
-              <CheckCircle size={16} className="text-green-600" />
-              <span className="text-xs text-gray-600 font-semibold">Completed</span>
+              <Zap size={16} className="text-yellow-600 fill-yellow-600" />
+              <span className="text-xs text-gray-600 font-semibold">Total XP</span>
             </div>
-            <p className="text-2xl font-bold text-green-600">{totalCompleted}</p>
+            <p className="text-2xl font-bold text-yellow-600">{totalXP.toLocaleString()}</p>
           </div>
 
           <div className="bg-white bg-opacity-70 p-3 rounded-lg border border-yellow-200">
@@ -135,18 +138,52 @@ export const LevelIndicator = ({ variant = 'full' }) => {
               <Target size={16} className="text-orange-600" />
               <span className="text-xs text-gray-600 font-semibold">Remaining</span>
             </div>
-            <p className="text-2xl font-bold text-orange-600">{Math.max(remaining, 0)}</p>
+            <p className="text-2xl font-bold text-orange-600">{Math.max(remaining, 0)} XP</p>
+            <p className="text-xs text-gray-500 mt-1">
+              ~{Math.ceil(remaining / 10)} phrases
+            </p>
+          </div>
 
-            {displayIndices.length > 0 && displayIndices.length <= 10 && (
-              <p className="text-xs text-gray-600 mt-2 leading-relaxed">
-                ({displayIndices.join(', ')})
-              </p>
+          <div className="bg-white bg-opacity-70 p-3 rounded-lg border border-yellow-200">
+            <div className="flex items-center gap-2 mb-1">
+              <CheckCircle size={16} className="text-green-600" />
+              <span className="text-xs text-gray-600 font-semibold">Phrases</span>
+            </div>
+            <p className="text-2xl font-bold text-green-600">{phrasesCompleted}</p>
+            <p className="text-xs text-gray-500 mt-1">
+              {xpBreakdown.phrases} XP
+            </p>
+          </div>
+        </div>
+
+        {/* XP Breakdown */}
+        <div className="mt-4 p-3 bg-white bg-opacity-50 rounded-lg border border-yellow-200">
+          <p className="text-xs text-gray-600 font-semibold mb-2">XP Breakdown</p>
+          <div className="grid grid-cols-3 gap-2 text-xs">
+            {xpBreakdown.categories > 0 && (
+              <div className="text-gray-600">
+                <span className="font-semibold">Categories:</span> {xpBreakdown.categories}
+              </div>
             )}
-
-            {displayIndices.length > 10 && (
-              <p className="text-xs text-gray-600 mt-2 leading-relaxed">
-                ({displayIndices.slice(0, 10).join(', ')}, ...)
-              </p>
+            {xpBreakdown.translate > 0 && (
+              <div className="text-gray-600">
+                <span className="font-semibold">Translate:</span> {xpBreakdown.translate}
+              </div>
+            )}
+            {xpBreakdown.numbers > 0 && (
+              <div className="text-gray-600">
+                <span className="font-semibold">Numbers:</span> {xpBreakdown.numbers}
+              </div>
+            )}
+            {xpBreakdown.challenge > 0 && (
+              <div className="text-gray-600">
+                <span className="font-semibold">Challenge:</span> {xpBreakdown.challenge}
+              </div>
+            )}
+            {xpBreakdown.video > 0 && (
+              <div className="text-gray-600">
+                <span className="font-semibold">Video:</span> {xpBreakdown.video}
+              </div>
             )}
           </div>
         </div>
@@ -159,7 +196,7 @@ export const LevelIndicator = ({ variant = 'full' }) => {
               <span className="text-sm">Level {currentLevel} Complete! 🎉</span>
             </div>
             <p className="text-xs text-purple-600">
-              Continue practicing to unlock Level {currentLevel + 1} ({(currentLevel + 1) * 10} phrases total)
+              Continue practicing to unlock Level {currentLevel + 1} (need {(currentLevel + 1) * 100} total XP)
             </p>
           </div>
         )}

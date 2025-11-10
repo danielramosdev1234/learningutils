@@ -30,6 +30,7 @@ import {
 import { doc, updateDoc } from 'firebase/firestore';
 import { db } from '../../config/firebase';
 import { checkAndCreateBackup } from '../../services/backupService';
+import { loadXPData } from './xpSlice';
 
 // Estado inicial
 const initialState = {
@@ -144,6 +145,14 @@ export const initializeUser = createAsyncThunk(
           };
         }
 
+        // ✅ Carrega dados de XP (todos os usuários já foram migrados)
+        try {
+          await dispatch(loadXPData(currentUser.uid)).unwrap();
+        } catch (error) {
+          console.error('⚠️ Erro ao carregar XP (continuando):', error);
+          // Não falha a inicialização se XP não carregar
+        }
+
         // ✅ PASSO 2: Prepara referral
         let referralData = userData.referral || {
           ...initialState.referral,
@@ -235,6 +244,26 @@ export const initializeUser = createAsyncThunk(
       }
     } catch (error) {
       console.error('❌ ERRO CRÍTICO em initializeUser:', error);
+      
+      // Se o usuário está autenticado mas houve erro, retorna pelo menos o perfil
+      const currentUser = getCurrentUser();
+      if (currentUser) {
+        console.log('⚠️ Erro na inicialização, mas usuário está autenticado. Retornando perfil básico.');
+        return {
+          mode: 'authenticated',
+          userId: currentUser.uid,
+          profile: {
+            displayName: currentUser.displayName,
+            email: currentUser.email,
+            photoURL: currentUser.photoURL
+          },
+          progress: initialState.progress,
+          stats: initialState.stats,
+          levelSystem: initialState.levelSystem,
+          referral: initialState.referral
+        };
+      }
+      
       return rejectWithValue(error.message);
     }
   }
@@ -308,6 +337,14 @@ export const loginWithGoogle = createAsyncThunk(
       console.log('✅ Dados carregados do Firebase:');
       console.log(`   Frases: ${userData.stats?.totalPhrases || 0}`);
       console.log(`   Level: ${userData.levelSystem?.currentLevel || 1}`);
+
+      // ✅ Carrega dados de XP (todos os usuários já foram migrados)
+      try {
+        await dispatch(loadXPData(user.uid)).unwrap();
+      } catch (error) {
+        console.error('⚠️ Erro ao carregar XP (continuando):', error);
+        // Não falha o login se XP não carregar
+      }
 
       return {
         userId: user.uid,
