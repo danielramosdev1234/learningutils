@@ -3,7 +3,7 @@ import {
   Mic, Globe, Hash, Zap, Video, Radio,
   TrendingUp, Target, Flame, Trophy,
   ArrowRight, Star, Clock, Users,
-  CheckCircle, Award, MessageCircle, Gift
+  CheckCircle, Award, MessageCircle, Gift, BookOpen
 } from 'lucide-react';
 import { useSelector } from 'react-redux';
 import LevelRankingModal from './modals/LevelRankingModal';
@@ -14,6 +14,7 @@ import numerosImg from '../assets/numeros.png';
 import challengeImg from '../assets/challenge.png';
 import videoListenerImg from '../assets/videolistener.png';
 import liveRoomImg from '../assets/liveroom.png';
+import { LevelIndicator } from './leaderboard/LevelIndicator';
 
 
 
@@ -49,6 +50,69 @@ const Dashboard = () => {
 
 
   const features = [
+    {
+              id: 'categories',
+              title: 'Categories/Subjects',
+              description: (
+                        <ul className="space-y-2 text-sm text-gray-600">
+                                                                      <li className="flex items-center gap-2">
+                                                                                      <CheckCircle className="w-4 h-4 text-green-500" />
+                                                                                      Treine frases de situações do seu interesse
+                                                                                    </li>
+                                                                                    <li className="flex items-center gap-2">
+                                                                                        <CheckCircle className="w-4 h-4 text-green-500" />
+                                                                                       Simule conversas reais.
+                                                                                      </li>
+                                                                    <li className="flex items-center gap-2">
+                                                                      <CheckCircle className="w-4 h-4 text-green-500" />
+                                                                      Real-time pronunciation feedback.
+                                                                    </li>
+                                                                    <li className="flex items-center gap-2">
+                                                                      <CheckCircle className="w-4 h-4 text-green-500" />
+                                                                      Word-by-word accuracy analysis.
+                                                                    </li>
+
+                                                                  </ul>
+                      ),
+              icon: BookOpen,
+              gradient: 'from-indigo-500 to-purple-500 ',
+              path: '/?mode=chunk',
+                                            src: wordByWordImg,
+                                                  alt: 'exemplo word by word'
+            },{
+          id: 'speak',
+          title: 'Speak Prhases',
+          description: (
+                    <ul className="space-y-2 text-sm text-gray-600">
+                                                                  <li className="flex items-center gap-2">
+                                                                                  <CheckCircle className="w-4 h-4 text-green-500" />
+                                                                                  Frases escolhidas por estudos científicos linguísticos.
+                                                                                </li>
+                                                                                <li className="flex items-center gap-2">
+                                                                                    <CheckCircle className="w-4 h-4 text-green-500" />
+                                                                                   Frequentes em conversas reais.
+                                                                                  </li>
+                                                                                  <li className="flex items-center gap-2">
+                                                                                    <CheckCircle className="w-4 h-4 text-green-500" />
+                                                                                   Fazem sentido completo (ex.: "no meio da noite").
+                                                                                  </li>
+                                                                <li className="flex items-center gap-2">
+                                                                  <CheckCircle className="w-4 h-4 text-green-500" />
+                                                                  Real-time pronunciation feedback.
+                                                                </li>
+                                                                <li className="flex items-center gap-2">
+                                                                  <CheckCircle className="w-4 h-4 text-green-500" />
+                                                                  Word-by-word accuracy analysis.
+                                                                </li>
+
+                                                              </ul>
+                  ),
+          icon: Mic,
+          gradient: 'from-purple-500 to-pink-500 ',
+          path: '/?mode=chunk',
+                                        src: wordByWordImg,
+                                              alt: 'exemplo word by word'
+        },
     {
       id: 'translate',
       title: 'Translate & Practice',
@@ -302,132 +366,8 @@ description: (
                    />
                  )}
 
-        {/* Level Progress Card */}
-        <div className="bg-white rounded-2xl shadow-md p-3 md:p-4 mb-8">
-          <div className="flex items-center gap-2 md:gap-4">
-            {/* Left - Speak phrases button */}
-           <div className="bg-gradient-to-br from-purple-500 to-pink-500 px-3 md:px-6 py-4 md:py-8 rounded-2xl flex flex-col items-center justify-center min-w-[80px] md:min-w-[110px]">
-             <Mic className="w-6 h-6 md:w-8 md:h-8 text-white mb-1 md:mb-2" />
-             <span className="text-white font-bold text-xs md:text-sm text-center leading-tight">Speak<br/>phrases</span>
-            </div>
-
-            {/* Center - Level Info & Progress */}
-            <div className="flex-1">
-              <div className="flex items-start gap-3 mb-3">
-                <div className="bg-gradient-to-br from-yellow-400 to-orange-500 p-2 rounded-xl">
-                  <Trophy className="w-6 h-6 text-white" />
-                </div>
-                <div>
-                  <h2 className="text-lg md:text-xl font-bold text-gray-900">Level {currentLevel}</h2>
-                  <p className="text-gray-600 text-xs md:text-sm">Complete {totalNeededForLevel} phrases total to advance</p>
-                </div>
-              </div>
-
-              {/* Progress Bar */}
-              <div>
-                <div className="flex justify-between items-center mb-1">
-                  <span className="text-xs md:text-sm font-semibold text-gray-700">Progress</span>
-                  <span className="text-xs md:text-sm font-semibold text-gray-900">{totalCompleted} / {totalNeededForLevel}</span>
-                </div>
-                <div className="h-3 bg-gray-200 rounded-full overflow-hidden relative">
-                  <div
-                    className="h-full bg-green-500 rounded-full transition-all duration-500 relative"
-                   style={{ width: `${Math.min(progressPercent, 100)}%` }}
-                  >
-                    <span className="absolute right-2 top-1/2 -translate-y-1/2 text-xs font-bold text-white">
-                      {Math.round(progressPercent)}%
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Right - Action Buttons */}
-            <div className="hidden md:flex flex-col gap-2">
-              <button onClick={() => setShowRankingModal(true)}
-              className="border-2 border-purple-500 text-purple-600 px-5 py-2.5 rounded-xl font-semibold hover:bg-purple-50 transition-all text-sm whitespace-nowrap flex items-center justify-center gap-1.5">
-                <CheckCircle className="w-4 h-4" />
-                View Ranking
-              </button>
-              <button
-                onClick={() => handleNavigate('/?mode=chunk')}
-                className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-5 py-2.5 rounded-xl font-semibold hover:shadow-lg transition-all text-sm whitespace-nowrap flex items-center justify-center gap-1.5"
-              >
-                Start training
-                <ArrowRight className="w-4 h-4" />
-              </button>
-            </div>
-          </div>
-
-          {/* Mobile Buttons - Below Card */}
-                          <div className="md:hidden grid grid-cols-2 gap-2 mb-8 px-4 botoespadding" >
-                              <style >{`
-                                      .botoespadding {
-                                        padding-top: 20px;
-                                      }`}</style>
-                            <button onClick={() => setShowRankingModal(true)}
-                                className="border-2 border-purple-500 text-purple-600 px-4 py-2.5 rounded-xl font-semibold hover:bg-purple-50 transition-all text-sm flex items-center justify-center gap-1.5">
-                              <CheckCircle className="w-4 h-4" />
-                              Ranking
-                            </button>
-                            <button
-                              onClick={() => handleNavigate('/?mode=chunk')}
-                              className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-4 py-2.5 rounded-xl font-semibold hover:shadow-lg transition-all text-sm flex items-center justify-center gap-1.5"
-                            >
-                              Start
-                              <ArrowRight className="w-4 h-4" />
-                            </button>
-                          </div>
-
-          {/* Preview Section - Speak Phrases */}
-                          <div className="bg-white rounded-2xl shadow-md p-4 md:p-6 mb-8">
-                            <div className="flex items-center gap-3 mb-4">
-                              <Mic className="w-6 h-6 text-purple-600" />
-                              <h3 className="text-xl font-bold text-gray-900">How it Works</h3>
-                            </div>
-
-                              {/* Texto explicativo */}
-
-                                          <ul className="space-y-2 text-sm text-gray-600">
-                                              <li className="flex items-center gap-2">
-                                                              <CheckCircle className="w-4 h-4 text-green-500" />
-                                                              Frases escolhidas por estudos científicos linguísticos.
-                                                            </li>
-                                                            <li className="flex items-center gap-2">
-                                                                <CheckCircle className="w-4 h-4 text-green-500" />
-                                                               Frequentes em conversas reais.
-                                                              </li>
-                                                              <li className="flex items-center gap-2">
-                                                                <CheckCircle className="w-4 h-4 text-green-500" />
-                                                               Fazem sentido completo (ex.: "no meio da noite").
-                                                              </li>
-                                            <li className="flex items-center gap-2">
-                                              <CheckCircle className="w-4 h-4 text-green-500" />
-                                              Real-time pronunciation feedback.
-                                            </li>
-                                            <li className="flex items-center gap-2">
-                                              <CheckCircle className="w-4 h-4 text-green-500" />
-                                              Word-by-word accuracy analysis.
-                                            </li>
-
-                                          </ul>
-
-                              {/* Imagem do exemplo */}
-                              <div className="imagemexemplo">
-                                  <style >{`
-                                                                        .imagemexemplo {
-                                                                          padding-top: 20px;
-                                                                        }`}</style>
-                                <img
-                                  src={wordByWordImg}
-                                  alt="Pronunciation Feedback Example"
-                                  className="w-full h-auto rounded-lg shadow-md"
-                                />
-                                </div>
-
-
-                          </div>
-        </div>
+        {/* Level Indicator */}
+                <LevelIndicator variant="full" />
 
         <LevelRankingModal
                   isOpen={showRankingModal}
