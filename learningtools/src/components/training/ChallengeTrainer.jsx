@@ -4,6 +4,8 @@ import { loadChallengeLeaderboard, saveChallengeRecord, checkIfMakesTop10 } from
 import { useSelector, useDispatch } from 'react-redux';
 import { updateChallengeHighScore } from '../../store/slices/userSlice';
 import ProtectedLeaderboardSave from '../leaderboard/ProtectedLeaderboardSave';
+import { LevelIndicator } from '../leaderboard/LevelIndicator';
+import { useXP } from '../../hooks/useXP';
 
 // Versão integrada para o TrainerSelector
 const TrainerSelector = () => {
@@ -86,6 +88,7 @@ const ChallengeTrainer = () => {
 
   const dispatch = useDispatch();
   const { mode, profile } = useSelector(state => state.user);
+  const { earnXP } = useXP();
 
   const [completedPhrases, setCompletedPhrases] = useState(0);
   const [showNameInput, setShowNameInput] = useState(false);
@@ -222,13 +225,24 @@ const ChallengeTrainer = () => {
     setIsListening(false);
   };
 
-  const checkAnswer = (spokenText) => {
+  const checkAnswer = async (spokenText) => {
     const currentPhrase = DEMO_PHRASES[currentPhraseIndex];
     const similarity = calculateSimilarity(currentPhrase.text, spokenText);
 
     setLastResult({ similarity, correct: similarity >= 90 });
 
     if (similarity >= 90) {
+      // Ganha XP por acertar frase no challenge
+      try {
+        await earnXP('challenge', {
+          phraseId: currentPhrase.id,
+          similarity,
+          timeLeft
+        });
+      } catch (error) {
+        console.error('Erro ao ganhar XP:', error);
+      }
+
       // Correct! Move to next phrase
       setTimeout(() => {
         setCompletedPhrases(prev => prev + 1);
@@ -331,6 +345,8 @@ const shareScore = () => {
       <div className="min-h-screen bg-gradient-to-br from-purple-50 to-pink-100 py-8 px-4">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-8">
+              {/* Level Indicator */}
+                      <LevelIndicator variant="full" />
             <div className="flex items-center justify-center gap-3 mb-4">
               <Zap className="text-yellow-500" size={48} />
               <h1 className="text-5xl font-bold text-gray-800">Challenge Mode</h1>

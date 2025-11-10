@@ -9,6 +9,7 @@ import {
   incrementPhraseCompleted,
   saveProgress
 } from '../../store/slices/userSlice';
+import { LevelIndicator } from '../leaderboard/LevelIndicator';
 
 const CATEGORIES = [
   {
@@ -283,6 +284,7 @@ const CategoryTrainer = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4">
       <div className="max-w-3xl mx-auto">
+        <LevelIndicator variant="full" />
         {/* Header com categoria e progresso */}
         <div className="mb-6">
           <button

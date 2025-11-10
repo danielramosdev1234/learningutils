@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Trophy, Lock, CheckCircle, Target, TrendingUp, Zap } from 'lucide-react';
+import { Trophy, Lock, CheckCircle, Target, TrendingUp, Zap, ChevronDown, ChevronUp } from 'lucide-react';
 import { useSelector } from 'react-redux';
 import LevelRankingModal from '../modals/LevelRankingModal';
 
@@ -11,6 +11,7 @@ export const LevelIndicator = ({ variant = 'full' }) => {
   const { userId } = useSelector(state => state.user);
   const { totalXP, currentLevel, xpProgress, xpToday, xpBreakdown } = useSelector(state => state.xp);
   const [showRankingModal, setShowRankingModal] = useState(false);
+  const [showXPBreakdown, setShowXPBreakdown] = useState(false);
 
   if (!totalXP && totalXP !== 0) return null;
 
@@ -47,7 +48,7 @@ export const LevelIndicator = ({ variant = 'full' }) => {
     );
   }
 
-  // Full variant (para ChunkTrainer) - CLICÁVEL
+  // Full variant
   return (
     <>
       <div
@@ -157,56 +158,121 @@ export const LevelIndicator = ({ variant = 'full' }) => {
         </div>
 
         {/* XP Breakdown */}
-        <div className="mt-4 p-3 bg-white bg-opacity-50 rounded-lg border border-yellow-200">
-          <p className="text-xs text-gray-600 font-semibold mb-2">XP Breakdown</p>
-          <div className="grid grid-cols-3 gap-2 text-xs">
-            {xpBreakdown.categories > 0 && (
-              <div className="text-gray-600">
-                <span className="font-semibold">Categories:</span> {xpBreakdown.categories}
-              </div>
-            )}
-            {xpBreakdown.translate > 0 && (
-              <div className="text-gray-600">
-                <span className="font-semibold">Translate:</span> {xpBreakdown.translate}
-              </div>
-            )}
-            {xpBreakdown.numbers > 0 && (
-              <div className="text-gray-600">
-                <span className="font-semibold">Numbers:</span> {xpBreakdown.numbers}
-              </div>
-            )}
-            {xpBreakdown.challenge > 0 && (
-              <div className="text-gray-600">
-                <span className="font-semibold">Challenge:</span> {xpBreakdown.challenge}
-              </div>
-            )}
-            {xpBreakdown.video > 0 && (
-              <div className="text-gray-600">
-                <span className="font-semibold">Video:</span> {xpBreakdown.video}
-              </div>
-            )}
-          </div>
-        </div>
-
-        {/* Next Level Preview */}
-        {isLevelComplete && (
-          <div className="mt-4 p-3 bg-gradient-to-r from-purple-100 to-pink-100 rounded-lg border-2 border-purple-300">
-            <div className="flex items-center gap-2 text-purple-700 font-semibold mb-1">
-              <Trophy size={16} />
-              <span className="text-sm">Level {currentLevel} Complete! 🎉</span>
-            </div>
-            <p className="text-xs text-purple-600">
-              Continue practicing to unlock Level {currentLevel + 1} (need {(currentLevel + 1) * 100} total XP)
-            </p>
-          </div>
-        )}
-
         {/* Hint to click */}
         <div className="mt-3 text-center">
           <p className="text-xs text-gray-500 flex items-center justify-center gap-1">
             <TrendingUp size={12} />
             Click to view global ranking
           </p>
+        </div>
+      </div>
+
+      {/* 'Como Ganhar XP' SEPARADO */}
+      <div className="max-w-3xl mx-auto">
+        <div className="mt-2 mb-6 bg-white bg-opacity-70 rounded-lg border border-yellow-200 overflow-hidden">
+          <button
+            onClick={() => setShowXPBreakdown(!showXPBreakdown)}
+            className="w-full p-4 flex items-center justify-between hover:bg-yellow-50 transition-colors"
+          >
+            <div className="flex items-center gap-2">
+              <Zap size={16} className="text-yellow-600 fill-yellow-600" />
+              <p className="text-base text-gray-700 font-bold">Como Ganhar XP</p>
+            </div>
+            {showXPBreakdown ? (
+              <ChevronUp size={20} className="text-gray-600" />
+            ) : (
+              <ChevronDown size={20} className="text-gray-600" />
+            )}
+          </button>
+
+          {showXPBreakdown && (
+            <div className="px-4 pb-4 space-y-4 text-sm">
+
+                <div className="bg-yellow-50 p-3 rounded border-l-4 border-yellow-400">
+                                <div className="flex justify-between items-center mb-1">
+                                  <span className="font-semibold text-yellow-800">🔥 Streak Bonus</span>
+                                  <span className="text-yellow-600 text-base font-bold">+2 XP</span>
+                                </div>
+                                <p className="text-yellow-700">A cada exercício ganha +2 XP bônus por manter streak de 7+ dias</p>
+                              </div>
+              <div className="bg-blue-50 p-3 rounded border-l-4 border-blue-400">
+                <div className="flex justify-between items-center mb-1">
+                  <span className="font-semibold text-blue-800">💬 Phrases (Falar Frases)</span>
+                  <span className="text-blue-600 text-base font-bold">5 XP</span>
+                </div>
+                <p className="text-blue-700">Acertar uma frase com 80%+ de precisão</p>
+                <p className="text-blue-600 mt-1">+2 XP extra se acertar 90%+ | +5 XP se acertar 100%</p>
+                {xpBreakdown.phrases > 0 && (
+                  <p className="text-blue-500 mt-1">Total ganho: {xpBreakdown.phrases} XP</p>
+                )}
+              </div>
+
+              <div className="bg-green-50 p-3 rounded border-l-4 border-green-400">
+                <div className="flex justify-between items-center mb-1">
+                  <span className="font-semibold text-green-800">📚 Categories (Categorias)</span>
+                  <span className="text-blue-600 text-base font-bold">5 XP</span>
+                                  </div>
+                                  <p className="text-blue-700">Acertar uma frase com 80%+ de precisão</p>
+                                  <p className="text-blue-600 mt-1">+2 XP extra se acertar 90%+ | +5 XP se acertar 100%</p>
+                {xpBreakdown.categories > 0 && (
+                  <p className="text-green-500 mt-1">Total ganho: {xpBreakdown.categories} XP</p>
+                )}
+              </div>
+
+              <div className="bg-purple-50 p-3 rounded border-l-4 border-purple-400">
+                <div className="flex justify-between items-center mb-1">
+                  <span className="font-semibold text-purple-800">🔄 Translate (Tradução)</span>
+                  <span className="text-blue-600 text-base font-bold">5 XP</span>
+                                  </div>
+                                  <p className="text-blue-700">Acertar uma frase com 80%+ de precisão</p>
+                                  <p className="text-blue-600 mt-1">+2 XP extra se acertar 90%+ | +5 XP se acertar 100%</p>
+                {xpBreakdown.translate > 0 && (
+                  <p className="text-purple-500 mt-1">Total ganho: {xpBreakdown.translate} XP</p>
+                )}
+              </div>
+
+              <div className="bg-orange-50 p-3 rounded border-l-4 border-orange-400">
+                <div className="flex justify-between items-center mb-1">
+                  <span className="font-semibold text-orange-800">🔢 Numbers (Números)</span>
+                  <span className="text-orange-600 text-base font-bold">5 XP</span>
+                </div>
+                <p className="text-orange-700">Cada numero correto.</p>
+                {xpBreakdown.numbers > 0 && (
+                  <p className="text-orange-500 mt-1">Total ganho: {xpBreakdown.numbers} XP</p>
+                )}
+              </div>
+
+              <div className="bg-red-50 p-3 rounded border-l-4 border-red-400">
+                <div className="flex justify-between items-center mb-1">
+                  <span className="font-semibold text-red-800">🎯 Challenge (Desafio)</span>
+                  <span className="text-red-600 text-base font-bold">5 XP</span>
+                </div>
+                <p className="text-red-700">Cada frase correta.</p>
+                {xpBreakdown.challenge > 0 && (
+                  <p className="text-red-500 mt-1">Total ganho: {xpBreakdown.challenge} XP</p>
+                )}
+              </div>
+
+              <div className="bg-indigo-50 p-3 rounded border-l-4 border-indigo-400">
+                <div className="flex justify-between items-center mb-1">
+                  <span className="font-semibold text-indigo-800">🎥 Video (Vídeo)</span>
+                  <span className="text-indigo-600 text-base font-bold">5-10 XP</span>
+                </div>
+                <p className="text-indigo-700">Cada questão correta. Phrases: 5 XP | Scenes: 10 XP</p>
+                {xpBreakdown.video > 0 && (
+                  <p className="text-indigo-500 mt-1">Total ganho: {xpBreakdown.video} XP</p>
+                )}
+              </div>
+
+
+
+              <div className="mt-3 pt-2 border-t border-yellow-300">
+                <p className="text-[13px] text-gray-700 text-center">
+                  💡 <span className="font-semibold">Dica:</span> Cada nível requer 100 XP. Continue praticando para subir de nível!
+                </p>
+              </div>
+            </div>
+          )}
         </div>
       </div>
 

@@ -4,13 +4,18 @@ import { XP_CONFIG } from '../store/slices/xpSlice';
  * Calcula XP baseado na performance
  */
 export const calculateXPReward = (mode, performance = {}) => {
+  // Se o metadata tem um amount customizado, usa ele
+  if (performance.amount !== undefined) {
+    return performance.amount;
+  }
+
   let baseXP = XP_CONFIG.REWARDS[mode] || 10;
 
   // Bônus por accuracy
   if (performance.accuracy >= 100) {
     baseXP += XP_CONFIG.REWARDS.perfectScore;
   } else if (performance.accuracy >= 90) {
-    baseXP += 5;
+    baseXP += 2;
   }
 
   // Bônus por streak

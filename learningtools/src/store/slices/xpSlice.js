@@ -19,14 +19,14 @@ import { db } from '../../config/firebase';
 export const XP_CONFIG = {
   XP_PER_LEVEL: 100,
   REWARDS: {
-    phrases: 10,
-    categories: 10,
-    translate: 10,
+    phrases: 5,
+    categories: 5,
+    translate: 5,
     numbers: 5,
-    challenge: 10,
-    video: 20,
+    challenge: 5,
+    video: 10,
     streak: 5,
-    perfectScore: 20
+    perfectScore: 5
   }
 };
 

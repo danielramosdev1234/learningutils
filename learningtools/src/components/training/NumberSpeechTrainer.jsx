@@ -10,11 +10,14 @@ import { Leaderboard } from '../leaderboard/Leaderboard';
 import { useSelector, useDispatch } from 'react-redux';
 import { incrementPhraseCompleted, incrementIncorrectAttempt } from '../../store/slices/userSlice';
 import ProtectedLeaderboardSave from '../leaderboard/ProtectedLeaderboardSave';
+import { useXP } from '../../hooks/useXP';
+import { LevelIndicator } from '../leaderboard/LevelIndicator';
 
 export default function NumberSpeechTrainer() {
 
   const dispatch = useDispatch();
   const { mode, profile } = useSelector(state => state.user);
+  const { earnXP } = useXP();
   const [currentNumber, setCurrentNumber] = useState(0);
   const [minRange, setMinRange] = useState(1);
   const [maxRange, setMaxRange] = useState(100);
@@ -81,7 +84,7 @@ export default function NumberSpeechTrainer() {
     window.speechSynthesis.speak(utterance);
   };
 
-  const checkAnswer = (spokenText) => {
+  const checkAnswer = async (spokenText) => {
     const t = getTranslation(selectedLanguage);
     const trimmed = spokenText ? spokenText.trim() : '';
 
@@ -114,6 +117,17 @@ export default function NumberSpeechTrainer() {
     if (isCorrect) {
       setFeedback(t.correct);
       dispatch(incrementPhraseCompleted());
+      
+      // Ganha XP por acertar o número
+      try {
+        await earnXP('numbers', {
+          number: currentNumber,
+          language: selectedLanguage
+        });
+      } catch (error) {
+        console.error('Erro ao ganhar XP:', error);
+      }
+      
       setTimeout(() => {
         generateNewNumber();
 
@@ -155,9 +169,13 @@ export default function NumberSpeechTrainer() {
   const t = getTranslation(selectedLanguage);
 
   return (
+
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-4 md:p-8">
       <div className="max-w-4xl mx-auto">
+          {/* Level Indicator */}
+                  <LevelIndicator variant="full" />
         <div className="bg-white rounded-2xl shadow-xl p-6 md:p-8">
+
           <div className="flex items-center justify-between mb-6">
             <h1 className="text-2xl md:text-3xl font-bold text-gray-800">Number Speech Trainer</h1>
           </div>

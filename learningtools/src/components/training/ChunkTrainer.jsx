@@ -257,7 +257,6 @@ const ChunkTrainer = ({ onOpenInvite }) => {
             Listen, speak, and improve your English!
           </p>
         </div>
-        <XPIndicator variant="compact" />
 
         {filteredPhrases.length > 0 && (
           <PhraseCard

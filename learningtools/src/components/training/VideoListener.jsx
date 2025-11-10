@@ -2,8 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { Play, SkipForward, Trophy, Zap, Volume2, Check, X } from 'lucide-react';
 import questionsImportadas from '../../utils/questionsDatabase.js';
 import questionsScenesDatabase from '../../utils/questionsScenesDatabase.js';
+import { useXP } from '../../hooks/useXP';
+import { LevelIndicator } from '../leaderboard/LevelIndicator';
 
 const VideoLearningApp = () => {
+  const { earnXP } = useXP();
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [score, setScore] = useState(0);
   const [correctAnswers, setCorrectAnswers] = useState(0);
@@ -78,7 +81,7 @@ const VideoLearningApp = () => {
   const currentQ = questionsToUse[currentQuestion];
 
 
-  const handleAnswerSelect = (index) => {
+  const handleAnswerSelect = async (index) => {
     if (showResult) return;
 
     setSelectedAnswer(index);
@@ -87,9 +90,27 @@ const VideoLearningApp = () => {
     setShowResult(true);
 
     if (correct) {
-      setScore(score + 10);
-      setStreak(streak + 1);
+
       setCorrectAnswers(correctAnswers + 1);
+      
+      // Ganha XP por acertar questão de vídeo
+      // Phrases: 5 XP | Scenes: 10 XP
+      const xpAmount = gameMode === 'phrases' ? 5 : 10;
+
+      setScore(score + xpAmount);
+            setStreak(streak + 1);
+      
+      try {
+        await earnXP('video', {
+          amount: xpAmount,
+          questionId: currentQ.id || currentQuestion,
+          videoId: currentQ.videoId,
+          gameMode,
+          streak
+        });
+      } catch (error) {
+        console.error('Erro ao ganhar XP:', error);
+      }
     } else {
       setStreak(0);
       setWrongAnswers(wrongAnswers + 1);
@@ -161,8 +182,12 @@ const processOptionText = (text) => {
   // Tela de seleção
   if (!gameMode) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4 flex items-center justify-center">
+
+      <div className=" bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4 flex items-center justify-center">
+
         <div className="max-w-4xl w-full text-center">
+            {/* Level Indicator */}
+                              <LevelIndicator variant="full" />
           <h1 className="text-5xl font-bold mb-8">🎬 Video Learning</h1>
           <div className="grid md:grid-cols-2 gap-8 px-4">
             <button
@@ -437,10 +462,17 @@ const processOptionText = (text) => {
                 {isCorrect ? '🎉 Correto!' : '❌ Incorreto'}
               </h3>
               <p className="text-lg">
-                {isCorrect ?
-                  `Você ganhou 10 pontos! Sequência: ${streak}x` :
+                {isCorrect ? (
+                  <>
+                    Você acertou! Sequência: {streak}x
+                    <br />
+                    <span className="text-yellow-300 font-bold">
+                      +{gameMode === 'phrases' ? 5 : 10} XP ganho!
+                    </span>
+                  </>
+                ) : (
                   'Não desista! Continue praticando.'
-                }
+                )}
               </p>
             </div>
 

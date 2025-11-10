@@ -1,9 +1,10 @@
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../config/firebase';
+import { calculateLevel, calculateXPProgress } from '../store/slices/xpSlice';
 
 /**
- * Carrega ranking global de níveis
- * Ordena por: currentLevel DESC, totalCompleted DESC
+ * Carrega ranking global de níveis baseado no XP System
+ * Ordena por: currentLevel DESC, totalXP DESC
  *
  * @param {number} limitCount - Número de usuários a retornar (padrão: 50)
  * @param {boolean} includeGuests - Se deve incluir guests (padrão: false)
@@ -11,7 +12,7 @@ import { db } from '../config/firebase';
  */
 export const loadLevelRanking = async (limitCount = 50, includeGuests = false) => {
   try {
-    console.log('📄 Buscando ranking do Firestore...');
+    console.log('📄 Buscando ranking do Firestore (XP System)...');
 
     // Busca todos os usuários
     const usersRef = collection(db, 'users');
@@ -24,13 +25,14 @@ export const loadLevelRanking = async (limitCount = 50, includeGuests = false) =
     querySnapshot.forEach((doc) => {
       const data = doc.data();
 
-      // Valida se tem levelSystem (obrigatório)
-      if (data.levelSystem) {
-        const { currentLevel = 1, globalCompletedIndices = [] } = data.levelSystem;
-        const totalCompleted = globalCompletedIndices.length;
+      // Valida se tem xpSystem (obrigatório)
+      if (data.xpSystem) {
+        const { totalXP = 0 } = data.xpSystem;
+        const currentLevel = calculateLevel(totalXP);
+        const xpProgress = calculateXPProgress(totalXP);
 
         // Pula usuários sem progresso
-        if (totalCompleted === 0 && currentLevel === 1) return;
+        if (totalXP === 0 && currentLevel === 1) return;
 
         // Profile pode não existir em todos os usuários
         const profile = data.profile || {};
@@ -39,8 +41,9 @@ export const loadLevelRanking = async (limitCount = 50, includeGuests = false) =
         // Pula guests se não quiser incluir
         if (!includeGuests && isGuest) return;
 
-        const phrasesNeeded = currentLevel * 10;
-        const progressPercent = Math.min(100, Math.round((totalCompleted / phrasesNeeded) * 100));
+        // Calcula total de frases completadas baseado no XP de phrases
+        const phrasesXP = data.xpSystem.xpBreakdown?.phrases || 0;
+        const totalCompleted = Math.floor(phrasesXP / 5); // Cada frase dá 5 XP
 
         users.push({
           userId: doc.id,
@@ -48,8 +51,9 @@ export const loadLevelRanking = async (limitCount = 50, includeGuests = false) =
           email: profile.email || null,
           photoURL: profile.photoURL || null,
           currentLevel: currentLevel,
+          totalXP: totalXP,
           totalCompleted: totalCompleted,
-          progressPercent: progressPercent,
+          progressPercent: xpProgress.percentage,
           streak: data.stats?.streak?.current || 0,
           lastUpdated: data.lastUpdated,
           isGuest: isGuest
@@ -58,16 +62,16 @@ export const loadLevelRanking = async (limitCount = 50, includeGuests = false) =
     });
 
     // Ordena manualmente no cliente
-    // Critérios: Level (desc) -> Total Completed (desc) -> Progress % (desc)
+    // Critérios: Level (desc) -> Total XP (desc) -> Progress % (desc)
     users.sort((a, b) => {
       // 1º critério: Nível maior
       if (b.currentLevel !== a.currentLevel) {
         return b.currentLevel - a.currentLevel;
       }
 
-      // 2º critério: Mais frases completadas
-      if (b.totalCompleted !== a.totalCompleted) {
-        return b.totalCompleted - a.totalCompleted;
+      // 2º critério: Mais XP total
+      if (b.totalXP !== a.totalXP) {
+        return b.totalXP - a.totalXP;
       }
 
       // 3º critério: Maior progresso percentual

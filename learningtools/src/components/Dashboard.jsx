@@ -271,6 +271,12 @@ description: (
              })}
            </div>
 
+            <div className="espaçobaixo">
+                <style >{`
+                        .espaçobaixo {
+                          padding-bottom: 20px;
+                          padding-top: 20px;
+                        }`}</style>
            <p className="text-xs text-gray-600 mt-3 text-center">
              {streak.current === 0
                ? 'O estudo consistente melhora o aprendizado 5x mais rápido!'
@@ -279,6 +285,14 @@ description: (
                : `Incrível! Você já ganhou ${Math.floor(streak.current / 7)} freeze${Math.floor(streak.current / 7) > 1 ? 's' : ''}!
                Mais ${7 - (streak.current % 7)} dia${7 - (streak.current % 7) !== 1 ? 's' : ''} para ganhar +1 recompensa.`}
            </p>
+           </div>
+           <div className="bg-yellow-50 p-3 rounded border-l-4 border-yellow-400">
+                                           <div className="flex justify-between items-center mb-1">
+                                             <span className="font-semibold text-yellow-800">🔥 Streak Bonus</span>
+                                             <span className="text-yellow-600 text-base font-bold">+2 XP</span>
+                                           </div>
+                                           <p className="text-yellow-700">Consiga uma sequencia de 7+ dias para ganhar +2 XP bônus a cada exercício.</p>
+                                         </div>
          </div>
 
          {showModal && (

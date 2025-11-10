@@ -44,19 +44,24 @@ export default function LevelRankingModal({ isOpen, onClose, currentUserId }) {
 
       // ⚠️ FALLBACK: Mock data caso Firebase falhe
       console.log('⚠️ Usando dados mock como fallback');
-      const mockData = Array.from({ length: 25 }, (_, i) => ({
-        userId: `user_${i + 1}`,
-        displayName: `Player ${i + 1}`,
-        photoURL: null,
-        currentLevel: Math.max(1, 10 - Math.floor(i / 3)),
-        totalCompleted: Math.max(10, 100 - i * 3),
-        progressPercent: Math.floor(Math.random() * 100),
-        streak: Math.floor(Math.random() * 30)
-      }));
+      const mockData = Array.from({ length: 25 }, (_, i) => {
+        const totalXP = Math.max(100, 1000 - i * 40);
+        const currentLevel = Math.floor(totalXP / 100) + 1;
+        return {
+          userId: `user_${i + 1}`,
+          displayName: `Player ${i + 1}`,
+          photoURL: null,
+          currentLevel: currentLevel,
+          totalXP: totalXP,
+          totalCompleted: Math.max(10, 100 - i * 3),
+          progressPercent: Math.floor(Math.random() * 100),
+          streak: Math.floor(Math.random() * 30)
+        };
+      });
 
       const sorted = mockData.sort((a, b) => {
         if (b.currentLevel !== a.currentLevel) return b.currentLevel - a.currentLevel;
-        if (b.totalCompleted !== a.totalCompleted) return b.totalCompleted - a.totalCompleted;
+        if (b.totalXP !== a.totalXP) return b.totalXP - a.totalXP;
         return b.progressPercent - a.progressPercent;
       });
 
@@ -150,13 +155,14 @@ export default function LevelRankingModal({ isOpen, onClose, currentUserId }) {
                         <p className="font-bold text-gray-800 text-sm text-center truncate w-full px-1">
                           {top3[1].displayName}
                         </p>
-                        <p className="text-orange-600 font-black text-lg">
-                          {top3[1].totalCompleted}
+                        <span className="bg-gray-300 text-silver-700 px-2 py-0.5 rounded-full font-bold">
+                                                    Lvl {top3[1].currentLevel}
+                                                  </span>
+                        <p className="text-orange-600 font-black ">
+                          {top3[1].totalXP || 0} XP
                         </p>
                         <div className="flex items-center gap-2 text-xs mt-1">
-                          <span className="bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full font-bold">
-                            Lv {top3[1].currentLevel}
-                          </span>
+
                           <span className="bg-orange-100 text-orange-700 px-2 py-0.5 rounded-full font-bold">
                             🔥 {top3[1].streak}d
                           </span>
@@ -189,13 +195,14 @@ export default function LevelRankingModal({ isOpen, onClose, currentUserId }) {
                         <p className="font-black text-gray-900 text-base text-center truncate w-full px-1">
                           {top3[0].displayName}
                         </p>
-                        <p className="text-orange-600 font-black text-xl">
-                          {top3[0].totalCompleted}
+                        <span className="bg-yellow-300 text-black font-black px-2 py-0.5 rounded-full font-bold">
+                                                    Lvl {top3[0].currentLevel}
+                                                  </span>
+                        <p className="text-orange-600 font-black ">
+                          {top3[0].totalXP || 0} XP
                         </p>
                         <div className="flex items-center gap-2 text-xs mt-1">
-                          <span className="bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full font-bold">
-                            Lv {top3[0].currentLevel}
-                          </span>
+
                           <span className="bg-orange-100 text-orange-700 px-2 py-0.5 rounded-full font-bold">
                             🔥 {top3[0].streak}d
                           </span>
@@ -230,13 +237,14 @@ export default function LevelRankingModal({ isOpen, onClose, currentUserId }) {
                         <p className="font-bold text-gray-800 text-sm text-center truncate w-full px-1">
                           {top3[2].displayName}
                         </p>
-                        <p className="text-orange-600 font-black text-lg">
-                          {top3[2].totalCompleted}
+                        <span className="bg-orange-300 text-black-700 px-2 py-0.5 rounded-full font-bold">
+                                                    Lvl {top3[2].currentLevel}
+                                                  </span>
+                        <p className="text-orange-600 font-black ">
+                          {top3[2].totalXP || 0} XP
                         </p>
                         <div className="flex items-center gap-2 text-xs mt-1">
-                          <span className="bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full font-bold">
-                            Lv {top3[2].currentLevel}
-                          </span>
+
                           <span className="bg-orange-100 text-orange-700 px-2 py-0.5 rounded-full font-bold">
                             🔥 {top3[2].streak}d
                           </span>
@@ -309,7 +317,7 @@ export default function LevelRankingModal({ isOpen, onClose, currentUserId }) {
 
                           {/* Score */}
                           <span className="text-lg font-black text-orange-500 flex-shrink-0">
-                            {user.totalCompleted}
+                            {user.totalXP || 0} XP
                           </span>
                         </div>
                       </div>
@@ -359,7 +367,7 @@ export default function LevelRankingModal({ isOpen, onClose, currentUserId }) {
                       </div>
 
                       <span className="text-lg font-black text-orange-500 flex-shrink-0">
-                        {currentUserData.totalCompleted}
+                        {currentUserData.totalXP || 0} XP
                       </span>
                     </div>
                   </div>
