@@ -58,18 +58,19 @@ export const LevelIndicator = ({ variant = 'full' }) => {
         {/* Header */}
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-3">
-            <div className="bg-gradient-to-br from-yellow-400 to-orange-500 p-3 rounded-xl shadow-md">
-              <Trophy size={28} className="text-white" />
-            </div>
+
             <div>
-              <h3 className="text-2xl font-bold text-gray-800">
-                Level {currentLevel}
-              </h3>
-              <p className="text-sm text-gray-600">
-                {totalXP.toLocaleString()} XP Total • Earn {xpProgress.needed} XP to advance
-              </p>
+
+                     <div   className="flex items-center gap-2 px-3 py-1.5 bg-gradient-to-r from-yellow-400 to-orange-400 rounded-lg shadow-md hover:from-yellow-500 hover:to-orange-500 transition-all ">
+
+              <Trophy size={30} className="text-white" />
+                        <span className="text-2xl font-bold  text-white ">
+                          Lvl {currentLevel}
+                        </span>
+                        </div>
             </div>
           </div>
+
 
           <div className="flex items-center gap-2">
             {xpToday > 0 && (
