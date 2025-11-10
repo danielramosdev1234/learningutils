@@ -15,6 +15,7 @@ export default function MeetRoom() {
   const { roomId } = useParams();
   const navigate = useNavigate();
   const user = useSelector(state => state.user);
+  const xp = useSelector(state => state.xp);
 
   const [room, setRoom] = useState(null);
   const [messages, setMessages] = useState([]);
@@ -44,8 +45,8 @@ export default function MeetRoom() {
         await socketService.connect({
           displayName: user.profile.displayName,
           photoURL: user.profile.photoURL,
-          currentLevel: user.levelSystem.currentLevel,
-          totalPhrases: user.stats.totalPhrases
+          currentLevel: xp.currentLevel || 1,
+          totalPhrases: xp.totalXP || 0
         });
       }
 
@@ -145,7 +146,7 @@ export default function MeetRoom() {
             socketService.leaveRoom(roomId);
           }
     };
-  }, [user.mode, roomId, navigate]);
+  }, [user.mode, roomId, navigate, xp.currentLevel, xp.totalXP]);
 
   const fetchLiveKitToken = async (roomId) => {
     try {
@@ -165,7 +166,7 @@ export default function MeetRoom() {
           participantMetadata: JSON.stringify({
             userId: user.userId,
             avatar: user.profile.photoURL,
-            level: user.levelSystem.currentLevel
+            level: xp.currentLevel || 1
           })
         })
       });
