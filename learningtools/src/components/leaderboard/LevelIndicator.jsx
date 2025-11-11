@@ -269,7 +269,7 @@ export const LevelIndicator = ({ variant = 'full' }) => {
 
               <div className="mt-3 pt-2 border-t border-yellow-300">
                 <p className="text-[13px] text-gray-700 text-center">
-                  💡 <span className="font-semibold">Dica:</span> Cada nível requer 100 XP. Continue praticando para subir de nível!
+                  💡 <span className="font-semibold">Dica:</span> Cada nível requer 100+(lvl*5) XP. Continue praticando para subir de nível!
                 </p>
               </div>
             </div>

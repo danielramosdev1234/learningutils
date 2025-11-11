@@ -17,7 +17,8 @@ import { db } from '../../config/firebase';
 
 // ⚙️ CONFIGURAÇÃO DO SISTEMA DE XP
 export const XP_CONFIG = {
-  XP_PER_LEVEL: 100,
+  BASE_XP: 100,           // XP base para cada nível
+  XP_MULTIPLIER: 5,       // Multiplicador por nível
   REWARDS: {
     phrases: 5,
     categories: 5,
@@ -30,24 +31,85 @@ export const XP_CONFIG = {
   }
 };
 
-// 📊 FUNÇÕES AUXILIARES
-export const calculateLevel = (totalXP) => {
-  return Math.floor(totalXP / XP_CONFIG.XP_PER_LEVEL) + 1;
+// 📊 FUNÇÕES AUXILIARES REFATORADAS
+
+/**
+ * Calcula XP necessário para completar um nível específico
+ * Fórmula: 100 + (5 × nível)
+ */
+export const getXPRequiredForLevel = (level) => {
+  return XP_CONFIG.BASE_XP + (XP_CONFIG.XP_MULTIPLIER * level);
 };
 
+/**
+ * Calcula o XP total acumulado necessário para alcançar um nível
+ * Soma progressiva: nível 1 precisa 105, nível 2 precisa 105+110=215, etc.
+ */
+export const getTotalXPForLevel = (level) => {
+  let totalXP = 0;
+  for (let i = 1; i <= level; i++) {
+    totalXP += getXPRequiredForLevel(i);
+  }
+  return totalXP;
+};
+
+/**
+ * Calcula o nível atual baseado no XP total
+ * Usa busca iterativa para encontrar o nível correto
+ */
+export const calculateLevel = (totalXP) => {
+  if (totalXP === 0) return 1;
+
+  let level = 1;
+  let accumulatedXP = 0;
+
+  while (accumulatedXP <= totalXP) {
+    const xpNeeded = getXPRequiredForLevel(level);
+    accumulatedXP += xpNeeded;
+
+    if (accumulatedXP > totalXP) {
+      return level;
+    }
+    level++;
+  }
+
+  return level;
+};
+
+/**
+ * Calcula XP total necessário para o próximo nível
+ */
 export const calculateXPForNextLevel = (totalXP) => {
   const currentLevel = calculateLevel(totalXP);
-  return currentLevel * XP_CONFIG.XP_PER_LEVEL;
+  return getTotalXPForLevel(currentLevel);
 };
 
+/**
+ * Calcula progresso no nível atual
+ */
 export const calculateXPProgress = (totalXP) => {
-  const xpForCurrentLevel = (calculateLevel(totalXP) - 1) * XP_CONFIG.XP_PER_LEVEL;
-  const xpInCurrentLevel = totalXP - xpForCurrentLevel;
+  const currentLevel = calculateLevel(totalXP);
+  const xpForPreviousLevel = currentLevel > 1 ? getTotalXPForLevel(currentLevel - 1) : 0;
+  const xpForCurrentLevel = getTotalXPForLevel(currentLevel);
+
+  const xpInCurrentLevel = totalXP - xpForPreviousLevel;
+  const xpNeededForLevel = xpForCurrentLevel - xpForPreviousLevel;
+
   return {
     current: xpInCurrentLevel,
-    needed: XP_CONFIG.XP_PER_LEVEL,
-    percentage: Math.round((xpInCurrentLevel / XP_CONFIG.XP_PER_LEVEL) * 100)
+    needed: xpNeededForLevel,
+    percentage: Math.round((xpInCurrentLevel / xpNeededForLevel) * 100)
   };
+};
+
+// 📈 FUNÇÃO DE DEBUG (útil para testar)
+export const debugXPSystem = () => {
+  console.log('🔍 XP System Debug:');
+  for (let level = 1; level <= 10; level++) {
+    const xpRequired = getXPRequiredForLevel(level);
+    const totalXP = getTotalXPForLevel(level);
+    console.log(`Level ${level}: ${xpRequired} XP needed | Total accumulated: ${totalXP} XP`);
+  }
 };
 
 // Estado inicial
@@ -56,7 +118,7 @@ const initialState = {
   currentLevel: 1,
   xpProgress: {
     current: 0,
-    needed: 100,
+    needed: 105, // Primeiro nível agora precisa de 105 XP
     percentage: 0
   },
   xpBreakdown: {
