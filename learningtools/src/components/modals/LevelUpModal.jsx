@@ -282,7 +282,7 @@ export const LevelUpModal = ({ isOpen, onClose, newLevel, totalXP = 0 }) => {
       )}
 
       {/* CSS para animações */}
-      <style jsx>{`
+      <style >{`
         @keyframes bounce-in {
           0% {
             opacity: 0;

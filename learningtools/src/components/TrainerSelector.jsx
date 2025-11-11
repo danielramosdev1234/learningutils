@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Hash, Mic, Zap, Video, MoreHorizontal, X, MessageCircle, Globe, Gift, Radio, House, BookOpen, ArrowUp01 } from 'lucide-react';
 import NumberSpeechTrainer from './training/NumberSpeechTrainer';
 import ChunkTrainer from './training/ChunkTrainer';
@@ -48,6 +48,7 @@ export default function TrainerSelector() {
   const [showInviteModal, setShowInviteModal] = useState(false);
   const [showSpeakMenu, setShowSpeakMenu] = useState(false);
   const { levelSystem, stats, profile } = useSelector(state => state.user);
+  const dispatch = useDispatch();
 
 
 
@@ -524,11 +525,7 @@ const handleCloseLevelUpModal = () => {
         </div>
       )}
 
-  <LevelUpModal
-          isOpen={levelSystem?.showLevelUpModal || false}
-          onClose={handleCloseLevelUpModal}
-          newLevel={levelSystem?.pendingLevelUp || 1}
-        />
+
 
         {/* Modal Invite Friends */}
           {showInviteModal && (
