@@ -26,7 +26,18 @@ const isAndroidDevice = () => {
   return /android/.test(ua);
 };
 
-export const PhraseCard = ({ phrase, onSpeak, onCorrectAnswer, onNextPhrase, isActive, textToSpeech, autoAdvance = true }) => {
+export const PhraseCard = ({
+  phrase,
+  onSpeak,
+  onCorrectAnswer,
+  onNextPhrase,
+  isActive,
+  textToSpeech,
+  autoAdvance = true,
+  tourActive = false,
+  tourStep = 0,
+  onTourFeedbackVisible
+}) => {
  const isAndroid = useMemo(() => isAndroidDevice(), []);
 
  const chunksHook = useSpeechRecognitionForChunks();
@@ -96,8 +107,9 @@ export const PhraseCard = ({ phrase, onSpeak, onCorrectAnswer, onNextPhrase, isA
     return stored ? parseInt(stored) : 0;
   });
 
-  const [isDisabled, setIsDisabled] = useState(false)
+  const [isDisabled, setIsDisabled] = useState(false);
   const audioRef = useRef(null);
+  const shouldShowIPA = showIPA || (tourActive && tourStep >= 3);
 
   // Processa o resultado quando terminar de ouvir
   useEffect(() => {
@@ -110,6 +122,10 @@ export const PhraseCard = ({ phrase, onSpeak, onCorrectAnswer, onNextPhrase, isA
       setResult(comparison);
       setShowFeedback(true);
       setHasProcessed(true);
+
+      if (tourActive && typeof onTourFeedbackVisible === 'function') {
+        onTourFeedbackVisible();
+      }
 
       if (comparison.similarity >= 80) {
         console.log(`✅ ${comparison.similarity}% - Marking phrase as completed!`);
@@ -146,17 +162,36 @@ export const PhraseCard = ({ phrase, onSpeak, onCorrectAnswer, onNextPhrase, isA
         setTimeout(() => setShowFireworks(false), 5000);
       }
 
-      const newTotal = totalPracticed + 1;
-      setTotalPracticed(newTotal);
-      localStorage.setItem('learnfun_total_practiced', newTotal);
+      setTotalPracticed(prev => {
+        const updated = prev + 1;
+        localStorage.setItem('learnfun_total_practiced', updated);
+        return updated;
+      });
 
-      const timer = setTimeout(() => {
-        setShowFeedback(false);
-      }, 3000);
+      let timer;
+      if (!tourActive) {
+        timer = setTimeout(() => {
+          setShowFeedback(false);
+        }, 3000);
+      }
 
-      return () => clearTimeout(timer);
+      return () => {
+        if (timer) {
+          clearTimeout(timer);
+        }
+      };
     }
-  }, [transcript, isListening, hasProcessed, phrase.text, onCorrectAnswer]);
+  }, [
+    transcript,
+    isListening,
+    hasProcessed,
+    phrase.text,
+    onCorrectAnswer,
+    autoAdvance,
+    onNextPhrase,
+    tourActive,
+    onTourFeedbackVisible
+  ]);
 
 useEffect(() => {
   console.log('🔄 Phrase changed, resetting states');
@@ -294,14 +329,26 @@ const handleNextSkip = () => {
 
       <div className="text-center mb-6">
         <div className="flex items-center justify-center gap-3 mb-2">
-          <h2 className="text-3xl font-bold text-gray-800">{phrase.text}</h2>
+          <h2
+            className="text-3xl font-bold text-gray-800"
+            data-tour-id="tour-phrase-text"
+          >
+            {phrase.text}
+          </h2>
         </div>
 
         {phrase.translation && (
-          <p className="text-gray-500 text-lg italic mb-3">{phrase.translation}</p>
+          <p
+            className="text-gray-500 text-lg italic mb-3"
+            data-tour-id="tour-phrase-translation"
+          >
+            {phrase.translation}
+          </p>
         )}
 
-        <IPATranscription text={phrase.text} show={showIPA} />
+        <div data-tour-id="tour-ipa">
+          <IPATranscription text={phrase.text} show={shouldShowIPA} />
+        </div>
       </div>
 
       {speechError && (
@@ -349,6 +396,7 @@ const handleNextSkip = () => {
               ? 'bg-red-500 hover:bg-red-600 text-white animate-pulse'
               : 'bg-green-500 hover:bg-green-600 text-white'
           }`}
+          data-tour-id="tour-speak-button"
         >
           {isListening ? <MicOff size={20} className="sm:w-6 sm:h-6" /> : <Mic size={20} className="sm:w-6 sm:h-6" />}
           <span>{isListening ? 'Stop' : 'Speak'}</span>
@@ -437,58 +485,68 @@ const handleNextSkip = () => {
         </div>
       )}
 
-      {showFeedback && result && !isListening && (
-        <div className={`mt-6 p-5 rounded-lg transition-all ${
-          result.similarity > 80
-            ? 'bg-green-50 border-2 border-green-400 shadow-lg'
-            : 'bg-orange-50 border-2 border-orange-400 shadow-lg'
-        }`}>
-          <div className="flex items-center gap-3 mb-3">
-            {result.similarity > 80 ? (
-              <CheckCircle className="text-green-600" size={32} />
-            ) : (
-              <XCircle className="text-orange-600" size={32} />
-            )}
-            <h3 className={`font-bold text-xl ${result.similarity > 80 ? 'text-green-700' : 'text-orange-700'}`}>
-              {result.similarity > 80 ? 'Perfect! 🎉' : 'Keep Practicing! 💪'}
-            </h3>
-          </div>
-
-          <div className="space-y-2">
-            <div className="bg-white bg-opacity-60 p-3 rounded-lg">
-              <p className="text-gray-700">
-                <span className="font-semibold">You said:</span> <span className="text-gray-900">"{transcript}"</span>
-              </p>
+      <div data-tour-id="tour-feedback-area" className="space-y-4">
+        {showFeedback && result && !isListening && (
+          <div className={`mt-6 p-5 rounded-lg transition-all ${
+            result.similarity > 80
+              ? 'bg-green-50 border-2 border-green-400 shadow-lg'
+              : 'bg-orange-50 border-2 border-orange-400 shadow-lg'
+          }`}>
+            <div className="flex items-center gap-3 mb-3">
+              {result.similarity > 80 ? (
+                <CheckCircle className="text-green-600" size={32} />
+              ) : (
+                <XCircle className="text-orange-600" size={32} />
+              )}
+              <h3 className={`font-bold text-xl ${result.similarity > 80 ? 'text-green-700' : 'text-orange-700'}`}>
+                {result.similarity > 80 ? 'Perfect! 🎉' : 'Keep Practicing! 💪'}
+              </h3>
             </div>
 
-            <div className="flex items-center justify-between bg-white bg-opacity-60 p-3 rounded-lg">
-              <span className="font-semibold text-gray-700">Accuracy:</span>
-              <span className={`text-2xl font-bold ${
-                result.similarity > 80 ? 'text-green-600' : 'text-orange-600'
-              }`}>
-                {result.similarity}%
-              </span>
+            <div className="space-y-2">
+            <div
+              className="bg-white bg-opacity-60 p-3 rounded-lg"
+              data-tour-id="tour-feedback-summary"
+            >
+                <p className="text-gray-700">
+                  <span className="font-semibold">You said:</span> <span className="text-gray-900">"{transcript}"</span>
+                </p>
+              </div>
+
+              <div
+                className="flex items-center justify-between bg-white bg-opacity-60 p-3 rounded-lg"
+                data-tour-id="tour-feedback-accuracy"
+              >
+                <span className="font-semibold text-gray-700">Accuracy:</span>
+                <span className={`text-2xl font-bold ${
+                  result.similarity > 80 ? 'text-green-600' : 'text-orange-600'
+                }`}>
+                  {result.similarity}%
+                </span>
+              </div>
+
+              {result.similarity > 70 && (
+                <ShareButton
+                  phraseText={phrase.text}
+                  accuracy={result.similarity}
+                  totalPracticed={totalPracticed}
+                  variant={result.similarity >= 80 ? 'celebration' : 'default'}
+                />
+              )}
             </div>
-
-            {result.similarity > 70 && (
-              <ShareButton
-                phraseText={phrase.text}
-                accuracy={result.similarity}
-                totalPracticed={totalPracticed}
-                variant={result.similarity >= 80 ? 'celebration' : 'default'}
-              />
-            )}
           </div>
-        </div>
-      )}
+        )}
 
-      {transcript && !isListening && (
-        <PhonemeFeedback
-          expectedText={phrase.text}
-          spokenText={transcript}
-          userAudioBlob={audioBlob}
-        />
-      )}
+        {transcript && !isListening && (
+          <div className="mt-4" data-tour-id="tour-feedback-word">
+            <PhonemeFeedback
+              expectedText={phrase.text}
+              spokenText={transcript}
+              userAudioBlob={audioBlob}
+            />
+          </div>
+        )}
+      </div>
 
       {isListening && (
         <div className="mt-6 flex items-center justify-center gap-3 text-red-600 bg-red-50 p-4 rounded-lg border-2 border-red-200">

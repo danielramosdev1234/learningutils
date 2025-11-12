@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Briefcase, ShoppingBag, Plane, Users, Home, ArrowLeft, Play, Trophy, Target, Code } from 'lucide-react';
 import { PhraseCard } from './PhraseCard';
@@ -11,6 +11,7 @@ import {
   saveProgress
 } from '../../store/slices/userSlice';
 import { LevelIndicator } from '../leaderboard/LevelIndicator';
+import GuidedTourOverlay from '../ui/GuidedTourOverlay';
 
 const CATEGORIES = [
   {
@@ -63,7 +64,9 @@ const CATEGORIES = [
   }
 ];
 
-const CategoryTrainer = () => {
+const TOUR_STORAGE_KEY = 'learnfun_daily_basics_tour_v1';
+
+const CategoryTrainer = ({ autoSelectCategory = null }) => {
   const dispatch = useDispatch();
   const { levelSystem, progress, userId, mode } = useSelector(state => state.user);
   const textToSpeech = useTextToSpeech();
@@ -74,6 +77,22 @@ const CategoryTrainer = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [completedInSession, setCompletedInSession] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [showTour, setShowTour] = useState(false);
+  const [tourStep, setTourStep] = useState(0);
+  const [tourSpeakCompleted, setTourSpeakCompleted] = useState(false);
+  const tourInitializedRef = useRef(false);
+
+  // Seleciona categoria automaticamente quando indicado (onboarding)
+  useEffect(() => {
+    if (!autoSelectCategory) return;
+
+    const categoryExists = CATEGORIES.some(cat => cat.id === autoSelectCategory);
+    if (!categoryExists) return;
+
+    if (selectedCategory !== autoSelectCategory) {
+      setSelectedCategory(autoSelectCategory);
+    }
+  }, [autoSelectCategory, selectedCategory]);
 
   // Carrega todas as frases
   useEffect(() => {
@@ -113,6 +132,132 @@ const CategoryTrainer = () => {
     // IMPORTANTE: Não incluir progress?.categories nas dependências para evitar
     // que o índice seja recalculado quando uma frase é completada (causaria avanço automático)
   }, [selectedCategory, allPhrases]);
+
+  useEffect(() => {
+    if (
+      !selectedCategory ||
+      selectedCategory !== 'daily_basics' ||
+      !categoryPhrases.length ||
+      currentIndex >= categoryPhrases.length ||
+      mode !== 'guest'
+    ) {
+      return;
+    }
+
+    if (typeof window === 'undefined' || tourInitializedRef.current) {
+      return;
+    }
+
+    const stored = localStorage.getItem(TOUR_STORAGE_KEY);
+    if (!stored) {
+      tourInitializedRef.current = true;
+      setTourStep(0);
+      setTourSpeakCompleted(false);
+      setShowTour(true);
+    } else {
+      tourInitializedRef.current = true;
+    }
+  }, [selectedCategory, categoryPhrases, currentIndex, mode]);
+
+  const tourSteps = useMemo(() => {
+    const baseSteps = [
+      {
+        id: 'intro',
+        title: 'Tour guiado Daily Basics',
+        description: 'Vamos passar rapidamente por cada parte da prática para você aproveitar ao máximo.',
+        targetId: null,
+        primaryLabel: 'Começar'
+      },
+      {
+        id: 'phrase',
+        title: 'Frase em inglês',
+        description: 'Esta é a frase que você vai praticar agora. Leia com atenção para se preparar.',
+        targetId: 'tour-phrase-text'
+      },
+      {
+        id: 'translation',
+        title: 'Tradução em português',
+        description: 'Aqui você vê o significado em português para conectar ideias e contexto.',
+        targetId: 'tour-phrase-translation'
+      },
+      {
+        id: 'ipa',
+        title: 'Pronúncia com IPA',
+        description: 'O IPA detalha cada som da frase. Use-o para ajustar pronúncias que ainda soam estranhas.',
+        targetId: 'tour-ipa'
+      },
+      {
+        id: 'speak',
+        title: tourSpeakCompleted ? 'Veja o painel de feedback' : 'Hora de praticar',
+        description: tourSpeakCompleted
+          ? 'Aqui você enxerga o resultado geral da sua prática com tudo que precisa para melhorar.'
+          : 'Toque em Speak, repita a frase e depois vamos analisar o feedback juntos.',
+        targetId: tourSpeakCompleted ? 'tour-feedback-area' : 'tour-speak-button'
+      }
+    ];
+
+    if (tourSpeakCompleted) {
+      baseSteps.push(
+        {
+          id: 'feedback-you-said',
+          title: 'Entenda o "You said"',
+          description: 'Mostra exatamente o que o reconhecimento de voz captou da sua fala em inglês. Compare para ver se foi interpretado corretamente.',
+          targetId: 'tour-feedback-summary'
+        },
+        {
+          id: 'feedback-accuracy',
+          title: 'Precisão com o "Accuracy"',
+          description: 'Indica o quão perto você chegou da frase original. Quanto mais próximo de 100%, mais fiel foi a pronúncia.',
+          targetId: 'tour-feedback-accuracy'
+        },
+        {
+          id: 'feedback-word',
+          title: 'Word-by-Word Analysis',
+          description: 'Analisa cada palavra e aponta diferenças de pronúncia entre o que você falou e a frase original para ajustar detalhes.',
+          targetId: 'tour-feedback-word'
+        }
+      );
+    }
+
+    return baseSteps;
+  }, [tourSpeakCompleted]);
+
+  const handleTourFinish = (status = 'completed') => {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem(TOUR_STORAGE_KEY, status);
+    }
+    setShowTour(false);
+    setTourStep(0);
+    setTourSpeakCompleted(false);
+  };
+
+  const handleTourNext = () => {
+    if (tourStep < tourSteps.length - 1) {
+      setTourStep(prev => prev + 1);
+      return;
+    }
+
+    if (tourSpeakCompleted) {
+      handleTourFinish('completed');
+    }
+  };
+
+  const handleTourPrev = () => {
+    if (tourStep === 0) return;
+    setTourStep(prev => Math.max(prev - 1, 0));
+  };
+
+  const handleTourSkip = () => {
+    handleTourFinish('skipped');
+  };
+
+  const handleTourFeedbackVisible = () => {
+    if (showTour) {
+      setTourSpeakCompleted(true);
+    }
+  };
+
+  const tourNextDisabled = tourStep === tourSteps.length - 1 && !tourSpeakCompleted;
 
   const handleCategorySelect = (categoryId) => {
     setSelectedCategory(categoryId);
@@ -370,9 +515,25 @@ const CategoryTrainer = () => {
           onCorrectAnswer={handleCorrectAnswer}
           onNextPhrase={handleNextPhrase}
           isActive={true}
-          autoAdvance={false}
+          autoAdvance={!showTour}
+          tourActive={showTour}
+          tourStep={tourStep}
+          onTourFeedbackVisible={handleTourFeedbackVisible}
         />
       </div>
+
+      {showTour && (
+        <GuidedTourOverlay
+          visible={showTour}
+          steps={tourSteps}
+          currentStep={tourStep}
+          onNext={handleTourNext}
+          onPrev={handleTourPrev}
+          onSkip={handleTourSkip}
+          onFinish={() => handleTourFinish('completed')}
+          isNextDisabled={tourNextDisabled}
+        />
+      )}
     </div>
   );
 };

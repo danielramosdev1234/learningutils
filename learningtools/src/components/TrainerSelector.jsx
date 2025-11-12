@@ -25,6 +25,9 @@ import {
   updateLevelSystemIndices,
   markPhraseCompleted
 } from '../store/slices/userSlice';
+import GuestOnboarding from './ui/GuestOnboarding';
+
+const ONBOARDING_STORAGE_KEY = 'learnfun_guest_onboarding_v1';
 
 export default function TrainerSelector() {
   const getInitialTrainer = () => {
@@ -47,8 +50,12 @@ export default function TrainerSelector() {
   const [showMoreMenu, setShowMoreMenu] = useState(false);
   const [showInviteModal, setShowInviteModal] = useState(false);
   const [showSpeakMenu, setShowSpeakMenu] = useState(false);
-  const { levelSystem, stats, profile } = useSelector(state => state.user);
+  const { levelSystem, stats, profile, mode } = useSelector(state => state.user);
   const dispatch = useDispatch();
+
+  const [showOnboarding, setShowOnboarding] = useState(false);
+  const [onboardingStep, setOnboardingStep] = useState(1);
+  const [autoSelectCategory, setAutoSelectCategory] = useState(null);
 
 
 
@@ -58,6 +65,46 @@ export default function TrainerSelector() {
       window.va('pageview', { path });
     }
   }, [activeTrainer]);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    if (mode === 'guest') {
+      const hasSeenOnboarding = localStorage.getItem(ONBOARDING_STORAGE_KEY);
+      if (!hasSeenOnboarding) {
+        setShowOnboarding(true);
+        setOnboardingStep(1);
+      }
+    } else {
+      setShowOnboarding(false);
+    }
+  }, [mode]);
+
+  const finishOnboarding = () => {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem(ONBOARDING_STORAGE_KEY, 'completed');
+    }
+    setShowOnboarding(false);
+    setOnboardingStep(1);
+    setAutoSelectCategory(null);
+  };
+
+  const handleOnboardingSkip = () => {
+    finishOnboarding();
+  };
+
+  const handleOnboardingNext = () => {
+    if (onboardingStep === 1) {
+      handleTrainerChange('categories');
+      setOnboardingStep(2);
+    } else if (onboardingStep === 2) {
+      handleTrainerChange('categories');
+      setAutoSelectCategory('daily_basics');
+      setOnboardingStep(3);
+    } else {
+      finishOnboarding();
+    }
+  };
 
 const handleCloseLevelUpModal = () => {
     dispatch(closeLevelUpModal());
@@ -256,7 +303,9 @@ const handleCloseLevelUpModal = () => {
 
       {/* Active Trainer Component */}
       <div className="transition-opacity duration-300">
-          {activeTrainer === 'categories' && <CategoryTrainer />}
+          {activeTrainer === 'categories' && (
+            <CategoryTrainer autoSelectCategory={autoSelectCategory} />
+          )}
         {activeTrainer === 'dashboard' && <Dashboard onNavigate={handleTrainerChange} />}
         {activeTrainer === 'chunk' && <ChunkTrainer />}
         {activeTrainer === 'translate' && <TranslateTrainer />}
@@ -618,6 +667,15 @@ const handleCloseLevelUpModal = () => {
       <div className="hidden md:block">
         <WhatsAppFloatingButton />
       </div>
+
+      {showOnboarding && (
+        <GuestOnboarding
+          open={showOnboarding}
+          step={onboardingStep}
+          onNext={handleOnboardingNext}
+          onSkip={handleOnboardingSkip}
+        />
+      )}
     </div>
   );
 }
