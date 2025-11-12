@@ -105,8 +105,7 @@ const VideoLearningApp = () => {
           amount: xpAmount,
           questionId: currentQ.id || currentQuestion,
           videoId: currentQ.videoId,
-          gameMode,
-          streak
+          gameMode
         });
       } catch (error) {
         console.error('Erro ao ganhar XP:', error);

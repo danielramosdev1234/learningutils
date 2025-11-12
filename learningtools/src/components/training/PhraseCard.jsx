@@ -1,6 +1,6 @@
 // src/components/PhraseCard.jsx (ATUALIZADO - Referral processado no login)
 
-import React, { useState, useEffect, useRef, useMemo  } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { Volume2, Mic, MicOff, CheckCircle, XCircle, Loader, AlertCircle, Play, Pause, ArrowRight, Gift, Settings  } from 'lucide-react';
 import { useSpeechRecognitionForChunks } from '../../hooks/useSpeechRecognitionForChunks';
 import { compareTexts } from '../../utils/textComparison';
@@ -32,6 +32,8 @@ export const PhraseCard = ({ phrase, onSpeak, onCorrectAnswer, onNextPhrase, isA
  const chunksHook = useSpeechRecognitionForChunks();
 
  const dispatch = useDispatch();
+ const { levelSystem, userId, stats } = useSelector(state => state.user);
+   const streak = stats?.streak || { current: 0, longest: 0, history: [] };
 
  const { earnXP } = useXP();
 
@@ -115,7 +117,8 @@ export const PhraseCard = ({ phrase, onSpeak, onCorrectAnswer, onNextPhrase, isA
         // Ganha XP ao acertar frase
         earnXP('phrases', {
           phraseId: phrase.id,
-          accuracy: comparison.similarity
+          accuracy: comparison.similarity,
+          streak: streak.current
         });
 
         dispatch(markPhraseCompleted({

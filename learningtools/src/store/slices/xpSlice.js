@@ -26,7 +26,7 @@ export const XP_CONFIG = {
     numbers: 5,
     challenge: 5,
     video: 10,
-    streak: 5,
+    streak: 2,
     perfectScore: 5
   }
 };

@@ -22,6 +22,8 @@ export const calculateXPReward = (mode, performance = {}) => {
   if (performance.streak >= 7) {
     baseXP += XP_CONFIG.REWARDS.streak;
   }
+  console.warn('baseXP', baseXP);
+  console.warn('performance', performance);
 
   return baseXP;
 };
