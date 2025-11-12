@@ -521,7 +521,7 @@ const CategoryTrainer = ({ autoSelectCategory = null }) => {
           onCorrectAnswer={handleCorrectAnswer}
           onNextPhrase={handleNextPhrase}
           isActive={true}
-          autoAdvance={!showTour}
+          autoAdvance={false}
           tourActive={showTour}
           tourStep={tourStep}
           onTourFeedbackVisible={handleTourFeedbackVisible}

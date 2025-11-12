@@ -212,11 +212,30 @@ export const loadXPData = createAsyncThunk(
       const data = userDoc.data();
       const xpSystem = data.xpSystem || {};
 
+      const lastUpdatedTimestamp = xpSystem.lastUpdated || null;
+      let lastUpdatedDate = lastUpdatedTimestamp?.toDate ? lastUpdatedTimestamp.toDate() : null;
+      const today = new Date();
+      let xpToday = xpSystem.xpToday || 0;
+
+      if (lastUpdatedDate && lastUpdatedDate.toDateString() !== today.toDateString()) {
+        await updateDoc(userRef, {
+          'xpSystem.xpToday': 0,
+          'xpSystem.lastUpdated': serverTimestamp()
+        });
+        xpToday = 0;
+        lastUpdatedDate = today;
+      } else if (!lastUpdatedDate) {
+        await updateDoc(userRef, {
+          'xpSystem.lastUpdated': serverTimestamp()
+        });
+        lastUpdatedDate = today;
+      }
+
       return {
         totalXP: xpSystem.totalXP || 0,
         xpBreakdown: xpSystem.xpBreakdown || initialState.xpBreakdown,
-        xpToday: xpSystem.xpToday || 0,
-        lastUpdated: xpSystem.lastUpdated
+        xpToday,
+        lastUpdated: lastUpdatedDate
       };
 
     } catch (error) {
