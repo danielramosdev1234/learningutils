@@ -191,7 +191,7 @@ const CategoryTrainer = ({ autoSelectCategory = null }) => {
         title: tourSpeakCompleted ? 'Veja o painel de feedback' : 'Hora de praticar',
         description: tourSpeakCompleted
           ? 'Aqui você enxerga o resultado geral da sua prática com tudo que precisa para melhorar.'
-          : 'Toque em Speak, repita a frase e depois vamos analisar o feedback juntos.',
+          : 'Toque em Speak, repita a frase "Hello" e depois vamos analisar o feedback juntos.',
         targetId: tourSpeakCompleted ? 'tour-feedback-area' : 'tour-speak-button'
       }
     ];

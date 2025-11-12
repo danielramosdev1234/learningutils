@@ -233,6 +233,12 @@ const GuidedTourOverlay = ({
         <div className="flex items-center justify-between text-xs font-semibold text-purple-600 uppercase tracking-wider mb-4">
           <span>Tour Guiado</span>
           <span>{progressText}</span>
+          <button
+                      onClick={onSkip}
+                      className="text-sm font-semibold text-gray-500 hover:text-gray-700 transition-colors"
+                    >
+                      Pular tour
+                    </button>
         </div>
 
         <h3 className="text-xl font-bold text-gray-900 mb-3">{step.title}</h3>
@@ -251,12 +257,7 @@ const GuidedTourOverlay = ({
             ))}
           </div>
 
-          <button
-            onClick={onSkip}
-            className="text-sm font-semibold text-gray-500 hover:text-gray-700 transition-colors"
-          >
-            Pular tour
-          </button>
+
         </div>
 
         <div className="flex items-center justify-between gap-3">

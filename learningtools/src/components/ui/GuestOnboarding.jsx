@@ -71,20 +71,26 @@ export const GuestOnboarding = ({ open, step, onNext, onSkip }) => {
 
   return (
     <div className="fixed inset-0 z-[999] bg-slate-900/70 backdrop-blur-sm flex items-center justify-center px-4">
-      <div className="relative w-full max-w-lg bg-white rounded-3xl shadow-2xl border border-purple-100 p-8">
-        <button
-          onClick={onSkip}
-          className="absolute top-4 right-4 p-2 text-gray-400 hover:text-gray-600 transition-colors"
-          aria-label="Pular tutorial"
-        >
-          ✕
-        </button>
-
-        <div className="text-sm font-semibold text-purple-600 uppercase tracking-wide mb-3">
-          Passo {step} de {TOTAL_STEPS}
+      <div className="relative w-full max-w-lg bg-white rounded-3xl shadow-2xl border border-purple-100 p-6 sm:p-8 max-h-[90vh] overflow-y-auto">
+        <div className="flex items-start justify-between gap-3 mb-4">
+          <div>
+            <div className="text-sm font-semibold text-purple-600 uppercase tracking-wide">
+              Tour guiado
+            </div>
+            <div className="text-xs font-medium text-purple-500 mt-1">
+              Passo {step} de {TOTAL_STEPS}
+            </div>
+          </div>
+          <button
+            onClick={onSkip}
+            className="p-2 text-gray-400 hover:text-gray-600 transition-colors"
+            aria-label="Pular tutorial"
+          >
+            ✕
+          </button>
         </div>
 
-        <h2 className="text-2xl font-bold text-gray-900 mb-3">
+        <h2 className="text-2xl font-bold text-gray-900 mb-3 leading-tight">
           {content.title}
         </h2>
 
@@ -118,17 +124,17 @@ export const GuestOnboarding = ({ open, step, onNext, onSkip }) => {
           })}
         </div>
 
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
           <button
             onClick={onSkip}
-            className="text-sm font-semibold text-gray-500 hover:text-gray-700 transition-colors"
+            className="w-full sm:w-auto px-5 py-3 rounded-xl border border-gray-200 bg-white text-sm font-semibold text-gray-600 hover:bg-gray-50 transition-colors shadow-sm"
           >
             Pular tutorial
           </button>
 
           <button
             onClick={onNext}
-            className="inline-flex items-center gap-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white px-5 py-3 rounded-xl font-semibold shadow-lg hover:from-purple-600 hover:to-pink-600 transition-transform transform hover:-translate-y-0.5"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white px-5 py-3 rounded-xl font-semibold shadow-lg hover:from-purple-600 hover:to-pink-600 transition-transform transform hover:-translate-y-0.5"
           >
             {content.primaryLabel}
             <ArrowRight className="w-4 h-4" />
