@@ -408,6 +408,7 @@ const handleNextSkip = () => {
           <button
             onClick={onNextPhrase}
             className="flex items-center gap-1 sm:gap-2 bg-indigo-500 hover:bg-indigo-600 text-white px-3 sm:px-6 py-2 sm:py-3 rounded-lg transition-all shadow-md font-semibold text-sm sm:text-base "
+            data-tour-id="tour-next-button"
           >
             <ArrowRight size={20} className="sm:w-6 sm:h-6" />
             <span>Next</span>

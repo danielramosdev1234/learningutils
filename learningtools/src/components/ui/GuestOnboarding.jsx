@@ -81,6 +81,7 @@ export const GuestOnboarding = ({ open, step, onNext, onSkip }) => {
               Passo {step} de {TOTAL_STEPS}
             </div>
           </div>
+
           <button
             onClick={onSkip}
             className="p-2 text-gray-400 hover:text-gray-600 transition-colors"
@@ -125,12 +126,7 @@ export const GuestOnboarding = ({ open, step, onNext, onSkip }) => {
         </div>
 
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-          <button
-            onClick={onSkip}
-            className="w-full sm:w-auto px-5 py-3 rounded-xl border border-gray-200 bg-white text-sm font-semibold text-gray-600 hover:bg-gray-50 transition-colors shadow-sm"
-          >
-            Pular tutorial
-          </button>
+
 
           <button
             onClick={onNext}

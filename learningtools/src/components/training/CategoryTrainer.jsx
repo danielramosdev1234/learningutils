@@ -215,6 +215,12 @@ const CategoryTrainer = ({ autoSelectCategory = null }) => {
           title: 'Word-by-Word Analysis',
           description: 'Analisa cada palavra e aponta diferenças de pronúncia entre o que você falou e a frase original para ajustar detalhes.',
           targetId: 'tour-feedback-word'
+        },
+        {
+          id: 'feedback-next',
+          title: 'Avance para a próxima frase',
+          description: 'Toque em “Next” para seguir para a próxima frase e continuar praticando com o mesmo foco.',
+          targetId: 'tour-next-button'
         }
       );
     }
