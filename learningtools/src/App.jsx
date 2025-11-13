@@ -18,6 +18,7 @@ import { ReferralFieldInitializer } from './components/referral/ReferralFieldIni
 import MeetRoom from './components/social/MeetRoom';
 import PWAInstallPrompt from './components/ui/PWAInstallPrompt';
 import OfflineIndicator from './components/ui/OfflineIndicator';
+import { useNotificationSync } from './hooks/useNotificationSync';
 
 function App() {
   const dispatch = useDispatch();
@@ -26,6 +27,9 @@ function App() {
   
   // Estado do XP System para o LevelUpModal
   const { showLevelUpModal, pendingLevelUp, totalXP } = useSelector(state => state.xp);
+
+  // Sincroniza dados de notificação com Service Worker
+  useNotificationSync();
 
   // Detecta referral na URL ANTES de inicializar
   useEffect(() => {

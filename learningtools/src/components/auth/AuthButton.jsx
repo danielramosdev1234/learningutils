@@ -1,14 +1,18 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { LogIn, LogOut, User } from 'lucide-react';
+import { LogIn, LogOut, User, Download, Bell } from 'lucide-react';
 import { loginWithGoogle, logout } from '../../store/slices/userSlice';
 import BackupManager from '../BackupManager';
+import { usePWAInstall } from '../../hooks/usePWAInstall';
+import NotificationSettings from '../settings/NotificationSettings';
 
 const AuthButton = () => {
   const dispatch = useDispatch();
   const { mode, profile, loading } = useSelector(state => state.user);
   const [showMenu, setShowMenu] = useState(false);
   const [showBackupModal, setShowBackupModal] = useState(false);
+  const [showNotificationSettings, setShowNotificationSettings] = useState(false);
+  const { install, isInstalled, canInstall } = usePWAInstall();
 
   const handleLogin = async () => {
     const result = await dispatch(loginWithGoogle());
@@ -83,14 +87,31 @@ const AuthButton = () => {
               <p className="text-sm text-gray-600">{profile.email}</p>
             </div>
 
+            {/* PWA Install Option */}
+            {canInstall && !isInstalled && (
+              <button
+                onClick={() => {
+                  install();
+                  setShowMenu(false);
+                }}
+                className="w-full flex items-center gap-3 px-4 py-3 hover:bg-blue-50 transition-colors text-left text-gray-700 border-b border-gray-200"
+              >
+                <Download size={20} className="text-blue-600" />
+                <span className="font-semibold">Instalar App</span>
+              </button>
+            )}
 
-
-            {/* Modal Backup */}
-                      {showBackupModal && (
-                        <div className="fixed inset-0 z-50 bg-white overflow-y-auto">
-                          <BackupManager onBack={() => setShowBackupModal(false)} />
-                        </div>
-                      )}
+            {/* Notification Settings */}
+            <button
+              onClick={() => {
+                setShowNotificationSettings(true);
+                setShowMenu(false);
+              }}
+              className="w-full flex items-center gap-3 px-4 py-3 hover:bg-purple-50 transition-colors text-left text-gray-700 border-b border-gray-200"
+            >
+              <Bell size={20} className="text-purple-600" />
+              <span className="font-semibold">Notificações</span>
+            </button>
 
             <button
               onClick={handleLogout}
@@ -101,6 +122,20 @@ const AuthButton = () => {
             </button>
           </div>
         </>
+      )}
+
+      {/* Modal Backup */}
+      {showBackupModal && (
+        <div className="fixed inset-0 z-50 bg-white overflow-y-auto">
+          <BackupManager onBack={() => setShowBackupModal(false)} />
+        </div>
+      )}
+
+      {/* Notification Settings Modal */}
+      {showNotificationSettings && (
+        <div className="fixed inset-0 z-50 bg-white overflow-y-auto">
+          <NotificationSettings onBack={() => setShowNotificationSettings(false)} />
+        </div>
       )}
     </div>
   );

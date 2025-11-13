@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Hash, Mic, Zap, Video, MoreHorizontal, X, MessageCircle, Globe, Gift, Radio, House, BookOpen, ArrowUp01 } from 'lucide-react';
+import { Hash, Mic, Zap, Video, MoreHorizontal, X, MessageCircle, Globe, Gift, Radio, House, BookOpen, ArrowUp01, Download } from 'lucide-react';
 import NumberSpeechTrainer from './training/NumberSpeechTrainer';
 import ChunkTrainer from './training/ChunkTrainer';
 import ChallengeTrainer from './training/ChallengeTrainer';
@@ -26,6 +26,7 @@ import {
   markPhraseCompleted
 } from '../store/slices/userSlice';
 import GuestOnboarding from './ui/GuestOnboarding';
+import { usePWAInstall } from '../hooks/usePWAInstall';
 
 const ONBOARDING_STORAGE_KEY = 'learnfun_guest_onboarding_v1';
 
@@ -56,6 +57,7 @@ export default function TrainerSelector() {
   const [showOnboarding, setShowOnboarding] = useState(false);
   const [onboardingStep, setOnboardingStep] = useState(1);
   const [autoSelectCategory, setAutoSelectCategory] = useState(null);
+  const { install, isInstalled, canInstall } = usePWAInstall();
 
 
 
@@ -524,6 +526,31 @@ const handleCloseLevelUpModal = () => {
             {/* Menu Items */}
             <div className="p-4 space-y-3">
 
+              {/* PWA Install Option */}
+              {canInstall && !isInstalled && (
+                <button
+                  onClick={() => {
+                    install();
+                    setShowMoreMenu(false);
+                  }}
+                  className="w-full flex items-center gap-4 p-4 rounded-xl bg-gradient-to-r from-blue-50 to-cyan-50 hover:from-blue-100 hover:to-cyan-100 text-gray-800 transition-all border-2 border-blue-200"
+                >
+                  <div className="p-3 rounded-full bg-gradient-to-r from-blue-500 to-cyan-500">
+                    <Download className="w-6 h-6 text-white" />
+                  </div>
+                  <div className="text-left flex-1">
+                    <div className="font-bold text-lg">Instalar App</div>
+                    <div className="text-sm text-gray-600">
+                      Acesso rápido e offline
+                    </div>
+                  </div>
+                  <div className="text-blue-600">
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </div>
+                </button>
+              )}
 
               {/* WhatsApp Community */}
               <button

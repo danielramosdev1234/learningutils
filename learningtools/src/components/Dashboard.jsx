@@ -16,6 +16,7 @@ import videoListenerImg from '../assets/videolistener.png';
 import liveRoomImg from '../assets/liveroom.png';
 import categoriesImg from '../assets/categories.png';
 import { LevelIndicator } from './leaderboard/LevelIndicator';
+import PWAInstallCard from './ui/PWAInstallCard';
 
 
 
@@ -330,13 +331,16 @@ description: (
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-pink-50">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
 
 
 
 
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 py-8">
+
+         {/* PWA Install Card */}
+         <PWAInstallCard />
 
          {/* Streak Progress Bar */}
          <div className="bg-white rounded-2xl shadow-md p-4 mb-4" onClick={() => setShowModal(true)}>
