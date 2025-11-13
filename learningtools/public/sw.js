@@ -3,11 +3,16 @@ import { clientsClaim } from 'workbox-core';
 import { ExpirationPlugin } from 'workbox-expiration';
 import { precacheAndRoute, createHandlerBoundToURL } from 'workbox-precaching';
 import { registerRoute } from 'workbox-routing';
-import { StaleWhileRevalidate } from 'workbox-strategies';
-import { CacheFirst } from 'workbox-strategies';
+import { StaleWhileRevalidate, CacheFirst } from 'workbox-strategies';
 
-// Precache assets
+// ============================================
+// CACHE E PRECACHE
+// ============================================
+
 clientsClaim();
+self.skipWaiting();
+
+// Precache de assets
 precacheAndRoute(self.__WB_MANIFEST);
 
 // Navigation route
@@ -55,59 +60,157 @@ registerRoute(
 );
 
 // ============================================
-// NOTIFICATION SYSTEM
+// 🔔 EVENTOS DE NOTIFICAÇÃO (CRÍTICO!)
+// ============================================
+
+/**
+ * EVENTO PRINCIPAL: Quando o usuário clica na notificação
+ * Este é o código que faz o app abrir!
+ */
+self.addEventListener('notificationclick', (event) => {
+  console.log('🔔 Notificação clicada!', event);
+
+  // Fecha a notificação
+  event.notification.close();
+
+  // URL para abrir (pode vir dos dados da notificação)
+  const urlToOpen = event.notification.data?.url || '/';
+  const fullUrl = new URL(urlToOpen, self.location.origin).href;
+
+  event.waitUntil(
+    // Procura por janelas/tabs abertas do app
+    clients.matchAll({
+      type: 'window',
+      includeUninstalled: false
+    }).then((clientList) => {
+      console.log('📱 Janelas abertas:', clientList.length);
+
+      // Se já existe uma janela do app aberta, foca nela
+      for (const client of clientList) {
+        if (client.url.includes(self.location.origin)) {
+          console.log('✅ Focando janela existente');
+          return client.focus().then(() => {
+            // Navega para a URL se for diferente
+            if (client.url !== fullUrl && client.navigate) {
+              return client.navigate(fullUrl);
+            }
+            return client;
+          });
+        }
+      }
+
+      // Se não existe janela aberta, abre uma nova
+      if (clients.openWindow) {
+        console.log('🆕 Abrindo nova janela');
+        return clients.openWindow(fullUrl);
+      }
+    }).catch(error => {
+      console.error('❌ Erro ao abrir janela:', error);
+    })
+  );
+});
+
+/**
+ * Evento quando notificação é fechada (opcional)
+ */
+self.addEventListener('notificationclose', (event) => {
+  console.log('🔕 Notificação fechada:', event.notification.tag);
+
+  // Aqui você pode registrar analytics
+  event.waitUntil(
+    Promise.resolve() // Placeholder para futuras ações
+  );
+});
+
+/**
+ * PUSH NOTIFICATIONS - Para notificações do servidor
+ */
+self.addEventListener('push', (event) => {
+  console.log('📨 Push recebido:', event);
+
+  let notificationData = {
+    title: 'LearnFunTools',
+    body: 'Nova notificação!',
+    icon: '/pwa-192x192.png',
+    badge: '/pwa-192x192.png',
+    data: { url: '/' },
+    tag: 'learnfun-notification',
+    requireInteraction: false,
+    vibrate: [200, 100, 200],
+    actions: [
+      {
+        action: 'open',
+        title: 'Abrir App'
+      },
+      {
+        action: 'dismiss',
+        title: 'Dispensar'
+      }
+    ]
+  };
+
+  // Se veio dados do servidor
+  if (event.data) {
+    try {
+      const data = event.data.json();
+      notificationData = { ...notificationData, ...data };
+    } catch (e) {
+      notificationData.body = event.data.text();
+    }
+  }
+
+  event.waitUntil(
+    self.registration.showNotification(notificationData.title, {
+      body: notificationData.body,
+      icon: notificationData.icon,
+      badge: notificationData.badge,
+      data: notificationData.data,
+      tag: notificationData.tag,
+      requireInteraction: notificationData.requireInteraction,
+      vibrate: notificationData.vibrate,
+      actions: notificationData.actions
+    })
+  );
+});
+
+/**
+ * Evento de ação de notificação (quando tem botões)
+ */
+self.addEventListener('notificationactionclick', (event) => {
+  console.log('🎯 Ação da notificação:', event.action);
+
+  event.notification.close();
+
+  if (event.action === 'open') {
+    const urlToOpen = event.notification.data?.url || '/';
+    event.waitUntil(
+      clients.openWindow(urlToOpen)
+    );
+  }
+  // Se for 'dismiss', apenas fecha a notificação (já fechada acima)
+});
+
+// ============================================
+// SISTEMA DE NOTIFICAÇÕES AGENDADAS
 // ============================================
 
 const NOTIFICATION_STORAGE_KEY = 'learnfun_notification_settings';
 const NOTIFICATION_DATA_KEY = 'learnfun_notification_data';
 
-// Estado das notificações
 let notificationSettings = null;
 let notificationData = null;
 let dailyReminderIntervals = [];
 let inactivityCheckInterval = null;
 let streakCheckInterval = null;
 
-// Carrega configurações do IndexedDB ou localStorage via mensagem
-async function loadNotificationSettings() {
-  try {
-    // Tenta carregar do IndexedDB primeiro
-    const db = await openNotificationDB();
-    const settings = await getFromDB(db, NOTIFICATION_STORAGE_KEY);
-    
-    if (settings) {
-      notificationSettings = settings;
-      return settings;
-    }
-  } catch (error) {
-    console.log('Erro ao carregar do IndexedDB, usando fallback');
-  }
-
-  // Fallback: retorna null e espera mensagem do cliente
-  return null;
-}
-
-// Carrega dados do usuário (streak, última atividade) via mensagem
-async function loadNotificationData() {
-  try {
-    const db = await openNotificationDB();
-    const data = await getFromDB(db, NOTIFICATION_DATA_KEY);
-    notificationData = data;
-    return data;
-  } catch (error) {
-    console.log('Erro ao carregar dados de notificação');
-    return null;
-  }
-}
-
-// IndexedDB helper
+// IndexedDB helper functions
 function openNotificationDB() {
   return new Promise((resolve, reject) => {
     const request = indexedDB.open('learnfun_notifications', 1);
-    
+
     request.onerror = () => reject(request.error);
     request.onsuccess = () => resolve(request.result);
-    
+
     request.onupgradeneeded = (event) => {
       const db = event.target.result;
       if (!db.objectStoreNames.contains('settings')) {
@@ -122,7 +225,7 @@ function getFromDB(db, key) {
     const transaction = db.transaction(['settings'], 'readonly');
     const store = transaction.objectStore('settings');
     const request = store.get(key);
-    
+
     request.onerror = () => reject(request.error);
     request.onsuccess = () => resolve(request.result);
   });
@@ -133,31 +236,54 @@ function saveToDB(db, key, value) {
     const transaction = db.transaction(['settings'], 'readwrite');
     const store = transaction.objectStore('settings');
     const request = store.put(value, key);
-    
+
     request.onerror = () => reject(request.error);
     request.onsuccess = () => resolve();
   });
 }
 
-// Limpa todos os intervalos de notificação
+async function loadNotificationSettings() {
+  try {
+    const db = await openNotificationDB();
+    const settings = await getFromDB(db, NOTIFICATION_STORAGE_KEY);
+    if (settings) {
+      notificationSettings = settings;
+      return settings;
+    }
+  } catch (error) {
+    console.log('Erro ao carregar do IndexedDB');
+  }
+  return null;
+}
+
+async function loadNotificationData() {
+  try {
+    const db = await openNotificationDB();
+    const data = await getFromDB(db, NOTIFICATION_DATA_KEY);
+    notificationData = data;
+    return data;
+  } catch (error) {
+    console.log('Erro ao carregar dados de notificação');
+    return null;
+  }
+}
+
 function clearAllIntervals() {
   dailyReminderIntervals.forEach(interval => clearInterval(interval));
   dailyReminderIntervals = [];
-  
+
   if (inactivityCheckInterval) {
     clearInterval(inactivityCheckInterval);
     inactivityCheckInterval = null;
   }
-  
+
   if (streakCheckInterval) {
     clearInterval(streakCheckInterval);
     streakCheckInterval = null;
   }
 }
 
-// Agenda notificações diárias
 function scheduleDailyReminders(config) {
-  // Limpa intervalos anteriores
   dailyReminderIntervals.forEach(interval => clearInterval(interval));
   dailyReminderIntervals = [];
 
@@ -167,38 +293,34 @@ function scheduleDailyReminders(config) {
 
   config.times.forEach((timeStr) => {
     const [hours, minutes] = timeStr.split(':').map(Number);
-    
+
     const checkAndNotify = () => {
       const now = new Date();
       const currentDay = now.getDay();
-      
-      // Verifica se é um dia configurado
+
       if (!config.daysOfWeek || !config.daysOfWeek.includes(currentDay)) {
         return;
       }
 
-      // Verifica se é o horário correto (com margem de 1 minuto)
       if (now.getHours() === hours && now.getMinutes() === minutes) {
-        showNotification('Hora de treinar! 🎯', {
+        self.registration.showNotification('Hora de treinar! 🎯', {
           body: 'Que tal praticar um pouco de inglês agora?',
           icon: '/pwa-192x192.png',
           badge: '/pwa-192x192.png',
           tag: `daily-reminder-${timeStr}`,
+          data: { url: '/' },
           requireInteraction: false,
+          vibrate: [200, 100, 200]
         });
       }
     };
 
-    // Verifica a cada minuto
     const interval = setInterval(checkAndNotify, 60 * 1000);
     dailyReminderIntervals.push(interval);
-    
-    // Verifica imediatamente se já passou do horário hoje
     checkAndNotify();
   });
 }
 
-// Verifica inatividade periodicamente
 function scheduleInactivityCheck(settings) {
   if (inactivityCheckInterval) {
     clearInterval(inactivityCheckInterval);
@@ -222,18 +344,19 @@ function scheduleInactivityCheck(settings) {
         daysSinceActivity
       );
 
-      showNotification('Você está sem treinar!', {
+      self.registration.showNotification('Você está sem treinar!', {
         body: message,
         icon: '/pwa-192x192.png',
         badge: '/pwa-192x192.png',
         tag: 'inactivity-reminder',
+        data: { url: '/' },
         requireInteraction: false,
+        vibrate: [200, 100, 200]
       });
     }
-  }, 60 * 60 * 1000); // Verifica a cada hora
+  }, 60 * 60 * 1000);
 }
 
-// Verifica streak periodicamente
 function scheduleStreakCheck(settings) {
   if (streakCheckInterval) {
     clearInterval(streakCheckInterval);
@@ -253,50 +376,33 @@ function scheduleStreakCheck(settings) {
       (today.getTime() - lastActivity.getTime()) / (1000 * 60 * 60 * 24)
     );
 
-    // Verifica se está prestes a perder o streak
     if (daysSinceActivity === 1 && data.streak > 0) {
       const [hours, minutes] = settings.streakReminders.reminderTime.split(':').map(Number);
       const now = new Date();
-      
-      // Só envia se for o horário configurado
+
       if (now.getHours() === hours && now.getMinutes() === minutes) {
         const message = settings.streakReminders.message.replace(
           '{streak}',
           data.streak
         );
 
-        showNotification('Não perca sua sequência!', {
+        self.registration.showNotification('Não perca sua sequência!', {
           body: message,
           icon: '/pwa-192x192.png',
           badge: '/pwa-192x192.png',
           tag: 'streak-reminder',
+          data: { url: '/' },
           requireInteraction: false,
+          vibrate: [200, 100, 200]
         });
       }
     }
-  }, 60 * 1000); // Verifica a cada minuto
+  }, 60 * 1000);
 }
 
-// Mostra notificação
-async function showNotification(title, options) {
-  if (Notification.permission !== 'granted') {
-    return;
-  }
-
-  const defaultOptions = {
-    icon: '/pwa-192x192.png',
-    badge: '/pwa-192x192.png',
-    requireInteraction: false,
-    ...options,
-  };
-
-  await self.registration.showNotification(title, defaultOptions);
-}
-
-// Inicializa sistema de notificações
 async function initializeNotifications() {
   const settings = await loadNotificationSettings();
-  
+
   if (!settings || !settings.enabled) {
     clearAllIntervals();
     return;
@@ -304,43 +410,33 @@ async function initializeNotifications() {
 
   notificationSettings = settings;
 
-  // Agenda notificações diárias
   if (settings.dailyReminders?.enabled) {
     scheduleDailyReminders(settings.dailyReminders);
   }
 
-  // Agenda verificação de inatividade
   scheduleInactivityCheck(settings);
-
-  // Agenda verificação de streak
   scheduleStreakCheck(settings);
 }
 
-// Escuta mensagens do cliente
+// Escuta mensagens do app
 self.addEventListener('message', async (event) => {
   if (event.data && event.data.type) {
     switch (event.data.type) {
       case 'SCHEDULE_DAILY_REMINDERS':
-        // Salva configurações no IndexedDB
         try {
           const db = await openNotificationDB();
           await saveToDB(db, NOTIFICATION_STORAGE_KEY, event.data.config);
+          await initializeNotifications();
         } catch (error) {
           console.error('Erro ao salvar configurações:', error);
         }
-        
-        // Recarrega e agenda
-        await initializeNotifications();
         break;
 
       case 'UPDATE_NOTIFICATION_SETTINGS':
-        // Salva todas as configurações
         try {
           const db = await openNotificationDB();
           await saveToDB(db, NOTIFICATION_STORAGE_KEY, event.data.settings);
           notificationSettings = event.data.settings;
-          
-          // Reinicializa
           clearAllIntervals();
           await initializeNotifications();
         } catch (error) {
@@ -349,7 +445,6 @@ self.addEventListener('message', async (event) => {
         break;
 
       case 'UPDATE_NOTIFICATION_DATA':
-        // Atualiza dados do usuário (streak, última atividade)
         try {
           const db = await openNotificationDB();
           await saveToDB(db, NOTIFICATION_DATA_KEY, event.data.data);
@@ -366,7 +461,7 @@ self.addEventListener('message', async (event) => {
   }
 });
 
-// Inicializa quando o Service Worker é ativado
+// Inicializa quando o SW é ativado
 self.addEventListener('activate', async (event) => {
   event.waitUntil(
     Promise.all([
@@ -376,8 +471,6 @@ self.addEventListener('activate', async (event) => {
   );
 });
 
-// Inicializa quando o Service Worker é instalado
 self.addEventListener('install', (event) => {
   self.skipWaiting();
 });
-
