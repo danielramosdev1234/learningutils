@@ -265,6 +265,37 @@ export default function NotificationSettings({ onBack }) {
                 </span>
               )}
             </div>
+            {hasToken && isInitialized && (
+              <button
+                onClick={async () => {
+                  try {
+                    const { notificationAPI } = await import('../../services/apiService');
+                    
+                    if (!userId) {
+                      alert('❌ Usuário não autenticado');
+                      return;
+                    }
+
+                    console.log('🧪 [TEST] Enviando notificação push via backend...');
+                    
+                    await notificationAPI.send(userId, {
+                      title: 'Teste Push Notification (FCM)',
+                      body: 'Esta notificação foi enviada via backend/FCM e funciona mesmo com o app fechado!',
+                      icon: '/pwa-192x192.png'
+                    });
+                    
+                    alert('✅ Notificação push enviada!\n\nVerifique se apareceu (pode demorar alguns segundos).\n\nVeja os logs no console (F12) e no Railway.');
+                  } catch (error) {
+                    console.error('❌ [TEST] Erro ao enviar notificação push:', error);
+                    alert(`❌ Erro: ${error.message}\n\nVerifique o console (F12) e os logs do Railway.`);
+                  }
+                }}
+                className="mt-4 w-full bg-blue-600 text-white px-4 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors flex items-center justify-center gap-2"
+              >
+                <Bell className="w-5 h-5" />
+                Testar Push Notification (FCM)
+              </button>
+            )}
             {fcmError && (
               <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-lg">
                 <p className="text-sm text-red-700 font-semibold mb-2">
