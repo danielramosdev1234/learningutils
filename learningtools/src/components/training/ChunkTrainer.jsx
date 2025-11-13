@@ -260,6 +260,7 @@ const ChunkTrainer = ({ onOpenInvite }) => {
             onCorrectAnswer={handleCorrectAnswer}
             onNextPhrase={handleNextPhrase}
             isActive={true}
+            autoAdvance={false}
           />
         )}
       </div>

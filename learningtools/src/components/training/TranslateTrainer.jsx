@@ -360,6 +360,7 @@ const TranslateTrainer = () => {
               textToSpeech={textToSpeech}
               onCorrectAnswer={handleCorrectAnswer}
               isActive={true}
+              autoAdvance={false}
             />
           </div>
         )}
