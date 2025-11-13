@@ -10,6 +10,11 @@ const VAPID_KEY = import.meta.env.VITE_FIREBASE_VAPID_KEY;
  */
 export const getFCMToken = async () => {
   try {
+    // Verifica se a VAPID key está configurada
+    if (!VAPID_KEY) {
+      throw new Error('VAPID_KEY não configurada. Adicione VITE_FIREBASE_VAPID_KEY no arquivo .env');
+    }
+
     const messaging = await getFirebaseMessaging();
     if (!messaging) {
       throw new Error('Firebase Messaging não está disponível');
@@ -20,8 +25,27 @@ export const getFCMToken = async () => {
       throw new Error('Service Worker não é suportado');
     }
 
-    const registration = await navigator.serviceWorker.ready;
+    // Aguarda Service Worker estar totalmente pronto
+    let registration;
+    try {
+      registration = await navigator.serviceWorker.ready;
+      console.log('✅ Service Worker registration pronto');
+    } catch (error) {
+      throw new Error('Service Worker não está disponível. Recarregue a página.');
+    }
+
+    // Verifica se o Service Worker tem suporte a push
+    if (!registration.pushManager) {
+      throw new Error('Push Manager não está disponível no Service Worker');
+    }
     
+    // Valida formato da VAPID key
+    if (!VAPID_KEY || VAPID_KEY.length < 80) {
+      throw new Error('VAPID_KEY parece estar incorreta. Use o par de chaves completo do Firebase Console (não a chave privada). O par de chaves deve ter mais de 80 caracteres.');
+    }
+
+    console.log('🔑 Tentando obter token FCM com VAPID key (primeiros 20 chars):', VAPID_KEY.substring(0, 20) + '...');
+
     // Obtém o token FCM
     const token = await getToken(messaging, {
       vapidKey: VAPID_KEY,
@@ -36,6 +60,17 @@ export const getFCMToken = async () => {
     return token;
   } catch (error) {
     console.error('❌ Erro ao obter token FCM:', error);
+    
+    // Mensagem de erro mais detalhada
+    if (error.message.includes('applicationServerKey') || error.message.includes('not valid')) {
+      const detailedError = new Error(
+        'VAPID_KEY inválida. No Firebase Console, copie o "Par de chaves" completo da tabela (não a chave privada do modal). ' +
+        'O par de chaves deve ter mais de 80 caracteres. ' +
+        'Verifique o arquivo VAPID_KEY_SETUP.md para instruções detalhadas.'
+      );
+      throw detailedError;
+    }
+    
     throw error;
   }
 };

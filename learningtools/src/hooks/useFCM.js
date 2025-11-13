@@ -41,6 +41,21 @@ export function useFCM() {
           return;
         }
 
+        // Aguarda Service Worker estar totalmente pronto
+        if ('serviceWorker' in navigator) {
+          let registration = null;
+          try {
+            registration = await navigator.serviceWorker.ready;
+            console.log('✅ Service Worker pronto');
+          } catch (swError) {
+            console.error('❌ Erro ao aguardar Service Worker:', swError);
+            throw new Error('Service Worker não está disponível. Recarregue a página.');
+          }
+
+          // Aguarda um pouco mais para garantir que está totalmente inicializado
+          await new Promise(resolve => setTimeout(resolve, 500));
+        }
+
         // Verifica se já tem token salvo
         const status = await checkFCMTokenStatus(userId);
         if (status.hasToken) {
@@ -65,7 +80,17 @@ export function useFCM() {
         console.log('✅ FCM inicializado com sucesso');
       } catch (error) {
         console.error('❌ Erro ao inicializar FCM:', error);
-        setError(error.message);
+        
+        // Mensagem de erro mais detalhada
+        let errorMessage = error.message;
+        
+        if (error.message.includes('Missing or insufficient permissions')) {
+          errorMessage = 'Permissões insuficientes. Verifique se: 1) O Service Worker está registrado, 2) A VAPID_KEY está correta no .env, 3) Você está em HTTPS ou localhost.';
+        } else if (error.message.includes('applicationServerKey') || error.message.includes('not valid')) {
+          errorMessage = 'VAPID_KEY inválida. Use o par de chaves completo do Firebase Console (não a chave privada).';
+        }
+        
+        setError(errorMessage);
         setIsInitialized(false);
       } finally {
         setIsLoading(false);
