@@ -57,7 +57,7 @@ export default function TrainerSelector() {
   const [showOnboarding, setShowOnboarding] = useState(false);
   const [onboardingStep, setOnboardingStep] = useState(1);
   const [autoSelectCategory, setAutoSelectCategory] = useState(null);
-  const { install, isInstalled, canInstall } = usePWAInstall();
+  const { install, isInstalled, canInstall, hasDeferredPrompt } = usePWAInstall();
 
 
 
@@ -533,7 +533,13 @@ const handleCloseLevelUpModal = () => {
                     install();
                     setShowMoreMenu(false);
                   }}
-                  className="w-full flex items-center gap-4 p-4 rounded-xl bg-gradient-to-r from-blue-50 to-cyan-50 hover:from-blue-100 hover:to-cyan-100 text-gray-800 transition-all border-2 border-blue-200"
+                  disabled={!hasDeferredPrompt}
+                  className={`w-full flex items-center gap-4 p-4 rounded-xl transition-all border-2 ${
+                    hasDeferredPrompt
+                      ? 'bg-gradient-to-r from-blue-50 to-cyan-50 hover:from-blue-100 hover:to-cyan-100 text-gray-800 border-blue-200'
+                      : 'bg-gray-100 text-gray-400 border-gray-200 cursor-not-allowed'
+                  }`}
+                  title={!hasDeferredPrompt ? 'Aguardando navegador oferecer instalação...' : 'Instalar aplicativo'}
                 >
                   <div className="p-3 rounded-full bg-gradient-to-r from-blue-500 to-cyan-500">
                     <Download className="w-6 h-6 text-white" />

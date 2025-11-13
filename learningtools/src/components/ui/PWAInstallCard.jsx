@@ -2,7 +2,7 @@ import { Download, Smartphone, Zap } from 'lucide-react';
 import { usePWAInstall } from '../../hooks/usePWAInstall';
 
 export default function PWAInstallCard() {
-  const { install, isInstalled, isAvailable } = usePWAInstall();
+  const { install, isInstalled, isAvailable, hasDeferredPrompt } = usePWAInstall();
 
   // Não mostra se já estiver instalado
   if (isInstalled) return null;
@@ -37,10 +37,16 @@ export default function PWAInstallCard() {
         <div className="flex flex-wrap gap-3">
           <button
             onClick={install}
-            className="flex-1 min-w-[140px] bg-white text-blue-600 font-bold py-3 px-6 rounded-xl hover:bg-blue-50 transition-all flex items-center justify-center gap-2 shadow-lg hover:shadow-xl"
+            disabled={!hasDeferredPrompt}
+            className={`flex-1 min-w-[140px] font-bold py-3 px-6 rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg hover:shadow-xl ${
+              hasDeferredPrompt
+                ? 'bg-white text-blue-600 hover:bg-blue-50'
+                : 'bg-gray-200 text-gray-500 cursor-not-allowed'
+            }`}
+            title={!hasDeferredPrompt ? 'Aguardando navegador oferecer instalação...' : 'Instalar aplicativo'}
           >
             <Download className="w-5 h-5" />
-            Instalar Agora
+            {hasDeferredPrompt ? 'Instalar Agora' : 'Aguardando...'}
           </button>
           <button
             onClick={() => {

@@ -12,7 +12,7 @@ const AuthButton = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [showBackupModal, setShowBackupModal] = useState(false);
   const [showNotificationSettings, setShowNotificationSettings] = useState(false);
-  const { install, isInstalled, canInstall } = usePWAInstall();
+  const { install, isInstalled, canInstall, hasDeferredPrompt } = usePWAInstall();
 
   // Escuta evento para abrir configurações de notificações
   useEffect(() => {
@@ -107,10 +107,16 @@ const AuthButton = () => {
                   install();
                   setShowMenu(false);
                 }}
-                className="w-full flex items-center gap-3 px-4 py-3 hover:bg-blue-50 transition-colors text-left text-gray-700 border-b border-gray-200"
+                disabled={!hasDeferredPrompt}
+                className={`w-full flex items-center gap-3 px-4 py-3 transition-colors text-left border-b border-gray-200 ${
+                  hasDeferredPrompt
+                    ? 'text-gray-700 hover:bg-blue-50'
+                    : 'text-gray-400 cursor-not-allowed'
+                }`}
+                title={!hasDeferredPrompt ? 'Aguardando navegador oferecer instalação...' : 'Instalar aplicativo'}
               >
-                <Download size={20} className="text-blue-600" />
-                <span className="font-semibold">Instalar App</span>
+                <Download size={20} className={hasDeferredPrompt ? 'text-blue-600' : 'text-gray-400'} />
+                <span className="font-semibold">{hasDeferredPrompt ? 'Instalar App' : 'Instalar App (aguardando...)'}</span>
               </button>
             )}
 
