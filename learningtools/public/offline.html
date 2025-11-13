@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Offline - LearnFunTools</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      background: #0F172A;
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
+    .container {
+      max-width: 400px;
+    }
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+    .offline-icon {
+      font-size: 2.5rem;
+    }
+    p {
+      font-size: 1.1rem;
+      opacity: 0.9;
+      margin-bottom: 2rem;
+    }
+    .retry-button {
+      background: #0EA5E9;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .retry-button:hover {
+      background: #0284C7;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>
+      <span class="offline-icon">📴</span>
+      Você está offline
+    </h1>
+    <p>Conecte-se à internet para continuar</p>
+    <button class="retry-button" onclick="window.location.reload()">
+      Tentar novamente
+    </button>
+  </div>
+</body>
+</html>
+

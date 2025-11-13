@@ -16,6 +16,8 @@ import {
 import { ReferralWelcomeBonusHandler } from './components/referral/ReferralWelcomeBonusHandler';
 import { ReferralFieldInitializer } from './components/referral/ReferralFieldInitializer';
 import MeetRoom from './components/social/MeetRoom';
+import PWAInstallPrompt from './components/ui/PWAInstallPrompt';
+import OfflineIndicator from './components/ui/OfflineIndicator';
 
 function App() {
   const dispatch = useDispatch();
@@ -77,6 +79,8 @@ function App() {
     <BrowserRouter>
       <ReferralFieldInitializer />
       <ReferralWelcomeBonusHandler />
+      <PWAInstallPrompt />
+      <OfflineIndicator />
 
       <Routes>
         {/* Rota principal com todos os trainers */}
