@@ -5,6 +5,11 @@ import { Provider } from 'react-redux';
 import App from './App.jsx';
 import store from './store/store.js';
 import './index.css';
+import { initializePWAInstallManager } from './utils/pwaInstallManager';
+
+// Inicializa o PWA Install Manager ANTES de renderizar o React
+// Isso garante que o listener esteja ativo desde o início
+initializePWAInstallManager();
 
 registerSW({
   immediate: true,

@@ -16,7 +16,6 @@ import {
 import { ReferralWelcomeBonusHandler } from './components/referral/ReferralWelcomeBonusHandler';
 import { ReferralFieldInitializer } from './components/referral/ReferralFieldInitializer';
 import MeetRoom from './components/social/MeetRoom';
-import PWAInstallPrompt from './components/ui/PWAInstallPrompt';
 import OfflineIndicator from './components/ui/OfflineIndicator';
 import NotificationPrompt from './components/ui/NotificationPrompt';
 import { useNotificationSync } from './hooks/useNotificationSync';
@@ -84,7 +83,6 @@ function App() {
     <BrowserRouter>
       <ReferralFieldInitializer />
       <ReferralWelcomeBonusHandler />
-      <PWAInstallPrompt />
       <OfflineIndicator />
       <NotificationPrompt />
 

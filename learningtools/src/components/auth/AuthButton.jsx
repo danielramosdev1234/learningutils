@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { LogIn, LogOut, User, Download, Bell } from 'lucide-react';
+import { LogIn, LogOut, User, Bell } from 'lucide-react';
 import { loginWithGoogle, logout } from '../../store/slices/userSlice';
 import BackupManager from '../BackupManager';
-import { usePWAInstall } from '../../hooks/usePWAInstall';
 import NotificationSettings from '../settings/NotificationSettings';
 
 const AuthButton = () => {
@@ -12,7 +11,6 @@ const AuthButton = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [showBackupModal, setShowBackupModal] = useState(false);
   const [showNotificationSettings, setShowNotificationSettings] = useState(false);
-  const { install, isInstalled, canInstall, hasDeferredPrompt } = usePWAInstall();
 
   // Escuta evento para abrir configurações de notificações
   useEffect(() => {
@@ -99,26 +97,6 @@ const AuthButton = () => {
               <p className="font-bold text-gray-800">{profile.displayName}</p>
               <p className="text-sm text-gray-600">{profile.email}</p>
             </div>
-
-            {/* PWA Install Option */}
-            {canInstall && !isInstalled && (
-              <button
-                onClick={() => {
-                  install();
-                  setShowMenu(false);
-                }}
-                disabled={!hasDeferredPrompt}
-                className={`w-full flex items-center gap-3 px-4 py-3 transition-colors text-left border-b border-gray-200 ${
-                  hasDeferredPrompt
-                    ? 'text-gray-700 hover:bg-blue-50'
-                    : 'text-gray-400 cursor-not-allowed'
-                }`}
-                title={!hasDeferredPrompt ? 'Aguardando navegador oferecer instalação...' : 'Instalar aplicativo'}
-              >
-                <Download size={20} className={hasDeferredPrompt ? 'text-blue-600' : 'text-gray-400'} />
-                <span className="font-semibold">{hasDeferredPrompt ? 'Instalar App' : 'Instalar App (aguardando...)'}</span>
-              </button>
-            )}
 
             {/* Notification Settings */}
             <button

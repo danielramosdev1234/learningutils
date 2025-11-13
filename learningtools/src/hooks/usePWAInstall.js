@@ -13,21 +13,25 @@ export function usePWAInstall() {
   const [isAvailable, setIsAvailable] = useState(false);
 
   useEffect(() => {
-    // Inicializa o manager global (apenas uma vez)
+    // O manager já foi inicializado no main.jsx, mas garantimos aqui também
     initializePWAInstallManager();
     
     // Verifica estado inicial
     const currentPrompt = getDeferredPrompt();
     const installed = getIsInstalled();
     
+    console.log('🔍 [Hook] Estado inicial - Prompt:', !!currentPrompt, 'Instalado:', installed);
+    
     if (currentPrompt) {
       setDeferredPrompt(currentPrompt);
       setIsAvailable(true);
+      console.log('✅ [Hook] DeferredPrompt encontrado no estado inicial');
     }
     setIsInstalled(installed);
 
     // Subscreve para receber atualizações
     const unsubscribe = subscribeToPWAInstall((prompt) => {
+      console.log('📨 [Hook] Recebida notificação do manager. Prompt:', !!prompt);
       if (prompt) {
         setDeferredPrompt(prompt);
         setIsAvailable(true);
