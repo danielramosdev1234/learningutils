@@ -18,6 +18,7 @@ import { ReferralFieldInitializer } from './components/referral/ReferralFieldIni
 import MeetRoom from './components/social/MeetRoom';
 import PWAInstallPrompt from './components/ui/PWAInstallPrompt';
 import OfflineIndicator from './components/ui/OfflineIndicator';
+import NotificationPrompt from './components/ui/NotificationPrompt';
 import { useNotificationSync } from './hooks/useNotificationSync';
 
 function App() {
@@ -85,6 +86,7 @@ function App() {
       <ReferralWelcomeBonusHandler />
       <PWAInstallPrompt />
       <OfflineIndicator />
+      <NotificationPrompt />
 
       <Routes>
         {/* Rota principal com todos os trainers */}

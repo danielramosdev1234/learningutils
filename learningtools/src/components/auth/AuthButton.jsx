@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { LogIn, LogOut, User, Download, Bell } from 'lucide-react';
 import { loginWithGoogle, logout } from '../../store/slices/userSlice';
@@ -13,6 +13,19 @@ const AuthButton = () => {
   const [showBackupModal, setShowBackupModal] = useState(false);
   const [showNotificationSettings, setShowNotificationSettings] = useState(false);
   const { install, isInstalled, canInstall } = usePWAInstall();
+
+  // Escuta evento para abrir configurações de notificações
+  useEffect(() => {
+    const handleOpenNotificationSettings = () => {
+      setShowNotificationSettings(true);
+    };
+
+    window.addEventListener('openNotificationSettings', handleOpenNotificationSettings);
+    
+    return () => {
+      window.removeEventListener('openNotificationSettings', handleOpenNotificationSettings);
+    };
+  }, []);
 
   const handleLogin = async () => {
     const result = await dispatch(loginWithGoogle());
