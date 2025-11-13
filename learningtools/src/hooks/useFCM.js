@@ -8,6 +8,7 @@ import {
   checkFCMTokenStatus
 } from '../services/fcmService';
 import { requestNotificationPermission } from '../services/notificationService';
+import { logFCMDiagnostics } from '../utils/fcmDiagnostics';
 
 /**
  * Hook para gerenciar Firebase Cloud Messaging
@@ -81,11 +82,15 @@ export function useFCM() {
       } catch (error) {
         console.error('❌ Erro ao inicializar FCM:', error);
         
+        // Executa diagnóstico completo
+        console.log('🔍 Executando diagnóstico FCM...');
+        await logFCMDiagnostics();
+        
         // Mensagem de erro mais detalhada
         let errorMessage = error.message;
         
         if (error.message.includes('Missing or insufficient permissions')) {
-          errorMessage = 'Permissões insuficientes. Verifique se: 1) O Service Worker está registrado, 2) A VAPID_KEY está correta no .env, 3) Você está em HTTPS ou localhost.';
+          errorMessage = 'Permissões insuficientes. Execute o diagnóstico no console (F12) para mais detalhes.';
         } else if (error.message.includes('applicationServerKey') || error.message.includes('not valid')) {
           errorMessage = 'VAPID_KEY inválida. Use o par de chaves completo do Firebase Console (não a chave privada).';
         }

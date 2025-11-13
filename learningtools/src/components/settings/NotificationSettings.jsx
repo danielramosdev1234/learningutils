@@ -267,12 +267,25 @@ export default function NotificationSettings({ onBack }) {
             </div>
             {fcmError && (
               <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-lg">
-                <p className="text-sm text-red-700">
-                  <strong>Erro ao configurar push notifications:</strong> {fcmError}
+                <p className="text-sm text-red-700 font-semibold mb-2">
+                  Erro ao configurar push notifications:
                 </p>
-                <p className="text-xs text-red-600 mt-1">
-                  Verifique se o VAPID_KEY está configurado corretamente no arquivo .env
+                <p className="text-sm text-red-700 mb-2">
+                  {fcmError}
                 </p>
+                <div className="text-xs text-red-600 space-y-1">
+                  <p><strong>Verifique:</strong></p>
+                  <ul className="list-disc list-inside ml-2 space-y-1">
+                    <li>VAPID_KEY no .env está correta? (use o "Par de chaves" completo do Firebase Console)</li>
+                    <li>Você está em HTTPS ou localhost?</li>
+                    <li>Service Worker está registrado? (DevTools → Application → Service Workers)</li>
+                    <li>Permissões de notificação foram concedidas?</li>
+                  </ul>
+                  <p className="mt-2">
+                    <strong>Como corrigir:</strong> No Firebase Console → Cloud Messaging → 
+                    Certificados push da Web → Copie o "Par de chaves" completo (não a chave privada)
+                  </p>
+                </div>
               </div>
             )}
           </div>

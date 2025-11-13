@@ -6,6 +6,25 @@ import { db } from '../config/firebase';
 const VAPID_KEY = import.meta.env.VITE_FIREBASE_VAPID_KEY;
 
 /**
+ * Converte a VAPID key para o formato correto (base64 URL-safe)
+ * O Firebase aceita a chave diretamente, mas pode precisar de ajustes
+ */
+const normalizeVAPIDKey = (key) => {
+  if (!key) return null;
+  
+  // Remove espaços e quebras de linha
+  let normalized = key.trim().replace(/\s+/g, '');
+  
+  // Se já está no formato correto (contém hífens e underscores), retorna como está
+  if (normalized.includes('-') || normalized.includes('_')) {
+    return normalized;
+  }
+  
+  // Se parece ser base64, retorna como está
+  return normalized;
+};
+
+/**
  * Obtém o token FCM do dispositivo
  */
 export const getFCMToken = async () => {
@@ -15,6 +34,29 @@ export const getFCMToken = async () => {
       throw new Error('VAPID_KEY não configurada. Adicione VITE_FIREBASE_VAPID_KEY no arquivo .env');
     }
 
+    // Normaliza a VAPID key
+    const normalizedKey = normalizeVAPIDKey(VAPID_KEY);
+    if (!normalizedKey) {
+      throw new Error('VAPID_KEY está vazia após normalização');
+    }
+
+    // Valida formato da VAPID key
+    if (normalizedKey.length < 80) {
+      throw new Error(
+        `VAPID_KEY muito curta (${normalizedKey.length} caracteres). ` +
+        'Use o par de chaves completo do Firebase Console (não a chave privada). ' +
+        'O par de chaves deve ter mais de 80 caracteres. ' +
+        'No Firebase Console: Cloud Messaging > Certificados push da Web > Par de chaves'
+      );
+    }
+
+    console.log('🔑 VAPID Key configurada:', {
+      length: normalizedKey.length,
+      preview: normalizedKey.substring(0, 30) + '...',
+      hasHyphens: normalizedKey.includes('-'),
+      hasUnderscores: normalizedKey.includes('_')
+    });
+
     const messaging = await getFirebaseMessaging();
     if (!messaging) {
       throw new Error('Firebase Messaging não está disponível');
@@ -22,33 +64,59 @@ export const getFCMToken = async () => {
 
     // Verifica se o Service Worker está registrado
     if (!('serviceWorker' in navigator)) {
-      throw new Error('Service Worker não é suportado');
+      throw new Error('Service Worker não é suportado neste navegador');
+    }
+
+    // Verifica se está em HTTPS ou localhost
+    const isSecure = window.location.protocol === 'https:' || 
+                     window.location.hostname === 'localhost' || 
+                     window.location.hostname === '127.0.0.1';
+    
+    if (!isSecure) {
+      throw new Error(
+        `Push notifications requerem HTTPS ou localhost. ` +
+        `Você está em: ${window.location.protocol}//${window.location.hostname}`
+      );
     }
 
     // Aguarda Service Worker estar totalmente pronto
     let registration;
     try {
+      // Primeiro, verifica se há algum Service Worker registrado
+      const registrations = await navigator.serviceWorker.getRegistrations();
+      console.log('📋 Service Workers registrados:', registrations.length);
+      
+      if (registrations.length === 0) {
+        throw new Error('Nenhum Service Worker registrado. Recarregue a página.');
+      }
+
       registration = await navigator.serviceWorker.ready;
-      console.log('✅ Service Worker registration pronto');
+      console.log('✅ Service Worker registration pronto:', {
+        scope: registration.scope,
+        active: !!registration.active,
+        installing: !!registration.installing,
+        waiting: !!registration.waiting
+      });
     } catch (error) {
-      throw new Error('Service Worker não está disponível. Recarregue a página.');
+      console.error('❌ Erro ao aguardar Service Worker:', error);
+      throw new Error('Service Worker não está disponível. Recarregue a página e verifique se o Service Worker está registrado.');
     }
 
     // Verifica se o Service Worker tem suporte a push
     if (!registration.pushManager) {
-      throw new Error('Push Manager não está disponível no Service Worker');
-    }
-    
-    // Valida formato da VAPID key
-    if (!VAPID_KEY || VAPID_KEY.length < 80) {
-      throw new Error('VAPID_KEY parece estar incorreta. Use o par de chaves completo do Firebase Console (não a chave privada). O par de chaves deve ter mais de 80 caracteres.');
+      throw new Error('Push Manager não está disponível no Service Worker. Verifique se o Service Worker está configurado corretamente.');
     }
 
-    console.log('🔑 Tentando obter token FCM com VAPID key (primeiros 20 chars):', VAPID_KEY.substring(0, 20) + '...');
+    // Verifica permissão de notificações
+    if (Notification.permission !== 'granted') {
+      throw new Error('Permissão de notificações não concedida. Solicite permissão primeiro.');
+    }
+
+    console.log('🔑 Tentando obter token FCM...');
 
     // Obtém o token FCM
     const token = await getToken(messaging, {
-      vapidKey: VAPID_KEY,
+      vapidKey: normalizedKey,
       serviceWorkerRegistration: registration
     });
 
