@@ -123,10 +123,11 @@ self.addEventListener('notificationclose', (event) => {
 });
 
 /**
- * PUSH NOTIFICATIONS - Para notificações do servidor
+ * PUSH NOTIFICATIONS - Firebase Cloud Messaging (FCM)
+ * Recebe mensagens push mesmo com o app fechado
  */
 self.addEventListener('push', (event) => {
-  console.log('📨 Push recebido:', event);
+  console.log('📨 Push recebido (FCM):', event);
 
   let notificationData = {
     title: 'LearnFunTools',
@@ -149,26 +150,63 @@ self.addEventListener('push', (event) => {
     ]
   };
 
-  // Se veio dados do servidor
+  // Processa dados do FCM
   if (event.data) {
     try {
-      const data = event.data.json();
-      notificationData = { ...notificationData, ...data };
+      const payload = event.data.json();
+      console.log('📦 Payload FCM:', payload);
+
+      // FCM envia dados em payload.notification e payload.data
+      if (payload.notification) {
+        notificationData.title = payload.notification.title || notificationData.title;
+        notificationData.body = payload.notification.body || notificationData.body;
+        notificationData.icon = payload.notification.icon || notificationData.icon;
+        notificationData.image = payload.notification.image;
+      }
+
+      // Dados customizados vêm em payload.data
+      if (payload.data) {
+        notificationData.data = {
+          ...notificationData.data,
+          ...payload.data
+        };
+        notificationData.tag = payload.data.tag || payload.data.type || notificationData.tag;
+        
+        // URL customizada se fornecida
+        if (payload.data.url) {
+          notificationData.data.url = payload.data.url;
+        }
+      }
+
+      // Configurações específicas do FCM
+      if (payload.fcmOptions) {
+        notificationData.requireInteraction = payload.fcmOptions.link || false;
+      }
     } catch (e) {
-      notificationData.body = event.data.text();
+      console.error('❌ Erro ao processar payload FCM:', e);
+      // Fallback: tenta ler como texto
+      try {
+        notificationData.body = event.data.text();
+      } catch (textError) {
+        console.error('❌ Erro ao ler dados como texto:', textError);
+      }
     }
   }
+
+  console.log('🔔 Exibindo notificação:', notificationData);
 
   event.waitUntil(
     self.registration.showNotification(notificationData.title, {
       body: notificationData.body,
       icon: notificationData.icon,
       badge: notificationData.badge,
+      image: notificationData.image,
       data: notificationData.data,
       tag: notificationData.tag,
       requireInteraction: notificationData.requireInteraction,
       vibrate: notificationData.vibrate,
-      actions: notificationData.actions
+      actions: notificationData.actions,
+      timestamp: Date.now()
     })
   );
 });

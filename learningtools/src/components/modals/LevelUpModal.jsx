@@ -1,13 +1,43 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Trophy, Star, Sparkles, X, ArrowRight, Volume2, VolumeX } from 'lucide-react';
+import { useSelector } from 'react-redux';
 import applausosSound from '../../assets/aplausos.wav';
 import musicaVitoriaSound from '../../assets/musicadavitoria.mp3';
 import { XP_CONFIG, calculateXPForNextLevel } from '../../store/slices/xpSlice';
+import { notificationAPI } from '../../services/apiService';
+import { loadNotificationSettings } from '../../services/notificationService';
 
 /**
  * Modal de celebração quando passa de nível (XP System)
  */
+
 export const LevelUpModal = ({ isOpen, onClose, newLevel, totalXP = 0 }) => {
+  const { userId, mode } = useSelector(state => state.user);
+
+  // Envia notificação push quando sobe de nível
+  useEffect(() => {
+    if (isOpen && newLevel && mode !== 'guest' && userId) {
+      const sendLevelUpNotification = async () => {
+        try {
+          // Verifica se o usuário tem notificações de conquista habilitadas
+          const settings = await loadNotificationSettings(userId);
+          
+          if (settings?.achievementReminders?.enabled && settings?.achievementReminders?.levelUp) {
+            await notificationAPI.sendAchievement(userId, 'levelUp', {
+              level: newLevel,
+              xp: totalXP
+            });
+            console.log('✅ Notificação de level up enviada');
+          }
+        } catch (error) {
+          console.error('Erro ao enviar notificação de level up:', error);
+          // Não bloqueia a UI se falhar
+        }
+      };
+
+      sendLevelUpNotification();
+    }
+  }, [isOpen, newLevel, userId, mode, totalXP]);
   const [showConfetti, setShowConfetti] = useState(false);
   const [isPlayingMusic, setIsPlayingMusic] = useState(false);
   const [audioStarted, setAudioStarted] = useState(false); // ✅ NOVO: Controla se já tentou tocar

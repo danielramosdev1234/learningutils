@@ -1,6 +1,7 @@
 import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
 import { getAuth, GoogleAuthProvider } from 'firebase/auth';
+import { getMessaging, getToken, onMessage, isSupported } from 'firebase/messaging';
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
@@ -21,3 +22,26 @@ export const googleProvider = new GoogleAuthProvider();
 googleProvider.setCustomParameters({
   prompt: 'select_account'
 });
+
+// Firebase Messaging (apenas no cliente, não no Service Worker)
+let messaging = null;
+
+export const getFirebaseMessaging = async () => {
+  if (typeof window === 'undefined') return null;
+  
+  try {
+    const isMessagingSupported = await isSupported();
+    if (!isMessagingSupported) {
+      console.warn('Firebase Messaging não é suportado neste navegador');
+      return null;
+    }
+    
+    if (!messaging) {
+      messaging = getMessaging(app);
+    }
+    return messaging;
+  } catch (error) {
+    console.error('Erro ao inicializar Firebase Messaging:', error);
+    return null;
+  }
+};

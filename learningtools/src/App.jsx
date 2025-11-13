@@ -19,6 +19,7 @@ import MeetRoom from './components/social/MeetRoom';
 import OfflineIndicator from './components/ui/OfflineIndicator';
 import NotificationPrompt from './components/ui/NotificationPrompt';
 import { useNotificationSync } from './hooks/useNotificationSync';
+import { useFCM } from './hooks/useFCM';
 
 function App() {
   const dispatch = useDispatch();
@@ -30,6 +31,9 @@ function App() {
 
   // Sincroniza dados de notificação com Service Worker
   useNotificationSync();
+  
+  // Inicializa Firebase Cloud Messaging para push notifications
+  useFCM();
 
   // Detecta referral na URL ANTES de inicializar
   useEffect(() => {

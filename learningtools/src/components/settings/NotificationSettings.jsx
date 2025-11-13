@@ -10,6 +10,7 @@ import {
   requestNotificationPermission,
   sendTestNotification
 } from '../../services/notificationService';
+import { useFCM } from '../../hooks/useFCM';
 
 const DAYS_OF_WEEK = [
   { value: 0, label: 'Dom' },
@@ -28,6 +29,9 @@ export default function NotificationSettings({ onBack }) {
   const [saving, setSaving] = useState(false);
   const [permissionStatus, setPermissionStatus] = useState('default');
   const [testNotificationSent, setTestNotificationSent] = useState(false);
+  
+  // Hook FCM para verificar status de push notifications
+  const { isInitialized, hasToken, isLoading: fcmLoading, error: fcmError } = useFCM();
 
   useEffect(() => {
     loadSettings();
@@ -229,6 +233,50 @@ export default function NotificationSettings({ onBack }) {
             </button>
           )}
         </div>
+
+        {/* Status Push Notifications (FCM) */}
+        {mode !== 'guest' && (
+          <div className="bg-white rounded-2xl shadow-md p-6">
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-3">
+                {hasToken && isInitialized ? (
+                  <CheckCircle className="w-6 h-6 text-green-500" />
+                ) : fcmLoading ? (
+                  <div className="w-6 h-6 border-2 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+                ) : (
+                  <AlertCircle className="w-6 h-6 text-yellow-500" />
+                )}
+                <div>
+                  <h2 className="text-xl font-bold text-gray-800">Push Notifications (FCM)</h2>
+                  <p className="text-sm text-gray-600">
+                    {fcmLoading
+                      ? 'Configurando push notifications...'
+                      : hasToken && isInitialized
+                      ? 'Push notifications ativas - Você receberá notificações mesmo com o app fechado'
+                      : fcmError
+                      ? `Erro: ${fcmError}`
+                      : 'Aguardando configuração...'}
+                  </p>
+                </div>
+              </div>
+              {hasToken && isInitialized && (
+                <span className="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm font-semibold">
+                  Ativo
+                </span>
+              )}
+            </div>
+            {fcmError && (
+              <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-lg">
+                <p className="text-sm text-red-700">
+                  <strong>Erro ao configurar push notifications:</strong> {fcmError}
+                </p>
+                <p className="text-xs text-red-600 mt-1">
+                  Verifique se o VAPID_KEY está configurado corretamente no arquivo .env
+                </p>
+              </div>
+            )}
+          </div>
+        )}
 
         {/* Toggle Geral */}
         <div className="bg-white rounded-2xl shadow-md p-6">
