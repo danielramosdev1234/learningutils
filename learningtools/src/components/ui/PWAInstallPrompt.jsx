@@ -1,53 +1,63 @@
 import { useState, useEffect } from 'react';
 import { Download, X } from 'lucide-react';
+import {
+  initializePWAInstallManager,
+  subscribeToPWAInstall,
+  getDeferredPrompt,
+  getIsInstalled,
+  installPWA as globalInstallPWA
+} from '../../utils/pwaInstallManager';
 
 export default function PWAInstallPrompt() {
   const [deferredPrompt, setDeferredPrompt] = useState(null);
   const [showPrompt, setShowPrompt] = useState(false);
 
   useEffect(() => {
-    // Captura o evento de instalação
-    const handler = (e) => {
-      e.preventDefault();
-      setDeferredPrompt(e);
+    // Inicializa o manager global
+    initializePWAInstallManager();
+    
+    // Verifica estado inicial
+    const currentPrompt = getDeferredPrompt();
+    const isInstalled = getIsInstalled();
+    
+    if (currentPrompt && !isInstalled) {
+      setDeferredPrompt(currentPrompt);
+      setShowPrompt(true);
+    }
 
-      // Só mostra se o usuário ainda não instalou
-      const alreadyInstalled = window.matchMedia('(display-mode: standalone)').matches;
-      if (!alreadyInstalled) {
+    // Subscreve para receber atualizações
+    const unsubscribe = subscribeToPWAInstall((prompt) => {
+      if (prompt && !getIsInstalled()) {
+        setDeferredPrompt(prompt);
         setShowPrompt(true);
+      } else {
+        setDeferredPrompt(null);
+        setShowPrompt(false);
       }
-    };
-
-    window.addEventListener('beforeinstallprompt', handler);
-
-    // Detecta se já está instalado
-    window.addEventListener('appinstalled', () => {
-      setShowPrompt(false);
-      setDeferredPrompt(null);
     });
 
     return () => {
-      window.removeEventListener('beforeinstallprompt', handler);
+      unsubscribe();
     };
   }, []);
 
   const handleInstall = async () => {
     if (!deferredPrompt) return;
 
-    // Mostra o prompt nativo
-    deferredPrompt.prompt();
-
-    // Aguarda a escolha do usuário
-    const { outcome } = await deferredPrompt.userChoice;
-
-    if (outcome === 'accepted') {
-      console.log('✅ PWA instalado com sucesso!');
-    } else {
-      console.log('❌ Usuário cancelou a instalação');
+    try {
+      const accepted = await globalInstallPWA();
+      
+      if (accepted) {
+        console.log('✅ PWA instalado com sucesso!');
+      } else {
+        console.log('❌ Usuário cancelou a instalação');
+        setDeferredPrompt(null);
+        setShowPrompt(false);
+      }
+    } catch (error) {
+      console.error('Erro ao instalar:', error);
+      alert(`Erro ao instalar: ${error.message}`);
     }
-
-    setDeferredPrompt(null);
-    setShowPrompt(false);
   };
 
   const handleDismiss = () => {

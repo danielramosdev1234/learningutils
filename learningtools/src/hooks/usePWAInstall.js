@@ -1,4 +1,11 @@
 import { useState, useEffect } from 'react';
+import {
+  initializePWAInstallManager,
+  subscribeToPWAInstall,
+  getDeferredPrompt,
+  getIsInstalled,
+  installPWA as globalInstallPWA
+} from '../utils/pwaInstallManager';
 
 export function usePWAInstall() {
   const [deferredPrompt, setDeferredPrompt] = useState(null);
@@ -6,58 +13,42 @@ export function usePWAInstall() {
   const [isAvailable, setIsAvailable] = useState(false);
 
   useEffect(() => {
-    // Verifica se já está instalado
-    const checkInstalled = () => {
-      const standalone = window.matchMedia('(display-mode: standalone)').matches;
-      const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
-      const isInStandaloneMode = (window.navigator.standalone === true) || standalone;
-      setIsInstalled(isInStandaloneMode);
-      
-      if (isInStandaloneMode) {
-        console.log('✅ App já está instalado');
-      }
-    };
-
-    checkInstalled();
-
-    // Captura o evento de instalação
-    const handler = (e) => {
-      console.log('🎯 Evento beforeinstallprompt capturado!');
-      e.preventDefault();
-      // Salva também no window para acesso global
-      window.deferredPrompt = e;
-      setDeferredPrompt(e);
-      setIsAvailable(true);
-      console.log('✅ DeferredPrompt salvo, instalação disponível');
-    };
-
-    // Verifica se o evento já foi disparado antes do listener ser adicionado
-    // (isso pode acontecer se o componente montar depois do evento)
-    if (window.deferredPrompt) {
-      console.log('📦 DeferredPrompt encontrado no window');
-      setDeferredPrompt(window.deferredPrompt);
+    // Inicializa o manager global (apenas uma vez)
+    initializePWAInstallManager();
+    
+    // Verifica estado inicial
+    const currentPrompt = getDeferredPrompt();
+    const installed = getIsInstalled();
+    
+    if (currentPrompt) {
+      setDeferredPrompt(currentPrompt);
       setIsAvailable(true);
     }
+    setIsInstalled(installed);
 
-    window.addEventListener('beforeinstallprompt', handler);
+    // Subscreve para receber atualizações
+    const unsubscribe = subscribeToPWAInstall((prompt) => {
+      if (prompt) {
+        setDeferredPrompt(prompt);
+        setIsAvailable(true);
+        console.log('✅ [Hook] DeferredPrompt atualizado via manager');
+      } else {
+        setDeferredPrompt(null);
+        setIsAvailable(false);
+        setIsInstalled(true);
+        console.log('✅ [Hook] App instalado ou prompt removido');
+      }
+    });
 
-    // Detecta se já está instalado
-    const installedHandler = () => {
-      console.log('🎉 App instalado!');
-      setIsInstalled(true);
-      setDeferredPrompt(null);
-      setIsAvailable(false);
-      window.deferredPrompt = null;
-    };
-
-    window.addEventListener('appinstalled', installedHandler);
-
-    // Log para debug
-    console.log('🔍 usePWAInstall: Listener registrado. Aguardando beforeinstallprompt...');
+    // Atualiza estado de instalação periodicamente
+    const checkInterval = setInterval(() => {
+      const installed = getIsInstalled();
+      setIsInstalled(installed);
+    }, 1000);
 
     return () => {
-      window.removeEventListener('beforeinstallprompt', handler);
-      window.removeEventListener('appinstalled', installedHandler);
+      unsubscribe();
+      clearInterval(checkInterval);
     };
   }, []);
 
@@ -69,8 +60,8 @@ export function usePWAInstall() {
       return;
     }
 
-    // Tenta usar o deferredPrompt do estado ou do window
-    const promptToUse = deferredPrompt || window.deferredPrompt;
+    // Usa o manager global
+    const promptToUse = getDeferredPrompt();
 
     if (!promptToUse) {
       // Tenta verificar se o evento ainda não foi disparado
@@ -90,20 +81,8 @@ export function usePWAInstall() {
         return;
       }
 
-      // Verifica se o Service Worker está registrado
-      if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.getRegistration().then(registration => {
-          if (!registration) {
-            console.warn('⚠️ Service Worker não está registrado');
-          } else {
-            console.log('✅ Service Worker registrado:', registration.scope);
-          }
-        });
-      }
-
-      // Verifica se já está instalado (pode ter sido perdido no estado)
-      const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
-      if (isStandalone) {
+      // Verifica se já está instalado
+      if (getIsInstalled()) {
         alert('✅ O app já está instalado! Procure pelo ícone na sua tela inicial.');
         return;
       }
@@ -125,37 +104,17 @@ Tente:
 Se o problema persistir, verifique o console do navegador (F12) para mais detalhes.`;
 
       alert(message);
-      console.log('📋 Informações de debug:', {
-        protocol: window.location.protocol,
-        hostname: window.location.hostname,
-        hasManifest: !!manifestLink,
-        hasServiceWorker: 'serviceWorker' in navigator,
-        isStandalone,
-        userAgent: navigator.userAgent
-      });
       return;
     }
 
     try {
       console.log('🚀 Iniciando instalação do PWA...');
+      const accepted = await globalInstallPWA();
       
-      // Mostra o prompt nativo
-      await promptToUse.prompt();
-      console.log('📱 Prompt de instalação exibido');
-
-      // Aguarda a escolha do usuário
-      const { outcome } = await promptToUse.userChoice;
-      console.log('👤 Escolha do usuário:', outcome);
-
-      if (outcome === 'accepted') {
+      if (accepted) {
         console.log('✅ PWA instalado com sucesso!');
-        // Não limpa o deferredPrompt aqui, o evento appinstalled vai fazer isso
       } else {
         console.log('❌ Usuário cancelou a instalação');
-        // Limpa apenas se cancelou
-        setDeferredPrompt(null);
-        setIsAvailable(false);
-        window.deferredPrompt = null;
       }
     } catch (error) {
       console.error('❌ Erro ao instalar PWA:', error);
@@ -167,8 +126,8 @@ Se o problema persistir, verifique o console do navegador (F12) para mais detalh
     install,
     isInstalled,
     isAvailable: isAvailable && !isInstalled,
-    canInstall: (!!deferredPrompt || !!window.deferredPrompt) && !isInstalled,
-    hasDeferredPrompt: !!deferredPrompt || !!window.deferredPrompt,
+    canInstall: !!deferredPrompt && !isInstalled,
+    hasDeferredPrompt: !!deferredPrompt,
   };
 }
 
