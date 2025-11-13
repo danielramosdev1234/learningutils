@@ -16,12 +16,12 @@ export const loadNotificationSettings = async (userId = null) => {
       daysOfWeek: [1, 2, 3, 4, 5, 6, 0] // Todos os dias
     },
     inactivityReminders: {
-      enabled: false,
+      enabled: true,
       daysWithoutActivity: 1, // Lembrar após 1 dia sem atividade
       message: 'Você está sem treinar há {days} dia(s)! Volte e mantenha sua sequência! 🔥'
     },
     streakReminders: {
-      enabled: false,
+      enabled: true,
       reminderTime: '20:00', // Horário para lembrar de manter streak
       daysBeforeExpiry: [1], // Lembrar 1 dia antes de expirar
       message: 'Não perca sua sequência de {streak} dias! Treine hoje para manter o fogo! 🔥'
