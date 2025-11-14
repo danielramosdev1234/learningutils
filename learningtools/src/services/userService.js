@@ -124,16 +124,18 @@ const generateReferralCode = (displayName) => {
 
 /**
  * Salva dados do usuário autenticado no cache local (offline)
+ * Inclui xpSystem se fornecido
  */
-export const saveAuthUserDataToCache = (userId, userData) => {
+export const saveAuthUserDataToCache = (userId, userData, xpSystem = null) => {
   try {
     const cacheKey = `learnfun_auth_cache_${userId}`;
     const cacheData = {
       ...userData,
+      ...(xpSystem && { xpSystem }), // Inclui xpSystem se fornecido
       cachedAt: new Date().toISOString()
     };
     localStorage.setItem(cacheKey, JSON.stringify(cacheData));
-    console.log('💾 Dados salvos no cache local (offline)');
+    console.log('💾 Dados salvos no cache local (offline)', xpSystem ? '(com XP)' : '');
   } catch (error) {
     console.error('❌ Erro ao salvar cache local:', error);
   }
@@ -221,8 +223,9 @@ export const loadAuthUserData = async (userId, retryCount = 3) => {
             }
           }
 
-          // Salva no cache local para uso offline
-          saveAuthUserDataToCache(userId, data);
+          // Salva no cache local para uso offline (inclui xpSystem se existir)
+          const xpSystem = data.xpSystem || null;
+          saveAuthUserDataToCache(userId, data, xpSystem);
 
           return data;
         } else {

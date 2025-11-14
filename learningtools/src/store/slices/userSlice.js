@@ -134,6 +134,16 @@ export const initializeUser = createAsyncThunk(
           const cachedData = loadAuthUserDataFromCache(currentUser.uid);
           if (cachedData) {
             console.log('✅ Usando dados do cache local (primeira vez ou offline)');
+            
+            // Se tem xpSystem no cache, carrega XP também
+            if (cachedData.xpSystem) {
+              try {
+                await dispatch(loadXPData(currentUser.uid)).unwrap();
+              } catch (xpError) {
+                console.warn('⚠️ Erro ao carregar XP do cache (continuando):', xpError);
+              }
+            }
+            
             return {
               mode: 'authenticated',
               userId: currentUser.uid,
@@ -272,10 +282,40 @@ export const initializeUser = createAsyncThunk(
     } catch (error) {
       console.error('❌ ERRO CRÍTICO em initializeUser:', error);
       
-      // Se o usuário está autenticado mas houve erro, retorna pelo menos o perfil
+      // Se o usuário está autenticado mas houve erro, tenta cache antes de retornar estado inicial
       const currentUser = getCurrentUser();
       if (currentUser) {
-        console.log('⚠️ Erro na inicialização, mas usuário está autenticado. Retornando perfil básico.');
+        console.log('⚠️ Erro na inicialização, tentando cache local...');
+        const cachedData = loadAuthUserDataFromCache(currentUser.uid);
+        
+        if (cachedData) {
+          console.log('✅ Usando dados do cache local após erro');
+          
+          // Se tem xpSystem no cache, carrega XP também
+          if (cachedData.xpSystem) {
+            try {
+              await dispatch(loadXPData(currentUser.uid)).unwrap();
+            } catch (xpError) {
+              console.warn('⚠️ Erro ao carregar XP do cache (continuando):', xpError);
+            }
+          }
+          
+          return {
+            mode: 'authenticated',
+            userId: currentUser.uid,
+            profile: {
+              displayName: currentUser.displayName,
+              email: currentUser.email,
+              photoURL: currentUser.photoURL
+            },
+            progress: cachedData.progress || initialState.progress,
+            stats: cachedData.stats || initialState.stats,
+            levelSystem: cachedData.levelSystem || initialState.levelSystem,
+            referral: cachedData.referral || initialState.referral
+          };
+        }
+        
+        console.log('⚠️ Nenhum cache encontrado, retornando perfil básico.');
         return {
           mode: 'authenticated',
           userId: currentUser.uid,

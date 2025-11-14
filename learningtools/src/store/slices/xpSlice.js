@@ -158,11 +158,37 @@ export const addXP = createAsyncThunk(
 
       // 1️⃣ ATUALIZA DOCUMENTO PRINCIPAL (atomic operation)
       const userRef = doc(db, 'users', userId);
-      await updateDoc(userRef, {
-        'xpSystem.totalXP': increment(amount),
-        [`xpSystem.xpBreakdown.${mode}`]: increment(amount),
-        'xpSystem.xpToday': increment(amount),
-        'xpSystem.lastUpdated': serverTimestamp()
+      try {
+        await updateDoc(userRef, {
+          'xpSystem.totalXP': increment(amount),
+          [`xpSystem.xpBreakdown.${mode}`]: increment(amount),
+          'xpSystem.xpToday': increment(amount),
+          'xpSystem.lastUpdated': serverTimestamp()
+        });
+      } catch (firestoreError) {
+        console.warn('⚠️ Erro ao salvar XP no Firestore (continuando para cache):', firestoreError.message);
+        // Continua para salvar no cache mesmo se Firestore falhar
+      }
+      
+      // Salva no cache local também
+      const xpData = {
+        totalXP: newTotalXP,
+        xpBreakdown: {
+          ...state.xpBreakdown,
+          [mode]: (state.xpBreakdown[mode] || 0) + amount
+        },
+        xpToday: (state.xpToday || 0) + amount,
+        lastUpdated: new Date()
+      };
+      
+      // Importa função de cache (evita dependência circular)
+      const { saveAuthUserDataToCache } = await import('../../services/userService');
+      const cachedData = JSON.parse(localStorage.getItem(`learnfun_auth_cache_${userId}`) || '{}');
+      saveAuthUserDataToCache(userId, cachedData, {
+        totalXP: xpData.totalXP,
+        xpBreakdown: xpData.xpBreakdown,
+        xpToday: xpData.xpToday,
+        lastUpdated: xpData.lastUpdated.toISOString()
       });
 
       // 2️⃣ REGISTRA NO HISTÓRICO (não bloqueia a operação principal)
@@ -196,50 +222,175 @@ export const addXP = createAsyncThunk(
 );
 
 /**
- * Carrega dados de XP do Firebase
+ * Carrega dados de XP do cache local (offline)
+ */
+const loadXPDataFromCache = (userId) => {
+  try {
+    const cacheKey = `learnfun_auth_cache_${userId}`;
+    const cachedStr = localStorage.getItem(cacheKey);
+    
+    if (cachedStr) {
+      const cachedData = JSON.parse(cachedStr);
+      const xpSystem = cachedData.xpSystem || {};
+      
+      if (xpSystem.totalXP !== undefined) {
+        console.log('📦 XP carregado do cache local (offline)');
+        console.log('   Total XP:', xpSystem.totalXP);
+        
+        const lastUpdatedDate = xpSystem.lastUpdated ? new Date(xpSystem.lastUpdated) : new Date();
+        const today = new Date();
+        let xpToday = xpSystem.xpToday || 0;
+        
+        // Se o último update foi em outro dia, reseta xpToday
+        if (lastUpdatedDate.toDateString() !== today.toDateString()) {
+          xpToday = 0;
+        }
+        
+        return {
+          totalXP: xpSystem.totalXP || 0,
+          xpBreakdown: xpSystem.xpBreakdown || initialState.xpBreakdown,
+          xpToday,
+          lastUpdated: lastUpdatedDate
+        };
+      }
+    }
+    
+    return null;
+  } catch (error) {
+    console.error('❌ Erro ao carregar XP do cache:', error);
+    return null;
+  }
+};
+
+/**
+ * Salva dados de XP no cache local
+ */
+const saveXPDataToCache = (userId, xpData) => {
+  try {
+    const cacheKey = `learnfun_auth_cache_${userId}`;
+    const cachedStr = localStorage.getItem(cacheKey);
+    
+    if (cachedStr) {
+      const cachedData = JSON.parse(cachedStr);
+      cachedData.xpSystem = {
+        totalXP: xpData.totalXP,
+        xpBreakdown: xpData.xpBreakdown,
+        xpToday: xpData.xpToday,
+        lastUpdated: xpData.lastUpdated?.toISOString ? xpData.lastUpdated.toISOString() : new Date().toISOString()
+      };
+      localStorage.setItem(cacheKey, JSON.stringify(cachedData));
+      console.log('💾 XP salvo no cache local');
+    }
+  } catch (error) {
+    console.error('❌ Erro ao salvar XP no cache:', error);
+  }
+};
+
+/**
+ * Verifica se está online
+ */
+const isOnline = () => {
+  return navigator.onLine;
+};
+
+/**
+ * Carrega dados de XP do Firebase (com fallback para cache offline)
  */
 export const loadXPData = createAsyncThunk(
   'xp/loadXPData',
   async (userId, { rejectWithValue }) => {
     try {
-      const userRef = doc(db, 'users', userId);
-      const userDoc = await getDoc(userRef);
+      // Tenta carregar do Firestore
+      let lastError = null;
+      try {
+        const userRef = doc(db, 'users', userId);
+        const userDoc = await getDoc(userRef);
 
-      if (!userDoc.exists()) {
-        return initialState;
+        if (!userDoc.exists()) {
+          // Tenta cache antes de retornar initialState
+          const cachedXP = loadXPDataFromCache(userId);
+          if (cachedXP) {
+            return cachedXP;
+          }
+          return initialState;
+        }
+
+        const data = userDoc.data();
+        const xpSystem = data.xpSystem || {};
+
+        const lastUpdatedTimestamp = xpSystem.lastUpdated || null;
+        let lastUpdatedDate = lastUpdatedTimestamp?.toDate ? lastUpdatedTimestamp.toDate() : null;
+        const today = new Date();
+        let xpToday = xpSystem.xpToday || 0;
+
+        if (lastUpdatedDate && lastUpdatedDate.toDateString() !== today.toDateString()) {
+          try {
+            await updateDoc(userRef, {
+              'xpSystem.xpToday': 0,
+              'xpSystem.lastUpdated': serverTimestamp()
+            });
+            xpToday = 0;
+            lastUpdatedDate = today;
+          } catch (updateError) {
+            console.warn('⚠️ Erro ao atualizar xpToday (continuando):', updateError.message);
+          }
+        } else if (!lastUpdatedDate) {
+          try {
+            await updateDoc(userRef, {
+              'xpSystem.lastUpdated': serverTimestamp()
+            });
+            lastUpdatedDate = today;
+          } catch (updateError) {
+            console.warn('⚠️ Erro ao atualizar lastUpdated (continuando):', updateError.message);
+          }
+        }
+
+        const xpData = {
+          totalXP: xpSystem.totalXP || 0,
+          xpBreakdown: xpSystem.xpBreakdown || initialState.xpBreakdown,
+          xpToday,
+          lastUpdated: lastUpdatedDate
+        };
+
+        // Salva no cache
+        saveXPDataToCache(userId, xpData);
+
+        return xpData;
+
+      } catch (error) {
+        lastError = error;
+        console.warn('⚠️ Erro ao carregar XP do Firestore:', error.message);
+        
+        // Se não está online, tenta cache imediatamente
+        if (!isOnline()) {
+          console.log('📴 Sem conexão, tentando cache local para XP...');
+          const cachedXP = loadXPDataFromCache(userId);
+          if (cachedXP) {
+            return cachedXP;
+          }
+        }
       }
 
-      const data = userDoc.data();
-      const xpSystem = data.xpSystem || {};
-
-      const lastUpdatedTimestamp = xpSystem.lastUpdated || null;
-      let lastUpdatedDate = lastUpdatedTimestamp?.toDate ? lastUpdatedTimestamp.toDate() : null;
-      const today = new Date();
-      let xpToday = xpSystem.xpToday || 0;
-
-      if (lastUpdatedDate && lastUpdatedDate.toDateString() !== today.toDateString()) {
-        await updateDoc(userRef, {
-          'xpSystem.xpToday': 0,
-          'xpSystem.lastUpdated': serverTimestamp()
-        });
-        xpToday = 0;
-        lastUpdatedDate = today;
-      } else if (!lastUpdatedDate) {
-        await updateDoc(userRef, {
-          'xpSystem.lastUpdated': serverTimestamp()
-        });
-        lastUpdatedDate = today;
+      // Se todas as tentativas falharam, tenta cache
+      console.log('⚠️ Tentando carregar XP do cache local...');
+      const cachedXP = loadXPDataFromCache(userId);
+      if (cachedXP) {
+        console.log('✅ XP carregado do cache local');
+        return cachedXP;
       }
 
-      return {
-        totalXP: xpSystem.totalXP || 0,
-        xpBreakdown: xpSystem.xpBreakdown || initialState.xpBreakdown,
-        xpToday,
-        lastUpdated: lastUpdatedDate
-      };
+      console.error('❌ Erro ao carregar XP do Firestore e cache:', lastError);
+      return initialState;
 
     } catch (error) {
       console.error('❌ Error loading XP:', error);
+      
+      // Última tentativa: cache
+      const cachedXP = loadXPDataFromCache(userId);
+      if (cachedXP) {
+        return cachedXP;
+      }
+      
       return rejectWithValue(error.message);
     }
   }
