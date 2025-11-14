@@ -197,7 +197,7 @@ export default function LevelRankingModal({ isOpen, onClose, currentUserId }) {
                           <div className="relative z-10">
                             <div className="relative inline-block mb-3">
                               <div className="absolute -inset-2 bg-gradient-to-r from-yellow-300 to-yellow-400 rounded-full blur-xl opacity-60 animate-pulse"></div>
-                              <div className="relative w-28 h-28 rounded-full bg-gradient-to-br from-yellow-300 via-yellow-400 to-yellow-500 flex items-center justify-center text-4xl border-4 border-white shadow-2xl">
+                              <div className="relative rounded-full bg-gradient-to-br from-yellow-300 via-yellow-400 to-yellow-500 flex items-center justify-center text-4xl border-4 border-white shadow-2xl">
                                 {top3[0].photoURL ? (
                                   <img
                                     src={top3[0].photoURL}
