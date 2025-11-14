@@ -1,0 +1,722 @@
+[
+  {
+    "text": "This is a protocol deviation.",
+    "translation": "Isto é um desvio de protocolo.",
+    "category": "clinical_research",
+    "theme": "protocol_deviation",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "clinical_001"
+  },
+  {
+    "text": "We need to document the deviation.",
+    "translation": "Precisamos documentar o desvio.",
+    "category": "clinical_research",
+    "theme": "protocol_deviation",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "clinical_002"
+  },
+  {
+    "text": "Was this deviation major or minor?",
+    "translation": "Este desvio foi maior ou menor?",
+    "category": "clinical_research",
+    "theme": "protocol_deviation",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "clinical_003"
+  },
+  {
+    "text": "Please complete the deviation form.",
+    "translation": "Por favor, complete o formulário de desvio.",
+    "category": "clinical_research",
+    "theme": "protocol_deviation",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "clinical_004"
+  },
+  {
+    "text": "The patient signed the informed consent.",
+    "translation": "O paciente assinou o consentimento informado.",
+    "category": "clinical_research",
+    "theme": "informed_consent",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "clinical_005"
+  },
+  {
+    "text": "Did you explain all the risks?",
+    "translation": "Você explicou todos os riscos?",
+    "category": "clinical_research",
+    "theme": "informed_consent",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "clinical_006"
+  },
+  {
+    "text": "The consent form needs to be updated.",
+    "translation": "O formulário de consentimento precisa ser atualizado.",
+    "category": "clinical_research",
+    "theme": "informed_consent",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "clinical_007"
+  },
+  {
+    "text": "We need a witness signature.",
+    "translation": "Precisamos de uma assinatura de testemunha.",
+    "category": "clinical_research",
+    "theme": "informed_consent",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "clinical_008"
+  },
+  {
+    "text": "The patient is eligible for enrollment.",
+    "translation": "O paciente é elegível para inclusão.",
+    "category": "clinical_research",
+    "theme": "enrollment",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "clinical_009"
+  },
+  {
+    "text": "Please check the inclusion criteria.",
+    "translation": "Por favor, verifique os critérios de inclusão.",
+    "category": "clinical_research",
+    "theme": "enrollment",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "clinical_010"
+  },
+  {
+    "text": "Does the patient meet all criteria?",
+    "translation": "O paciente atende a todos os critérios?",
+    "category": "clinical_research",
+    "theme": "enrollment",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "clinical_011"
+  },
+  {
+    "text": "We need to screen more patients.",
+    "translation": "Precisamos triar mais pacientes.",
+    "category": "clinical_research",
+    "theme": "enrollment",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "clinical_012"
+  },
+  {
+    "text": "This is an adverse event.",
+    "translation": "Isto é um evento adverso.",
+    "category": "clinical_research",
+    "theme": "adverse_events",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "clinical_013"
+  },
+  {
+    "text": "Is this event related to the study drug?",
+    "translation": "Este evento está relacionado ao medicamento do estudo?",
+    "category": "clinical_research",
+    "theme": "adverse_events",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "clinical_014"
+  },
+  {
+    "text": "We need to report this immediately.",
+    "translation": "Precisamos relatar isto imediatamente.",
+    "category": "clinical_research",
+    "theme": "adverse_events",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "clinical_015"
+  },
+  {
+    "text": "What is the severity grade?",
+    "translation": "Qual é o grau de severidade?",
+    "category": "clinical_research",
+    "theme": "adverse_events",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "clinical_016"
+  },
+  {
+    "text": "This is a serious adverse event.",
+    "translation": "Isto é um evento adverso sério.",
+    "category": "clinical_research",
+    "theme": "sae_reporting",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "clinical_017"
+  },
+  {
+    "text": "The SAE must be reported within twenty-four hours.",
+    "translation": "O EAS deve ser relatado dentro de vinte e quatro horas.",
+    "category": "clinical_research",
+    "theme": "sae_reporting",
+    "difficulty": 3,
+    "environment": "production",
+    "id": "clinical_018"
+  },
+  {
+    "text": "Please complete the SAE form.",
+    "translation": "Por favor, complete o formulário de EAS.",
+    "category": "clinical_research",
+    "theme": "sae_reporting",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "clinical_019"
+  },
+  {
+    "text": "Did you notify the ethics committee?",
+    "translation": "Você notificou o comitê de ética?",
+    "category": "clinical_research",
+    "theme": "sae_reporting",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "clinical_020"
+  },
+  {
+    "text": "We need to perform source data verification.",
+    "translation": "Precisamos realizar verificação de dados fonte.",
+    "category": "clinical_research",
+    "theme": "data_monitoring",
+    "difficulty": 3,
+    "environment": "production",
+    "id": "clinical_021"
+  },
+  {
+    "text": "The monitor is reviewing the records.",
+    "translation": "O monitor está revisando os registros.",
+    "category": "clinical_research",
+    "theme": "data_monitoring",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "clinical_022"
+  },
+  {
+    "text": "Please prepare the source documents.",
+    "translation": "Por favor, prepare os documentos fonte.",
+    "category": "clinical_research",
+    "theme": "data_monitoring",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "clinical_023"
+  },
+  {
+    "text": "The data must match the source.",
+    "translation": "Os dados devem corresponder à fonte.",
+    "category": "clinical_research",
+    "theme": "data_monitoring",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "clinical_024"
+  },
+  {
+    "text": "We follow Good Clinical Practice guidelines.",
+    "translation": "Seguimos as diretrizes de Boas Práticas Clínicas.",
+    "category": "clinical_research",
+    "theme": "gcp_compliance",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "clinical_025"
+  },
+  {
+    "text": "This study is GCP compliant.",
+    "translation": "Este estudo está em conformidade com BPC.",
+    "category": "clinical_research",
+    "theme": "gcp_compliance",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "clinical_026"
+  },
+  {
+    "text": "All staff must be GCP certified.",
+    "translation": "Toda equipe deve ser certificada em BPC.",
+    "category": "clinical_research",
+    "theme": "gcp_compliance",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "clinical_027"
+  },
+  {
+    "text": "When does your GCP certificate expire?",
+    "translation": "Quando seu certificado de BPC expira?",
+    "category": "clinical_research",
+    "theme": "gcp_compliance",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "clinical_028"
+  },
+  {
+    "text": "The IRB approved the protocol.",
+    "translation": "O CEP aprovou o protocolo.",
+    "category": "clinical_research",
+    "theme": "regulatory",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "clinical_029"
+  },
+  {
+    "text": "We need IRB approval for this amendment.",
+    "translation": "Precisamos de aprovação do CEP para esta emenda.",
+    "category": "clinical_research",
+    "theme": "regulatory",
+    "difficulty": 3,
+    "environment": "production",
+    "id": "clinical_030"
+  },
+  {
+    "text": "Please submit the annual report.",
+    "translation": "Por favor, envie o relatório anual.",
+    "category": "clinical_research",
+    "theme": "regulatory",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "clinical_031"
+  },
+  {
+    "text": "The regulatory documents are in order.",
+    "translation": "Os documentos regulatórios estão em ordem.",
+    "category": "clinical_research",
+    "theme": "regulatory",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "clinical_032"
+  },
+  {
+    "text": "We need to randomize the patient.",
+    "translation": "Precisamos randomizar o paciente.",
+    "category": "clinical_research",
+    "theme": "study_procedures",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "clinical_033"
+  },
+  {
+    "text": "What is the randomization number?",
+    "translation": "Qual é o número de randomização?",
+    "category": "clinical_research",
+    "theme": "study_procedures",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "clinical_034"
+  },
+  {
+    "text": "The visit window is seven days.",
+    "translation": "A janela de visita é de sete dias.",
+    "category": "clinical_research",
+    "theme": "study_procedures",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "clinical_035"
+  },
+  {
+    "text": "Please collect the blood samples.",
+    "translation": "Por favor, colete as amostras de sangue.",
+    "category": "clinical_research",
+    "theme": "study_procedures",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "clinical_036"
+  },
+  {
+    "text": "The drug must be stored at room temperature.",
+    "translation": "O medicamento deve ser armazenado em temperatura ambiente.",
+    "category": "clinical_research",
+    "theme": "drug_management",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "clinical_037"
+  },
+  {
+    "text": "Please check the temperature logs.",
+    "translation": "Por favor, verifique os registros de temperatura.",
+    "category": "clinical_research",
+    "theme": "drug_management",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "clinical_038"
+  },
+  {
+    "text": "We need to account for all study drugs.",
+    "translation": "Precisamos contabilizar todos os medicamentos do estudo.",
+    "category": "clinical_research",
+    "theme": "drug_management",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "clinical_039"
+  },
+  {
+    "text": "The drug has expired.",
+    "translation": "O medicamento expirou.",
+    "category": "clinical_research",
+    "theme": "drug_management",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "clinical_040"
+  },
+  {
+    "text": "Please update the case report form.",
+    "translation": "Por favor, atualize o formulário de relato de caso.",
+    "category": "clinical_research",
+    "theme": "documentation",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "clinical_041"
+  },
+  {
+    "text": "The CRF needs to be completed.",
+    "translation": "O CRF precisa ser completado.",
+    "category": "clinical_research",
+    "theme": "documentation",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "clinical_042"
+  },
+  {
+    "text": "There are queries in the database.",
+    "translation": "Há queries no banco de dados.",
+    "category": "clinical_research",
+    "theme": "documentation",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "clinical_043"
+  },
+  {
+    "text": "Please resolve the open queries.",
+    "translation": "Por favor, resolva as queries abertas.",
+    "category": "clinical_research",
+    "theme": "documentation",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "clinical_044"
+  },
+  {
+    "text": "The patient withdrew consent.",
+    "translation": "O paciente retirou o consentimento.",
+    "category": "clinical_research",
+    "theme": "patient_management",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "clinical_045"
+  },
+  {
+    "text": "We need to schedule the follow-up visit.",
+    "translation": "Precisamos agendar a visita de acompanhamento.",
+    "category": "clinical_research",
+    "theme": "patient_management",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "clinical_046"
+  },
+  {
+    "text": "The patient missed the appointment.",
+    "translation": "O paciente perdeu a consulta.",
+    "category": "clinical_research",
+    "theme": "patient_management",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "clinical_047"
+  },
+  {
+    "text": "Please contact the patient for reschedule.",
+    "translation": "Por favor, contate o paciente para reagendar.",
+    "category": "clinical_research",
+    "theme": "patient_management",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "clinical_048"
+  },
+  {
+    "text": "The audit is scheduled for next week.",
+    "translation": "A auditoria está agendada para a próxima semana.",
+    "category": "clinical_research",
+    "theme": "audits_inspections",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "clinical_049"
+  },
+  {
+    "text": "We need to prepare for the inspection.",
+    "translation": "Precisamos nos preparar para a inspeção.",
+    "category": "clinical_research",
+    "theme": "audits_inspections",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "clinical_050"
+  },
+  {
+    "text": "The auditor found no major findings.",
+    "translation": "O auditor não encontrou achados maiores.",
+    "category": "clinical_research",
+    "theme": "audits_inspections",
+    "difficulty": 3,
+    "environment": "production",
+    "id": "clinical_051"
+  },
+  {
+    "text": "Please provide the corrective action plan.",
+    "translation": "Por favor, forneça o plano de ação corretiva.",
+    "category": "clinical_research",
+    "theme": "audits_inspections",
+    "difficulty": 3,
+    "environment": "production",
+    "id": "clinical_052"
+  },
+  {
+    "text": "The lab results are out of range.",
+    "translation": "Os resultados laboratoriais estão fora da faixa.",
+    "category": "clinical_research",
+    "theme": "laboratory",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "clinical_053"
+  },
+  {
+    "text": "We need to repeat the test.",
+    "translation": "Precisamos repetir o teste.",
+    "category": "clinical_research",
+    "theme": "laboratory",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "clinical_054"
+  },
+  {
+    "text": "The samples were sent to the central lab.",
+    "translation": "As amostras foram enviadas para o laboratório central.",
+    "category": "clinical_research",
+    "theme": "laboratory",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "clinical_055"
+  },
+  {
+    "text": "Please label the specimens correctly.",
+    "translation": "Por favor, etiquete os espécimes corretamente.",
+    "category": "clinical_research",
+    "theme": "laboratory",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "clinical_056"
+  },
+  {
+    "text": "The sponsor will visit next month.",
+    "translation": "O patrocinador visitará no próximo mês.",
+    "category": "clinical_research",
+    "theme": "sponsor_communication",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "clinical_057"
+  },
+  {
+    "text": "We need to send the progress report.",
+    "translation": "Precisamos enviar o relatório de progresso.",
+    "category": "clinical_research",
+    "theme": "sponsor_communication",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "clinical_058"
+  },
+  {
+    "text": "The CRO requested additional documents.",
+    "translation": "A CRO solicitou documentos adicionais.",
+    "category": "clinical_research",
+    "theme": "sponsor_communication",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "clinical_059"
+  },
+  {
+    "text": "Please respond to the sponsor query.",
+    "translation": "Por favor, responda à query do patrocinador.",
+    "category": "clinical_research",
+    "theme": "sponsor_communication",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "clinical_060"
+  },
+  {
+    "text": "The study has reached its enrollment target.",
+    "translation": "O estudo atingiu sua meta de inclusão.",
+    "category": "clinical_research",
+    "theme": "study_milestones",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "clinical_061"
+  },
+  {
+    "text": "We completed the last patient visit.",
+    "translation": "Completamos a última visita do paciente.",
+    "category": "clinical_research",
+    "theme": "study_milestones",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "clinical_062"
+  },
+  {
+    "text": "The database lock is next week.",
+    "translation": "O fechamento do banco de dados é na próxima semana.",
+    "category": "clinical_research",
+    "theme": "study_milestones",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "clinical_063"
+  },
+  {
+    "text": "We need to close out the site.",
+    "translation": "Precisamos encerrar o centro.",
+    "category": "clinical_research",
+    "theme": "study_milestones",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "clinical_064"
+  },
+  {
+    "text": "This protocol requires special training.",
+    "translation": "Este protocolo requer treinamento especial.",
+    "category": "clinical_research",
+    "theme": "training",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "clinical_065"
+  },
+  {
+    "text": "All staff must complete the training module.",
+    "translation": "Toda equipe deve completar o módulo de treinamento.",
+    "category": "clinical_research",
+    "theme": "training",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "clinical_066"
+  },
+  {
+    "text": "Please sign the delegation log.",
+    "translation": "Por favor, assine o registro de delegação.",
+    "category": "clinical_research",
+    "theme": "training",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "clinical_067"
+  },
+  {
+    "text": "Your training certificate is on file.",
+    "translation": "Seu certificado de treinamento está arquivado.",
+    "category": "clinical_research",
+    "theme": "training",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "clinical_068"
+  },
+  {
+    "text": "We need to maintain patient confidentiality.",
+    "translation": "Precisamos manter a confidencialidade do paciente.",
+    "category": "clinical_research",
+    "theme": "ethics",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "clinical_069"
+  },
+  {
+    "text": "All data must be anonymized.",
+    "translation": "Todos os dados devem ser anonimizados.",
+    "category": "clinical_research",
+    "theme": "ethics",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "clinical_070"
+  },
+  {
+    "text": "This study follows the Declaration of Helsinki.",
+    "translation": "Este estudo segue a Declaração de Helsinque.",
+    "category": "clinical_research",
+    "theme": "ethics",
+    "difficulty": 3,
+    "environment": "production",
+    "id": "clinical_071"
+  },
+  {
+    "text": "Patient safety is our priority.",
+    "translation": "A segurança do paciente é nossa prioridade.",
+    "category": "clinical_research",
+    "theme": "ethics",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "clinical_072"
+  },
+  {
+    "text": "The safety report was submitted on time.",
+    "translation": "O relatório de segurança foi enviado no prazo.",
+    "category": "clinical_research",
+    "theme": "safety_reporting",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "clinical_073"
+  },
+  {
+    "text": "We monitor all safety signals.",
+    "translation": "Monitoramos todos os sinais de segurança.",
+    "category": "clinical_research",
+    "theme": "safety_reporting",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "clinical_074"
+  },
+  {
+    "text": "Please update the safety database.",
+    "translation": "Por favor, atualize o banco de dados de segurança.",
+    "category": "clinical_research",
+    "theme": "safety_reporting",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "clinical_075"
+  },
+  {
+    "text": "The data safety monitoring board reviewed the data.",
+    "translation": "O comitê de monitoramento de segurança de dados revisou os dados.",
+    "category": "clinical_research",
+    "theme": "safety_reporting",
+    "difficulty": 3,
+    "environment": "production",
+    "id": "clinical_076"
+  },
+  {
+    "text": "We need to archive the essential documents.",
+    "translation": "Precisamos arquivar os documentos essenciais.",
+    "category": "clinical_research",
+    "theme": "archiving",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "clinical_077"
+  },
+  {
+    "text": "The documents must be retained for fifteen years.",
+    "translation": "Os documentos devem ser retidos por quinze anos.",
+    "category": "clinical_research",
+    "theme": "archiving",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "clinical_078"
+  },
+  {
+    "text": "Where is the investigator site file?",
+    "translation": "Onde está o arquivo do centro investigador?",
+    "category": "clinical_research",
+    "theme": "archiving",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "clinical_079"
+  },
+  {
+    "text": "All documents are stored securely.",
+    "translation": "Todos os documentos estão armazenados com segurança.",
+    "category": "clinical_research",
+    "theme": "archiving",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "clinical_080"
+  }
+]

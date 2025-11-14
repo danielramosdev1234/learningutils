@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Briefcase, ShoppingBag, Plane, Users, Home, ArrowLeft, Play, Trophy, Target, Code } from 'lucide-react';
+import { Briefcase, ShoppingBag, Plane, Users, Home, ArrowLeft, Play, Trophy, Target, Code, Activity, FileText } from 'lucide-react';
 import { PhraseCard } from './PhraseCard';
 import { useTextToSpeech } from '../../hooks/useTextToSpeech';
 import { PhraseRepository } from '../../services/phraseRepository';
@@ -61,7 +61,15 @@ const CATEGORIES = [
     color: 'from-cyan-500 to-blue-600',
     description: 'Tech Interview - Fullstack Developer',
     emoji: '💻'
-  }
+  },
+{
+  id: 'clinical_research',
+  name: 'Clinical Research',
+  icon: Activity, // ou FileText
+  color: 'from-teal-500 to-emerald-600',
+  description: 'Clinical trials and research',
+  emoji: '🔬'
+}
 ];
 
 const TOUR_STORAGE_KEY = 'learnfun_daily_basics_tour_v1';

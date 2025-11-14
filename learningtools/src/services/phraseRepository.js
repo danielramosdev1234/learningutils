@@ -8,6 +8,7 @@ import socialEnglishPhrases from '../data/social_english_phrases.json';
 import travelSurvivalPhrases from '../data/travel_survival_phrases.json';
 import phrasesData from '../data/phrases.json';
 import techInterviewPhrases from '../data/tech_interview_phrases.json';
+import clinicalResearchPhrases from '../data/clinical_research_phrases.json';
 
 export class PhraseRepository {
   /**
@@ -42,7 +43,8 @@ export class PhraseRepository {
         ...shoppingMoneyPhrases,
         ...socialEnglishPhrases,
         ...travelSurvivalPhrases,
-        ...techInterviewPhrases
+        ...techInterviewPhrases,
+        ...clinicalResearchPhrases
       ];
 
       console.log(`📚 Total de frases carregadas: ${allPhrases.length}`);
@@ -128,7 +130,8 @@ export class PhraseRepository {
       'professional_english',
       'shopping_money',
       'social_english',
-      'travel_survival'
+      'travel_survival',
+      'clinical_research'
     ];
 
     return categories.map(categoryId => ({
