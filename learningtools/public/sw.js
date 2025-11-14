@@ -160,8 +160,40 @@ self.addEventListener('push', (event) => {
       if (payload.notification) {
         notificationData.title = payload.notification.title || notificationData.title;
         notificationData.body = payload.notification.body || notificationData.body;
-        notificationData.icon = payload.notification.icon || notificationData.icon;
-        notificationData.image = payload.notification.image;
+        
+        // Converte caminho relativo do ícone para URL absoluta
+        let iconPath = payload.notification.icon || notificationData.icon;
+        if (iconPath && !iconPath.startsWith('http')) {
+          iconPath = new URL(iconPath, self.location.origin).href;
+        }
+        notificationData.icon = iconPath;
+        
+        // Converte caminho relativo da imagem para URL absoluta
+        if (payload.notification.image) {
+          let imagePath = payload.notification.image;
+          if (!imagePath.startsWith('http')) {
+            imagePath = new URL(imagePath, self.location.origin).href;
+          }
+          notificationData.image = imagePath;
+        }
+      }
+      
+      // Verifica também em payload.webpush.notification (FCM pode enviar aqui)
+      if (payload.webpush && payload.webpush.notification) {
+        if (payload.webpush.notification.icon) {
+          let iconPath = payload.webpush.notification.icon;
+          if (!iconPath.startsWith('http')) {
+            iconPath = new URL(iconPath, self.location.origin).href;
+          }
+          notificationData.icon = iconPath;
+        }
+        if (payload.webpush.notification.badge) {
+          let badgePath = payload.webpush.notification.badge;
+          if (!badgePath.startsWith('http')) {
+            badgePath = new URL(badgePath, self.location.origin).href;
+          }
+          notificationData.badge = badgePath;
+        }
       }
 
       // Dados customizados vêm em payload.data
@@ -175,6 +207,24 @@ self.addEventListener('push', (event) => {
         // URL customizada se fornecida
         if (payload.data.url) {
           notificationData.data.url = payload.data.url;
+        }
+        
+        // Ícone também pode vir em payload.data (fallback)
+        if (payload.data.icon && !notificationData.icon.startsWith('http')) {
+          let iconPath = payload.data.icon;
+          if (!iconPath.startsWith('http')) {
+            iconPath = new URL(iconPath, self.location.origin).href;
+          }
+          notificationData.icon = iconPath;
+        }
+        
+        // Badge também pode vir em payload.data (fallback)
+        if (payload.data.badge && !notificationData.badge.startsWith('http')) {
+          let badgePath = payload.data.badge;
+          if (!badgePath.startsWith('http')) {
+            badgePath = new URL(badgePath, self.location.origin).href;
+          }
+          notificationData.badge = badgePath;
         }
       }
 
@@ -193,7 +243,29 @@ self.addEventListener('push', (event) => {
     }
   }
 
-  console.log('🔔 Exibindo notificação:', notificationData);
+  // ✅ CRÍTICO: Converte caminhos relativos para URLs absolutas
+  // Isso é necessário porque o Service Worker precisa de URLs absolutas
+  // quando processa notificações push (app pode estar fechado)
+  if (notificationData.icon && !notificationData.icon.startsWith('http')) {
+    notificationData.icon = new URL(notificationData.icon, self.location.origin).href;
+    console.log('🔗 [SW] Ícone convertido para URL absoluta:', notificationData.icon);
+  }
+  if (notificationData.badge && !notificationData.badge.startsWith('http')) {
+    notificationData.badge = new URL(notificationData.badge, self.location.origin).href;
+    console.log('🔗 [SW] Badge convertido para URL absoluta:', notificationData.badge);
+  }
+  if (notificationData.image && !notificationData.image.startsWith('http')) {
+    notificationData.image = new URL(notificationData.image, self.location.origin).href;
+    console.log('🔗 [SW] Imagem convertida para URL absoluta:', notificationData.image);
+  }
+
+  console.log('🔔 [SW] Exibindo notificação:', {
+    title: notificationData.title,
+    body: notificationData.body,
+    icon: notificationData.icon,
+    badge: notificationData.badge,
+    tag: notificationData.tag
+  });
 
   event.waitUntil(
     self.registration.showNotification(notificationData.title, {
@@ -207,6 +279,14 @@ self.addEventListener('push', (event) => {
       vibrate: notificationData.vibrate,
       actions: notificationData.actions,
       timestamp: Date.now()
+    }).then(() => {
+      console.log('✅ [SW] Notificação exibida com sucesso!');
+    }).catch((error) => {
+      console.error('❌ [SW] Erro ao exibir notificação:', error);
+      console.error('❌ [SW] Detalhes do erro:', {
+        message: error.message,
+        stack: error.stack
+      });
     })
   );
 });
