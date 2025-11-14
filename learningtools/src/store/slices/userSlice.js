@@ -10,7 +10,8 @@ import {
   saveGuestData,
   loadAuthUserData,
   saveAuthUserData,
-  migrateGuestToAuth
+  migrateGuestToAuth,
+  loadAuthUserDataFromCache
 } from '../../services/userService';
 import {
   generateReferralCode,
@@ -123,13 +124,36 @@ export const initializeUser = createAsyncThunk(
         // ✅ USUÁRIO AUTENTICADO
         console.log('👤 Usuário autenticado:', currentUser.uid);
 
-        // ✅ PASSO 1: Carrega dados do Firebase (com retry automático)
+        // ✅ PASSO 1: Carrega dados do Firebase (com retry automático e fallback para cache)
         const userData = await loadAuthUserData(currentUser.uid, 3);
 
         if (!userData) {
-          console.log('🆕 Primeira vez deste usuário - será criado no login');
+          console.log('🆕 Primeira vez deste usuário ou sem dados no Firestore');
+          
+          // Última tentativa: tenta carregar do cache local
+          const cachedData = loadAuthUserDataFromCache(currentUser.uid);
+          if (cachedData) {
+            console.log('✅ Usando dados do cache local (primeira vez ou offline)');
+            return {
+              mode: 'authenticated',
+              userId: currentUser.uid,
+              profile: {
+                displayName: currentUser.displayName,
+                email: currentUser.email,
+                photoURL: currentUser.photoURL
+              },
+              progress: cachedData.progress || initialState.progress,
+              stats: cachedData.stats || initialState.stats,
+              levelSystem: cachedData.levelSystem || initialState.levelSystem,
+              referral: cachedData.referral || {
+                ...initialState.referral,
+                referredBy: referredByCode || null
+              }
+            };
+          }
 
-          // Retorna estado inicial, perfil será criado no loginWithGoogle
+          // Se não tem cache também, retorna estado inicial
+          console.log('🆕 Criando perfil inicial zerado');
           return {
             mode: 'authenticated',
             userId: currentUser.uid,

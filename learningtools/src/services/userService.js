@@ -123,60 +123,158 @@ const generateReferralCode = (displayName) => {
 };
 
 /**
- * Carrega dados do usuário autenticado do Firestore
+ * Salva dados do usuário autenticado no cache local (offline)
  */
-export const loadAuthUserData = async (userId) => {
+export const saveAuthUserDataToCache = (userId, userData) => {
+  try {
+    const cacheKey = `learnfun_auth_cache_${userId}`;
+    const cacheData = {
+      ...userData,
+      cachedAt: new Date().toISOString()
+    };
+    localStorage.setItem(cacheKey, JSON.stringify(cacheData));
+    console.log('💾 Dados salvos no cache local (offline)');
+  } catch (error) {
+    console.error('❌ Erro ao salvar cache local:', error);
+  }
+};
+
+/**
+ * Carrega dados do usuário autenticado do cache local (offline)
+ */
+export const loadAuthUserDataFromCache = (userId) => {
+  try {
+    const cacheKey = `learnfun_auth_cache_${userId}`;
+    const cachedStr = localStorage.getItem(cacheKey);
+    
+    if (cachedStr) {
+      const cachedData = JSON.parse(cachedStr);
+      console.log('📦 Dados carregados do cache local (offline)');
+      console.log('📍 CurrentIndex do cache:', cachedData.progress?.chunkTrainer?.currentIndex);
+      console.log('📅 Cache criado em:', cachedData.cachedAt);
+      return cachedData;
+    }
+    
+    return null;
+  } catch (error) {
+    console.error('❌ Erro ao carregar cache local:', error);
+    return null;
+  }
+};
+
+/**
+ * Verifica se está online
+ */
+const isOnline = () => {
+  return navigator.onLine;
+};
+
+/**
+ * Carrega dados do usuário autenticado do Firestore (com fallback para cache offline)
+ */
+export const loadAuthUserData = async (userId, retryCount = 3) => {
   try {
     if (!userId) {
       console.error('❌ userId é obrigatório');
       return null;
     }
 
-    const userDocRef = doc(db, 'users', userId);
-    const userDoc = await getDoc(userDocRef);
+    // Tenta carregar do Firestore
+    let lastError = null;
+    for (let i = 0; i < retryCount; i++) {
+      try {
+        const userDocRef = doc(db, 'users', userId);
+        const userDoc = await getDoc(userDocRef);
 
-    if (userDoc.exists()) {
-      const data = userDoc.data();
-      console.log('✅ Dados carregados do Firestore');
-      console.log('📍 CurrentIndex do Firebase:', data.progress?.chunkTrainer?.currentIndex);
+        if (userDoc.exists()) {
+          const data = userDoc.data();
+          console.log('✅ Dados carregados do Firestore');
+          console.log('📍 CurrentIndex do Firebase:', data.progress?.chunkTrainer?.currentIndex);
 
-      // Valida estrutura de referral
-      if (data.referral) {
-        const referralCode = data.referral.code || generateReferralCode(data.profile?.displayName);
+          // Valida estrutura de referral
+          if (data.referral) {
+            const referralCode = data.referral.code || generateReferralCode(data.profile?.displayName);
 
-        data.referral = {
-          code: referralCode,
-          referredBy: data.referral.referredBy || null,
-          totalInvites: data.referral.totalInvites || 0,
-          successfulInvites: Array.isArray(data.referral.successfulInvites)
-            ? data.referral.successfulInvites
-            : [],
-          pending: Array.isArray(data.referral.pending)
-            ? data.referral.pending
-            : [],
-          rewards: {
-            skipPhrases: data.referral.rewards?.skipPhrases || 0,
-            totalEarned: data.referral.rewards?.totalEarned || 0
-          },
-          hasReceivedWelcomeBonus: data.referral.hasReceivedWelcomeBonus || false
-        };
+            data.referral = {
+              code: referralCode,
+              referredBy: data.referral.referredBy || null,
+              totalInvites: data.referral.totalInvites || 0,
+              successfulInvites: Array.isArray(data.referral.successfulInvites)
+                ? data.referral.successfulInvites
+                : [],
+              pending: Array.isArray(data.referral.pending)
+                ? data.referral.pending
+                : [],
+              rewards: {
+                skipPhrases: data.referral.rewards?.skipPhrases || 0,
+                totalEarned: data.referral.rewards?.totalEarned || 0
+              },
+              hasReceivedWelcomeBonus: data.referral.hasReceivedWelcomeBonus || false
+            };
 
-        // Salva o código gerado no Firestore se foi gerado agora
-        if (!userDoc.data().referral.code) {
-          await updateDoc(userDocRef, {
-            'referral.code': referralCode
-          });
-          console.log('✅ Código de referral gerado:', referralCode);
+            // Salva o código gerado no Firestore se foi gerado agora
+            if (!userDoc.data().referral.code) {
+              await updateDoc(userDocRef, {
+                'referral.code': referralCode
+              });
+              console.log('✅ Código de referral gerado:', referralCode);
+            }
+          }
+
+          // Salva no cache local para uso offline
+          saveAuthUserDataToCache(userId, data);
+
+          return data;
+        } else {
+          console.log('ℹ️ Primeira vez deste usuário');
+          
+          // Tenta carregar do cache mesmo sendo primeira vez (pode ter dados não sincronizados)
+          const cachedData = loadAuthUserDataFromCache(userId);
+          if (cachedData) {
+            console.log('⚠️ Usuário não existe no Firestore, mas tem cache local. Usando cache.');
+            return cachedData;
+          }
+          
+          return null;
+        }
+      } catch (error) {
+        lastError = error;
+        console.warn(`⚠️ Tentativa ${i + 1}/${retryCount} falhou:`, error.message);
+        
+        // Se não está online, tenta cache imediatamente
+        if (!isOnline()) {
+          console.log('📴 Sem conexão detectada, tentando cache local...');
+          break;
+        }
+        
+        // Aguarda antes de tentar novamente (exceto na última tentativa)
+        if (i < retryCount - 1) {
+          await new Promise(resolve => setTimeout(resolve, 1000 * (i + 1)));
         }
       }
-
-      return data;
-    } else {
-      console.log('ℹ️ Primeira vez deste usuário');
-      return null;
     }
+
+    // Se todas as tentativas falharam, tenta carregar do cache local
+    console.log('⚠️ Não foi possível carregar do Firestore, tentando cache local...');
+    const cachedData = loadAuthUserDataFromCache(userId);
+    
+    if (cachedData) {
+      console.log('✅ Usando dados do cache local (modo offline)');
+      return cachedData;
+    }
+
+    console.error('❌ Erro ao carregar dados do Firestore e cache local:', lastError);
+    return null;
   } catch (error) {
-    console.error('❌ Erro ao carregar dados do Firestore:', error);
+    console.error('❌ Erro ao carregar dados:', error);
+    
+    // Última tentativa: cache local
+    const cachedData = loadAuthUserDataFromCache(userId);
+    if (cachedData) {
+      console.log('✅ Usando dados do cache local após erro');
+      return cachedData;
+    }
+    
     return null;
   }
 };
@@ -255,14 +353,46 @@ export const saveAuthUserData = async (userId, profile, progress, stats, levelSy
     // Remove valores undefined antes de salvar
     const cleanedData = removeUndefined(dataToSave);
 
-    await setDoc(userDocRef, cleanedData, { merge: true });
+    // Tenta salvar no Firestore
+    try {
+      await setDoc(userDocRef, cleanedData, { merge: true });
+      console.log('✅ Dados salvos no Firestore');
+      console.log('📍 CurrentIndex salvo:', progress?.chunkTrainer?.currentIndex);
+    } catch (firestoreError) {
+      console.warn('⚠️ Erro ao salvar no Firestore (continuando para salvar cache):', firestoreError.message);
+      // Continua para salvar no cache mesmo se Firestore falhar
+    }
 
-    console.log('✅ Dados salvos no Firestore');
-    console.log('📍 CurrentIndex salvo:', progress?.chunkTrainer?.currentIndex);
+    // SEMPRE salva no cache local (para uso offline)
+    const userData = {
+      profile,
+      progress,
+      stats,
+      levelSystem,
+      referral
+    };
+    saveAuthUserDataToCache(userId, userData);
+
     return true;
   } catch (error) {
-    console.error('❌ Erro ao salvar no Firestore:', error);
+    console.error('❌ Erro ao salvar dados:', error);
     console.error('   Stack:', error.stack);
+    
+    // Tenta salvar no cache mesmo em caso de erro
+    try {
+      const userData = {
+        profile,
+        progress,
+        stats,
+        levelSystem,
+        referral
+      };
+      saveAuthUserDataToCache(userId, userData);
+      console.log('💾 Dados salvos no cache local mesmo após erro');
+    } catch (cacheError) {
+      console.error('❌ Erro ao salvar cache local:', cacheError);
+    }
+    
     return false;
   }
 };
