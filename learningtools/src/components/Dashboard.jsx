@@ -342,6 +342,9 @@ description: (
          {/* PWA Install Card */}
          <PWAInstallCard />
 
+         {/* Level Indicator */}
+                         <LevelIndicator variant="full" />
+
          {/* Streak Progress Bar */}
          <div className="bg-white rounded-2xl shadow-md p-4 mb-4" onClick={() => setShowModal(true)}>
            <div className="flex items-center justify-between mb-3">
@@ -425,8 +428,7 @@ description: (
                    />
                  )}
 
-        {/* Level Indicator */}
-                <LevelIndicator variant="full" />
+
 
         <LevelRankingModal
                   isOpen={showRankingModal}
