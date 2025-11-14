@@ -9,7 +9,7 @@
     "id": "tech_001"
   },
   {
-    "text": "I'm a fullstack developer.",
+    "text": "I'm a full stack developer.",
     "translation": "Sou um desenvolvedor fullstack.",
     "category": "tech_interview",
     "theme": "introduction",
@@ -90,7 +90,7 @@
     "id": "tech_010"
   },
   {
-    "text": "I use React for frontend.",
+    "text": "I use React for front end.",
     "translation": "Uso React para frontend.",
     "category": "tech_interview",
     "theme": "technologies",
@@ -108,7 +108,7 @@
     "id": "tech_012"
   },
   {
-    "text": "I know Node.js well.",
+    "text": "I know Node js well.",
     "translation": "Conheço bem Node.js.",
     "category": "tech_interview",
     "theme": "technologies",
@@ -126,7 +126,7 @@
     "id": "tech_014"
   },
   {
-    "text": "I use PostgreSQL database.",
+    "text": "I use Postgre SQL database.",
     "translation": "Uso banco de dados PostgreSQL.",
     "category": "tech_interview",
     "theme": "technologies",
@@ -216,7 +216,7 @@
     "id": "tech_024"
   },
   {
-    "text": "I handled the frontend development.",
+    "text": "I handled the front end development.",
     "translation": "Cuidei do desenvolvimento frontend.",
     "category": "tech_interview",
     "theme": "projects",
@@ -279,7 +279,7 @@
     "id": "tech_031"
   },
   {
-    "text": "I understand component lifecycle.",
+    "text": "I understand component life cycle.",
     "translation": "Entendo o ciclo de vida dos componentes.",
     "category": "tech_interview",
     "theme": "react",
@@ -414,7 +414,7 @@
     "id": "tech_046"
   },
   {
-    "text": "What about your Node.js skills?",
+    "text": "What about your Node js skills?",
     "translation": "E suas habilidades em Node.js?",
     "category": "tech_interview",
     "theme": "nodejs",
