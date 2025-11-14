@@ -52,7 +52,7 @@ export const useTextToSpeech = () => {
     };
   }, []);
 
-  const speak = useCallback((text, onEnd = null, rate = 0.9) => {
+  const speak = useCallback((text, onEnd = null, rate = 0.8) => {
     if (!('speechSynthesis' in window)) {
       console.error('Speech synthesis not supported');
       alert('Your browser does not support text-to-speech');

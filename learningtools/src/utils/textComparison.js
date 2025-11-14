@@ -1,3 +1,151 @@
+// ========================================
+// NUMBER WORDS TO NUMERIC
+// ========================================
+const NUMBER_WORDS = {
+  'zero': '0', 'one': '1', 'two': '2', 'three': '3', 'four': '4',
+  'five': '5', 'six': '6', 'seven': '7', 'eight': '8', 'nine': '9',
+  'ten': '10', 'eleven': '11', 'twelve': '12', 'thirteen': '13',
+  'fourteen': '14', 'fifteen': '15', 'sixteen': '16', 'seventeen': '17',
+  'eighteen': '18', 'nineteen': '19', 'twenty': '20', 'thirty': '30',
+  'forty': '40', 'fifty': '50', 'sixty': '60', 'seventy': '70',
+  'eighty': '80', 'ninety': '90', 'hundred': '100', 'thousand': '1000'
+};
+
+// ========================================
+// TECH TERMS MAPPING (variações comuns do reconhecimento de voz)
+// ========================================
+const TECH_TERMS_MAP = {
+  // Databases
+  'postgresql': 'postgresql',
+  'postgres ql': 'postgresql',
+  'postgres': 'postgresql',
+  'postgres sequel': 'postgresql',
+  'postgresql database': 'postgresql',
+  
+  'mongodb': 'mongodb',
+  'mongo db': 'mongodb',
+  'mongo': 'mongodb',
+  'mongo database': 'mongodb',
+  
+  'mysql': 'mysql',
+  'my sql': 'mysql',
+  'my sequel': 'mysql',
+  
+  'redis': 'redis',
+  'reddis': 'redis',
+  'red is': 'redis',
+  
+  // Frameworks & Libraries
+  'angular': 'angular',
+  'angular js': 'angular',
+  'angularjs': 'angular',
+  
+  'react': 'react',
+  'react js': 'react',
+  'reactjs': 'react',
+  
+  'vue': 'vue',
+  'vue js': 'vue',
+  'vuejs': 'vue',
+  
+  'node js': 'nodejs',
+  'nodejs': 'nodejs',
+  'node': 'nodejs',
+  'node dot js': 'nodejs',
+  'node point js': 'nodejs',
+  'node.js': 'nodejs',
+  'node dot j s': 'nodejs',
+  
+  'express': 'express',
+  'express js': 'express',
+  'expressjs': 'express',
+  
+  // APIs & Protocols
+  'apis': 'apis',
+  'api': 'apis',
+  'a p i': 'apis',
+  'a p i s': 'apis',
+  'api s': 'apis',
+  
+  'rest': 'rest',
+  'rest api': 'rest',
+  'restful': 'rest',
+  
+  'graphql': 'graphql',
+  'graph ql': 'graphql',
+  'graph q l': 'graphql',
+  
+  // Cloud & DevOps
+  'aws': 'aws',
+  'a w s': 'aws',
+  'amazon web services': 'aws',
+  
+  'docker': 'docker',
+  'docker container': 'docker',
+  
+  'kubernetes': 'kubernetes',
+  'k eight s': 'kubernetes',
+  'kube': 'kubernetes',
+  
+  // Languages
+  'javascript': 'javascript',
+  'java script': 'javascript',
+  'js': 'javascript',
+  
+  'typescript': 'typescript',
+  'type script': 'typescript',
+  'ts': 'typescript',
+  
+  'python': 'python',
+  'python three': 'python',
+  'python 3': 'python',
+  
+  'java': 'java',
+  'java language': 'java',
+  
+  // Tools & Others
+  'git': 'git',
+  'git hub': 'github',
+  'github': 'github',
+  
+  'html': 'html',
+  'h t m l': 'html',
+  
+  'css': 'css',
+  'c s s': 'css',
+  
+  'json': 'json',
+  'j s o n': 'json',
+  
+  'xml': 'xml',
+  'x m l': 'xml',
+  
+  'http': 'http',
+  'h t t p': 'http',
+  
+  'https': 'https',
+  'h t t p s': 'https',
+  
+  'url': 'url',
+  'u r l': 'url',
+  
+  'ui': 'ui',
+  'u i': 'ui',
+  'user interface': 'ui',
+  
+  'ux': 'ux',
+  'u x': 'ux',
+  'user experience': 'ux',
+  
+  'sql': 'sql',
+  's q l': 'sql',
+  'sequel': 'sql',
+  
+  'nosql': 'nosql',
+  'no sql': 'nosql',
+  'no sequel': 'nosql',
+};
+
 const CONTRACTION_MAP = {
   // ========================================
   // NEGATIVE CONTRACTIONS (todas as formas)
@@ -321,6 +469,45 @@ const CONTRACTION_MAP = {
 // FUNÇÃO MELHORADA
 // ========================================
 
+// Normaliza números escritos por extenso para numéricos
+const normalizeNumbers = (text) => {
+  let normalized = text.toLowerCase();
+  
+  // Ordena por tamanho (maior primeiro) para evitar substituições parciais
+  const sortedKeys = Object.keys(NUMBER_WORDS).sort((a, b) => b.length - a.length);
+  
+  sortedKeys.forEach(word => {
+    const numeric = NUMBER_WORDS[word];
+    // Match com word boundaries para evitar falsos positivos
+    const regex = new RegExp(`\\b${word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'gi');
+    normalized = normalized.replace(regex, numeric);
+  });
+  
+  return normalized;
+};
+
+// Normaliza termos técnicos para suas formas padrão
+const normalizeTechTerms = (text) => {
+  let normalized = text.toLowerCase();
+  
+  // Ordena por tamanho (maior primeiro) para evitar substituições parciais
+  const sortedKeys = Object.keys(TECH_TERMS_MAP).sort((a, b) => b.length - a.length);
+  
+  sortedKeys.forEach(variant => {
+    const standard = TECH_TERMS_MAP[variant];
+    // Escapa caracteres especiais do regex
+    const escaped = variant.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    // Substitui espaços por \s* para permitir espaços opcionais
+    // Substitui pontos por [.\s]* para permitir pontos ou espaços
+    const pattern = escaped.replace(/\s+/g, '\\s*').replace(/\./g, '[.\\s]*');
+    // Match com word boundaries
+    const regex = new RegExp(`\\b${pattern}\\b`, 'gi');
+    normalized = normalized.replace(regex, standard);
+  });
+  
+  return normalized;
+};
+
 const normalizeContractions = (text) => {
   let normalized = text.toLowerCase().trim();
 
@@ -372,15 +559,33 @@ const getEditDistance = (str1, str2) => {
 
 export const compareTexts = (original, spoken) => {
   const normalize = (text) => {
-    let normalized = text.toLowerCase()
-      .replace(/[^\w\s']/g, '') // Mantém apóstrofos temporariamente
+    // 1. Converte para minúsculas
+    let normalized = text.toLowerCase();
+    
+    // 2. Normaliza termos técnicos PRIMEIRO (antes de remover pontuação)
+    // Isso garante que "node.js", "node js", "node dot js" virem todos "nodejs"
+    normalized = normalizeTechTerms(normalized);
+    
+    // 3. Normaliza números escritos por extenso
+    normalized = normalizeNumbers(normalized);
+    
+    // 4. Remove pontuação, substituindo por espaço
+    // Isso garante que "node.js" vire "node js" após normalização técnica
+    normalized = normalized
+      .replace(/[^\w\s']/g, ' ') // Substitui pontuação por espaço
+      .replace(/\s+/g, ' ') // Normaliza múltiplos espaços em um único espaço
       .trim();
 
-    // ✅ ADICIONE ESTA LINHA:
+    // 5. Normaliza contrações
     normalized = normalizeContractions(normalized);
 
-    // Remove apóstrofos após normalização
-    return normalized.replace(/'/g, '');
+    // 6. Remove apóstrofos após normalização
+    normalized = normalized.replace(/'/g, '');
+    
+    // 7. Normaliza espaços finais novamente
+    normalized = normalized.replace(/\s+/g, ' ').trim();
+
+    return normalized;
   };
 
   const originalNorm = normalize(original);
