@@ -160,78 +160,59 @@ export const LevelIndicator = ({ variant = 'full' }) => {
               {/* Level Badge Compacto */}
               <div className="relative">
                 {/* Badge de Nível - Compacto Futurístico */}
-                <div className="relative flex items-center gap-2 bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl px-3 py-2 border border-cyan-300/40 shadow-md z-10">
-                  <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-gradient-to-br from-cyan-400 to-blue-500">
-                    <Trophy size={16} className="text-white" aria-hidden="true" />
+                <div className="relative flex items-center gap-2 bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl px-3 py-2 sm:px-4 sm:py-2.5 border border-yellow-300/40 shadow-md z-10">
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg flex items-center justify-center bg-gradient-to-br from-yellow-400 to-yellow-500">
+                    <Trophy size={16} className="sm:w-5 sm:h-5 text-white" aria-hidden="true" />
                   </div>
-                  <div className="leading-none">
-                    <p className="text-[9px] font-semibold uppercase tracking-wide text-cyan-600">Level</p>
-                    <p className="text-xl font-bold text-gray-900">{currentLevel}</p>
-                  </div>
+
+
+                                    <div className="relative">
+                                     {/* Label Ranking */}
+                                                                         <p className="text-[9px] sm:text-xs font-semibold uppercase tracking-wide text-gray-500 mb-1">Ranking</p>
+
+                                      {/* Glow Effect baseado na posição */}
+                                      <div className={`absolute -inset-0.5 rounded-lg blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${
+                                        userRankingPosition === 1
+                                          ? 'bg-gradient-to-r from-yellow-400/40 to-amber-500/40'
+                                          : userRankingPosition === 2
+                                          ? 'bg-gradient-to-r from-slate-400/40 to-slate-500/40'
+                                          : userRankingPosition === 3
+                                          ? 'bg-gradient-to-r from-amber-600/40 to-orange-600/40'
+                                          : 'bg-gradient-to-r from-indigo-500/40 to-purple-500/40'
+                                      }`} />
+
+                                      <div className={`relative flex items-center gap-1.5 rounded-lg  py-1.5 sm:px-3 sm:py-2 `}>
+                                        {userRankingPosition <= 3 && (
+                                          <Crown size={12} className={`sm:w-4 sm:h-4 ${
+                                            userRankingPosition === 1
+                                              ? 'text-yellow-600'
+                                              : userRankingPosition === 2
+                                              ? 'text-slate-600'
+                                              : 'text-orange-600'
+                                          }`} aria-hidden="true" />
+                                        )}
+                                        <span className="text-gray-900 text-sm sm:text-base font-bold">#{userRankingPosition}</span>
+                                      </div>
+                                    </div>
                 </div>
               </div>
 
               {/* Rank Badge Mini - Com Moldura de Medalha e Glow Effect */}
               {userRankingPosition && userRankingPosition <= 10 && (
-                <div className="relative">
-                  {/* Moldura de Medalha (se estiver no top 10) */}
-                  {medalFrameClass && (
-                    <div className={medalFrameClass.replace('rounded-xl sm:rounded-2xl', 'rounded-lg')}>
-                      <div className={`w-full h-full rounded-lg shadow-inner ${
-                        userRankingPosition === 1
-                          ? 'bg-gradient-to-br from-yellow-300 via-amber-200 to-yellow-400'
-                          : userRankingPosition === 2
-                          ? 'bg-gradient-to-br from-slate-200 via-slate-100 to-slate-300'
-                          : userRankingPosition === 3
-                          ? 'bg-gradient-to-br from-amber-300 via-orange-200 to-amber-400'
-                          : 'bg-gradient-to-br from-indigo-200 via-purple-200 to-pink-200'
-                      }`} />
-                    </div>
-                  )}
-                  
-                  {/* Glow Effect baseado na posição */}
-                  <div className={`absolute -inset-0.5 rounded-lg blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${
-                    userRankingPosition === 1
-                      ? 'bg-gradient-to-r from-yellow-400/40 to-amber-500/40'
-                      : userRankingPosition === 2
-                      ? 'bg-gradient-to-r from-slate-400/40 to-slate-500/40'
-                      : userRankingPosition === 3
-                      ? 'bg-gradient-to-r from-amber-600/40 to-orange-600/40'
-                      : 'bg-gradient-to-r from-indigo-500/40 to-purple-500/40'
-                  }`} />
-                  
-                  <div className={`relative flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 border z-10 ${
-                    userRankingPosition === 1
-                      ? 'bg-gradient-to-r from-yellow-50 to-amber-50 border-yellow-300/50'
-                      : userRankingPosition === 2
-                      ? 'bg-gradient-to-r from-slate-50 to-gray-50 border-slate-300/50'
-                      : userRankingPosition === 3
-                      ? 'bg-gradient-to-r from-amber-50 to-orange-50 border-orange-300/50'
-                      : 'bg-gradient-to-r from-indigo-50 to-purple-50 border-purple-300/50'
-                  }`}>
-                    {userRankingPosition <= 3 && (
-                      <Crown size={12} className={
-                        userRankingPosition === 1
-                          ? 'text-yellow-600'
-                          : userRankingPosition === 2
-                          ? 'text-slate-600'
-                          : 'text-orange-600'
-                      } aria-hidden="true" />
-                    )}
-                    <span className="text-gray-900 text-sm font-bold">#{userRankingPosition}</span>
-                  </div>
+                <div className="relative flex flex-col">
+
                 </div>
               )}
             </div>
 
             {/* Right: Today XP Compacto */}
             {xpToday > 0 && (
-              <div className="bg-gradient-to-br from-emerald-50 to-green-50 rounded-xl px-3 py-2 border border-emerald-300/40 shadow-md" role="status" aria-label={`Today's XP: ${xpToday}`}>
+              <div className="bg-gradient-to-br from-emerald-50 to-green-50 rounded-xl px-3 py-2 sm:px-4 sm:py-2.5 border border-emerald-300/40 shadow-md" role="status" aria-label={`Today's XP: ${xpToday}`}>
                 <div className="flex items-center gap-2">
-                  <TrendingUp size={14} className="text-emerald-600" aria-hidden="true" />
+                  <TrendingUp size={14} className="sm:w-5 sm:h-5 text-emerald-600" aria-hidden="true" />
                   <div className="leading-none">
-                    <p className="text-[9px] text-emerald-700/80 font-semibold uppercase tracking-wide">Today</p>
-                    <p className="text-base font-bold text-gray-900">+{xpToday.toLocaleString()}</p>
+                    <p className="text-[9px] sm:text-xs text-emerald-700/80 font-semibold uppercase tracking-wide">Today</p>
+                    <p className="text-base sm:text-lg font-bold text-gray-900">+{xpToday.toLocaleString()}</p>
                   </div>
                 </div>
               </div>
@@ -242,19 +223,19 @@ export const LevelIndicator = ({ variant = 'full' }) => {
           <div className="space-y-2">
             {/* Info linha única */}
             <div className="flex items-center justify-between">
-              <span className="text-xs text-gray-600 font-medium">Level {currentLevel + 1}</span>
-              <span className="text-sm font-bold text-gray-900">
-                {xpProgress.current} <span className="text-gray-400 text-xs">/ {xpProgress.needed}</span>
+              <span className="text-xl  text-gray-600 font-medium">Level {currentLevel + 1}</span>
+              <span className="text-xl  sm:text-base font-bold text-gray-900">
+                {xpProgress.current} <span className="text-gray-400 text-xl  sm:text-sm">/ {xpProgress.needed}</span>
               </span>
             </div>
 
             {/* Progress Bar */}
-            <div className="relative h-2.5 bg-gray-100 rounded-full overflow-hidden border border-gray-200 shadow-inner" role="progressbar" aria-valuenow={progressPercent} aria-valuemin={0} aria-valuemax={100} aria-label={`Progress to level ${currentLevel + 1}: ${Math.round(progressPercent)}%`}>
+            <div className="relative h-2.5 sm:h-3 bg-gray-100 rounded-full overflow-hidden border border-gray-200 shadow-inner" role="progressbar" aria-valuenow={progressPercent} aria-valuemin={0} aria-valuemax={100} aria-label={`Progress to level ${currentLevel + 1}: ${Math.round(progressPercent)}%`}>
               <div 
-                className="h-full bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500 relative transition-all duration-700 ease-out rounded-full"
+                className="h-full bg-purple-500 relative transition-all duration-700 ease-out rounded-full"
                 style={{
                   width: `${Math.max(progressPercent, 3)}%`,
-                  boxShadow: '0 0 15px rgba(34, 211, 238, 0.25)'
+                  boxShadow: '0 0 15px rgba(168, 85, 247, 0.4)'
                 }}
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent animate-shimmer" />
@@ -262,8 +243,8 @@ export const LevelIndicator = ({ variant = 'full' }) => {
             </div>
 
             {/* Stats inline */}
-            <div className="flex justify-between text-[10px] text-gray-500">
-              <span className="font-semibold text-cyan-600">{Math.round(progressPercent)}% complete</span>
+            <div className="flex justify-between text-[14px]  text-gray-500">
+              <span className="font-semibold text-purple-600">{Math.round(progressPercent)}% complete</span>
               <span>{remaining} XP left</span>
             </div>
 
