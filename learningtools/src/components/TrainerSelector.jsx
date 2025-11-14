@@ -29,7 +29,7 @@ import GuestOnboarding from './ui/GuestOnboarding';
 
 const ONBOARDING_STORAGE_KEY = 'learnfun_guest_onboarding_v1';
 
-export default function TrainerSelector() {
+const TrainerSelector = () => {
   const getInitialTrainer = () => {
     const params = new URLSearchParams(window.location.search);
     const mode = params.get('mode');
@@ -164,56 +164,101 @@ const handleCloseLevelUpModal = () => {
                              {/* Home Button */}
                                                         <button
                                                           onClick={() => handleTrainerChange('dashboard')}
+                                                          onKeyDown={(e) => {
+                                                            if (e.key === 'Enter' || e.key === ' ') {
+                                                              e.preventDefault();
+                                                              handleTrainerChange('dashboard');
+                                                            }
+                                                          }}
+                                                          tabIndex={0}
+                                                          aria-label="Ir para página inicial"
+                                                          aria-current={activeTrainer === 'dashboard' ? 'page' : undefined}
                                                           className={`flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all ${
                                                             activeTrainer === 'dashboard'
                                                               ? 'bg-purple-500 text-white shadow-lg scale-105'
                                                               : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                                                           }`}
                                                         >
-                                                          <House className="w-5 h-5" />
+                                                          <House className="w-5 h-5" aria-hidden="true" />
                                                           Home
                                                         </button>
                 {/* Categories Button */}
                 <button
                                                            onClick={() => handleTrainerChange('categories')}
+                                                           onKeyDown={(e) => {
+                                                             if (e.key === 'Enter' || e.key === ' ') {
+                                                               e.preventDefault();
+                                                               handleTrainerChange('categories');
+                                                             }
+                                                           }}
+                                                           tabIndex={0}
+                                                           aria-label="Abrir categorias de frases"
+                                                           aria-current={activeTrainer === 'categories' ? 'page' : undefined}
                                                            className={`flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all ${
                                                              activeTrainer === 'categories'
                                                                ? 'bg-gradient-to-r from-indigo-500 to-purple-500 text-white shadow-lg scale-105'
                                                                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                                                            }`}
                                                          >
-                                                           <BookOpen className="w-5 h-5" />
+                                                           <BookOpen className="w-5 h-5" aria-hidden="true" />
                                                            Categories
                                                          </button>
               {/* Chunk Trainer Button */}
               <button
                 onClick={() => handleTrainerChange('chunk')}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    handleTrainerChange('chunk');
+                  }
+                }}
+                tabIndex={0}
+                aria-label="Treinar pronúncia de frases"
+                aria-current={activeTrainer === 'chunk' ? 'page' : undefined}
                 className={`flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all ${
                   activeTrainer === 'chunk'
                     ? 'bg-purple-500 text-white shadow-lg scale-105'
                     : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                 }`}
               >
-                <Mic className="w-5 h-5" />
+                <Mic className="w-5 h-5" aria-hidden="true" />
                 Speak phrases
               </button>
 
               {/* Translate Trainer Button - NOVO */}
               <button
                 onClick={() => handleTrainerChange('translate')}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    handleTrainerChange('translate');
+                  }
+                }}
+                tabIndex={0}
+                aria-label="Treinar tradução"
+                aria-current={activeTrainer === 'translate' ? 'page' : undefined}
                 className={`flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all ${
                   activeTrainer === 'translate'
                     ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg scale-105'
                     : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                 }`}
               >
-                <Globe className="w-5 h-5" />
+                <Globe className="w-5 h-5" aria-hidden="true" />
                 Translate
               </button>
 
               {/* Number Trainer Button */}
               <button
                 onClick={() => handleTrainerChange('numbers')}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    handleTrainerChange('numbers');
+                  }
+                }}
+                tabIndex={0}
+                aria-label="Treinar números em inglês"
+                aria-current={activeTrainer === 'numbers' ? 'page' : undefined}
                 className={`flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all ${
                   activeTrainer === 'numbers'
                     ? 'bg-blue-500 text-white shadow-lg scale-105'
@@ -228,39 +273,66 @@ const handleCloseLevelUpModal = () => {
 
               <button
                 onClick={() => handleTrainerChange('live-rooms')}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    handleTrainerChange('live-rooms');
+                  }
+                }}
+                tabIndex={0}
+                aria-label="Abrir salas ao vivo"
+                aria-current={activeTrainer === 'live-rooms' ? 'page' : undefined}
                 className={`flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all ${
                   activeTrainer === 'live-rooms'
                     ? 'bg-gradient-to-r from-green-500 to-teal-500 text-white shadow-lg scale-105'
                     : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                 }`}
               >
-                <Radio className="w-5 h-5" />
+                <Radio className="w-5 h-5" aria-hidden="true" />
                 Live Rooms
               </button>
 
               {/* Challenge Mode Button */}
               <button
                 onClick={() => handleTrainerChange('challenge')}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    handleTrainerChange('challenge');
+                  }
+                }}
+                tabIndex={0}
+                aria-label="Abrir modo desafio"
+                aria-current={activeTrainer === 'challenge' ? 'page' : undefined}
                 className={`flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all ${
                   activeTrainer === 'challenge'
                     ? 'bg-gradient-to-r from-yellow-500 to-orange-500 text-white shadow-lg scale-105'
                     : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                 }`}
               >
-                <Zap className="w-5 h-5" />
+                <Zap className="w-5 h-5" aria-hidden="true" />
                 Challenge
               </button>
 
               {/* VideoLearningApp Button */}
               <button
                 onClick={() => handleTrainerChange('VideoLearningApp')}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    handleTrainerChange('VideoLearningApp');
+                  }
+                }}
+                tabIndex={0}
+                aria-label="Abrir aprendizado com vídeo"
+                aria-current={activeTrainer === 'VideoLearningApp' ? 'page' : undefined}
                 className={`flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all ${
                   activeTrainer === 'VideoLearningApp'
                     ? 'bg-gradient-to-r from-red-500 to-pink-500 text-white shadow-lg scale-105'
                     : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                 }`}
               >
-                <Video className="w-5 h-5" />
+                <Video className="w-5 h-5" aria-hidden="true" />
                 Video
               </button>
             </div>
@@ -319,18 +391,38 @@ const handleCloseLevelUpModal = () => {
         <div
           className="fixed inset-0 bg-black bg-opacity-50 z-50 md:hidden"
           onClick={() => setShowSpeakMenu(false)}
+          onKeyDown={(e) => {
+            if (e.key === 'Escape') {
+              setShowSpeakMenu(false);
+            }
+          }}
+          tabIndex={0}
+          role="button"
+          aria-label="Fechar menu de opções de fala"
         >
           <div
             className="absolute bottom-20 left-0 right-0  rounded-t-3xl shadow-2xl animate-slide-up"
             onClick={(e) => e.stopPropagation()}
+            onKeyDown={(e) => e.stopPropagation()}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="speak-menu-title"
           >
             <div className="flex justify-between items-center p-4 border-b">
-              <h3 className="text-lg font-bold text-gray-800">Speak Options</h3>
+              <h3 id="speak-menu-title" className="text-lg font-bold text-gray-800">Speak Options</h3>
               <button
                 onClick={() => setShowSpeakMenu(false)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    setShowSpeakMenu(false);
+                  }
+                }}
+                tabIndex={0}
+                aria-label="Fechar menu"
                 className="p-2 hover:bg-gray-100 rounded-full transition-colors"
               >
-                <X className="w-5 h-5 text-gray-600" />
+                <X className="w-5 h-5 text-gray-600" aria-hidden="true" />
               </button>
             </div>
 
@@ -341,6 +433,15 @@ const handleCloseLevelUpModal = () => {
                                                 handleTrainerChange('categories');
                                                 setShowSpeakMenu(false);
                                               }}
+                                              onKeyDown={(e) => {
+                                                if (e.key === 'Enter' || e.key === ' ') {
+                                                  e.preventDefault();
+                                                  handleTrainerChange('categories');
+                                                  setShowSpeakMenu(false);
+                                                }
+                                              }}
+                                              tabIndex={0}
+                                              aria-label="Abrir categorias de frases"
                                               className={`w-full flex items-center gap-4 p-4 rounded-xl transition-all ${
                                                 activeTrainer === 'categories'
                                                   ? 'bg-purple-500 text-white shadow-lg'
@@ -352,7 +453,7 @@ const handleCloseLevelUpModal = () => {
                                               }`}>
                                                 <BookOpen  className={`w-6 h-6 ${
                                                   activeTrainer === 'categories' ? 'text-white' : 'text-purple-600'
-                                                }`} />
+                                                }`} aria-hidden="true" />
                                               </div>
                                               <div className="text-left flex-1">
                                                 <div className="font-bold text-lg">Categories</div>
@@ -363,7 +464,7 @@ const handleCloseLevelUpModal = () => {
                                                 </div>
                                               </div>
                                               {activeTrainer === 'categories' && (
-                                                <div className="w-2 h-2  rounded-full" />
+                                                <div className="w-2 h-2  rounded-full" aria-hidden="true" />
                                               )}
                                             </button>
               {/* Speak Phrases */}
@@ -372,6 +473,15 @@ const handleCloseLevelUpModal = () => {
                   handleTrainerChange('chunk');
                   setShowSpeakMenu(false);
                 }}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    handleTrainerChange('chunk');
+                    setShowSpeakMenu(false);
+                  }
+                }}
+                tabIndex={0}
+                aria-label="Treinar pronúncia de frases"
                 className={`w-full flex items-center gap-4 p-4 rounded-xl transition-all ${
                   activeTrainer === 'chunk'
                     ? 'bg-purple-500 text-white shadow-lg'
@@ -383,7 +493,7 @@ const handleCloseLevelUpModal = () => {
                 }`}>
                   <Mic className={`w-6 h-6 ${
                     activeTrainer === 'chunk' ? 'text-white' : 'text-purple-600'
-                  }`} />
+                  }`} aria-hidden="true" />
                 </div>
                 <div className="text-left flex-1">
                   <div className="font-bold text-lg">Speak Phrases</div>
@@ -394,7 +504,7 @@ const handleCloseLevelUpModal = () => {
                   </div>
                 </div>
                 {activeTrainer === 'chunk' && (
-                  <div className="w-2 h-2  rounded-full" />
+                  <div className="w-2 h-2  rounded-full" aria-hidden="true" />
                 )}
               </button>
 
@@ -406,6 +516,15 @@ const handleCloseLevelUpModal = () => {
                    handleTrainerChange('translate');
                    setShowSpeakMenu(false);
                  }}
+                 onKeyDown={(e) => {
+                   if (e.key === 'Enter' || e.key === ' ') {
+                     e.preventDefault();
+                     handleTrainerChange('translate');
+                     setShowSpeakMenu(false);
+                   }
+                 }}
+                 tabIndex={0}
+                 aria-label="Treinar tradução"
                  className={`w-full flex items-center gap-4 p-4 rounded-xl transition-all ${
                    activeTrainer === 'translate'
                      ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg'
@@ -417,7 +536,7 @@ const handleCloseLevelUpModal = () => {
                  }`}>
                    <Globe className={`w-6 h-6 ${
                      activeTrainer === 'translate' ? 'text-white' : 'text-pink-600'
-                   }`} />
+                   }`} aria-hidden="true" />
                  </div>
                  <div className="text-left flex-1">
                    <div className="font-bold text-lg">Translate</div>
@@ -428,7 +547,7 @@ const handleCloseLevelUpModal = () => {
                    </div>
                  </div>
                  {activeTrainer === 'translate' && (
-                   <div className="w-2 h-2  rounded-full" />
+                   <div className="w-2 h-2  rounded-full" aria-hidden="true" />
                  )}
                </button>
 
@@ -438,6 +557,15 @@ const handleCloseLevelUpModal = () => {
                                  handleTrainerChange('numbers');
                                  setShowSpeakMenu(false);
                                }}
+                               onKeyDown={(e) => {
+                                 if (e.key === 'Enter' || e.key === ' ') {
+                                   e.preventDefault();
+                                   handleTrainerChange('numbers');
+                                   setShowSpeakMenu(false);
+                                 }
+                               }}
+                               tabIndex={0}
+                               aria-label="Treinar números em inglês"
                                className={`w-full flex items-center gap-4 p-4 rounded-xl transition-all ${
                                  activeTrainer === 'numbers'
                                    ? 'bg-purple-500 text-white shadow-lg'
@@ -449,7 +577,7 @@ const handleCloseLevelUpModal = () => {
                                }`}>
                                  <ArrowUp01 className={`w-6 h-6 ${
                                    activeTrainer === 'numbers' ? 'text-white' : 'text-purple-600'
-                                 }`} />
+                                 }`} aria-hidden="true" />
                                </div>
                                <div className="text-left flex-1">
                                  <div className="font-bold text-lg">Numbers</div>
@@ -460,7 +588,7 @@ const handleCloseLevelUpModal = () => {
                                  </div>
                                </div>
                                {activeTrainer === 'numbers' && (
-                                 <div className="w-2 h-2  rounded-full" />
+                                 <div className="w-2 h-2  rounded-full" aria-hidden="true" />
                                )}
                              </button>
 
@@ -470,6 +598,15 @@ const handleCloseLevelUpModal = () => {
                   handleTrainerChange('challenge');
                   setShowSpeakMenu(false);
                 }}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    handleTrainerChange('challenge');
+                    setShowSpeakMenu(false);
+                  }
+                }}
+                tabIndex={0}
+                aria-label="Abrir modo desafio"
                 className={`w-full flex items-center gap-4 p-4 rounded-xl transition-all ${
                   activeTrainer === 'challenge'
                     ? 'bg-gradient-to-r from-yellow-500 to-orange-500 text-white shadow-lg'
@@ -481,7 +618,7 @@ const handleCloseLevelUpModal = () => {
                 }`}>
                   <Zap className={`w-6 h-6 ${
                     activeTrainer === 'challenge' ? 'text-white' : 'text-orange-600'
-                  }`} />
+                  }`} aria-hidden="true" />
                 </div>
                 <div className="text-left flex-1">
                   <div className="font-bold text-lg">Challenge Mode</div>
@@ -492,7 +629,7 @@ const handleCloseLevelUpModal = () => {
                   </div>
                 </div>
                 {activeTrainer === 'challenge' && (
-                  <div className="w-2 h-2  rounded-full" />
+                  <div className="w-2 h-2  rounded-full" aria-hidden="true" />
                 )}
               </button>
             </div>
@@ -505,19 +642,39 @@ const handleCloseLevelUpModal = () => {
         <div
           className="fixed inset-0 bg-black bg-opacity-50 z-50 md:hidden"
           onClick={() => setShowMoreMenu(false)}
+          onKeyDown={(e) => {
+            if (e.key === 'Escape') {
+              setShowMoreMenu(false);
+            }
+          }}
+          tabIndex={0}
+          role="button"
+          aria-label="Fechar menu de mais opções"
         >
           <div
             className="absolute bottom-20 left-0 right-0 bg-white rounded-t-3xl shadow-2xl animate-slide-up"
             onClick={(e) => e.stopPropagation()}
+            onKeyDown={(e) => e.stopPropagation()}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="more-menu-title"
           >
             {/* Header do Menu */}
             <div className="flex justify-between items-center p-4 border-b">
-              <h3 className="text-lg font-bold text-gray-800">More Options</h3>
+              <h3 id="more-menu-title" className="text-lg font-bold text-gray-800">More Options</h3>
               <button
                 onClick={() => setShowMoreMenu(false)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    setShowMoreMenu(false);
+                  }
+                }}
+                tabIndex={0}
+                aria-label="Fechar menu"
                 className="p-2 hover:bg-gray-100 rounded-full transition-colors"
               >
-                <X className="w-5 h-5 text-gray-600" />
+                <X className="w-5 h-5 text-gray-600" aria-hidden="true" />
               </button>
             </div>
 
@@ -527,10 +684,18 @@ const handleCloseLevelUpModal = () => {
               {/* WhatsApp Community */}
               <button
                 onClick={handleWhatsAppClick}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    handleWhatsAppClick();
+                  }
+                }}
+                tabIndex={0}
+                aria-label="Abrir comunidade do WhatsApp"
                 className="w-full flex items-center gap-4 p-4 rounded-xl bg-green-50 hover:bg-green-100 text-gray-800 transition-all"
               >
                 <div className="p-3 rounded-full bg-green-500">
-                  <MessageCircle className="w-6 h-6 text-white" />
+                  <MessageCircle className="w-6 h-6 text-white" aria-hidden="true" />
                 </div>
                 <div className="text-left flex-1">
                   <div className="font-bold text-lg">LearnFun Community</div>
@@ -538,7 +703,7 @@ const handleCloseLevelUpModal = () => {
                     Suporte e Dicas • WhatsApp
                   </div>
                 </div>
-                <div className="text-green-600">
+                <div className="text-green-600" aria-hidden="true">
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                   </svg>
@@ -551,10 +716,19 @@ const handleCloseLevelUpModal = () => {
                       setShowMoreMenu(false);
                       setShowInviteModal(true);
                     }}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        setShowMoreMenu(false);
+                        setShowInviteModal(true);
+                      }
+                    }}
+                    tabIndex={0}
+                    aria-label="Convidar amigos"
                     className="w-full flex items-center gap-4 p-4 rounded-xl bg-purple-50 hover:bg-purple-100 text-gray-800 transition-all"
                   >
                     <div className="p-3 rounded-full bg-gradient-to-r from-purple-500 to-pink-500">
-                      <Gift className="w-6 h-6 text-white" />
+                      <Gift className="w-6 h-6 text-white" aria-hidden="true" />
                     </div>
                     <div className="text-left flex-1">
                       <div className="font-bold text-lg">Convide Amigos</div>
@@ -588,16 +762,25 @@ const handleCloseLevelUpModal = () => {
           {/* Speak Button */}
           <button
             onClick={() => setShowSpeakMenu(!showSpeakMenu)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                setShowSpeakMenu(!showSpeakMenu);
+              }
+            }}
+            tabIndex={0}
+            aria-label="Abrir menu de treinamento de fala"
+            aria-expanded={showSpeakMenu}
             className={`flex flex-col items-center gap-1 py-3 transition-all ${
               showSpeakMenu || activeTrainer === 'chunk' || activeTrainer === 'translate' || activeTrainer === 'challenge'
                 ? 'text-purple-600'
                 : 'text-gray-400'
             }`}
           >
-            <Mic className={`w-6 h-6 ${activeTrainer === 'chunk' ? 'scale-110' : ''}`} />
+            <Mic className={`w-6 h-6 ${activeTrainer === 'chunk' ? 'scale-110' : ''}`} aria-hidden="true" />
             <span className="text-xs font-semibold">Speak</span>
             {activeTrainer === 'chunk' && (
-              <div className="w-8 h-1 bg-purple-600 rounded-full mt-1" />
+              <div className="w-8 h-1 bg-purple-600 rounded-full mt-1" aria-hidden="true" />
             )}
           </button>
 
@@ -605,42 +788,69 @@ const handleCloseLevelUpModal = () => {
 
             <button
               onClick={() => handleTrainerChange('live-rooms')}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  handleTrainerChange('live-rooms');
+                }
+              }}
+              tabIndex={0}
+              aria-label="Abrir salas ao vivo"
+              aria-current={activeTrainer === 'live-rooms' ? 'page' : undefined}
               className={`flex flex-col items-center gap-1 py-3 transition-all ${
                 activeTrainer === 'live-rooms' ? 'text-green-600' : 'text-gray-400'
               }`}
             >
-              <Radio className={`w-6 h-6 ${activeTrainer === 'live-rooms' ? 'scale-110' : ''}`} />
+              <Radio className={`w-6 h-6 ${activeTrainer === 'live-rooms' ? 'scale-110' : ''}`} aria-hidden="true" />
               <span className="text-xs font-semibold">Live</span>
               {activeTrainer === 'live-rooms' && (
-                <div className="w-8 h-1 bg-green-600 rounded-full mt-1" />
+                <div className="w-8 h-1 bg-green-600 rounded-full mt-1" aria-hidden="true" />
               )}
             </button>
 
           {/* Home Button */}
           <button
             onClick={() => handleTrainerChange('dashboard')}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                handleTrainerChange('dashboard');
+              }
+            }}
+            tabIndex={0}
+            aria-label="Ir para página inicial"
+            aria-current={activeTrainer === 'dashboard' ? 'page' : undefined}
             className={`flex flex-col items-center gap-1 py-3 transition-all ${
               activeTrainer === 'dashboard' ? 'text-blue-600' : 'text-gray-400'
             }`}
           >
-            <House className={`w-6 h-6 ${activeTrainer === 'dashboard' ? 'scale-110' : ''}`} />
+            <House className={`w-6 h-6 ${activeTrainer === 'dashboard' ? 'scale-110' : ''}`} aria-hidden="true" />
             <span className="text-xs font-semibold">Home</span>
             {activeTrainer === 'dashboard' && (
-              <div className="w-8 h-1 bg-blue-600 rounded-full mt-1" />
+              <div className="w-8 h-1 bg-blue-600 rounded-full mt-1" aria-hidden="true" />
             )}
           </button>
 
           {/* Video Button */}
           <button
             onClick={() => handleTrainerChange('VideoLearningApp')}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                handleTrainerChange('VideoLearningApp');
+              }
+            }}
+            tabIndex={0}
+            aria-label="Abrir aprendizado com vídeo"
+            aria-current={activeTrainer === 'VideoLearningApp' ? 'page' : undefined}
             className={`flex flex-col items-center gap-1 py-3 transition-all ${
               activeTrainer === 'VideoLearningApp' ? 'text-red-600' : 'text-gray-400'
             }`}
           >
-            <Video className={`w-6 h-6 ${activeTrainer === 'VideoLearningApp' ? 'scale-110' : ''}`} />
+            <Video className={`w-6 h-6 ${activeTrainer === 'VideoLearningApp' ? 'scale-110' : ''}`} aria-hidden="true" />
             <span className="text-xs font-semibold">Video</span>
             {activeTrainer === 'VideoLearningApp' && (
-              <div className="w-8 h-1 bg-red-600 rounded-full mt-1" />
+              <div className="w-8 h-1 bg-red-600 rounded-full mt-1" aria-hidden="true" />
             )}
           </button>
 
@@ -649,14 +859,23 @@ const handleCloseLevelUpModal = () => {
           {/* More Button */}
           <button
             onClick={() => setShowMoreMenu(!showMoreMenu)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                setShowMoreMenu(!showMoreMenu);
+              }
+            }}
+            tabIndex={0}
+            aria-label="Abrir menu de mais opções"
+            aria-expanded={showMoreMenu}
             className={`flex flex-col items-center gap-1 py-3 transition-all ${
               showMoreMenu || activeTrainer === 'challenge' ? 'text-gray-800' : 'text-gray-400'
             }`}
           >
-            <MoreHorizontal className={`w-6 h-6 ${showMoreMenu ? 'scale-110' : ''}`} />
+            <MoreHorizontal className={`w-6 h-6 ${showMoreMenu ? 'scale-110' : ''}`} aria-hidden="true" />
             <span className="text-xs font-semibold">More</span>
             {(showMoreMenu || activeTrainer === 'challenge') && (
-              <div className="w-8 h-1 bg-gray-800 rounded-full mt-1" />
+              <div className="w-8 h-1 bg-gray-800 rounded-full mt-1" aria-hidden="true" />
             )}
           </button>
         </div>
@@ -677,4 +896,6 @@ const handleCloseLevelUpModal = () => {
       )}
     </div>
   );
-}
+};
+
+export default TrainerSelector;

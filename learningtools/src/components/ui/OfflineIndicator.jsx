@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Wifi, WifiOff } from 'lucide-react';
 
-export default function OfflineIndicator() {
+const OfflineIndicator = () => {
   const [isOnline, setIsOnline] = useState(navigator.onLine);
   const [showNotification, setShowNotification] = useState(false);
 
@@ -29,28 +29,38 @@ export default function OfflineIndicator() {
   // Não mostra nada se estiver online e sem notificação
   if (isOnline && !showNotification) return null;
 
+  // Helper para construir className sem ternários
+  const getStatusClasses = () => {
+    const baseClasses = 'fixed top-4 left-1/2 -translate-x-1/2 z-50 px-4 py-2 rounded-full shadow-lg transition-all duration-300 text-white';
+    const statusClasses = isOnline 
+      ? 'bg-green-500 animate-fade-in' 
+      : 'bg-red-500';
+    return `${baseClasses} ${statusClasses}`;
+  };
+
   return (
     <div
-      className={`fixed top-4 left-1/2 -translate-x-1/2 z-50 px-4 py-2 rounded-full shadow-lg transition-all duration-300 ${
-        isOnline
-          ? 'bg-green-500 text-white animate-fade-in'
-          : 'bg-red-500 text-white'
-      }`}
+      className={getStatusClasses()}
+      role="status"
+      aria-live="polite"
+      aria-label={isOnline ? 'Conectado à internet' : 'Sem conexão com a internet'}
     >
       <div className="flex items-center gap-2">
         {isOnline ? (
           <>
-            <Wifi size={18} />
+            <Wifi size={18} aria-hidden="true" />
             <span className="font-medium">Conectado!</span>
           </>
         ) : (
           <>
-            <WifiOff size={18} />
+            <WifiOff size={18} aria-hidden="true" />
             <span className="font-medium">Você está offline</span>
           </>
         )}
       </div>
     </div>
   );
-}
+};
+
+export default OfflineIndicator;
 

@@ -48,14 +48,62 @@ const AuthButton = () => {
     }
   };
 
+  const handleToggleMenu = () => {
+    setShowMenu(!showMenu);
+  };
+
+  const handleKeyDownToggleMenu = (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      handleToggleMenu();
+    } else if (e.key === 'Escape' && showMenu) {
+      setShowMenu(false);
+    }
+  };
+
+  const handleKeyDownLogin = (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      handleLogin();
+    }
+  };
+
+  const handleKeyDownLogout = (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      handleLogout();
+    }
+  };
+
+  const handleKeyDownNotificationSettings = (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      setShowNotificationSettings(true);
+      setShowMenu(false);
+    }
+  };
+
+  const handleCloseMenu = () => {
+    setShowMenu(false);
+  };
+
+  const handleKeyDownBackdrop = (e) => {
+    if (e.key === 'Escape') {
+      handleCloseMenu();
+    }
+  };
+
   if (mode === 'guest') {
     return (
       <button
         onClick={handleLogin}
+        onKeyDown={handleKeyDownLogin}
+        tabIndex={0}
+        aria-label="Entrar com Google"
         disabled={loading}
         className="flex items-center gap-2 bg-white hover:bg-gray-50 text-gray-800 px-4 py-2 rounded-lg font-semibold transition-all shadow-md border-2 border-gray-200 disabled:opacity-50 disabled:cursor-not-allowed"
       >
-        <LogIn size={20} />
+        <LogIn size={20} aria-hidden="true" />
         {loading ? 'Entrando...' : 'Entrar com Google'}
       </button>
     );
@@ -64,17 +112,26 @@ const AuthButton = () => {
   return (
     <div className="relative">
       <button
-        onClick={() => setShowMenu(!showMenu)}
+        onClick={handleToggleMenu}
+        onKeyDown={handleKeyDownToggleMenu}
+        tabIndex={0}
+        aria-label={`Menu do usuário ${profile.displayName}`}
+        aria-expanded={showMenu}
+        aria-haspopup="true"
         className="flex items-center gap-3 bg-white hover:bg-gray-50 px-4 py-2 rounded-lg transition-all shadow-md border-2 border-gray-200"
       >
         {profile.photoURL ? (
           <img
             src={profile.photoURL}
-            alt={profile.displayName}
+            alt={`Foto de perfil de ${profile.displayName}`}
             className="w-8 h-8 rounded-full"
+            aria-hidden="false"
           />
         ) : (
-          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-white font-bold">
+          <div 
+            className="w-8 h-8 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-white font-bold"
+            aria-hidden="true"
+          >
             {profile.displayName?.[0]?.toUpperCase() || 'U'}
           </div>
         )}
@@ -88,11 +145,19 @@ const AuthButton = () => {
           {/* Backdrop */}
           <div
             className="fixed inset-0 z-40"
-            onClick={() => setShowMenu(false)}
+            onClick={handleCloseMenu}
+            onKeyDown={handleKeyDownBackdrop}
+            tabIndex={0}
+            aria-label="Fechar menu"
+            role="button"
           />
 
           {/* Menu */}
-          <div className="absolute right-0 mt-2 w-64 bg-white rounded-lg shadow-xl border-2 border-gray-200 z-50 overflow-hidden">
+          <div 
+            className="absolute right-0 mt-2 w-64 bg-white rounded-lg shadow-xl border-2 border-gray-200 z-50 overflow-hidden"
+            role="menu"
+            aria-label="Menu do usuário"
+          >
             <div className="p-4 border-b border-gray-200 bg-gradient-to-br from-blue-50 to-indigo-100">
               <p className="font-bold text-gray-800">{profile.displayName}</p>
               <p className="text-sm text-gray-600">{profile.email}</p>
@@ -104,17 +169,25 @@ const AuthButton = () => {
                 setShowNotificationSettings(true);
                 setShowMenu(false);
               }}
+              onKeyDown={handleKeyDownNotificationSettings}
+              tabIndex={0}
+              aria-label="Abrir configurações de notificações"
+              role="menuitem"
               className="w-full flex items-center gap-3 px-4 py-3 hover:bg-purple-50 transition-colors text-left text-gray-700 border-b border-gray-200"
             >
-              <Bell size={20} className="text-purple-600" />
+              <Bell size={20} className="text-purple-600" aria-hidden="true" />
               <span className="font-semibold">Notificações</span>
             </button>
 
             <button
               onClick={handleLogout}
+              onKeyDown={handleKeyDownLogout}
+              tabIndex={0}
+              aria-label="Sair da conta"
+              role="menuitem"
               className="w-full flex items-center gap-3 px-4 py-3 hover:bg-gray-50 transition-colors text-left text-gray-700"
             >
-              <LogOut size={20} />
+              <LogOut size={20} aria-hidden="true" />
               <span className="font-semibold">Sair</span>
             </button>
           </div>

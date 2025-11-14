@@ -4,7 +4,7 @@ import { Bell, BellOff, X, Settings } from 'lucide-react';
 import { requestNotificationPermission } from '../../services/notificationService';
 import { useNavigate } from 'react-router-dom';
 
-export default function NotificationPrompt() {
+const NotificationPrompt = () => {
   const { userId, mode } = useSelector(state => state.user);
   const [showPrompt, setShowPrompt] = useState(false);
   const [permissionStatus, setPermissionStatus] = useState('default');
@@ -102,33 +102,84 @@ export default function NotificationPrompt() {
     sessionStorage.setItem('notification-prompt-dismissed', 'true');
   };
 
+  const handleKeyDownClose = (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      handleDismiss();
+    } else if (e.key === 'Escape') {
+      handleDismiss();
+    }
+  };
+
+  const handleKeyDownEnable = (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      handleEnable();
+    }
+  };
+
+  const handleKeyDownDismiss = (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      handleDismiss();
+    }
+  };
+
+  const handleKeyDownDismissPermanently = (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      handleDismissPermanently();
+    }
+  };
+
+  const handleKeyDownBackdrop = (e) => {
+    if (e.key === 'Escape') {
+      handleDismiss();
+    }
+  };
+
   if (!showPrompt) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-      <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 relative animate-slide-up">
+    <div 
+      className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4"
+      onClick={handleDismiss}
+      onKeyDown={handleKeyDownBackdrop}
+      tabIndex={0}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="notification-prompt-title"
+      aria-describedby="notification-prompt-description"
+    >
+      <div 
+        className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 relative animate-slide-up"
+        onClick={(e) => e.stopPropagation()}
+        onKeyDown={(e) => e.stopPropagation()}
+      >
         <button
           onClick={handleDismiss}
+          onKeyDown={handleKeyDownClose}
+          tabIndex={0}
+          aria-label="Fechar prompt de notificações"
           className="absolute top-4 right-4 p-2 hover:bg-gray-100 rounded-full transition-colors"
-          aria-label="Fechar"
         >
-          <X className="w-5 h-5 text-gray-600" />
+          <X className="w-5 h-5 text-gray-600" aria-hidden="true" />
         </button>
 
         <div className="text-center mb-6">
           <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-500 rounded-full mb-4">
             {permissionStatus === 'denied' ? (
-              <BellOff className="w-8 h-8 text-white" />
+              <BellOff className="w-8 h-8 text-white" aria-hidden="true" />
             ) : (
-              <Bell className="w-8 h-8 text-white" />
+              <Bell className="w-8 h-8 text-white" aria-hidden="true" />
             )}
           </div>
           
-          <h2 className="text-2xl font-bold text-gray-800 mb-2">
+          <h2 id="notification-prompt-title" className="text-2xl font-bold text-gray-800 mb-2">
             Ative as Notificações
           </h2>
           
-          <p className="text-gray-600">
+          <p id="notification-prompt-description" className="text-gray-600">
             {permissionStatus === 'denied' 
               ? 'As notificações estão bloqueadas. Ative nas configurações do navegador para receber lembretes de treino!'
               : 'Receba lembretes personalizados para treinar inglês e não perder sua sequência! 🔥'}
@@ -138,9 +189,12 @@ export default function NotificationPrompt() {
         <div className="space-y-3">
           <button
             onClick={handleEnable}
+            onKeyDown={handleKeyDownEnable}
+            tabIndex={0}
+            aria-label={permissionStatus === 'denied' ? 'Ir para configurações do navegador' : 'Ativar notificações'}
             className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white font-bold py-3 px-6 rounded-xl hover:from-blue-700 hover:to-purple-700 transition-all flex items-center justify-center gap-2 shadow-lg"
           >
-            <Bell className="w-5 h-5" />
+            <Bell className="w-5 h-5" aria-hidden="true" />
             {permissionStatus === 'denied' 
               ? 'Ir para Configurações'
               : 'Ativar Notificações'}
@@ -149,12 +203,18 @@ export default function NotificationPrompt() {
           <div className="flex gap-2">
             <button
               onClick={handleDismiss}
+              onKeyDown={handleKeyDownDismiss}
+              tabIndex={0}
+              aria-label="Fechar prompt agora"
               className="flex-1 px-4 py-2 text-gray-600 hover:text-gray-800 font-semibold transition-colors"
             >
               Agora não
             </button>
             <button
               onClick={handleDismissPermanently}
+              onKeyDown={handleKeyDownDismissPermanently}
+              tabIndex={0}
+              aria-label="Não mostrar este prompt novamente"
               className="flex-1 px-4 py-2 text-gray-500 hover:text-gray-700 text-sm transition-colors"
             >
               Não mostrar novamente
@@ -165,7 +225,7 @@ export default function NotificationPrompt() {
         <div className="mt-6 pt-4 border-t border-gray-200">
           <div className="flex items-start gap-3 text-sm text-gray-600">
             <div className="flex-shrink-0 mt-0.5">
-              <Settings className="w-4 h-4" />
+              <Settings className="w-4 h-4" aria-hidden="true" />
             </div>
             <p>
               Você pode configurar horários, frequência e tipos de notificações 
@@ -176,5 +236,7 @@ export default function NotificationPrompt() {
       </div>
     </div>
   );
-}
+};
+
+export default NotificationPrompt;
 

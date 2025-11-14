@@ -22,7 +22,7 @@ const DAYS_OF_WEEK = [
   { value: 6, label: 'Sáb' }
 ];
 
-export default function NotificationSettings({ onBack }) {
+const NotificationSettings = ({ onBack }) => {
   const { userId, mode } = useSelector(state => state.user);
   const [settings, setSettings] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -165,9 +165,17 @@ export default function NotificationSettings({ onBack }) {
         <div className="max-w-4xl mx-auto px-4 py-4 flex items-center gap-4">
           <button
             onClick={onBack}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                onBack();
+              }
+            }}
+            tabIndex={0}
+            aria-label="Voltar"
             className="p-2 hover:bg-gray-100 rounded-full transition-colors"
           >
-            <X className="w-6 h-6 text-gray-600" />
+            <X className="w-6 h-6 text-gray-600" aria-hidden="true" />
           </button>
           <div className="flex-1">
             <h1 className="text-2xl font-bold text-gray-800">Notificações</h1>
@@ -175,6 +183,14 @@ export default function NotificationSettings({ onBack }) {
           </div>
           <button
             onClick={handleSave}
+            onKeyDown={(e) => {
+              if ((e.key === 'Enter' || e.key === ' ') && !saving) {
+                e.preventDefault();
+                handleSave();
+              }
+            }}
+            tabIndex={0}
+            aria-label={saving ? 'Salvando configurações' : 'Salvar configurações'}
             disabled={saving}
             className="bg-blue-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
@@ -207,6 +223,14 @@ export default function NotificationSettings({ onBack }) {
             {permissionStatus !== 'granted' && (
               <button
                 onClick={handleRequestPermission}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    handleRequestPermission();
+                  }
+                }}
+                tabIndex={0}
+                aria-label="Solicitar permissão de notificações"
                 className="bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
               >
                 Solicitar Permissão
@@ -217,16 +241,24 @@ export default function NotificationSettings({ onBack }) {
           {permissionStatus === 'granted' && (
             <button
               onClick={handleTestNotification}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  handleTestNotification();
+                }
+              }}
+              tabIndex={0}
+              aria-label={testNotificationSent ? 'Notificação de teste enviada' : 'Enviar notificação de teste'}
               className="w-full bg-green-50 text-green-700 px-4 py-3 rounded-lg font-semibold hover:bg-green-100 transition-colors flex items-center justify-center gap-2"
             >
               {testNotificationSent ? (
                 <>
-                  <CheckCircle className="w-5 h-5" />
+                  <CheckCircle className="w-5 h-5" aria-hidden="true" />
                   Notificação enviada!
                 </>
               ) : (
                 <>
-                  <Bell className="w-5 h-5" />
+                  <Bell className="w-5 h-5" aria-hidden="true" />
                   Enviar Notificação de Teste
                 </>
               )}
@@ -238,10 +270,10 @@ export default function NotificationSettings({ onBack }) {
       </div>
     </div>
   );
-}
+};
 
 // Componente auxiliar para seções de notificação
-function NotificationSection({ icon: Icon, title, description, enabled, onToggle, children }) {
+const NotificationSection = ({ icon: Icon, title, description, enabled, onToggle, children }) => {
   return (
     <div className="bg-white rounded-2xl shadow-md p-6">
       <div className="flex items-center justify-between mb-4">
@@ -265,10 +297,10 @@ function NotificationSection({ icon: Icon, title, description, enabled, onToggle
       {enabled && <div className="mt-4">{children}</div>}
     </div>
   );
-}
+};
 
 // Componente auxiliar para toggle options
-function ToggleOption({ label, checked, onChange }) {
+const ToggleOption = ({ label, checked, onChange }) => {
   return (
     <div className="flex items-center justify-between py-2">
       <span className="text-gray-700 font-medium">{label}</span>
@@ -283,5 +315,7 @@ function ToggleOption({ label, checked, onChange }) {
       </label>
     </div>
   );
-}
+};
+
+export default NotificationSettings;
 

@@ -154,10 +154,24 @@ export const LevelUpModal = ({ isOpen, onClose, newLevel, totalXP = 0 }) => {
       <div
         className="fixed inset-0 bg-black bg-opacity-50 z-40 transition-opacity duration-300"
         onClick={onClose}
+        onKeyDown={(e) => {
+          if (e.key === 'Escape') {
+            onClose();
+          }
+        }}
+        tabIndex={0}
+        role="button"
+        aria-label="Fechar modal"
       />
 
       {/* Modal */}
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-4 pointer-events-none">
+      <div 
+        className="fixed inset-0 z-50 flex items-center justify-center p-4 pointer-events-none"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="level-up-title"
+        aria-describedby="level-up-description"
+      >
         <div
           className="bg-white rounded-2xl shadow-2xl max-w-lg w-full p-8 pointer-events-auto transform transition-all duration-500 animate-bounce-in relative cursor-pointer"
           onClick={(e) => {
@@ -168,6 +182,15 @@ export const LevelUpModal = ({ isOpen, onClose, newLevel, totalXP = 0 }) => {
               startAudio();
             }
           }}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              if (!audioStarted) {
+                startAudio();
+              }
+            }
+          }}
+          tabIndex={0}
         >
           {/* Indicador visual para clicar (aparece apenas se áudio não iniciou) */}
           {!audioStarted && (
@@ -183,9 +206,18 @@ export const LevelUpModal = ({ isOpen, onClose, newLevel, totalXP = 0 }) => {
               e.stopPropagation(); // ✅ Impede que dispare o startAudio
               onClose();
             }}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                e.stopPropagation();
+                onClose();
+              }
+            }}
+            tabIndex={0}
+            aria-label="Fechar modal de level up"
             className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors z-10"
           >
-            <X size={24} />
+            <X size={24} aria-hidden="true" />
           </button>
 
           {/* Botão de controle de música */}
@@ -198,21 +230,33 @@ export const LevelUpModal = ({ isOpen, onClose, newLevel, totalXP = 0 }) => {
                 toggleMusic(); // Alterna play/pause
               }
             }}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                e.stopPropagation();
+                if (!audioStarted) {
+                  startAudio();
+                } else {
+                  toggleMusic();
+                }
+              }
+            }}
+            tabIndex={0}
+            aria-label={!audioStarted ? 'Tocar música de celebração' : isPlayingMusic ? 'Pausar música' : 'Tocar música'}
             className={`absolute top-4 left-4 flex items-center gap-2 px-3 py-2 rounded-lg transition-all shadow-md z-10 ${
               isPlayingMusic
                 ? 'bg-purple-500 hover:bg-purple-600 text-white'
                 : 'bg-gray-200 hover:bg-gray-300 text-gray-700'
             }`}
-            title={!audioStarted ? 'Tocar música' : isPlayingMusic ? 'Pausar música' : 'Tocar música'}
           >
             {isPlayingMusic ? (
               <>
-                <VolumeX size={20} className="animate-pulse" />
+                <VolumeX size={20} className="animate-pulse" aria-hidden="true" />
                 <span className="text-sm font-semibold">Pausar</span>
               </>
             ) : (
               <>
-                <Volume2 size={20} />
+                <Volume2 size={20} aria-hidden="true" />
                 <span className="text-sm font-semibold">{!audioStarted ? '🎵 Tocar' : 'Tocar'}</span>
               </>
             )}
@@ -237,12 +281,12 @@ export const LevelUpModal = ({ isOpen, onClose, newLevel, totalXP = 0 }) => {
           </div>
 
           {/* Título */}
-          <h2 className="text-4xl font-bold text-center mb-2 bg-gradient-to-r from-yellow-600 to-orange-600 bg-clip-text ">
+          <h2 id="level-up-title" className="text-4xl font-bold text-center mb-2 bg-gradient-to-r from-yellow-600 to-orange-600 bg-clip-text text-transparent">
             Parabéns! 🎉
           </h2>
 
           {/* Subtítulo do nível */}
-          <div className="text-center mb-6">
+          <div id="level-up-description" className="text-center mb-6">
             <p className="text-gray-600 text-lg mb-1">Você alcançou o</p>
             <div className="inline-block bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-6 py-2 rounded-full shadow-lg">
               <span className="font-bold text-2xl">Level {newLevel}</span>
@@ -277,37 +321,47 @@ export const LevelUpModal = ({ isOpen, onClose, newLevel, totalXP = 0 }) => {
           {/* Botão de continuar */}
           <button
             onClick={onClose}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                onClose();
+              }
+            }}
+            tabIndex={0}
+            aria-label="Continuar praticando"
             className="w-full bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white font-bold py-4 rounded-xl shadow-lg transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2"
           >
             <span>Continue Praticando</span>
-            <ArrowRight size={20} />
+            <ArrowRight size={20} aria-hidden="true" />
           </button>
         </div>
       </div>
 
       {/* Confetti Animation */}
       {showConfetti && (
-        <div className="fixed inset-0 z-30 pointer-events-none">
-          {[...Array(50)].map((_, i) => (
-            <div
-              key={i}
-              className="absolute animate-confetti"
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: '-10px',
-                animationDelay: `${Math.random() * 2}s`,
-                animationDuration: `${2 + Math.random() * 2}s`
-              }}
-            >
+        <div className="fixed inset-0 z-30 pointer-events-none" aria-hidden="true">
+          {[...Array(50)].map((_, i) => {
+            const colors = ['bg-yellow-300', 'bg-orange-400', 'bg-red-400', 'bg-purple-400', 'bg-blue-400'];
+            const randomColor = colors[Math.floor(Math.random() * 5)];
+            const randomLeft = Math.random() * 100;
+            const randomDelay = Math.random() * 2;
+            const randomDuration = 2 + Math.random() * 2;
+            const randomRotation = Math.random() * 360;
+            
+            return (
               <div
-                className="w-2 h-2 rounded-full"
+                key={i}
+                className={`absolute animate-confetti ${randomColor} w-2 h-2 rounded-full`}
                 style={{
-                  backgroundColor: ['#FCD34D', '#FB923C', '#F87171', '#A78BFA', '#60A5FA'][Math.floor(Math.random() * 5)],
-                  transform: `rotate(${Math.random() * 360}deg)`
+                  left: `${randomLeft}%`,
+                  top: '-10px',
+                  animationDelay: `${randomDelay}s`,
+                  animationDuration: `${randomDuration}s`,
+                  transform: `rotate(${randomRotation}deg)`
                 }}
               />
-            </div>
-          ))}
+            );
+          })}
         </div>
       )}
 
