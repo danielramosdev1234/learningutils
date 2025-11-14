@@ -51,6 +51,7 @@ export const LevelUpModal = ({ isOpen, onClose, newLevel, totalXP = 0 }) => {
 
     // 🎵 Toca aplausos
     if (applauseRef.current) {
+      applauseRef.current.volume = 0.5; // Volume pela metade
       applauseRef.current.currentTime = 0;
       applauseRef.current.play()
         .then(() => console.log('🎵 Aplausos tocando!'))
@@ -59,6 +60,7 @@ export const LevelUpModal = ({ isOpen, onClose, newLevel, totalXP = 0 }) => {
 
     // 🎶 Toca música da vitória (em loop)
     if (musicRef.current) {
+      musicRef.current.volume = 0.5; // Volume pela metade
       musicRef.current.currentTime = 0;
       musicRef.current.play()
         .then(() => {
@@ -70,6 +72,16 @@ export const LevelUpModal = ({ isOpen, onClose, newLevel, totalXP = 0 }) => {
 
     setAudioStarted(true);
   };
+
+  // Define volume inicial dos áudios
+  useEffect(() => {
+    if (applauseRef.current) {
+      applauseRef.current.volume = 0.5; // Volume pela metade
+    }
+    if (musicRef.current) {
+      musicRef.current.volume = 0.5; // Volume pela metade
+    }
+  }, []);
 
   useEffect(() => {
     if (isOpen) {
@@ -96,6 +108,7 @@ export const LevelUpModal = ({ isOpen, onClose, newLevel, totalXP = 0 }) => {
       musicRef.current.pause();
       setIsPlayingMusic(false);
     } else {
+      musicRef.current.volume = 0.5; // Volume pela metade
       musicRef.current.currentTime = 0; // Reinicia do começo
       musicRef.current.play()
         .then(() => setIsPlayingMusic(true))

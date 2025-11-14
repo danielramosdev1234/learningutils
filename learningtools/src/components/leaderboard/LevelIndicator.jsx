@@ -223,7 +223,7 @@ export const LevelIndicator = ({ variant = 'full' }) => {
           <div className="space-y-2">
             {/* Info linha única */}
             <div className="flex items-center justify-between">
-              <span className="text-xl  text-gray-600 font-medium">Level {currentLevel + 1}</span>
+              <span className="text-xl  text-gray-600 font-medium">Level {currentLevel}</span>
               <span className="text-xl  sm:text-base font-bold text-gray-900">
                 {xpProgress.current} <span className="text-gray-400 text-xl  sm:text-sm">/ {xpProgress.needed}</span>
               </span>
