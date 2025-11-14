@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Trophy, Lock, CheckCircle, Target, TrendingUp, Zap, ChevronDown, ChevronUp } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Trophy, CheckCircle, Target, TrendingUp, Zap, ChevronDown, ChevronUp, Crown } from 'lucide-react';
 import { useSelector } from 'react-redux';
 import LevelRankingModal from '../modals/LevelRankingModal';
 
@@ -12,6 +12,7 @@ export const LevelIndicator = ({ variant = 'full' }) => {
   const { totalXP, currentLevel, xpProgress, xpToday, xpBreakdown } = useSelector(state => state.xp);
   const [showRankingModal, setShowRankingModal] = useState(false);
   const [showXPBreakdown, setShowXPBreakdown] = useState(false);
+  const [userRankingPosition, setUserRankingPosition] = useState(null);
 
   if (!totalXP && totalXP !== 0) return null;
 
@@ -22,26 +23,95 @@ export const LevelIndicator = ({ variant = 'full' }) => {
   // Calcula frases completadas baseado no XP (cada frase = 10 XP)
   const phrasesCompleted = Math.floor(xpBreakdown.phrases / 10);
 
+  const handleOpenRanking = () => {
+    setShowRankingModal(true);
+  };
+
+  const handleCloseRanking = () => {
+    setShowRankingModal(false);
+  };
+
+  const handleToggleXPBreakdown = () => {
+    setShowXPBreakdown(prev => !prev);
+  };
+
+  const handleRankingClick = (e) => {
+    e?.stopPropagation();
+    handleOpenRanking();
+  };
+
+  const handleKeyDown = (e, action) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      action();
+    }
+  };
+
+  // Busca posição do usuário no ranking
+  useEffect(() => {
+    const fetchUserRanking = async () => {
+      if (!userId || variant === 'compact') return;
+      
+      try {
+        const { loadLevelRanking } = await import('../../services/levelRankingService');
+        const ranking = await loadLevelRanking(100);
+        const userIndex = ranking.findIndex(u => u.userId === userId);
+        if (userIndex !== -1) {
+          setUserRankingPosition(userIndex + 1);
+        }
+      } catch (error) {
+        console.warn('⚠️ Erro ao buscar posição no ranking:', error);
+      }
+    };
+
+    fetchUserRanking();
+  }, [userId, variant]);
+
+  // Determina qual moldura usar baseado na posição
+  const getMedalFrameClass = () => {
+    if (!userRankingPosition) return null;
+    
+    if (userRankingPosition === 1) {
+      // Gold Medal Frame - Efeito metálico dourado brilhante
+      return 'absolute -inset-1 rounded-xl sm:rounded-2xl bg-gradient-to-br from-yellow-500 via-amber-500 to-yellow-600 p-[4px] shadow-[0_0_25px_rgba(234,179,8,0.9),inset_0_2px_12px_rgba(255,255,255,0.6),inset_0_-2px_12px_rgba(217,119,6,0.6),0_3px_15px_rgba(234,179,8,0.6)]';
+    } else if (userRankingPosition === 2) {
+      // Silver Medal Frame - Efeito metálico prateado
+      return 'absolute -inset-1 rounded-xl sm:rounded-2xl bg-gradient-to-br from-slate-400 via-slate-300 to-slate-500 p-[3px] shadow-[0_0_20px_rgba(148,163,184,0.7),inset_0_2px_8px_rgba(255,255,255,0.5),inset_0_-2px_8px_rgba(100,116,139,0.5)]';
+    } else if (userRankingPosition === 3) {
+      // Bronze Medal Frame - Efeito metálico bronze
+      return 'absolute -inset-1 rounded-xl sm:rounded-2xl bg-gradient-to-br from-amber-700 via-orange-600 to-amber-800 p-[3px] shadow-[0_0_20px_rgba(217,119,6,0.7),inset_0_2px_8px_rgba(255,255,255,0.4),inset_0_-2px_8px_rgba(180,83,9,0.5)]';
+    } else if (userRankingPosition <= 10) {
+      // Top 10 Medal Frame - Efeito metálico roxo/rosa
+      return 'absolute -inset-1 rounded-xl sm:rounded-2xl bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 p-[3px] shadow-[0_0_20px_rgba(139,92,246,0.6),inset_0_2px_8px_rgba(255,255,255,0.3),inset_0_-2px_8px_rgba(109,40,217,0.4)]';
+    }
+    return null;
+  };
+
+  const medalFrameClass = getMedalFrameClass();
+
   // Compact variant (para Navbar) - CLICÁVEL
   if (variant === 'compact') {
     return (
       <>
         <button
-          onClick={() => setShowRankingModal(true)}
+          onClick={handleOpenRanking}
+          onKeyDown={(e) => handleKeyDown(e, handleOpenRanking)}
+          tabIndex={0}
+          aria-label={`Level ${currentLevel}. Click to view ranking`}
           className="flex items-center gap-2 px-3 py-1.5 bg-gradient-to-r from-yellow-400 to-orange-400 rounded-lg shadow-md hover:from-yellow-500 hover:to-orange-500 transition-all transform hover:scale-105 active:scale-95"
         >
-          <Trophy size={16} className="text-white" />
+          <Trophy size={16} className="text-white" aria-hidden="true" />
           <span className="font-bold text-white text-sm">
             Lvl {currentLevel}
           </span>
           {isLevelComplete && (
-            <CheckCircle size={14} className="text-white animate-pulse" />
+            <CheckCircle size={14} className="text-white animate-pulse" aria-hidden="true" />
           )}
         </button>
 
         <LevelRankingModal
           isOpen={showRankingModal}
-          onClose={() => setShowRankingModal(false)}
+          onClose={handleCloseRanking}
           currentUserId={userId}
         />
       </>
@@ -49,227 +119,303 @@ export const LevelIndicator = ({ variant = 'full' }) => {
   }
 
   // Full variant
+  const getProgressBarWidth = (percent) => {
+    const clamped = Math.min(Math.max(percent, 0), 100);
+    // Usa classes Tailwind para valores comuns, fallback para valor dinâmico
+    if (clamped >= 100) return 'w-full';
+    if (clamped >= 90) return 'w-[90%]';
+    if (clamped >= 80) return 'w-[80%]';
+    if (clamped >= 70) return 'w-[70%]';
+    if (clamped >= 60) return 'w-[60%]';
+    if (clamped >= 50) return 'w-[50%]';
+    if (clamped >= 40) return 'w-[40%]';
+    if (clamped >= 30) return 'w-[30%]';
+    if (clamped >= 20) return 'w-[20%]';
+    if (clamped >= 10) return 'w-[10%]';
+    return 'w-0';
+  };
+
+  const progressBarWidthClass = getProgressBarWidth(progressPercent);
+
   return (
     <>
-      <div
-        onClick={() => setShowRankingModal(true)}
-        className="bg-gradient-to-r from-yellow-50 to-orange-50 rounded-xl shadow-lg p-6 border-2 border-yellow-300 mb-6 cursor-pointer hover:shadow-xl hover:scale-[1.02] transition-all"
-      >
-        {/* Header */}
-        <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center gap-3">
+      {/* Main Level Card - Compact Futuristic Design */}
+      <div className="relative group mb-4 sm:mb-6">
+        {/* Glow sutil no hover */}
+        <div className="absolute -inset-0.5 bg-gradient-to-r from-cyan-400/20 to-purple-400/20 rounded-2xl blur opacity-0 group-hover:opacity-100 transition duration-300" />
+        
+        {/* Card */}
+        <div
+          onClick={handleOpenRanking}
+          onKeyDown={(e) => handleKeyDown(e, handleOpenRanking)}
+          tabIndex={0}
+          role="button"
+          aria-label={`Level ${currentLevel} progress. Click to view global ranking`}
+          className="relative bg-white rounded-2xl p-5 border border-gray-200 shadow-xl cursor-pointer hover:shadow-2xl transition-all duration-300"
+        >
+          {/* Top: Level + Rank + Today XP em uma linha */}
+          <div className="flex items-center justify-between gap-3 mb-4">
+            {/* Left: Level com Rank */}
+            <div className="flex items-center gap-2">
+              {/* Level Badge Compacto */}
+              <div className="relative">
+                {/* Badge de Nível - Compacto Futurístico */}
+                <div className="relative flex items-center gap-2 bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl px-3 py-2 border border-cyan-300/40 shadow-md z-10">
+                  <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-gradient-to-br from-cyan-400 to-blue-500">
+                    <Trophy size={16} className="text-white" aria-hidden="true" />
+                  </div>
+                  <div className="leading-none">
+                    <p className="text-[9px] font-semibold uppercase tracking-wide text-cyan-600">Level</p>
+                    <p className="text-xl font-bold text-gray-900">{currentLevel}</p>
+                  </div>
+                </div>
+              </div>
 
-            <div>
-
-                     <div   className="flex items-center gap-2 px-3 py-1.5 bg-gradient-to-r from-yellow-400 to-orange-400 rounded-lg shadow-md hover:from-yellow-500 hover:to-orange-500 transition-all ">
-
-              <Trophy size={30} className="text-white" />
-                        <span className="text-2xl font-bold  text-white ">
-                          Lvl {currentLevel}
-                        </span>
-                        </div>
+              {/* Rank Badge Mini - Com Moldura de Medalha e Glow Effect */}
+              {userRankingPosition && userRankingPosition <= 10 && (
+                <div className="relative">
+                  {/* Moldura de Medalha (se estiver no top 10) */}
+                  {medalFrameClass && (
+                    <div className={medalFrameClass.replace('rounded-xl sm:rounded-2xl', 'rounded-lg')}>
+                      <div className={`w-full h-full rounded-lg shadow-inner ${
+                        userRankingPosition === 1
+                          ? 'bg-gradient-to-br from-yellow-300 via-amber-200 to-yellow-400'
+                          : userRankingPosition === 2
+                          ? 'bg-gradient-to-br from-slate-200 via-slate-100 to-slate-300'
+                          : userRankingPosition === 3
+                          ? 'bg-gradient-to-br from-amber-300 via-orange-200 to-amber-400'
+                          : 'bg-gradient-to-br from-indigo-200 via-purple-200 to-pink-200'
+                      }`} />
+                    </div>
+                  )}
+                  
+                  {/* Glow Effect baseado na posição */}
+                  <div className={`absolute -inset-0.5 rounded-lg blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${
+                    userRankingPosition === 1
+                      ? 'bg-gradient-to-r from-yellow-400/40 to-amber-500/40'
+                      : userRankingPosition === 2
+                      ? 'bg-gradient-to-r from-slate-400/40 to-slate-500/40'
+                      : userRankingPosition === 3
+                      ? 'bg-gradient-to-r from-amber-600/40 to-orange-600/40'
+                      : 'bg-gradient-to-r from-indigo-500/40 to-purple-500/40'
+                  }`} />
+                  
+                  <div className={`relative flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 border z-10 ${
+                    userRankingPosition === 1
+                      ? 'bg-gradient-to-r from-yellow-50 to-amber-50 border-yellow-300/50'
+                      : userRankingPosition === 2
+                      ? 'bg-gradient-to-r from-slate-50 to-gray-50 border-slate-300/50'
+                      : userRankingPosition === 3
+                      ? 'bg-gradient-to-r from-amber-50 to-orange-50 border-orange-300/50'
+                      : 'bg-gradient-to-r from-indigo-50 to-purple-50 border-purple-300/50'
+                  }`}>
+                    {userRankingPosition <= 3 && (
+                      <Crown size={12} className={
+                        userRankingPosition === 1
+                          ? 'text-yellow-600'
+                          : userRankingPosition === 2
+                          ? 'text-slate-600'
+                          : 'text-orange-600'
+                      } aria-hidden="true" />
+                    )}
+                    <span className="text-gray-900 text-sm font-bold">#{userRankingPosition}</span>
+                  </div>
+                </div>
+              )}
             </div>
-          </div>
 
-
-          <div className="flex items-center gap-2">
+            {/* Right: Today XP Compacto */}
             {xpToday > 0 && (
-              <div className="bg-green-50 px-4 py-2 rounded-lg border border-green-200">
+              <div className="bg-gradient-to-br from-emerald-50 to-green-50 rounded-xl px-3 py-2 border border-emerald-300/40 shadow-md" role="status" aria-label={`Today's XP: ${xpToday}`}>
                 <div className="flex items-center gap-2">
-                  <TrendingUp size={16} className="text-green-600" />
-                  <div>
-                    <p className="text-xs text-green-700 font-semibold">Today</p>
-                    <p className="text-sm font-bold text-green-600">+{xpToday} XP</p>
+                  <TrendingUp size={14} className="text-emerald-600" aria-hidden="true" />
+                  <div className="leading-none">
+                    <p className="text-[9px] text-emerald-700/80 font-semibold uppercase tracking-wide">Today</p>
+                    <p className="text-base font-bold text-gray-900">+{xpToday.toLocaleString()}</p>
                   </div>
                 </div>
               </div>
             )}
+          </div>
 
+          {/* Progress Section Compacta */}
+          <div className="space-y-2">
+            {/* Info linha única */}
+            <div className="flex items-center justify-between">
+              <span className="text-xs text-gray-600 font-medium">Level {currentLevel + 1}</span>
+              <span className="text-sm font-bold text-gray-900">
+                {xpProgress.current} <span className="text-gray-400 text-xs">/ {xpProgress.needed}</span>
+              </span>
+            </div>
+
+            {/* Progress Bar */}
+            <div className="relative h-2.5 bg-gray-100 rounded-full overflow-hidden border border-gray-200 shadow-inner" role="progressbar" aria-valuenow={progressPercent} aria-valuemin={0} aria-valuemax={100} aria-label={`Progress to level ${currentLevel + 1}: ${Math.round(progressPercent)}%`}>
+              <div 
+                className="h-full bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500 relative transition-all duration-700 ease-out rounded-full"
+                style={{
+                  width: `${Math.max(progressPercent, 3)}%`,
+                  boxShadow: '0 0 15px rgba(34, 211, 238, 0.25)'
+                }}
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent animate-shimmer" />
+              </div>
+            </div>
+
+            {/* Stats inline */}
+            <div className="flex justify-between text-[10px] text-gray-500">
+              <span className="font-semibold text-cyan-600">{Math.round(progressPercent)}% complete</span>
+              <span>{remaining} XP left</span>
+            </div>
+
+            {/* Ready Badge - Compacto */}
             {isLevelComplete && (
-              <div className="bg-green-500 text-white px-4 py-2 rounded-lg font-bold flex items-center gap-2 animate-bounce">
-                <CheckCircle size={20} />
-                <span>Ready!</span>
+              <div className="mt-2 flex items-center justify-center gap-2 px-3 py-2 bg-gradient-to-r from-emerald-500 to-green-600 text-white rounded-lg text-xs font-bold shadow-lg animate-pulse" role="status" aria-label="Level complete, ready to level up">
+                <CheckCircle size={14} aria-hidden="true" />
+                <span>Ready to Level Up!</span>
               </div>
             )}
-
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                setShowRankingModal(true);
-              }}
-              className="flex items-center gap-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white px-4 py-2 rounded-lg font-semibold hover:from-purple-600 hover:to-pink-600 transition-all shadow-md"
-            >
-              <TrendingUp size={18} />
-              <span className="hidden sm:inline">View Ranking</span>
-            </button>
           </div>
-        </div>
-
-        {/* Progress Bar */}
-        <div className="mb-3">
-          <div className="flex justify-between text-sm font-semibold text-gray-700 mb-2">
-            <span>Progress to Level {currentLevel + 1}</span>
-            <span>{xpProgress.current} / {xpProgress.needed} XP</span>
-          </div>
-          <div className="bg-gray-200 rounded-full h-4 overflow-hidden shadow-inner">
-            <div
-              className="bg-gradient-to-r from-green-400 to-green-600 h-full transition-all duration-500 ease-out flex items-center justify-end pr-2"
-              style={{ width: `${Math.min(progressPercent, 100)}%` }}
-            >
-              {progressPercent > 10 && (
-                <span className="text-white text-xs font-bold">
-                  {Math.round(progressPercent)}%
-                </span>
-              )}
-            </div>
-          </div>
-        </div>
-
-        {/* Stats */}
-        <div className="grid grid-cols-3 gap-3">
-          <div className="bg-white bg-opacity-70 p-3 rounded-lg border border-yellow-200">
-            <div className="flex items-center gap-2 mb-1">
-              <Zap size={16} className="text-yellow-600 fill-yellow-600" />
-              <span className="text-xs text-gray-600 font-semibold">Total XP</span>
-            </div>
-            <p className="text-2xl font-bold text-yellow-600">{totalXP.toLocaleString()}</p>
-          </div>
-
-          <div className="bg-white bg-opacity-70 p-3 rounded-lg border border-yellow-200">
-            <div className="flex items-center gap-2 mb-1">
-              <Target size={16} className="text-orange-600" />
-              <span className="text-xs text-gray-600 font-semibold">Remaining</span>
-            </div>
-            <p className="text-2xl font-bold text-orange-600">{Math.max(remaining, 0)} XP</p>
-            <p className="text-xs text-gray-500 mt-1">
-              ~{Math.ceil(remaining / 10)} phrases
-            </p>
-          </div>
-
-          <div className="bg-white bg-opacity-70 p-3 rounded-lg border border-yellow-200">
-            <div className="flex items-center gap-2 mb-1">
-              <CheckCircle size={16} className="text-green-600" />
-              <span className="text-xs text-gray-600 font-semibold">Phrases</span>
-            </div>
-            <p className="text-2xl font-bold text-green-600">{phrasesCompleted}</p>
-            <p className="text-xs text-gray-500 mt-1">
-              {xpBreakdown.phrases} XP
-            </p>
-          </div>
-        </div>
-
-        {/* XP Breakdown */}
-        {/* Hint to click */}
-        <div className="mt-3 text-center">
-          <p className="text-xs text-gray-500 flex items-center justify-center gap-1">
-            <TrendingUp size={12} />
-            Click to view global ranking
-          </p>
         </div>
       </div>
 
-      {/* 'Como Ganhar XP' SEPARADO */}
+      {/* XP Breakdown Section */}
       <div className="max-w-3xl mx-auto">
-        <div className="mt-2 mb-6 bg-white bg-opacity-70 rounded-lg border border-yellow-200 overflow-hidden">
+        <div className="bg-white rounded-xl sm:rounded-2xl shadow-lg border border-gray-200 overflow-hidden mb-4 sm:mb-6">
           <button
-            onClick={() => setShowXPBreakdown(!showXPBreakdown)}
-            className="w-full p-4 flex items-center justify-between hover:bg-yellow-50 transition-colors"
+            onClick={handleToggleXPBreakdown}
+            onKeyDown={(e) => handleKeyDown(e, handleToggleXPBreakdown)}
+            tabIndex={0}
+            aria-expanded={showXPBreakdown}
+            aria-controls="xp-breakdown-content"
+            aria-label={showXPBreakdown ? 'Hide XP breakdown' : 'Show XP breakdown'}
+            className="w-full p-3 sm:p-5 flex items-center justify-between hover:bg-gradient-to-r hover:from-amber-50 hover:to-yellow-50 transition-all duration-200"
           >
-            <div className="flex items-center gap-2">
-              <Zap size={16} className="text-yellow-600 fill-yellow-600" />
-              <p className="text-base text-gray-700 font-bold">Como Ganhar XP</p>
+            <div className="flex items-center gap-2 sm:gap-3">
+              <div className="p-1.5 sm:p-2 bg-gradient-to-br from-amber-400 to-orange-500 rounded-lg">
+                <Zap size={16} className="sm:w-5 sm:h-5 text-white fill-white" aria-hidden="true" />
+              </div>
+              <p className="text-sm sm:text-lg font-bold text-gray-800">Como Ganhar XP</p>
             </div>
-            {showXPBreakdown ? (
-              <ChevronUp size={20} className="text-gray-600" />
-            ) : (
-              <ChevronDown size={20} className="text-gray-600" />
-            )}
+            <div className={`transform transition-transform duration-200 ${showXPBreakdown ? 'rotate-180' : ''}`}>
+              {showXPBreakdown ? (
+                <ChevronUp size={20} className="sm:w-6 sm:h-6 text-gray-600" aria-hidden="true" />
+              ) : (
+                <ChevronDown size={20} className="sm:w-6 sm:h-6 text-gray-600" aria-hidden="true" />
+              )}
+            </div>
           </button>
 
           {showXPBreakdown && (
-            <div className="px-4 pb-4 space-y-4 text-sm">
-
-                <div className="bg-yellow-50 p-3 rounded border-l-4 border-yellow-400">
-                                <div className="flex justify-between items-center mb-1">
-                                  <span className="font-semibold text-yellow-800">🔥 Streak Bonus</span>
-                                  <span className="text-yellow-600 text-base font-bold">+2 XP</span>
-                                </div>
-                                <p className="text-yellow-700">A cada exercício ganha +2 XP bônus por manter streak de 7+ dias</p>
-                              </div>
-              <div className="bg-blue-50 p-3 rounded border-l-4 border-blue-400">
-                <div className="flex justify-between items-center mb-1">
-                  <span className="font-semibold text-blue-800">💬 Phrases (Falar Frases)</span>
-                  <span className="text-blue-600 text-base font-bold">5 XP</span>
+            <div id="xp-breakdown-content" className="px-3 sm:px-5 pb-4 sm:pb-6 space-y-2 sm:space-y-3 animate-in fade-in slide-in-from-top-2 duration-300" role="region" aria-label="XP breakdown details">
+              {/* Streak Bonus */}
+              <div className="bg-gradient-to-r from-amber-50 to-yellow-50 p-3 sm:p-4 rounded-lg sm:rounded-xl border-l-4 border-amber-400 shadow-sm hover:shadow-md transition-shadow">
+                <div className="flex justify-between items-start mb-1.5 sm:mb-2 gap-2">
+                  <div className="flex items-center gap-1.5 sm:gap-2 flex-1 min-w-0">
+                    <span className="text-base sm:text-xl flex-shrink-0">🔥</span>
+                    <span className="font-bold text-amber-800 text-xs sm:text-sm truncate">Streak Bonus</span>
+                  </div>
+                  <span className="px-2 sm:px-3 py-0.5 sm:py-1 bg-amber-500 text-white rounded-lg text-xs sm:text-sm font-bold shadow-sm flex-shrink-0">+2 XP</span>
                 </div>
-                <p className="text-blue-700">Acertar uma frase com 80%+ de precisão</p>
-                <p className="text-blue-600 mt-1">+2 XP extra se acertar 90%+ | +5 XP se acertar 100%</p>
+                <p className="text-xs sm:text-sm text-amber-700">A cada exercício ganha +2 XP bônus por manter streak de 7+ dias</p>
+              </div>
+              {/* Phrases */}
+              <div className="bg-gradient-to-r from-blue-50 to-cyan-50 p-3 sm:p-4 rounded-lg sm:rounded-xl border-l-4 border-blue-400 shadow-sm hover:shadow-md transition-shadow">
+                <div className="flex justify-between items-start mb-1.5 sm:mb-2 gap-2">
+                  <div className="flex items-center gap-1.5 sm:gap-2 flex-1 min-w-0">
+                    <span className="text-base sm:text-xl flex-shrink-0">💬</span>
+                    <span className="font-bold text-blue-800 text-xs sm:text-sm truncate">Phrases</span>
+                  </div>
+                  <span className="px-2 sm:px-3 py-0.5 sm:py-1 bg-blue-500 text-white rounded-lg text-xs sm:text-sm font-bold shadow-sm flex-shrink-0">5 XP</span>
+                </div>
+                <p className="text-xs sm:text-sm text-blue-700 mb-0.5 sm:mb-1">Acertar uma frase com 80%+ de precisão</p>
+                <p className="text-[10px] sm:text-xs text-blue-600">+2 XP extra se acertar 90%+ | +5 XP se acertar 100%</p>
                 {xpBreakdown.phrases > 0 && (
-                  <p className="text-blue-500 mt-1">Total ganho: {xpBreakdown.phrases} XP</p>
+                  <p className="text-[10px] sm:text-xs text-blue-500 mt-1.5 sm:mt-2 font-semibold">✓ Total ganho: {xpBreakdown.phrases.toLocaleString()} XP</p>
                 )}
               </div>
 
-              <div className="bg-green-50 p-3 rounded border-l-4 border-green-400">
-                <div className="flex justify-between items-center mb-1">
-                  <span className="font-semibold text-green-800">📚 Categories (Categorias)</span>
-                  <span className="text-blue-600 text-base font-bold">5 XP</span>
-                                  </div>
-                                  <p className="text-blue-700">Acertar uma frase com 80%+ de precisão</p>
-                                  <p className="text-blue-600 mt-1">+2 XP extra se acertar 90%+ | +5 XP se acertar 100%</p>
+              {/* Categories */}
+              <div className="bg-gradient-to-r from-emerald-50 to-green-50 p-3 sm:p-4 rounded-lg sm:rounded-xl border-l-4 border-emerald-400 shadow-sm hover:shadow-md transition-shadow">
+                <div className="flex justify-between items-start mb-1.5 sm:mb-2 gap-2">
+                  <div className="flex items-center gap-1.5 sm:gap-2 flex-1 min-w-0">
+                    <span className="text-base sm:text-xl flex-shrink-0">📚</span>
+                    <span className="font-bold text-emerald-800 text-xs sm:text-sm truncate">Categories</span>
+                  </div>
+                  <span className="px-2 sm:px-3 py-0.5 sm:py-1 bg-emerald-500 text-white rounded-lg text-xs sm:text-sm font-bold shadow-sm flex-shrink-0">5 XP</span>
+                </div>
+                <p className="text-xs sm:text-sm text-emerald-700 mb-0.5 sm:mb-1">Acertar uma frase com 80%+ de precisão</p>
+                <p className="text-[10px] sm:text-xs text-emerald-600">+2 XP extra se acertar 90%+ | +5 XP se acertar 100%</p>
                 {xpBreakdown.categories > 0 && (
-                  <p className="text-green-500 mt-1">Total ganho: {xpBreakdown.categories} XP</p>
+                  <p className="text-[10px] sm:text-xs text-emerald-500 mt-1.5 sm:mt-2 font-semibold">✓ Total ganho: {xpBreakdown.categories.toLocaleString()} XP</p>
                 )}
               </div>
 
-              <div className="bg-purple-50 p-3 rounded border-l-4 border-purple-400">
-                <div className="flex justify-between items-center mb-1">
-                  <span className="font-semibold text-purple-800">🔄 Translate (Tradução)</span>
-                  <span className="text-blue-600 text-base font-bold">5 XP</span>
-                                  </div>
-                                  <p className="text-blue-700">Acertar uma frase com 80%+ de precisão</p>
-                                  <p className="text-blue-600 mt-1">+2 XP extra se acertar 90%+ | +5 XP se acertar 100%</p>
+              {/* Translate */}
+              <div className="bg-gradient-to-r from-violet-50 to-purple-50 p-3 sm:p-4 rounded-lg sm:rounded-xl border-l-4 border-violet-400 shadow-sm hover:shadow-md transition-shadow">
+                <div className="flex justify-between items-start mb-1.5 sm:mb-2 gap-2">
+                  <div className="flex items-center gap-1.5 sm:gap-2 flex-1 min-w-0">
+                    <span className="text-base sm:text-xl flex-shrink-0">🔄</span>
+                    <span className="font-bold text-violet-800 text-xs sm:text-sm truncate">Translate</span>
+                  </div>
+                  <span className="px-2 sm:px-3 py-0.5 sm:py-1 bg-violet-500 text-white rounded-lg text-xs sm:text-sm font-bold shadow-sm flex-shrink-0">5 XP</span>
+                </div>
+                <p className="text-xs sm:text-sm text-violet-700 mb-0.5 sm:mb-1">Acertar uma frase com 80%+ de precisão</p>
+                <p className="text-[10px] sm:text-xs text-violet-600">+2 XP extra se acertar 90%+ | +5 XP se acertar 100%</p>
                 {xpBreakdown.translate > 0 && (
-                  <p className="text-purple-500 mt-1">Total ganho: {xpBreakdown.translate} XP</p>
+                  <p className="text-[10px] sm:text-xs text-violet-500 mt-1.5 sm:mt-2 font-semibold">✓ Total ganho: {xpBreakdown.translate.toLocaleString()} XP</p>
                 )}
               </div>
 
-              <div className="bg-orange-50 p-3 rounded border-l-4 border-orange-400">
-                <div className="flex justify-between items-center mb-1">
-                  <span className="font-semibold text-orange-800">🔢 Numbers (Números)</span>
-                  <span className="text-orange-600 text-base font-bold">5 XP</span>
+              {/* Numbers */}
+              <div className="bg-gradient-to-r from-orange-50 to-amber-50 p-3 sm:p-4 rounded-lg sm:rounded-xl border-l-4 border-orange-400 shadow-sm hover:shadow-md transition-shadow">
+                <div className="flex justify-between items-start mb-1.5 sm:mb-2 gap-2">
+                  <div className="flex items-center gap-1.5 sm:gap-2 flex-1 min-w-0">
+                    <span className="text-base sm:text-xl flex-shrink-0">🔢</span>
+                    <span className="font-bold text-orange-800 text-xs sm:text-sm truncate">Numbers</span>
+                  </div>
+                  <span className="px-2 sm:px-3 py-0.5 sm:py-1 bg-orange-500 text-white rounded-lg text-xs sm:text-sm font-bold shadow-sm flex-shrink-0">5 XP</span>
                 </div>
-                <p className="text-orange-700">Cada numero correto.</p>
+                <p className="text-xs sm:text-sm text-orange-700">Cada número correto</p>
                 {xpBreakdown.numbers > 0 && (
-                  <p className="text-orange-500 mt-1">Total ganho: {xpBreakdown.numbers} XP</p>
+                  <p className="text-[10px] sm:text-xs text-orange-500 mt-1.5 sm:mt-2 font-semibold">✓ Total ganho: {xpBreakdown.numbers.toLocaleString()} XP</p>
                 )}
               </div>
 
-              <div className="bg-red-50 p-3 rounded border-l-4 border-red-400">
-                <div className="flex justify-between items-center mb-1">
-                  <span className="font-semibold text-red-800">🎯 Challenge (Desafio)</span>
-                  <span className="text-red-600 text-base font-bold">5 XP</span>
+              {/* Challenge */}
+              <div className="bg-gradient-to-r from-rose-50 to-red-50 p-3 sm:p-4 rounded-lg sm:rounded-xl border-l-4 border-rose-400 shadow-sm hover:shadow-md transition-shadow">
+                <div className="flex justify-between items-start mb-1.5 sm:mb-2 gap-2">
+                  <div className="flex items-center gap-1.5 sm:gap-2 flex-1 min-w-0">
+                    <span className="text-base sm:text-xl flex-shrink-0">🎯</span>
+                    <span className="font-bold text-rose-800 text-xs sm:text-sm truncate">Challenge</span>
+                  </div>
+                  <span className="px-2 sm:px-3 py-0.5 sm:py-1 bg-rose-500 text-white rounded-lg text-xs sm:text-sm font-bold shadow-sm flex-shrink-0">5 XP</span>
                 </div>
-                <p className="text-red-700">Cada frase correta.</p>
+                <p className="text-xs sm:text-sm text-rose-700">Cada frase correta</p>
                 {xpBreakdown.challenge > 0 && (
-                  <p className="text-red-500 mt-1">Total ganho: {xpBreakdown.challenge} XP</p>
+                  <p className="text-[10px] sm:text-xs text-rose-500 mt-1.5 sm:mt-2 font-semibold">✓ Total ganho: {xpBreakdown.challenge.toLocaleString()} XP</p>
                 )}
               </div>
 
-              <div className="bg-indigo-50 p-3 rounded border-l-4 border-indigo-400">
-                <div className="flex justify-between items-center mb-1">
-                  <span className="font-semibold text-indigo-800">🎥 Video (Vídeo)</span>
-                  <span className="text-indigo-600 text-base font-bold">5-10 XP</span>
+              {/* Video */}
+              <div className="bg-gradient-to-r from-indigo-50 to-blue-50 p-3 sm:p-4 rounded-lg sm:rounded-xl border-l-4 border-indigo-400 shadow-sm hover:shadow-md transition-shadow">
+                <div className="flex justify-between items-start mb-1.5 sm:mb-2 gap-2">
+                  <div className="flex items-center gap-1.5 sm:gap-2 flex-1 min-w-0">
+                    <span className="text-base sm:text-xl flex-shrink-0">🎥</span>
+                    <span className="font-bold text-indigo-800 text-xs sm:text-sm truncate">Video</span>
+                  </div>
+                  <span className="px-2 sm:px-3 py-0.5 sm:py-1 bg-indigo-500 text-white rounded-lg text-xs sm:text-sm font-bold shadow-sm flex-shrink-0">5-10 XP</span>
                 </div>
-                <p className="text-indigo-700">Cada questão correta. Phrases: 5 XP | Scenes: 10 XP</p>
+                <p className="text-xs sm:text-sm text-indigo-700">Cada questão correta. Phrases: 5 XP | Scenes: 10 XP</p>
                 {xpBreakdown.video > 0 && (
-                  <p className="text-indigo-500 mt-1">Total ganho: {xpBreakdown.video} XP</p>
+                  <p className="text-[10px] sm:text-xs text-indigo-500 mt-1.5 sm:mt-2 font-semibold">✓ Total ganho: {xpBreakdown.video.toLocaleString()} XP</p>
                 )}
               </div>
 
-
-
-              <div className="mt-3 pt-2 border-t border-yellow-300">
-                <p className="text-[13px] text-gray-700 text-center">
-                  💡 <span className="font-semibold">Dica:</span> Cada nível requer 100+(lvl*5) XP. Continue praticando para subir de nível!
+              {/* Tip */}
+              <div className="mt-3 sm:mt-4 pt-3 sm:pt-4 border-t border-gray-200 bg-gradient-to-r from-gray-50 to-gray-100 p-3 sm:p-4 rounded-lg sm:rounded-xl">
+                <p className="text-xs sm:text-sm text-gray-700 text-center">
+                  <span className="text-base sm:text-lg mr-1 sm:mr-2">💡</span>
+                  <span className="font-semibold">Dica:</span> Cada nível requer 100+(lvl×5) XP. Continue praticando!
                 </p>
               </div>
             </div>
@@ -279,7 +425,7 @@ export const LevelIndicator = ({ variant = 'full' }) => {
 
       <LevelRankingModal
         isOpen={showRankingModal}
-        onClose={() => setShowRankingModal(false)}
+        onClose={handleCloseRanking}
         currentUserId={userId}
       />
     </>

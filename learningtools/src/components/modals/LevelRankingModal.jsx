@@ -131,23 +131,27 @@ export default function LevelRankingModal({ isOpen, onClose, currentUserId }) {
                   <Sparkles className="absolute top-6 right-10 w-5 h-5 text-orange-400 animate-pulse delay-100" />
 
                   <div className="flex items-end justify-center gap-3 mb-6">
-                    {/* 2nd Place - Left */}
+                    {/* 2nd Place - Left - Silver Medal Frame */}
                     {top3[1] && (
                       <div className="flex flex-col items-center flex-1">
                         <div className="relative mb-3">
+                          {/* Silver Medal Frame - Moldura prateada com efeito metálico */}
+                          <div className="absolute -inset-1 rounded-full bg-gradient-to-br from-slate-400 via-slate-300 to-slate-500 p-[4px] shadow-[0_0_25px_rgba(148,163,184,0.7),inset_0_2px_10px_rgba(255,255,255,0.5),inset_0_-2px_10px_rgba(100,116,139,0.5)]">
+                            <div className="w-full h-full rounded-full bg-gradient-to-br from-slate-200 via-slate-100 to-slate-300 shadow-inner" />
+                          </div>
                           {top3[1].photoURL ? (
                             <img
                               src={top3[1].photoURL}
                               alt={top3[1].displayName}
-                              className="w-16 h-16 rounded-full border-4 border-gray-300 shadow-lg"
+                              className="relative w-16 h-16 rounded-full border-[3px] border-slate-300 shadow-xl z-10"
                             />
                           ) : (
-                            <div className="w-16 h-16 rounded-full border-4 border-gray-300 bg-gradient-to-br from-gray-300 to-gray-400 flex items-center justify-center text-white font-bold text-xl shadow-lg">
+                            <div className="relative w-16 h-16 rounded-full border-[3px] border-slate-300 bg-gradient-to-br from-slate-300 to-slate-400 flex items-center justify-center text-white font-bold text-xl shadow-xl z-10">
                               {top3[1].displayName?.charAt(0).toUpperCase() || '?'}
                             </div>
                           )}
-                          <div className="absolute -top-2 -right-2 bg-gray-300 rounded-full p-1.5 shadow-lg border-2 border-white">
-                                  <svg className="w-5 h-5 text-gray-600" fill="currentColor" viewBox="0 0 24 24">
+                          <div className="absolute -top-2 -right-2 bg-gradient-to-br from-slate-300 to-slate-500 rounded-full p-1.5 shadow-lg border-2 border-white z-20">
+                                  <svg className="w-5 h-5 text-slate-700" fill="currentColor" viewBox="0 0 24 24">
                                     <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
                                   </svg>
                                 </div>
@@ -173,22 +177,26 @@ export default function LevelRankingModal({ isOpen, onClose, currentUserId }) {
                       </div>
                     )}
 
-                    {/* 1st Place - Center (Tallest) */}
+                    {/* 1st Place - Center (Tallest) - Gold Medal Frame */}
                     {top3[0] && (
                       <div className="flex flex-col items-center flex-1">
                         <div className="relative mb-3">
+                          {/* Gold Medal Frame - Moldura dourada com efeito metálico brilhante */}
+                          <div className="absolute -inset-1 rounded-full bg-gradient-to-br from-yellow-500 via-amber-500 to-yellow-600 p-[5px] shadow-[0_0_30px_rgba(234,179,8,0.9),inset_0_2px_15px_rgba(255,255,255,0.6),inset_0_-2px_15px_rgba(217,119,6,0.6),0_4px_20px_rgba(234,179,8,0.6)]">
+                            <div className="w-full h-full rounded-full bg-gradient-to-br from-yellow-300 via-amber-200 to-yellow-400 shadow-inner" />
+                          </div>
                           {top3[0].photoURL ? (
                             <img
                               src={top3[0].photoURL}
                               alt={top3[0].displayName}
-                              className="w-20 h-20 rounded-full border-4 border-yellow-400 shadow-xl"
+                              className="relative w-20 h-20 rounded-full border-[4px] border-yellow-400 shadow-2xl z-10"
                             />
                           ) : (
-                            <div className="w-20 h-20 rounded-full border-4 border-yellow-400 bg-gradient-to-br from-yellow-400 to-orange-500 flex items-center justify-center text-white font-bold text-2xl shadow-xl">
+                            <div className="relative w-20 h-20 rounded-full border-[4px] border-yellow-400 bg-gradient-to-br from-yellow-400 to-orange-500 flex items-center justify-center text-white font-bold text-2xl shadow-2xl z-10">
                               {top3[0].displayName?.charAt(0).toUpperCase() || '?'}
                             </div>
                           )}
-                          <div className="absolute -top-3 -right-2 bg-yellow-400 rounded-full p-2 shadow-lg">
+                          <div className="absolute -top-3 -right-2 bg-gradient-to-br from-yellow-400 to-amber-500 rounded-full p-2 shadow-xl border-2 border-yellow-300 z-20">
                             <Crown className="w-6 h-6 text-yellow-800" fill="currentColor" />
                           </div>
                         </div>
@@ -213,23 +221,27 @@ export default function LevelRankingModal({ isOpen, onClose, currentUserId }) {
                       </div>
                     )}
 
-                    {/* 3rd Place - Right */}
+                    {/* 3rd Place - Right - Bronze Medal Frame */}
                     {top3[2] && (
                       <div className="flex flex-col items-center flex-1">
                         <div className="relative mb-3">
+                          {/* Bronze Medal Frame - Moldura bronze com efeito metálico */}
+                          <div className="absolute -inset-1 rounded-full bg-gradient-to-br from-amber-700 via-orange-600 to-amber-800 p-[4px] shadow-[0_0_25px_rgba(217,119,6,0.7),inset_0_2px_10px_rgba(255,255,255,0.4),inset_0_-2px_10px_rgba(180,83,9,0.5)]">
+                            <div className="w-full h-full rounded-full bg-gradient-to-br from-amber-300 via-orange-200 to-amber-400 shadow-inner" />
+                          </div>
                           {top3[2].photoURL ? (
                             <img
                               src={top3[2].photoURL}
                               alt={top3[2].displayName}
-                              className="w-16 h-16 rounded-full border-4 border-orange-400 shadow-lg"
+                              className="relative w-16 h-16 rounded-full border-[3px] border-orange-500 shadow-xl z-10"
                             />
                           ) : (
-                            <div className="w-16 h-16 rounded-full border-4 border-orange-400 bg-gradient-to-br from-orange-300 to-orange-500 flex items-center justify-center text-white font-bold text-xl shadow-lg">
+                            <div className="relative w-16 h-16 rounded-full border-[3px] border-orange-500 bg-gradient-to-br from-orange-300 to-orange-500 flex items-center justify-center text-white font-bold text-xl shadow-xl z-10">
                               {top3[2].displayName?.charAt(0).toUpperCase() || '?'}
                             </div>
                           )}
-                          <div className="absolute -top-2 -right-2 bg-orange-400 rounded-full p-1.5 shadow-lg border-2 border-white">
-                                  <svg className="w-5 h-5 text-orange-800" fill="currentColor" viewBox="0 0 24 24">
+                          <div className="absolute -top-2 -right-2 bg-gradient-to-br from-orange-500 to-amber-600 rounded-full p-1.5 shadow-lg border-2 border-white z-20">
+                                  <svg className="w-5 h-5 text-orange-900" fill="currentColor" viewBox="0 0 24 24">
                                     <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
                                   </svg>
                                 </div>
@@ -280,16 +292,30 @@ export default function LevelRankingModal({ isOpen, onClose, currentUserId }) {
                             {position}
                           </span>
 
-                          {/* Avatar */}
-                          <div className="flex-shrink-0">
+                          {/* Avatar - Top 10 Frame */}
+                          <div className="flex-shrink-0 relative">
+                            {/* Top 10 Medal Frame - Moldura para posições 4-10 */}
+                            {position <= 10 && (
+                              <div className="absolute -inset-0.5 rounded-full bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 p-[3px] shadow-[0_0_20px_rgba(139,92,246,0.6),inset_0_2px_8px_rgba(255,255,255,0.3),inset_0_-2px_8px_rgba(109,40,217,0.4)]">
+                                <div className="w-full h-full rounded-full bg-gradient-to-br from-indigo-200 via-purple-200 to-pink-200 shadow-inner" />
+                              </div>
+                            )}
                             {user.photoURL ? (
                               <img
                                 src={user.photoURL}
                                 alt={user.displayName}
-                                className="w-10 h-10 rounded-full border-2 border-gray-200"
+                                className={`relative w-10 h-10 rounded-full z-10 ${
+                                  position <= 10 
+                                    ? 'border-[2px] border-purple-400 shadow-md' 
+                                    : 'border-2 border-gray-200'
+                                }`}
                               />
                             ) : (
-                              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-400 to-pink-400 flex items-center justify-center text-white font-bold">
+                              <div className={`relative w-10 h-10 rounded-full flex items-center justify-center text-white font-bold z-10 ${
+                                position <= 10
+                                  ? 'bg-gradient-to-br from-purple-400 to-pink-400 border-[2px] border-purple-400 shadow-md'
+                                  : 'bg-gradient-to-br from-purple-400 to-pink-400'
+                              }`}>
                                 {user.displayName?.charAt(0).toUpperCase() || '?'}
                               </div>
                             )}
@@ -335,15 +361,29 @@ export default function LevelRankingModal({ isOpen, onClose, currentUserId }) {
                         {userPosition}
                       </span>
 
-                      <div className="flex-shrink-0">
+                      <div className="flex-shrink-0 relative">
+                        {/* Top 10 Medal Frame se estiver no top 10 */}
+                        {userPosition <= 10 && (
+                          <div className="absolute -inset-0.5 rounded-full bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 p-[3px] shadow-[0_0_20px_rgba(139,92,246,0.6),inset_0_2px_8px_rgba(255,255,255,0.3),inset_0_-2px_8px_rgba(109,40,217,0.4)]">
+                            <div className="w-full h-full rounded-full bg-gradient-to-br from-indigo-200 via-purple-200 to-pink-200 shadow-inner" />
+                          </div>
+                        )}
                         {currentUserData.photoURL ? (
                           <img
                             src={currentUserData.photoURL}
                             alt={currentUserData.displayName}
-                            className="w-10 h-10 rounded-full border-2 border-blue-400"
+                            className={`relative w-10 h-10 rounded-full z-10 ${
+                              userPosition <= 10 
+                                ? 'border-[2px] border-purple-400 shadow-md' 
+                                : 'border-2 border-blue-400'
+                            }`}
                           />
                         ) : (
-                          <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-400 to-indigo-400 flex items-center justify-center text-white font-bold">
+                          <div className={`relative w-10 h-10 rounded-full flex items-center justify-center text-white font-bold z-10 ${
+                            userPosition <= 10
+                              ? 'bg-gradient-to-br from-purple-400 to-pink-400 border-[2px] border-purple-400 shadow-md'
+                              : 'bg-gradient-to-br from-blue-400 to-indigo-400'
+                          }`}>
                             {currentUserData.displayName?.charAt(0).toUpperCase() || '?'}
                           </div>
                         )}
