@@ -31,8 +31,8 @@ export const usePhonemeAnalysis = () => {
     // Gera feedback baseado na acurácia
     const feedback = generateFeedback(analysis.accuracy);
 
-    // Obtém dicas para palavras problemáticas
-    const tips = getPronunciationTips(analysis.problematicWords);
+    // Obtém dicas para palavras problemáticas usando a frase completa em IPA
+    const tips = getPronunciationTips(analysis.problematicWords, expectedText, spokenText);
 
     return {
       ...analysis,

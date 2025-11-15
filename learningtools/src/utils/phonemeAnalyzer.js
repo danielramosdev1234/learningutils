@@ -1,6 +1,6 @@
 // src/utils/phonemeAnalyzer.js
 
-import { convertWordToIPA } from './ipaConverter';
+import { convertWordToIPA, convertTextToIPA } from './ipaConverter';
 
 /**
  * Matriz de similaridade fonética
@@ -492,70 +492,188 @@ const PHONEME_CHALLENGES = {
 };
 
 /**
- * Detecta fonemas problemáticos baseado em análise IPA
+ * Alinha fonemas usando similaridade fonética
+ * Retorna array de objetos com fonemas alinhados
+ */
+const phoneticLevenshteinAlignment = (phones1, phones2) => {
+  const len1 = phones1.length;
+  const len2 = phones2.length;
+  
+  // Matriz de programação dinâmica
+  const matrix = Array(len2 + 1)
+    .fill(null)
+    .map(() => Array(len1 + 1).fill({ cost: Infinity, path: null }));
+  
+  // Inicializa primeira linha e coluna
+  matrix[0][0] = { cost: 0, path: null };
+  for (let i = 1; i <= len1; i++) {
+    matrix[0][i] = { cost: i, path: { type: 'delete', i: i - 1, j: 0 } };
+  }
+  for (let j = 1; j <= len2; j++) {
+    matrix[j][0] = { cost: j, path: { type: 'insert', i: 0, j: j - 1 } };
+  }
+  
+  // Preenche matriz
+  for (let j = 1; j <= len2; j++) {
+    for (let i = 1; i <= len1; i++) {
+      const phone1 = phones1[i - 1];
+      const phone2 = phones2[j - 1];
+      
+      const substitutionCost = getPhoneticDistance(phone1, phone2);
+      const matchCost = matrix[j - 1][i - 1].cost + substitutionCost;
+      const deleteCost = matrix[j][i - 1].cost + 1;
+      const insertCost = matrix[j - 1][i].cost + 1;
+      
+      const minCost = Math.min(matchCost, deleteCost, insertCost);
+      
+      let path = null;
+      if (minCost === matchCost) {
+        path = { type: 'match', i: i - 1, j: j - 1 };
+      } else if (minCost === deleteCost) {
+        path = { type: 'delete', i: i - 1, j };
+      } else {
+        path = { type: 'insert', i, j: j - 1 };
+      }
+      
+      matrix[j][i] = { cost: minCost, path };
+    }
+  }
+  
+  // Reconstrói alinhamento
+  const alignment = [];
+  let i = len1, j = len2;
+  
+  while (i > 0 || j > 0) {
+    const { path } = matrix[j][i];
+    
+    if (!path) break;
+    
+    if (path.type === 'match') {
+      alignment.unshift({
+        expectedPhoneme: phones1[path.i],
+        spokenPhoneme: phones2[path.j],
+        position: path.i
+      });
+      i = path.i;
+      j = path.j;
+    } else if (path.type === 'delete') {
+      alignment.unshift({
+        expectedPhoneme: phones1[path.i],
+        spokenPhoneme: null,
+        position: path.i
+      });
+      i = path.i;
+    } else if (path.type === 'insert') {
+      alignment.unshift({
+        expectedPhoneme: null,
+        spokenPhoneme: phones2[path.j],
+        position: i
+      });
+      j = path.j;
+    }
+  }
+  
+  return alignment;
+};
+
+/**
+ * Detecta fonemas problemáticos baseado em análise IPA da frase completa
  * @param {Array} problematicWords - Palavras com baixa confidence
+ * @param {string} expectedText - Texto esperado completo (opcional, para análise de frase)
+ * @param {string} spokenText - Texto falado completo (opcional, para análise de frase)
  * @returns {Array} - Dicas específicas
  */
-export const getPronunciationTips = (problematicWords) => {
+export const getPronunciationTips = (problematicWords, expectedText = null, spokenText = null) => {
   const tips = [];
   const tipsGiven = new Set();
 
-  problematicWords.forEach(wordData => {
-    const { word, expectedIPA, spokenIPA } = wordData;
+  // Se temos a frase completa, usa o IPA da frase completa para análise mais precisa
+  if (expectedText && spokenText) {
+    const expectedFullIPA = convertTextToIPA(expectedText);
+    const spokenFullIPA = convertTextToIPA(spokenText);
 
-    // Analisa diferenças no IPA
-    if (expectedIPA && !expectedIPA.includes('[')) {
-      const cleanExpectedIPA = expectedIPA.replace(/[\/\[\]]/g, '');
-      const cleanSpokenIPA = spokenIPA ? spokenIPA.replace(/[\/\[\]]/g, '') : '';
+    // Remove espaços e formatação do IPA
+    const cleanExpectedIPA = expectedFullIPA.replace(/[\/\[\]\s]/g, '');
+    const cleanSpokenIPA = spokenFullIPA.replace(/[\/\[\]\s]/g, '');
 
-      // Detecta quais fonemas estão faltando ou errados
+    // Verifica se ambos os IPAs são válidos (não contêm palavras não encontradas)
+    if (!cleanExpectedIPA.includes('[') && !cleanSpokenIPA.includes('[')) {
+      // Analisa fonema por fonema na frase completa usando alinhamento fonético
       const expectedPhonemes = Array.from(cleanExpectedIPA);
       const spokenPhonemes = Array.from(cleanSpokenIPA);
 
-      expectedPhonemes.forEach((phoneme, idx) => {
-        const spokenPhoneme = spokenPhonemes[idx];
-
-        // Se o fonema é diferente E está na lista de desafios
-        if (phoneme !== spokenPhoneme && PHONEME_CHALLENGES[phoneme]) {
-          const key = `${phoneme}-${word}`;
-
-          if (!tipsGiven.has(phoneme)) {
-            const challenge = PHONEME_CHALLENGES[phoneme];
+      // Usa alinhamento fonético ponderado para comparar fonemas correspondentes
+      const alignment = phoneticLevenshteinAlignment(expectedPhonemes, spokenPhonemes);
+      
+      // Analisa os fonemas alinhados
+      alignment.forEach(({ expectedPhoneme, spokenPhoneme, position }) => {
+        // Se o fonema esperado é diferente do falado E está na lista de desafios
+        if (expectedPhoneme && expectedPhoneme !== spokenPhoneme && PHONEME_CHALLENGES[expectedPhoneme]) {
+          if (!tipsGiven.has(expectedPhoneme)) {
+            const challenge = PHONEME_CHALLENGES[expectedPhoneme];
+            
+            // Encontra a palavra que contém este fonema para usar como exemplo
+            const exampleWord = problematicWords.find(w => {
+              const wordIPA = w.expectedIPA?.replace(/[\/\[\]]/g, '') || '';
+              return wordIPA && wordIPA.includes(expectedPhoneme);
+            })?.word || problematicWords[0]?.word || '';
 
             tips.push({
-              phoneme,
+              phoneme: expectedPhoneme,
               name: challenge.name,
               tip: challenge.tip,
-              example: word,
-              expectedSound: phoneme,
+              example: exampleWord,
+              expectedSound: expectedPhoneme,
               detectedSound: spokenPhoneme || '(missing)',
               examples: challenge.examples
             });
 
-            tipsGiven.add(phoneme);
+            tipsGiven.add(expectedPhoneme);
           }
         }
       });
     }
+  }
 
-    // Fallback: busca por padrões de texto se IPA não disponível
-    Object.keys(PHONEME_CHALLENGES).forEach(phoneme => {
-      const challenge = PHONEME_CHALLENGES[phoneme];
+  // Fallback: análise palavra por palavra (mantido para compatibilidade)
+  if (tips.length === 0) {
+    problematicWords.forEach(wordData => {
+      const { word, expectedIPA, spokenIPA } = wordData;
 
-      challenge.graphemes.forEach(grapheme => {
-        if (word.includes(grapheme) && !tipsGiven.has(phoneme)) {
-          tips.push({
-            phoneme,
-            name: challenge.name,
-            tip: challenge.tip,
-            example: word,
-            examples: challenge.examples
-          });
-          tipsGiven.add(phoneme);
-        }
-      });
+      // Analisa diferenças no IPA
+      if (expectedIPA && !expectedIPA.includes('[')) {
+        const cleanExpectedIPA = expectedIPA.replace(/[\/\[\]]/g, '');
+        const cleanSpokenIPA = spokenIPA ? spokenIPA.replace(/[\/\[\]]/g, '') : '';
+
+        // Detecta quais fonemas estão faltando ou errados
+        const expectedPhonemes = Array.from(cleanExpectedIPA);
+        const spokenPhonemes = Array.from(cleanSpokenIPA);
+
+        expectedPhonemes.forEach((phoneme, idx) => {
+          const spokenPhoneme = spokenPhonemes[idx];
+
+          // Se o fonema é diferente E está na lista de desafios
+          if (phoneme !== spokenPhoneme && PHONEME_CHALLENGES[phoneme]) {
+            if (!tipsGiven.has(phoneme)) {
+              const challenge = PHONEME_CHALLENGES[phoneme];
+
+              tips.push({
+                phoneme,
+                name: challenge.name,
+                tip: challenge.tip,
+                example: word,
+                expectedSound: phoneme,
+                detectedSound: spokenPhoneme || '(missing)',
+                examples: challenge.examples
+              });
+
+              tipsGiven.add(phoneme);
+            }
+          }
+        });
+      }
     });
-  });
+  }
 
   return tips;
 };
