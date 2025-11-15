@@ -436,7 +436,7 @@ const handleNextSkip = () => {
         </div>
       )}
 
-      <div className="flex justify-center gap-2 sm:gap-4 mb-6 flex-wrap">
+      <div className="flex justify-center gap-2 sm:gap-4 mb-6 flex-wrap" style={{ touchAction: 'manipulation' }}>
           {canSkipPhrase && !isListening && (
                     <button
                       onClick={handleSkipPhrase}
@@ -452,7 +452,9 @@ const handleNextSkip = () => {
 
 
         <button
-          onClick={() => {
+          onClick={(e) => {
+            e.stopPropagation();
+            e.preventDefault();
             try {
               trackUserAction('tts_playback_started', { phraseId: phrase.id });
               onSpeak(phrase.text);
@@ -462,7 +464,11 @@ const handleNextSkip = () => {
               toast.error('Erro ao reproduzir áudio');
             }
           }}
-          className="flex items-center gap-1 sm:gap-2 bg-blue-500 hover:bg-blue-600 text-white px-3 sm:px-6 py-2 sm:py-3 rounded-lg transition-colors shadow-md font-semibold text-sm sm:text-base"
+          onTouchStart={(e) => {
+            e.stopPropagation();
+          }}
+          style={{ touchAction: 'manipulation' }}
+          className="flex items-center gap-1 sm:gap-2 bg-blue-500 hover:bg-blue-600 text-white px-3 sm:px-6 py-2 sm:py-3 rounded-lg transition-colors shadow-md font-semibold text-sm sm:text-base relative z-10"
           aria-label="Reproduzir áudio da frase"
           title="Clique para ouvir a pronúncia correta."
         >
@@ -471,9 +477,17 @@ const handleNextSkip = () => {
         </button>
 
         <button
-          onClick={handleMicClick}
+          onClick={(e) => {
+            e.stopPropagation();
+            e.preventDefault();
+            handleMicClick();
+          }}
+          onTouchStart={(e) => {
+            e.stopPropagation();
+          }}
           disabled={!!speechError}
-          className={`flex items-center gap-1 sm:gap-2 px-3 sm:px-6 py-2 sm:py-3 rounded-lg transition-all shadow-md font-semibold text-sm sm:text-base ${
+          style={{ touchAction: 'manipulation' }}
+          className={`flex items-center gap-1 sm:gap-2 px-3 sm:px-6 py-2 sm:py-3 rounded-lg transition-all shadow-md font-semibold text-sm sm:text-base relative z-10 ${
             speechError
               ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
               : isListening
