@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { Volume2, Mic, MicOff, CheckCircle, XCircle, Loader, AlertCircle, Play, Pause, ArrowRight, Gift, Settings  } from 'lucide-react';
-import toast from 'react-hot-toast';
 import { useSpeechRecognitionForChunks } from '../../hooks/useSpeechRecognitionForChunks';
 import { compareTexts } from '../../utils/textComparison';
 import { useSpeechRecognition } from '../../hooks/useSpeechRecognition';
@@ -139,15 +138,6 @@ export const PhraseCard = ({
       if (comparison.similarity >= 80) {
         console.log(`✅ ${comparison.similarity}% - Marking phrase as completed!`);
 
-        // Toast de sucesso
-        toast.success(
-          `Excelente! ${comparison.similarity}% de acurácia! 🎉`,
-          {
-            icon: '🎯',
-            duration: 3000,
-          }
-        );
-
         try {
           // Ganha XP ao acertar frase
           earnXP('phrases', {
@@ -177,24 +167,13 @@ export const PhraseCard = ({
         } catch (error) {
           console.error('Erro ao processar frase completa:', error);
           trackError('phrase_completion_error', error.message, { phraseId: phrase.id });
-          toast.error('Erro ao salvar progresso. Tente novamente.');
         }
       } else {
         // Feedback para acurácia abaixo de 80%
-        toast.error(
-          `Continue praticando! ${comparison.similarity}% de acurácia. Tente novamente! 💪`,
-          {
-            duration: 3000,
-          }
-        );
       }
 
       if (comparison.similarity === 100) {
         setShowFireworks(true);
-        toast.success('Perfeito! 100% de acurácia! 🎊', {
-          icon: '🌟',
-          duration: 4000,
-        });
         setTimeout(() => setShowFireworks(false), 5000);
       }
 
@@ -298,7 +277,6 @@ const handleNextSkip = () => {
         console.log('🛑 Stopping...');
         trackUserAction('recording_stopped', { phraseId: phrase.id });
         stopListening();
-        toast.success('Gravação interrompida', { duration: 2000 });
       } else {
         console.log('🎤 Starting new recording...');
         trackUserAction('recording_started', { phraseId: phrase.id });
@@ -320,21 +298,15 @@ const handleNextSkip = () => {
         }
 
         startListening();
-        toast.loading('Gravando... Fale agora!', {
-          duration: 2000,
-          icon: '🎤',
-        });
       }
     } catch (error) {
       console.error('Erro ao controlar gravação:', error);
       trackError('recording_error', error.message, { phraseId: phrase.id });
-      toast.error('Erro ao iniciar gravação. Verifique as permissões do microfone.');
     }
   };
 
   const playUserAudio = () => {
     if (!audioBlob) {
-      toast.error('Nenhum áudio disponível para reproduzir');
       return;
     }
 
@@ -368,19 +340,16 @@ const handleNextSkip = () => {
         setIsPlayingUserAudio(false);
         URL.revokeObjectURL(audioUrl);
         trackError('audio_playback_error', 'Erro ao reproduzir áudio', { phraseId: phrase.id });
-        toast.error('Erro ao reproduzir áudio');
       };
 
       audio.play().catch(err => {
         console.error('Play error:', err);
         setIsPlayingUserAudio(false);
         trackError('audio_play_error', err.message, { phraseId: phrase.id });
-        toast.error('Erro ao iniciar reprodução do áudio');
       });
     } catch (error) {
       console.error('Erro ao configurar reprodução de áudio:', error);
       trackError('audio_setup_error', error.message, { phraseId: phrase.id });
-      toast.error('Erro ao configurar reprodução de áudio');
     }
   };
 
@@ -463,7 +432,6 @@ const handleNextSkip = () => {
               }
             } catch (error) {
               trackError('tts_error', error.message, { phraseId: phrase.id });
-              toast.error('Erro ao reproduzir áudio');
             }
           }}
           onTouchStart={(e) => {
