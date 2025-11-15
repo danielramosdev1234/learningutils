@@ -1,7 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, lazy, Suspense } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { Toaster } from 'react-hot-toast';
 import { initializeUser } from './store/slices/userSlice';
+import ErrorBoundary from './components/ErrorBoundary';
+import { LoadingSpinner } from './components/ui/LoadingSpinner';
 import TrainerSelector from './components/TrainerSelector';
 import IncentiveModal from './components/modals/IncentiveModal';
 import { LevelUpModal } from './components/modals/LevelUpModal';
@@ -20,11 +23,13 @@ import OfflineIndicator from './components/ui/OfflineIndicator';
 import NotificationPrompt from './components/ui/NotificationPrompt';
 import { useNotificationSync } from './hooks/useNotificationSync';
 import { useFCM } from './hooks/useFCM';
-import FAQ from './components/FAQ';
-import Home from './pages/Home';
-import Sobre from './pages/Sobre';
-import ComoFunciona from './pages/ComoFunciona';
-import Precos from './pages/Precos';
+
+// Lazy loading de páginas para melhor performance
+const FAQ = lazy(() => import('./components/FAQ'));
+const Home = lazy(() => import('./pages/Home'));
+const Sobre = lazy(() => import('./pages/Sobre'));
+const ComoFunciona = lazy(() => import('./pages/ComoFunciona'));
+const Precos = lazy(() => import('./pages/Precos'));
 
 function App() {
   const dispatch = useDispatch();
@@ -89,36 +94,102 @@ function App() {
   }
 
   return (
-    <BrowserRouter>
-      <ReferralFieldInitializer />
-      <ReferralWelcomeBonusHandler />
-      <OfflineIndicator />
-      <NotificationPrompt />
+    <ErrorBoundary>
+      <BrowserRouter>
+        <ReferralFieldInitializer />
+        <ReferralWelcomeBonusHandler />
+        <OfflineIndicator />
+        <NotificationPrompt />
 
-      <Routes>
-        {/* Rota principal com todos os trainers */}
-        <Route path="/" element={<TrainerSelector />} />
+        <Suspense fallback={<LoadingSpinner fullScreen text="Carregando página..." />}>
+          <Routes>
+            {/* Rota principal com todos os trainers */}
+            <Route path="/" element={<TrainerSelector />} />
 
-        {/* Páginas estáticas para SEO */}
-        <Route path="/home" element={<Home />} />
-        <Route path="/sobre" element={<Sobre />} />
-        <Route path="/como-funciona" element={<ComoFunciona />} />
-        <Route path="/precos" element={<Precos />} />
-        <Route path="/faq" element={<FAQ />} />
+            {/* Páginas estáticas para SEO - Lazy loaded */}
+            <Route 
+              path="/home" 
+              element={
+                <Suspense fallback={<LoadingSpinner fullScreen text="Carregando..." />}>
+                  <Home />
+                </Suspense>
+              } 
+            />
+            <Route 
+              path="/sobre" 
+              element={
+                <Suspense fallback={<LoadingSpinner fullScreen text="Carregando..." />}>
+                  <Sobre />
+                </Suspense>
+              } 
+            />
+            <Route 
+              path="/como-funciona" 
+              element={
+                <Suspense fallback={<LoadingSpinner fullScreen text="Carregando..." />}>
+                  <ComoFunciona />
+                </Suspense>
+              } 
+            />
+            <Route 
+              path="/precos" 
+              element={
+                <Suspense fallback={<LoadingSpinner fullScreen text="Carregando..." />}>
+                  <Precos />
+                </Suspense>
+              } 
+            />
+            <Route 
+              path="/faq" 
+              element={
+                <Suspense fallback={<LoadingSpinner fullScreen text="Carregando..." />}>
+                  <FAQ />
+                </Suspense>
+              } 
+            />
 
-        {/* Rota para entrar em uma sala específica */}
-        <Route path="/jitsi-room/:roomId" element={<MeetRoom />} />
-      </Routes>
+            {/* Rota para entrar em uma sala específica */}
+            <Route path="/jitsi-room/:roomId" element={<MeetRoom />} />
+          </Routes>
+        </Suspense>
 
-      <IncentiveModal />
-      <LevelUpModal
-        isOpen={showLevelUpModal}
-        onClose={() => dispatch(closeLevelUpModal())}
-        newLevel={pendingLevelUp}
-        totalXP={totalXP}
-      />
-      <Analytics />
-    </BrowserRouter>
+        <IncentiveModal />
+        <LevelUpModal
+          isOpen={showLevelUpModal}
+          onClose={() => dispatch(closeLevelUpModal())}
+          newLevel={pendingLevelUp}
+          totalXP={totalXP}
+        />
+        
+        {/* Toast Notifications */}
+        <Toaster
+          position="top-right"
+          toastOptions={{
+            duration: 4000,
+            style: {
+              background: '#fff',
+              color: '#1f2937',
+              borderRadius: '0.5rem',
+              boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)',
+            },
+            success: {
+              iconTheme: {
+                primary: '#10b981',
+                secondary: '#fff',
+              },
+            },
+            error: {
+              iconTheme: {
+                primary: '#ef4444',
+                secondary: '#fff',
+              },
+            },
+          }}
+        />
+        
+        <Analytics />
+      </BrowserRouter>
+    </ErrorBoundary>
   );
 }
 

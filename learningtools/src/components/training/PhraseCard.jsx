@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { Volume2, Mic, MicOff, CheckCircle, XCircle, Loader, AlertCircle, Play, Pause, ArrowRight, Gift, Settings  } from 'lucide-react';
+import toast from 'react-hot-toast';
 import { useSpeechRecognitionForChunks } from '../../hooks/useSpeechRecognitionForChunks';
 import { compareTexts } from '../../utils/textComparison';
 import { useSpeechRecognition } from '../../hooks/useSpeechRecognition';
@@ -20,6 +21,7 @@ import {
 } from '../../utils/referralUtils';
 import { useDispatch, useSelector } from 'react-redux';
 import { useXP } from '../../hooks/useXP';
+import { trackExerciseComplete, trackError, trackUserAction } from '../../utils/analytics';
 
 const isAndroidDevice = () => {
   const ua = navigator.userAgent.toLowerCase();
@@ -127,38 +129,72 @@ export const PhraseCard = ({
         onTourFeedbackVisible();
       }
 
+      // Track exercise completion
+      const startTime = performance.now();
+      trackExerciseComplete('phrase', comparison.similarity, 0, {
+        phraseId: phrase.id,
+        phraseText: phrase.text
+      });
+
       if (comparison.similarity >= 80) {
         console.log(`✅ ${comparison.similarity}% - Marking phrase as completed!`);
 
-        // Ganha XP ao acertar frase
-        earnXP('phrases', {
-          phraseId: phrase.id,
-          accuracy: comparison.similarity,
-          streak: streak.current
-        });
+        // Toast de sucesso
+        toast.success(
+          `Excelente! ${comparison.similarity}% de acurácia! 🎉`,
+          {
+            icon: '🎯',
+            duration: 3000,
+          }
+        );
 
-        dispatch(markPhraseCompleted({
-          phraseId: phrase.id,
-          phraseIndex: phrase.index
-        }));
+        try {
+          // Ganha XP ao acertar frase
+          earnXP('phrases', {
+            phraseId: phrase.id,
+            accuracy: comparison.similarity,
+            streak: streak.current
+          });
 
-        // Chama onCorrectAnswer para marcar como completa
-        if (onCorrectAnswer) {
-          onCorrectAnswer();
+          dispatch(markPhraseCompleted({
+            phraseId: phrase.id,
+            phraseIndex: phrase.index
+          }));
+
+          // Chama onCorrectAnswer para marcar como completa
+          if (onCorrectAnswer) {
+            onCorrectAnswer();
+          }
+
+          // Só avança automaticamente se autoAdvance estiver habilitado
+          if (autoAdvance && onNextPhrase) {
+            console.log(`🎉 Auto advancing!`);
+            // Aguarda um pouco antes de avançar para mostrar o feedback
+            setTimeout(() => {
+              onNextPhrase();
+            }, 2000);
+          }
+        } catch (error) {
+          console.error('Erro ao processar frase completa:', error);
+          trackError('phrase_completion_error', error.message, { phraseId: phrase.id });
+          toast.error('Erro ao salvar progresso. Tente novamente.');
         }
-
-        // Só avança automaticamente se autoAdvance estiver habilitado
-        if (autoAdvance && onNextPhrase) {
-          console.log(`🎉 Auto advancing!`);
-          // Aguarda um pouco antes de avançar para mostrar o feedback
-          setTimeout(() => {
-            onNextPhrase();
-          }, 2000);
-        }
+      } else {
+        // Feedback para acurácia abaixo de 80%
+        toast.error(
+          `Continue praticando! ${comparison.similarity}% de acurácia. Tente novamente! 💪`,
+          {
+            duration: 3000,
+          }
+        );
       }
 
       if (comparison.similarity === 100) {
         setShowFireworks(true);
+        toast.success('Perfeito! 100% de acurácia! 🎊', {
+          icon: '🌟',
+          duration: 4000,
+        });
         setTimeout(() => setShowFireworks(false), 5000);
       }
 
@@ -257,70 +293,95 @@ const handleNextSkip = () => {
     }
 
   const handleMicClick = () => {
-    if (isListening) {
-      console.log('🛑 Stopping...');
-      stopListening();
-    } else {
-      console.log('🎤 Starting new recording...');
-      
-      // Para a reprodução do áudio do botão "Hear" se estiver reproduzindo
-      if ('speechSynthesis' in window) {
-        window.speechSynthesis.cancel();
-        console.log('🔇 Stopped TTS playback');
-      }
-      
-      setResult(null);
-      setShowFeedback(false);
-      setHasProcessed(false);
-      setIsPlayingUserAudio(false);
+    try {
+      if (isListening) {
+        console.log('🛑 Stopping...');
+        trackUserAction('recording_stopped', { phraseId: phrase.id });
+        stopListening();
+        toast.success('Gravação interrompida', { duration: 2000 });
+      } else {
+        console.log('🎤 Starting new recording...');
+        trackUserAction('recording_started', { phraseId: phrase.id });
+        
+        // Para a reprodução do áudio do botão "Hear" se estiver reproduzindo
+        if ('speechSynthesis' in window) {
+          window.speechSynthesis.cancel();
+          console.log('🔇 Stopped TTS playback');
+        }
+        
+        setResult(null);
+        setShowFeedback(false);
+        setHasProcessed(false);
+        setIsPlayingUserAudio(false);
 
-      if (isAndroid) {
-        setAndroidTranscript('');
-        setAndroidError('');
-      }
+        if (isAndroid) {
+          setAndroidTranscript('');
+          setAndroidError('');
+        }
 
-      startListening();
+        startListening();
+        toast.loading('Gravando... Fale agora!', {
+          duration: 2000,
+          icon: '🎤',
+        });
+      }
+    } catch (error) {
+      console.error('Erro ao controlar gravação:', error);
+      trackError('recording_error', error.message, { phraseId: phrase.id });
+      toast.error('Erro ao iniciar gravação. Verifique as permissões do microfone.');
     }
   };
 
   const playUserAudio = () => {
     if (!audioBlob) {
-      console.log('⚠️ No audio to play');
+      toast.error('Nenhum áudio disponível para reproduzir');
       return;
     }
 
-    console.log('🔊 Playing recorded audio...');
+    try {
+      console.log('🔊 Playing recorded audio...');
+      trackUserAction('audio_playback_started', { phraseId: phrase.id });
 
-    if (audioRef.current) {
-      audioRef.current.pause();
-      audioRef.current.currentTime = 0;
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current.currentTime = 0;
+      }
+
+      const audioUrl = URL.createObjectURL(audioBlob);
+      const audio = new Audio(audioUrl);
+      audioRef.current = audio;
+
+      audio.onplay = () => {
+        console.log('▶️ Audio playing');
+        setIsPlayingUserAudio(true);
+      };
+
+      audio.onended = () => {
+        console.log('⏹️ Audio ended');
+        setIsPlayingUserAudio(false);
+        URL.revokeObjectURL(audioUrl);
+        trackUserAction('audio_playback_ended', { phraseId: phrase.id });
+      };
+
+      audio.onerror = (e) => {
+        console.error('❌ Audio error:', e);
+        setIsPlayingUserAudio(false);
+        URL.revokeObjectURL(audioUrl);
+        trackError('audio_playback_error', 'Erro ao reproduzir áudio', { phraseId: phrase.id });
+        toast.error('Erro ao reproduzir áudio');
+      };
+
+      audio.play().catch(err => {
+        console.error('Play error:', err);
+        setIsPlayingUserAudio(false);
+        trackError('audio_play_error', err.message, { phraseId: phrase.id });
+        toast.error('Erro ao iniciar reprodução do áudio');
+      });
+    } catch (error) {
+      console.error('Erro ao configurar reprodução de áudio:', error);
+      trackError('audio_setup_error', error.message, { phraseId: phrase.id });
+      toast.error('Erro ao configurar reprodução de áudio');
     }
-
-    const audioUrl = URL.createObjectURL(audioBlob);
-    const audio = new Audio(audioUrl);
-    audioRef.current = audio;
-
-    audio.onplay = () => {
-      console.log('▶️ Audio playing');
-      setIsPlayingUserAudio(true);
-    };
-
-    audio.onended = () => {
-      console.log('⏹️ Audio ended');
-      setIsPlayingUserAudio(false);
-      URL.revokeObjectURL(audioUrl);
-    };
-
-    audio.onerror = (e) => {
-      console.error('❌ Audio error:', e);
-      setIsPlayingUserAudio(false);
-      URL.revokeObjectURL(audioUrl);
-    };
-
-    audio.play().catch(err => {
-      console.error('Play error:', err);
-      setIsPlayingUserAudio(false);
-    });
   };
 
   const stopUserAudio = () => {
@@ -359,8 +420,13 @@ const handleNextSkip = () => {
       </div>
 
       {speechError && (
-        <div className="mb-4 p-4 bg-red-50 border-2 border-red-300 rounded-lg flex items-center gap-2">
-          <AlertCircle className="text-red-600" size={20} />
+        <div 
+          className="mb-4 p-4 bg-red-50 border-2 border-red-300 rounded-lg flex items-center gap-2"
+          role="alert"
+          aria-live="assertive"
+          aria-atomic="true"
+        >
+          <AlertCircle className="text-red-600" size={20} aria-hidden="true" />
           <p className="text-red-700 text-sm">
             {speechError === 'not-allowed'
               ? '🔒 Microphone permission denied. Click the 🔒 icon and allow access.'
@@ -386,10 +452,21 @@ const handleNextSkip = () => {
 
 
         <button
-          onClick={() => {onSpeak(phrase.text); stopListening();}}
+          onClick={() => {
+            try {
+              trackUserAction('tts_playback_started', { phraseId: phrase.id });
+              onSpeak(phrase.text);
+              stopListening();
+            } catch (error) {
+              trackError('tts_error', error.message, { phraseId: phrase.id });
+              toast.error('Erro ao reproduzir áudio');
+            }
+          }}
           className="flex items-center gap-1 sm:gap-2 bg-blue-500 hover:bg-blue-600 text-white px-3 sm:px-6 py-2 sm:py-3 rounded-lg transition-colors shadow-md font-semibold text-sm sm:text-base"
+          aria-label="Reproduzir áudio da frase"
+          title="Clique para ouvir a pronúncia correta"
         >
-          <Volume2 size={20} className="sm:w-6 sm:h-6" />
+          <Volume2 size={20} className="sm:w-6 sm:h-6" aria-hidden="true" />
           <span>Hear</span>
         </button>
 
@@ -404,8 +481,15 @@ const handleNextSkip = () => {
               : 'bg-green-500 hover:bg-green-600 text-white'
           }`}
           data-tour-id="tour-speak-button"
+          aria-label={isListening ? 'Parar gravação' : 'Iniciar gravação'}
+          aria-pressed={isListening}
+          title={isListening ? 'Clique para parar a gravação' : 'Clique para começar a falar'}
         >
-          {isListening ? <MicOff size={20} className="sm:w-6 sm:h-6" /> : <Mic size={20} className="sm:w-6 sm:h-6" />}
+          {isListening ? (
+            <MicOff size={20} className="sm:w-6 sm:h-6" aria-hidden="true" />
+          ) : (
+            <Mic size={20} className="sm:w-6 sm:h-6" aria-hidden="true" />
+          )}
           <span>{isListening ? 'Stop' : 'Speak'}</span>
         </button>
 
@@ -477,15 +561,17 @@ const handleNextSkip = () => {
                 ? 'bg-purple-600 hover:bg-purple-700 text-white'
                 : 'bg-purple-500 hover:bg-purple-600 text-white'
             }`}
+            aria-label={isPlayingUserAudio ? 'Parar reprodução da gravação' : 'Reproduzir minha gravação'}
+            aria-pressed={isPlayingUserAudio}
           >
             {isPlayingUserAudio ? (
               <>
-                <Pause size={20} className="animate-pulse" />
+                <Pause size={20} className="animate-pulse" aria-hidden="true" />
                 <span>Stop Recording</span>
               </>
             ) : (
               <>
-                <Play size={20} />
+                <Play size={20} aria-hidden="true" />
                 <span>Hear Your Recording</span>
               </>
             )}
@@ -495,16 +581,22 @@ const handleNextSkip = () => {
 
       <div data-tour-id="tour-feedback-area" className="space-y-4">
         {showFeedback && result && !isListening && (
-          <div className={`mt-6 p-5 rounded-lg transition-all ${
-            result.similarity > 80
-              ? 'bg-green-50 border-2 border-green-400 shadow-lg'
-              : 'bg-orange-50 border-2 border-orange-400 shadow-lg'
-          }`}>
+          <div 
+            className={`mt-6 p-5 rounded-lg transition-all ${
+              result.similarity > 80
+                ? 'bg-green-50 border-2 border-green-400 shadow-lg'
+                : 'bg-orange-50 border-2 border-orange-400 shadow-lg'
+            }`}
+            role="status"
+            aria-live="polite"
+            aria-atomic="true"
+            aria-label={`Resultado: ${result.similarity}% de acurácia`}
+          >
             <div className="flex items-center gap-3 mb-3">
               {result.similarity > 80 ? (
-                <CheckCircle className="text-green-600" size={32} />
+                <CheckCircle className="text-green-600" size={32} aria-hidden="true" />
               ) : (
-                <XCircle className="text-orange-600" size={32} />
+                <XCircle className="text-orange-600" size={32} aria-hidden="true" />
               )}
               <h3 className={`font-bold text-xl ${result.similarity > 80 ? 'text-green-700' : 'text-orange-700'}`}>
                 {result.similarity > 80 ? 'Perfect! 🎉' : 'Keep Practicing! 💪'}
@@ -557,8 +649,13 @@ const handleNextSkip = () => {
       </div>
 
       {isListening && (
-        <div className="mt-6 flex items-center justify-center gap-3 text-red-600 bg-red-50 p-4 rounded-lg border-2 border-red-200">
-          <Loader className="animate-spin" size={28} />
+        <div 
+          className="mt-6 flex items-center justify-center gap-3 text-red-600 bg-red-50 p-4 rounded-lg border-2 border-red-200"
+          role="status"
+          aria-live="polite"
+          aria-label="Gravando áudio"
+        >
+          <Loader className="animate-spin" size={28} aria-hidden="true" />
           <span className="font-bold text-lg">🎙️ Recording & Listening...</span>
         </div>
       )}

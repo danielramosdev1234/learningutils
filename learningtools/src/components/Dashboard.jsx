@@ -331,7 +331,7 @@ description: (
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+    <main className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
       {/* Hero Section com conteúdo textual para IAs - Visível apenas para bots e screen readers */}
       <div className="sr-only">
         <h1>Aprenda Inglês de Forma Prática e Divertida</h1>
@@ -614,7 +614,7 @@ description: (
           </div>
         </div>
       </div>
-    </div>
+    </main>
   );
 };
 
