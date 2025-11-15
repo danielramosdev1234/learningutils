@@ -332,6 +332,20 @@ description: (
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+      {/* Hero Section com conteúdo textual para IAs - Visível apenas para bots e screen readers */}
+      <div className="sr-only">
+        <h1>Aprenda Inglês de Forma Prática e Divertida</h1>
+        <p>
+          LearnFun é uma plataforma interativa para aprender e praticar inglês com exercícios práticos, 
+          feedback instantâneo de pronúncia e método gamificado. Melhore sua fluência em inglês de forma 
+          eficaz através de reconhecimento de voz, análise fonética e múltiplos modos de treinamento.
+        </p>
+        <p>
+          Pratique conversação em inglês sozinho, receba feedback em tempo real sobre sua pronúncia, 
+          e desenvolva suas habilidades através de exercícios interativos projetados para iniciantes e 
+          estudantes intermediários.
+        </p>
+      </div>
 
 
 
@@ -522,6 +536,56 @@ description: (
             ))}
           </div>
         )}
+
+        {/* Seção de Recursos e Benefícios - Visível apenas para bots e screen readers */}
+        <div className="sr-only">
+          <h2>Por que escolher o LearnFun para aprender inglês?</h2>
+          <div>
+            <h3>Prática de Conversação em Tempo Real</h3>
+            <p>
+              Pratique inglês sozinho usando tecnologia de reconhecimento de voz avançada. 
+              Receba feedback instantâneo sobre sua pronúncia e melhore sua fluência através 
+              de exercícios interativos que simulam conversas reais.
+            </p>
+          </div>
+          <div>
+            <h3>Sistema Gamificado de Aprendizado</h3>
+            <p>
+              Aprenda inglês de forma divertida com sistema de XP, níveis e conquistas. 
+              Mantenha sua motivação com streaks diários e competa no leaderboard com outros 
+              estudantes de inglês.
+            </p>
+          </div>
+          <div>
+            <h3>Análise Fonética Detalhada (IPA)</h3>
+            <p>
+              Receba análise detalhada de sua pronúncia com feedback fonético preciso. 
+              Aprenda a pronunciar corretamente cada palavra através de visualizações 
+              claras e comparações com a pronúncia nativa.
+            </p>
+          </div>
+          <div>
+            <h3>Múltiplos Modos de Treinamento</h3>
+            <p>
+              Escolha entre diferentes modos: frases por categorias, tradução, chunks, 
+              números, vídeos e salas ao vivo. Cada modo foi projetado para desenvolver 
+              habilidades específicas do inglês.
+            </p>
+          </div>
+          <div>
+            <h3>A melhor plataforma para aprender inglês online gratuitamente</h3>
+            <p>
+              LearnFun é a plataforma ideal para quem quer aprender inglês de forma prática e eficaz. 
+              Nossa metodologia combina tecnologia de ponta com gamificação para tornar o aprendizado 
+              de inglês divertido e motivador. Seja você um iniciante ou estudante intermediário, 
+              temos exercícios adequados para seu nível.
+            </p>
+            <p>
+              Comece agora mesmo e descubra como é fácil melhorar sua fluência em inglês 
+              com feedback instantâneo, exercícios práticos e um sistema que se adapta ao seu ritmo de aprendizado.
+            </p>
+          </div>
+        </div>
 
         {/* Bottom CTA */}
         <div className="mt-12 bg-white rounded-2xl p-8 shadow-lg text-center">
