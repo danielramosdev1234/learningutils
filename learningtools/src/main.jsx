@@ -28,10 +28,25 @@ registerSW({
   },
 });
 
-ReactDOM.createRoot(document.getElementById('root')).render(
+// Preserva conteúdo estático inicial para IAs/crawlers
+// O React vai substituir apenas quando montar completamente
+const rootElement = document.getElementById('root');
+const staticContent = rootElement.innerHTML;
+
+ReactDOM.createRoot(rootElement).render(
   <React.StrictMode>
     <Provider store={store}>
       <App />
     </Provider>
   </React.StrictMode>,
 );
+
+// Sinalizar que o app foi renderizado (útil para prerendering futuro)
+if (typeof document !== 'undefined') {
+  document.addEventListener('DOMContentLoaded', () => {
+    // Pequeno delay para garantir que React montou
+    setTimeout(() => {
+      document.dispatchEvent(new Event('app-rendered'));
+    }, 100);
+  });
+}
