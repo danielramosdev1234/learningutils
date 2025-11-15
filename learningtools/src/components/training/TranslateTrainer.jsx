@@ -10,6 +10,7 @@ import {
   saveProgress,
   markPhraseCompleted
 } from '../../store/slices/userSlice';
+import { LevelIndicator } from '../leaderboard/LevelIndicator';
 
 const TranslateTrainer = () => {
   const dispatch = useDispatch();
@@ -231,6 +232,7 @@ const TranslateTrainer = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4">
       <div className="max-w-3xl mx-auto">
+          <LevelIndicator variant="full" />
         <header className="text-center mb-8">
           <div className="flex items-center justify-center gap-3 mb-2">
             <Languages className="w-10 h-10 text-blue-600" aria-hidden="true" />

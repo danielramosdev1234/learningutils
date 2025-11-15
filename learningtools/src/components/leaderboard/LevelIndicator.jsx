@@ -305,47 +305,21 @@ export const LevelIndicator = ({ variant = 'full' }) => {
                   <div className="flex items-center gap-1.5 sm:gap-2 flex-1 min-w-0">
                     <span className="text-base sm:text-xl flex-shrink-0">💬</span>
                     <span className="font-bold text-blue-800 text-xs sm:text-sm truncate">Phrases</span>
+                    <span className="text-base sm:text-xl flex-shrink-0">📚</span>
+                    <span className="font-bold text-emerald-800 text-xs sm:text-sm truncate">Categories</span>
+                    <span className="text-base sm:text-xl flex-shrink-0">🔄</span>
+                    <span className="font-bold text-violet-800 text-xs sm:text-sm truncate">Translate</span>
                   </div>
-                  <span className="px-2 sm:px-3 py-0.5 sm:py-1 bg-blue-500 text-white rounded-lg text-xs sm:text-sm font-bold shadow-sm flex-shrink-0">5 XP</span>
+                  <span className="px-2 sm:px-3 py-0.5 sm:py-1 bg-blue-500 text-white rounded-lg text-xs sm:text-sm font-bold shadow-sm flex-shrink-0">5-10 XP</span>
                 </div>
-                <p className="text-xs sm:text-sm text-blue-700 mb-0.5 sm:mb-1">Acertar uma frase com 80%+ de precisão</p>
+                <p className="text-xs sm:text-sm text-blue-700 mb-0.5 sm:mb-1">5 XP Acertar uma frase com 80%+ de precisão</p>
                 <p className="text-[10px] sm:text-xs text-blue-600">+2 XP extra se acertar 90%+ | +5 XP se acertar 100%</p>
                 {xpBreakdown.phrases > 0 && (
                   <p className="text-[10px] sm:text-xs text-blue-500 mt-1.5 sm:mt-2 font-semibold">✓ Total ganho: {xpBreakdown.phrases.toLocaleString()} XP</p>
                 )}
               </div>
 
-              {/* Categories */}
-              <div className="bg-gradient-to-r from-emerald-50 to-green-50 p-3 sm:p-4 rounded-lg sm:rounded-xl border-l-4 border-emerald-400 shadow-sm hover:shadow-md transition-shadow">
-                <div className="flex justify-between items-start mb-1.5 sm:mb-2 gap-2">
-                  <div className="flex items-center gap-1.5 sm:gap-2 flex-1 min-w-0">
-                    <span className="text-base sm:text-xl flex-shrink-0">📚</span>
-                    <span className="font-bold text-emerald-800 text-xs sm:text-sm truncate">Categories</span>
-                  </div>
-                  <span className="px-2 sm:px-3 py-0.5 sm:py-1 bg-emerald-500 text-white rounded-lg text-xs sm:text-sm font-bold shadow-sm flex-shrink-0">5 XP</span>
-                </div>
-                <p className="text-xs sm:text-sm text-emerald-700 mb-0.5 sm:mb-1">Acertar uma frase com 80%+ de precisão</p>
-                <p className="text-[10px] sm:text-xs text-emerald-600">+2 XP extra se acertar 90%+ | +5 XP se acertar 100%</p>
-                {xpBreakdown.categories > 0 && (
-                  <p className="text-[10px] sm:text-xs text-emerald-500 mt-1.5 sm:mt-2 font-semibold">✓ Total ganho: {xpBreakdown.categories.toLocaleString()} XP</p>
-                )}
-              </div>
 
-              {/* Translate */}
-              <div className="bg-gradient-to-r from-violet-50 to-purple-50 p-3 sm:p-4 rounded-lg sm:rounded-xl border-l-4 border-violet-400 shadow-sm hover:shadow-md transition-shadow">
-                <div className="flex justify-between items-start mb-1.5 sm:mb-2 gap-2">
-                  <div className="flex items-center gap-1.5 sm:gap-2 flex-1 min-w-0">
-                    <span className="text-base sm:text-xl flex-shrink-0">🔄</span>
-                    <span className="font-bold text-violet-800 text-xs sm:text-sm truncate">Translate</span>
-                  </div>
-                  <span className="px-2 sm:px-3 py-0.5 sm:py-1 bg-violet-500 text-white rounded-lg text-xs sm:text-sm font-bold shadow-sm flex-shrink-0">5 XP</span>
-                </div>
-                <p className="text-xs sm:text-sm text-violet-700 mb-0.5 sm:mb-1">Acertar uma frase com 80%+ de precisão</p>
-                <p className="text-[10px] sm:text-xs text-violet-600">+2 XP extra se acertar 90%+ | +5 XP se acertar 100%</p>
-                {xpBreakdown.translate > 0 && (
-                  <p className="text-[10px] sm:text-xs text-violet-500 mt-1.5 sm:mt-2 font-semibold">✓ Total ganho: {xpBreakdown.translate.toLocaleString()} XP</p>
-                )}
-              </div>
 
               {/* Numbers */}
               <div className="bg-gradient-to-r from-orange-50 to-amber-50 p-3 sm:p-4 rounded-lg sm:rounded-xl border-l-4 border-orange-400 shadow-sm hover:shadow-md transition-shadow">

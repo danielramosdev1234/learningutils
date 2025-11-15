@@ -215,7 +215,7 @@ const processOptionText = (text) => {
 
   if (!currentQ) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 text-white p-4 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 text-white p-4 flex items-center justify-center">
         <div className="text-center">
           <div className="text-6xl mb-4">⏳</div>
           <p className="text-xl">Carregando questões...</p>
@@ -230,7 +230,7 @@ const processOptionText = (text) => {
     const percentage = Math.round((correctAnswers / totalQuestions) * 100);
 
     return (
-      <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 text-white p-4 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 text-white p-4 flex items-center justify-center">
         <div className="max-w-2xl w-full">
           <div className="bg-white bg-opacity-10 backdrop-blur-lg rounded-3xl p-8 shadow-2xl">
             <div className="text-center mb-8">
@@ -327,7 +327,7 @@ const processOptionText = (text) => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 text-white p-4">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 text-white p-4">
       {/* Header com Score */}
       <div className="max-w-4xl mx-auto mb-6">
         <div className="flex justify-between items-center bg-black bg-opacity-30 backdrop-blur-lg rounded-2xl p-4 shadow-2xl">
@@ -487,7 +487,7 @@ const processOptionText = (text) => {
       </div>
 
       {/* Footer */}
-      <div className="max-w-4xl mx-auto mt-8 text-center text-gray-300 text-sm">
+      <div className="max-w-4xl mx-auto mt-8 text-center text-black text-sm">
         <p>💡 Dica: Assista o vídeo quantas vezes precisar antes de responder!</p>
       </div>
     </div>
