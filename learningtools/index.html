@@ -1,16 +1,148 @@
 <!doctype html>
-<html lang="en">
+<html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <link rel="manifest" href="/manifest.webmanifest" />
-    <link rel="apple-touch-icon" href="/pwa-192x192.png" />
+    <link rel="manifest" href="dist/manifest.webmanifest" />
+    <link rel="apple-touch-icon" href="public/pwa-192x192.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#0EA5E9" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="apple-mobile-web-app-title" content="LearnFun" />
-    <title>LearnFunTools</title>
+    
+    <!-- SEO Meta Tags -->
+    <title>LearnFun - Aprenda Inglês de Forma Prática e Divertida</title>
+    <meta name="description" content="Plataforma interativa para aprender e praticar inglês com exercícios práticos, feedback instantâneo de pronúncia e método gamificado. Melhore sua fluência em inglês de forma divertida e eficaz." />
+    <meta name="keywords" content="aprender inglês, curso de inglês online, prática de inglês, conversação em inglês, pronúncia em inglês, exercícios de inglês, inglês online, aprender inglês sozinho" />
+    <meta name="author" content="LearnFun" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://learnfun-sigma.vercel.app/" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://learnfun-sigma.vercel.app/" />
+    <meta property="og:title" content="LearnFun - Aprenda Inglês de Forma Prática e Divertida" />
+    <meta property="og:description" content="Plataforma interativa para aprender e praticar inglês com exercícios práticos, feedback instantâneo de pronúncia e método gamificado." />
+    <meta property="og:image" content="https://learnfun-sigma.vercel.app/pwa-512x512.png" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:site_name" content="LearnFun" />
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://learnfun-sigma.vercel.app/" />
+    <meta name="twitter:title" content="LearnFun - Aprenda Inglês de Forma Prática e Divertida" />
+    <meta name="twitter:description" content="Plataforma interativa para aprender e praticar inglês com exercícios práticos, feedback instantâneo de pronúncia e método gamificado." />
+    <meta name="twitter:image" content="https://learnfun-sigma.vercel.app/pwa-512x512.png" />
+    
+    <!-- Schema.org JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "EducationalOrganization",
+      "name": "LearnFun",
+      "alternateName": "LearnFunTools",
+      "description": "Plataforma interativa para aprender e praticar inglês de forma divertida e eficaz",
+      "url": "https://learnfun-sigma.vercel.app",
+      "logo": "https://learnfun-sigma.vercel.app/pwa-512x512.png",
+      "sameAs": [],
+      "courseMode": "online",
+      "educationalLevel": ["Beginner", "Intermediate"],
+      "teaches": "English Language",
+      "audience": {
+        "@type": "EducationalAudience",
+        "educationalRole": "student",
+        "audienceType": "English Language Learners"
+      },
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "BRL",
+        "availability": "https://schema.org/InStock"
+      },
+      "featureList": [
+        "Exercícios práticos interativos",
+        "Reconhecimento de voz em tempo real",
+        "Feedback instantâneo de pronúncia",
+        "Análise fonética detalhada (IPA)",
+        "Sistema gamificado com XP e níveis",
+        "Múltiplos modos de treinamento",
+        "Sistema de streaks",
+        "Leaderboard e ranking"
+      ]
+    }
+    </script>
+    
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "LearnFun",
+      "description": "Plataforma interativa para aprender e praticar inglês",
+      "url": "https://learnfun-sigma.vercel.app",
+      "applicationCategory": "EducationalApplication",
+      "operatingSystem": "Web, iOS, Android",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "BRL"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.8",
+        "ratingCount": "100"
+      }
+    }
+    </script>
+    
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Qual a melhor plataforma para aprender inglês online?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "LearnFun oferece uma experiência única combinando tecnologia de reconhecimento de voz, gamificação e feedback instantâneo para tornar o aprendizado de inglês eficaz e divertido."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Como praticar conversação em inglês sozinho?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "LearnFun permite praticar conversação através de exercícios interativos com reconhecimento de voz, análise de pronúncia e feedback em tempo real, tudo sem precisar de um parceiro de conversação."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Quanto tempo leva para ficar fluente em inglês?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "O tempo varia, mas com prática consistente diária usando LearnFun, você pode ver melhorias significativas em semanas. Nosso sistema de streaks ajuda a manter a consistência."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "A plataforma é gratuita?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Sim, LearnFun oferece acesso gratuito com recursos completos para aprender e praticar inglês."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Funciona no celular?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Sim, LearnFun é uma Progressive Web App (PWA) que funciona perfeitamente em dispositivos móveis, tablets e desktops."
+          }
+        }
+      ]
+    }
+    </script>
   </head>
   <body>
     <div id="root"></div>

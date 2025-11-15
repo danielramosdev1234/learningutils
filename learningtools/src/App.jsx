@@ -20,6 +20,7 @@ import OfflineIndicator from './components/ui/OfflineIndicator';
 import NotificationPrompt from './components/ui/NotificationPrompt';
 import { useNotificationSync } from './hooks/useNotificationSync';
 import { useFCM } from './hooks/useFCM';
+import FAQ from './components/FAQ';
 
 function App() {
   const dispatch = useDispatch();
@@ -96,6 +97,9 @@ function App() {
 
         {/* Rota para entrar em uma sala específica */}
         <Route path="/jitsi-room/:roomId" element={<MeetRoom />} />
+
+        {/* Rota para FAQ */}
+        <Route path="/faq" element={<FAQ />} />
       </Routes>
 
       <IncentiveModal />

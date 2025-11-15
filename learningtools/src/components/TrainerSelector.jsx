@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Hash, Mic, Zap, Video, MoreHorizontal, X, MessageCircle, Globe, Gift, Radio, House, BookOpen, ArrowUp01 } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { Hash, Mic, Zap, Video, MoreHorizontal, X, MessageCircle, Globe, Gift, Radio, House, BookOpen, ArrowUp01, HelpCircle } from 'lucide-react';
 import NumberSpeechTrainer from './training/NumberSpeechTrainer';
 import ChunkTrainer from './training/ChunkTrainer';
 import ChallengeTrainer from './training/ChallengeTrainer';
@@ -52,6 +53,7 @@ const TrainerSelector = () => {
   const [showSpeakMenu, setShowSpeakMenu] = useState(false);
   const { levelSystem, stats, profile, mode } = useSelector(state => state.user);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [showOnboarding, setShowOnboarding] = useState(false);
   const [onboardingStep, setOnboardingStep] = useState(1);
@@ -742,6 +744,39 @@ const handleCloseLevelUpModal = () => {
                       </svg>
                     </div>
                   </button>
+
+              {/* FAQ */}
+              <button
+                onClick={() => {
+                  setShowMoreMenu(false);
+                  navigate('/faq');
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    setShowMoreMenu(false);
+                    navigate('/faq');
+                  }
+                }}
+                tabIndex={0}
+                aria-label="Ver perguntas frequentes"
+                className="w-full flex items-center gap-4 p-4 rounded-xl bg-blue-50 hover:bg-blue-100 text-gray-800 transition-all"
+              >
+                <div className="p-3 rounded-full bg-blue-500">
+                  <HelpCircle className="w-6 h-6 text-white" aria-hidden="true" />
+                </div>
+                <div className="text-left flex-1">
+                  <div className="font-bold text-lg">Perguntas Frequentes</div>
+                  <div className="text-sm text-gray-600">
+                    Tire suas dúvidas sobre o LearnFun
+                  </div>
+                </div>
+                <div className="text-blue-600">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </div>
+              </button>
             </div>
           </div>
         </div>

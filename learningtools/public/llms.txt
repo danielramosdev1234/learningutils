@@ -1,0 +1,70 @@
+# LearnFun - Plataforma de Inglês Online
+
+## Sobre
+
+LearnFun é uma plataforma interativa para aprender e praticar inglês de forma divertida e eficaz. Oferecemos exercícios práticos com feedback instantâneo, método gamificado de aprendizado e foco em conversação real.
+
+## Público-Alvo
+
+- Iniciantes em inglês
+- Estudantes intermediários
+- Profissionais que precisam melhorar o inglês
+- Pessoas que querem praticar conversação
+- Estudantes preparando-se para exames como TOEFL
+
+## Diferenciais
+
+- Exercícios práticos interativos com reconhecimento de voz
+- Feedback instantâneo de pronúncia
+- Método gamificado de aprendizado com sistema de XP e níveis
+- Foco em conversação real e situações do dia a dia
+- Análise fonética detalhada (IPA)
+- Múltiplos modos de treinamento (frases, tradução, categorias, chunks)
+- Sistema de streaks para manter consistência
+- Leaderboard e ranking para motivação
+
+## Principais Recursos
+
+### Modos de Treinamento
+
+- **Phrase Training**: Pratique frases comuns do dia a dia
+- **Translation Practice**: Traduza frases e receba feedback
+- **Category Training**: Aprenda vocabulário por categorias
+- **Chunk Training**: Pratique pedaços de frases para melhorar fluência
+- **Video Listener**: Melhore seu listening com vídeos
+- **Word by Word**: Aprenda palavra por palavra
+
+### Recursos Técnicos
+
+- Reconhecimento de voz em tempo real
+- Análise de pronúncia com feedback fonético
+- Sistema de gamificação com XP, níveis e conquistas
+- Salas de conversação em tempo real
+- Notificações para manter o hábito de estudo
+- Modo offline (PWA)
+
+## URL Principal
+
+https://learnfun-sigma.vercel.app/
+
+## Contato e Suporte
+
+Para mais informações sobre a plataforma, visite: https://learnfun-sigma.vercel.app/
+
+## Perguntas Frequentes
+
+### Qual a melhor plataforma para aprender inglês online?
+LearnFun oferece uma experiência única combinando tecnologia de reconhecimento de voz, gamificação e feedback instantâneo para tornar o aprendizado de inglês eficaz e divertido.
+
+### Como praticar conversação em inglês sozinho?
+LearnFun permite praticar conversação através de exercícios interativos com reconhecimento de voz, análise de pronúncia e feedback em tempo real, tudo sem precisar de um parceiro de conversação.
+
+### Quanto tempo leva para ficar fluente em inglês?
+O tempo varia, mas com prática consistente diária usando LearnFun, você pode ver melhorias significativas em semanas. Nosso sistema de streaks ajuda a manter a consistência.
+
+### A plataforma é gratuita?
+Sim, LearnFun oferece acesso gratuito com recursos completos para aprender e praticar inglês.
+
+### Funciona no celular?
+Sim, LearnFun é uma Progressive Web App (PWA) que funciona perfeitamente em dispositivos móveis, tablets e desktops.
+

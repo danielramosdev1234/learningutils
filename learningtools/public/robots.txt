@@ -1,0 +1,97 @@
+# Permitir acesso geral a todos os bots
+User-agent: *
+Allow: /
+
+# ============================================
+# BOTS DE INTELIGÊNCIA ARTIFICIAL
+# ============================================
+
+# OpenAI - ChatGPT
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+# Anthropic - Claude
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+# Google - Bard/Gemini
+User-agent: Google-Extended
+Allow: /
+
+# Perplexity AI
+User-agent: PerplexityBot
+Allow: /
+
+# Common Crawl (usado por várias IAs)
+User-agent: CCBot
+Allow: /
+
+# Bing Chat / Microsoft Copilot
+User-agent: BingBot
+Allow: /
+
+# Applebot (pode ser usado para Apple Intelligence)
+User-agent: Applebot
+Allow: /
+
+# Facebook Bot (pode indexar para IA)
+User-agent: facebookexternalhit
+Allow: /
+
+# Twitter Bot
+User-agent: Twitterbot
+Allow: /
+
+# LinkedIn Bot
+User-agent: LinkedInBot
+Allow: /
+
+# Baidu (maior buscador da China)
+User-agent: Baiduspider
+Allow: /
+
+# Yandex (maior buscador da Rússia)
+User-agent: YandexBot
+Allow: /
+
+# Cohere (IA de linguagem)
+User-agent: CohereBot
+Allow: /
+
+# You.com (buscador com IA)
+User-agent: YouBot
+Allow: /
+
+# ============================================
+# BUSCADORES TRADICIONAIS
+# ============================================
+
+# Google
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /
+
+User-agent: Googlebot-Video
+Allow: /
+
+# Bing
+User-agent: BingPreview
+Allow: /
+
+# DuckDuckGo
+User-agent: DuckDuckBot
+Allow: /
+
+# ============================================
+# SITEMAP
+# ============================================
+# Sitemap: https://learnfun-sigma.vercel.app/sitemap.xml
+
