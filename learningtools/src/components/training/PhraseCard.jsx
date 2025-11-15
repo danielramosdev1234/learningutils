@@ -386,7 +386,7 @@ const handleNextSkip = () => {
 
 
         <button
-          onClick={() => onSpeak(phrase.text)}
+          onClick={() => {onSpeak(phrase.text); stopListening();}}
           className="flex items-center gap-1 sm:gap-2 bg-blue-500 hover:bg-blue-600 text-white px-3 sm:px-6 py-2 sm:py-3 rounded-lg transition-colors shadow-md font-semibold text-sm sm:text-base"
         >
           <Volume2 size={20} className="sm:w-6 sm:h-6" />
