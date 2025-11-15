@@ -13,6 +13,8 @@ export const PhonemeFeedback = ({ expectedText, spokenText, userAudioBlob }) => 
   const { speak } = useTextToSpeech();
   const [playingWord, setPlayingWord] = useState(null);
   const [playingUserAudio, setPlayingUserAudio] = useState(null);
+  const [playingSound, setPlayingSound] = useState(null);
+  const [playingPracticeWord, setPlayingPracticeWord] = useState(null);
   const audioRef = useRef(null);
 
   if (!expectedText || !spokenText) return null;
@@ -30,6 +32,36 @@ export const PhonemeFeedback = ({ expectedText, spokenText, userAudioBlob }) => 
     setPlayingWord(index);
     speak(word, () => {
       setPlayingWord(null);
+    }, 0.50);
+  };
+
+  /**
+   * Toca o som do fonema (ex: "L sound", "J sound")
+   */
+  const playSound = (soundName, tipIndex) => {
+    setPlayingSound(tipIndex);
+    // Usa o exemplo da palavra para tocar o som
+    const tip = tips[tipIndex];
+    if (tip && tip.example) {
+      speak(tip.example, () => {
+        setPlayingSound(null);
+      }, 0.50);
+    } else {
+      // Fallback: tenta falar o nome do som
+      speak(soundName, () => {
+        setPlayingSound(null);
+      }, 0.50);
+    }
+  };
+
+  /**
+   * Toca uma palavra de prática
+   */
+  const playPracticeWord = (word, tipIndex, wordIndex) => {
+    const key = `${tipIndex}-${wordIndex}`;
+    setPlayingPracticeWord(key);
+    speak(word, () => {
+      setPlayingPracticeWord(null);
     }, 0.50);
   };
 
@@ -73,6 +105,87 @@ export const PhonemeFeedback = ({ expectedText, spokenText, userAudioBlob }) => 
 
   return (
     <div className="mt-6 space-y-4 animate-fadeIn">
+
+    {/* Pronunciation Tips */}
+          {tips.length > 0 && (
+            <div className="bg-gradient-to-r from-amber-50 to-yellow-50 p-5 rounded-xl shadow-md border-2 border-amber-300">
+              <h4 className="font-bold text-gray-800 mb-3 flex items-center gap-2">
+                <Lightbulb size={20} className="text-amber-600" />
+                Pronunciation Tips
+              </h4>
+
+              <div className="space-y-3">
+                {tips.map((tip, index) => (
+                  <div
+                    key={index}
+                    className="bg-white bg-opacity-70 p-4 rounded-lg border border-amber-200"
+                  >
+                    <div className="flex items-start gap-3">
+                      <div className="bg-amber-100 text-amber-800 font-mono font-bold px-3 py-1 rounded text-lg">
+                        {tip.phoneme}
+                      </div>
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2 mb-1">
+                          <p className="text-sm text-gray-700">
+                            <strong>Sound:</strong> {tip.name || tip.sound}
+                          </p>
+                          <button
+                            onClick={() => playSound(tip.name || tip.sound, index)}
+                            disabled={playingSound === index}
+                            className={`flex items-center gap-1 px-2 py-1 rounded text-xs font-semibold transition-all ${
+                              playingSound === index
+                                ? 'bg-blue-600 text-white animate-pulse'
+                                : 'bg-blue-500 hover:bg-blue-600 text-white'
+                            }`}
+                            title="Hear the sound"
+                            aria-label={`Hear ${tip.name || tip.sound}`}
+                          >
+                            <Volume2 size={14} />
+                            {playingSound === index ? 'Playing...' : 'Hear'}
+                          </button>
+                        </div>
+                        <p className="text-sm text-gray-700 mb-1">
+                          <strong>Tip:</strong> {tip.tip}
+                        </p>
+                        <p className="text-xs text-gray-600">
+                          <strong>Example in phrase:</strong> "{tip.example}"
+                        </p>
+                        {tip.examples && tip.examples.length > 0 && (
+                          <div className="text-xs text-gray-600 mt-1">
+                            <strong>Practice with:</strong>
+                            <div className="flex flex-wrap items-center gap-1 mt-1">
+                              {tip.examples.map((word, wordIndex) => (
+                                <span
+                                  key={wordIndex}
+                                  className="inline-flex items-center gap-1 bg-gray-100 px-2 py-1 rounded"
+                                >
+                                  {word}
+                                  <button
+                                    onClick={() => playPracticeWord(word, index, wordIndex)}
+                                    disabled={playingPracticeWord === `${index}-${wordIndex}`}
+                                    className={`flex items-center gap-1 px-1.5 py-0.5 rounded text-xs font-semibold transition-all ${
+                                      playingPracticeWord === `${index}-${wordIndex}`
+                                        ? 'bg-green-600 text-white animate-pulse'
+                                        : 'bg-green-500 hover:bg-green-600 text-white'
+                                    }`}
+                                    title={`Hear ${word}`}
+                                    aria-label={`Hear ${word}`}
+                                  >
+                                    <Volume2 size={12} />
+                                    {playingPracticeWord === `${index}-${wordIndex}` ? '...' : ''}
+                                  </button>
+                                </span>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
 
       {/* Word-by-Word Analysis */}
       <div className="bg-white p-5 rounded-xl shadow-md border-2 border-gray-200">
@@ -209,46 +322,7 @@ export const PhonemeFeedback = ({ expectedText, spokenText, userAudioBlob }) => 
         </div>
       </div>
 
-      {/* Pronunciation Tips */}
-      {tips.length > 0 && (
-        <div className="bg-gradient-to-r from-amber-50 to-yellow-50 p-5 rounded-xl shadow-md border-2 border-amber-300">
-          <h4 className="font-bold text-gray-800 mb-3 flex items-center gap-2">
-            <Lightbulb size={20} className="text-amber-600" />
-            Pronunciation Tips
-          </h4>
 
-          <div className="space-y-3">
-            {tips.map((tip, index) => (
-              <div
-                key={index}
-                className="bg-white bg-opacity-70 p-4 rounded-lg border border-amber-200"
-              >
-                <div className="flex items-start gap-3">
-                  <div className="bg-amber-100 text-amber-800 font-mono font-bold px-3 py-1 rounded text-lg">
-                    {tip.phoneme}
-                  </div>
-                  <div className="flex-1">
-                    <p className="text-sm text-gray-700 mb-1">
-                      <strong>Sound:</strong> {tip.name || tip.sound}
-                    </p>
-                    <p className="text-sm text-gray-700 mb-1">
-                      <strong>Tip:</strong> {tip.tip}
-                    </p>
-                    <p className="text-xs text-gray-600">
-                      <strong>Example in phrase:</strong> "{tip.example}"
-                    </p>
-                    {tip.examples && tip.examples.length > 0 && (
-                      <p className="text-xs text-gray-600 mt-1">
-                        <strong>Practice with:</strong> {tip.examples.join(', ')}
-                      </p>
-                    )}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
     </div>
   );
 };

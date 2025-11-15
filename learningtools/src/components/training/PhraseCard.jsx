@@ -609,27 +609,20 @@ const handleNextSkip = () => {
                 </span>
               </div>
 
-              {result.similarity > 70 && (
-                <ShareButton
-                  phraseText={phrase.text}
-                  accuracy={result.similarity}
-                  totalPracticed={totalPracticed}
-                  variant={result.similarity >= 80 ? 'celebration' : 'default'}
-                />
-              )}
+               {transcript && !isListening && (
+                        <div className="mt-4" data-tour-id="tour-feedback-word">
+                          <PhonemeFeedback
+                            expectedText={phrase.text}
+                            spokenText={transcript}
+                            userAudioBlob={audioBlob}
+                          />
+                        </div>
+                      )}
             </div>
           </div>
         )}
 
-        {transcript && !isListening && (
-          <div className="mt-4" data-tour-id="tour-feedback-word">
-            <PhonemeFeedback
-              expectedText={phrase.text}
-              spokenText={transcript}
-              userAudioBlob={audioBlob}
-            />
-          </div>
-        )}
+
       </div>
 
       {isListening && (
