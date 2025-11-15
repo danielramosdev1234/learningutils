@@ -28,10 +28,15 @@ registerSW({
   },
 });
 
-// Preserva conteúdo estático inicial para IAs/crawlers
-// O React vai substituir apenas quando montar completamente
+// Esconde conteúdo estático imediatamente quando React começa a montar
 const rootElement = document.getElementById('root');
-const staticContent = rootElement.innerHTML;
+if (rootElement) {
+  // Remove conteúdo estático antes do React renderizar
+  const staticContent = rootElement.querySelector('.static-content-visible');
+  if (staticContent) {
+    staticContent.style.display = 'none';
+  }
+}
 
 ReactDOM.createRoot(rootElement).render(
   <React.StrictMode>

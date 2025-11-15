@@ -143,11 +143,38 @@
       ]
     }
     </script>
+    <style>
+      /* Por padrão, conteúdo estático visível (para crawlers sem JS) */
+      .static-content-visible {
+        display: block;
+      }
+      
+      /* Quando JS está habilitado, esconde IMEDIATAMENTE - aplica antes do body renderizar */
+      html.js-enabled .static-content-visible,
+      html:not(.no-js) .static-content-visible {
+        display: none !important;
+      }
+    </style>
+    <script>
+      // CRÍTICO: Executa ANTES do body ser renderizado
+      // Esconde conteúdo estático imediatamente quando JS está ativo
+      // Mas mantém visível para crawlers/IAs que não executam JS
+      (function() {
+        // Marca que JS está habilitado ANTES do body
+        document.documentElement.classList.add('js-enabled');
+        document.documentElement.classList.remove('no-js');
+      })();
+    </script>
   </head>
   <body>
+    <script>
+      // Remove classe no-js do body quando JS está ativo
+      document.body.classList.remove('no-js');
+    </script>
     <div id="root">
-      <!-- Conteúdo estático inicial visível para IAs e crawlers -->
-      <main style="max-width: 1200px; margin: 0 auto; padding: 2rem; font-family: system-ui, -apple-system, sans-serif;">
+      <!-- Conteúdo estático inicial visível APENAS para IAs e crawlers (sem JS) -->
+      <!-- O script no head já esconde este conteúdo quando JS está ativo -->
+      <main class="static-content-visible" style="max-width: 1200px; margin: 0 auto; padding: 2rem; font-family: system-ui, -apple-system, sans-serif; display: none;" data-static-fallback>
         <h1 style="font-size: 3rem; font-weight: bold; color: #1f2937; margin-bottom: 1rem; text-align: center;">
           LearnFun - Plataforma de Inglês Online
         </h1>
@@ -247,19 +274,6 @@
         </noscript>
       </main>
     </div>
-    
-    <!-- Script para preservar conteúdo estático até React hidratar -->
-    <script>
-      // Preserva o conteúdo estático visível para crawlers/IAs
-      // O React vai substituir quando montar, mas o conteúdo já foi indexado
-      (function() {
-        const root = document.getElementById('root');
-        if (root && root.children.length > 0) {
-          // Marca o conteúdo como preservado para crawlers
-          root.setAttribute('data-static-content', 'true');
-        }
-      })();
-    </script>
     
     <script type="module" src="/src/main.jsx"></script>
   </body>
