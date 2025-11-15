@@ -262,6 +262,13 @@ const handleNextSkip = () => {
       stopListening();
     } else {
       console.log('🎤 Starting new recording...');
+      
+      // Para a reprodução do áudio do botão "Hear" se estiver reproduzindo
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        console.log('🔇 Stopped TTS playback');
+      }
+      
       setResult(null);
       setShowFeedback(false);
       setHasProcessed(false);
