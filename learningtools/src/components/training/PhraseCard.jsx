@@ -464,7 +464,7 @@ const handleNextSkip = () => {
           }}
           className="flex items-center gap-1 sm:gap-2 bg-blue-500 hover:bg-blue-600 text-white px-3 sm:px-6 py-2 sm:py-3 rounded-lg transition-colors shadow-md font-semibold text-sm sm:text-base"
           aria-label="Reproduzir áudio da frase"
-          title="Clique para ouvir a pronúncia correta"
+          title="Clique para ouvir a pronúncia correta."
         >
           <Volume2 size={20} className="sm:w-6 sm:h-6" aria-hidden="true" />
           <span>Hear</span>
