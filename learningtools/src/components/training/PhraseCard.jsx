@@ -458,7 +458,9 @@ const handleNextSkip = () => {
             try {
               trackUserAction('tts_playback_started', { phraseId: phrase.id });
               onSpeak(phrase.text);
+              if (isListening) {
               stopListening();
+              }
             } catch (error) {
               trackError('tts_error', error.message, { phraseId: phrase.id });
               toast.error('Erro ao reproduzir áudio');
