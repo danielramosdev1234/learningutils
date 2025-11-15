@@ -444,7 +444,7 @@ const PHONEME_CHALLENGES = {
     graphemes: ['l'],
     name: 'L sound',
     commonErrors: ['r', 'w'],
-    tip: 'oque a ponta da língua na crista atrás dos dentes superiores',
+    tip: 'Toque a ponta da língua na crista atrás dos dentes superiores',
     examples: ['light', 'ball', 'please', 'cold']
   },
   'v': {
@@ -488,6 +488,183 @@ const PHONEME_CHALLENGES = {
     commonErrors: ['tʃ', 'ʒ'],
     tip: 'Comece com "d", termine com "zh"',
     examples: ['judge', 'magic', 'edge', 'joy']
+  },
+  // Vogais problemáticas para brasileiros
+  'æ': { // cat, bad
+    graphemes: ['a'],
+    name: 'A sound (cat)',
+    commonErrors: ['ɛ', 'a', 'e'],
+    tip: 'Abra bem a boca, língua baixa, som entre "a" e "é". Não é "é" nem "a" puro',
+    examples: ['cat', 'bad', 'hat', 'man', 'apple']
+  },
+  'ʌ': { // cup, but
+    graphemes: ['u', 'o'],
+    name: 'U sound (cup)',
+    commonErrors: ['a', 'o', 'u'],
+    tip: 'Boca meio aberta, língua no centro. Não é "a" nem "ó". Parece um "a" mais fechado',
+    examples: ['cup', 'but', 'love', 'sun', 'come']
+  },
+  'ə': { // schwa - the, about
+    graphemes: ['a', 'e', 'i', 'o', 'u'],
+    name: 'Schwa sound',
+    commonErrors: ['a', 'e', 'i'],
+    tip: 'Som neutro, muito curto e relaxado. Não pronuncie como "e" ou "a". É o som mais comum em inglês',
+    examples: ['the', 'about', 'ago', 'sofa', 'banana']
+  },
+  'ɪ': { // bit, sit
+    graphemes: ['i'],
+    name: 'I sound (bit)',
+    commonErrors: ['i', 'e'],
+    tip: 'Mais curto e relaxado que o "i" português. Boca menos aberta. Não é "i" longo',
+    examples: ['bit', 'sit', 'ship', 'big', 'fish']
+  },
+  'i': { // beat, seat
+    graphemes: ['ee', 'ea', 'ie'],
+    name: 'EE sound (beat)',
+    commonErrors: ['ɪ', 'i'],
+    tip: 'Som longo e tenso. Estique os lábios como um sorriso. Mais longo que o "i" português',
+    examples: ['beat', 'seat', 'see', 'tree', 'meet']
+  },
+  'ɛ': { // bet, set
+    graphemes: ['e'],
+    name: 'E sound (bet)',
+    commonErrors: ['e', 'ɪ'],
+    tip: 'Mais aberto que o "e" português. Boca mais aberta, língua baixa',
+    examples: ['bet', 'set', 'red', 'bed', 'head']
+  },
+  'e': { // bait, say
+    graphemes: ['ay', 'ai', 'ea'],
+    name: 'AY sound (bait)',
+    commonErrors: ['ɛ', 'e'],
+    tip: 'Ditongo: comece com "e" e termine com "i" suave. Não é "é" puro',
+    examples: ['bait', 'say', 'day', 'way', 'play']
+  },
+  'ʊ': { // book, look
+    graphemes: ['oo', 'u'],
+    name: 'U sound (book)',
+    commonErrors: ['u', 'o'],
+    tip: 'Mais curto e relaxado que o "u" português. Lábios arredondados mas menos tensos',
+    examples: ['book', 'look', 'good', 'put', 'foot']
+  },
+  'u': { // boot, suit
+    graphemes: ['oo', 'ue', 'ui'],
+    name: 'OO sound (boot)',
+    commonErrors: ['ʊ', 'u'],
+    tip: 'Som longo e tenso. Lábios bem arredondados e projetados para frente',
+    examples: ['boot', 'suit', 'moon', 'food', 'blue']
+  },
+  'ɔ': { // bought, caught
+    graphemes: ['aw', 'au', 'o'],
+    name: 'AW sound (bought)',
+    commonErrors: ['o', 'a'],
+    tip: 'Boca bem aberta, lábios arredondados. Mais aberto que o "ó" português',
+    examples: ['bought', 'caught', 'law', 'saw', 'dog']
+  },
+  'ɑ': { // hot, not
+    graphemes: ['o', 'a'],
+    name: 'AH sound (hot)',
+    commonErrors: ['o', 'a', 'ɔ'],
+    tip: 'Boca bem aberta, língua baixa e para trás. Não é "ó" nem "a"',
+    examples: ['hot', 'not', 'stop', 'box', 'clock']
+  },
+  // Consoantes problemáticas
+  'h': { // house, help
+    graphemes: ['h'],
+    name: 'H sound',
+    commonErrors: ['r', ''],
+    tip: 'Sopro de ar suave, sem vibração. Não é "r" nem deve ser omitido. Como soprar no espelho',
+    examples: ['house', 'help', 'hello', 'happy', 'home']
+  },
+  'z': { // zoo, size
+    graphemes: ['z', 's'],
+    name: 'Z sound',
+    commonErrors: ['s', 'z'],
+    tip: 'Como "s" mas com voz (vibração nas cordas vocais). Coloque a mão na garganta e sinta a vibração',
+    examples: ['zoo', 'size', 'easy', 'lazy', 'buzz']
+  },
+  's': { // see, sit
+    graphemes: ['s', 'c'],
+    name: 'S sound',
+    commonErrors: ['z', 'ʃ'],
+    tip: 'Ar passando entre os dentes, sem voz. Não vibre as cordas vocais',
+    examples: ['see', 'sit', 'sun', 'bus', 'miss']
+  },
+  'ŋ': { // sing, ring
+    graphemes: ['ng'],
+    name: 'NG sound',
+    commonErrors: ['n', 'g'],
+    tip: 'Língua no fundo da boca, ar pelo nariz. Não adicione "g" no final. É um som nasal',
+    examples: ['sing', 'ring', 'song', 'long', 'thing']
+  },
+  'n': { // no, not
+    graphemes: ['n'],
+    name: 'N sound',
+    commonErrors: ['ŋ', 'm'],
+    tip: 'Língua toca os dentes superiores, ar pelo nariz. Diferente de "ng"',
+    examples: ['no', 'not', 'sun', 'man', 'ten']
+  },
+  'm': { // me, my
+    graphemes: ['m'],
+    name: 'M sound',
+    commonErrors: ['n', 'b'],
+    tip: 'Lábios fechados, ar pelo nariz. Mantenha os lábios fechados',
+    examples: ['me', 'my', 'man', 'time', 'come']
+  },
+  'b': { // be, big
+    graphemes: ['b'],
+    name: 'B sound',
+    commonErrors: ['v', 'p'],
+    tip: 'Lábios fechados, depois solte com explosão. Diferente de "v"',
+    examples: ['be', 'big', 'boy', 'baby', 'book']
+  },
+  'p': { // pen, put
+    graphemes: ['p'],
+    name: 'P sound',
+    commonErrors: ['b', 'f'],
+    tip: 'Lábios fechados, depois solte com explosão sem voz. Diferente de "b"',
+    examples: ['pen', 'put', 'play', 'happy', 'stop']
+  },
+  'd': { // do, day
+    graphemes: ['d'],
+    name: 'D sound',
+    commonErrors: ['t', 'ð'],
+    tip: 'Língua toca os dentes superiores, depois solte com voz. Diferente de "t"',
+    examples: ['do', 'day', 'dog', 'bad', 'red']
+  },
+  't': { // to, time
+    graphemes: ['t'],
+    name: 'T sound',
+    commonErrors: ['d', 'θ'],
+    tip: 'Língua toca os dentes superiores, depois solte sem voz. Diferente de "d"',
+    examples: ['to', 'time', 'top', 'cat', 'sit']
+  },
+  'g': { // go, get
+    graphemes: ['g'],
+    name: 'G sound',
+    commonErrors: ['k', 'dʒ'],
+    tip: 'Parte de trás da língua toca o céu da boca, depois solte com voz. Diferente de "k"',
+    examples: ['go', 'get', 'big', 'dog', 'game']
+  },
+  'k': { // cat, key
+    graphemes: ['k', 'c'],
+    name: 'K sound',
+    commonErrors: ['g', 't'],
+    tip: 'Parte de trás da língua toca o céu da boca, depois solte sem voz. Diferente de "g"',
+    examples: ['cat', 'key', 'book', 'cake', 'think']
+  },
+  'f': { // for, if
+    graphemes: ['f', 'ph'],
+    name: 'F sound',
+    commonErrors: ['v', 'p'],
+    tip: 'Dentes superiores tocam o lábio inferior, empurre o ar sem voz',
+    examples: ['for', 'if', 'fish', 'off', 'life']
+  },
+  'j': { // yes, you
+    graphemes: ['y'],
+    name: 'Y sound',
+    commonErrors: ['i', 'dʒ'],
+    tip: 'Língua no centro, lábios levemente arredondados. Como começar a dizer "i" mas com som de consoante',
+    examples: ['yes', 'you', 'year', 'yellow', 'young']
   }
 };
 
