@@ -3,8 +3,8 @@ import { Languages, Sparkles, Trash2, History, Volume2, Mic, MicOff } from 'luci
 import { useTranslation } from '../../hooks/useTranslation';
 import { PhraseCard } from './PhraseCard';
 import { useTextToSpeech } from '../../hooks/useTextToSpeech';
-import { useSpeechRecognition } from '../../hooks/useSpeechRecognition'; // ✅ IMPORT
-import { useSelector, useDispatch } from 'react-redux';
+import { useSpeechRecognition } from '../../hooks/useSpeechRecognition';
+import { useDispatch } from 'react-redux';
 import {
   incrementPhraseCompleted,
   saveProgress,
@@ -13,12 +13,12 @@ import {
 
 const TranslateTrainer = () => {
   const dispatch = useDispatch();
-  const { progress, levelSystem } = useSelector(state => state.user);
 
   const [portugueseText, setPortugueseText] = useState('');
   const [currentPhrase, setCurrentPhrase] = useState(null);
   const [translationHistory, setTranslationHistory] = useState([]);
   const [showHistory, setShowHistory] = useState(false);
+  
   const textToSpeech = useTextToSpeech();
   const { speak } = textToSpeech;
 
@@ -26,48 +26,50 @@ const TranslateTrainer = () => {
     translateToEnglish,
     isTranslating,
     error: translationError,
-    apiUsed,
     clearError
   } = useTranslation();
 
+  const handleSpeechResult = (finalText, error) => {
+    if (error) {
+      console.error('Speech recognition error:', error);
+      return;
+    }
+    
+    if (finalText) {
+      setPortugueseText(finalText);
+      console.log('✅ Texto capturado em português:', finalText);
+    }
+  };
 
-  // ✅ NOVO: Hook de reconhecimento de voz para português
   const {
     isListening,
     transcript,
     setTranscript,
     toggleListening
-  } = useSpeechRecognition('pt-BR', (finalText, error) => {
-    if (error) {
-      console.error('Speech recognition error:', error);
-      // Você pode mostrar o erro na UI se quiser
-    } else if (finalText) {
-      setPortugueseText(finalText);
-      console.log('✅ Texto capturado em português:', finalText);
-    }
-  });
+  } = useSpeechRecognition('pt-BR', handleSpeechResult);
 
-  // Carrega histórico do localStorage
   useEffect(() => {
     const stored = localStorage.getItem('learnfun_translation_history');
-    if (stored) {
-      try {
-        const history = JSON.parse(stored);
-        setTranslationHistory(history.slice(0, 10));
-      } catch (e) {
-        console.error('Error loading history:', e);
-      }
+    if (!stored) {
+      return;
+    }
+
+    try {
+      const history = JSON.parse(stored);
+      setTranslationHistory(history.slice(0, 10));
+    } catch (e) {
+      console.error('Error loading history:', e);
     }
   }, []);
 
-  // ✅ NOVO: Atualiza textarea quando transcript muda
   useEffect(() => {
-    if (transcript && transcript !== '🎤 Listening...') {
-      setPortugueseText(transcript);
+    if (!transcript || transcript === '🎤 Listening...') {
+      return;
     }
+    
+    setPortugueseText(transcript);
   }, [transcript]);
 
-  // Salva histórico no localStorage
   const saveToHistory = (original, translated) => {
     const newEntry = {
       id: Date.now(),
@@ -89,22 +91,23 @@ const TranslateTrainer = () => {
     clearError();
 
     const result = await translateToEnglish(portugueseText);
-
-    if (result && result.success) {
-      const newPhrase = {
-        id: `translate-${Date.now()}`,
-        text: result.translated,
-        translation: result.original,
-        category: 'user-translation',
-        difficulty: 'custom',
-        index: 0
-      };
-
-      setCurrentPhrase(newPhrase);
-      saveToHistory(result.original, result.translated);
-
-      console.log('✨ Phrase ready for training:', newPhrase);
+    if (!result || !result.success) {
+      return;
     }
+
+    const newPhrase = {
+      id: `translate-${Date.now()}`,
+      text: result.translated,
+      translation: result.original,
+      category: 'user-translation',
+      difficulty: 'custom',
+      index: 0
+    };
+
+    setCurrentPhrase(newPhrase);
+    saveToHistory(result.original, result.translated);
+
+    console.log('✨ Phrase ready for training:', newPhrase);
   };
 
   const handleCorrectAnswer = () => {
@@ -124,7 +127,7 @@ const TranslateTrainer = () => {
     }, 500);
   };
 
-  const loadFromHistory = (entry) => {
+  const handleLoadFromHistory = (entry) => {
     const phrase = {
       id: `history-${entry.id}`,
       text: entry.translated,
@@ -139,109 +142,191 @@ const TranslateTrainer = () => {
     setShowHistory(false);
   };
 
-  const clearHistory = () => {
+  const handleClearHistory = () => {
     setTranslationHistory([]);
     localStorage.removeItem('learnfun_translation_history');
     setShowHistory(false);
   };
 
+  const handleToggleHistory = () => {
+    setShowHistory(!showHistory);
+  };
+
+  const handleTextareaChange = (e) => {
+    setPortugueseText(e.target.value);
+  };
+
+  const handleTextareaKeyDown = (e) => {
+    if (e.key !== 'Enter' || e.shiftKey) {
+      return;
+    }
+    
+    e.preventDefault();
+    handleTranslate();
+  };
+
+  const handleHistoryItemClick = (entry) => {
+    handleLoadFromHistory(entry);
+  };
+
+  const handleHistoryItemKeyDown = (e, entry) => {
+    if (e.key !== 'Enter' && e.key !== ' ') {
+      return;
+    }
+    
+    e.preventDefault();
+    handleLoadFromHistory(entry);
+  };
+
+  const handleHistoryToggleKeyDown = (e) => {
+    if (e.key !== 'Enter' && e.key !== ' ') {
+      return;
+    }
+    
+    e.preventDefault();
+    handleToggleHistory();
+  };
+
+  const handleMicrophoneKeyDown = (e) => {
+    if (e.key !== 'Enter' && e.key !== ' ') {
+      return;
+    }
+    
+    e.preventDefault();
+    toggleListening();
+  };
+
+  const handleTranslateKeyDown = (e) => {
+    if (e.key !== 'Enter' && e.key !== ' ') {
+      return;
+    }
+    
+    e.preventDefault();
+    handleTranslate();
+  };
+
+  const handleSpeakHistoryItem = (e, text) => {
+    e.stopPropagation();
+    speak(text);
+  };
+
+  const handleSpeakHistoryItemKeyDown = (e, text) => {
+    if (e.key !== 'Enter' && e.key !== ' ') {
+      return;
+    }
+    
+    e.preventDefault();
+    e.stopPropagation();
+    speak(text);
+  };
+
+  const isTranslateDisabled = !portugueseText.trim() || isTranslating || isListening;
+  const microphoneButtonClasses = isListening
+    ? 'bg-red-500 hover:bg-red-600 text-white'
+    : 'bg-green-500 hover:bg-green-600 text-white';
+  const translateButtonClasses = isTranslateDisabled
+    ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+    : 'bg-blue-500 hover:bg-blue-600 text-white';
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4">
       <div className="max-w-3xl mx-auto">
-
-        {/* Header */}
-        <div className="text-center mb-8">
+        <header className="text-center mb-8">
           <div className="flex items-center justify-center gap-3 mb-2">
-            <Languages className="w-10 h-10 text-purple-600" />
-            <h1 className="text-4xl font-bold text-gray-800">
+            <Languages className="w-10 h-10 text-blue-600" aria-hidden="true" />
+            <h1 className="text-4xl font-bold text-gray-900">
               Translate & Practice
             </h1>
           </div>
-          <p className="text-gray-600 text-lg">
+          <p className="text-gray-600 text-base">
             Digite ou fale uma frase em português, traduza para inglês e pratique a pronúncia!
           </p>
-        </div>
+        </header>
 
-        {/* Translation Input Card */}
-        <div className="bg-white rounded-xl shadow-lg p-6 mb-6">
+        <section className="bg-white rounded-lg border border-gray-200 p-6 mb-6" aria-labelledby="translation-input-title">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-xl font-bold text-gray-800 flex items-center gap-2">
-              <span className="text-2xl">🇧🇷</span>
+            <h2 id="translation-input-title" className="text-xl font-semibold text-gray-900 flex items-center gap-2">
+              <span className="text-2xl" aria-hidden="true">🇧🇷</span>
               Digite ou Fale em Português
-            </h3>
+            </h2>
             {translationHistory.length > 0 && (
               <button
-                onClick={() => setShowHistory(!showHistory)}
-                className="flex items-center gap-2 text-gray-600 hover:text-purple-600 transition-colors"
+                onClick={handleToggleHistory}
+                onKeyDown={handleHistoryToggleKeyDown}
+                tabIndex={0}
+                aria-label="Mostrar ou ocultar histórico de traduções"
+                aria-expanded={showHistory}
+                className="flex items-center gap-2 text-purple-600 hover:text-purple-700 transition-colors"
               >
-                <History size={20} />
-                <span className="text-sm font-semibold">Histórico</span>
+                <History size={20} aria-hidden="true" />
+                <span className="text-sm font-medium">Histórico</span>
               </button>
             )}
           </div>
 
-          {/* ✅ NOVO: Botão de Speech-to-Text */}
           <div className="mb-3 flex items-center gap-2">
             <button
               onClick={toggleListening}
+              onKeyDown={handleMicrophoneKeyDown}
               disabled={isTranslating}
-              className={`flex items-center gap-2 px-4 py-3 rounded-lg font-semibold transition-all shadow-md ${
-                isListening
-                  ? 'bg-red-500 hover:bg-red-600 text-white animate-pulse'
-                  : 'bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white'
-              }`}
+              tabIndex={0}
+              aria-label={isListening ? 'Parar de gravar áudio' : 'Iniciar gravação de áudio em português'}
+              aria-pressed={isListening}
+              className={`flex items-center gap-2 px-4 py-3 rounded-lg font-medium transition-colors ${microphoneButtonClasses}`}
             >
               {isListening ? (
                 <>
-                  <MicOff size={20} />
+                  <MicOff size={20} aria-hidden="true" />
                   <span>Parar de Gravar</span>
                 </>
               ) : (
                 <>
-                  <Mic size={20} />
-                  <span>🎤 Falar em Português</span>
+                  <Mic size={20} aria-hidden="true" />
+                  <span>Falar em Português</span>
                 </>
               )}
             </button>
 
             {isListening && (
-              <div className="flex items-center gap-2 text-red-600 animate-pulse">
-                <div className="w-3 h-3 bg-red-500 rounded-full"></div>
-                <span className="text-sm font-semibold">Gravando...</span>
+              <div className="flex items-center gap-2 text-red-600" role="status" aria-live="polite">
+                <div className="w-2 h-2 bg-red-500 rounded-full" aria-hidden="true"></div>
+                <span className="text-sm font-medium">Gravando...</span>
               </div>
             )}
           </div>
 
-          {/* Text Input */}
+          <label htmlFor="portuguese-text-input" className="sr-only">
+            Campo de texto para digitar ou falar em português
+          </label>
           <textarea
+            id="portuguese-text-input"
             value={portugueseText}
-            onChange={(e) => setPortugueseText(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter' && !e.shiftKey) {
-                e.preventDefault();
-                handleTranslate();
-              }
-            }}
+            onChange={handleTextareaChange}
+            onKeyDown={handleTextareaKeyDown}
             placeholder="Ex: Olá, como você está hoje?"
-            className="w-full p-4 border-2 border-gray-300 rounded-lg text-lg focus:border-purple-500 focus:ring-2 focus:ring-purple-200 focus:outline-none transition-all resize-none"
+            className="w-full p-4 border border-gray-300 rounded-lg text-base focus:border-blue-500 focus:ring-2 focus:ring-blue-200 focus:outline-none transition-all resize-none bg-white"
             rows={3}
             disabled={isTranslating || isListening}
+            aria-label="Digite ou fale uma frase em português"
+            aria-describedby="textarea-help"
           />
+          <div id="textarea-help" className="sr-only">
+            Pressione Enter para traduzir rapidamente
+          </div>
 
-          {/* Error Message */}
           {translationError && (
-            <div className="mt-3 p-4 bg-red-50 border-2 border-red-300 rounded-lg">
+            <div className="mt-3 p-4 bg-red-50 border border-red-200 rounded-lg" role="alert" aria-live="assertive">
               <div className="flex items-start gap-2 mb-2">
-                <span className="text-2xl">⚠️</span>
+                <span className="text-xl" aria-hidden="true">⚠️</span>
                 <div className="flex-1">
-                  <p className="text-red-700 font-semibold mb-1">Erro na Tradução</p>
-                  <p className="text-red-600 text-sm">{translationError}</p>
+                  <p className="text-red-800 font-medium mb-1">Erro na Tradução</p>
+                  <p className="text-red-700 text-sm">{translationError}</p>
                 </div>
               </div>
 
-              <div className="mt-3 p-3 bg-white rounded border border-red-200">
-                <p className="text-xs text-gray-700 mb-2">
-                  <strong>Possíveis causas:</strong>
+              <div className="mt-3 p-3 bg-white rounded border border-red-100">
+                <p className="text-xs text-gray-700 mb-2 font-medium">
+                  Possíveis causas:
                 </p>
                 <ul className="text-xs text-gray-600 space-y-1 list-disc list-inside">
                   <li>A API do Google Apps Script pode estar temporariamente indisponível</li>
@@ -250,107 +335,111 @@ const TranslateTrainer = () => {
                   <li>Tente novamente em alguns segundos</li>
                 </ul>
               </div>
-
-
             </div>
           )}
 
-          {/* Translate Button */}
           <button
             onClick={handleTranslate}
-            disabled={!portugueseText.trim() || isTranslating || isListening}
-            className={`w-full mt-4 flex items-center justify-center gap-2 px-6 py-4 rounded-lg font-bold text-lg transition-all shadow-md ${
-              !portugueseText.trim() || isTranslating || isListening
-                ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                : 'bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white transform hover:scale-105'
-            }`}
+            onKeyDown={handleTranslateKeyDown}
+            disabled={isTranslateDisabled}
+            tabIndex={0}
+            aria-label="Traduzir texto para inglês"
+            aria-busy={isTranslating}
+            className={`w-full mt-4 flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-medium text-base transition-colors ${translateButtonClasses}`}
           >
             {isTranslating ? (
               <>
-                <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-white"></div>
+                <div className="animate-spin rounded-full h-5 w-5 border-2 border-white border-t-transparent" aria-hidden="true"></div>
                 <span>Traduzindo...</span>
               </>
             ) : (
               <>
-                <Sparkles size={24} />
+                <Sparkles size={20} aria-hidden="true" />
                 <span>Traduzir para Inglês</span>
-                <span className="text-2xl">🇺🇸</span>
               </>
             )}
           </button>
 
-          {/* Quick Tips */}
           <div className="mt-4 space-y-2">
-            <div className="p-3 bg-purple-50 border border-purple-200 rounded-lg">
-              <p className="text-sm text-purple-700">
-                💡 <strong>Dica:</strong> Pressione <kbd className="px-2 py-1 bg-white rounded border">Enter</kbd> para traduzir rapidamente!
-              </p>
-            </div>
             <div className="p-3 bg-blue-50 border border-blue-200 rounded-lg">
               <p className="text-sm text-blue-700">
-                🎤 <strong>Novo:</strong> Clique no botão do microfone para falar em português e o texto será escrito automaticamente!
+                💡 <span className="font-medium">Dica:</span> Pressione <kbd className="px-2 py-1 bg-white rounded border border-blue-300 text-xs">Enter</kbd> para traduzir rapidamente!
+              </p>
+            </div>
+            <div className="p-3 bg-purple-50 border border-purple-200 rounded-lg">
+              <p className="text-sm text-purple-700">
+                🎤 <span className="font-medium">Novo:</span> Clique no botão do microfone para falar em português e o texto será escrito automaticamente!
               </p>
             </div>
           </div>
-        </div>
+        </section>
 
-        {/* History Modal */}
         {showHistory && translationHistory.length > 0 && (
-          <div className="bg-white rounded-xl shadow-lg p-6 mb-6 animate-fadeIn">
+          <section className="bg-white rounded-lg border border-gray-200 p-6 mb-6" aria-labelledby="history-title">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-bold text-gray-800 flex items-center gap-2">
-                <History size={20} />
+              <h2 id="history-title" className="text-lg font-semibold text-gray-900 flex items-center gap-2">
+                <History size={20} aria-hidden="true" />
                 Histórico de Traduções
-              </h3>
+              </h2>
               <button
-                onClick={clearHistory}
-                className="flex items-center gap-1 text-red-600 hover:text-red-700 text-sm font-semibold"
+                onClick={handleClearHistory}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    handleClearHistory();
+                  }
+                }}
+                tabIndex={0}
+                aria-label="Limpar histórico de traduções"
+                className="flex items-center gap-1 text-red-600 hover:text-red-700 text-sm font-medium transition-colors"
               >
-                <Trash2 size={16} />
+                <Trash2 size={16} aria-hidden="true" />
                 Limpar
               </button>
             </div>
 
-            <div className="space-y-2 max-h-64 overflow-y-auto">
+            <ul className="space-y-2 max-h-64 overflow-y-auto" role="list">
               {translationHistory.map((entry) => (
-                <button
-                  key={entry.id}
-                  onClick={() => loadFromHistory(entry)}
-                  className="w-full text-left p-3 bg-gray-50 hover:bg-purple-50 rounded-lg border border-gray-200 hover:border-purple-300 transition-all"
-                >
-                  <div className="flex items-start justify-between gap-2">
-                    <div className="flex-1">
-                      <p className="text-sm text-gray-600 mb-1">
-                        🇧🇷 {entry.original}
-                      </p>
-                      <p className="text-sm font-semibold text-gray-800">
-                        🇺🇸 {entry.translated}
-                      </p>
+                <li key={entry.id}>
+                  <button
+                    onClick={() => handleHistoryItemClick(entry)}
+                    onKeyDown={(e) => handleHistoryItemKeyDown(e, entry)}
+                    tabIndex={0}
+                    aria-label={`Carregar tradução: ${entry.original} em português, ${entry.translated} em inglês`}
+                    className="w-full text-left p-3 bg-gray-50 hover:bg-purple-50 rounded-lg border border-gray-200 hover:border-purple-300 transition-colors"
+                  >
+                    <div className="flex items-start justify-between gap-2">
+                      <div className="flex-1">
+                        <p className="text-sm text-gray-600 mb-1">
+                          <span aria-hidden="true">🇧🇷</span> {entry.original}
+                        </p>
+                        <p className="text-sm font-medium text-gray-900">
+                          <span aria-hidden="true">🇺🇸</span> {entry.translated}
+                        </p>
+                      </div>
+                      <button
+                        onClick={(e) => handleSpeakHistoryItem(e, entry.translated)}
+                        onKeyDown={(e) => handleSpeakHistoryItemKeyDown(e, entry.translated)}
+                        tabIndex={0}
+                        aria-label={`Ouvir pronúncia de: ${entry.translated}`}
+                        className="text-blue-500 flex-shrink-0 mt-1 hover:text-blue-600 transition-colors"
+                      >
+                        <Volume2 size={16} aria-hidden="true" />
+                      </button>
                     </div>
-                    <Volume2
-                      size={16}
-                      className="text-purple-500 flex-shrink-0 mt-1"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        speak(entry.translated);
-                      }}
-                    />
-                  </div>
-                </button>
+                  </button>
+                </li>
               ))}
-            </div>
-          </div>
+            </ul>
+          </section>
         )}
 
-        {/* Practice Card */}
         {currentPhrase && (
-          <div className="animate-fadeIn">
-            <div className="bg-gradient-to-r from-green-400 to-blue-500 p-1 rounded-xl mb-4">
-              <div className="bg-white rounded-lg p-4">
-                <p className="text-center text-gray-700 font-semibold">
-                  ✨ Agora pratique a pronúncia em inglês! ✨
-                </p>
-              </div>
+          <section aria-labelledby="practice-title">
+            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
+              <p id="practice-title" className="text-center text-blue-800 font-medium">
+                Agora pratique a pronúncia em inglês!
+              </p>
             </div>
 
             <PhraseCard
@@ -362,49 +451,48 @@ const TranslateTrainer = () => {
               isActive={true}
               autoAdvance={false}
             />
-          </div>
+          </section>
         )}
 
-        {/* Instructions (when no phrase active) */}
         {!currentPhrase && (
-          <div className="bg-white rounded-xl shadow-lg p-8 text-center">
-            <div className="text-6xl mb-4">🎯</div>
-            <h3 className="text-2xl font-bold text-gray-800 mb-3">
+          <section className="bg-white rounded-lg border border-gray-200 p-8 text-center" aria-labelledby="instructions-title">
+            <div className="text-5xl mb-4" aria-hidden="true">🎯</div>
+            <h2 id="instructions-title" className="text-2xl font-semibold text-gray-900 mb-4">
               Como Funciona?
-            </h3>
+            </h2>
             <div className="space-y-3 text-left max-w-md mx-auto">
               <div className="flex items-start gap-3">
-                <span className="text-2xl flex-shrink-0">1️⃣</span>
+                <span className="text-xl flex-shrink-0" aria-hidden="true">1.</span>
                 <p className="text-gray-700">
-                  <strong>Digite ou fale</strong> uma frase em português que você quer aprender
+                  <span className="font-medium">Digite ou fale</span> uma frase em português que você quer aprender
                 </p>
               </div>
               <div className="flex items-start gap-3">
-                <span className="text-2xl flex-shrink-0">2️⃣</span>
+                <span className="text-xl flex-shrink-0" aria-hidden="true">2.</span>
                 <p className="text-gray-700">
-                  Clique em <strong>"Traduzir"</strong> para converter para inglês
+                  Clique em <span className="font-medium">"Traduzir"</span> para converter para inglês
                 </p>
               </div>
               <div className="flex items-start gap-3">
-                <span className="text-2xl flex-shrink-0">3️⃣</span>
+                <span className="text-xl flex-shrink-0" aria-hidden="true">3.</span>
                 <p className="text-gray-700">
-                  Use os botões <strong>"Hear"</strong> e <strong>"Speak"</strong> para praticar
+                  Use os botões <span className="font-medium">"Hear"</span> e <span className="font-medium">"Speak"</span> para praticar
                 </p>
               </div>
               <div className="flex items-start gap-3">
-                <span className="text-2xl flex-shrink-0">4️⃣</span>
+                <span className="text-xl flex-shrink-0" aria-hidden="true">4.</span>
                 <p className="text-gray-700">
-                  Receba <strong>feedback detalhado</strong> com análise fonética IPA!
+                  Receba <span className="font-medium">feedback detalhado</span> com análise fonética IPA!
                 </p>
               </div>
             </div>
 
-            <div className="mt-6 p-4 bg-purple-50 border-2 border-purple-200 rounded-lg">
-              <p className="text-purple-700 font-semibold">
-                💪 Pratique frases do seu dia a dia e melhore sua pronúncia!
+            <div className="mt-6 p-4 bg-purple-50 border border-purple-200 rounded-lg">
+              <p className="text-purple-700 font-medium">
+                Pratique frases do seu dia a dia e melhore sua pronúncia!
               </p>
             </div>
-          </div>
+          </section>
         )}
       </div>
     </div>

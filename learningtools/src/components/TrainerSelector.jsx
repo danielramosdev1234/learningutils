@@ -196,7 +196,7 @@ const handleCloseLevelUpModal = () => {
                                                            aria-current={activeTrainer === 'categories' ? 'page' : undefined}
                                                            className={`flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all ${
                                                              activeTrainer === 'categories'
-                                                               ? 'bg-gradient-to-r from-indigo-500 to-purple-500 text-white shadow-lg scale-105'
+                                                               ? 'bg-purple-500 text-white shadow-lg scale-105'
                                                                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                                                            }`}
                                                          >
@@ -239,7 +239,7 @@ const handleCloseLevelUpModal = () => {
                 aria-current={activeTrainer === 'translate' ? 'page' : undefined}
                 className={`flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all ${
                   activeTrainer === 'translate'
-                    ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg scale-105'
+                    ? 'bg-gradient-to-r bg-purple-500 text-white shadow-lg scale-105'
                     : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                 }`}
               >
