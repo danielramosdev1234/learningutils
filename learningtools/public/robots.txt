@@ -93,5 +93,5 @@ Allow: /
 # ============================================
 # SITEMAP
 # ============================================
-# Sitemap: https://learnfun-sigma.vercel.app/sitemap.xml
+Sitemap: https://learnfun-sigma.vercel.app/sitemap.xml
 

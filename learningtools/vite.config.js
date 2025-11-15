@@ -4,6 +4,25 @@ import { VitePWA } from 'vite-plugin-pwa';
 
 // https://vite.dev/config/
 export default defineConfig({
+  build: {
+    // Otimizações para SEO e performance
+    minify: 'terser',
+    terserOptions: {
+      compress: {
+        drop_console: false, // Mantém console para debug
+      },
+    },
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'react-vendor': ['react', 'react-dom', 'react-router-dom'],
+          'redux-vendor': ['@reduxjs/toolkit', 'react-redux'],
+        },
+      },
+    },
+    // Preload de recursos críticos
+    assetsInlineLimit: 4096,
+  },
   plugins: [
     react(),
     VitePWA({

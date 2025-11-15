@@ -21,6 +21,10 @@ import NotificationPrompt from './components/ui/NotificationPrompt';
 import { useNotificationSync } from './hooks/useNotificationSync';
 import { useFCM } from './hooks/useFCM';
 import FAQ from './components/FAQ';
+import Home from './pages/Home';
+import Sobre from './pages/Sobre';
+import ComoFunciona from './pages/ComoFunciona';
+import Precos from './pages/Precos';
 
 function App() {
   const dispatch = useDispatch();
@@ -95,11 +99,15 @@ function App() {
         {/* Rota principal com todos os trainers */}
         <Route path="/" element={<TrainerSelector />} />
 
+        {/* Páginas estáticas para SEO */}
+        <Route path="/home" element={<Home />} />
+        <Route path="/sobre" element={<Sobre />} />
+        <Route path="/como-funciona" element={<ComoFunciona />} />
+        <Route path="/precos" element={<Precos />} />
+        <Route path="/faq" element={<FAQ />} />
+
         {/* Rota para entrar em uma sala específica */}
         <Route path="/jitsi-room/:roomId" element={<MeetRoom />} />
-
-        {/* Rota para FAQ */}
-        <Route path="/faq" element={<FAQ />} />
       </Routes>
 
       <IncentiveModal />

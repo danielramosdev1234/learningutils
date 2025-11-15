@@ -8,7 +8,8 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "migrate:xp:admin": "node ./admin/migrateToXP.mjs"
+    "migrate:xp:admin": "node ./admin/migrateToXP.mjs",
+    "prerender": "node scripts/prerender.js"
   },
   "dependencies": {
     "@jitsi/react-sdk": "^1.4.4",

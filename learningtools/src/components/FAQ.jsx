@@ -1,8 +1,14 @@
 import React, { useState } from 'react';
 import { ChevronDown, ChevronUp, HelpCircle, BookOpen, Mic, Trophy, Smartphone, Gift, Target, Users } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { SEOHead } from './SEOHead';
 
 const FAQ = () => {
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": []
+  };
   const [openIndex, setOpenIndex] = useState(null);
 
   const faqs = [
@@ -87,63 +93,90 @@ const FAQ = () => {
     setOpenIndex(openIndex === index ? null : index);
   };
 
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-4xl mx-auto">
-        {/* Header */}
-        <div className="text-center mb-12">
-          <div className="flex items-center justify-center gap-3 mb-4">
-            <HelpCircle className="w-10 h-10 text-blue-600" />
-            <h1 className="text-4xl font-bold text-gray-800">Perguntas Frequentes</h1>
-          </div>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Encontre respostas para as dúvidas mais comuns sobre o LearnFun
-          </p>
-        </div>
+  // Gera schema FAQPage dinamicamente
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": faqs.map(faq => ({
+      "@type": "Question",
+      "name": faq.question,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": faq.answer
+      }
+    }))
+  };
 
-        {/* FAQ List */}
-        <div className="space-y-4 mb-8">
-          {faqs.map((faq, index) => (
-            <div
-              key={index}
-              className="bg-white rounded-lg shadow-md overflow-hidden transition-all duration-200 hover:shadow-lg"
-            >
-              <button
-                onClick={() => toggleFAQ(index)}
-                className="w-full px-6 py-4 flex items-center justify-between text-left focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-inset"
-                aria-expanded={openIndex === index}
-                aria-controls={`faq-answer-${index}`}
-              >
-                <div className="flex items-center gap-3 flex-1">
-                  <div className="text-blue-600 flex-shrink-0">
-                    {faq.icon}
-                  </div>
-                  <span className="font-semibold text-gray-800 text-lg pr-4">
-                    {faq.question}
-                  </span>
-                </div>
-                <div className="flex-shrink-0 text-gray-400">
-                  {openIndex === index ? (
-                    <ChevronUp className="w-5 h-5" />
-                  ) : (
-                    <ChevronDown className="w-5 h-5" />
-                  )}
-                </div>
-              </button>
-              
-              {openIndex === index && (
-                <div
-                  id={`faq-answer-${index}`}
-                  className="px-6 pb-4 pt-2 border-t border-gray-100"
-                >
-                  <p className="text-gray-600 leading-relaxed pl-11">
-                    {faq.answer}
-                  </p>
-                </div>
-              )}
+  return (
+    <>
+      <SEOHead
+        title="Perguntas Frequentes - LearnFun FAQ"
+        description="Encontre respostas para as dúvidas mais comuns sobre o LearnFun: preços, funcionalidades, como funciona e muito mais."
+        keywords="faq learnfun, perguntas frequentes learnfun, dúvidas learnfun, ajuda learnfun"
+        canonical="https://learnfun-sigma.vercel.app/faq"
+        schema={faqSchema}
+      />
+      <main className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-12 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-4xl mx-auto">
+          {/* Header */}
+          <header className="text-center mb-12">
+            <div className="flex items-center justify-center gap-3 mb-4">
+              <HelpCircle className="w-10 h-10 text-blue-600" />
+              <h1 className="text-4xl font-bold text-gray-800">Perguntas Frequentes</h1>
             </div>
-          ))}
-        </div>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              Encontre respostas para as dúvidas mais comuns sobre o LearnFun
+            </p>
+          </header>
+
+        {/* FAQ List - Estrutura Semântica */}
+        <section>
+          <dl className="space-y-4 mb-8">
+            {faqs.map((faq, index) => (
+              <div
+                key={index}
+                className="bg-white rounded-lg shadow-md overflow-hidden transition-all duration-200 hover:shadow-lg"
+              >
+                <dt>
+                  <button
+                    onClick={() => toggleFAQ(index)}
+                    className="w-full px-6 py-4 flex items-center justify-between text-left focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-inset"
+                    aria-expanded={openIndex === index}
+                    aria-controls={`faq-answer-${index}`}
+                  >
+                    <div className="flex items-center gap-3 flex-1">
+                      <div className="text-blue-600 flex-shrink-0">
+                        {faq.icon}
+                      </div>
+                      <span className="font-semibold text-gray-800 text-lg pr-4">
+                        {faq.question}
+                      </span>
+                    </div>
+                    <div className="flex-shrink-0 text-gray-400">
+                      {openIndex === index ? (
+                        <ChevronUp className="w-5 h-5" />
+                      ) : (
+                        <ChevronDown className="w-5 h-5" />
+                      )}
+                    </div>
+                  </button>
+                </dt>
+                <dd>
+                  {openIndex === index && (
+                    <div
+                      id={`faq-answer-${index}`}
+                      className="px-6 pb-4 pt-2 border-t border-gray-100"
+                    >
+                      <p className="text-gray-600 leading-relaxed pl-11">
+                        {faq.answer}
+                      </p>
+                    </div>
+                  )}
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </section>
 
         {/* CTA Section */}
         <div className="bg-gradient-to-r from-blue-600 to-indigo-600 rounded-xl shadow-xl p-8 text-center text-white">
@@ -160,13 +193,14 @@ const FAQ = () => {
         </div>
 
         {/* Additional Info */}
-        <div className="mt-8 text-center text-gray-600">
+        <footer className="mt-8 text-center text-gray-600">
           <p>
             Ainda tem dúvidas? Entre em contato conosco através da plataforma.
           </p>
-        </div>
+        </footer>
       </div>
-    </div>
+      </main>
+    </>
   );
 };
 
