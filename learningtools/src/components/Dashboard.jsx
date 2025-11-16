@@ -158,7 +158,7 @@ const Dashboard = () => {
               ),
       icon: Globe,
       gradient: 'from-blue-500 to-cyan-500',
-      path: '/?mode=translate',
+      path: '/?mode=speak-training-modes',
                                     src: translatePracticeImg,
                                           alt: 'exemplo word by word'
     },
@@ -188,7 +188,7 @@ description: (
       </div>
     ),      icon: Hash,
       gradient: 'from-green-500 to-teal-500',
-      path: '/?mode=numbers',
+      path: '/?mode=speak-training-modes',
                                   src: numerosImg ,
                                         alt: 'exemplo word by word'
     },
@@ -218,7 +218,7 @@ description: (
       </div>
     ),      icon: Zap,
       gradient: 'from-yellow-500 to-orange-500',
-      path: '/?mode=challenge',
+      path: '/?mode=speak-training-modes',
       highlight: true,
                            src: challengeImg ,
                                  alt: 'exemplo word by word'
@@ -598,7 +598,7 @@ description: (
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <button
-              onClick={() => handleNavigate('/?mode=challenge')}
+              onClick={() => handleNavigate('/?mode=speak-training-modes')}
               className="bg-gradient-to-r from-yellow-500 to-orange-500 text-white px-8 py-4 rounded-xl font-bold hover:shadow-xl transition-all flex items-center gap-2"
             >
               <Zap className="w-5 h-5" />

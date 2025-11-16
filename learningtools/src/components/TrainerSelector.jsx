@@ -17,6 +17,7 @@ import LiveRooms from './social/LiveRooms';
 import Dashboard from './Dashboard';
 import CategoryTrainer from './training/CategoryTrainer';
 import SentenceBuilder from './training/SentenceBuilder';
+import SpeakTrainingModes from './SpeakTrainingModes';
 import { LevelUpModal } from './modals/LevelUpModal';
 import {
   updateChunkProgress,
@@ -41,6 +42,7 @@ const TrainerSelector = () => {
     if (mode === 'numbers') return 'numbers';
     if (mode === 'VideoLearningApp') return 'VideoLearningApp';
     if (mode === 'sentence-builder') return 'sentence-builder';
+    if (mode === 'speak-training-modes') return 'speak-training-modes';
     if (mode === 'dashboard') return 'dashboard';
     return 'dashboard';
   };
@@ -50,7 +52,6 @@ const TrainerSelector = () => {
     );
   const [showMoreMenu, setShowMoreMenu] = useState(false);
   const [showInviteModal, setShowInviteModal] = useState(false);
-  const [showSpeakMenu, setShowSpeakMenu] = useState(false);
   const { levelSystem, stats, profile, mode } = useSelector(state => state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -195,95 +196,27 @@ const handleCloseLevelUpModal = () => {
                                                           <House className="w-5 h-5" aria-hidden="true" />
                                                           Home
                                                         </button>
-                {/* Categories Button */}
-                <button
-                                                           onClick={() => handleTrainerChange('categories')}
-                                                           onKeyDown={(e) => {
-                                                             if (e.key === 'Enter' || e.key === ' ') {
-                                                               e.preventDefault();
-                                                               handleTrainerChange('categories');
-                                                             }
-                                                           }}
-                                                           tabIndex={0}
-                                                           aria-label="Abrir categorias de frases"
-                                                           aria-current={activeTrainer === 'categories' ? 'page' : undefined}
-                                                           className={`flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all ${
-                                                             activeTrainer === 'categories'
-                                                               ? 'bg-purple-500 text-white shadow-lg scale-105'
-                                                               : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                                                           }`}
-                                                         >
-                                                           <BookOpen className="w-5 h-5" aria-hidden="true" />
-                                                           Categories
-                                                         </button>
-
-              {/* Translate Trainer Button - NOVO */}
+              {/* Speak Training Button */}
               <button
-                onClick={() => handleTrainerChange('translate')}
+                onClick={() => handleTrainerChange('speak-training-modes')}
                 onKeyDown={(e) => {
                   if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
-                    handleTrainerChange('translate');
+                    handleTrainerChange('speak-training-modes');
                   }
                 }}
                 tabIndex={0}
-                aria-label="Treinar tradução"
-                aria-current={activeTrainer === 'translate' ? 'page' : undefined}
+                aria-label="Abrir modos de treinamento de fala"
+                aria-current={activeTrainer === 'speak-training-modes' ? 'page' : undefined}
                 className={`flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all ${
-                  activeTrainer === 'translate'
-                    ? 'bg-gradient-to-r bg-purple-500 text-white shadow-lg scale-105'
+                  activeTrainer === 'speak-training-modes'
+                    ? 'bg-purple-500 text-white shadow-lg scale-105'
                     : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                 }`}
               >
-                <Globe className="w-5 h-5" aria-hidden="true" />
-                Translate
+                <Mic className="w-5 h-5" aria-hidden="true" />
+                Speak Training
               </button>
-
-              {/* Sentence Builder Button */}
-              <button
-                onClick={() => handleTrainerChange('sentence-builder')}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    handleTrainerChange('sentence-builder');
-                  }
-                }}
-                tabIndex={0}
-                aria-label="Construtor de frases"
-                aria-current={activeTrainer === 'sentence-builder' ? 'page' : undefined}
-                className={`flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all ${
-                  activeTrainer === 'sentence-builder'
-                    ? 'bg-gradient-to-r from-cyan-500 to-blue-500 text-white shadow-lg scale-105'
-                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                }`}
-              >
-                <Puzzle className="w-5 h-5" aria-hidden="true" />
-                Sentence Builder
-              </button>
-
-              {/* Number Trainer Button */}
-              <button
-                onClick={() => handleTrainerChange('numbers')}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    handleTrainerChange('numbers');
-                  }
-                }}
-                tabIndex={0}
-                aria-label="Treinar números em inglês"
-                aria-current={activeTrainer === 'numbers' ? 'page' : undefined}
-                className={`flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all ${
-                  activeTrainer === 'numbers'
-                    ? 'bg-blue-500 text-white shadow-lg scale-105'
-                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                }`}
-              >
-                <Hash className="w-5 h-5" />
-                Number
-              </button>
-
-
 
               <button
                 onClick={() => handleTrainerChange('live-rooms')}
@@ -393,6 +326,7 @@ const handleCloseLevelUpModal = () => {
             <CategoryTrainer autoSelectCategory={autoSelectCategory} />
           )}
         {activeTrainer === 'dashboard' && <Dashboard onNavigate={handleTrainerChange} />}
+        {activeTrainer === 'speak-training-modes' && <SpeakTrainingModes onNavigate={handleTrainerChange} />}
         {activeTrainer === 'translate' && <TranslateTrainer />}
         {activeTrainer === 'sentence-builder' && <SentenceBuilder />}
         {activeTrainer === 'numbers' && <NumberSpeechTrainer />}
@@ -400,257 +334,6 @@ const handleCloseLevelUpModal = () => {
         {activeTrainer === 'VideoLearningApp' && <VideoLearningApp />}
         {activeTrainer === 'live-rooms' && <LiveRooms />}
       </div>
-
-      {showSpeakMenu && (
-        <div
-          className="fixed inset-0 bg-black bg-opacity-50 z-50 md:hidden"
-          onClick={() => setShowSpeakMenu(false)}
-          onKeyDown={(e) => {
-            if (e.key === 'Escape') {
-              setShowSpeakMenu(false);
-            }
-          }}
-          tabIndex={0}
-          role="button"
-          aria-label="Fechar menu de opções de fala"
-        >
-          <div
-            className="absolute bottom-20 left-0 right-0  rounded-t-3xl shadow-2xl animate-slide-up"
-            onClick={(e) => e.stopPropagation()}
-            onKeyDown={(e) => e.stopPropagation()}
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="speak-menu-title"
-          >
-            <div className="flex justify-between items-center p-4 border-b">
-              <h3 id="speak-menu-title" className="text-lg font-bold text-gray-800">Speak Options</h3>
-              <button
-                onClick={() => setShowSpeakMenu(false)}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    setShowSpeakMenu(false);
-                  }
-                }}
-                tabIndex={0}
-                aria-label="Fechar menu"
-                className="p-2 hover:bg-gray-100 rounded-full transition-colors"
-              >
-                <X className="w-5 h-5 text-gray-600" aria-hidden="true" />
-              </button>
-            </div>
-
-            <div className="p-4 space-y-3">
-                {/* Categories Phrases */}
-                                            <button
-                                              onClick={() => {
-                                                handleTrainerChange('categories');
-                                                setShowSpeakMenu(false);
-                                              }}
-                                              onKeyDown={(e) => {
-                                                if (e.key === 'Enter' || e.key === ' ') {
-                                                  e.preventDefault();
-                                                  handleTrainerChange('categories');
-                                                  setShowSpeakMenu(false);
-                                                }
-                                              }}
-                                              tabIndex={0}
-                                              aria-label="Abrir categorias de frases"
-                                              className={`w-full flex items-center gap-4 p-4 rounded-xl transition-all ${
-                                                activeTrainer === 'categories'
-                                                  ? 'bg-purple-500 text-white shadow-lg'
-                                                  : 'bg-gray-50 hover:bg-gray-100 text-gray-800'
-                                              }`}
-                                            >
-                                              <div className={`p-3 rounded-full ${
-                                                activeTrainer === 'categories' ? ' bg-opacity-20' : 'bg-purple-100'
-                                              }`}>
-                                                <BookOpen  className={`w-6 h-6 ${
-                                                  activeTrainer === 'categories' ? 'text-white' : 'text-purple-600'
-                                                }`} aria-hidden="true" />
-                                              </div>
-                                              <div className="text-left flex-1">
-                                                <div className="font-bold text-lg">Categories</div>
-                                                <div className={`text-sm ${
-                                                  activeTrainer === 'categories' ? 'text-white text-opacity-90' : 'text-gray-600'
-                                                }`}>
-                                                  Escolha frases por situações.
-                                                </div>
-                                              </div>
-                                              {activeTrainer === 'categories' && (
-                                                <div className="w-2 h-2  rounded-full" aria-hidden="true" />
-                                              )}
-                                            </button>
-
-
-
-              {/* Translate */}
-              <button
-                 onClick={() => {
-                   handleTrainerChange('translate');
-                   setShowSpeakMenu(false);
-                 }}
-                 onKeyDown={(e) => {
-                   if (e.key === 'Enter' || e.key === ' ') {
-                     e.preventDefault();
-                     handleTrainerChange('translate');
-                     setShowSpeakMenu(false);
-                   }
-                 }}
-                 tabIndex={0}
-                 aria-label="Treinar tradução"
-                 className={`w-full flex items-center gap-4 p-4 rounded-xl transition-all ${
-                   activeTrainer === 'translate'
-                     ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg'
-                     : 'bg-gray-50 hover:bg-gray-100 text-gray-800'
-                 }`}
-               >
-                 <div className={`p-3 rounded-full ${
-                   activeTrainer === 'translate' ? ' bg-opacity-20' : 'bg-pink-100'
-                 }`}>
-                   <Globe className={`w-6 h-6 ${
-                     activeTrainer === 'translate' ? 'text-white' : 'text-pink-600'
-                   }`} aria-hidden="true" />
-                 </div>
-                 <div className="text-left flex-1">
-                   <div className="font-bold text-lg">Translate</div>
-                   <div className={`text-sm ${
-                     activeTrainer === 'translate' ? 'text-white text-opacity-90' : 'text-gray-600'
-                   }`}>
-                     Translate and practice
-                   </div>
-                 </div>
-                 {activeTrainer === 'translate' && (
-                   <div className="w-2 h-2  rounded-full" aria-hidden="true" />
-                 )}
-               </button>
-
-               {/* Numbers */}
-                             <button
-                               onClick={() => {
-                                 handleTrainerChange('numbers');
-                                 setShowSpeakMenu(false);
-                               }}
-                               onKeyDown={(e) => {
-                                 if (e.key === 'Enter' || e.key === ' ') {
-                                   e.preventDefault();
-                                   handleTrainerChange('numbers');
-                                   setShowSpeakMenu(false);
-                                 }
-                               }}
-                               tabIndex={0}
-                               aria-label="Treinar números em inglês"
-                               className={`w-full flex items-center gap-4 p-4 rounded-xl transition-all ${
-                                 activeTrainer === 'numbers'
-                                   ? 'bg-purple-500 text-white shadow-lg'
-                                   : 'bg-gray-50 hover:bg-gray-100 text-gray-800'
-                               }`}
-                             >
-                               <div className={`p-3 rounded-full ${
-                                 activeTrainer === 'numbers' ? ' bg-opacity-20' : 'bg-purple-100'
-                               }`}>
-                                 <ArrowUp01 className={`w-6 h-6 ${
-                                   activeTrainer === 'numbers' ? 'text-white' : 'text-purple-600'
-                                 }`} aria-hidden="true" />
-                               </div>
-                               <div className="text-left flex-1">
-                                 <div className="font-bold text-lg">Numbers</div>
-                                 <div className={`text-sm ${
-                                   activeTrainer === 'numbers' ? 'text-white text-opacity-90' : 'text-gray-600'
-                                 }`}>
-                                   Practice Numbers pronunciation
-                                 </div>
-                               </div>
-                               {activeTrainer === 'numbers' && (
-                                 <div className="w-2 h-2  rounded-full" aria-hidden="true" />
-                               )}
-                             </button>
-
-                             {/* Sentence Builder */}
-                             <button
-                               onClick={() => {
-                                 handleTrainerChange('sentence-builder');
-                                 setShowSpeakMenu(false);
-                               }}
-                               onKeyDown={(e) => {
-                                 if (e.key === 'Enter' || e.key === ' ') {
-                                   e.preventDefault();
-                                   handleTrainerChange('sentence-builder');
-                                   setShowSpeakMenu(false);
-                                 }
-                               }}
-                               tabIndex={0}
-                               aria-label="Construtor de frases"
-                               className={`w-full flex items-center gap-4 p-4 rounded-xl transition-all ${
-                                 activeTrainer === 'sentence-builder'
-                                   ? 'bg-gradient-to-r from-cyan-500 to-blue-500 text-white shadow-lg'
-                                   : 'bg-gray-50 hover:bg-gray-100 text-gray-800'
-                               }`}
-                             >
-                               <div className={`p-3 rounded-full ${
-                                 activeTrainer === 'sentence-builder' ? ' bg-opacity-20' : 'bg-cyan-100'
-                               }`}>
-                                 <Puzzle className={`w-6 h-6 ${
-                                   activeTrainer === 'sentence-builder' ? 'text-white' : 'text-cyan-600'
-                                 }`} aria-hidden="true" />
-                               </div>
-                               <div className="text-left flex-1">
-                                 <div className="font-bold text-lg">Sentence Builder</div>
-                                 <div className={`text-sm ${
-                                   activeTrainer === 'sentence-builder' ? 'text-white text-opacity-90' : 'text-gray-600'
-                                 }`}>
-                                   Build sentences with drag & drop
-                                 </div>
-                               </div>
-                               {activeTrainer === 'sentence-builder' && (
-                                 <div className="w-2 h-2  rounded-full" aria-hidden="true" />
-                               )}
-                             </button>
-
-              {/* Challenge Mode */}
-              <button
-                onClick={() => {
-                  handleTrainerChange('challenge');
-                  setShowSpeakMenu(false);
-                }}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    handleTrainerChange('challenge');
-                    setShowSpeakMenu(false);
-                  }
-                }}
-                tabIndex={0}
-                aria-label="Abrir modo desafio"
-                className={`w-full flex items-center gap-4 p-4 rounded-xl transition-all ${
-                  activeTrainer === 'challenge'
-                    ? 'bg-gradient-to-r from-yellow-500 to-orange-500 text-white shadow-lg'
-                    : 'bg-gray-50 hover:bg-gray-100 text-gray-800'
-                }`}
-              >
-                <div className={`p-3 rounded-full ${
-                  activeTrainer === 'challenge' ? ' bg-opacity-20' : 'bg-orange-100'
-                }`}>
-                  <Zap className={`w-6 h-6 ${
-                    activeTrainer === 'challenge' ? 'text-white' : 'text-orange-600'
-                  }`} aria-hidden="true" />
-                </div>
-                <div className="text-left flex-1">
-                  <div className="font-bold text-lg">Challenge Mode</div>
-                  <div className={`text-sm ${
-                    activeTrainer === 'challenge' ? 'text-white text-opacity-90' : 'text-gray-600'
-                  }`}>
-                    Test your skills!
-                  </div>
-                </div>
-                {activeTrainer === 'challenge' && (
-                  <div className="w-2 h-2  rounded-full" aria-hidden="true" />
-                )}
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* MORE MENU Modal - Mobile Only */}
       {showMoreMenu && (
@@ -807,26 +490,29 @@ const handleCloseLevelUpModal = () => {
       {/* BOTTOM Navigation Bar - Mobile Only */}
       <nav className="fixed bottom-0 left-0 right-0 bg-white border-t-2 shadow-lg z-40 md:hidden">
         <div className="grid grid-cols-5 gap-1 px-2">
-          {/* Speak Button */}
+          {/* Speak Button - Vai direto para speak-training-modes */}
           <button
-            onClick={() => setShowSpeakMenu(!showSpeakMenu)}
+            onClick={() => handleTrainerChange('speak-training-modes')}
             onKeyDown={(e) => {
               if (e.key === 'Enter' || e.key === ' ') {
                 e.preventDefault();
-                setShowSpeakMenu(!showSpeakMenu);
+                handleTrainerChange('speak-training-modes');
               }
             }}
             tabIndex={0}
-            aria-label="Abrir menu de treinamento de fala"
-            aria-expanded={showSpeakMenu}
+            aria-label="Abrir modos de treinamento de fala"
+            aria-current={activeTrainer === 'speak-training-modes' ? 'page' : undefined}
             className={`flex flex-col items-center gap-1 py-3 transition-all ${
-              showSpeakMenu || activeTrainer === 'translate' || activeTrainer === 'challenge' || activeTrainer === 'sentence-builder'
+              activeTrainer === 'speak-training-modes' || activeTrainer === 'categories' || activeTrainer === 'translate' || activeTrainer === 'numbers' || activeTrainer === 'challenge' || activeTrainer === 'sentence-builder'
                 ? 'text-purple-600'
                 : 'text-gray-400'
             }`}
           >
-            <Mic className="w-6 h-6" aria-hidden="true" />
+            <Mic className={`w-6 h-6 ${activeTrainer === 'speak-training-modes' ? 'scale-110' : ''}`} aria-hidden="true" />
             <span className="text-xs font-semibold">Speak</span>
+            {(activeTrainer === 'speak-training-modes' || activeTrainer === 'categories' || activeTrainer === 'translate' || activeTrainer === 'numbers' || activeTrainer === 'challenge' || activeTrainer === 'sentence-builder') && (
+              <div className="w-8 h-1 bg-purple-600 rounded-full mt-1" aria-hidden="true" />
+            )}
           </button>
 
 
