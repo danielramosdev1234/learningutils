@@ -9,6 +9,7 @@ import travelSurvivalPhrases from '../data/travel_survival_phrases.json';
 import phrasesData from '../data/phrases.json';
 import techInterviewPhrases from '../data/tech_interview_phrases.json';
 import clinicalResearchPhrases from '../data/clinical_research_phrases.json';
+import questionsPhrases from '../data/questions_phrases.json';
 
 export class PhraseRepository {
   /**
@@ -44,7 +45,8 @@ export class PhraseRepository {
         ...socialEnglishPhrases,
         ...travelSurvivalPhrases,
         ...techInterviewPhrases,
-        ...clinicalResearchPhrases
+        ...clinicalResearchPhrases,
+        ...questionsPhrases
       ];
 
       console.log(`📚 Total de frases carregadas: ${allPhrases.length}`);
@@ -55,6 +57,7 @@ export class PhraseRepository {
       console.log(`      👥 Social: ${socialEnglishPhrases.length}`);
       console.log(`      ✈️ Travel: ${travelSurvivalPhrases.length}`);
       console.log(`      💻 Tech Interview: ${techInterviewPhrases.length}`);
+      console.log(`      ❓ Questions: ${questionsPhrases.length}`);
 
       // Adiciona IDs se não existirem (para compatibilidade)
       const phrasesWithIds = allPhrases.map((phrase, index) => ({
@@ -90,7 +93,8 @@ export class PhraseRepository {
         shopping_money: phrases.filter(p => p.category === 'shopping_money').length,
         social_english: phrases.filter(p => p.category === 'social_english').length,
         travel_survival: phrases.filter(p => p.category === 'travel_survival').length,
-        tech_interview: phrases.filter(p => p.category === 'tech_interview').length
+        tech_interview: phrases.filter(p => p.category === 'tech_interview').length,
+        essential_survival: phrases.filter(p => p.category === 'essential_survival').length
       };
 
       console.log('📂 Frases por categoria:', categories);
@@ -131,7 +135,8 @@ export class PhraseRepository {
       'shopping_money',
       'social_english',
       'travel_survival',
-      'clinical_research'
+      'clinical_research',
+      'essential_survival'
     ];
 
     return categories.map(categoryId => ({

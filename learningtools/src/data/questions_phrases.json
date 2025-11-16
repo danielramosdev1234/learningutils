@@ -1,0 +1,866 @@
+[
+  {
+    "text": "Where is the bathroom?",
+    "translation": "Onde fica o banheiro?",
+    "category": "essential_survival",
+    "theme": "location",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "question_001",
+    "grammar_notes": {
+      "estrutura": "Where + is + artigo + substantivo",
+      "explicacao_pt": "Em inglês, perguntas com 'where' (onde) usam o verbo 'to be'. A ordem é: WHERE + VERBO + SUJEITO.",
+      "porque_assim": "Diferente do português que usa 'ficar', o inglês usa 'is' (estar/ser) para localização permanente. 'Where' sempre vem no início de perguntas sobre localização.",
+      "palavra_chave": "'IS' - não precisa de verbo auxiliar 'do/does' com o verbo 'to be'",
+      "formas_alternativas": ["Where's the restroom?", "Where can I find the bathroom?"],
+      "dica_pronuncia": "Where = 'uér' (não confundir com 'were')",
+      "erro_comum": "Não diga 'Where the bathroom is?' - isto é ordem de frase afirmativa, não interrogativa"
+    }
+  },
+  {
+    "text": "How much does this cost?",
+    "translation": "Quanto custa isso?",
+    "category": "essential_survival",
+    "theme": "essential_survival",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "question_002",
+    "grammar_notes": {
+      "estrutura": "How much + does + sujeito + verbo base",
+      "explicacao_pt": "Para perguntas no presente simples com verbos normais (não 'to be'), precisamos do auxiliar 'DO/DOES'. Com 'this/it' (3ª pessoa singular) = DOES.",
+      "porque_assim": "DOES é obrigatório em perguntas no presente simples. Depois de 'does', o verbo volta para forma base (cost, não costs).",
+      "palavra_chave": "'DOES' - sempre que perguntar sobre he/she/it no presente. O verbo principal fica sem 's'",
+      "formas_alternativas": ["How much is this?", "What's the price?", "How much is it?"],
+      "dica_pronuncia": "Does = 'dâz' (som de 'z' no final)",
+      "erro_comum": "Não diga 'How much costs this?' - precisa do 'does' e ordem correta"
+    }
+  },
+  {
+    "text": "Do you speak English?",
+    "translation": "Você fala inglês?",
+    "category": "essential_survival",
+    "theme": "communication",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "question_003",
+    "grammar_notes": {
+      "estrutura": "Do + you + verbo base + objeto",
+      "explicacao_pt": "Com 'you/we/they' usamos DO (não does). A pergunta inverte: DO + sujeito + verbo. O verbo fica na forma base (speak, não speaks).",
+      "porque_assim": "O auxiliar 'DO' marca que é pergunta no presente simples. Ele carrega a marcação de tempo, então o verbo principal fica limpo.",
+      "palavra_chave": "'DO' - para I/you/we/they no presente simples",
+      "formas_alternativas": ["Can you speak English?", "Do you understand English?"],
+      "dica_pronuncia": "Do = 'dú' (som curto e fechado)",
+      "erro_comum": "Não diga 'You speak English?' - tecnicamente possível mas informal demais. Sempre use 'Do' em contexto formal."
+    }
+  },
+  {
+    "text": "What time is it?",
+    "translation": "Que horas são?",
+    "category": "essential_survival",
+    "theme": "time",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "question_004",
+    "grammar_notes": {
+      "estrutura": "What + substantivo + verbo to be + sujeito",
+      "explicacao_pt": "Pergunta com 'what' + substantivo. Usa 'IS' (singular) porque 'time' é incontável em inglês. O 'it' é sujeito obrigatório.",
+      "porque_assim": "Em inglês, 'time' é singular e abstrato. Diferente do português que usa plural 'horas'. O 'it' é necessário mesmo sendo óbvio - inglês exige sujeito explícito.",
+      "palavra_chave": "'IT' - sempre precisa de sujeito em inglês, mesmo quando óbvio",
+      "formas_alternativas": ["What's the time?", "Do you have the time?"],
+      "dica_pronuncia": "What time = 'uót táim' (junte as palavras)",
+      "erro_comum": "Não diga 'What time it is?' - ordem errada. Com 'to be', inverte: IS + IT"
+    }
+  },
+  {
+    "text": "Can I have the menu, please?",
+    "translation": "Posso ver o cardápio, por favor?",
+    "category": "essential_survival",
+    "theme": "restaurant",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "question_005",
+    "grammar_notes": {
+      "estrutura": "Can + I + verbo base + objeto + please",
+      "explicacao_pt": "Modal verb 'CAN' (poder/conseguir) + sujeito + verbo base. 'Can' já indica pergunta pela inversão. 'Have' aqui significa 'receber/obter'.",
+      "porque_assim": "Verbos modais (can, could, would, should) formam perguntas por inversão simples, sem precisar de 'do/does'. 'Have' é usado para pedir coisas em inglês.",
+      "palavra_chave": "'CAN' - verbo modal não precisa de auxiliar. Inverte direto com sujeito.",
+      "formas_alternativas": ["Could I have the menu?", "May I see the menu?", "Can I get the menu?"],
+      "dica_pronuncia": "Can = 'kén' (não enfatizado) ou 'kân' (enfático)",
+      "erro_comum": "Não precisa dizer 'Do can I have' - 'can' já é auxiliar"
+    }
+  },
+  {
+    "text": "Where can I buy a ticket?",
+    "translation": "Onde posso comprar um bilhete?",
+    "category": "essential_survival",
+    "theme": "transportation",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "question_006",
+    "grammar_notes": {
+      "estrutura": "Where + can + I + verbo base + objeto",
+      "explicacao_pt": "Combina palavra interrogativa (where) + modal (can) + sujeito + verbo. O 'can' fica entre 'where' e 'I' porque é auxiliar.",
+      "porque_assim": "Ordem em perguntas com modal: WH-word + MODAL + SUJEITO + VERBO. O modal sempre vem antes do sujeito.",
+      "palavra_chave": "Ordem fixa: WHERE + CAN + I (nunca 'Where I can...')",
+      "formas_alternativas": ["Where do I buy a ticket?", "Where can I get a ticket?"],
+      "dica_pronuncia": "Where can = 'uér kén' (pronuncia rápida, quase uma palavra)",
+      "erro_comum": "NUNCA 'Where I can buy' - modal sempre antes do sujeito em perguntas"
+    }
+  },
+  {
+    "text": "Is this seat taken?",
+    "translation": "Este lugar está ocupado?",
+    "category": "essential_survival",
+    "theme": "public_spaces",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "question_007",
+    "grammar_notes": {
+      "estrutura": "Is + sujeito + particípio passado",
+      "explicacao_pt": "Pergunta com 'to be' + particípio passado = voz passiva. 'Taken' é particípio de 'take' (pegar/ocupar). Literalmente: 'Este assento está pegado?'",
+      "porque_assim": "Voz passiva enfatiza o estado do assento, não quem o ocupou. Comum em inglês para situações onde o agente não importa.",
+      "palavra_chave": "'TAKEN' - particípio de 'take'. Voz passiva = be + particípio",
+      "formas_alternativas": ["Is anyone sitting here?", "Is this seat free?", "Can I sit here?"],
+      "dica_pronuncia": "Taken = 'têiken' (som de 'ei')",
+      "erro_comum": "Não diga 'This seat is taken?' - precisa inverter: IS + THIS SEAT"
+    }
+  },
+  {
+    "text": "How do I get to the airport?",
+    "translation": "Como eu chego no aeroporto?",
+    "category": "essential_survival",
+    "theme": "essential_survival",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "question_008",
+    "grammar_notes": {
+      "estrutura": "How + do + I + verbo base + preposição + destino",
+      "explicacao_pt": "Pergunta no presente simples com 'I' = usa DO. 'Get to' é phrasal verb = chegar em. 'How' pergunta sobre o método/caminho.",
+      "porque_assim": "'Get to' é idiomático para movimento/chegada. 'How' com 'do' pergunta sobre processo/método. A preposição 'to' é obrigatória com destinos.",
+      "palavra_chave": "'GET TO' - phrasal verb para chegar/alcançar lugar. O 'to' não pode ser omitido.",
+      "formas_alternativas": ["How can I get to the airport?", "What's the way to the airport?"],
+      "dica_pronuncia": "Get to = 'guét tu' (não pronuncie 't' duplo, flui junto)",
+      "erro_comum": "Não esqueça 'to' depois de 'get'. 'Get airport' está errado."
+    }
+  },
+  {
+    "text": "Could you write that down for me?",
+    "translation": "Você poderia escrever isso para mim?",
+    "category": "essential_survival",
+    "theme": "communication",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "question_009",
+    "grammar_notes": {
+      "estrutura": "Could + you + verbo base + that + partícula + for me",
+      "explicacao_pt": "'Could' (passado de can) é mais educado que 'can'. 'Write down' é phrasal verb = anotar. 'For me' = para mim (beneficiário).",
+      "porque_assim": "Could é forma condicional/polida de can. 'Down' adiciona sentido de 'registrar no papel'. Separar em 'write that down' é mais natural que 'write down that'.",
+      "palavra_chave": "'WRITE DOWN' - phrasal verb inseparável quando há pronome. 'That' fica no meio.",
+      "formas_alternativas": ["Can you write that down?", "Could you write it down?", "Please write that down"],
+      "dica_pronuncia": "Could = 'cud' (som de 'u' curto, 'l' é mudo)",
+      "erro_comum": "Ordem: write THAT down (não 'write down that'). Pronomes ficam no meio de phrasal verbs."
+    }
+  },
+  {
+    "text": "What do you recommend?",
+    "translation": "O que você recomenda?",
+    "category": "essential_survival",
+    "theme": "restaurant",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "question_010",
+    "grammar_notes": {
+      "estrutura": "What + do + you + verbo base",
+      "explicacao_pt": "Pergunta simples no presente com 'you' = DO. 'What' é objeto direto do verbo 'recommend'. Ordem: palavra WH + auxiliar + sujeito + verbo.",
+      "porque_assim": "'What' representa a coisa recomendada (objeto). Como é presente simples com 'you', precisa de 'do'. Verbo fica na base.",
+      "palavra_chave": "'WHAT' - quando é objeto da pergunta, vem primeiro mas a estrutura mantém do + sujeito + verbo",
+      "formas_alternativas": ["What would you recommend?", "What's your recommendation?", "Any recommendations?"],
+      "dica_pronuncia": "What do you = 'uát du iú' (flui rápido, quase 'watdyu')",
+      "erro_comum": "Não diga 'What you recommend?' - falta o 'do'"
+    }
+  },
+  {
+    "text": "Is there Wi-Fi here?",
+    "translation": "Tem Wi-Fi aqui?",
+    "category": "essential_survival",
+    "theme": "connectivity",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "question_011",
+    "grammar_notes": {
+      "estrutura": "Is + there + substantivo + advérbio de lugar",
+      "explicacao_pt": "'There is/are' = há/tem (existência). Para perguntar, inverte: IS + THERE. 'There' aqui não significa 'lá', é parte da expressão de existência.",
+      "porque_assim": "'There' é sujeito gramatical falso. O sujeito real é 'Wi-Fi'. Estrutura fixa do inglês para expressar existência/presença.",
+      "palavra_chave": "'THERE' - sujeito falso em construções existenciais. Não confundir com advérbio 'lá'.",
+      "formas_alternativas": ["Do you have Wi-Fi?", "Is Wi-Fi available?"],
+      "dica_pronuncia": "Is there = 'iz dhér' (th tem som de 'ð')",
+      "erro_comum": "Não diga 'Has Wi-Fi here?' - usar 'have' assim está errado. Use 'there is/are'."
+    }
+  },
+  {
+    "text": "What's the Wi-Fi password?",
+    "translation": "Qual é a senha do Wi-Fi?",
+    "category": "essential_survival",
+    "theme": "connectivity",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "question_012",
+    "grammar_notes": {
+      "estrutura": "What + is + artigo + substantivo composto",
+      "explicacao_pt": "'What's' = contração de 'what is'. Em inglês, substantivos podem formar compostos diretos (Wi-Fi password) sem preposição 'of'.",
+      "porque_assim": "Substantivo + substantivo = posse/relação. O primeiro substantivo funciona como adjetivo. 'Wi-Fi password' = senha DO Wi-Fi.",
+      "palavra_chave": "Substantivos compostos: PRIMEIRO + SEGUNDO (sem preposição). Primeiro modifica segundo.",
+      "formas_alternativas": ["What is the password for the Wi-Fi?", "What's the password?"],
+      "dica_pronuncia": "What's = 'uóts' (contração comum na fala)",
+      "erro_comum": "Pode dizer 'password of the Wi-Fi' mas soa estranho. 'Wi-Fi password' é natural."
+    }
+  },
+  {
+    "text": "Do you accept credit cards?",
+    "translation": "Vocês aceitam cartão de crédito?",
+    "category": "essential_survival",
+    "theme": "payment",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "question_013",
+    "grammar_notes": {
+      "estrutura": "Do + you + verbo base + substantivo plural",
+      "explicacao_pt": "Presente simples com 'you' = DO. 'Credit cards' no plural porque aceita cartões em geral, não um específico.",
+      "porque_assim": "'Accept' = aceitar/receber como pagamento. Plural generaliza - não é sobre um cartão específico. 'You' pode ser singular ou plural.",
+      "palavra_chave": "'CARDS' - plural sem artigo = categoria geral de coisas",
+      "formas_alternativas": ["Can I pay with credit card?", "Do you take cards?", "Is card payment accepted?"],
+      "dica_pronuncia": "Credit = 'crédit' (ênfase na primeira sílaba)",
+      "erro_comum": "Não precisa dizer 'the credit cards' - sem artigo é mais natural para categoria geral"
+    }
+  },
+  {
+    "text": "Where is the nearest pharmacy?",
+    "translation": "Onde fica a farmácia mais próxima?",
+    "category": "essential_survival",
+    "theme": "location",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "question_014",
+    "grammar_notes": {
+      "estrutura": "Where + is + artigo + superlativo + substantivo",
+      "explicacao_pt": "Superlativo em inglês: THE + NEAREST (mais próximo). Ordem: artigo + superlativo + substantivo. 'Nearest' é forma irregular de 'near'.",
+      "porque_assim": "Superlativos sempre levam 'THE' em inglês. 'Near-nearest' é irregular (não usa 'most'). Adjetivos vêm ANTES do substantivo.",
+      "palavra_chave": "'THE NEAREST' - superlativo sempre com THE. Adjetivo ANTES do substantivo.",
+      "formas_alternativas": ["Where's the closest pharmacy?", "Is there a pharmacy nearby?"],
+      "dica_pronuncia": "Nearest = 'níərest' (três sílabas, 'ea' = som de 'i')",
+      "erro_comum": "Não diga 'the pharmacy most near' - adjetivo VEM ANTES. E é 'nearest', não 'most near'."
+    }
+  },
+  {
+    "text": "Can I try this on?",
+    "translation": "Posso experimentar isso?",
+    "category": "essential_survival",
+    "theme": "essential_survival",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "question_015",
+    "grammar_notes": {
+      "estrutura": "Can + I + verbo + objeto + partícula",
+      "explicacao_pt": "'Try on' = phrasal verb = experimentar roupa/calçado. 'This' (objeto) fica ENTRE 'try' e 'on' quando é pronome ou curto.",
+      "porque_assim": "Phrasal verbs separáveis: objeto pode ficar no meio. 'Try this on' ou 'try on this' = ambos corretos, mas primeiro é mais natural.",
+      "palavra_chave": "'TRY ON' - phrasal verb separável. Objetos pronominais (this/it) ficam NO MEIO obrigatoriamente.",
+      "formas_alternativas": ["Can I try it on?", "May I try this?", "Can I test this?"],
+      "dica_pronuncia": "Try on = 'trái on' (entonação sobe no 'on')",
+      "erro_comum": "Com 'it': DEVE ser 'try it on' (não 'try on it'). Pronomes sempre no meio."
+    }
+  },
+  {
+    "text": "How long does it take?",
+    "translation": "Quanto tempo leva?",
+    "category": "essential_survival",
+    "theme": "time",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "question_016",
+    "grammar_notes": {
+      "estrutura": "How + adjetivo + does + sujeito + verbo base",
+      "explicacao_pt": "'How long' = quanto tempo (literalmente 'quão longo'). 'It' é sujeito obrigatório mesmo sendo impessoal. 'Take' = levar tempo.",
+      "porque_assim": "'Take' é usado idiomaticamente para duração em inglês. 'It' representa tempo/situação de forma impessoal. DOES porque é 3ª pessoa.",
+      "palavra_chave": "'IT TAKES' - expressão fixa para duração. IT é impessoal, obrigatório.",
+      "formas_alternativas": ["How much time does it take?", "How long will it take?"],
+      "dica_pronuncia": "How long = 'ráu long' (h aspirado)",
+      "erro_comum": "Não esqueça 'it'. 'How long does take?' está errado - precisa de sujeito."
+    }
+  },
+  {
+    "text": "What does this mean?",
+    "translation": "O que isso significa?",
+    "category": "essential_survival",
+    "theme": "communication",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "question_017",
+    "grammar_notes": {
+      "estrutura": "What + does + sujeito + verbo base",
+      "explicacao_pt": "Pergunta no presente simples. 'This' = sujeito (3ª pessoa) = precisa DOES. 'Mean' = significar.",
+      "porque_assim": "'This/that/it' = 3ª pessoa singular = DOES (não DO). Depois de DOES, verbo volta à forma base (mean, não means).",
+      "palavra_chave": "'THIS' = 3ª pessoa = DOES (como he/she/it)",
+      "formas_alternativas": ["What's the meaning of this?", "What is this?"],
+      "dica_pronuncia": "Mean = 'miin' (som longo de 'i')",
+      "erro_comum": "Não diga 'What means this?' ou 'What this means?' - ordem errada. DOES vem após WH-word."
+    }
+  },
+  {
+    "text": "Could you speak more slowly?",
+    "translation": "Você poderia falar mais devagar?",
+    "category": "essential_survival",
+    "theme": "communication",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "question_018",
+    "grammar_notes": {
+      "estrutura": "Could + you + verbo + advérbio comparativo",
+      "explicacao_pt": "'Could' (mais polido que can) + speak. 'Slowly' = advérbio. Comparativo = MORE + advérbio longo (more slowly).",
+      "porque_assim": "Advérbios longos (2+ sílabas) formam comparativo com MORE (não -er). 'Slowlier' não existe. MORE slowly está correto.",
+      "palavra_chave": "'MORE' + advérbio longo para comparativo. 'Slowly' tem 2 sílabas = MORE slowly",
+      "formas_alternativas": ["Can you speak slower?", "Could you slow down?", "Please speak more slowly"],
+      "dica_pronuncia": "Slowly = 'slóu-li' (duas sílabas distintas)",
+      "erro_comum": "'Slower' (adjetivo) também é aceito informalmente, mas 'more slowly' (advérbio) é gramaticalmente correto."
+    }
+  },
+  {
+    "text": "When does it open?",
+    "translation": "Quando abre?",
+    "category": "essential_survival",
+    "theme": "time",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "question_019",
+    "grammar_notes": {
+      "estrutura": "When + does + sujeito + verbo base",
+      "explicacao_pt": "'When' = quando. 'It' = sujeito impessoal (loja/restaurante). 3ª pessoa = DOES. 'Open' pode ser verbo E adjetivo.",
+      "porque_assim": "'It' representa o estabelecimento. Como é 3ª pessoa singular, usa DOES. Verbo 'open' não leva preposição.",
+      "palavra_chave": "'IT' - para estabelecimentos/lugares. 'OPEN' = verbo intransitivo (não precisa de objeto)",
+      "formas_alternativas": ["What time does it open?", "When do they open?", "What are the opening hours?"],
+      "dica_pronuncia": "Open = 'óu-pen' (não 'ô-pen')",
+      "erro_comum": "Não diga 'When it opens?' - falta DOES. Não confunda: 'When does it open?' (pergunta) vs 'when it opens' (parte de frase)"
+    }
+  },
+  {
+    "text": "Do I need a reservation?",
+    "translation": "Preciso de reserva?",
+    "category": "essential_survival",
+    "theme": "restaurant",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "question_020",
+    "grammar_notes": {
+      "estrutura": "Do + I + verbo base + artigo + substantivo",
+      "explicacao_pt": "'Need' = precisar. Com 'I' = DO. 'A reservation' = uma reserva (artigo indefinido). 'Need' leva objeto direto.",
+      "porque_assim": "'Need' é verbo transitivo = precisa de objeto. Artigo 'a' porque é uma reserva qualquer (indefinido), não específica.",
+      "palavra_chave": "'NEED' + objeto direto (sem preposição em inglês). Em português 'precisar DE', em inglês só 'need'.",
+      "formas_alternativas": ["Is a reservation necessary?", "Should I make a reservation?", "Do I need to book?"],
+      "dica_pronuncia": "Reservation = 'rezər-vêi-shen' (ênfase na 3ª sílaba)",
+      "erro_comum": "Não diga 'Do I need of a reservation?' - 'need' não leva preposição em inglês."
+    }
+  },
+  {
+    "text": "Why is this closed?",
+    "translation": "Por que isso está fechado?",
+    "category": "essential_survival",
+    "theme": "location",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "question_021",
+    "grammar_notes": {
+      "estrutura": "Why + is + sujeito + adjetivo/particípio",
+      "explicacao_pt": "'WHY' = por que (motivo/razão). Com verbo 'to be', inverte direto: WHY + IS + sujeito. Não precisa de DO/DOES.",
+      "porque_assim": "Verbo 'to be' não usa auxiliar. Inverte direto com sujeito. 'Why' sempre inicia a pergunta quando quer saber o motivo.",
+      "palavra_chave": "'WHY' - sempre sobre MOTIVO/RAZÃO. Com 'to be' = inversão direta (sem DO/DOES)",
+      "formas_alternativas": ["Why isn't this open?", "How come this is closed?"],
+      "dica_pronuncia": "Why = 'uái' (som de 'ai')",
+      "erro_comum": "Não diga 'Why does this is closed?' - com 'to be' não usa DOES. Só inversão: WHY + IS"
+    }
+  },
+  {
+    "text": "Who is your manager?",
+    "translation": "Quem é seu gerente?",
+    "category": "essential_survival",
+    "theme": "complaints",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "question_022",
+    "grammar_notes": {
+      "estrutura": "Who + is + possessivo + substantivo",
+      "explicacao_pt": "'WHO' = quem (pessoas). Com 'to be' inverte: WHO + IS. 'Your' = seu/sua (possessivo). Ordem natural de pergunta.",
+      "porque_assim": "'Who' pergunta identidade de pessoa. Como usa 'to be', só inverte verbo e sujeito. Não precisa de auxiliar DO.",
+      "palavra_chave": "'WHO' - sempre para PESSOAS. Com 'to be' = inversão simples",
+      "formas_alternativas": ["Who's the manager?", "Who can I speak to?"],
+      "dica_pronuncia": "Who = 'rru' (som de 'h' fraco, quase 'u')",
+      "erro_comum": "Não confunda: WHO (quem) vs WHOSE (de quem - posse)"
+    }
+  },
+  {
+    "text": "Which one do you prefer?",
+    "translation": "Qual você prefere?",
+    "category": "essential_survival",
+    "theme": "choices",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "question_023",
+    "grammar_notes": {
+      "estrutura": "Which + substantivo/pronome + do + sujeito + verbo base",
+      "explicacao_pt": "'WHICH' = qual/quais (escolha entre opções limitadas). 'One' = pronome para coisa. Com 'you' = DO auxiliar.",
+      "porque_assim": "'Which' implica escolha entre opções. Diferente de 'what' (mais aberto). 'One' evita repetir substantivo. DO porque é presente simples.",
+      "palavra_chave": "'WHICH' - escolha entre OPÇÕES LIMITADAS/CONHECIDAS. 'WHAT' = pergunta mais aberta",
+      "formas_alternativas": ["Which do you like better?", "Which would you choose?"],
+      "dica_pronuncia": "Which = 'uítch' (som de 'tch' no final)",
+      "erro_comum": "WHICH = opções limitadas ('qual destes?'). WHAT = aberto ('qual é seu nome?' - usa WHAT, não WHICH)"
+    }
+  },
+  {
+    "text": "Whose bag is this?",
+    "translation": "De quem é esta bolsa?",
+    "category": "essential_survival",
+    "theme": "lost_and_found",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "question_024",
+    "grammar_notes": {
+      "estrutura": "Whose + substantivo + is + demonstrativo",
+      "explicacao_pt": "'WHOSE' = de quem (posse/propriedade). Vem antes do substantivo que possui. Com 'to be' = inversão direta.",
+      "porque_assim": "'Whose' pergunta sobre dono/proprietário. Funciona como adjetivo possessivo na pergunta. 'Whose bag' = a bolsa de quem.",
+      "palavra_chave": "'WHOSE' - pergunta sobre POSSE/PROPRIEDADE. Diferente de WHO (quem é) e WHO'S (who is)",
+      "formas_alternativas": ["Who does this bag belong to?", "Whose is this?"],
+      "dica_pronuncia": "Whose = 'rruuz' (som de 'z')",
+      "erro_comum": "WHOSE ≠ WHO'S. Whose = de quem (posse). Who's = who is (quem é)"
+    }
+  },
+  {
+    "text": "Whom should I contact?",
+    "translation": "Com quem devo entrar em contato?",
+    "category": "essential_survival",
+    "theme": "formal_communication",
+    "difficulty": 3,
+    "environment": "production",
+    "id": "question_025",
+    "grammar_notes": {
+      "estrutura": "Whom + modal + sujeito + verbo base",
+      "explicacao_pt": "'WHOM' = quem (objeto). Formal/escrito. Na fala, usa-se 'WHO'. 'Should' = modal (dever). 'Contact' = entrar em contato.",
+      "porque_assim": "'Whom' é forma objetiva de 'who'. Usado quando a pessoa é objeto (recebe ação). Muito formal, raro na fala moderna.",
+      "palavra_chave": "'WHOM' - forma FORMAL/ESCRITA de WHO quando é OBJETO. Na fala moderna, usa WHO mesmo",
+      "formas_alternativas": ["Who should I contact?' (mais comum), 'Who do I need to speak with?"],
+      "dica_pronuncia": "Whom = 'rrum' (igual a 'who' + m)",
+      "erro_comum": "WHOM é ultra formal. Na conversa normal, pode usar WHO. 'Who should I contact?' é perfeitamente aceitável."
+    }
+  },
+  {
+    "text": "Why did you choose this?",
+    "translation": "Por que você escolheu isso?",
+    "category": "essential_survival",
+    "theme": "reasons",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "question_026",
+    "grammar_notes": {
+      "estrutura": "Why + did + sujeito + verbo base + objeto",
+      "explicacao_pt": "'WHY' no passado = usa DID (passado de DO). Depois de DID, verbo volta à base (choose, não chose).",
+      "porque_assim": "DID marca tempo passado. Verbo principal fica na forma base porque DID já carrega marcação de tempo.",
+      "palavra_chave": "'DID' - auxiliar do passado simples. Verbo principal volta à FORMA BASE depois de DID",
+      "formas_alternativas": ["What made you choose this?", "Why this one?"],
+      "dica_pronuncia": "Did you = 'díd iu' (pode soar como 'dídju' na fala rápida)",
+      "erro_comum": "Não diga 'Why you chose this?' - falta DID. 'Why did you chose?' - verbo tem que ser BASE (choose) após DID"
+    }
+  },
+  {
+    "text": "How many people are coming?",
+    "translation": "Quantas pessoas estão vindo?",
+    "category": "essential_survival",
+    "theme": "reservations",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "question_027",
+    "grammar_notes": {
+      "estrutura": "How many + substantivo plural + verbo + gerúndio",
+      "explicacao_pt": "'HOW MANY' = quantos/quantas (para contáveis). Sempre seguido de substantivo PLURAL. 'Are coming' = presente contínuo (futuro próximo).",
+      "porque_assim": "'How many' conta coisas separadas. Substantivo sempre plural. 'People' já é plural de 'person'. Presente contínuo expressa futuro planejado.",
+      "palavra_chave": "'HOW MANY' - para coisas CONTÁVEIS (plural). 'HOW MUCH' - para INCONTÁVEIS (singular)",
+      "formas_alternativas": ["How many people will come?", "What's the party size?"],
+      "dica_pronuncia": "How many = 'rráu méni' (flui junto)",
+      "erro_comum": "HOW MANY + plural. HOW MUCH + singular. Não diga 'How many water?' (incontável) - é 'How much water?'"
+    }
+  },
+  {
+    "text": "How much time do we have?",
+    "translation": "Quanto tempo temos?",
+    "category": "essential_survival",
+    "theme": "time",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "question_028",
+    "grammar_notes": {
+      "estrutura": "How much + substantivo incontável + do + sujeito + verbo base",
+      "explicacao_pt": "'HOW MUCH' = quanto/quanta (incontável). 'Time' é incontável = singular. Com 'we' = DO auxiliar.",
+      "porque_assim": "'Time' não pode ser contado em unidades diretas (não 'one time, two times' para duração). Por isso HOW MUCH, não HOW MANY.",
+      "palavra_chave": "'HOW MUCH' - INCONTÁVEIS (singular): time, water, money, information",
+      "formas_alternativas": ["How long do we have?", "What's our time limit?"],
+      "dica_pronuncia": "How much = 'rráu mâtch'",
+      "erro_comum": "TIME (duração) = incontável. Mas TIMES (vezes/ocasiões) = contável. 'How many times?' está correto para frequência."
+    }
+  },
+  {
+    "text": "How far is it from here?",
+    "translation": "Quão longe é daqui?",
+    "category": "essential_survival",
+    "theme": "distance",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "question_029",
+    "grammar_notes": {
+      "estrutura": "How + adjetivo + is + sujeito + from + lugar",
+      "explicacao_pt": "'HOW FAR' = quão longe (distância). 'It' = sujeito impessoal. 'From here' = de/daqui. Verbo 'to be' usado para distância.",
+      "porque_assim": "'How' + adjetivo/advérbio mede grau/intensidade. 'Far' = longe. 'From' indica ponto de partida da medição.",
+      "palavra_chave": "'HOW' + adjetivo = pergunta sobre GRAU/INTENSIDADE: how far, how long, how tall, how old",
+      "formas_alternativas": ["What's the distance?", "How long does it take to get there?"],
+      "dica_pronuncia": "How far = 'rráu fár'",
+      "erro_comum": "Não confunda: HOW FAR (distância) vs HOW LONG (tempo/comprimento)"
+    }
+  },
+  {
+    "text": "How often do the buses run?",
+    "translation": "Com que frequência os ônibus passam?",
+    "category": "essential_survival",
+    "theme": "transportation",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "question_030",
+    "grammar_notes": {
+      "estrutura": "How often + do + substantivo plural + verbo base",
+      "explicacao_pt": "'HOW OFTEN' = com que frequência/quão frequentemente. 'Run' = passar/circular (para transporte). Buses = plural = DO.",
+      "porque_assim": "'How often' pergunta sobre frequência de repetição. 'Run' é usado idiomaticamente para serviços de transporte funcionarem.",
+      "palavra_chave": "'HOW OFTEN' - pergunta sobre FREQUÊNCIA (always, usually, sometimes, never)",
+      "formas_alternativas": ["What's the bus schedule?", "How frequently do buses come?"],
+      "dica_pronuncia": "How often = 'rráu ófen'",
+      "erro_comum": "'Run' para transporte = operar/circular. Não traduzir literalmente como 'correr'."
+    }
+  },
+  {
+    "text": "What kind of food do you like?",
+    "translation": "Que tipo de comida você gosta?",
+    "category": "essential_survival",
+    "theme": "preferences",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "question_031",
+    "grammar_notes": {
+      "estrutura": "What kind of + substantivo + do + sujeito + verbo base",
+      "explicacao_pt": "'WHAT KIND OF' = que tipo de. 'Of' é obrigatório. 'Food' = incontável mas singular aqui (categoria geral).",
+      "porque_assim": "'Kind' = tipo/espécie. Sempre seguido de 'OF' antes do substantivo. Pergunta sobre categoria/tipo específico.",
+      "palavra_chave": "'WHAT KIND OF' - expressão fixa. OF é OBRIGATÓRIO. Pergunta sobre TIPO/CATEGORIA",
+      "formas_alternativas": ["What type of food do you like?", "What sort of food do you prefer?"],
+      "dica_pronuncia": "Kind of = 'káind âv' (of pronuncia como 'âv')",
+      "erro_comum": "Não esqueça o OF. 'What kind food?' está errado. Sempre: WHAT KIND OF + substantivo"
+    }
+  },
+  {
+    "text": "When can I pick it up?",
+    "translation": "Quando posso buscar?",
+    "category": "essential_survival",
+    "theme": "services",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "question_032",
+    "grammar_notes": {
+      "estrutura": "When + can + sujeito + phrasal verb + objeto",
+      "explicacao_pt": "'WHEN' = quando. Modal CAN = inversão direta. 'Pick up' = phrasal verb = buscar/pegar. 'It' no meio.",
+      "porque_assim": "Modal verb inverte com sujeito. 'Pick up' é separável - pronome IT fica obrigatoriamente no meio.",
+      "palavra_chave": "'PICK IT UP' - com pronome, DEVE estar no meio. 'Pick up it' está ERRADO",
+      "formas_alternativas": ["When will it be ready?", "When is the pickup time?"],
+      "dica_pronuncia": "Pick it up = 'pík it âp' (palavras fluem juntas)",
+      "erro_comum": "Pronomes (it/them) SEMPRE no meio de phrasal verbs separáveis: pick IT up, try IT on, turn IT off"
+    }
+  },
+  {
+    "text": "Where are you from?",
+    "translation": "De onde você é?",
+    "category": "essential_survival",
+    "theme": "introductions",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "question_033",
+    "grammar_notes": {
+      "estrutura": "Where + are + sujeito + from",
+      "explicacao_pt": "'WHERE FROM' = de onde (origem). 'From' fica no final. Com 'to be' inverte: WHERE + ARE + you.",
+      "porque_assim": "Preposição 'from' indica origem. Em inglês formal antigo era 'From where are you?', mas hoje 'from' vai pro final.",
+      "palavra_chave": "Preposição no FINAL é natural em inglês moderno. 'Where are you from?' (não 'From where')",
+      "formas_alternativas": ["What's your nationality?", "What country are you from?"],
+      "dica_pronuncia": "Where are you = 'uér âr iú' (flui junto)",
+      "erro_comum": "Não diga 'Where you are from?' - falta inversão. Com 'to be' = WHERE + ARE + you"
+    }
+  },
+  {
+    "text": "Why not?",
+    "translation": "Por que não?",
+    "category": "essential_survival",
+    "theme": "responses",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "question_034",
+    "grammar_notes": {
+      "estrutura": "Why + not",
+      "explicacao_pt": "'WHY NOT' = por que não. Pergunta curta/resposta. Pode ser pergunta (duvidando) ou concordância (aceitando).",
+      "porque_assim": "Forma elíptica - omite resto da frase que está implícito no contexto. Pode significar 'por que não?' ou 'por que não!' (aceitando).",
+      "palavra_chave": "'WHY NOT' - duplo sentido: 1) pergunta motivo de negativa, 2) concorda com sugestão",
+      "formas_alternativas": ["Why is that?", "What's the reason?"],
+      "dica_pronuncia": "Why not = 'uái nót'",
+      "erro_comum": "Context matters! 'Why not?' pode ser pergunta genuína OU concordância positiva ('por que não? vamos!')"
+    }
+  },
+  {
+    "text": "How come you're late?",
+    "translation": "Como é que você está atrasado?",
+    "category": "essential_survival",
+    "theme": "reasons",
+    "difficulty": 3,
+    "environment": "production",
+    "id": "question_035",
+    "grammar_notes": {
+      "estrutura": "How come + sujeito + verbo (ordem afirmativa)",
+      "explicacao_pt": "'HOW COME' = como assim/por que (informal). Não inverte! Usa ordem de frase afirmativa: sujeito + verbo.",
+      "porque_assim": "'How come' é expressão idiomática. Diferente de 'why', mantém ordem normal (you're, não 'are you'). Mais coloquial que 'why'.",
+      "palavra_chave": "'HOW COME' - ordem AFIRMATIVA (não inverte). Informal. Expressa surpresa/curiosidade",
+      "formas_alternativas": ["Why are you late?", "What happened?"],
+      "dica_pronuncia": "How come = 'rráu kâm'",
+      "erro_comum": "NÃO inverte com 'how come': 'How come you're late?' ✓  'How come are you late?' ✗"
+    }
+  },
+  {
+    "text": "How old are you?",
+    "translation": "Quantos anos você tem?",
+    "category": "essential_survival",
+    "theme": "personal_info",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "question_036",
+    "grammar_notes": {
+      "estrutura": "How + adjetivo + verbo to be + sujeito",
+      "explicacao_pt": "'HOW OLD' = quantos anos/qual idade. Literalmente 'quão velho'. Com 'to be' inverte: HOW OLD + ARE + you.",
+      "porque_assim": "Inglês usa 'to be' (ser/estar) para idade, não 'have' (ter) como português. 'Old' = velho/idade.",
+      "palavra_chave": "'HOW OLD' - para IDADE. Usa 'to be' (are/is), NÃO 'have'. 'I am 25 years old' (não 'I have')",
+      "formas_alternativas": ["What's your age?", "How old is he/she?"],
+      "dica_pronuncia": "How old = 'rráu ôld'",
+      "erro_comum": "Em inglês: 'I AM 25 years old' ✓. Não diga 'I have 25 years' ✗ (erro comum de portugueses)"
+    }
+  },
+  {
+    "text": "How tall are you?",
+    "translation": "Qual é sua altura?",
+    "category": "essential_survival",
+    "theme": "physical_description",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "question_037",
+    "grammar_notes": {
+      "estrutura": "How + adjetivo + verbo to be + sujeito",
+      "explicacao_pt": "'HOW TALL' = quão alto/qual altura. 'Tall' = alto (para pessoas/coisas verticais). Usa 'to be'.",
+      "porque_assim": "Características físicas usam 'to be' em inglês. 'Tall' é adjetivo, não substantivo (height = substantivo).",
+      "palavra_chave": "'HOW TALL' - pergunta ALTURA. Resposta: 'I'm 1.80m tall' ou 'I'm 6 feet tall'",
+      "formas_alternativas": ["What's your height?", "How tall is the building?"],
+      "dica_pronuncia": "Tall = 'tól' (som longo de 'o')",
+      "erro_comum": "TALL = pessoas/prédios (vertical). HIGH = montanhas/aviões (elevação). 'How high is the mountain?'"
+    }
+  },
+  {
+    "text": "How long will it take?",
+    "translation": "Quanto tempo vai levar?",
+    "category": "essential_survival",
+    "theme": "time",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "question_038",
+    "grammar_notes": {
+      "estrutura": "How long + will + sujeito + verbo base",
+      "explicacao_pt": "'HOW LONG' = quanto tempo (duração). 'Will' = futuro. 'Take' = levar (tempo). 'It' = sujeito impessoal.",
+      "porque_assim": "'Long' refere-se a comprimento temporal. 'It takes' é expressão idiomática para duração. 'Will' indica futuro.",
+      "palavra_chave": "'HOW LONG' - DURAÇÃO temporal. Também pode ser comprimento físico: 'How long is the river?'",
+      "formas_alternativas": ["How much time will it take?", "What's the duration?"],
+      "dica_pronuncia": "How long = 'rráu lóng'",
+      "erro_comum": "HOW LONG = duração/comprimento. HOW FAR = distância. Não confunda!"
+    }
+  },
+  {
+    "text": "How big is your apartment?",
+    "translation": "Quão grande é seu apartamento?",
+    "category": "essential_survival",
+    "theme": "housing",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "question_039",
+    "grammar_notes": {
+      "estrutura": "How + adjetivo + is + possessivo + substantivo",
+      "explicacao_pt": "'HOW BIG' = quão grande/qual tamanho. 'Big' = grande (tamanho geral). 'Your' = seu/sua.",
+      "porque_assim": "'Big' pergunta sobre tamanho/dimensão geral. Pode responder em metros quadrados, número de quartos, etc.",
+      "palavra_chave": "'HOW BIG' - pergunta TAMANHO geral. Variações: how small, how large",
+      "formas_alternativas": ["What size is your apartment?", "How large is it?"],
+      "dica_pronuncia": "How big = 'rráu bíg'",
+      "erro_comum": "BIG = tamanho geral. LARGE = formal/maior escala. GREAT = tamanho impressionante/qualidade"
+    }
+  },
+  {
+    "text": "What size do you wear?",
+    "translation": "Qual tamanho você veste?",
+    "category": "essential_survival",
+    "theme": "clothing",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "question_040",
+    "grammar_notes": {
+      "estrutura": "What + substantivo + do + sujeito + verbo base",
+      "explicacao_pt": "'WHAT SIZE' = qual tamanho. 'Wear' = vestir/usar (roupa). Com 'you' = auxiliar DO.",
+      "porque_assim": "'What size' pergunta tamanho específico (S, M, L, 38, 40, etc.). 'Wear' é usado para roupas que você usa habitualmente.",
+      "palavra_chave": "'WHAT SIZE' - tamanho específico de roupa/sapato. WHAT + substantivo especifica tipo de 'o que'",
+      "formas_alternativas": ["What's your size?", "What size are you?"],
+      "dica_pronuncia": "Wear = 'uér' (som igual a 'where')",
+      "erro_comum": "WEAR = vestir/usar. PUT ON = colocar/vestir (ação). 'I wear size M' vs 'I'm putting on my shirt'"
+    }
+  },
+  {
+    "text": "What color is it?",
+    "translation": "Qual cor é?",
+    "category": "essential_survival",
+    "theme": "description",
+    "difficulty": 1,
+    "environment": "production",
+    "id": "question_041",
+    "grammar_notes": {
+      "estrutura": "What + substantivo + is + sujeito",
+      "explicacao_pt": "'WHAT COLOR' = qual cor. 'Color' (EUA) / 'Colour' (UK). Com 'to be' inverte: WHAT COLOR + IS + it.",
+      "porque_assim": "'What' + substantivo especifica tipo de informação buscada. 'Color' funciona como complemento de 'what'.",
+      "palavra_chave": "'WHAT COLOR' - cor específica. WHAT + substantivo = pergunta específica sobre algo",
+      "formas_alternativas": ["What's the color?", "Which color is it?"],
+      "dica_pronuncia": "Color (EUA) = 'kâ-lər' | Colour (UK) = 'kâ-lə'",
+      "erro_comum": "Grafia: COLOR (americano) vs COLOUR (britânico). Ambos corretos, depende do inglês que você aprende."
+    }
+  },
+  {
+    "text": "What time does the store open?",
+    "translation": "Que horas a loja abre?",
+    "category": "essential_survival",
+    "theme": "business_hours",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "question_042",
+    "grammar_notes": {
+      "estrutura": "What time + does + substantivo + verbo base",
+      "explicacao_pt": "'WHAT TIME' = que horas (hora específica). 'Store' = 3ª pessoa singular = DOES. 'Open' = abrir.",
+      "porque_assim": "'What time' é mais específico que 'when'. Espera resposta com hora exata (9am, 2pm, etc.).",
+      "palavra_chave": "'WHAT TIME' - hora EXATA esperada. 'WHEN' - mais geral (pode ser 'tomorrow', 'next week')",
+      "formas_alternativas": ["When does the store open?", "What are the opening hours?"],
+      "dica_pronuncia": "What time = 'uót táim' (junto soa como 'uótáim')",
+      "erro_comum": "WHAT TIME = hora específica. WHEN = tempo mais geral. Ambos funcionam, mas 'what time' é mais preciso."
+    }
+  },
+  {
+    "text": "How about this one?",
+    "translation": "Que tal este?",
+    "category": "essential_survival",
+    "theme": "suggestions",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "question_043",
+    "grammar_notes": {
+      "estrutura": "How about + substantivo/pronome/gerúndio",
+      "explicacao_pt": "'HOW ABOUT' = que tal/e sobre. Faz sugestão ou pergunta opinião. Não é pergunta completa - é elíptica.",
+      "porque_assim": "Estrutura informal para sugestões. 'How about' + nome/pronome/verbo-ing. Omite verbo principal (implícito).",
+      "palavra_chave": "'HOW ABOUT' - fazer SUGESTÕES ou pedir opinião. Seguido de substantivo/pronome/gerúndio",
+      "formas_alternativas": ["What about this one?", "What do you think of this one?"],
+      "dica_pronuncia": "How about = 'rráu ə-báut' (about pronuncia rápido)",
+      "erro_comum": "HOW ABOUT + gerúndio: 'How about going?' ✓. Não use infinitivo: 'How about to go?' ✗"
+    }
+  },
+  {
+    "text": "What about the price?",
+    "translation": "E quanto ao preço?",
+    "category": "essential_survival",
+    "theme": "negotiation",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "question_044",
+    "grammar_notes": {
+      "estrutura": "What about + substantivo/pronome",
+      "explicacao_pt": "'WHAT ABOUT' = e quanto a/e sobre. Traz novo tópico ou pede esclarecimento sobre algo.",
+      "porque_assim": "Similar a 'how about' mas foca em informação/consideração, não sugestão. Pergunta sobre algo não mencionado.",
+      "palavra_chave": "'WHAT ABOUT' - trazer novo TÓPICO ou pedir informação sobre algo específico",
+      "formas_alternativas": ["How about the price?", "And the price?", "What's the situation with the price?"],
+      "dica_pronuncia": "What about = 'uót ə-báut'",
+      "erro_comum": "Muito similar: HOW ABOUT (sugestão) vs WHAT ABOUT (informação). Na prática, frequentemente intercambiáveis."
+    }
+  },
+  {
+    "text": "How heavy is this suitcase?",
+    "translation": "Quão pesada é esta mala?",
+    "category": "essential_survival",
+    "theme": "luggage",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "question_045",
+    "grammar_notes": {
+      "estrutura": "How + adjetivo + is + demonstrativo + substantivo",
+      "explicacao_pt": "'HOW HEAVY' = quão pesado. 'Heavy' = pesado (peso). 'Suitcase' = mala de viagem.",
+      "porque_assim": "'Heavy' é adjetivo para peso. Resposta esperada em quilos, libras, etc. 'To be' usado para características.",
+      "palavra_chave": "'HOW HEAVY' - pergunta sobre PESO. Antônimo: how light (quão leve)",
+      "formas_alternativas": ["What's the weight of this suitcase?", "How much does this weigh?"],
+      "dica_pronuncia": "Heavy = 'hé-vi' (duas sílabas)",
+      "erro_comum": "HEAVY = pesado (peso). HARD = duro/difícil. Não confunda!"
+    }
+  },
+  {
+    "text": "How deep is the pool?",
+    "translation": "Quão funda é a piscina?",
+    "category": "essential_survival",
+    "theme": "facilities",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "question_046",
+    "grammar_notes": {
+      "estrutura": "How + adjetivo + is + artigo + substantivo",
+      "explicacao_pt": "'HOW DEEP' = quão fundo/profundo. 'Deep' = profundo (para dentro da terra/água). 'Pool' = piscina.",
+      "porque_assim": "'Deep' mede profundidade vertical para baixo. Resposta em metros/pés de profundidade.",
+      "palavra_chave": "'HOW DEEP' - PROFUNDIDADE (vertical para baixo). Antônimo: how shallow (quão raso)",
+      "formas_alternativas": ["What's the depth of the pool?", "How deep does it go?"],
+      "dica_pronuncia": "Deep = 'diip' (som longo de 'i')",
+      "erro_comum": "DEEP = profundidade (água, buraco). THICK = espessura (parede, livro). HIGH = altura"
+    }
+  },
+  {
+    "text": "How wide is the street?",
+    "translation": "Quão larga é a rua?",
+    "category": "essential_survival",
+    "theme": "location",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "question_047",
+    "grammar_notes": {
+      "estrutura": "How + adjetivo + is + artigo + substantivo",
+      "explicacao_pt": "'HOW WIDE' = quão largo/amplo. 'Wide' = largo (dimensão horizontal lado a lado). 'Street' = rua.",
+      "porque_assim": "'Wide' mede largura horizontal. Oposto de 'narrow' (estreito). Usado para estradas, rios, objetos.",
+      "palavra_chave": "'HOW WIDE' - LARGURA (horizontal). Antônimo: how narrow (quão estreito)",
+      "formas_alternativas": ["What's the width of the street?", "How broad is it?"],
+      "dica_pronuncia": "Wide = 'uáid' (som de 'ai')",
+      "erro_comum": "WIDE = largura. BROAD = similar mas mais formal. THICK = espessura (3D)"
+    }
+  },
+  {
+    "text": "How hot is it outside?",
+    "translation": "Quão quente está lá fora?",
+    "category": "essential_survival",
+    "theme": "weather",
+    "difficulty": 2,
+    "environment": "production",
+    "id": "question_048",
+    "grammar_notes": {
+      "estrutura": "How + adjetivo + is + pronome + advérbio",
+      "explicacao_pt": "'HOW HOT' = quão quente. 'It' = sujeito impessoal (clima). 'Outside' = lá fora/do lado de fora.",
+      "porque_assim": "'It' é usado para tempo/clima em inglês. 'Hot' pergunta temperatura/sensação térmica. 'Outside' especifica onde.",
+      "palavra_chave": "'IT' - sujeito impessoal obrigatório para clima: 'it's hot', 'it's raining', 'it's cold'",
+      "formas_alternativas": ["What's the temperature?", "How cold is it?", "Is it hot outside?"],
+      "dica_pronuncia": "Hot = 'hót' (som curto de 'o')",
+      "erro_comum": "Clima SEMPRE precisa de 'IT': 'It is hot' ✓. Não diga apenas 'Is hot' ✗"
+    }
+  }
+]

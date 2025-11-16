@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Briefcase, ShoppingBag, Plane, Users, Home, ArrowLeft, Play, Trophy, Target, Code, Activity, FileText, Mic } from 'lucide-react';
+import { Briefcase, ShoppingBag, Plane, Users, Home, ArrowLeft, Play, Trophy, Target, Code, Activity, FileText, Mic, HelpCircle } from 'lucide-react';
 import { PhraseCard } from './PhraseCard';
 import { useTextToSpeech } from '../../hooks/useTextToSpeech';
 import { PhraseRepository } from '../../services/phraseRepository';
@@ -78,6 +78,14 @@ const CATEGORIES = [
   color: 'from-purple-500 to-pink-600',
   description: 'Practice phrases specialized in pronunciation training',
   emoji: '🎤'
+},
+{
+  id: 'essential_survival',
+  name: 'Essential Questions',
+  icon: HelpCircle,
+  color: 'from-indigo-500 to-purple-600',
+  description: 'Essential questions with grammar tips',
+  emoji: '❓'
 }
 ];
 
