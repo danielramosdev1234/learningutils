@@ -54,6 +54,9 @@ const TECH_TERMS_MAP = {
   'postgres': 'postgresql',
   'postgres sequel': 'postgresql',
   'postgresql database': 'postgresql',
+
+  'every day': 'everyday',
+  'everyday': 'every day',
   
   'mongodb': 'mongodb',
   'mongo db': 'mongodb',

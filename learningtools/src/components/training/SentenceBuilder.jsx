@@ -4,10 +4,13 @@ import { useDispatch } from 'react-redux';
 import { useXP } from '../../hooks/useXP';
 import { trackExerciseComplete, trackError, trackUserAction } from '../../utils/analytics';
 import { incrementPhraseCompleted } from '../../store/slices/userSlice';
+import { useTextToSpeech } from '../../hooks/useTextToSpeech';
+import { PhraseCard } from './PhraseCard';
 
 const SentenceBuilder = () => {
   const dispatch = useDispatch();
   const { earnXP } = useXP();
+  const textToSpeech = useTextToSpeech();
 
   const [level, setLevel] = useState(1);
   const [score, setScore] = useState(0);
@@ -18,6 +21,9 @@ const SentenceBuilder = () => {
   const [showHint, setShowHint] = useState(false);
   const [streak, setStreak] = useState(0);
   const [completedExercises, setCompletedExercises] = useState(new Set());
+  const [showPhraseCard, setShowPhraseCard] = useState(false);
+  const [currentPhrase, setCurrentPhrase] = useState(null);
+  const [pronunciationCompleted, setPronunciationCompleted] = useState(false);
 
   const exercises = [
     {
@@ -123,6 +129,9 @@ const SentenceBuilder = () => {
   const handleWordClick = (word) => {
     if (showFeedback) return;
     
+    // Toca o áudio da palavra
+    textToSpeech.speak(word);
+    
     const newSentence = [...userSentence, word];
     setUserSentence(newSentence);
     
@@ -157,7 +166,20 @@ const SentenceBuilder = () => {
       // Marcar exercício como completo
       setCompletedExercises(new Set([...completedExercises, currentExercise]));
       
-      // Ganhar XP
+      // Criar objeto phrase para o PhraseCard
+      const phrase = {
+        id: `sentence-builder-${currentExercise}-${Date.now()}`,
+        text: currentEx.correctOrder.join(' '),
+        translation: currentEx.translation,
+        category: 'sentence-builder',
+        difficulty: `level-${currentEx.level}`,
+        index: currentExercise
+      };
+      
+      setCurrentPhrase(phrase);
+      setShowPhraseCard(true);
+      
+      // Ganhar XP (será ganho novamente quando completar a pronúncia)
       const xpAmount = currentEx.level * 5 + (showHint ? 0 : 2);
       earnXP('sentence_builder', {
         level: currentEx.level,
@@ -173,8 +195,6 @@ const SentenceBuilder = () => {
         usedHint: showHint,
         streak: streak + 1
       });
-      
-      dispatch(incrementPhraseCompleted());
     } else {
       setStreak(0);
       
@@ -187,7 +207,26 @@ const SentenceBuilder = () => {
     }
   };
 
+  const handlePhraseCardComplete = () => {
+    // Quando o PhraseCard for completado, marcar como completo
+    setPronunciationCompleted(true);
+    trackUserAction('sentence_builder_pronunciation_completed', {
+      exerciseIndex: currentExercise,
+      level: currentEx.level
+    });
+  };
+
+  const handlePhraseCardNext = () => {
+    // Quando clicar no botão Next do PhraseCard, avançar para o próximo exercício
+    nextExercise();
+  };
+
   const nextExercise = () => {
+    // Resetar estados relacionados ao PhraseCard
+    setShowPhraseCard(false);
+    setCurrentPhrase(null);
+    setPronunciationCompleted(false);
+    
     if (currentExercise < exercises.length - 1) {
       setCurrentExercise(currentExercise + 1);
       setUserSentence([]);
@@ -214,6 +253,9 @@ const SentenceBuilder = () => {
     setUserSentence([]);
     setShowFeedback(false);
     setShowHint(false);
+    setShowPhraseCard(false);
+    setCurrentPhrase(null);
+    setPronunciationCompleted(false);
     
     trackUserAction('sentence_builder_reset', {
       exerciseIndex: currentExercise
@@ -451,23 +493,70 @@ const SentenceBuilder = () => {
                 </button>
               </>
             ) : (
-              <button
-                onClick={nextExercise}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    nextExercise();
-                  }
-                }}
-                tabIndex={0}
-                aria-label={currentExercise < exercises.length - 1 ? 'Próximo exercício' : 'Recomeçar'}
-                className="flex-1 py-3 bg-indigo-600 text-white rounded-xl font-semibold hover:bg-indigo-700 transition-all text-sm md:text-base"
-              >
-                {currentExercise < exercises.length - 1 ? 'Próximo Exercício →' : '🔄 Recomeçar'}
-              </button>
+              !isCorrect && (
+                <button
+                  onClick={nextExercise}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      nextExercise();
+                    }
+                  }}
+                  tabIndex={0}
+                  aria-label={currentExercise < exercises.length - 1 ? 'Próximo exercício' : 'Recomeçar'}
+                  className="flex-1 py-3 bg-indigo-600 text-white rounded-xl font-semibold hover:bg-indigo-700 transition-all text-sm md:text-base"
+                >
+                  {currentExercise < exercises.length - 1 ? 'Próximo Exercício →' : '🔄 Recomeçar'}
+                </button>
+              )
             )}
           </div>
         </div>
+
+        {/* PhraseCard - Aparece quando a resposta está correta */}
+        {showPhraseCard && currentPhrase && (
+          <div className="bg-white rounded-2xl shadow-lg p-6 md:p-8 mb-6">
+            <div className="mb-4">
+              <h2 className="text-xl md:text-2xl font-bold text-gray-800 mb-2">
+                🎉 Frase correta! Agora pronuncie:
+              </h2>
+              <p className="text-gray-600 text-sm md:text-base">
+                Complete a pronúncia e clique em "Próximo" para avançar
+              </p>
+            </div>
+            
+            <PhraseCard
+              key={currentPhrase.id}
+              phrase={currentPhrase}
+              onSpeak={textToSpeech.speak2}
+              textToSpeech={textToSpeech}
+              onCorrectAnswer={handlePhraseCardComplete}
+              onNextPhrase={handlePhraseCardNext}
+              isActive={true}
+              autoAdvance={false}
+            />
+            
+            {/* Botão Next - Aparece quando a pronúncia está completa */}
+            {pronunciationCompleted && (
+              <div className="mt-6 pt-6 border-t border-gray-200">
+                <button
+                  onClick={nextExercise}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      nextExercise();
+                    }
+                  }}
+                  tabIndex={0}
+                  aria-label={currentExercise < exercises.length - 1 ? 'Próximo exercício' : 'Recomeçar'}
+                  className="w-full py-3 bg-indigo-600 text-white rounded-xl font-semibold hover:bg-indigo-700 transition-all text-sm md:text-base"
+                >
+                  {currentExercise < exercises.length - 1 ? 'Próximo Exercício →' : '🔄 Recomeçar'}
+                </button>
+              </div>
+            )}
+          </div>
+        )}
 
         {/* Progress */}
         <div className="bg-white rounded-2xl shadow-lg p-4 md:p-6">
