@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { Hash, Mic, Zap, Video, MoreHorizontal, X, MessageCircle, Globe, Gift, Radio, House, BookOpen, ArrowUp01, HelpCircle } from 'lucide-react';
+import { Hash, Mic, Zap, Video, MoreHorizontal, X, MessageCircle, Globe, Gift, Radio, House, BookOpen, ArrowUp01, HelpCircle, Puzzle } from 'lucide-react';
 import NumberSpeechTrainer from './training/NumberSpeechTrainer';
 import ChunkTrainer from './training/ChunkTrainer';
 import ChallengeTrainer from './training/ChallengeTrainer';
@@ -17,6 +17,7 @@ import { InviteFriendsScreen } from './referral/InviteFriendsScreen';
 import LiveRooms from './social/LiveRooms';
 import Dashboard from './Dashboard';
 import CategoryTrainer from './training/CategoryTrainer';
+import SentenceBuilder from './training/SentenceBuilder';
 import { LevelUpModal } from './modals/LevelUpModal';
 import {
   updateChunkProgress,
@@ -41,6 +42,7 @@ const TrainerSelector = () => {
     if (mode === 'challenge') return 'challenge';
     if (mode === 'numbers') return 'numbers';
     if (mode === 'VideoLearningApp') return 'VideoLearningApp';
+    if (mode === 'sentence-builder') return 'sentence-builder';
     if (mode === 'dashboard') return 'dashboard';
     return 'dashboard';
   };
@@ -249,6 +251,28 @@ const handleCloseLevelUpModal = () => {
                 Translate
               </button>
 
+              {/* Sentence Builder Button */}
+              <button
+                onClick={() => handleTrainerChange('sentence-builder')}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    handleTrainerChange('sentence-builder');
+                  }
+                }}
+                tabIndex={0}
+                aria-label="Construtor de frases"
+                aria-current={activeTrainer === 'sentence-builder' ? 'page' : undefined}
+                className={`flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all ${
+                  activeTrainer === 'sentence-builder'
+                    ? 'bg-gradient-to-r from-cyan-500 to-blue-500 text-white shadow-lg scale-105'
+                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                }`}
+              >
+                <Puzzle className="w-5 h-5" aria-hidden="true" />
+                Sentence Builder
+              </button>
+
               {/* Number Trainer Button */}
               <button
                 onClick={() => handleTrainerChange('numbers')}
@@ -383,6 +407,7 @@ const handleCloseLevelUpModal = () => {
         {activeTrainer === 'dashboard' && <Dashboard onNavigate={handleTrainerChange} />}
         {activeTrainer === 'chunk' && <ChunkTrainer />}
         {activeTrainer === 'translate' && <TranslateTrainer />}
+        {activeTrainer === 'sentence-builder' && <SentenceBuilder />}
         {activeTrainer === 'numbers' && <NumberSpeechTrainer />}
         {activeTrainer === 'challenge' && <ChallengeTrainer />}
         {activeTrainer === 'VideoLearningApp' && <VideoLearningApp />}
@@ -590,6 +615,47 @@ const handleCloseLevelUpModal = () => {
                                  </div>
                                </div>
                                {activeTrainer === 'numbers' && (
+                                 <div className="w-2 h-2  rounded-full" aria-hidden="true" />
+                               )}
+                             </button>
+
+                             {/* Sentence Builder */}
+                             <button
+                               onClick={() => {
+                                 handleTrainerChange('sentence-builder');
+                                 setShowSpeakMenu(false);
+                               }}
+                               onKeyDown={(e) => {
+                                 if (e.key === 'Enter' || e.key === ' ') {
+                                   e.preventDefault();
+                                   handleTrainerChange('sentence-builder');
+                                   setShowSpeakMenu(false);
+                                 }
+                               }}
+                               tabIndex={0}
+                               aria-label="Construtor de frases"
+                               className={`w-full flex items-center gap-4 p-4 rounded-xl transition-all ${
+                                 activeTrainer === 'sentence-builder'
+                                   ? 'bg-gradient-to-r from-cyan-500 to-blue-500 text-white shadow-lg'
+                                   : 'bg-gray-50 hover:bg-gray-100 text-gray-800'
+                               }`}
+                             >
+                               <div className={`p-3 rounded-full ${
+                                 activeTrainer === 'sentence-builder' ? ' bg-opacity-20' : 'bg-cyan-100'
+                               }`}>
+                                 <Puzzle className={`w-6 h-6 ${
+                                   activeTrainer === 'sentence-builder' ? 'text-white' : 'text-cyan-600'
+                                 }`} aria-hidden="true" />
+                               </div>
+                               <div className="text-left flex-1">
+                                 <div className="font-bold text-lg">Sentence Builder</div>
+                                 <div className={`text-sm ${
+                                   activeTrainer === 'sentence-builder' ? 'text-white text-opacity-90' : 'text-gray-600'
+                                 }`}>
+                                   Build sentences with drag & drop
+                                 </div>
+                               </div>
+                               {activeTrainer === 'sentence-builder' && (
                                  <div className="w-2 h-2  rounded-full" aria-hidden="true" />
                                )}
                              </button>
@@ -807,7 +873,7 @@ const handleCloseLevelUpModal = () => {
             aria-label="Abrir menu de treinamento de fala"
             aria-expanded={showSpeakMenu}
             className={`flex flex-col items-center gap-1 py-3 transition-all ${
-              showSpeakMenu || activeTrainer === 'chunk' || activeTrainer === 'translate' || activeTrainer === 'challenge'
+              showSpeakMenu || activeTrainer === 'chunk' || activeTrainer === 'translate' || activeTrainer === 'challenge' || activeTrainer === 'sentence-builder'
                 ? 'text-purple-600'
                 : 'text-gray-400'
             }`}
