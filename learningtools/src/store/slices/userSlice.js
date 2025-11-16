@@ -72,6 +72,9 @@ const initialState = {
     },
     categories: {
       // Estrutura: { categoryId: { completedPhrases: [phraseId1, phraseId2, ...], lastIndex: 0 } }
+    },
+    sentenceBuilder: {
+      // Estrutura: { categoryId: { completedPhrases: [phraseId1, phraseId2, ...], lastIndex: 0 } }
     }
   },
 
@@ -687,6 +690,31 @@ const userSlice = createSlice({
       state.progress.categories[categoryId].lastIndex = currentIndex;
     },
 
+    markSentenceBuilderPhraseCompleted: (state, action) => {
+      const { categoryId, phraseId, currentIndex } = action.payload;
+      
+      // Inicializa sentenceBuilder se não existir
+      if (!state.progress.sentenceBuilder) {
+        state.progress.sentenceBuilder = {};
+      }
+      
+      // Inicializa a categoria se não existir
+      if (!state.progress.sentenceBuilder[categoryId]) {
+        state.progress.sentenceBuilder[categoryId] = {
+          completedPhrases: [],
+          lastIndex: 0
+        };
+      }
+      
+      // Adiciona a frase se ainda não estiver completada
+      if (!state.progress.sentenceBuilder[categoryId].completedPhrases.includes(phraseId)) {
+        state.progress.sentenceBuilder[categoryId].completedPhrases.push(phraseId);
+      }
+      
+      // Atualiza o último índice
+      state.progress.sentenceBuilder[categoryId].lastIndex = currentIndex;
+    },
+
     incrementPhraseCompleted: (state, action) => {
       state.stats.totalPhrases += 1;
       state.stats.totalAttempts += 1;
@@ -958,6 +986,7 @@ const userSlice = createSlice({
 export const {
   updateChunkProgress,
   markCategoryPhraseCompleted,
+  markSentenceBuilderPhraseCompleted,
   incrementPhraseCompleted,
   incrementIncorrectAttempt,
   updateChallengeHighScore,

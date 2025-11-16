@@ -1,130 +1,81 @@
 import React, { useState, useEffect } from 'react';
-import { Check, X, Lightbulb, RotateCcw, Trophy, Zap } from 'lucide-react';
-import { useDispatch } from 'react-redux';
+import { Check, X, Lightbulb, RotateCcw, Trophy, Zap, Target, Play, ArrowLeft } from 'lucide-react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useXP } from '../../hooks/useXP';
 import { trackExerciseComplete, trackError, trackUserAction } from '../../utils/analytics';
-import { incrementPhraseCompleted } from '../../store/slices/userSlice';
+import { incrementPhraseCompleted, markPhraseCompleted, markSentenceBuilderPhraseCompleted, saveProgress } from '../../store/slices/userSlice';
 import { useTextToSpeech } from '../../hooks/useTextToSpeech';
 import { PhraseCard } from './PhraseCard';
+import builderPhrasesData from '../../data/builder_phrases.json';
+
+const WORD_COUNT_CATEGORIES = [
+  { id: '3_words', name: '3 Words', count: 3, color: 'from-blue-500 to-indigo-600', emoji: '🔢' },
+  { id: '4_words', name: '4 Words', count: 4, color: 'from-purple-500 to-pink-600', emoji: '🔢' },
+  { id: '5_words', name: '5 Words', count: 5, color: 'from-green-500 to-teal-600', emoji: '🔢' },
+  { id: '6_words', name: '6 Words', count: 6, color: 'from-yellow-500 to-orange-600', emoji: '🔢' },
+  { id: '7_words', name: '7 Words', count: 7, color: 'from-red-500 to-rose-600', emoji: '🔢' },
+  { id: '8_words', name: '8 Words', count: 8, color: 'from-cyan-500 to-blue-600', emoji: '🔢' },
+  { id: '9_words', name: '9 Words', count: 9, color: 'from-teal-500 to-emerald-600', emoji: '🔢' },
+  { id: '10_words', name: '10 Words', count: 10, color: 'from-indigo-500 to-purple-600', emoji: '🔢' }
+];
 
 const SentenceBuilder = () => {
   const dispatch = useDispatch();
   const { earnXP } = useXP();
   const textToSpeech = useTextToSpeech();
+  const { levelSystem, progress, userId, mode } = useSelector(state => state.user);
 
-  const [level, setLevel] = useState(1);
-  const [score, setScore] = useState(0);
-  const [currentExercise, setCurrentExercise] = useState(0);
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [categoryPhrases, setCategoryPhrases] = useState([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
   const [userSentence, setUserSentence] = useState([]);
   const [showFeedback, setShowFeedback] = useState(false);
   const [isCorrect, setIsCorrect] = useState(false);
   const [showHint, setShowHint] = useState(false);
   const [streak, setStreak] = useState(0);
-  const [completedExercises, setCompletedExercises] = useState(new Set());
   const [showPhraseCard, setShowPhraseCard] = useState(false);
   const [currentPhrase, setCurrentPhrase] = useState(null);
   const [pronunciationCompleted, setPronunciationCompleted] = useState(false);
+  const [completedInSession, setCompletedInSession] = useState([]);
 
-  const exercises = [
-    {
-      level: 1,
-      translation: "Eu gosto de música",
-      correctOrder: ["I", "like", "music"],
-      words: ["music", "I", "like"],
-      hint: "Sujeito + Verbo + Objeto",
-      explanation: "Em inglês, a ordem básica é Sujeito-Verbo-Objeto (SVO)"
-    },
-    {
-      level: 1,
-      translation: "Ela estuda todos os dias",
-      correctOrder: ["She", "studies", "every", "day"],
-      words: ["day", "studies", "She", "every"],
-      hint: "Lembre-se: 'studies' com 's' para 'she'",
-      explanation: "Verbos na terceira pessoa do singular (he/she/it) ganham 's' no presente simples"
-    },
-    {
-      level: 1,
-      translation: "Nós jogamos futebol",
-      correctOrder: ["We", "play", "soccer"],
-      words: ["play", "We", "soccer"],
-      hint: "Sujeito + Verbo + Objeto",
-      explanation: "Ordem básica SVO: We (nós) + play (jogamos) + soccer (futebol)"
-    },
-    {
-      level: 1,
-      translation: "Eles comem pizza",
-      correctOrder: ["They", "eat", "pizza"],
-      words: ["pizza", "They", "eat"],
-      hint: "Sujeito + Verbo + Objeto",
-      explanation: "Ordem básica SVO: They (eles) + eat (comem) + pizza"
-    },
-    {
-      level: 2,
-      translation: "Eu não falo espanhol",
-      correctOrder: ["I", "don't", "speak", "Spanish"],
-      words: ["speak", "don't", "I", "Spanish"],
-      hint: "Use 'don't' antes do verbo para negação",
-      explanation: "Negativas no presente usam: sujeito + don't/doesn't + verbo base"
-    },
-    {
-      level: 2,
-      translation: "Você vai à escola de ônibus?",
-      correctOrder: ["Do", "you", "go", "to", "school", "by", "bus", "?"],
-      words: ["you", "to", "go", "?", "school", "Do", "by", "bus"],
-      hint: "Perguntas começam com 'Do/Does'",
-      explanation: "Perguntas sim/não usam: Do/Does + sujeito + verbo base"
-    },
-    {
-      level: 2,
-      translation: "Ela não gosta de café",
-      correctOrder: ["She", "doesn't", "like", "coffee"],
-      words: ["doesn't", "She", "coffee", "like"],
-      hint: "Use 'doesn't' para 'she' na negativa",
-      explanation: "Para terceira pessoa (he/she/it) na negativa, use 'doesn't' + verbo base"
-    },
-    {
-      level: 2,
-      translation: "Eles trabalham aqui?",
-      correctOrder: ["Do", "they", "work", "here", "?"],
-      words: ["they", "work", "Do", "here", "?"],
-      hint: "Perguntas começam com 'Do'",
-      explanation: "Perguntas com 'they' usam 'Do' + they + verbo base"
-    },
-    {
-      level: 3,
-      translation: "Ela está lendo um livro agora",
-      correctOrder: ["She", "is", "reading", "a", "book", "now"],
-      words: ["reading", "She", "now", "book", "is", "a"],
-      hint: "Use 'is' + verbo com -ing para ações em progresso",
-      explanation: "Presente contínuo: sujeito + am/is/are + verbo-ing"
-    },
-    {
-      level: 3,
-      translation: "Nós estivemos esperando por uma hora",
-      correctOrder: ["We", "have", "been", "waiting", "for", "an", "hour"],
-      words: ["hour", "have", "We", "waiting", "for", "been", "an"],
-      hint: "Present Perfect Continuous: have/has + been + verbo-ing",
-      explanation: "Usado para ações que começaram no passado e continuam até agora"
-    },
-    {
-      level: 3,
-      translation: "Eu estava estudando quando você ligou",
-      correctOrder: ["I", "was", "studying", "when", "you", "called"],
-      words: ["called", "I", "studying", "when", "was", "you"],
-      hint: "Passado contínuo: was/were + verbo-ing",
-      explanation: "Passado contínuo descreve ações em progresso no passado"
-    },
-    {
-      level: 3,
-      translation: "Eles vão viajar amanhã",
-      correctOrder: ["They", "will", "travel", "tomorrow"],
-      words: ["travel", "They", "tomorrow", "will"],
-      hint: "Futuro simples: will + verbo base",
-      explanation: "Futuro simples usa 'will' + verbo base para ações futuras"
+  // Carrega frases quando categoria é selecionada
+  useEffect(() => {
+    if (selectedCategory && builderPhrasesData.phrases[selectedCategory]) {
+      const phrases = builderPhrasesData.phrases[selectedCategory].map((phrase, index) => ({
+        id: `builder-${selectedCategory}-${index}`,
+        english: phrase.english,
+        portuguese: phrase.portuguese,
+        context: phrase.context,
+        category: phrase.category,
+        wordCount: WORD_COUNT_CATEGORIES.find(cat => cat.id === selectedCategory)?.count || 0
+      }));
+      
+      setCategoryPhrases(phrases);
+      
+      // Carrega progresso da categoria
+      const categoryProgress = progress?.sentenceBuilder?.[selectedCategory];
+      const completedPhrasesInCategory = categoryProgress?.completedPhrases || [];
+      
+      // Encontra a primeira frase não completada
+      const firstIncompleteIndex = phrases.findIndex(
+        phrase => !completedPhrasesInCategory.includes(phrase.id)
+      );
+      
+      const startIndex = firstIncompleteIndex !== -1 ? firstIncompleteIndex : 0;
+      setCurrentIndex(startIndex);
+      setCompletedInSession([]);
+      setUserSentence([]);
+      setShowFeedback(false);
+      setShowPhraseCard(false);
+      setCurrentPhrase(null);
+      setPronunciationCompleted(false);
     }
-  ];
+  }, [selectedCategory, progress?.sentenceBuilder]);
 
-  const currentEx = exercises[currentExercise];
+  const handleCategorySelect = (categoryId) => {
+    setSelectedCategory(categoryId);
+    trackUserAction('sentence_builder_category_selected', { categoryId });
+  };
 
   const handleWordClick = (word) => {
     if (showFeedback) return;
@@ -137,8 +88,8 @@ const SentenceBuilder = () => {
     
     trackUserAction('sentence_builder_word_clicked', {
       word,
-      exerciseIndex: currentExercise,
-      level: currentEx.level
+      exerciseIndex: currentIndex,
+      category: selectedCategory
     });
   };
 
@@ -148,76 +99,117 @@ const SentenceBuilder = () => {
     setUserSentence(newSentence);
     
     trackUserAction('sentence_builder_word_removed', {
-      exerciseIndex: currentExercise,
-      level: currentEx.level
+      exerciseIndex: currentIndex,
+      category: selectedCategory
     });
   };
 
+  const getCorrectOrder = (phrase) => {
+    // Remove pontuação e divide em palavras
+    return phrase.english
+      .replace(/[.,!?;:]/g, '')
+      .split(' ')
+      .filter(word => word.length > 0)
+      .map(word => word.trim());
+  };
+
+  const getShuffledWords = (phrase) => {
+    const words = getCorrectOrder(phrase);
+    // Embaralha as palavras usando Fisher-Yates
+    const shuffled = [...words];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return shuffled;
+  };
+
   const checkAnswer = () => {
-    const correct = JSON.stringify(userSentence) === JSON.stringify(currentEx.correctOrder);
+    const currentPhraseData = categoryPhrases[currentIndex];
+    if (!currentPhraseData) return;
+
+    const correctOrder = getCorrectOrder(currentPhraseData);
+    const correct = JSON.stringify(userSentence) === JSON.stringify(correctOrder);
     setIsCorrect(correct);
     setShowFeedback(true);
     
     if (correct) {
-      const points = currentEx.level * 10 + (showHint ? 0 : 5);
-      setScore(score + points);
       setStreak(streak + 1);
-      
-      // Marcar exercício como completo
-      setCompletedExercises(new Set([...completedExercises, currentExercise]));
       
       // Criar objeto phrase para o PhraseCard
       const phrase = {
-        id: `sentence-builder-${currentExercise}-${Date.now()}`,
-        text: currentEx.correctOrder.join(' '),
-        translation: currentEx.translation,
+        id: currentPhraseData.id,
+        text: currentPhraseData.english,
+        translation: currentPhraseData.portuguese,
         category: 'sentence-builder',
-        difficulty: `level-${currentEx.level}`,
-        index: currentExercise
+        difficulty: selectedCategory,
+        index: currentIndex
       };
       
       setCurrentPhrase(phrase);
       setShowPhraseCard(true);
       
-      // Ganhar XP (será ganho novamente quando completar a pronúncia)
-      const xpAmount = currentEx.level * 5 + (showHint ? 0 : 2);
+      // Ganhar XP
       earnXP('sentence_builder', {
-        level: currentEx.level,
-        exerciseIndex: currentExercise,
-        usedHint: showHint,
+        category: selectedCategory,
+        exerciseIndex: currentIndex,
         streak: streak + 1
       });
       
       // Track analytics
-      trackExerciseComplete('sentence_builder', 100, xpAmount, {
-        level: currentEx.level,
-        exerciseIndex: currentExercise,
-        usedHint: showHint,
+      trackExerciseComplete('sentence_builder', 100, 0, {
+        category: selectedCategory,
+        exerciseIndex: currentIndex,
         streak: streak + 1
       });
+      
+      dispatch(incrementPhraseCompleted());
     } else {
       setStreak(0);
       
       trackExerciseComplete('sentence_builder', 0, 0, {
-        level: currentEx.level,
-        exerciseIndex: currentExercise,
+        category: selectedCategory,
+        exerciseIndex: currentIndex,
         userAnswer: userSentence.join(' '),
-        correctAnswer: currentEx.correctOrder.join(' ')
+        correctAnswer: correctOrder.join(' ')
       });
     }
   };
 
   const handlePhraseCardComplete = () => {
-    // Quando o PhraseCard for completado, marcar como completo
     setPronunciationCompleted(true);
     trackUserAction('sentence_builder_pronunciation_completed', {
-      exerciseIndex: currentExercise,
-      level: currentEx.level
+      exerciseIndex: currentIndex,
+      category: selectedCategory
     });
   };
 
   const handlePhraseCardNext = () => {
-    // Quando clicar no botão Next do PhraseCard, avançar para o próximo exercício
+    // Marcar frase como completa
+    const currentPhraseData = categoryPhrases[currentIndex];
+    if (currentPhraseData) {
+      dispatch(markPhraseCompleted({
+        phraseId: currentPhraseData.id,
+        phraseIndex: currentIndex
+      }));
+      
+      // Salvar progresso específico do sentence builder
+      dispatch(markSentenceBuilderPhraseCompleted({
+        categoryId: selectedCategory,
+        phraseId: currentPhraseData.id,
+        currentIndex: currentIndex
+      }));
+      
+      if (mode === 'authenticated' && userId) {
+        setTimeout(() => {
+          dispatch(saveProgress());
+        }, 500);
+      }
+      
+      setCompletedInSession([...completedInSession, currentPhraseData.id]);
+    }
+    
+    // Avançar para próximo exercício
     nextExercise();
   };
 
@@ -226,26 +218,16 @@ const SentenceBuilder = () => {
     setShowPhraseCard(false);
     setCurrentPhrase(null);
     setPronunciationCompleted(false);
+    setUserSentence([]);
+    setShowFeedback(false);
+    setShowHint(false);
+    setShuffledWords([]);
     
-    if (currentExercise < exercises.length - 1) {
-      setCurrentExercise(currentExercise + 1);
-      setUserSentence([]);
-      setShowFeedback(false);
-      setShowHint(false);
-      setLevel(exercises[currentExercise + 1].level);
+    if (currentIndex < categoryPhrases.length - 1) {
+      setCurrentIndex(currentIndex + 1);
     } else {
-      // Reiniciar
-      setCurrentExercise(0);
-      setUserSentence([]);
-      setShowFeedback(false);
-      setShowHint(false);
-      setLevel(1);
-      setCompletedExercises(new Set());
-      
-      trackUserAction('sentence_builder_restarted', {
-        totalScore: score,
-        totalCompleted: completedExercises.size
-      });
+      // Reinicia do começo quando acabar
+      setCurrentIndex(0);
     }
   };
 
@@ -256,23 +238,159 @@ const SentenceBuilder = () => {
     setShowPhraseCard(false);
     setCurrentPhrase(null);
     setPronunciationCompleted(false);
+    // Re-embaralhar palavras ao resetar
+    if (currentPhraseData) {
+      setShuffledWords(getShuffledWords(currentPhraseData));
+    }
     
     trackUserAction('sentence_builder_reset', {
-      exerciseIndex: currentExercise
+      exerciseIndex: currentIndex,
+      category: selectedCategory
     });
   };
 
-  const availableWords = currentEx.words.filter(
-    word => !userSentence.includes(word) || 
-    currentEx.words.filter(w => w === word).length > userSentence.filter(w => w === word).length
-  );
+  // Calcula estatísticas da categoria
+  const getCategoryStats = (categoryId) => {
+    const phrases = builderPhrasesData.phrases[categoryId] || [];
+    const total = phrases.length;
+    
+    const categoryProgress = progress?.sentenceBuilder?.[categoryId];
+    const completedPhrasesInCategory = categoryProgress?.completedPhrases || [];
+    
+    const completedCount = completedPhrasesInCategory.length;
+
+    return {
+      total,
+      completed: completedCount,
+      percentage: total > 0 ? Math.round((completedCount / total) * 100) : 0
+    };
+  };
+
+  const currentPhraseData = categoryPhrases[currentIndex];
+  
+  // Memoizar palavras embaralhadas para evitar re-embaralhamento a cada render
+  const [shuffledWords, setShuffledWords] = useState([]);
+  
+  useEffect(() => {
+    if (currentPhraseData) {
+      setShuffledWords(getShuffledWords(currentPhraseData));
+    }
+  }, [currentPhraseData?.id]);
+  
+  const availableWords = currentPhraseData 
+    ? shuffledWords.filter(
+        word => {
+          const wordCountInSentence = userSentence.filter(w => w === word).length;
+          const wordCountInShuffled = shuffledWords.filter(w => w === word).length;
+          return wordCountInSentence < wordCountInShuffled;
+        }
+      )
+    : [];
+
+  const correctOrder = currentPhraseData ? getCorrectOrder(currentPhraseData) : [];
 
   // Track quando o componente é montado
   useEffect(() => {
-    trackUserAction('sentence_builder_opened', {
-      level: currentEx.level
-    });
+    trackUserAction('sentence_builder_opened', {});
   }, []);
+
+  // Tela de seleção de categoria
+  if (!selectedCategory) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 py-8 px-4">
+        <div className="max-w-4xl mx-auto">
+          {/* Header */}
+          <div className="text-center mb-12">
+            <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-cyan-500 to-blue-500 rounded-full mb-4 shadow-lg">
+              <Target className="w-10 h-10 text-white" />
+            </div>
+            <h1 className="text-4xl font-bold text-gray-800 mb-3">
+              🎯 Sentence Builder
+            </h1>
+            <p className="text-gray-600 text-lg">
+              Choose a word count and build sentences!
+            </p>
+          </div>
+
+          {/* Category Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            {WORD_COUNT_CATEGORIES.map((category) => {
+              const stats = getCategoryStats(category.id);
+
+              return (
+                <button
+                  key={category.id}
+                  onClick={() => handleCategorySelect(category.id)}
+                  className="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 p-6 text-left group hover:scale-105"
+                >
+                  {/* Header */}
+                  <div className="flex items-center justify-between mb-4">
+                    <div className={`bg-gradient-to-br ${category.color} p-4 rounded-xl shadow-md`}>
+                      <span className="text-2xl font-bold text-white">{category.count}</span>
+                    </div>
+                    <span className="text-3xl">{category.emoji}</span>
+                  </div>
+
+                  {/* Título */}
+                  <h3 className="text-xl font-bold text-gray-800 mb-2">
+                    {category.name}
+                  </h3>
+
+                  {/* Estatísticas */}
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between text-sm">
+                      <span className="text-gray-600">Progress:</span>
+                      <span className="font-bold text-gray-800">
+                        {stats.completed}/{stats.total}
+                      </span>
+                    </div>
+
+                    {/* Barra de progresso */}
+                    <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
+                      <div
+                        className={`h-full bg-gradient-to-r ${category.color} transition-all duration-500`}
+                        style={{ width: `${stats.percentage}%` }}
+                      />
+                    </div>
+
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs text-gray-500">
+                        {stats.percentage}% Complete
+                      </span>
+                      {stats.percentage === 100 && (
+                        <Trophy className="w-5 h-5 text-yellow-500" />
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Call to action */}
+                  <div className="mt-4 flex items-center text-blue-600 font-semibold group-hover:text-blue-700">
+                    <Play className="w-5 h-5 mr-2" />
+                    Start
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Tela de exercício
+  if (!currentPhraseData) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-blue-600 mx-auto mb-4"></div>
+          <p className="text-gray-600 text-lg">Loading phrases...</p>
+        </div>
+      </div>
+    );
+  }
+
+  const categoryInfo = WORD_COUNT_CATEGORIES.find(cat => cat.id === selectedCategory);
+  const stats = getCategoryStats(selectedCategory);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 p-4 md:p-6">
@@ -280,35 +398,41 @@ const SentenceBuilder = () => {
         {/* Header */}
         <div className="bg-white rounded-2xl shadow-lg p-4 md:p-6 mb-6">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4 gap-4">
-            <div>
-              <h1 className="text-2xl md:text-3xl font-bold text-gray-800 flex items-center gap-2">
-                🎯 English Sentence Builder
-              </h1>
-              <p className="text-gray-600 mt-1 text-sm md:text-base">
-                Aprenda a construir frases em inglês de forma divertida
-              </p>
+            <div className="flex items-center gap-4">
+              <button
+                onClick={() => {
+                  setSelectedCategory(null);
+                  setCurrentIndex(0);
+                  setUserSentence([]);
+                  setShowFeedback(false);
+                  setShowPhraseCard(false);
+                }}
+                className="p-2 hover:bg-gray-100 rounded-lg transition-all"
+                tabIndex={0}
+                aria-label="Voltar para seleção de categorias"
+              >
+                <ArrowLeft className="w-6 h-6 text-gray-600" />
+              </button>
+              <div>
+                <h1 className="text-2xl md:text-3xl font-bold text-gray-800 flex items-center gap-2">
+                  🎯 Sentence Builder
+                </h1>
+                <p className="text-gray-600 mt-1 text-sm md:text-base">
+                  {categoryInfo?.name} - {stats.completed}/{stats.total} completed
+                </p>
+              </div>
             </div>
             <div className="flex items-center gap-2 md:gap-4">
-              <div className="bg-indigo-100 px-3 md:px-4 py-2 rounded-lg">
-                <div className="text-xs text-indigo-600 font-semibold">NÍVEL</div>
-                <div className="text-xl md:text-2xl font-bold text-indigo-700">{currentEx.level}</div>
-              </div>
-              <div className="bg-green-100 px-3 md:px-4 py-2 rounded-lg">
-                <div className="text-xs text-green-600 font-semibold">PONTOS</div>
-                <div className="text-xl md:text-2xl font-bold text-green-700">{score}</div>
-              </div>
+              {streak > 0 && (
+                <div className="flex items-center gap-2 bg-orange-100 px-4 py-2 rounded-lg">
+                  <Zap className="text-orange-500" size={20} />
+                  <span className="text-orange-700 font-semibold text-sm md:text-base">
+                    {streak} 🔥
+                  </span>
+                </div>
+              )}
             </div>
           </div>
-
-          {/* Streak */}
-          {streak > 0 && (
-            <div className="flex items-center gap-2 bg-orange-100 px-4 py-2 rounded-lg w-fit">
-              <Zap className="text-orange-500" size={20} />
-              <span className="text-orange-700 font-semibold text-sm md:text-base">
-                Sequência: {streak} {streak === 1 ? 'acerto' : 'acertos'}! 🔥
-              </span>
-            </div>
-          )}
         </div>
 
         {/* Exercise Card */}
@@ -316,14 +440,14 @@ const SentenceBuilder = () => {
           <div className="mb-6">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2 gap-2">
               <span className="text-sm font-semibold text-indigo-600 bg-indigo-100 px-3 py-1 rounded-full w-fit">
-                Exercício {currentExercise + 1} de {exercises.length}
+                Phrase {currentIndex + 1} of {categoryPhrases.length}
               </span>
               <button
                 onClick={() => {
                   setShowHint(!showHint);
                   if (!showHint) {
                     trackUserAction('sentence_builder_hint_shown', {
-                      exerciseIndex: currentExercise
+                      exerciseIndex: currentIndex
                     });
                   }
                 }}
@@ -339,7 +463,10 @@ const SentenceBuilder = () => {
             <h2 className="text-xl md:text-2xl font-bold text-gray-800 mb-2">
               Traduza para o inglês:
             </h2>
-            <p className="text-lg md:text-xl text-gray-700 italic">"{currentEx.translation}"</p>
+            <p className="text-lg md:text-xl text-gray-700 italic">"{currentPhraseData.portuguese}"</p>
+            {currentPhraseData.context && (
+              <p className="text-sm text-gray-500 mt-2">Context: {currentPhraseData.context}</p>
+            )}
           </div>
 
           {/* Hint */}
@@ -347,7 +474,7 @@ const SentenceBuilder = () => {
             <div className="mb-6 bg-amber-50 border-l-4 border-amber-400 p-4 rounded">
               <p className="text-amber-800 flex items-start gap-2 text-sm md:text-base">
                 <Lightbulb size={20} className="mt-0.5 flex-shrink-0" />
-                <span><strong>Dica:</strong> {currentEx.hint}</span>
+                <span><strong>Dica:</strong> A frase tem {categoryInfo?.count} palavras. Organize-as na ordem correta!</span>
               </p>
             </div>
           )}
@@ -436,18 +563,13 @@ const SentenceBuilder = () => {
                   {!isCorrect && (
                     <>
                       <p className="text-red-700 mb-2 text-sm md:text-base">
-                        <strong>Resposta correta:</strong> {currentEx.correctOrder.join(' ')}
+                        <strong>Resposta correta:</strong> {correctOrder.join(' ')}
                       </p>
                       <p className="text-red-700 mb-2 text-sm md:text-base">
                         <strong>Sua resposta:</strong> {userSentence.join(' ')}
                       </p>
                     </>
                   )}
-                  <div className="bg-white bg-opacity-50 p-3 rounded-lg mt-3">
-                    <p className="text-sm font-medium text-gray-800">
-                      💡 {currentEx.explanation}
-                    </p>
-                  </div>
                 </div>
               </div>
             </div>
@@ -459,17 +581,17 @@ const SentenceBuilder = () => {
               <>
                 <button
                   onClick={checkAnswer}
-                  disabled={userSentence.length !== currentEx.correctOrder.length}
+                  disabled={userSentence.length !== correctOrder.length}
                   onKeyDown={(e) => {
-                    if ((e.key === 'Enter' || e.key === ' ') && userSentence.length === currentEx.correctOrder.length) {
+                    if ((e.key === 'Enter' || e.key === ' ') && userSentence.length === correctOrder.length) {
                       e.preventDefault();
                       checkAnswer();
                     }
                   }}
-                  tabIndex={userSentence.length === currentEx.correctOrder.length ? 0 : -1}
+                  tabIndex={userSentence.length === correctOrder.length ? 0 : -1}
                   aria-label="Verificar resposta"
                   className={`flex-1 py-3 rounded-xl font-semibold transition-all text-sm md:text-base ${
-                    userSentence.length === currentEx.correctOrder.length
+                    userSentence.length === correctOrder.length
                       ? 'bg-indigo-600 text-white hover:bg-indigo-700'
                       : 'bg-gray-200 text-gray-400 cursor-not-allowed'
                   }`}
@@ -503,10 +625,10 @@ const SentenceBuilder = () => {
                     }
                   }}
                   tabIndex={0}
-                  aria-label={currentExercise < exercises.length - 1 ? 'Próximo exercício' : 'Recomeçar'}
+                  aria-label="Próximo exercício"
                   className="flex-1 py-3 bg-indigo-600 text-white rounded-xl font-semibold hover:bg-indigo-700 transition-all text-sm md:text-base"
                 >
-                  {currentExercise < exercises.length - 1 ? 'Próximo Exercício →' : '🔄 Recomeçar'}
+                  Próximo Exercício →
                 </button>
               )
             )}
@@ -521,7 +643,7 @@ const SentenceBuilder = () => {
                 🎉 Frase correta! Agora pronuncie:
               </h2>
               <p className="text-gray-600 text-sm md:text-base">
-                Complete a pronúncia e clique em "Próximo" para avançar
+                Complete a pronúncia e clique em "Next" para avançar
               </p>
             </div>
             
@@ -540,18 +662,18 @@ const SentenceBuilder = () => {
             {pronunciationCompleted && (
               <div className="mt-6 pt-6 border-t border-gray-200">
                 <button
-                  onClick={nextExercise}
+                  onClick={handlePhraseCardNext}
                   onKeyDown={(e) => {
                     if (e.key === 'Enter' || e.key === ' ') {
                       e.preventDefault();
-                      nextExercise();
+                      handlePhraseCardNext();
                     }
                   }}
                   tabIndex={0}
-                  aria-label={currentExercise < exercises.length - 1 ? 'Próximo exercício' : 'Recomeçar'}
+                  aria-label="Próximo exercício"
                   className="w-full py-3 bg-indigo-600 text-white rounded-xl font-semibold hover:bg-indigo-700 transition-all text-sm md:text-base"
                 >
-                  {currentExercise < exercises.length - 1 ? 'Próximo Exercício →' : '🔄 Recomeçar'}
+                  Próximo Exercício →
                 </button>
               </div>
             )}
@@ -566,13 +688,18 @@ const SentenceBuilder = () => {
           </div>
           <div className="w-full bg-gray-200 rounded-full h-3 mb-2">
             <div
-              className="bg-gradient-to-r from-indigo-500 to-purple-500 h-3 rounded-full transition-all duration-500"
-              style={{ width: `${((currentExercise + (showFeedback && isCorrect ? 1 : 0)) / exercises.length) * 100}%` }}
+              className={`h-full bg-gradient-to-r ${categoryInfo?.color} rounded-full transition-all duration-500`}
+              style={{ width: `${stats.percentage}%` }}
             />
           </div>
           <p className="text-sm text-gray-600">
-            {currentExercise + (showFeedback && isCorrect ? 1 : 0)} de {exercises.length} exercícios completados
+            {stats.completed} de {stats.total} frases completadas ({stats.percentage}%)
           </p>
+          {completedInSession.length > 0 && (
+            <p className="text-sm text-green-600 mt-2">
+              🎉 {completedInSession.length} frase{completedInSession.length > 1 ? 's' : ''} completada{completedInSession.length > 1 ? 's' : ''} nesta sessão!
+            </p>
+          )}
         </div>
       </div>
     </div>
@@ -580,4 +707,3 @@ const SentenceBuilder = () => {
 };
 
 export default SentenceBuilder;
-

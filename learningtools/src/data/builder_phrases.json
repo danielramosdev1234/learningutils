@@ -1,0 +1,2927 @@
+{
+  "phrases": {
+    "3_words": [
+      {
+        "english": "How are you?",
+        "portuguese": "Como você está?",
+        "context": "Cumprimento diário",
+        "frequency": "very_high",
+        "category": "greetings"
+      },
+      {
+        "english": "I don't know.",
+        "portuguese": "Eu não sei.",
+        "context": "Resposta comum",
+        "frequency": "very_high",
+        "category": "common_responses"
+      },
+      {
+        "english": "Thank you much.",
+        "portuguese": "Muito obrigado.",
+        "context": "Agradecimento",
+        "frequency": "very_high",
+        "category": "courtesy"
+      },
+      {
+        "english": "See you later.",
+        "portuguese": "Até mais tarde.",
+        "context": "Despedida casual",
+        "frequency": "very_high",
+        "category": "goodbyes"
+      },
+      {
+        "english": "I'm so tired.",
+        "portuguese": "Estou muito cansado.",
+        "context": "Estado físico",
+        "frequency": "high",
+        "category": "feelings"
+      },
+      {
+        "english": "What's your name?",
+        "portuguese": "Qual seu nome?",
+        "context": "Apresentação inicial",
+        "frequency": "very_high",
+        "category": "introductions"
+      },
+      {
+        "english": "I love you.",
+        "portuguese": "Eu te amo.",
+        "context": "Expressão de afeto",
+        "frequency": "high",
+        "category": "emotions"
+      },
+      {
+        "english": "I'm really hungry.",
+        "portuguese": "Estou com muita fome.",
+        "context": "Necessidade básica",
+        "frequency": "very_high",
+        "category": "needs"
+      },
+      {
+        "english": "Excuse me, please.",
+        "portuguese": "Com licença, por favor.",
+        "context": "Pedido de atenção",
+        "frequency": "very_high",
+        "category": "courtesy"
+      },
+      {
+        "english": "I'm coming back.",
+        "portuguese": "Estou voltando.",
+        "context": "Retorno breve",
+        "frequency": "very_high",
+        "category": "common_phrases"
+      },
+      {
+        "english": "Wait for me.",
+        "portuguese": "Espere por mim.",
+        "context": "Pedido de espera",
+        "frequency": "very_high",
+        "category": "requests"
+      },
+      {
+        "english": "Let's go now.",
+        "portuguese": "Vamos agora.",
+        "context": "Convite para sair",
+        "frequency": "very_high",
+        "category": "actions"
+      },
+      {
+        "english": "I got it.",
+        "portuguese": "Eu entendi.",
+        "context": "Confirmação de entendimento",
+        "frequency": "very_high",
+        "category": "understanding"
+      },
+      {
+        "english": "That sounds good.",
+        "portuguese": "Isso parece bom.",
+        "context": "Aprovação",
+        "frequency": "very_high",
+        "category": "agreement"
+      },
+      {
+        "english": "Never mind that.",
+        "portuguese": "Deixa pra lá.",
+        "context": "Desistência de assunto",
+        "frequency": "very_high",
+        "category": "conversation"
+      },
+      {
+        "english": "I'm not sure.",
+        "portuguese": "Não tenho certeza.",
+        "context": "Incerteza",
+        "frequency": "very_high",
+        "category": "common_responses"
+      },
+      {
+        "english": "You're absolutely right.",
+        "portuguese": "Você está absolutamente certo.",
+        "context": "Concordância forte",
+        "frequency": "high",
+        "category": "agreement"
+      },
+      {
+        "english": "I'll call you.",
+        "portuguese": "Eu te ligo.",
+        "context": "Promessa de contato",
+        "frequency": "very_high",
+        "category": "communication"
+      },
+      {
+        "english": "That's not mine.",
+        "portuguese": "Isso não é meu.",
+        "context": "Negação de posse",
+        "frequency": "high",
+        "category": "possession"
+      },
+      {
+        "english": "I'm almost done.",
+        "portuguese": "Estou quase terminando.",
+        "context": "Progresso de tarefa",
+        "frequency": "very_high",
+        "category": "work"
+      },
+      {
+        "english": "Hold on tight.",
+        "portuguese": "Segure firme.",
+        "context": "Aviso de segurança",
+        "frequency": "high",
+        "category": "safety"
+      },
+      {
+        "english": "What's going on?",
+        "portuguese": "O que está acontecendo?",
+        "context": "Pergunta sobre situação",
+        "frequency": "very_high",
+        "category": "questions"
+      },
+      {
+        "english": "I totally agree.",
+        "portuguese": "Concordo totalmente.",
+        "context": "Concordância completa",
+        "frequency": "very_high",
+        "category": "agreement"
+      },
+      {
+        "english": "Can you drive?",
+        "portuguese": "Você sabe dirigir?",
+        "context": "Pergunta sobre habilidade",
+        "frequency": "high",
+        "category": "abilities"
+      },
+      {
+        "english": "I feel better.",
+        "portuguese": "Me sinto melhor.",
+        "context": "Melhora de estado",
+        "frequency": "high",
+        "category": "health"
+      },
+      {
+        "english": "That's too expensive.",
+        "portuguese": "Isso é muito caro.",
+        "context": "Reação a preço",
+        "frequency": "very_high",
+        "category": "shopping"
+      },
+      {
+        "english": "I miss you.",
+        "portuguese": "Sinto sua falta.",
+        "context": "Expressão de saudade",
+        "frequency": "high",
+        "category": "emotions"
+      },
+      {
+        "english": "Please hurry up.",
+        "portuguese": "Por favor, se apresse.",
+        "context": "Pedido de rapidez",
+        "frequency": "very_high",
+        "category": "urgency"
+      },
+      {
+        "english": "It's my turn.",
+        "portuguese": "É minha vez.",
+        "context": "Indicação de turno",
+        "frequency": "high",
+        "category": "queue"
+      },
+      {
+        "english": "I'm leaving now.",
+        "portuguese": "Estou saindo agora.",
+        "context": "Aviso de partida",
+        "frequency": "very_high",
+        "category": "leaving"
+      },
+      {
+        "english": "That makes sense.",
+        "portuguese": "Isso faz sentido.",
+        "context": "Compreensão lógica",
+        "frequency": "very_high",
+        "category": "understanding"
+      },
+      {
+        "english": "Count me in.",
+        "portuguese": "Pode me incluir.",
+        "context": "Aceitação de convite",
+        "frequency": "high",
+        "category": "agreement"
+      },
+      {
+        "english": "I can't wait.",
+        "portuguese": "Mal posso esperar.",
+        "context": "Ansiedade positiva",
+        "frequency": "high",
+        "category": "emotions"
+      },
+      {
+        "english": "It's not working.",
+        "portuguese": "Não está funcionando.",
+        "context": "Problema técnico",
+        "frequency": "very_high",
+        "category": "technical"
+      },
+      {
+        "english": "Let me think.",
+        "portuguese": "Deixe-me pensar.",
+        "context": "Pedido de tempo",
+        "frequency": "very_high",
+        "category": "thinking"
+      },
+      {
+        "english": "I'm just kidding.",
+        "portuguese": "Estou só brincando.",
+        "context": "Esclarecimento de piada",
+        "frequency": "very_high",
+        "category": "humor"
+      },
+      {
+        "english": "Take your time.",
+        "portuguese": "Sem pressa.",
+        "context": "Dar tempo a alguém",
+        "frequency": "very_high",
+        "category": "patience"
+      },
+      {
+        "english": "I forgot everything.",
+        "portuguese": "Esqueci tudo.",
+        "context": "Admissão de esquecimento",
+        "frequency": "high",
+        "category": "memory"
+      },
+      {
+        "english": "That was close.",
+        "portuguese": "Foi por pouco.",
+        "context": "Escapada estreita",
+        "frequency": "high",
+        "category": "relief"
+      },
+      {
+        "english": "I'm so sorry.",
+        "portuguese": "Sinto muito mesmo.",
+        "context": "Desculpa sincera",
+        "frequency": "very_high",
+        "category": "apologies"
+      },
+      {
+        "english": "Stay right there.",
+        "portuguese": "Fique aí mesmo.",
+        "context": "Pedido para não se mover",
+        "frequency": "high",
+        "category": "instructions"
+      },
+      {
+        "english": "I need help.",
+        "portuguese": "Preciso de ajuda.",
+        "context": "Pedido de auxílio",
+        "frequency": "very_high",
+        "category": "assistance"
+      },
+      {
+        "english": "That's not fair.",
+        "portuguese": "Isso não é justo.",
+        "context": "Reclamação de injustiça",
+        "frequency": "high",
+        "category": "complaints"
+      },
+      {
+        "english": "Watch out ahead.",
+        "portuguese": "Cuidado à frente.",
+        "context": "Aviso de perigo",
+        "frequency": "high",
+        "category": "warnings"
+      },
+      {
+        "english": "I'll be there.",
+        "portuguese": "Estarei lá.",
+        "context": "Promessa de presença",
+        "frequency": "very_high",
+        "category": "commitments"
+      },
+      {
+        "english": "What's the problem?",
+        "portuguese": "Qual o problema?",
+        "context": "Pergunta sobre dificuldade",
+        "frequency": "very_high",
+        "category": "questions"
+      },
+      {
+        "english": "I changed mind.",
+        "portuguese": "Mudei de ideia.",
+        "context": "Mudança de decisão",
+        "frequency": "very_high",
+        "category": "decisions"
+      },
+      {
+        "english": "That's really cool.",
+        "portuguese": "Isso é muito legal.",
+        "context": "Admiração",
+        "frequency": "very_high",
+        "category": "reactions"
+      },
+      {
+        "english": "I'll take it.",
+        "portuguese": "Eu vou levar.",
+        "context": "Decisão de compra",
+        "frequency": "high",
+        "category": "shopping"
+      },
+      {
+        "english": "You look great.",
+        "portuguese": "Você está ótimo.",
+        "context": "Elogio de aparência",
+        "frequency": "high",
+        "category": "compliments"
+      }
+    ],
+    "4_words": [
+      {
+        "english": "Can I help you?",
+        "portuguese": "Posso te ajudar?",
+        "context": "Oferta de ajuda",
+        "frequency": "very_high",
+        "category": "assistance"
+      },
+      {
+        "english": "Where is the bathroom?",
+        "portuguese": "Onde fica o banheiro?",
+        "context": "Pergunta essencial em lugares públicos",
+        "frequency": "very_high",
+        "category": "directions"
+      },
+      {
+        "english": "I need some water.",
+        "portuguese": "Preciso de água.",
+        "context": "Necessidade básica",
+        "frequency": "very_high",
+        "category": "needs"
+      },
+      {
+        "english": "What time is it?",
+        "portuguese": "Que horas são?",
+        "context": "Pergunta sobre horário",
+        "frequency": "very_high",
+        "category": "time"
+      },
+      {
+        "english": "I'll be right back.",
+        "portuguese": "Já volto.",
+        "context": "Ausência temporária",
+        "frequency": "very_high",
+        "category": "common_phrases"
+      },
+      {
+        "english": "Can you repeat that?",
+        "portuguese": "Pode repetir isso?",
+        "context": "Pedido de repetição",
+        "frequency": "very_high",
+        "category": "communication"
+      },
+      {
+        "english": "I don't understand you.",
+        "portuguese": "Não estou te entendendo.",
+        "context": "Dificuldade de compreensão",
+        "frequency": "very_high",
+        "category": "communication"
+      },
+      {
+        "english": "How much is this?",
+        "portuguese": "Quanto custa isso?",
+        "context": "Compras e negociações",
+        "frequency": "very_high",
+        "category": "shopping"
+      },
+      {
+        "english": "I'm on my way.",
+        "portuguese": "Estou a caminho.",
+        "context": "Aviso de deslocamento",
+        "frequency": "very_high",
+        "category": "travel"
+      },
+      {
+        "english": "That's a good idea.",
+        "portuguese": "Essa é uma boa ideia.",
+        "context": "Aprovação de sugestão",
+        "frequency": "very_high",
+        "category": "agreement"
+      },
+      {
+        "english": "Let me see that.",
+        "portuguese": "Deixe-me ver isso.",
+        "context": "Pedido para observar",
+        "frequency": "very_high",
+        "category": "requests"
+      },
+      {
+        "english": "I have a question.",
+        "portuguese": "Tenho uma pergunta.",
+        "context": "Iniciar dúvida",
+        "frequency": "very_high",
+        "category": "questions"
+      },
+      {
+        "english": "What do you mean?",
+        "portuguese": "O que você quer dizer?",
+        "context": "Pedido de esclarecimento",
+        "frequency": "very_high",
+        "category": "clarification"
+      },
+      {
+        "english": "I have to go.",
+        "portuguese": "Tenho que ir.",
+        "context": "Necessidade de partir",
+        "frequency": "very_high",
+        "category": "leaving"
+      },
+      {
+        "english": "Can you believe that?",
+        "portuguese": "Você acredita nisso?",
+        "context": "Surpresa compartilhada",
+        "frequency": "high",
+        "category": "reactions"
+      },
+      {
+        "english": "I'm running late today.",
+        "portuguese": "Estou me atrasando hoje.",
+        "context": "Aviso de atraso",
+        "frequency": "very_high",
+        "category": "time"
+      },
+      {
+        "english": "That's not what happened.",
+        "portuguese": "Não foi isso que aconteceu.",
+        "context": "Correção de informação",
+        "frequency": "high",
+        "category": "clarification"
+      },
+      {
+        "english": "Do you have time?",
+        "portuguese": "Você tem tempo?",
+        "context": "Verificar disponibilidade",
+        "frequency": "very_high",
+        "category": "scheduling"
+      },
+      {
+        "english": "I can't find it.",
+        "portuguese": "Não consigo encontrar.",
+        "context": "Objeto perdido",
+        "frequency": "very_high",
+        "category": "problems"
+      },
+      {
+        "english": "Where are you from?",
+        "portuguese": "De onde você é?",
+        "context": "Conhecendo alguém",
+        "frequency": "very_high",
+        "category": "introductions"
+      },
+      {
+        "english": "I'll think about it.",
+        "portuguese": "Vou pensar sobre isso.",
+        "context": "Adiamento de decisão",
+        "frequency": "very_high",
+        "category": "decisions"
+      },
+      {
+        "english": "What's your phone number?",
+        "portuguese": "Qual seu número de telefone?",
+        "context": "Pedido de contato",
+        "frequency": "high",
+        "category": "contact"
+      },
+      {
+        "english": "I can't do that.",
+        "portuguese": "Não posso fazer isso.",
+        "context": "Recusa de pedido",
+        "frequency": "very_high",
+        "category": "refusal"
+      },
+      {
+        "english": "That's up to you.",
+        "portuguese": "Isso depende de você.",
+        "context": "Deixar decisão para outro",
+        "frequency": "high",
+        "category": "decisions"
+      },
+      {
+        "english": "I need more time.",
+        "portuguese": "Preciso de mais tempo.",
+        "context": "Pedido de prazo",
+        "frequency": "very_high",
+        "category": "time"
+      },
+      {
+        "english": "How was your day?",
+        "portuguese": "Como foi seu dia?",
+        "context": "Conversa casual",
+        "frequency": "very_high",
+        "category": "small_talk"
+      },
+      {
+        "english": "I'm stuck in traffic.",
+        "portuguese": "Estou preso no trânsito.",
+        "context": "Explicação de atraso",
+        "frequency": "very_high",
+        "category": "travel"
+      },
+      {
+        "english": "Can we talk later?",
+        "portuguese": "Podemos conversar depois?",
+        "context": "Adiamento de conversa",
+        "frequency": "very_high",
+        "category": "communication"
+      },
+      {
+        "english": "I'm doing my best.",
+        "portuguese": "Estou fazendo meu melhor.",
+        "context": "Defesa de esforço",
+        "frequency": "high",
+        "category": "work"
+      },
+      {
+        "english": "Where did you go?",
+        "portuguese": "Onde você foi?",
+        "context": "Pergunta sobre localização",
+        "frequency": "very_high",
+        "category": "questions"
+      },
+      {
+        "english": "I'll get back soon.",
+        "portuguese": "Volto em breve.",
+        "context": "Promessa de retorno",
+        "frequency": "very_high",
+        "category": "commitments"
+      },
+      {
+        "english": "That was my fault.",
+        "portuguese": "Foi culpa minha.",
+        "context": "Admissão de erro",
+        "frequency": "high",
+        "category": "apologies"
+      },
+      {
+        "english": "I need your help.",
+        "portuguese": "Preciso da sua ajuda.",
+        "context": "Pedido direto de auxílio",
+        "frequency": "very_high",
+        "category": "assistance"
+      },
+      {
+        "english": "What are you doing?",
+        "portuguese": "O que você está fazendo?",
+        "context": "Pergunta sobre atividade",
+        "frequency": "very_high",
+        "category": "questions"
+      },
+      {
+        "english": "I don't feel well.",
+        "portuguese": "Não me sinto bem.",
+        "context": "Relato de mal-estar",
+        "frequency": "very_high",
+        "category": "health"
+      },
+      {
+        "english": "Can I try this?",
+        "portuguese": "Posso experimentar isso?",
+        "context": "Pedido em loja",
+        "frequency": "high",
+        "category": "shopping"
+      },
+      {
+        "english": "I'm almost ready now.",
+        "portuguese": "Estou quase pronto agora.",
+        "context": "Status de preparação",
+        "frequency": "very_high",
+        "category": "preparation"
+      },
+      {
+        "english": "That's not my problem.",
+        "portuguese": "Esse não é meu problema.",
+        "context": "Negação de responsabilidade",
+        "frequency": "medium",
+        "category": "boundaries"
+      },
+      {
+        "english": "I'll let you know.",
+        "portuguese": "Eu te aviso.",
+        "context": "Promessa de informar",
+        "frequency": "very_high",
+        "category": "communication"
+      },
+      {
+        "english": "Where should we meet?",
+        "portuguese": "Onde devemos nos encontrar?",
+        "context": "Planejamento de encontro",
+        "frequency": "very_high",
+        "category": "scheduling"
+      },
+      {
+        "english": "I completely forgot that.",
+        "portuguese": "Esqueci completamente disso.",
+        "context": "Admissão de esquecimento",
+        "frequency": "high",
+        "category": "memory"
+      },
+      {
+        "english": "Do you like it?",
+        "portuguese": "Você gosta disso?",
+        "context": "Pergunta de opinião",
+        "frequency": "very_high",
+        "category": "opinions"
+      },
+      {
+        "english": "I'm not feeling well.",
+        "portuguese": "Não estou me sentindo bem.",
+        "context": "Relato de saúde",
+        "frequency": "very_high",
+        "category": "health"
+      },
+      {
+        "english": "Can you show me?",
+        "portuguese": "Você pode me mostrar?",
+        "context": "Pedido de demonstração",
+        "frequency": "very_high",
+        "category": "learning"
+      },
+      {
+        "english": "I'm here for you.",
+        "portuguese": "Estou aqui por você.",
+        "context": "Oferta de apoio",
+        "frequency": "high",
+        "category": "support"
+      },
+      {
+        "english": "What's the Wi-Fi password?",
+        "portuguese": "Qual a senha do Wi-Fi?",
+        "context": "Pergunta comum em locais",
+        "frequency": "very_high",
+        "category": "technical"
+      },
+      {
+        "english": "I'm just checking in.",
+        "portuguese": "Só estou dando notícias.",
+        "context": "Contato de acompanhamento",
+        "frequency": "high",
+        "category": "communication"
+      },
+      {
+        "english": "That sounds really interesting.",
+        "portuguese": "Isso parece muito interessante.",
+        "context": "Demonstrar interesse",
+        "frequency": "high",
+        "category": "reactions"
+      },
+      {
+        "english": "I'm working from home.",
+        "portuguese": "Estou trabalhando de casa.",
+        "context": "Informar localização de trabalho",
+        "frequency": "very_high",
+        "category": "work"
+      },
+      {
+        "english": "Can I get this?",
+        "portuguese": "Posso pegar isto?",
+        "context": "Pedido em loja/restaurante",
+        "frequency": "very_high",
+        "category": "ordering"
+      }
+    ],
+    "5_words": [
+      {
+        "english": "I'd like a cup of coffee.",
+        "portuguese": "Eu gostaria de um café.",
+        "context": "Pedido em restaurante/café",
+        "frequency": "very_high",
+        "category": "ordering"
+      },
+      {
+        "english": "Can I have the bill, please?",
+        "portuguese": "Pode trazer a conta, por favor?",
+        "context": "Finalização em restaurante",
+        "frequency": "very_high",
+        "category": "restaurant"
+      },
+      {
+        "english": "I'm sorry, I'm running late.",
+        "portuguese": "Desculpe, estou me atrasando.",
+        "context": "Atraso em compromisso",
+        "frequency": "very_high",
+        "category": "apologies"
+      },
+      {
+        "english": "Do you speak English fluently now?",
+        "portuguese": "Você fala inglês fluentemente agora?",
+        "context": "Verificar habilidade linguística",
+        "frequency": "high",
+        "category": "language"
+      },
+      {
+        "english": "I need to go home now.",
+        "portuguese": "Preciso ir para casa agora.",
+        "context": "Saída de local/evento",
+        "frequency": "very_high",
+        "category": "leaving"
+      },
+      {
+        "english": "Could you speak more slowly, please?",
+        "portuguese": "Poderia falar mais devagar, por favor?",
+        "context": "Dificuldade de compreensão",
+        "frequency": "high",
+        "category": "communication"
+      },
+      {
+        "english": "I have a question for you.",
+        "portuguese": "Tenho uma pergunta para você.",
+        "context": "Iniciar conversa/dúvida",
+        "frequency": "very_high",
+        "category": "conversation"
+      },
+      {
+        "english": "What do you do for work?",
+        "portuguese": "O que você faz de trabalho?",
+        "context": "Conhecendo alguém",
+        "frequency": "very_high",
+        "category": "small_talk"
+      },
+      {
+        "english": "Can you send me that file?",
+        "portuguese": "Você pode me enviar aquele arquivo?",
+        "context": "Pedido profissional",
+        "frequency": "very_high",
+        "category": "work"
+      },
+      {
+        "english": "I'll be there in five minutes.",
+        "portuguese": "Estarei aí em cinco minutos.",
+        "context": "Estimativa de tempo de chegada",
+        "frequency": "very_high",
+        "category": "time"
+      },
+      {
+        "english": "What's the best way to learn?",
+        "portuguese": "Qual a melhor forma de aprender?",
+        "context": "Pedido de conselho educacional",
+        "frequency": "high",
+        "category": "learning"
+      },
+      {
+        "english": "I don't have time right now.",
+        "portuguese": "Não tenho tempo agora.",
+        "context": "Recusa por falta de tempo",
+        "frequency": "very_high",
+        "category": "refusal"
+      },
+      {
+        "english": "Where can I find a taxi?",
+        "portuguese": "Onde posso encontrar um táxi?",
+        "context": "Procurando transporte",
+        "frequency": "high",
+        "category": "travel"
+      },
+      {
+        "english": "I'll get back to you soon.",
+        "portuguese": "Eu retorno para você em breve.",
+        "context": "Promessa de resposta",
+        "frequency": "very_high",
+        "category": "communication"
+      },
+      {
+        "english": "Can you help me with this?",
+        "portuguese": "Você pode me ajudar com isso?",
+        "context": "Pedido de assistência específica",
+        "frequency": "very_high",
+        "category": "assistance"
+      },
+      {
+        "english": "I'm not interested in that offer.",
+        "portuguese": "Não estou interessado nessa oferta.",
+        "context": "Recusa de proposta",
+        "frequency": "high",
+        "category": "refusal"
+      },
+      {
+        "english": "What time do you get off?",
+        "portuguese": "Que horas você sai do trabalho?",
+        "context": "Pergunta sobre horário de término",
+        "frequency": "high",
+        "category": "scheduling"
+      },
+      {
+        "english": "I need to charge my phone.",
+        "portuguese": "Preciso carregar meu telefone.",
+        "context": "Necessidade de bateria",
+        "frequency": "very_high",
+        "category": "daily_life"
+      },
+      {
+        "english": "Can I get a receipt, please?",
+        "portuguese": "Posso pegar um recibo, por favor?",
+        "context": "Solicitação em compra",
+        "frequency": "high",
+        "category": "shopping"
+      },
+      {
+        "english": "I'm looking for the train station.",
+        "portuguese": "Estou procurando a estação de trem.",
+        "context": "Pedindo direções",
+        "frequency": "high",
+        "category": "directions"
+      },
+      {
+        "english": "How long will it take today?",
+        "portuguese": "Quanto tempo vai levar hoje?",
+        "context": "Estimativa de duração",
+        "frequency": "very_high",
+        "category": "time"
+      },
+      {
+        "english": "I have to finish this first.",
+        "portuguese": "Tenho que terminar isso primeiro.",
+        "context": "Priorização de tarefas",
+        "frequency": "very_high",
+        "category": "work"
+      },
+      {
+        "english": "What are you talking about exactly?",
+        "portuguese": "Do que você está falando exatamente?",
+        "context": "Pedido de esclarecimento",
+        "frequency": "high",
+        "category": "clarification"
+      },
+      {
+        "english": "I'm trying my best here now.",
+        "portuguese": "Estou dando meu melhor aqui agora.",
+        "context": "Defesa de esforço",
+        "frequency": "high",
+        "category": "work"
+      },
+      {
+        "english": "Can we meet tomorrow for lunch?",
+        "portuguese": "Podemos nos encontrar amanhã para almoçar?",
+        "context": "Convite para refeição",
+        "frequency": "high",
+        "category": "social"
+      },
+      {
+        "english": "I need to take a break.",
+        "portuguese": "Preciso fazer uma pausa.",
+        "context": "Necessidade de descanso",
+        "frequency": "very_high",
+        "category": "work"
+      },
+      {
+        "english": "Where did you put my keys?",
+        "portuguese": "Onde você colocou minhas chaves?",
+        "context": "Procurando objeto perdido",
+        "frequency": "high",
+        "category": "daily_life"
+      },
+      {
+        "english": "I can't believe you did that!",
+        "portuguese": "Não acredito que você fez isso!",
+        "context": "Surpresa ou indignação",
+        "frequency": "high",
+        "category": "reactions"
+      },
+      {
+        "english": "What do you think about this?",
+        "portuguese": "O que você acha sobre isso?",
+        "context": "Pedindo opinião",
+        "frequency": "very_high",
+        "category": "opinions"
+      },
+      {
+        "english": "I'm going to bed right now.",
+        "portuguese": "Vou dormir agora mesmo.",
+        "context": "Anúncio de sono",
+        "frequency": "high",
+        "category": "daily_life"
+      },
+      {
+        "english": "Can you turn down the volume?",
+        "portuguese": "Você pode abaixar o volume?",
+        "context": "Pedido sobre barulho",
+        "frequency": "high",
+        "category": "requests"
+      },
+      {
+        "english": "I'll pick you up at eight.",
+        "portuguese": "Vou te buscar às oito.",
+        "context": "Combinação de transporte",
+        "frequency": "high",
+        "category": "scheduling"
+      },
+      {
+        "english": "Do you want to come along?",
+        "portuguese": "Você quer vir junto?",
+        "context": "Convite casual",
+        "frequency": "very_high",
+        "category": "invitations"
+      },
+      {
+        "english": "I'm in the middle of something.",
+        "portuguese": "Estou no meio de algo.",
+        "context": "Ocupado no momento",
+        "frequency": "very_high",
+        "category": "busy"
+      },
+      {
+        "english": "That's exactly what I thought too.",
+        "portuguese": "É exatamente o que eu pensei também.",
+        "context": "Concordância completa",
+        "frequency": "high",
+        "category": "agreement"
+      },
+      {
+        "english": "I haven't decided yet about it.",
+        "portuguese": "Ainda não decidi sobre isso.",
+        "context": "Indecisão",
+        "frequency": "very_high",
+        "category": "decisions"
+      },
+      {
+        "english": "Can I borrow your pen briefly?",
+        "portuguese": "Posso pegar sua caneta emprestada brevemente?",
+        "context": "Pedido de empréstimo",
+        "frequency": "high",
+        "category": "requests"
+      },
+      {
+        "english": "I need to buy some groceries.",
+        "portuguese": "Preciso comprar algumas compras de mercado.",
+        "context": "Tarefa doméstica",
+        "frequency": "very_high",
+        "category": "errands"
+      },
+      {
+        "english": "What's your address for the delivery?",
+        "portuguese": "Qual seu endereço para a entrega?",
+        "context": "Informação para envio",
+        "frequency": "high",
+        "category": "shopping"
+      },
+      {
+        "english": "I completely forgot about that meeting.",
+        "portuguese": "Esqueci completamente daquela reunião.",
+        "context": "Admissão de esquecimento",
+        "frequency": "high",
+        "category": "memory"
+      },
+      {
+        "english": "Can you give me a hand?",
+        "portuguese": "Você pode me dar uma ajuda?",
+        "context": "Pedido casual de auxílio",
+        "frequency": "very_high",
+        "category": "assistance"
+      },
+      {
+        "english": "I'm having a really bad day.",
+        "portuguese": "Estou tendo um dia muito ruim.",
+        "context": "Expressão de frustração",
+        "frequency": "high",
+        "category": "emotions"
+      },
+      {
+        "english": "Where's the nearest gas station here?",
+        "portuguese": "Onde fica o posto de gasolina mais próximo?",
+        "context": "Procurando serviço",
+        "frequency": "high",
+        "category": "directions"
+      },
+      {
+        "english": "I'll take care of it myself.",
+        "portuguese": "Vou cuidar disso eu mesmo.",
+        "context": "Assumir responsabilidade",
+        "frequency": "high",
+        "category": "responsibility"
+      },
+      {
+        "english": "Do you have any plans tonight?",
+        "portuguese": "Você tem algum plano hoje à noite?",
+        "context": "Conversa social",
+        "frequency": "very_high",
+        "category": "small_talk"
+      },
+      {
+        "english": "I'm waiting for an important call.",
+        "portuguese": "Estou esperando uma ligação importante.",
+        "context": "Expectativa de contato",
+        "frequency": "high",
+        "category": "communication"
+      },
+      {
+        "english": "Can you please close the door?",
+        "portuguese": "Você pode fechar a porta, por favor?",
+        "context": "Pedido simples",
+        "frequency": "very_high",
+        "category": "requests"
+      },
+      {
+        "english": "I'm not sure about that yet.",
+        "portuguese": "Não tenho certeza sobre isso ainda.",
+        "context": "Incerteza persistente",
+        "frequency": "very_high",
+        "category": "uncertainty"
+      },
+      {
+        "english": "What's the weather like out there?",
+        "portuguese": "Como está o tempo lá fora?",
+        "context": "Pergunta sobre clima",
+        "frequency": "very_high",
+        "category": "weather"
+      },
+      {
+        "english": "I'm glad to hear that news.",
+        "portuguese": "Fico feliz em ouvir essa notícia.",
+        "context": "Reação positiva",
+        "frequency": "high",
+        "category": "reactions"
+      }
+    ],
+    "6_words": [
+      {
+        "english": "I'm looking for a new job right now.",
+        "portuguese": "Estou procurando um emprego novo agora.",
+        "context": "Situação profissional",
+        "frequency": "high",
+        "category": "work"
+      },
+      {
+        "english": "Could you please send me that email again?",
+        "portuguese": "Você poderia me enviar aquele email de novo?",
+        "context": "Pedido profissional",
+        "frequency": "very_high",
+        "category": "work_communication"
+      },
+      {
+        "english": "I need to make a doctor's appointment soon.",
+        "portuguese": "Preciso marcar uma consulta médica em breve.",
+        "context": "Cuidados com saúde",
+        "frequency": "high",
+        "category": "healthcare"
+      },
+      {
+        "english": "What time does the store close today here?",
+        "portuguese": "Que horas a loja fecha hoje aqui?",
+        "context": "Informação sobre estabelecimento",
+        "frequency": "very_high",
+        "category": "shopping"
+      },
+      {
+        "english": "I'd like to make a reservation for dinner.",
+        "portuguese": "Gostaria de fazer uma reserva para jantar.",
+        "context": "Reserva em restaurante",
+        "frequency": "high",
+        "category": "restaurant"
+      },
+      {
+        "english": "Can I get a refund on this item?",
+        "portuguese": "Posso receber reembolso neste item?",
+        "context": "Devolução de produto",
+        "frequency": "high",
+        "category": "shopping"
+      },
+      {
+        "english": "I'm trying to learn how to cook better.",
+        "portuguese": "Estou tentando aprender a cozinhar melhor.",
+        "context": "Desenvolvimento de habilidade",
+        "frequency": "medium",
+        "category": "hobbies"
+      },
+      {
+        "english": "Do you have any plans for this weekend?",
+        "portuguese": "Você tem algum plano para este fim de semana?",
+        "context": "Conversa social",
+        "frequency": "very_high",
+        "category": "small_talk"
+      },
+      {
+        "english": "I haven't seen you in a long time.",
+        "portuguese": "Não te vejo há muito tempo.",
+        "context": "Reencontro",
+        "frequency": "very_high",
+        "category": "greetings"
+      },
+      {
+        "english": "Can you tell me where the exit is?",
+        "portuguese": "Você pode me dizer onde fica a saída?",
+        "context": "Pedindo direções",
+        "frequency": "high",
+        "category": "directions"
+      },
+      {
+        "english": "I'm going to the gym after work today.",
+        "portuguese": "Vou à academia depois do trabalho hoje.",
+        "context": "Planos pessoais",
+        "frequency": "high",
+        "category": "daily_life"
+      },
+      {
+        "english": "How long have you been living here now?",
+        "portuguese": "Há quanto tempo você mora aqui agora?",
+        "context": "Conhecendo alguém",
+        "frequency": "high",
+        "category": "small_talk"
+      },
+      {
+        "english": "I think I left my wallet at home.",
+        "portuguese": "Acho que deixei minha carteira em casa.",
+        "context": "Objeto esquecido",
+        "frequency": "high",
+        "category": "problems"
+      },
+      {
+        "english": "Could you turn on the air conditioning please?",
+        "portuguese": "Você poderia ligar o ar condicionado, por favor?",
+        "context": "Pedido de conforto",
+        "frequency": "high",
+        "category": "requests"
+      },
+      {
+        "english": "I'm not feeling very well today at all.",
+        "portuguese": "Não estou me sentindo muito bem hoje.",
+        "context": "Relato de mal-estar",
+        "frequency": "very_high",
+        "category": "health"
+      },
+      {
+        "english": "What do you usually do on the weekends?",
+        "portuguese": "O que você costuma fazer nos fins de semana?",
+        "context": "Conversa casual",
+        "frequency": "very_high",
+        "category": "small_talk"
+      },
+      {
+        "english": "I need to get my car fixed soon.",
+        "portuguese": "Preciso consertar meu carro em breve.",
+        "context": "Manutenção de veículo",
+        "frequency": "high",
+        "category": "car_maintenance"
+      },
+      {
+        "english": "Can you recommend a good place to eat?",
+        "portuguese": "Você pode recomendar um bom lugar para comer?",
+        "context": "Pedindo sugestão",
+        "frequency": "very_high",
+        "category": "recommendations"
+      },
+      {
+        "english": "I'm sorry, I didn't catch your name earlier.",
+        "portuguese": "Desculpe, não entendi seu nome antes.",
+        "context": "Pedido de repetição de nome",
+        "frequency": "high",
+        "category": "introductions"
+      },
+      {
+        "english": "How much does it cost per person exactly?",
+        "portuguese": "Quanto custa por pessoa exatamente?",
+        "context": "Pergunta sobre preço",
+        "frequency": "high",
+        "category": "shopping"
+      },
+      {
+        "english": "I'll be in touch with you very soon.",
+        "portuguese": "Estarei em contato com você muito em breve.",
+        "context": "Promessa de comunicação",
+        "frequency": "very_high",
+        "category": "communication"
+      },
+      {
+        "english": "Where can I find the customer service desk?",
+        "portuguese": "Onde posso encontrar o atendimento ao cliente?",
+        "context": "Procurando serviço",
+        "frequency": "high",
+        "category": "shopping"
+      },
+      {
+        "english": "I'm going out for lunch in ten minutes.",
+        "portuguese": "Vou sair para almoçar em dez minutos.",
+        "context": "Aviso de saída",
+        "frequency": "high",
+        "category": "work"
+      },
+      {
+        "english": "Can you show me how to do this?",
+        "portuguese": "Você pode me mostrar como fazer isso?",
+        "context": "Pedido de instrução",
+        "frequency": "very_high",
+        "category": "learning"
+      },
+      {
+        "english": "I forgot to bring my laptop to work.",
+        "portuguese": "Esqueci de trazer meu laptop para o trabalho.",
+        "context": "Item esquecido",
+        "frequency": "high",
+        "category": "work"
+      },
+      {
+        "english": "What's the best time to call you back?",
+        "portuguese": "Qual o melhor horário para te ligar de volta?",
+        "context": "Agendamento de ligação",
+        "frequency": "very_high",
+        "category": "scheduling"
+      },
+      {
+        "english": "I can't wait to see you this weekend.",
+        "portuguese": "Mal posso esperar para te ver este fim de semana.",
+        "context": "Antecipação de encontro",
+        "frequency": "high",
+        "category": "emotions"
+      },
+      {
+        "english": "Do you know where I can park here?",
+        "portuguese": "Você sabe onde posso estacionar aqui?",
+        "context": "Procurando estacionamento",
+        "frequency": "high",
+        "category": "directions"
+      },
+      {
+        "english": "I'm working on a really important project now.",
+        "portuguese": "Estou trabalhando em um projeto muito importante agora.",
+        "context": "Status de trabalho",
+        "frequency": "high",
+        "category": "work"
+      },
+      {
+        "english": "Could you please pass me the salt quickly?",
+        "portuguese": "Você poderia me passar o sal rapidamente?",
+        "context": "Pedido à mesa",
+        "frequency": "very_high",
+        "category": "dining"
+      },
+      {
+        "english": "I need to renew my driver's license soon.",
+        "portuguese": "Preciso renovar minha carteira de motorista em breve.",
+        "context": "Tarefa administrativa",
+        "frequency": "medium",
+        "category": "errands"
+      },
+      {
+        "english": "What kind of music do you like most?",
+        "portuguese": "Que tipo de música você mais gosta?",
+        "context": "Descobrindo preferências",
+        "frequency": "high",
+        "category": "small_talk"
+      },
+      {
+        "english": "I'm having trouble with my computer right now.",
+        "portuguese": "Estou tendo problemas com meu computador agora.",
+        "context": "Problema técnico",
+        "frequency": "very_high",
+        "category": "technical_issues"
+      },
+      {
+        "english": "Can I pay with a credit card here?",
+        "portuguese": "Posso pagar com cartão de crédito aqui?",
+        "context": "Forma de pagamento",
+        "frequency": "very_high",
+        "category": "payment"
+      },
+      {
+        "english": "I'd love to join you for dinner tonight.",
+        "portuguese": "Adoraria me juntar a você para jantar hoje à noite.",
+        "context": "Aceitação de convite",
+        "frequency": "high",
+        "category": "social"
+      },
+      {
+        "english": "How far is it from here to there?",
+        "portuguese": "Quão longe é daqui até lá?",
+        "context": "Pergunta sobre distância",
+        "frequency": "very_high",
+        "category": "directions"
+      },
+      {
+        "english": "I'm not sure if I can make it.",
+        "portuguese": "Não tenho certeza se posso ir.",
+        "context": "Dúvida sobre presença",
+        "frequency": "very_high",
+        "category": "commitments"
+      },
+      {
+        "english": "What time should we leave for the airport?",
+        "portuguese": "Que horas devemos sair para o aeroporto?",
+        "context": "Planejamento de viagem",
+        "frequency": "high",
+        "category": "travel"
+      },
+      {
+        "english": "I need to talk to you about something.",
+        "portuguese": "Preciso falar com você sobre algo.",
+        "context": "Início de conversa séria",
+        "frequency": "very_high",
+        "category": "conversation"
+      },
+      {
+        "english": "Can you please speak up a little bit?",
+        "portuguese": "Você pode falar um pouco mais alto?",
+        "context": "Dificuldade de audição",
+        "frequency": "high",
+        "category": "communication"
+      },
+      {
+        "english": "I'm really looking forward to the weekend now.",
+        "portuguese": "Estou realmente ansioso pelo fim de semana agora.",
+        "context": "Antecipação",
+        "frequency": "high",
+        "category": "emotions"
+      },
+      {
+        "english": "Do you mind if I open the window?",
+        "portuguese": "Você se importa se eu abrir a janela?",
+        "context": "Pedido educado",
+        "frequency": "high",
+        "category": "courtesy"
+      },
+      {
+        "english": "I'll have the same thing as her please.",
+        "portuguese": "Vou querer a mesma coisa que ela, por favor.",
+        "context": "Pedido em restaurante",
+        "frequency": "high",
+        "category": "ordering"
+      },
+      {
+        "english": "What's the fastest way to get there today?",
+        "portuguese": "Qual a forma mais rápida de chegar lá hoje?",
+        "context": "Planejamento de rota",
+        "frequency": "high",
+        "category": "directions"
+      },
+      {
+        "english": "I'm trying to save money for a vacation.",
+        "portuguese": "Estou tentando economizar dinheiro para férias.",
+        "context": "Planejamento financeiro",
+        "frequency": "medium",
+        "category": "personal_finance"
+      },
+      {
+        "english": "Can you believe what just happened right now?",
+        "portuguese": "Você acredita no que acabou de acontecer agora?",
+        "context": "Reação a surpresa",
+        "frequency": "high",
+        "category": "reactions"
+      },
+      {
+        "english": "I need to pick up some medicine today.",
+        "portuguese": "Preciso pegar alguns remédios hoje.",
+        "context": "Tarefa de saúde",
+        "frequency": "high",
+        "category": "healthcare"
+      },
+      {
+        "english": "What's your favorite type of food in general?",
+        "portuguese": "Qual seu tipo favorito de comida em geral?",
+        "context": "Descobrindo preferências",
+        "frequency": "high",
+        "category": "small_talk"
+      },
+      {
+        "english": "I'm going to take a shower real quick.",
+        "portuguese": "Vou tomar um banho bem rápido.",
+        "context": "Anúncio de atividade",
+        "frequency": "high",
+        "category": "daily_life"
+      },
+      {
+        "english": "Could you help me carry these bags please?",
+        "portuguese": "Você poderia me ajudar a carregar essas sacolas?",
+        "context": "Pedido de auxílio físico",
+        "frequency": "high",
+        "category": "assistance"
+      }
+    ],
+    "7_words": [
+      {
+        "english": "I'm sorry, but I can't make it to work today.",
+        "portuguese": "Desculpe, mas não posso ir trabalhar hoje.",
+        "context": "Ausência no trabalho",
+        "frequency": "high",
+        "category": "work"
+      },
+      {
+        "english": "Could you tell me how to get to the airport?",
+        "portuguese": "Você poderia me dizer como chegar ao aeroporto?",
+        "context": "Pedindo direções",
+        "frequency": "high",
+        "category": "directions"
+      },
+      {
+        "english": "I need to pick up my kids from school today.",
+        "portuguese": "Preciso buscar meus filhos na escola hoje.",
+        "context": "Rotina familiar",
+        "frequency": "high",
+        "category": "family"
+      },
+      {
+        "english": "What's the best way to get there from here?",
+        "portuguese": "Qual a melhor forma de chegar lá daqui?",
+        "context": "Planejamento de rota",
+        "frequency": "very_high",
+        "category": "directions"
+      },
+      {
+        "english": "I'd like to schedule a meeting with you this week.",
+        "portuguese": "Gostaria de agendar uma reunião com você esta semana.",
+        "context": "Agendamento profissional",
+        "frequency": "very_high",
+        "category": "work"
+      },
+      {
+        "english": "Can you recommend a good restaurant near here right now?",
+        "portuguese": "Você pode recomendar um bom restaurante perto daqui agora?",
+        "context": "Pedindo recomendação local",
+        "frequency": "very_high",
+        "category": "recommendations"
+      },
+      {
+        "english": "I'm having trouble with my internet connection right now here.",
+        "portuguese": "Estou tendo problemas com minha conexão de internet agora.",
+        "context": "Problema técnico",
+        "frequency": "very_high",
+        "category": "technical_issues"
+      },
+      {
+        "english": "I haven't been feeling very well for several days now.",
+        "portuguese": "Não tenho me sentido muito bem há vários dias.",
+        "context": "Relato de saúde",
+        "frequency": "high",
+        "category": "health"
+      },
+      {
+        "english": "How long does it take to get there by car?",
+        "portuguese": "Quanto tempo leva para chegar lá de carro?",
+        "context": "Estimativa de viagem",
+        "frequency": "very_high",
+        "category": "travel"
+      },
+      {
+        "english": "I was wondering if you could help me with something.",
+        "portuguese": "Estava pensando se você poderia me ajudar com algo.",
+        "context": "Pedido educado",
+        "frequency": "very_high",
+        "category": "requests"
+      },
+      {
+        "english": "Do you know where I can buy a phone charger?",
+        "portuguese": "Você sabe onde posso comprar um carregador de telefone?",
+        "context": "Procurando item",
+        "frequency": "high",
+        "category": "shopping"
+      },
+      {
+        "english": "I need to drop off my clothes at the laundry.",
+        "portuguese": "Preciso deixar minhas roupas na lavanderia.",
+        "context": "Tarefa doméstica",
+        "frequency": "medium",
+        "category": "errands"
+      },
+      {
+        "english": "What time do you want me to pick you up?",
+        "portuguese": "Que horas você quer que eu te busque?",
+        "context": "Combinação de transporte",
+        "frequency": "very_high",
+        "category": "scheduling"
+      },
+      {
+        "english": "I'm going to be out of town next week.",
+        "portuguese": "Vou estar fora da cidade semana que vem.",
+        "context": "Aviso de ausência",
+        "frequency": "high",
+        "category": "travel"
+      },
+      {
+        "english": "Could you please let me know when you arrive there?",
+        "portuguese": "Você poderia me avisar quando chegar lá?",
+        "context": "Pedido de confirmação",
+        "frequency": "very_high",
+        "category": "communication"
+      },
+      {
+        "english": "I think we should leave for the airport pretty soon.",
+        "portuguese": "Acho que deveríamos sair para o aeroporto bem logo.",
+        "context": "Sugestão de horário",
+        "frequency": "high",
+        "category": "travel"
+      },
+      {
+        "english": "Can you tell me what this word means in English?",
+        "portuguese": "Você pode me dizer o que esta palavra significa em inglês?",
+        "context": "Dúvida de vocabulário",
+        "frequency": "high",
+        "category": "language"
+      },
+      {
+        "english": "I'm not going to be able to finish this today.",
+        "portuguese": "Não vou conseguir terminar isso hoje.",
+        "context": "Problema com prazo",
+        "frequency": "very_high",
+        "category": "work"
+      },
+      {
+        "english": "What are you planning to do after work today exactly?",
+        "portuguese": "O que você planeja fazer depois do trabalho hoje exatamente?",
+        "context": "Conversa sobre planos",
+        "frequency": "high",
+        "category": "small_talk"
+      },
+      {
+        "english": "I'd like to order a pizza for delivery right now.",
+        "portuguese": "Gostaria de pedir uma pizza para entrega agora.",
+        "context": "Pedido de comida",
+        "frequency": "high",
+        "category": "ordering"
+      },
+      {
+        "english": "How much do you think this is going to cost?",
+        "portuguese": "Quanto você acha que isso vai custar?",
+        "context": "Estimativa de preço",
+        "frequency": "high",
+        "category": "shopping"
+      },
+      {
+        "english": "I need to make a phone call to my boss.",
+        "portuguese": "Preciso fazer uma ligação para meu chefe.",
+        "context": "Necessidade de comunicação",
+        "frequency": "high",
+        "category": "work"
+      },
+      {
+        "english": "Can I get you anything from the store while there?",
+        "portuguese": "Posso pegar algo para você na loja enquanto estiver lá?",
+        "context": "Oferta de ajuda",
+        "frequency": "high",
+        "category": "assistance"
+      },
+      {
+        "english": "I'm trying to find a good place to live here.",
+        "portuguese": "Estou tentando encontrar um bom lugar para morar aqui.",
+        "context": "Procura de moradia",
+        "frequency": "medium",
+        "category": "housing"
+      },
+      {
+        "english": "What do you think I should do about this situation?",
+        "portuguese": "O que você acha que eu deveria fazer sobre esta situação?",
+        "context": "Pedindo conselho",
+        "frequency": "very_high",
+        "category": "advice"
+      },
+      {
+        "english": "I haven't had a chance to check my email today.",
+        "portuguese": "Não tive chance de checar meu email hoje.",
+        "context": "Explicação de atraso",
+        "frequency": "high",
+        "category": "work"
+      },
+      {
+        "english": "Do you want to grab a coffee sometime this week?",
+        "portuguese": "Você quer tomar um café alguma hora esta semana?",
+        "context": "Convite casual",
+        "frequency": "very_high",
+        "category": "social"
+      },
+      {
+        "english": "I'm going to need more time to think about it.",
+        "portuguese": "Vou precisar de mais tempo para pensar sobre isso.",
+        "context": "Adiamento de decisão",
+        "frequency": "very_high",
+        "category": "decisions"
+      },
+      {
+        "english": "Can you please remind me to do that later today?",
+        "portuguese": "Você pode me lembrar de fazer isso mais tarde hoje?",
+        "context": "Pedido de lembrete",
+        "frequency": "high",
+        "category": "reminders"
+      },
+      {
+        "english": "I think I'm going to stay home tonight instead now.",
+        "portuguese": "Acho que vou ficar em casa hoje à noite.",
+        "context": "Mudança de planos",
+        "frequency": "high",
+        "category": "plans"
+      },
+      {
+        "english": "What's the best way to learn a new language fast?",
+        "portuguese": "Qual a melhor forma de aprender um idioma novo rápido?",
+        "context": "Pedido de método",
+        "frequency": "medium",
+        "category": "learning"
+      },
+      {
+        "english": "I need to find a place to stay for tonight.",
+        "portuguese": "Preciso encontrar um lugar para ficar esta noite.",
+        "context": "Procura de acomodação",
+        "frequency": "medium",
+        "category": "travel"
+      },
+      {
+        "english": "Could you give me directions to the nearest subway station?",
+        "portuguese": "Você poderia me dar direções para a estação de metrô mais próxima?",
+        "context": "Pedindo orientação",
+        "frequency": "high",
+        "category": "directions"
+      },
+      {
+        "english": "I'm sorry for the inconvenience this may have caused you.",
+        "portuguese": "Desculpe pelo inconveniente que isso possa ter causado.",
+        "context": "Desculpa formal",
+        "frequency": "high",
+        "category": "apologies"
+      },
+      {
+        "english": "What would be a good time to call you back?",
+        "portuguese": "Qual seria um bom horário para te ligar de volta?",
+        "context": "Agendamento de ligação",
+        "frequency": "very_high",
+        "category": "scheduling"
+      },
+      {
+        "english": "I'm looking forward to hearing from you very soon now.",
+        "portuguese": "Estou ansioso para ter notícias suas muito em breve.",
+        "context": "Expectativa de resposta",
+        "frequency": "high",
+        "category": "communication"
+      },
+      {
+        "english": "Can you tell me where the closest ATM is located?",
+        "portuguese": "Você pode me dizer onde o caixa eletrônico mais próximo está?",
+        "context": "Procurando serviço bancário",
+        "frequency": "high",
+        "category": "banking"
+      },
+      {
+        "english": "I don't think I'll be able to make it tonight.",
+        "portuguese": "Não acho que conseguirei ir hoje à noite.",
+        "context": "Declínio de convite",
+        "frequency": "very_high",
+        "category": "refusal"
+      },
+      {
+        "english": "How long have you been working at this company now?",
+        "portuguese": "Há quanto tempo você trabalha nesta empresa agora?",
+        "context": "Conversa profissional",
+        "frequency": "high",
+        "category": "work"
+      },
+      {
+        "english": "I need to get this done before the end today.",
+        "portuguese": "Preciso terminar isso antes do fim de hoje.",
+        "context": "Urgência de prazo",
+        "frequency": "very_high",
+        "category": "work"
+      },
+      {
+        "english": "What do you like to do in your free time?",
+        "portuguese": "O que você gosta de fazer no seu tempo livre?",
+        "context": "Conhecendo interesses",
+        "frequency": "very_high",
+        "category": "small_talk"
+      },
+      {
+        "english": "I'm going to be late for my next meeting today.",
+        "portuguese": "Vou me atrasar para minha próxima reunião hoje.",
+        "context": "Aviso de atraso",
+        "frequency": "high",
+        "category": "work"
+      },
+      {
+        "english": "Can you please turn off the lights when you leave?",
+        "portuguese": "Você pode apagar as luzes quando sair, por favor?",
+        "context": "Pedido de ação",
+        "frequency": "high",
+        "category": "requests"
+      },
+      {
+        "english": "I was thinking we could go out for dinner tonight.",
+        "portuguese": "Estava pensando que poderíamos sair para jantar hoje à noite.",
+        "context": "Sugestão de plano",
+        "frequency": "high",
+        "category": "social"
+      },
+      {
+        "english": "How often do you go to the gym every week?",
+        "portuguese": "Com que frequência você vai à academia toda semana?",
+        "context": "Pergunta sobre rotina",
+        "frequency": "medium",
+        "category": "fitness"
+      },
+      {
+        "english": "I'm having a hard time understanding this right now here.",
+        "portuguese": "Estou tendo dificuldade em entender isso agora aqui.",
+        "context": "Dificuldade de compreensão",
+        "frequency": "high",
+        "category": "learning"
+      },
+      {
+        "english": "Could you please send me the file by end today?",
+        "portuguese": "Você poderia me enviar o arquivo até o fim de hoje?",
+        "context": "Pedido com prazo",
+        "frequency": "very_high",
+        "category": "work"
+      },
+      {
+        "english": "I think there's been some kind of misunderstanding here today.",
+        "portuguese": "Acho que houve algum tipo de mal-entendido aqui hoje.",
+        "context": "Esclarecendo confusão",
+        "frequency": "high",
+        "category": "clarification"
+      },
+      {
+        "english": "What's the name of that restaurant you told me about?",
+        "portuguese": "Qual o nome daquele restaurante que você me falou?",
+        "context": "Recordando informação",
+        "frequency": "high",
+        "category": "memory"
+      },
+      {
+        "english": "I don't know if I'm going to have time today.",
+        "portuguese": "Não sei se vou ter tempo hoje.",
+        "context": "Incerteza sobre disponibilidade",
+        "frequency": "very_high",
+        "category": "time"
+      }
+    ],
+    "8_words": [
+      {
+        "english": "I'm looking forward to seeing you at the party this weekend.",
+        "portuguese": "Estou ansioso para te ver na festa este fim de semana.",
+        "context": "Expectativa social",
+        "frequency": "high",
+        "category": "social"
+      },
+      {
+        "english": "Could you please let me know when you arrive at work?",
+        "portuguese": "Você poderia me avisar quando chegar no trabalho?",
+        "context": "Coordenação profissional",
+        "frequency": "high",
+        "category": "work"
+      },
+      {
+        "english": "I need to go to the bank to deposit this check today.",
+        "portuguese": "Preciso ir ao banco depositar este cheque hoje.",
+        "context": "Tarefa bancária",
+        "frequency": "medium",
+        "category": "errands"
+      },
+      {
+        "english": "What time would be convenient for you to have a call today?",
+        "portuguese": "Que horas seria conveniente para você fazer uma ligação hoje?",
+        "context": "Agendamento de ligação",
+        "frequency": "very_high",
+        "category": "scheduling"
+      },
+      {
+        "english": "I was wondering if you could help me with this problem now.",
+        "portuguese": "Estava pensando se você poderia me ajudar com este problema agora.",
+        "context": "Pedido de ajuda educado",
+        "frequency": "very_high",
+        "category": "requests"
+      },
+      {
+        "english": "Can I get a window seat on the flight to London today?",
+        "portuguese": "Posso conseguir um assento na janela no voo para Londres hoje?",
+        "context": "Preferência em viagem",
+        "frequency": "high",
+        "category": "travel"
+      },
+      {
+        "english": "I think I left my phone in the car this morning already.",
+        "portuguese": "Acho que deixei meu telefone no carro esta manhã.",
+        "context": "Objeto perdido",
+        "frequency": "high",
+        "category": "daily_life"
+      },
+      {
+        "english": "Would you mind if I opened the window for some fresh air?",
+        "portuguese": "Você se importaria se eu abrisse a janela para ar fresco?",
+        "context": "Pedido educado de permissão",
+        "frequency": "high",
+        "category": "courtesy"
+      },
+      {
+        "english": "I haven't had a chance to look at that email yet today.",
+        "portuguese": "Não tive chance de olhar aquele email ainda hoje.",
+        "context": "Explicação de pendência",
+        "frequency": "very_high",
+        "category": "work"
+      },
+      {
+        "english": "How long does it take to get from here to downtown exactly?",
+        "portuguese": "Quanto tempo leva para ir daqui ao centro exatamente?",
+        "context": "Pergunta sobre duração de viagem",
+        "frequency": "high",
+        "category": "directions"
+      },
+      {
+        "english": "I'm going to need you to send that to me today.",
+        "portuguese": "Vou precisar que você me envie isso hoje.",
+        "context": "Solicitação urgente",
+        "frequency": "very_high",
+        "category": "work"
+      },
+      {
+        "english": "Could you tell me where the nearest post office is located here?",
+        "portuguese": "Você poderia me dizer onde fica a agência de correios mais próxima?",
+        "context": "Procurando serviço",
+        "frequency": "medium",
+        "category": "directions"
+      },
+      {
+        "english": "I was hoping we could discuss this matter in person very soon.",
+        "portuguese": "Estava esperando que pudéssemos discutir este assunto pessoalmente muito em breve.",
+        "context": "Solicitação de reunião",
+        "frequency": "high",
+        "category": "work"
+      },
+      {
+        "english": "What do you think would be the best solution for this now?",
+        "portuguese": "O que você acha que seria a melhor solução para isso agora?",
+        "context": "Pedindo opinião sobre problema",
+        "frequency": "very_high",
+        "category": "problem_solving"
+      },
+      {
+        "english": "I'm not sure if I understand exactly what you mean right now.",
+        "portuguese": "Não tenho certeza se entendo exatamente o que você quer dizer agora.",
+        "context": "Pedido de esclarecimento",
+        "frequency": "very_high",
+        "category": "clarification"
+      },
+      {
+        "english": "Can you recommend a good hotel near the airport for me tonight?",
+        "portuguese": "Você pode recomendar um bom hotel perto do aeroporto para mim hoje à noite?",
+        "context": "Pedindo recomendação de hospedagem",
+        "frequency": "medium",
+        "category": "travel"
+      },
+      {
+        "english": "I need to stop by the grocery store on my way home.",
+        "portuguese": "Preciso passar no mercado no caminho de casa.",
+        "context": "Tarefa do dia a dia",
+        "frequency": "very_high",
+        "category": "errands"
+      },
+      {
+        "english": "Do you know if there's a pharmacy that's open right now here?",
+        "portuguese": "Você sabe se há uma farmácia aberta agora aqui?",
+        "context": "Procurando serviço de urgência",
+        "frequency": "high",
+        "category": "healthcare"
+      },
+      {
+        "english": "I was thinking about going to the movies later this evening tonight.",
+        "portuguese": "Estava pensando em ir ao cinema mais tarde esta noite.",
+        "context": "Plano de entretenimento",
+        "frequency": "high",
+        "category": "entertainment"
+      },
+      {
+        "english": "Could you please let me know if you need anything else today?",
+        "portuguese": "Você poderia me avisar se precisar de mais alguma coisa hoje?",
+        "context": "Oferta de assistência",
+        "frequency": "high",
+        "category": "assistance"
+      },
+      {
+        "english": "I'm going to have to cancel our meeting scheduled for tomorrow afternoon.",
+        "portuguese": "Vou ter que cancelar nossa reunião agendada para amanhã à tarde.",
+        "context": "Cancelamento de compromisso",
+        "frequency": "high",
+        "category": "scheduling"
+      },
+      {
+        "english": "What's the best way to get in touch with you after hours?",
+        "portuguese": "Qual a melhor forma de entrar em contato com você fora do horário?",
+        "context": "Informação de contato",
+        "frequency": "high",
+        "category": "communication"
+      },
+      {
+        "english": "I think we should probably leave a little bit earlier than planned.",
+        "portuguese": "Acho que deveríamos provavelmente sair um pouco mais cedo que o planejado.",
+        "context": "Sugestão de mudança de horário",
+        "frequency": "high",
+        "category": "planning"
+      },
+      {
+        "english": "Can you tell me what time the store opens in the morning?",
+        "portuguese": "Você pode me dizer que horas a loja abre de manhã?",
+        "context": "Pergunta sobre horário de funcionamento",
+        "frequency": "high",
+        "category": "shopping"
+      },
+      {
+        "english": "I'm having a really hard time trying to find a parking spot.",
+        "portuguese": "Estou tendo muita dificuldade tentando encontrar uma vaga de estacionamento.",
+        "context": "Problema de estacionamento",
+        "frequency": "high",
+        "category": "driving"
+      },
+      {
+        "english": "Do you mind if I ask you a few questions about this?",
+        "portuguese": "Você se importa se eu te fizer algumas perguntas sobre isso?",
+        "context": "Pedido educado de informação",
+        "frequency": "very_high",
+        "category": "questions"
+      },
+      {
+        "english": "I was wondering if you would be interested in joining us tonight.",
+        "portuguese": "Estava pensando se você estaria interessado em se juntar a nós hoje à noite.",
+        "context": "Convite educado",
+        "frequency": "high",
+        "category": "invitations"
+      },
+      {
+        "english": "Could you please give me a call when you have a moment?",
+        "portuguese": "Você poderia me ligar quando tiver um momento?",
+        "context": "Pedido de ligação",
+        "frequency": "very_high",
+        "category": "communication"
+      },
+      {
+        "english": "I need to make sure I get to the airport on time.",
+        "portuguese": "Preciso ter certeza de que chego ao aeroporto no horário.",
+        "context": "Preocupação com pontualidade",
+        "frequency": "high",
+        "category": "travel"
+      },
+      {
+        "english": "What are you planning to do for your vacation this year exactly?",
+        "portuguese": "O que você planeja fazer nas suas férias este ano exatamente?",
+        "context": "Conversa sobre planos",
+        "frequency": "medium",
+        "category": "small_talk"
+      },
+      {
+        "english": "I'm trying to figure out the best way to solve this problem.",
+        "portuguese": "Estou tentando descobrir a melhor forma de resolver este problema.",
+        "context": "Trabalhando em solução",
+        "frequency": "very_high",
+        "category": "problem_solving"
+      },
+      {
+        "english": "Can you please tell me where I can find the restroom here?",
+        "portuguese": "Você pode me dizer onde posso encontrar o banheiro aqui?",
+        "context": "Pergunta em local público",
+        "frequency": "very_high",
+        "category": "directions"
+      },
+      {
+        "english": "I haven't been able to get in touch with him all day.",
+        "portuguese": "Não consegui entrar em contato com ele o dia todo.",
+        "context": "Dificuldade de comunicação",
+        "frequency": "high",
+        "category": "communication"
+      },
+      {
+        "english": "Do you have any idea what time they're supposed to arrive here?",
+        "portuguese": "Você tem alguma ideia de que horas eles devem chegar aqui?",
+        "context": "Pergunta sobre chegada",
+        "frequency": "high",
+        "category": "scheduling"
+      },
+      {
+        "english": "I was just about to call you when you sent that message.",
+        "portuguese": "Estava prestes a te ligar quando você enviou aquela mensagem.",
+        "context": "Coincidência de timing",
+        "frequency": "medium",
+        "category": "conversation"
+      },
+      {
+        "english": "Could you possibly help me move some furniture this weekend at all?",
+        "portuguese": "Você possivelmente poderia me ajudar a mover alguns móveis este fim de semana?",
+        "context": "Pedido de favor grande",
+        "frequency": "medium",
+        "category": "assistance"
+      },
+      {
+        "english": "I'm going to be working late at the office again tonight probably.",
+        "portuguese": "Vou trabalhar até tarde no escritório de novo hoje à noite provavelmente.",
+        "context": "Aviso de horário",
+        "frequency": "high",
+        "category": "work"
+      },
+      {
+        "english": "What would you like me to bring to the party on Saturday?",
+        "portuguese": "O que você gostaria que eu levasse para a festa no sábado?",
+        "context": "Pergunta sobre contribuição",
+        "frequency": "high",
+        "category": "social"
+      },
+      {
+        "english": "I need to find out what time the last train leaves tonight.",
+        "portuguese": "Preciso descobrir que horas sai o último trem hoje à noite.",
+        "context": "Informação de transporte",
+        "frequency": "medium",
+        "category": "travel"
+      },
+      {
+        "english": "Can you show me how to use this app on my phone?",
+        "portuguese": "Você pode me mostrar como usar este aplicativo no meu telefone?",
+        "context": "Pedido de ajuda técnica",
+        "frequency": "high",
+        "category": "technical"
+      },
+      {
+        "english": "I'm not really sure what the best approach would be right now.",
+        "portuguese": "Não tenho muita certeza qual seria a melhor abordagem agora.",
+        "context": "Incerteza sobre estratégia",
+        "frequency": "high",
+        "category": "decisions"
+      },
+      {
+        "english": "Do you think it's going to rain later this afternoon or tonight?",
+        "portuguese": "Você acha que vai chover mais tarde esta tarde ou hoje à noite?",
+        "context": "Pergunta sobre clima",
+        "frequency": "high",
+        "category": "weather"
+      },
+      {
+        "english": "I was hoping you could take a look at this for me.",
+        "portuguese": "Estava esperando que você pudesse dar uma olhada nisso para mim.",
+        "context": "Pedido de revisão",
+        "frequency": "very_high",
+        "category": "work"
+      },
+      {
+        "english": "Could you let me know as soon as you hear anything back?",
+        "portuguese": "Você poderia me avisar assim que souber de alguma coisa?",
+        "context": "Pedido de atualização",
+        "frequency": "very_high",
+        "category": "communication"
+      },
+      {
+        "english": "I think I'm going to need some help with this project soon.",
+        "portuguese": "Acho que vou precisar de ajuda com este projeto em breve.",
+        "context": "Antecipando necessidade",
+        "frequency": "high",
+        "category": "work"
+      },
+      {
+        "english": "What time do you usually wake up in the morning every day?",
+        "portuguese": "Que horas você costuma acordar de manhã todo dia?",
+        "context": "Pergunta sobre rotina",
+        "frequency": "medium",
+        "category": "small_talk"
+      },
+      {
+        "english": "I'm afraid I won't be able to attend the meeting tomorrow morning.",
+        "portuguese": "Receio que não poderei comparecer à reunião amanhã de manhã.",
+        "context": "Declínio formal",
+        "frequency": "high",
+        "category": "work"
+      },
+      {
+        "english": "Can you please remind me to pick up the dry cleaning today?",
+        "portuguese": "Você pode me lembrar de pegar a roupa na lavanderia hoje?",
+        "context": "Pedido de lembrete",
+        "frequency": "medium",
+        "category": "errands"
+      },
+      {
+        "english": "I was just wondering if you had a minute to talk now.",
+        "portuguese": "Estava me perguntando se você tem um minuto para conversar agora.",
+        "context": "Pedido educado de tempo",
+        "frequency": "very_high",
+        "category": "communication"
+      },
+      {
+        "english": "Do you know where I can get my car fixed around here?",
+        "portuguese": "Você sabe onde posso consertar meu carro por aqui?",
+        "context": "Procurando serviço automotivo",
+        "frequency": "medium",
+        "category": "car_maintenance"
+      }
+    ],
+    "9_words": [
+      {
+        "english": "I'm really sorry, but I don't think I can make it to dinner tonight.",
+        "portuguese": "Sinto muito, mas não acho que consigo ir ao jantar hoje à noite.",
+        "context": "Cancelamento de compromisso",
+        "frequency": "very_high",
+        "category": "social"
+      },
+      {
+        "english": "Could you please send me the report by the end of the day today?",
+        "portuguese": "Você poderia me enviar o relatório até o final do dia hoje?",
+        "context": "Prazo profissional",
+        "frequency": "very_high",
+        "category": "work"
+      },
+      {
+        "english": "I've been trying to reach you all day, but your phone is off now.",
+        "portuguese": "Tenho tentado te contatar o dia todo, mas seu telefone está desligado agora.",
+        "context": "Tentativa de contato",
+        "frequency": "high",
+        "category": "communication"
+      },
+      {
+        "english": "What do you think would be the best solution for this situation right now?",
+        "portuguese": "O que você acha que seria a melhor solução para esta situação agora?",
+        "context": "Pedindo opinião/conselho",
+        "frequency": "very_high",
+        "category": "problem_solving"
+      },
+      {
+        "english": "I need to stop by the grocery store on my way home tonight here.",
+        "portuguese": "Preciso passar no mercado no caminho de casa hoje à noite aqui.",
+        "context": "Tarefa do dia a dia",
+        "frequency": "very_high",
+        "category": "errands"
+      },
+      {
+        "english": "Can you tell me what time the next train to Boston leaves from here?",
+        "portuguese": "Você pode me dizer que horas o próximo trem para Boston sai daqui?",
+        "context": "Informação sobre transporte",
+        "frequency": "high",
+        "category": "travel"
+      },
+      {
+        "english": "I was hoping we could meet up sometime next week to discuss this matter.",
+        "portuguese": "Eu estava esperando que pudéssemos nos encontrar na próxima semana para discutir isso.",
+        "context": "Proposta de reunião",
+        "frequency": "very_high",
+        "category": "work"
+      },
+      {
+        "english": "Do you happen to know where I can find a good coffee shop nearby?",
+        "portuguese": "Por acaso você sabe onde posso encontrar uma boa cafeteria perto daqui?",
+        "context": "Pedindo informação local",
+        "frequency": "high",
+        "category": "recommendations"
+      },
+      {
+        "english": "I'm not going to be able to finish all of this work today.",
+        "portuguese": "Não vou conseguir terminar todo este trabalho hoje.",
+        "context": "Problema com prazo",
+        "frequency": "very_high",
+        "category": "work"
+      },
+      {
+        "english": "Could you let me know when you're planning to arrive at my place tonight?",
+        "portuguese": "Você poderia me avisar quando planeja chegar na minha casa hoje à noite?",
+        "context": "Coordenação de encontro",
+        "frequency": "high",
+        "category": "social"
+      },
+      {
+        "english": "I think we should probably leave for the airport a little bit earlier today.",
+        "portuguese": "Acho que deveríamos provavelmente sair para o aeroporto um pouco mais cedo hoje.",
+        "context": "Sugestão de ajuste de horário",
+        "frequency": "high",
+        "category": "travel"
+      },
+      {
+        "english": "What would be the best time for me to call you back tomorrow morning?",
+        "portuguese": "Qual seria o melhor horário para eu te ligar de volta amanhã de manhã?",
+        "context": "Agendamento de ligação",
+        "frequency": "very_high",
+        "category": "scheduling"
+      },
+      {
+        "english": "I was just wondering if you had a chance to look at that yet.",
+        "portuguese": "Estava me perguntando se você teve chance de olhar isso ainda.",
+        "context": "Acompanhamento educado",
+        "frequency": "very_high",
+        "category": "work"
+      },
+      {
+        "english": "Can you please tell me how long it takes to get there from here?",
+        "portuguese": "Você pode me dizer quanto tempo leva para chegar lá daqui?",
+        "context": "Pergunta sobre duração",
+        "frequency": "very_high",
+        "category": "directions"
+      },
+      {
+        "english": "I'm going to have to reschedule our meeting for later this week instead now.",
+        "portuguese": "Vou ter que reagendar nossa reunião para mais tarde esta semana agora.",
+        "context": "Mudança de agenda",
+        "frequency": "high",
+        "category": "scheduling"
+      },
+      {
+        "english": "Do you know if there's a place around here where I can buy tickets?",
+        "portuguese": "Você sabe se há um lugar por aqui onde posso comprar ingressos?",
+        "context": "Procurando local de venda",
+        "frequency": "medium",
+        "category": "shopping"
+      },
+      {
+        "english": "I haven't had a chance to check my messages since this morning at all.",
+        "portuguese": "Não tive chance de checar minhas mensagens desde esta manhã.",
+        "context": "Explicação de falta de resposta",
+        "frequency": "high",
+        "category": "communication"
+      },
+      {
+        "english": "Could you give me a hand with carrying these bags to the car please?",
+        "portuguese": "Você poderia me ajudar a carregar essas sacolas até o carro, por favor?",
+        "context": "Pedido de assistência física",
+        "frequency": "high",
+        "category": "assistance"
+      },
+      {
+        "english": "I'm trying to find out what time the store closes on Sundays around here.",
+        "portuguese": "Estou tentando descobrir que horas a loja fecha aos domingos por aqui.",
+        "context": "Busca de informação",
+        "frequency": "medium",
+        "category": "shopping"
+      },
+      {
+        "english": "What do you think I should wear to the interview tomorrow morning exactly now?",
+        "portuguese": "O que você acha que eu deveria vestir para a entrevista amanhã de manhã exatamente?",
+        "context": "Pedindo conselho de vestuário",
+        "frequency": "medium",
+        "category": "advice"
+      },
+      {
+        "english": "I need to figure out a way to get this done before the deadline.",
+        "portuguese": "Preciso descobrir uma forma de terminar isso antes do prazo.",
+        "context": "Urgência de trabalho",
+        "frequency": "very_high",
+        "category": "work"
+      },
+      {
+        "english": "Can you recommend a good place to eat that's not too expensive around here?",
+        "portuguese": "Você pode recomendar um bom lugar para comer que não seja muito caro por aqui?",
+        "context": "Pedindo recomendação com critério",
+        "frequency": "high",
+        "category": "recommendations"
+      },
+      {
+        "english": "I was thinking about taking a few days off next month to relax.",
+        "portuguese": "Estava pensando em tirar alguns dias de folga mês que vem para relaxar.",
+        "context": "Plano de férias",
+        "frequency": "medium",
+        "category": "work"
+      },
+      {
+        "english": "Do you mind if I turn down the air conditioning because it's too cold?",
+        "portuguese": "Você se importa se eu diminuir o ar condicionado porque está muito frio?",
+        "context": "Pedido de ajuste ambiental",
+        "frequency": "high",
+        "category": "comfort"
+      },
+      {
+        "english": "I'm having a really hard time trying to understand what you're saying right now.",
+        "portuguese": "Estou tendo muita dificuldade tentando entender o que você está dizendo agora.",
+        "context": "Dificuldade de compreensão",
+        "frequency": "high",
+        "category": "communication"
+      },
+      {
+        "english": "Could you please let me know if you need me to bring anything tomorrow?",
+        "portuguese": "Você poderia me avisar se precisa que eu leve algo amanhã?",
+        "context": "Oferta de contribuição",
+        "frequency": "high",
+        "category": "social"
+      },
+      {
+        "english": "I think I'm going to need a few more minutes to finish this up.",
+        "portuguese": "Acho que vou precisar de mais alguns minutos para terminar isso.",
+        "context": "Pedido de tempo adicional",
+        "frequency": "very_high",
+        "category": "work"
+      },
+      {
+        "english": "What time do you think we should plan to leave for the concert tonight?",
+        "portuguese": "Que horas você acha que deveríamos planejar sair para o show hoje à noite?",
+        "context": "Coordenação de saída",
+        "frequency": "high",
+        "category": "entertainment"
+      },
+      {
+        "english": "I was wondering if you could give me some advice about this situation here.",
+        "portuguese": "Estava pensando se você poderia me dar algum conselho sobre esta situação aqui.",
+        "context": "Pedido de orientação",
+        "frequency": "high",
+        "category": "advice"
+      },
+      {
+        "english": "Can you tell me where the nearest place is to exchange currency around here?",
+        "portuguese": "Você pode me dizer onde é o lugar mais próximo para trocar moeda por aqui?",
+        "context": "Procurando serviço financeiro",
+        "frequency": "medium",
+        "category": "travel"
+      },
+      {
+        "english": "I haven't been to the gym in almost two weeks because I've been busy.",
+        "portuguese": "Não vou à academia há quase duas semanas porque tenho estado ocupado.",
+        "context": "Explicação de ausência",
+        "frequency": "medium",
+        "category": "fitness"
+      },
+      {
+        "english": "Do you have any idea how much it's going to cost to fix this?",
+        "portuguese": "Você tem alguma ideia de quanto vai custar para consertar isso?",
+        "context": "Pergunta sobre estimativa",
+        "frequency": "high",
+        "category": "repairs"
+      },
+      {
+        "english": "I'm going to have to call you back in just a few minutes okay?",
+        "portuguese": "Vou ter que te ligar de volta em apenas alguns minutos, ok?",
+        "context": "Interrupção de ligação",
+        "frequency": "high",
+        "category": "communication"
+      },
+      {
+        "english": "Could you possibly help me out with this when you have some free time?",
+        "portuguese": "Você possivelmente poderia me ajudar com isso quando tiver um tempo livre?",
+        "context": "Pedido flexível de ajuda",
+        "frequency": "high",
+        "category": "requests"
+      },
+      {
+        "english": "I think there might be a problem with the system that we need fixed.",
+        "portuguese": "Acho que pode haver um problema com o sistema que precisamos consertar.",
+        "context": "Relato de problema técnico",
+        "frequency": "high",
+        "category": "technical_issues"
+      },
+      {
+        "english": "What are you planning to do after you finish work this evening at night?",
+        "portuguese": "O que você planeja fazer depois que terminar o trabalho esta noite?",
+        "context": "Pergunta sobre planos",
+        "frequency": "high",
+        "category": "small_talk"
+      },
+      {
+        "english": "I need to make sure I remember to bring my passport to the airport.",
+        "portuguese": "Preciso ter certeza de que lembro de levar meu passaporte ao aeroporto.",
+        "context": "Lembrete de item importante",
+        "frequency": "medium",
+        "category": "travel"
+      },
+      {
+        "english": "Can you please let me know if there's anything else I need to do?",
+        "portuguese": "Você pode me avisar se há mais alguma coisa que eu precise fazer?",
+        "context": "Verificação de pendências",
+        "frequency": "very_high",
+        "category": "work"
+      },
+      {
+        "english": "I was hoping you could take a look at this document before I send it.",
+        "portuguese": "Estava esperando que você pudesse dar uma olhada neste documento antes de eu enviá-lo.",
+        "context": "Pedido de revisão",
+        "frequency": "very_high",
+        "category": "work"
+      },
+      {
+        "english": "Do you think it would be okay if I left a little bit early today?",
+        "portuguese": "Você acha que seria ok se eu saísse um pouco mais cedo hoje?",
+        "context": "Pedido de saída antecipada",
+        "frequency": "high",
+        "category": "work"
+      },
+      {
+        "english": "I'm not really sure what the best way to approach this problem would be.",
+        "portuguese": "Não tenho muita certeza qual seria a melhor forma de abordar este problema.",
+        "context": "Incerteza sobre método",
+        "frequency": "high",
+        "category": "problem_solving"
+      },
+      {
+        "english": "Could you tell me where I can find a good place to get coffee?",
+        "portuguese": "Você poderia me dizer onde posso encontrar um bom lugar para tomar café?",
+        "context": "Procurando estabelecimento",
+        "frequency": "high",
+        "category": "recommendations"
+      },
+      {
+        "english": "I think we're going to need to order some more supplies for the office.",
+        "portuguese": "Acho que vamos precisar pedir mais alguns suprimentos para o escritório.",
+        "context": "Necessidade de reabastecimento",
+        "frequency": "high",
+        "category": "work"
+      },
+      {
+        "english": "What do you usually like to do when you have some free time available?",
+        "portuguese": "O que você costuma gostar de fazer quando tem algum tempo livre disponível?",
+        "context": "Conhecendo hobbies",
+        "frequency": "high",
+        "category": "small_talk"
+      },
+      {
+        "english": "I'm going to need you to fill out this form before you leave today.",
+        "portuguese": "Vou precisar que você preencha este formulário antes de sair hoje.",
+        "context": "Instrução administrativa",
+        "frequency": "high",
+        "category": "work"
+      },
+      {
+        "english": "Can you remind me what time we're supposed to meet up with everyone tomorrow?",
+        "portuguese": "Você pode me lembrar que horas devemos nos encontrar com todos amanhã?",
+        "context": "Verificação de horário",
+        "frequency": "high",
+        "category": "scheduling"
+      },
+      {
+        "english": "I haven't been able to get any work done today because of all interruptions.",
+        "portuguese": "Não consegui fazer nenhum trabalho hoje por causa de todas as interrupções.",
+        "context": "Explicação de improdutividade",
+        "frequency": "high",
+        "category": "work"
+      },
+      {
+        "english": "Do you know if there's a way to get a refund on this ticket?",
+        "portuguese": "Você sabe se há uma forma de obter reembolso neste ingresso?",
+        "context": "Pergunta sobre política de devolução",
+        "frequency": "medium",
+        "category": "shopping"
+      },
+      {
+        "english": "I was thinking we could maybe go see a movie this weekend if interested.",
+        "portuguese": "Estava pensando que poderíamos talvez ir ver um filme este fim de semana se interessado.",
+        "context": "Sugestão de atividade",
+        "frequency": "high",
+        "category": "entertainment"
+      },
+      {
+        "english": "Could you please send me a copy of that file when you get chance?",
+        "portuguese": "Você poderia me enviar uma cópia daquele arquivo quando tiver chance?",
+        "context": "Solicitação de documento",
+        "frequency": "very_high",
+        "category": "work"
+      }
+    ],
+    "10_words": [
+      {
+        "english": "I was wondering if you would be available to meet with me tomorrow afternoon here.",
+        "portuguese": "Estava pensando se você estaria disponível para se encontrar comigo amanhã à tarde aqui.",
+        "context": "Agendamento formal",
+        "frequency": "very_high",
+        "category": "scheduling"
+      },
+      {
+        "english": "Could you please let me know if there are any updates on the project status?",
+        "portuguese": "Você poderia me informar se há alguma atualização sobre o status do projeto?",
+        "context": "Acompanhamento profissional",
+        "frequency": "very_high",
+        "category": "work"
+      },
+      {
+        "english": "I'm not sure if I'll be able to finish all of this work by Friday.",
+        "portuguese": "Não tenho certeza se conseguirei terminar todo este trabalho até sexta-feira.",
+        "context": "Preocupação com prazo",
+        "frequency": "very_high",
+        "category": "work"
+      },
+      {
+        "english": "Would it be possible for us to reschedule our meeting to next week instead of tomorrow?",
+        "portuguese": "Seria possível reagendarmos nossa reunião para semana que vem ao invés de amanhã?",
+        "context": "Reagendamento",
+        "frequency": "very_high",
+        "category": "scheduling"
+      },
+      {
+        "english": "I think I need to take my car to the mechanic because it's making strange noises.",
+        "portuguese": "Acho que preciso levar meu carro ao mecânico porque está fazendo barulhos estranhos.",
+        "context": "Problema com veículo",
+        "frequency": "high",
+        "category": "car_maintenance"
+      },
+      {
+        "english": "Can you remind me what we decided about the budget for the new marketing campaign?",
+        "portuguese": "Você pode me lembrar o que decidimos sobre o orçamento da nova campanha de marketing?",
+        "context": "Recordação de decisão",
+        "frequency": "high",
+        "category": "work"
+      },
+      {
+        "english": "I've been waiting here for over an hour and I still haven't received my order yet.",
+        "portuguese": "Estou esperando aqui há mais de uma hora e ainda não recebi meu pedido.",
+        "context": "Reclamação de serviço",
+        "frequency": "medium",
+        "category": "complaints"
+      },
+      {
+        "english": "Do you mind if I ask you a few questions about your experience working here?",
+        "portuguese": "Você se importa se eu te fizer algumas perguntas sobre sua experiência trabalhando aqui?",
+        "context": "Entrevista/conversa profissional",
+        "frequency": "high",
+        "category": "work"
+      },
+      {
+        "english": "I was hoping we could sit down and talk about this issue sometime this week.",
+        "portuguese": "Estava esperando que pudéssemos sentar e conversar sobre este assunto alguma hora esta semana.",
+        "context": "Pedido de conversa séria",
+        "frequency": "high",
+        "category": "conversation"
+      },
+      {
+        "english": "Could you tell me what time you think would be best to call you back tomorrow?",
+        "portuguese": "Você poderia me dizer que horas você acha que seria melhor para te ligar de volta amanhã?",
+        "context": "Coordenação de comunicação",
+        "frequency": "high",
+        "category": "scheduling"
+      },
+      {
+        "english": "I need to find out how much it's going to cost to repair this before deciding.",
+        "portuguese": "Preciso descobrir quanto vai custar para consertar isso antes de decidir.",
+        "context": "Pesquisa de preço antes de decisão",
+        "frequency": "high",
+        "category": "decisions"
+      },
+      {
+        "english": "What do you think is the most important thing I should focus on right now here?",
+        "portuguese": "O que você acha que é a coisa mais importante em que devo focar agora aqui?",
+        "context": "Pedindo orientação de prioridade",
+        "frequency": "high",
+        "category": "advice"
+      },
+      {
+        "english": "I'm going to need some time to think about this before I can give you answer.",
+        "portuguese": "Vou precisar de algum tempo para pensar sobre isso antes de poder te dar resposta.",
+        "context": "Adiamento de decisão",
+        "frequency": "very_high",
+        "category": "decisions"
+      },
+      {
+        "english": "Can you please let me know as soon as possible if you're able to help out?",
+        "portuguese": "Você pode me avisar o mais rápido possível se você consegue ajudar?",
+        "context": "Pedido urgente de confirmação",
+        "frequency": "very_high",
+        "category": "assistance"
+      },
+      {
+        "english": "I was just wondering if you had a chance to look over the document I sent.",
+        "portuguese": "Estava me perguntando se você teve chance de revisar o documento que enviei.",
+        "context": "Acompanhamento de tarefa",
+        "frequency": "very_high",
+        "category": "work"
+      },
+      {
+        "english": "Do you happen to know where I might be able to find a good Italian restaurant?",
+        "portuguese": "Por acaso você sabe onde eu poderia encontrar um bom restaurante italiano?",
+        "context": "Pedindo recomendação específica",
+        "frequency": "medium",
+        "category": "recommendations"
+      },
+      {
+        "english": "I think it would be a good idea if we could meet to discuss this further.",
+        "portuguese": "Acho que seria uma boa ideia se pudéssemos nos reunir para discutir isso melhor.",
+        "context": "Proposta de reunião",
+        "frequency": "high",
+        "category": "work"
+      },
+      {
+        "english": "Could you please give me a call when you get a chance to talk about this?",
+        "portuguese": "Você poderia me ligar quando tiver uma chance de falar sobre isso?",
+        "context": "Pedido de ligação futura",
+        "frequency": "very_high",
+        "category": "communication"
+      },
+      {
+        "english": "I'm having a really difficult time trying to figure out what the problem is here now.",
+        "portuguese": "Estou tendo muita dificuldade tentando descobrir qual é o problema aqui agora.",
+        "context": "Frustração com problema",
+        "frequency": "high",
+        "category": "problem_solving"
+      },
+      {
+        "english": "What would you say is the best way to get from here to the city center?",
+        "portuguese": "O que você diria que é a melhor forma de ir daqui ao centro da cidade?",
+        "context": "Pedindo melhor rota",
+        "frequency": "high",
+        "category": "directions"
+      },
+      {
+        "english": "I need to make sure that everything is ready before the meeting starts this afternoon today.",
+        "portuguese": "Preciso ter certeza de que tudo está pronto antes da reunião começar esta tarde hoje.",
+        "context": "Preparação para evento",
+        "frequency": "high",
+        "category": "work"
+      },
+      {
+        "english": "Can you tell me how long you think it's going to take to finish this project?",
+        "portuguese": "Você pode me dizer quanto tempo acha que vai levar para terminar este projeto?",
+        "context": "Estimativa de tempo",
+        "frequency": "very_high",
+        "category": "work"
+      },
+      {
+        "english": "I was thinking about going to the gym after work, but I'm not sure yet today.",
+        "portuguese": "Estava pensando em ir à academia depois do trabalho, mas não tenho certeza ainda hoje.",
+        "context": "Plano tentativo",
+        "frequency": "medium",
+        "category": "fitness"
+      },
+      {
+        "english": "Do you know if there's anyone else who might be able to help me with this?",
+        "portuguese": "Você sabe se há mais alguém que possa conseguir me ajudar com isso?",
+        "context": "Procurando assistência alternativa",
+        "frequency": "high",
+        "category": "assistance"
+      },
+      {
+        "english": "I'm going to have to cancel my plans for tonight because something came up today.",
+        "portuguese": "Vou ter que cancelar meus planos para hoje à noite porque algo surgiu hoje.",
+        "context": "Cancelamento por imprevisto",
+        "frequency": "high",
+        "category": "social"
+      },
+      {
+        "english": "Could you please explain to me how this system works so I can understand it better?",
+        "portuguese": "Você poderia me explicar como este sistema funciona para que eu possa entendê-lo melhor?",
+        "context": "Pedido de explicação",
+        "frequency": "high",
+        "category": "learning"
+      },
+      {
+        "english": "I haven't been able to get in touch with anyone from the office all day today.",
+        "portuguese": "Não consegui entrar em contato com ninguém do escritório o dia todo hoje.",
+        "context": "Dificuldade de comunicação",
+        "frequency": "high",
+        "category": "work"
+      },
+      {
+        "english": "What time do you think we should plan on arriving at the venue for the event?",
+        "portuguese": "Que horas você acha que deveríamos planejar chegar no local para o evento?",
+        "context": "Planejamento de chegada",
+        "frequency": "high",
+        "category": "events"
+      },
+      {
+        "english": "I was wondering if you could give me some feedback on the presentation I gave yesterday.",
+        "portuguese": "Estava pensando se você poderia me dar algum feedback sobre a apresentação que dei ontem.",
+        "context": "Pedido de avaliação",
+        "frequency": "high",
+        "category": "work"
+      },
+      {
+        "english": "Can you let me know if you need me to pick up anything from the store?",
+        "portuguese": "Você pode me avisar se precisa que eu pegue algo da loja?",
+        "context": "Oferta de fazer compras",
+        "frequency": "high",
+        "category": "assistance"
+      },
+      {
+        "english": "I think I'm going to need to take a few days off to deal with everything.",
+        "portuguese": "Acho que vou precisar tirar alguns dias de folga para lidar com tudo.",
+        "context": "Necessidade de licença",
+        "frequency": "medium",
+        "category": "work"
+      },
+      {
+        "english": "Do you have any suggestions for what I should do about this problem I'm facing now?",
+        "portuguese": "Você tem alguma sugestão do que eu deveria fazer sobre este problema que estou enfrentando agora?",
+        "context": "Pedindo conselho sobre dificuldade",
+        "frequency": "very_high",
+        "category": "advice"
+      },
+      {
+        "english": "I'm not really sure what the policy is regarding taking time off during the holidays.",
+        "portuguese": "Não tenho muita certeza qual é a política em relação a tirar folga durante os feriados.",
+        "context": "Dúvida sobre normas",
+        "frequency": "medium",
+        "category": "work"
+      },
+      {
+        "english": "Could you possibly help me figure out what went wrong with this project we're working on?",
+        "portuguese": "Você possivelmente poderia me ajudar a descobrir o que deu errado com este projeto em que estamos trabalhando?",
+        "context": "Pedido de ajuda com análise",
+        "frequency": "high",
+        "category": "work"
+      },
+      {
+        "english": "I was hoping you might be able to join us for dinner at our place tonight.",
+        "portuguese": "Estava esperando que você talvez pudesse se juntar a nós para jantar em nossa casa hoje à noite.",
+        "context": "Convite para refeição",
+        "frequency": "high",
+        "category": "social"
+      },
+      {
+        "english": "What do you think would be the best approach to take when dealing with this client?",
+        "portuguese": "O que você acha que seria a melhor abordagem ao lidar com este cliente?",
+        "context": "Estratégia profissional",
+        "frequency": "high",
+        "category": "work"
+      },
+      {
+        "english": "I need to find out what the requirements are before I can start working on this.",
+        "portuguese": "Preciso descobrir quais são os requisitos antes de poder começar a trabalhar nisso.",
+        "context": "Clarificação de especificações",
+        "frequency": "very_high",
+        "category": "work"
+      },
+      {
+        "english": "Can you please make sure that everyone on the team gets a copy of this document?",
+        "portuguese": "Você pode ter certeza de que todos na equipe recebam uma cópia deste documento?",
+        "context": "Instrução de distribuição",
+        "frequency": "high",
+        "category": "work"
+      },
+      {
+        "english": "I'm going to be working from home for the rest of the week starting from tomorrow.",
+        "portuguese": "Vou estar trabalhando de casa pelo resto da semana começando de amanhã.",
+        "context": "Aviso de trabalho remoto",
+        "frequency": "high",
+        "category": "work"
+      },
+      {
+        "english": "Do you think it would be okay if I brought a friend along to the party?",
+        "portuguese": "Você acha que seria ok se eu trouxesse um amigo junto para a festa?",
+        "context": "Pedido de permissão social",
+        "frequency": "high",
+        "category": "social"
+      },
+      {
+        "english": "I was just checking in to see if you had any questions about what we discussed.",
+        "portuguese": "Estava só verificando para ver se você tinha alguma dúvida sobre o que discutimos.",
+        "context": "Acompanhamento pós-reunião",
+        "frequency": "high",
+        "category": "work"
+      },
+      {
+        "english": "Could you tell me where the best place is to park my car around this area?",
+        "portuguese": "Você poderia me dizer onde é o melhor lugar para estacionar meu carro nesta área?",
+        "context": "Informação sobre estacionamento",
+        "frequency": "high",
+        "category": "directions"
+      },
+      {
+        "english": "I think we need to have a serious conversation about what happened at the meeting yesterday.",
+        "portuguese": "Acho que precisamos ter uma conversa séria sobre o que aconteceu na reunião ontem.",
+        "context": "Necessidade de discussão importante",
+        "frequency": "high",
+        "category": "work"
+      },
+      {
+        "english": "What would be the most convenient time for you to come by and pick this up?",
+        "portuguese": "Qual seria o horário mais conveniente para você vir e pegar isso?",
+        "context": "Coordenação de retirada",
+        "frequency": "high",
+        "category": "scheduling"
+      },
+      {
+        "english": "I'm having some trouble understanding exactly what you want me to do with this information here.",
+        "portuguese": "Estou tendo alguma dificuldade em entender exatamente o que você quer que eu faça com esta informação aqui.",
+        "context": "Confusão sobre instruções",
+        "frequency": "high",
+        "category": "clarification"
+      },
+      {
+        "english": "Can you please let me know when you're planning to be back in the office tomorrow?",
+        "portuguese": "Você pode me avisar quando planeja estar de volta no escritório amanhã?",
+        "context": "Verificação de presença",
+        "frequency": "high",
+        "category": "work"
+      },
+      {
+        "english": "I was thinking we could maybe try that new restaurant that just opened up last week.",
+        "portuguese": "Estava pensando que poderíamos talvez experimentar aquele restaurante novo que acabou de abrir semana passada.",
+        "context": "Sugestão de local novo",
+        "frequency": "medium",
+        "category": "dining"
+      },
+      {
+        "english": "Do you know if there's a way to get a discount if we buy more than one?",
+        "portuguese": "Você sabe se há uma forma de conseguir desconto se comprarmos mais de um?",
+        "context": "Pergunta sobre preço em quantidade",
+        "frequency": "medium",
+        "category": "shopping"
+      },
+      {
+        "english": "I'm going to need you to send me that information as soon as you can today.",
+        "portuguese": "Vou precisar que você me envie aquela informação assim que puder hoje.",
+        "context": "Solicitação urgente",
+        "frequency": "very_high",
+        "category": "work"
+      },
+      {
+        "english": "Could you possibly recommend someone who might be able to help me with this technical issue here?",
+        "portuguese": "Você possivelmente poderia recomendar alguém que possa conseguir me ajudar com este problema técnico aqui?",
+        "context": "Procurando especialista",
+        "frequency": "high",
+        "category": "technical_issues"
+      }
+    ]
+  },
+  "metadata": {
+    "total_phrases": 400,
+    "phrases_by_length": {
+      "3_words": 50,
+      "4_words": 50,
+      "5_words": 50,
+      "6_words": 50,
+      "7_words": 50,
+      "8_words": 50,
+      "9_words": 50,
+      "10_words": 50
+    },
+    "categories": [
+      "greetings",
+      "common_responses",
+      "courtesy",
+      "goodbyes",
+      "feelings",
+      "introductions",
+      "emotions",
+      "needs",
+      "assistance",
+      "directions",
+      "time",
+      "communication",
+      "shopping",
+      "ordering",
+      "restaurant",
+      "apologies",
+      "language",
+      "leaving",
+      "conversation",
+      "small_talk",
+      "work",
+      "work_communication",
+      "healthcare",
+      "hobbies",
+      "family",
+      "recommendations",
+      "technical_issues",
+      "health",
+      "social",
+      "errands",
+      "scheduling",
+      "requests",
+      "travel",
+      "daily_life",
+      "problem_solving",
+      "car_maintenance",
+      "complaints",
+      "understanding",
+      "agreement",
+      "actions",
+      "possession",
+      "safety",
+      "questions",
+      "abilities",
+      "urgency",
+      "queue",
+      "thinking",
+      "humor",
+      "patience",
+      "memory",
+      "relief",
+      "instructions",
+      "warnings",
+      "commitments",
+      "decisions",
+      "reactions",
+      "compliments",
+      "clarification",
+      "refusal",
+      "contact",
+      "preparation",
+      "busy",
+      "uncertainty",
+      "weather",
+      "opinions",
+      "invitations",
+      "reminders",
+      "plans",
+      "learning",
+      "housing",
+      "advice",
+      "events",
+      "banking",
+      "fitness",
+      "dining",
+      "comfort",
+      "entertainment",
+      "payment",
+      "repairs",
+      "personal_finance",
+      "technical",
+      "boundaries",
+      "support",
+      "driving",
+      "responsibility"
+    ],
+    "frequency_levels": {
+      "very_high": "Usado diariamente em múltiplas situações - essencial para comunicação básica",
+      "high": "Usado frequentemente em contextos específicos - importante para fluência",
+      "medium": "Usado regularmente mas menos frequente - útil para situações específicas"
+    },
+    "usage_note": "Todas as 400 frases foram selecionadas baseadas em situações reais de comunicação do dia a dia, priorizando expressões que nativos da língua inglesa realmente usam em contextos cotidianos, profissionais e sociais. As frases cobrem desde necessidades básicas até comunicação complexa em ambientes profissionais.",
+    "learning_recommendation": "Comece pelas frases de 3-4 palavras (very_high frequency) para construir base sólida. Progrida gradualmente para frases mais longas conforme ganha confiança. Pratique em contextos reais sempre que possível."
+  }
+}
