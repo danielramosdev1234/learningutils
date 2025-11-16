@@ -21,6 +21,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { useXP } from '../../hooks/useXP';
 import { trackExerciseComplete, trackError, trackUserAction } from '../../utils/analytics';
+import { countWords } from '../../utils/wordCounter';
 
 const isAndroidDevice = () => {
   const ua = navigator.userAgent.toLowerCase();
@@ -139,11 +140,15 @@ export const PhraseCard = ({
         console.log(`✅ ${comparison.similarity}% - Marking phrase as completed!`);
 
         try {
-          // Ganha XP ao acertar frase
+          // Conta palavras na frase para calcular XP (1 XP por palavra)
+          const wordCount = countWords(phrase.text);
+          
+          // Ganha XP baseado no número de palavras (1 XP por palavra)
           earnXP('phrases', {
             phraseId: phrase.id,
             accuracy: comparison.similarity,
-            streak: streak.current
+            streak: streak.current,
+            amount: wordCount // Passa o número de palavras como amount
           });
 
           dispatch(markPhraseCompleted({

@@ -2,13 +2,29 @@ import { XP_CONFIG } from '../store/slices/xpSlice';
 
 /**
  * Calcula XP baseado na performance
+ * Se amount for fornecido (sistema de palavras), usa ele como base
  */
 export const calculateXPReward = (mode, performance = {}) => {
-  // Se o metadata tem um amount customizado, usa ele
-  if (performance.amount !== undefined) {
-    return performance.amount;
+  // Prioridade: amount customizado (para sistema de palavras - 1 XP por palavra)
+  if (performance.amount !== undefined && performance.amount > 0) {
+    let xp = performance.amount;
+    
+    // Aplica bônus de accuracy (valores fixos)
+    if (performance.accuracy >= 100) {
+      xp += 2; // +2 XP bônus para 100%
+    } else if (performance.accuracy >= 90) {
+      xp += 1; // +1 XP bônus para 90%+
+    }
+    
+    // Bônus por streak (mantém sistema de streak)
+    if (performance.streak >= 7) {
+      xp += XP_CONFIG.REWARDS.streak || 2;
+    }
+    
+    return Math.max(1, xp); // Mínimo 1 XP
   }
 
+  // Sistema antigo (fallback para compatibilidade com modos que não usam palavras)
   let baseXP = XP_CONFIG.REWARDS[mode] || 10;
 
   // Bônus por accuracy
@@ -22,8 +38,6 @@ export const calculateXPReward = (mode, performance = {}) => {
   if (performance.streak >= 7) {
     baseXP += XP_CONFIG.REWARDS.streak;
   }
-  console.warn('baseXP', baseXP);
-  console.warn('performance', performance);
 
   return baseXP;
 };

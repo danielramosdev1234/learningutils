@@ -310,10 +310,10 @@ export const LevelIndicator = ({ variant = 'full' }) => {
                     <span className="text-base sm:text-xl flex-shrink-0">🔄</span>
                     <span className="font-bold text-violet-800 text-xs sm:text-sm truncate">Translate</span>
                   </div>
-                  <span className="px-2 sm:px-3 py-0.5 sm:py-1 bg-blue-500 text-white rounded-lg text-xs sm:text-sm font-bold shadow-sm flex-shrink-0">5-10 XP</span>
+                  <span className="px-2 sm:px-3 py-0.5 sm:py-1 bg-blue-500 text-white rounded-lg text-xs sm:text-sm font-bold shadow-sm flex-shrink-0">1 XP/palavra</span>
                 </div>
-                <p className="text-xs sm:text-sm text-blue-700 mb-0.5 sm:mb-1">5 XP Acertar uma frase com 80%+ de precisão</p>
-                <p className="text-[10px] sm:text-xs text-blue-600">+2 XP extra se acertar 90%+ | +5 XP se acertar 100%</p>
+                <p className="text-xs sm:text-sm text-blue-700 mb-0.5 sm:mb-1">1 XP por cada palavra da frase (com 80%+ de precisão)</p>
+                <p className="text-[10px] sm:text-xs text-blue-600">+1 XP bônus se acertar 90%+ | +2 XP bônus se acertar 100%</p>
                 {xpBreakdown.phrases > 0 && (
                   <p className="text-[10px] sm:text-xs text-blue-500 mt-1.5 sm:mt-2 font-semibold">✓ Total ganho: {xpBreakdown.phrases.toLocaleString()} XP</p>
                 )}
@@ -328,9 +328,9 @@ export const LevelIndicator = ({ variant = 'full' }) => {
                     <span className="text-base sm:text-xl flex-shrink-0">🔢</span>
                     <span className="font-bold text-orange-800 text-xs sm:text-sm truncate">Numbers</span>
                   </div>
-                  <span className="px-2 sm:px-3 py-0.5 sm:py-1 bg-orange-500 text-white rounded-lg text-xs sm:text-sm font-bold shadow-sm flex-shrink-0">5 XP</span>
+                  <span className="px-2 sm:px-3 py-0.5 sm:py-1 bg-orange-500 text-white rounded-lg text-xs sm:text-sm font-bold shadow-sm flex-shrink-0">1 XP/número</span>
                 </div>
-                <p className="text-xs sm:text-sm text-orange-700">Cada número correto</p>
+                <p className="text-xs sm:text-sm text-orange-700">1 XP por cada número correto</p>
                 {xpBreakdown.numbers > 0 && (
                   <p className="text-[10px] sm:text-xs text-orange-500 mt-1.5 sm:mt-2 font-semibold">✓ Total ganho: {xpBreakdown.numbers.toLocaleString()} XP</p>
                 )}
@@ -343,9 +343,10 @@ export const LevelIndicator = ({ variant = 'full' }) => {
                     <span className="text-base sm:text-xl flex-shrink-0">🎯</span>
                     <span className="font-bold text-rose-800 text-xs sm:text-sm truncate">Challenge</span>
                   </div>
-                  <span className="px-2 sm:px-3 py-0.5 sm:py-1 bg-rose-500 text-white rounded-lg text-xs sm:text-sm font-bold shadow-sm flex-shrink-0">5 XP</span>
+                  <span className="px-2 sm:px-3 py-0.5 sm:py-1 bg-rose-500 text-white rounded-lg text-xs sm:text-sm font-bold shadow-sm flex-shrink-0">1 XP/palavra</span>
                 </div>
-                <p className="text-xs sm:text-sm text-rose-700">Cada frase correta</p>
+                <p className="text-xs sm:text-sm text-rose-700">1 XP por cada palavra da frase correta</p>
+                <p className="text-[10px] sm:text-xs text-rose-600">+1 XP bônus se acertar 90%+ | +2 XP bônus se acertar 100%</p>
                 {xpBreakdown.challenge > 0 && (
                   <p className="text-[10px] sm:text-xs text-rose-500 mt-1.5 sm:mt-2 font-semibold">✓ Total ganho: {xpBreakdown.challenge.toLocaleString()} XP</p>
                 )}

@@ -118,11 +118,12 @@ export default function NumberSpeechTrainer() {
       setFeedback(t.correct);
       dispatch(incrementPhraseCompleted());
       
-      // Ganha XP por acertar o número
+      // Ganha XP por acertar o número (1 XP por número)
       try {
         await earnXP('numbers', {
           number: currentNumber,
-          language: selectedLanguage
+          language: selectedLanguage,
+          amount: 1 // 1 XP por número
         });
       } catch (error) {
         console.error('Erro ao ganhar XP:', error);

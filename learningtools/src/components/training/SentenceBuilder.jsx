@@ -2,11 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { Check, X, Lightbulb, RotateCcw, Trophy, Zap, Target, Play, ArrowLeft } from 'lucide-react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useXP } from '../../hooks/useXP';
+import { countWords } from '../../utils/wordCounter';
 import { trackExerciseComplete, trackError, trackUserAction } from '../../utils/analytics';
 import { incrementPhraseCompleted, markPhraseCompleted, markSentenceBuilderPhraseCompleted, saveProgress } from '../../store/slices/userSlice';
 import { useTextToSpeech } from '../../hooks/useTextToSpeech';
 import { PhraseCard } from './PhraseCard';
 import builderPhrasesData from '../../data/builder_phrases.json';
+import { LevelIndicator } from '../leaderboard/LevelIndicator';
 
 const WORD_COUNT_CATEGORIES = [
   { id: '3_words', name: '3 Words', count: 3, color: 'from-blue-500 to-indigo-600', emoji: '🔢' },
@@ -149,11 +151,13 @@ const SentenceBuilder = () => {
       setCurrentPhrase(phrase);
       setShowPhraseCard(true);
       
-      // Ganhar XP
+      // Ganhar XP baseado no número de palavras (1 XP por palavra)
+      const wordCount = countWords(currentPhraseData.english);
       earnXP('sentence_builder', {
         category: selectedCategory,
         exerciseIndex: currentIndex,
-        streak: streak + 1
+        streak: streak + 1,
+        amount: wordCount // 1 XP por palavra
       });
       
       // Track analytics
@@ -299,6 +303,7 @@ const SentenceBuilder = () => {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 py-8 px-4">
         <div className="max-w-4xl mx-auto">
+
           {/* Header */}
           <div className="text-center mb-12">
             <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-cyan-500 to-blue-500 rounded-full mb-4 shadow-lg">
@@ -395,6 +400,7 @@ const SentenceBuilder = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 p-4 md:p-6">
       <div className="max-w-4xl mx-auto">
+          <LevelIndicator variant="full" />
         {/* Header */}
         <div className="bg-white rounded-2xl shadow-lg p-4 md:p-6 mb-6">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4 gap-4">

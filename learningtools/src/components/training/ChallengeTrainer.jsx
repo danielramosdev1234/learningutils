@@ -6,6 +6,7 @@ import { updateChallengeHighScore } from '../../store/slices/userSlice';
 import ProtectedLeaderboardSave from '../leaderboard/ProtectedLeaderboardSave';
 import { LevelIndicator } from '../leaderboard/LevelIndicator';
 import { useXP } from '../../hooks/useXP';
+import { countWords } from '../../utils/wordCounter';
 
 // Versão integrada para o TrainerSelector
 const TrainerSelector = () => {
@@ -232,12 +233,14 @@ const ChallengeTrainer = () => {
     setLastResult({ similarity, correct: similarity >= 90 });
 
     if (similarity >= 90) {
-      // Ganha XP por acertar frase no challenge
+      // Ganha XP por acertar frase no challenge (1 XP por palavra)
       try {
+        const wordCount = countWords(currentPhrase.text);
         await earnXP('challenge', {
           phraseId: currentPhrase.id,
           similarity,
-          timeLeft
+          timeLeft,
+          amount: wordCount // 1 XP por palavra
         });
       } catch (error) {
         console.error('Erro ao ganhar XP:', error);
