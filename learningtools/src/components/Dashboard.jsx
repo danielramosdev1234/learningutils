@@ -97,7 +97,7 @@ const Dashboard = () => {
                                                   alt: 'exemplo word by word'
             },{
           id: 'speak',
-          title: 'Speak Prhases',
+          title: 'Speak Phrases',
           description: (
                     <ul className="space-y-2 text-sm text-gray-600">
                                                                   <li className="flex items-center gap-2">
@@ -125,7 +125,7 @@ const Dashboard = () => {
                   ),
           icon: Mic,
           gradient: 'from-purple-500 to-pink-500 ',
-          path: '/?mode=chunk',
+          path: '/?mode=categories',
                                         src: wordByWordImg,
                                               alt: 'exemplo word by word'
         },
@@ -567,7 +567,7 @@ description: (
           <div>
             <h3>Múltiplos Modos de Treinamento</h3>
             <p>
-              Escolha entre diferentes modos: frases por categorias, tradução, chunks, 
+              Escolha entre diferentes modos: frases por categorias (incluindo Speak Phrases), tradução, 
               números, vídeos e salas ao vivo. Cada modo foi projetado para desenvolver 
               habilidades específicas do inglês.
             </p>

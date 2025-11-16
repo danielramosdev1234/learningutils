@@ -202,7 +202,7 @@ const BackupManager = () => {
       </div>
 
       <button
-                      onClick={() => window.location.href = '/?mode=chunk'}
+                      onClick={() => window.location.href = '/?mode=categories'}
                       className="p-2 hover:bg-white hover:bg-opacity-20 rounded-lg transition-colors"
                       title="Voltar para o início"
                     >

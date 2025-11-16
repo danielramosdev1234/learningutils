@@ -161,7 +161,7 @@ const Home = () => {
                 <h3 className="text-2xl font-bold text-gray-800">Múltiplos Modos de Treinamento</h3>
               </div>
               <p className="text-gray-700">
-                Frases por categorias, tradução, chunks, números, vídeos e salas ao vivo. 
+                Frases por categorias (incluindo Speak Phrases), tradução, números, vídeos e salas ao vivo. 
                 Cada modo desenvolve habilidades específicas do inglês.
               </p>
             </div>

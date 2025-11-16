@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { Hash, Mic, Zap, Video, MoreHorizontal, X, MessageCircle, Globe, Gift, Radio, House, BookOpen, ArrowUp01, HelpCircle, Puzzle } from 'lucide-react';
 import NumberSpeechTrainer from './training/NumberSpeechTrainer';
-import ChunkTrainer from './training/ChunkTrainer';
 import ChallengeTrainer from './training/ChallengeTrainer';
 import VideoLearningApp from './training/VideoListener';
 import WhatsAppFloatingButton from './ui/WhatsAppFloatingButton';
@@ -37,7 +36,6 @@ const TrainerSelector = () => {
     const mode = params.get('mode');
     if (mode === 'categories') return 'categories';
     if (mode === 'live-rooms') return 'live-rooms';
-    if (mode === 'chunk') return 'chunk';
     if (mode === 'translate') return 'translate';
     if (mode === 'challenge') return 'challenge';
     if (mode === 'numbers') return 'numbers';
@@ -83,6 +81,17 @@ const TrainerSelector = () => {
       setShowOnboarding(false);
     }
   }, [mode]);
+
+  // Lê parâmetro 'category' da URL quando o modo for 'categories'
+  useEffect(() => {
+    if (activeTrainer === 'categories') {
+      const params = new URLSearchParams(window.location.search);
+      const categoryParam = params.get('category');
+      if (categoryParam) {
+        setAutoSelectCategory(categoryParam);
+      }
+    }
+  }, [activeTrainer]);
 
   const finishOnboarding = () => {
     if (typeof window !== 'undefined') {
@@ -207,27 +216,6 @@ const handleCloseLevelUpModal = () => {
                                                            <BookOpen className="w-5 h-5" aria-hidden="true" />
                                                            Categories
                                                          </button>
-              {/* Chunk Trainer Button */}
-              <button
-                onClick={() => handleTrainerChange('chunk')}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    handleTrainerChange('chunk');
-                  }
-                }}
-                tabIndex={0}
-                aria-label="Treinar pronúncia de frases"
-                aria-current={activeTrainer === 'chunk' ? 'page' : undefined}
-                className={`flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all ${
-                  activeTrainer === 'chunk'
-                    ? 'bg-purple-500 text-white shadow-lg scale-105'
-                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                }`}
-              >
-                <Mic className="w-5 h-5" aria-hidden="true" />
-                Speak phrases
-              </button>
 
               {/* Translate Trainer Button - NOVO */}
               <button
@@ -405,7 +393,6 @@ const handleCloseLevelUpModal = () => {
             <CategoryTrainer autoSelectCategory={autoSelectCategory} />
           )}
         {activeTrainer === 'dashboard' && <Dashboard onNavigate={handleTrainerChange} />}
-        {activeTrainer === 'chunk' && <ChunkTrainer />}
         {activeTrainer === 'translate' && <TranslateTrainer />}
         {activeTrainer === 'sentence-builder' && <SentenceBuilder />}
         {activeTrainer === 'numbers' && <NumberSpeechTrainer />}
@@ -494,46 +481,6 @@ const handleCloseLevelUpModal = () => {
                                                 <div className="w-2 h-2  rounded-full" aria-hidden="true" />
                                               )}
                                             </button>
-              {/* Speak Phrases */}
-              <button
-                onClick={() => {
-                  handleTrainerChange('chunk');
-                  setShowSpeakMenu(false);
-                }}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    handleTrainerChange('chunk');
-                    setShowSpeakMenu(false);
-                  }
-                }}
-                tabIndex={0}
-                aria-label="Treinar pronúncia de frases"
-                className={`w-full flex items-center gap-4 p-4 rounded-xl transition-all ${
-                  activeTrainer === 'chunk'
-                    ? 'bg-purple-500 text-white shadow-lg'
-                    : 'bg-gray-50 hover:bg-gray-100 text-gray-800'
-                }`}
-              >
-                <div className={`p-3 rounded-full ${
-                  activeTrainer === 'chunk' ? ' bg-opacity-20' : 'bg-purple-100'
-                }`}>
-                  <Mic className={`w-6 h-6 ${
-                    activeTrainer === 'chunk' ? 'text-white' : 'text-purple-600'
-                  }`} aria-hidden="true" />
-                </div>
-                <div className="text-left flex-1">
-                  <div className="font-bold text-lg">Speak Phrases</div>
-                  <div className={`text-sm ${
-                    activeTrainer === 'chunk' ? 'text-white text-opacity-90' : 'text-gray-600'
-                  }`}>
-                    Practice pronunciation
-                  </div>
-                </div>
-                {activeTrainer === 'chunk' && (
-                  <div className="w-2 h-2  rounded-full" aria-hidden="true" />
-                )}
-              </button>
 
 
 
@@ -873,16 +820,13 @@ const handleCloseLevelUpModal = () => {
             aria-label="Abrir menu de treinamento de fala"
             aria-expanded={showSpeakMenu}
             className={`flex flex-col items-center gap-1 py-3 transition-all ${
-              showSpeakMenu || activeTrainer === 'chunk' || activeTrainer === 'translate' || activeTrainer === 'challenge' || activeTrainer === 'sentence-builder'
+              showSpeakMenu || activeTrainer === 'translate' || activeTrainer === 'challenge' || activeTrainer === 'sentence-builder'
                 ? 'text-purple-600'
                 : 'text-gray-400'
             }`}
           >
-            <Mic className={`w-6 h-6 ${activeTrainer === 'chunk' ? 'scale-110' : ''}`} aria-hidden="true" />
+            <Mic className="w-6 h-6" aria-hidden="true" />
             <span className="text-xs font-semibold">Speak</span>
-            {activeTrainer === 'chunk' && (
-              <div className="w-8 h-1 bg-purple-600 rounded-full mt-1" aria-hidden="true" />
-            )}
           </button>
 
 

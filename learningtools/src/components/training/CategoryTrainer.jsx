@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Briefcase, ShoppingBag, Plane, Users, Home, ArrowLeft, Play, Trophy, Target, Code, Activity, FileText } from 'lucide-react';
+import { Briefcase, ShoppingBag, Plane, Users, Home, ArrowLeft, Play, Trophy, Target, Code, Activity, FileText, Mic } from 'lucide-react';
 import { PhraseCard } from './PhraseCard';
 import { useTextToSpeech } from '../../hooks/useTextToSpeech';
 import { PhraseRepository } from '../../services/phraseRepository';
@@ -8,7 +8,8 @@ import {
   markPhraseCompleted,
   markCategoryPhraseCompleted,
   incrementPhraseCompleted,
-  saveProgress
+  saveProgress,
+  updateChunkProgress
 } from '../../store/slices/userSlice';
 import { LevelIndicator } from '../leaderboard/LevelIndicator';
 import GuidedTourOverlay from '../ui/GuidedTourOverlay';
@@ -69,6 +70,14 @@ const CATEGORIES = [
   color: 'from-teal-500 to-emerald-600',
   description: 'Clinical trials and research',
   emoji: '🔬'
+},
+{
+  id: 'speak_phrases',
+  name: 'Speak Phrases',
+  icon: Mic,
+  color: 'from-purple-500 to-pink-600',
+  description: 'Practice phrases specialized in pronunciation training',
+  emoji: '🎤'
 }
 ];
 
@@ -120,25 +129,70 @@ const CategoryTrainer = ({ autoSelectCategory = null }) => {
   // Filtra frases quando categoria é selecionada
   useEffect(() => {
     if (selectedCategory && allPhrases.length > 0) {
-      const filtered = allPhrases.filter(p => p.category === selectedCategory);
+      // Se for "speak_phrases", mostra todas as frases; senão, filtra por categoria
+      const filtered = selectedCategory === 'speak_phrases' 
+        ? allPhrases 
+        : allPhrases.filter(p => p.category === selectedCategory);
       setCategoryPhrases(filtered);
       
-      // Carrega progresso da categoria do Redux (só quando categoria muda)
-      const categoryProgress = progress?.categories?.[selectedCategory];
-      const completedPhrasesInCategory = categoryProgress?.completedPhrases || [];
+      // Para "speak_phrases", usa progresso do chunkTrainer; para outras categorias, usa progresso específico
+      let completedPhrasesInCategory;
+      let startIndex = 0;
       
-      // Encontra a primeira frase não completada nesta categoria
-      const firstIncompleteIndex = filtered.findIndex(
-        phrase => !completedPhrasesInCategory.includes(phrase.id)
-      );
+      if (selectedCategory === 'speak_phrases') {
+        // Para speak_phrases, usa o progresso do chunkTrainer (que era usado antes)
+        const chunkProgress = progress?.chunkTrainer;
+        const chunkCurrentIndex = chunkProgress?.currentIndex || 0;
+        // completedPhrases no chunkTrainer contém índices, não IDs
+        const completedIndices = chunkProgress?.completedPhrases || [];
+        
+        // Usa o currentIndex do chunkTrainer, mas garante que não seja maior que o tamanho
+        if (chunkCurrentIndex >= 0 && chunkCurrentIndex < filtered.length) {
+          startIndex = chunkCurrentIndex;
+        } else if (chunkCurrentIndex >= filtered.length) {
+          // Se o índice salvo for maior que o tamanho, volta para o final
+          startIndex = Math.max(0, filtered.length - 1);
+        } else {
+          // Se não houver índice válido, encontra a primeira não completada
+          const firstIncompleteIndex = filtered.findIndex(
+            (phrase, index) => !completedIndices.includes(index)
+          );
+          startIndex = firstIncompleteIndex !== -1 ? firstIncompleteIndex : 0;
+        }
+      } else {
+        // Carrega progresso da categoria do Redux (só quando categoria muda)
+        const categoryProgress = progress?.categories?.[selectedCategory];
+        completedPhrasesInCategory = categoryProgress?.completedPhrases || [];
+        const savedLastIndex = categoryProgress?.lastIndex || 0;
+        
+        // Encontra a primeira frase não completada nesta categoria
+        const firstIncompleteIndex = filtered.findIndex(
+          phrase => !completedPhrasesInCategory.includes(phrase.id)
+        );
+        
+        // Decide o índice inicial
+        if (savedLastIndex >= 0 && savedLastIndex < filtered.length) {
+          const phraseAtLastIndex = filtered[savedLastIndex];
+          if (phraseAtLastIndex && !completedPhrasesInCategory.includes(phraseAtLastIndex.id)) {
+            startIndex = savedLastIndex;
+          } else if (firstIncompleteIndex !== -1) {
+            startIndex = firstIncompleteIndex;
+          } else {
+            startIndex = 0;
+          }
+        } else if (firstIncompleteIndex !== -1) {
+          startIndex = firstIncompleteIndex;
+        } else {
+          startIndex = 0;
+        }
+      }
       
-      // Se todas foram completadas, começa do início; senão, começa da primeira não completada
-      const startIndex = firstIncompleteIndex !== -1 ? firstIncompleteIndex : 0;
       setCurrentIndex(startIndex);
       setCompletedInSession([]);
     }
-    // IMPORTANTE: Não incluir progress?.categories nas dependências para evitar
-    // que o índice seja recalculado quando uma frase é completada (causaria avanço automático)
+    // IMPORTANTE: Não incluir progress?.categories nem progress?.chunkTrainer?.currentIndex nas dependências
+    // para evitar que o índice seja recalculado quando uma frase é completada (causaria avanço automático)
+    // O índice é definido apenas quando a categoria muda ou quando as frases são carregadas
   }, [selectedCategory, allPhrases]);
 
   useEffect(() => {
@@ -292,12 +346,27 @@ const CategoryTrainer = ({ autoSelectCategory = null }) => {
       phraseIndex: currentIndex
     }));
 
-    // Marca como completa no progresso da categoria
-    dispatch(markCategoryPhraseCompleted({
-      categoryId: selectedCategory,
-      phraseId: currentPhrase.id,
-      currentIndex: currentIndex
-    }));
+    // Para "speak_phrases", atualiza o chunkTrainer; para outras categorias, atualiza o progresso da categoria
+    if (selectedCategory === 'speak_phrases') {
+      // Atualiza o progresso do chunkTrainer
+      const chunkProgress = progress?.chunkTrainer || {};
+      const completedPhrases = chunkProgress.completedPhrases || [];
+      const updatedCompletedPhrases = completedPhrases.includes(currentIndex) 
+        ? completedPhrases 
+        : [...completedPhrases, currentIndex];
+      
+      dispatch(updateChunkProgress({
+        currentIndex: currentIndex,
+        completedPhrases: updatedCompletedPhrases
+      }));
+    } else {
+      // Marca como completa no progresso da categoria
+      dispatch(markCategoryPhraseCompleted({
+        categoryId: selectedCategory,
+        phraseId: currentPhrase.id,
+        currentIndex: currentIndex
+      }));
+    }
 
     dispatch(incrementPhraseCompleted());
 
@@ -314,29 +383,60 @@ const CategoryTrainer = ({ autoSelectCategory = null }) => {
   };
 
   const handleNextPhrase = () => {
+    let newIndex;
     if (currentIndex < categoryPhrases.length - 1) {
-      setCurrentIndex(currentIndex + 1);
+      newIndex = currentIndex + 1;
     } else {
       // Reinicia do começo quando acabar
-      setCurrentIndex(0);
+      newIndex = 0;
+    }
+    
+    setCurrentIndex(newIndex);
+    
+    // Para "speak_phrases", atualiza o chunkTrainer.currentIndex
+    if (selectedCategory === 'speak_phrases') {
+      const chunkProgress = progress?.chunkTrainer || {};
+      const completedPhrases = chunkProgress.completedPhrases || [];
+      
+      dispatch(updateChunkProgress({
+        currentIndex: newIndex,
+        completedPhrases: completedPhrases
+      }));
+      
+      // Salva progresso no Firebase
+      if (mode === 'authenticated' && userId) {
+        setTimeout(() => {
+          dispatch(saveProgress());
+        }, 500);
+      }
     }
   };
 
   // Calcula estatísticas da categoria
   const getCategoryStats = (categoryId) => {
-    const categoryPhrasesCount = allPhrases.filter(p => p.category === categoryId).length;
+    // Se for "speak_phrases", conta todas as frases; senão, filtra por categoria
+    const categoryPhrasesCount = categoryId === 'speak_phrases'
+      ? allPhrases.length
+      : allPhrases.filter(p => p.category === categoryId).length;
     
-    // Usa progresso específico da categoria se disponível, senão usa global
-    const categoryProgress = progress?.categories?.[categoryId];
-    const completedPhrasesInCategory = categoryProgress?.completedPhrases || [];
-    
-    // Fallback para globalCompletedPhrases se não houver progresso específico
-    const completedCount = completedPhrasesInCategory.length > 0 
-      ? completedPhrasesInCategory.length
-      : allPhrases.filter(p =>
-          p.category === categoryId &&
-          levelSystem?.globalCompletedPhrases?.includes(p.id)
-        ).length;
+    let completedCount;
+    if (categoryId === 'speak_phrases') {
+      // Para speak_phrases, usa o chunkTrainer.completedPhrases (que contém índices)
+      const chunkProgress = progress?.chunkTrainer || {};
+      const completedIndices = chunkProgress.completedPhrases || [];
+      completedCount = completedIndices.length;
+    } else {
+      // Usa progresso específico da categoria se disponível, senão usa global
+      const categoryProgress = progress?.categories?.[categoryId];
+      const completedPhrasesInCategory = categoryProgress?.completedPhrases || [];
+      
+      completedCount = completedPhrasesInCategory.length > 0 
+        ? completedPhrasesInCategory.length
+        : allPhrases.filter(p =>
+            p.category === categoryId &&
+            levelSystem?.globalCompletedPhrases?.includes(p.id)
+          ).length;
+    }
 
     return {
       total: categoryPhrasesCount,

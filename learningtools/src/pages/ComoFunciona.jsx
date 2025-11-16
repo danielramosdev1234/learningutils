@@ -126,10 +126,6 @@ const ComoFunciona = () => {
                   <p className="text-gray-700 text-sm">Pratique frases por categorias temáticas</p>
                 </div>
                 <div className="bg-gray-50 rounded-lg p-4">
-                  <h3 className="font-bold text-gray-800 mb-2">Speak Phrases</h3>
-                  <p className="text-gray-700 text-sm">Treine pronúncia de frases completas</p>
-                </div>
-                <div className="bg-gray-50 rounded-lg p-4">
                   <h3 className="font-bold text-gray-800 mb-2">Translate</h3>
                   <p className="text-gray-700 text-sm">Pratique tradução português-inglês</p>
                 </div>
