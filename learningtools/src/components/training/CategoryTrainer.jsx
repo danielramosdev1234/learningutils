@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Briefcase, ShoppingBag, Plane, Users, Home, ArrowLeft, Play, Trophy, Target, Code, Activity, FileText, Mic, HelpCircle } from 'lucide-react';
+import { Briefcase, ShoppingBag, Plane, Users, Home, ArrowLeft, Play, Trophy, Target, Code, Activity, FileText, Mic, HelpCircle, Clock } from 'lucide-react';
 import { PhraseCard } from './PhraseCard';
 import { useTextToSpeech } from '../../hooks/useTextToSpeech';
 import { PhraseRepository } from '../../services/phraseRepository';
@@ -86,7 +86,15 @@ const CATEGORIES = [
   color: 'from-indigo-500 to-purple-600',
   description: 'Essential questions with grammar tips',
   emoji: '❓'
-}
+},
+{
+    id: 'verb_tenses',
+    name: 'Verb Tenses',
+    icon: Clock,
+    color: 'from-orange-500 to-red-600',
+    description: 'Master present, past, and future tenses',
+    emoji: '⏰'
+  }
 ];
 
 const TOUR_STORAGE_KEY = 'learnfun_daily_basics_tour_v1';

@@ -10,6 +10,7 @@ import phrasesData from '../data/phrases.json';
 import techInterviewPhrases from '../data/tech_interview_phrases.json';
 import clinicalResearchPhrases from '../data/clinical_research_phrases.json';
 import questionsPhrases from '../data/questions_phrases.json';
+import verbTensesPhrases from '../data/verb_tenses_new.json';
 
 export class PhraseRepository {
   /**
@@ -46,7 +47,8 @@ export class PhraseRepository {
         ...travelSurvivalPhrases,
         ...techInterviewPhrases,
         ...clinicalResearchPhrases,
-        ...questionsPhrases
+        ...questionsPhrases,
+                             ...verbTensesPhrases
       ];
 
       console.log(`📚 Total de frases carregadas: ${allPhrases.length}`);
@@ -58,6 +60,7 @@ export class PhraseRepository {
       console.log(`      ✈️ Travel: ${travelSurvivalPhrases.length}`);
       console.log(`      💻 Tech Interview: ${techInterviewPhrases.length}`);
       console.log(`      ❓ Questions: ${questionsPhrases.length}`);
+      console.log(`   📚 Verb Tenses: ${verbTensesPhrases.length}`);
 
       // Adiciona IDs se não existirem (para compatibilidade)
       const phrasesWithIds = allPhrases.map((phrase, index) => ({
@@ -136,7 +139,8 @@ export class PhraseRepository {
       'social_english',
       'travel_survival',
       'clinical_research',
-      'essential_survival'
+      'essential_survival',
+                              'verb_tenses'
     ];
 
     return categories.map(categoryId => ({

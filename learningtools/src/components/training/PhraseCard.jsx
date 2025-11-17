@@ -470,6 +470,36 @@ const handleNextSkip = () => {
                 </div>
               )}
 
+            {phrase.grammar_notes.forma_negativa  && (
+                            <div className="bg-red-50 rounded-lg p-3 border-l-4 border-red-500">
+                              <p className="text-xs font-semibold text-red-700 uppercase tracking-wide mb-1">❌ Negative Form</p>
+                              <p className="text-sm text-red-800">{phrase.grammar_notes.forma_negativa }</p>
+                            </div>
+                          )}
+
+            {phrase.grammar_notes.forma_interrogativa   && (
+                                        <div className="bg-white rounded-lg p-3 border-l-4 border-cyan-500">
+                                          <p className="text-xs font-semibold text-red-700 uppercase tracking-wide mb-1">❓ Question Form</p>
+                                          <p className="text-sm text-red-800">{phrase.grammar_notes.forma_interrogativa  }</p>
+                                        </div>
+                                      )}
+            {phrase.grammar_notes.time_markers    && (
+                                                    <div className="bg-white rounded-lg p-3 border-l-4 border-cyan-500">
+                                                      <p className="text-xs font-semibold text-cyan-700 uppercase tracking-wide mb-2">⏰ Time Markers</p>
+                                                      <div className="flex flex-wrap gap-2">
+                                                                          {phrase.grammar_notes.time_markers.map((alt, index) => (
+                                                                            <span
+                                                                              key={index}
+                                                                              className="px-3 py-1 bg-cyan-100 text-cyan-800 rounded-full text-xs font-medium"
+                                                                            >
+                                                                              {alt}
+                                                                            </span>
+                                                                          ))}
+                                                                        </div>
+                                                    </div>
+                                                  )}
+
+
               {phrase.grammar_notes.formas_alternativas && phrase.grammar_notes.formas_alternativas.length > 0 && (
                 <div className="bg-white rounded-lg p-3 border-l-4 border-cyan-500">
                   <p className="text-xs font-semibold text-cyan-700 uppercase tracking-wide mb-2">Alternative Forms</p>
