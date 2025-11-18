@@ -23,6 +23,8 @@ import OfflineIndicator from './components/ui/OfflineIndicator';
 import NotificationPrompt from './components/ui/NotificationPrompt';
 import { useNotificationSync } from './hooks/useNotificationSync';
 import { useFCM } from './hooks/useFCM';
+import { useUILanguage } from './context/LanguageContext.jsx';
+import { translateUI } from './i18n/uiTranslations.js';
 
 // Lazy loading de páginas para melhor performance
 const FAQ = lazy(() => import('./components/FAQ'));
@@ -35,6 +37,7 @@ function App() {
   const dispatch = useDispatch();
   const [authChecked, setAuthChecked] = useState(false);
   const [userInitialized, setUserInitialized] = useState(false);
+  const { language } = useUILanguage();
   
   // Estado do XP System para o LevelUpModal
   const { showLevelUpModal, pendingLevelUp, totalXP } = useSelector(state => state.xp);
@@ -87,7 +90,9 @@ function App() {
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100">
         <div className="text-center">
           <div className="w-16 h-16 border-4 border-purple-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-gray-600 font-semibold">Carregando...</p>
+          <p className="text-gray-600 font-semibold">
+            {translateUI(language, 'common.loading')}
+          </p>
         </div>
       </div>
     );
@@ -101,7 +106,7 @@ function App() {
         <OfflineIndicator />
         <NotificationPrompt />
 
-        <Suspense fallback={<LoadingSpinner fullScreen text="Carregando página..." />}>
+        <Suspense fallback={<LoadingSpinner fullScreen text={translateUI(language, 'common.loadingPage')} />}>
           <Routes>
             {/* Rota principal com todos os trainers */}
             <Route path="/" element={<TrainerSelector />} />
@@ -110,7 +115,7 @@ function App() {
             <Route 
               path="/home" 
               element={
-                <Suspense fallback={<LoadingSpinner fullScreen text="Carregando..." />}>
+                <Suspense fallback={<LoadingSpinner fullScreen text={translateUI(language, 'common.loading')} />}>
                   <Home />
                 </Suspense>
               } 
@@ -118,7 +123,7 @@ function App() {
             <Route 
               path="/sobre" 
               element={
-                <Suspense fallback={<LoadingSpinner fullScreen text="Carregando..." />}>
+                <Suspense fallback={<LoadingSpinner fullScreen text={translateUI(language, 'common.loading')} />}>
                   <Sobre />
                 </Suspense>
               } 
@@ -126,7 +131,7 @@ function App() {
             <Route 
               path="/como-funciona" 
               element={
-                <Suspense fallback={<LoadingSpinner fullScreen text="Carregando..." />}>
+                <Suspense fallback={<LoadingSpinner fullScreen text={translateUI(language, 'common.loading')} />}>
                   <ComoFunciona />
                 </Suspense>
               } 
@@ -134,7 +139,7 @@ function App() {
             <Route 
               path="/precos" 
               element={
-                <Suspense fallback={<LoadingSpinner fullScreen text="Carregando..." />}>
+                <Suspense fallback={<LoadingSpinner fullScreen text={translateUI(language, 'common.loading')} />}>
                   <Precos />
                 </Suspense>
               } 

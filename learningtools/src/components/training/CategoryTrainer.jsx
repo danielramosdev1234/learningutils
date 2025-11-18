@@ -13,89 +13,8 @@ import {
 } from '../../store/slices/userSlice';
 import { LevelIndicator } from '../leaderboard/LevelIndicator';
 import GuidedTourOverlay from '../ui/GuidedTourOverlay';
-
-const CATEGORIES = [
-  {
-    id: 'daily_basics',
-    name: 'Daily Basics',
-    icon: Home,
-    color: 'from-blue-500 to-indigo-600',
-    description: 'Essential everyday phrases',
-    emoji: '🏠'
-  },
-  {
-    id: 'travel_survival',
-    name: 'Travel Survival',
-    icon: Plane,
-    color: 'from-purple-500 to-pink-600',
-    description: 'Phrases for travelers',
-    emoji: '✈️'
-  },
-  {
-    id: 'professional_english',
-    name: 'Work & Professional',
-    icon: Briefcase,
-    color: 'from-green-500 to-teal-600',
-    description: 'Business communication',
-    emoji: '💼'
-  },
-  {
-    id: 'shopping_money',
-    name: 'Shopping & Money',
-    icon: ShoppingBag,
-    color: 'from-yellow-500 to-orange-600',
-    description: 'Shopping and payments',
-    emoji: '🛍️'
-  },
-  {
-    id: 'social_english',
-    name: 'Social English',
-    icon: Users,
-    color: 'from-red-500 to-rose-600',
-    description: 'Casual conversations',
-    emoji: '👥'
-  },
-{
-    id: 'tech_interview',
-    name: 'Tech Interview',
-    icon: Code,
-    color: 'from-cyan-500 to-blue-600',
-    description: 'Tech Interview - Fullstack Developer',
-    emoji: '💻'
-  },
-{
-  id: 'clinical_research',
-  name: 'Clinical Research',
-  icon: Activity, // ou FileText
-  color: 'from-teal-500 to-emerald-600',
-  description: 'Clinical trials and research',
-  emoji: '🔬'
-},
-{
-  id: 'speak_phrases',
-  name: 'Speak Phrases',
-  icon: Mic,
-  color: 'from-purple-500 to-pink-600',
-  description: 'Practice phrases specialized in pronunciation training',
-  emoji: '🎤'
-},
-{
-  id: 'essential_survival',
-  name: 'Essential Questions',
-  icon: HelpCircle,
-  color: 'from-indigo-500 to-purple-600',
-  description: 'Essential questions with grammar tips',
-  emoji: '❓'
-},
-{
-    id: 'verb_tenses',
-    name: 'Verb Tenses',
-    icon: Clock,
-    color: 'from-orange-500 to-red-600',
-    description: 'Master present, past, and future tenses',
-    emoji: '⏰'
-  }
-];
+import { useUILanguage } from '../../context/LanguageContext.jsx';
+import { translateUI } from '../../i18n/uiTranslations.js';
 
 const TOUR_STORAGE_KEY = 'learnfun_daily_basics_tour_v1';
 
@@ -103,6 +22,93 @@ const CategoryTrainer = ({ autoSelectCategory = null }) => {
   const dispatch = useDispatch();
   const { levelSystem, progress, userId, mode } = useSelector(state => state.user);
   const textToSpeech = useTextToSpeech();
+  const { language } = useUILanguage();
+
+  // Função para obter categorias traduzidas
+  const getCategories = () => [
+    {
+      id: 'daily_basics',
+      name: translateUI(language, 'categoryTrainer.dailyBasics'),
+      icon: Home,
+      color: 'from-blue-500 to-indigo-600',
+      description: translateUI(language, 'categoryTrainer.dailyBasicsDesc'),
+      emoji: '🏠'
+    },
+    {
+      id: 'travel_survival',
+      name: translateUI(language, 'categoryTrainer.travelSurvival'),
+      icon: Plane,
+      color: 'from-purple-500 to-pink-600',
+      description: translateUI(language, 'categoryTrainer.travelSurvivalDesc'),
+      emoji: '✈️'
+    },
+    {
+      id: 'professional_english',
+      name: translateUI(language, 'categoryTrainer.workProfessional'),
+      icon: Briefcase,
+      color: 'from-green-500 to-teal-600',
+      description: translateUI(language, 'categoryTrainer.workProfessionalDesc'),
+      emoji: '💼'
+    },
+    {
+      id: 'shopping_money',
+      name: translateUI(language, 'categoryTrainer.shoppingMoney'),
+      icon: ShoppingBag,
+      color: 'from-yellow-500 to-orange-600',
+      description: translateUI(language, 'categoryTrainer.shoppingMoneyDesc'),
+      emoji: '🛍️'
+    },
+    {
+      id: 'social_english',
+      name: translateUI(language, 'categoryTrainer.socialEnglish'),
+      icon: Users,
+      color: 'from-red-500 to-rose-600',
+      description: translateUI(language, 'categoryTrainer.socialEnglishDesc'),
+      emoji: '👥'
+    },
+    {
+      id: 'tech_interview',
+      name: translateUI(language, 'categoryTrainer.techInterview'),
+      icon: Code,
+      color: 'from-cyan-500 to-blue-600',
+      description: translateUI(language, 'categoryTrainer.techInterviewDesc'),
+      emoji: '💻'
+    },
+    {
+      id: 'clinical_research',
+      name: translateUI(language, 'categoryTrainer.clinicalResearch'),
+      icon: Activity,
+      color: 'from-teal-500 to-emerald-600',
+      description: translateUI(language, 'categoryTrainer.clinicalResearchDesc'),
+      emoji: '🔬'
+    },
+    {
+      id: 'speak_phrases',
+      name: translateUI(language, 'categoryTrainer.speakPhrases'),
+      icon: Mic,
+      color: 'from-purple-500 to-pink-600',
+      description: translateUI(language, 'categoryTrainer.speakPhrasesDesc'),
+      emoji: '🎤'
+    },
+    {
+      id: 'essential_survival',
+      name: translateUI(language, 'categoryTrainer.essentialQuestions'),
+      icon: HelpCircle,
+      color: 'from-indigo-500 to-purple-600',
+      description: translateUI(language, 'categoryTrainer.essentialQuestionsDesc'),
+      emoji: '❓'
+    },
+    {
+      id: 'verb_tenses',
+      name: translateUI(language, 'categoryTrainer.verbTenses'),
+      icon: Clock,
+      color: 'from-orange-500 to-red-600',
+      description: translateUI(language, 'categoryTrainer.verbTensesDesc'),
+      emoji: '⏰'
+    }
+  ];
+
+  const CATEGORIES = useMemo(() => getCategories(), [language]);
 
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [allPhrases, setAllPhrases] = useState([]);
@@ -125,7 +131,7 @@ const CategoryTrainer = ({ autoSelectCategory = null }) => {
     if (selectedCategory !== autoSelectCategory) {
       setSelectedCategory(autoSelectCategory);
     }
-  }, [autoSelectCategory, selectedCategory]);
+  }, [autoSelectCategory, selectedCategory, CATEGORIES]);
 
   // Carrega todas as frases
   useEffect(() => {
@@ -145,48 +151,38 @@ const CategoryTrainer = ({ autoSelectCategory = null }) => {
   // Filtra frases quando categoria é selecionada
   useEffect(() => {
     if (selectedCategory && allPhrases.length > 0) {
-      // Se for "speak_phrases", mostra todas as frases; senão, filtra por categoria
-      const filtered = selectedCategory === 'speak_phrases' 
-        ? allPhrases 
+      const filtered = selectedCategory === 'speak_phrases'
+        ? allPhrases
         : allPhrases.filter(p => p.category === selectedCategory);
       setCategoryPhrases(filtered);
-      
-      // Para "speak_phrases", usa progresso do chunkTrainer; para outras categorias, usa progresso específico
+
       let completedPhrasesInCategory;
       let startIndex = 0;
-      
+
       if (selectedCategory === 'speak_phrases') {
-        // Para speak_phrases, usa o progresso do chunkTrainer (que era usado antes)
         const chunkProgress = progress?.chunkTrainer;
         const chunkCurrentIndex = chunkProgress?.currentIndex || 0;
-        // completedPhrases no chunkTrainer contém índices, não IDs
         const completedIndices = chunkProgress?.completedPhrases || [];
-        
-        // Usa o currentIndex do chunkTrainer, mas garante que não seja maior que o tamanho
+
         if (chunkCurrentIndex >= 0 && chunkCurrentIndex < filtered.length) {
           startIndex = chunkCurrentIndex;
         } else if (chunkCurrentIndex >= filtered.length) {
-          // Se o índice salvo for maior que o tamanho, volta para o final
           startIndex = Math.max(0, filtered.length - 1);
         } else {
-          // Se não houver índice válido, encontra a primeira não completada
           const firstIncompleteIndex = filtered.findIndex(
             (phrase, index) => !completedIndices.includes(index)
           );
           startIndex = firstIncompleteIndex !== -1 ? firstIncompleteIndex : 0;
         }
       } else {
-        // Carrega progresso da categoria do Redux (só quando categoria muda)
         const categoryProgress = progress?.categories?.[selectedCategory];
         completedPhrasesInCategory = categoryProgress?.completedPhrases || [];
         const savedLastIndex = categoryProgress?.lastIndex || 0;
-        
-        // Encontra a primeira frase não completada nesta categoria
+
         const firstIncompleteIndex = filtered.findIndex(
           phrase => !completedPhrasesInCategory.includes(phrase.id)
         );
-        
-        // Decide o índice inicial
+
         if (savedLastIndex >= 0 && savedLastIndex < filtered.length) {
           const phraseAtLastIndex = filtered[savedLastIndex];
           if (phraseAtLastIndex && !completedPhrasesInCategory.includes(phraseAtLastIndex.id)) {
@@ -202,13 +198,10 @@ const CategoryTrainer = ({ autoSelectCategory = null }) => {
           startIndex = 0;
         }
       }
-      
+
       setCurrentIndex(startIndex);
       setCompletedInSession([]);
     }
-    // IMPORTANTE: Não incluir progress?.categories nem progress?.chunkTrainer?.currentIndex nas dependências
-    // para evitar que o índice seja recalculado quando uma frase é completada (causaria avanço automático)
-    // O índice é definido apenas quando a categoria muda ou quando as frases são carregadas
   }, [selectedCategory, allPhrases]);
 
   useEffect(() => {
@@ -241,35 +234,37 @@ const CategoryTrainer = ({ autoSelectCategory = null }) => {
     const baseSteps = [
       {
         id: 'intro',
-        title: 'Tour guiado Daily Basics',
-        description: 'Vamos passar rapidamente por cada parte da prática para você aproveitar ao máximo.',
+        title: translateUI(language, 'categoryTrainer.tourTitle'),
+        description: translateUI(language, 'categoryTrainer.tourIntro'),
         targetId: null,
-        primaryLabel: 'Começar'
+        primaryLabel: translateUI(language, 'categoryTrainer.tourStart')
       },
       {
         id: 'phrase',
-        title: 'Frase em inglês',
-        description: 'Esta é a frase que você vai praticar agora. Leia com atenção para se preparar.',
+        title: translateUI(language, 'categoryTrainer.tourPhraseTitle'),
+        description: translateUI(language, 'categoryTrainer.tourPhraseDesc'),
         targetId: 'tour-phrase-text'
       },
       {
         id: 'translation',
-        title: 'Tradução em português',
-        description: 'Aqui você vê o significado em português para conectar ideias e contexto.',
+        title: translateUI(language, 'categoryTrainer.tourTranslationTitle'),
+        description: translateUI(language, 'categoryTrainer.tourTranslationDesc'),
         targetId: 'tour-phrase-translation'
       },
       {
         id: 'ipa',
-        title: 'Pronúncia com IPA',
-        description: 'O IPA detalha cada som da frase. Use-o para ajustar pronúncias que ainda soam estranhas.',
+        title: translateUI(language, 'categoryTrainer.tourIpaTitle'),
+        description: translateUI(language, 'categoryTrainer.tourIpaDesc'),
         targetId: 'tour-ipa'
       },
       {
         id: 'speak',
-        title: tourSpeakCompleted ? 'Veja o painel de feedback' : 'Hora de praticar',
+        title: tourSpeakCompleted
+          ? translateUI(language, 'categoryTrainer.tourFeedbackTitle')
+          : translateUI(language, 'categoryTrainer.tourSpeakTitle'),
         description: tourSpeakCompleted
-          ? 'Aqui você enxerga o resultado geral da sua prática com tudo que precisa para melhorar.'
-          : 'Toque em Speak, repita a frase "Hello" e depois vamos analisar o feedback juntos.',
+          ? translateUI(language, 'categoryTrainer.tourFeedbackDesc')
+          : translateUI(language, 'categoryTrainer.tourSpeakDesc'),
         targetId: tourSpeakCompleted ? 'tour-feedback-area' : 'tour-speak-button'
       }
     ];
@@ -278,33 +273,33 @@ const CategoryTrainer = ({ autoSelectCategory = null }) => {
       baseSteps.push(
         {
           id: 'feedback-you-said',
-          title: 'Entenda o "You said"',
-          description: 'Mostra exatamente o que o reconhecimento de voz captou da sua fala em inglês. Compare para ver se foi interpretado corretamente.',
+          title: translateUI(language, 'categoryTrainer.tourYouSaidTitle'),
+          description: translateUI(language, 'categoryTrainer.tourYouSaidDesc'),
           targetId: 'tour-feedback-summary'
         },
         {
           id: 'feedback-accuracy',
-          title: 'Precisão com o "Accuracy"',
-          description: 'Indica o quão perto você chegou da frase original. Quanto mais próximo de 100%, mais fiel foi a pronúncia.',
+          title: translateUI(language, 'categoryTrainer.tourAccuracyTitle'),
+          description: translateUI(language, 'categoryTrainer.tourAccuracyDesc'),
           targetId: 'tour-feedback-accuracy'
         },
         {
           id: 'feedback-word',
-          title: 'Word-by-Word Analysis',
-          description: 'Analisa cada palavra e aponta diferenças de pronúncia entre o que você falou e a frase original para ajustar detalhes.',
+          title: translateUI(language, 'categoryTrainer.tourWordTitle'),
+          description: translateUI(language, 'categoryTrainer.tourWordDesc'),
           targetId: 'tour-feedback-word'
         },
         {
           id: 'feedback-next',
-          title: 'Avance para a próxima frase',
-          description: 'Toque em “Next” para seguir para a próxima frase e continuar praticando com o mesmo foco.',
+          title: translateUI(language, 'categoryTrainer.tourNextTitle'),
+          description: translateUI(language, 'categoryTrainer.tourNextDesc'),
           targetId: 'tour-next-button'
         }
       );
     }
 
     return baseSteps;
-  }, [tourSpeakCompleted]);
+  }, [tourSpeakCompleted, language]);
 
   const handleTourFinish = (status = 'completed') => {
     if (typeof window !== 'undefined') {
@@ -356,27 +351,23 @@ const CategoryTrainer = ({ autoSelectCategory = null }) => {
   const handleCorrectAnswer = () => {
     const currentPhrase = categoryPhrases[currentIndex];
 
-    // Marca como completa no sistema global
     dispatch(markPhraseCompleted({
       phraseId: currentPhrase.id,
       phraseIndex: currentIndex
     }));
 
-    // Para "speak_phrases", atualiza o chunkTrainer; para outras categorias, atualiza o progresso da categoria
     if (selectedCategory === 'speak_phrases') {
-      // Atualiza o progresso do chunkTrainer
       const chunkProgress = progress?.chunkTrainer || {};
       const completedPhrases = chunkProgress.completedPhrases || [];
-      const updatedCompletedPhrases = completedPhrases.includes(currentIndex) 
-        ? completedPhrases 
+      const updatedCompletedPhrases = completedPhrases.includes(currentIndex)
+        ? completedPhrases
         : [...completedPhrases, currentIndex];
-      
+
       dispatch(updateChunkProgress({
         currentIndex: currentIndex,
         completedPhrases: updatedCompletedPhrases
       }));
     } else {
-      // Marca como completa no progresso da categoria
       dispatch(markCategoryPhraseCompleted({
         categoryId: selectedCategory,
         phraseId: currentPhrase.id,
@@ -385,11 +376,8 @@ const CategoryTrainer = ({ autoSelectCategory = null }) => {
     }
 
     dispatch(incrementPhraseCompleted());
-
-    // Adiciona à lista de completadas nesta sessão
     setCompletedInSession([...completedInSession, currentPhrase.id]);
 
-    // Salva progresso no Firebase (aguarda um pouco mais para garantir que o Redux atualizou)
     if (mode === 'authenticated' && userId) {
       setTimeout(() => {
         dispatch(saveProgress());
@@ -403,23 +391,20 @@ const CategoryTrainer = ({ autoSelectCategory = null }) => {
     if (currentIndex < categoryPhrases.length - 1) {
       newIndex = currentIndex + 1;
     } else {
-      // Reinicia do começo quando acabar
       newIndex = 0;
     }
-    
+
     setCurrentIndex(newIndex);
-    
-    // Para "speak_phrases", atualiza o chunkTrainer.currentIndex
+
     if (selectedCategory === 'speak_phrases') {
       const chunkProgress = progress?.chunkTrainer || {};
       const completedPhrases = chunkProgress.completedPhrases || [];
-      
+
       dispatch(updateChunkProgress({
         currentIndex: newIndex,
         completedPhrases: completedPhrases
       }));
-      
-      // Salva progresso no Firebase
+
       if (mode === 'authenticated' && userId) {
         setTimeout(() => {
           dispatch(saveProgress());
@@ -428,25 +413,21 @@ const CategoryTrainer = ({ autoSelectCategory = null }) => {
     }
   };
 
-  // Calcula estatísticas da categoria
   const getCategoryStats = (categoryId) => {
-    // Se for "speak_phrases", conta todas as frases; senão, filtra por categoria
     const categoryPhrasesCount = categoryId === 'speak_phrases'
       ? allPhrases.length
       : allPhrases.filter(p => p.category === categoryId).length;
-    
+
     let completedCount;
     if (categoryId === 'speak_phrases') {
-      // Para speak_phrases, usa o chunkTrainer.completedPhrases (que contém índices)
       const chunkProgress = progress?.chunkTrainer || {};
       const completedIndices = chunkProgress.completedPhrases || [];
       completedCount = completedIndices.length;
     } else {
-      // Usa progresso específico da categoria se disponível, senão usa global
       const categoryProgress = progress?.categories?.[categoryId];
       const completedPhrasesInCategory = categoryProgress?.completedPhrases || [];
-      
-      completedCount = completedPhrasesInCategory.length > 0 
+
+      completedCount = completedPhrasesInCategory.length > 0
         ? completedPhrasesInCategory.length
         : allPhrases.filter(p =>
             p.category === categoryId &&
@@ -466,7 +447,7 @@ const CategoryTrainer = ({ autoSelectCategory = null }) => {
       <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-blue-600 mx-auto mb-4"></div>
-          <p className="text-gray-600 text-lg">Loading categories...</p>
+          <p className="text-gray-600 text-lg">{translateUI(language, 'categoryTrainer.loadingCategories')}</p>
         </div>
       </div>
     );
@@ -483,10 +464,10 @@ const CategoryTrainer = ({ autoSelectCategory = null }) => {
               <Target className="w-10 h-10 text-white" />
             </div>
             <h1 className="text-4xl font-bold text-gray-800 mb-3">
-              Practice by Category
+              {translateUI(language, 'categoryTrainer.practiceByCategory')}
             </h1>
             <p className="text-gray-600 text-lg">
-              Choose a topic and master essential phrases!
+              {translateUI(language, 'categoryTrainer.chooseTopicMaster')}
             </p>
           </div>
 
@@ -521,9 +502,9 @@ const CategoryTrainer = ({ autoSelectCategory = null }) => {
                   {/* Estatísticas */}
                   <div className="space-y-2">
                     <div className="flex items-center justify-between text-sm">
-                      <span className="text-gray-600">Progress:</span>
+                      <span className="text-gray-600">{translateUI(language, 'categoryTrainer.progress')}</span>
                       <span className="font-bold text-gray-800">
-                        {stats.completed}/{stats.total} phrases
+                        {stats.completed}/{stats.total} {translateUI(language, 'categoryTrainer.phrases')}
                       </span>
                     </div>
 
@@ -537,7 +518,7 @@ const CategoryTrainer = ({ autoSelectCategory = null }) => {
 
                     <div className="flex items-center justify-between">
                       <span className="text-xs text-gray-500">
-                        {stats.percentage}% Complete
+                        {stats.percentage}% {translateUI(language, 'categoryTrainer.complete')}
                       </span>
                       {stats.percentage === 100 && (
                         <Trophy className="w-5 h-5 text-yellow-500" />
@@ -548,7 +529,7 @@ const CategoryTrainer = ({ autoSelectCategory = null }) => {
                   {/* Call to action */}
                   <div className="mt-4 flex items-center text-blue-600 font-semibold group-hover:text-blue-700">
                     <Play className="w-5 h-5 mr-2" />
-                    Start Practicing
+                    {translateUI(language, 'categoryTrainer.startPracticing')}
                   </div>
                 </button>
               );
@@ -558,8 +539,7 @@ const CategoryTrainer = ({ autoSelectCategory = null }) => {
           {/* Info Footer */}
           <div className="mt-12 bg-white rounded-xl shadow-md p-6 text-center">
             <p className="text-gray-600">
-              💡 <strong>Tip:</strong> Each category contains real-world phrases you can use immediately.
-              Practice daily for best results!
+              💡 <strong>{translateUI(language, 'categoryTrainer.tipTitle')}</strong> {translateUI(language, 'categoryTrainer.tipText')}
             </p>
           </div>
         </div>
@@ -576,17 +556,30 @@ const CategoryTrainer = ({ autoSelectCategory = null }) => {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center">
         <div className="text-center">
-          <p className="text-gray-600 text-lg">No phrases available for this category</p>
+          <p className="text-gray-600 text-lg">{translateUI(language, 'categoryTrainer.noPhrasesAvailable')}</p>
           <button
             onClick={handleBack}
             className="mt-4 bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600"
           >
-            Go Back
+            {translateUI(language, 'categoryTrainer.goBack')}
           </button>
         </div>
       </div>
     );
   }
+
+  // Calcula plural para "frases completadas"
+  const getCompletedText = () => {
+    const count = completedInSession.length;
+    const pluralSuffix = language === 'en-US'
+      ? (count > 1 ? 's' : '')
+      : (count > 1 ? 's' : '');
+
+    return translateUI(language, 'categoryTrainer.completedThisSession', {
+      count,
+      plural: pluralSuffix
+    });
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4">
@@ -599,7 +592,7 @@ const CategoryTrainer = ({ autoSelectCategory = null }) => {
             className="flex items-center text-gray-600 hover:text-gray-800 mb-4 transition-colors"
           >
             <ArrowLeft className="w-5 h-5 mr-2" />
-            Back to Categories
+            {translateUI(language, 'categoryTrainer.backToCategories')}
           </button>
 
           <div className={`bg-gradient-to-r ${currentCategory.color} rounded-xl p-6 shadow-lg text-white`}>
@@ -616,7 +609,12 @@ const CategoryTrainer = ({ autoSelectCategory = null }) => {
             {/* Progresso */}
             <div className="space-y-2">
               <div className="flex items-center justify-between text-sm">
-                <span>Phrase {currentIndex + 1} of {categoryPhrases.length}</span>
+                <span>
+                  {translateUI(language, 'categoryTrainer.phraseOf', {
+                    current: currentIndex + 1,
+                    total: categoryPhrases.length
+                  })}
+                </span>
                 <span className="font-bold">{progressPercent}%</span>
               </div>
               <div className="w-full bg-white/20 rounded-full h-2 overflow-hidden">
@@ -630,7 +628,7 @@ const CategoryTrainer = ({ autoSelectCategory = null }) => {
             {/* Completadas nesta sessão */}
             {completedInSession.length > 0 && (
               <div className="mt-3 text-sm">
-                🎉 {completedInSession.length} phrase{completedInSession.length > 1 ? 's' : ''} completed this session!
+                🎉 {getCompletedText()}
               </div>
             )}
           </div>

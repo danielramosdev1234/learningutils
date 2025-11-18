@@ -1,17 +1,21 @@
-import React from 'react';
-import { 
-  BookOpen, 
-  Globe, 
-  Hash, 
-  Zap, 
+import React, { useMemo } from 'react';
+import {
+  BookOpen,
+  Globe,
+  Hash,
+  Zap,
   ArrowLeft,
   ArrowRight,
   Mic,
   Target,
   Puzzle
 } from 'lucide-react';
+import { useUILanguage } from '../context/LanguageContext.jsx';
+import { translateUI } from '../i18n/uiTranslations.js';
 
 const SpeakTrainingModes = ({ onNavigate }) => {
+  const { language } = useUILanguage();
+
   const handleModeSelect = (mode) => {
     if (onNavigate) {
       onNavigate(mode);
@@ -23,53 +27,54 @@ const SpeakTrainingModes = ({ onNavigate }) => {
     }
   };
 
-  const trainingModes = [
+  // Modos de treino traduzidos dinamicamente
+  const trainingModes = useMemo(() => [
     {
       id: 'categories',
-      name: 'Categories',
+      name: translateUI(language, 'speakTrainingModes.categories'),
       icon: BookOpen,
       color: 'from-indigo-500 to-purple-600',
-      description: 'Practice phrases by real-world situations and topics',
+      description: translateUI(language, 'speakTrainingModes.categoriesDesc'),
       emoji: '📚',
       gradient: 'bg-gradient-to-br from-indigo-500 to-purple-600'
     },
     {
       id: 'translate',
-      name: 'Translate',
+      name: translateUI(language, 'speakTrainingModes.translate'),
       icon: Globe,
       color: 'from-purple-500 to-pink-600',
-      description: 'Practice translation and improve your vocabulary',
+      description: translateUI(language, 'speakTrainingModes.translateDesc'),
       emoji: '🌍',
       gradient: 'bg-gradient-to-br from-purple-500 to-pink-600'
     },
     {
       id: 'numbers',
-      name: 'Numbers',
+      name: translateUI(language, 'speakTrainingModes.numbers'),
       icon: Hash,
       color: 'from-blue-500 to-cyan-600',
-      description: 'Master English numbers pronunciation',
+      description: translateUI(language, 'speakTrainingModes.numbersDesc'),
       emoji: '🔢',
       gradient: 'bg-gradient-to-br from-blue-500 to-cyan-600'
     },
     {
       id: 'challenge',
-      name: 'Challenge',
+      name: translateUI(language, 'speakTrainingModes.challenge'),
       icon: Zap,
       color: 'from-yellow-500 to-orange-600',
-      description: 'Test your skills with timed challenges',
+      description: translateUI(language, 'speakTrainingModes.challengeDesc'),
       emoji: '⚡',
       gradient: 'bg-gradient-to-br from-yellow-500 to-orange-600'
     },
     {
       id: 'sentence-builder',
-      name: 'Sentence Builder',
+      name: translateUI(language, 'speakTrainingModes.sentenceBuilder'),
       icon: Puzzle,
       color: 'from-cyan-500 to-blue-600',
-      description: 'Build sentences with drag & drop',
+      description: translateUI(language, 'speakTrainingModes.sentenceBuilderDesc'),
       emoji: '🧩',
       gradient: 'bg-gradient-to-br from-cyan-500 to-blue-600'
     }
-  ];
+  ], [language]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4">
@@ -85,11 +90,11 @@ const SpeakTrainingModes = ({ onNavigate }) => {
               }
             }}
             tabIndex={0}
-            aria-label="Voltar para o dashboard"
+            aria-label={translateUI(language, 'speakTrainingModes.backToDashboard')}
             className="flex items-center gap-2 text-gray-600 hover:text-gray-800 mb-6 transition-colors"
           >
             <ArrowLeft className="w-5 h-5" aria-hidden="true" />
-            <span className="font-semibold">Back</span>
+            <span className="font-semibold">{translateUI(language, 'speakTrainingModes.back')}</span>
           </button>
 
           <div className="text-center mb-8">
@@ -97,10 +102,10 @@ const SpeakTrainingModes = ({ onNavigate }) => {
               <Mic className="w-10 h-10 text-white" />
             </div>
             <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-3">
-              Speak Training Modes
+              {translateUI(language, 'speakTrainingModes.speakTrainingModes')}
             </h1>
             <p className="text-gray-600 text-lg md:text-xl">
-              Choose your preferred way to practice pronunciation
+              {translateUI(language, 'speakTrainingModes.choosePreferred')}
             </p>
           </div>
         </div>
@@ -120,7 +125,7 @@ const SpeakTrainingModes = ({ onNavigate }) => {
                   }
                 }}
                 tabIndex={0}
-                aria-label={`Abrir modo ${mode.name}`}
+                aria-label={translateUI(language, 'speakTrainingModes.openMode', { mode: mode.name })}
                 className="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 p-6 text-left group hover:scale-105"
               >
                 {/* Header com ícone e emoji */}
@@ -141,7 +146,7 @@ const SpeakTrainingModes = ({ onNavigate }) => {
 
                 {/* Call to action */}
                 <div className="mt-4 flex items-center text-purple-600 font-semibold group-hover:text-purple-700">
-                  <span>Start Training</span>
+                  <span>{translateUI(language, 'speakTrainingModes.startTraining')}</span>
                   <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
                 </div>
               </button>
@@ -153,10 +158,12 @@ const SpeakTrainingModes = ({ onNavigate }) => {
         <div className="bg-white rounded-xl shadow-md p-6 text-center">
           <div className="flex items-center justify-center gap-2 mb-2">
             <Target className="w-5 h-5 text-purple-600" />
-            <p className="text-gray-700 font-semibold">Tips for Better Results</p>
+            <p className="text-gray-700 font-semibold">
+              {translateUI(language, 'speakTrainingModes.tipsTitle')}
+            </p>
           </div>
           <p className="text-gray-600 text-sm">
-            💡 Practice daily for at least 10 minutes. Each mode targets different skills to help you become fluent!
+            {translateUI(language, 'speakTrainingModes.tipsText')}
           </p>
         </div>
       </div>
@@ -165,4 +172,3 @@ const SpeakTrainingModes = ({ onNavigate }) => {
 };
 
 export default SpeakTrainingModes;
-

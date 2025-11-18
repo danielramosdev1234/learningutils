@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import { useUILanguage } from '../../context/LanguageContext.jsx';
 import {
   Bell, BellOff, Clock, Calendar, Flame, Trophy, Target,
   AlertCircle, Sparkles, Users, BookOpen, X, CheckCircle
@@ -24,6 +25,8 @@ const DAYS_OF_WEEK = [
 
 const NotificationSettings = ({ onBack }) => {
   const { userId, mode } = useSelector(state => state.user);
+  const { language } = useUILanguage();
+  const t = (pt, en) => (language === 'en-US' ? en : pt);
   const [settings, setSettings] = useState(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -59,9 +62,9 @@ const NotificationSettings = ({ onBack }) => {
     const { granted, error } = await requestNotificationPermission();
     if (granted) {
       setPermissionStatus('granted');
-      alert('✅ Permissão concedida! Agora você pode receber notificações.');
+      alert(t('✅ Permissão concedida! Agora você pode receber notificações.', '✅ Permission granted! You can now receive notifications.'));
     } else {
-      alert(`❌ ${error || 'Permissão negada'}`);
+      alert(`❌ ${error || t('Permissão negada', 'Permission denied')}`);
     }
   };
 
@@ -69,9 +72,9 @@ const NotificationSettings = ({ onBack }) => {
     setSaving(true);
     try {
       await saveNotificationSettings(settings, userId || null);
-      alert('✅ Configurações salvas com sucesso!');
+      alert(t('✅ Configurações salvas com sucesso!', '✅ Settings saved successfully!'));
     } catch (error) {
-      alert('❌ Erro ao salvar configurações. Tente novamente.');
+      alert(t('❌ Erro ao salvar configurações. Tente novamente.', '❌ Error saving settings. Please try again.'));
       console.error(error);
     } finally {
       setSaving(false);
@@ -80,14 +83,14 @@ const NotificationSettings = ({ onBack }) => {
 
   const handleTestNotification = async () => {
     try {
-      await sendTestNotification('Teste de Notificação', {
-        body: 'Se você está vendo isso, as notificações estão funcionando! 🎉',
+      await sendTestNotification(t('Teste de Notificação', 'Notification Test'), {
+        body: t('Se você está vendo isso, as notificações estão funcionando! 🎉', 'If you are seeing this, notifications are working! 🎉'),
         icon: '/pwa-192x192.png'
       });
       setTestNotificationSent(true);
       setTimeout(() => setTestNotificationSent(false), 3000);
     } catch (error) {
-      alert(`❌ Erro: ${error.message}`);
+      alert(`❌ ${t('Erro', 'Error')}: ${error.message}`);
     }
   };
 
@@ -141,7 +144,7 @@ const NotificationSettings = ({ onBack }) => {
       <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center">
         <div className="text-center">
           <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-gray-600 font-semibold">Carregando configurações...</p>
+          <p className="text-gray-600 font-semibold">{t('Carregando configurações...', 'Loading settings...')}</p>
         </div>
       </div>
     );
@@ -152,7 +155,7 @@ const NotificationSettings = ({ onBack }) => {
       <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center">
         <div className="text-center">
           <AlertCircle className="w-16 h-16 text-red-500 mx-auto mb-4" />
-          <p className="text-gray-600 font-semibold">Erro ao carregar configurações</p>
+          <p className="text-gray-600 font-semibold">{t('Erro ao carregar configurações', 'Error loading settings')}</p>
         </div>
       </div>
     );
@@ -172,14 +175,14 @@ const NotificationSettings = ({ onBack }) => {
               }
             }}
             tabIndex={0}
-            aria-label="Voltar"
+            aria-label={t('Voltar', 'Back')}
             className="p-2 hover:bg-gray-100 rounded-full transition-colors"
           >
             <X className="w-6 h-6 text-gray-600" aria-hidden="true" />
           </button>
           <div className="flex-1">
-            <h1 className="text-2xl font-bold text-gray-800">Notificações</h1>
-            <p className="text-sm text-gray-600">Configure seus lembretes e alertas</p>
+            <h1 className="text-2xl font-bold text-gray-800">{t('Notificações', 'Notifications')}</h1>
+            <p className="text-sm text-gray-600">{t('Configure seus lembretes e alertas', 'Configure your reminders and alerts')}</p>
           </div>
           <button
             onClick={handleSave}
@@ -190,11 +193,11 @@ const NotificationSettings = ({ onBack }) => {
               }
             }}
             tabIndex={0}
-            aria-label={saving ? 'Salvando configurações' : 'Salvar configurações'}
+            aria-label={saving ? t('Salvando configurações', 'Saving settings') : t('Salvar configurações', 'Save settings')}
             disabled={saving}
             className="bg-blue-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {saving ? 'Salvando...' : 'Salvar'}
+            {saving ? t('Salvando...', 'Saving...') : t('Salvar', 'Save')}
           </button>
         </div>
       </div>
@@ -210,13 +213,13 @@ const NotificationSettings = ({ onBack }) => {
                 <BellOff className="w-6 h-6 text-gray-400" />
               )}
               <div>
-                <h2 className="text-xl font-bold text-gray-800">Permissão de Notificações</h2>
+                <h2 className="text-xl font-bold text-gray-800">{t('Permissão de Notificações', 'Notification Permission')}</h2>
                 <p className="text-sm text-gray-600">
                   {permissionStatus === 'granted'
-                    ? 'Permissão concedida'
+                    ? t('Permissão concedida', 'Permission granted')
                     : permissionStatus === 'denied'
-                    ? 'Permissão negada - Ative nas configurações do navegador'
-                    : 'Permissão não solicitada'}
+                    ? t('Permissão negada - Ative nas configurações do navegador', 'Permission denied - Enable it in your browser settings')
+                    : t('Permissão não solicitada', 'Permission not requested')}
                 </p>
               </div>
             </div>
@@ -230,10 +233,10 @@ const NotificationSettings = ({ onBack }) => {
                   }
                 }}
                 tabIndex={0}
-                aria-label="Solicitar permissão de notificações"
+                aria-label={t('Solicitar permissão de notificações', 'Request notification permission')}
                 className="bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
               >
-                Solicitar Permissão
+                {t('Solicitar Permissão', 'Request Permission')}
               </button>
             )}
           </div>
@@ -248,18 +251,18 @@ const NotificationSettings = ({ onBack }) => {
                 }
               }}
               tabIndex={0}
-              aria-label={testNotificationSent ? 'Notificação de teste enviada' : 'Enviar notificação de teste'}
+              aria-label={testNotificationSent ? t('Notificação de teste enviada', 'Test notification sent') : t('Enviar notificação de teste', 'Send test notification')}
               className="w-full bg-green-50 text-green-700 px-4 py-3 rounded-lg font-semibold hover:bg-green-100 transition-colors flex items-center justify-center gap-2"
             >
               {testNotificationSent ? (
                 <>
                   <CheckCircle className="w-5 h-5" aria-hidden="true" />
-                  Notificação enviada!
+                  {t('Notificação enviada!', 'Notification sent!')}
                 </>
               ) : (
                 <>
                   <Bell className="w-5 h-5" aria-hidden="true" />
-                  Enviar Notificação de Teste
+                  {t('Enviar Notificação de Teste', 'Send Test Notification')}
                 </>
               )}
             </button>

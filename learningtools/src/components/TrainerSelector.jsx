@@ -28,6 +28,9 @@ import {
   markPhraseCompleted
 } from '../store/slices/userSlice';
 import GuestOnboarding from './ui/GuestOnboarding';
+import AIConversationTrainer from './training/AIConversationTrainer';
+import { useUILanguage } from '../context/LanguageContext.jsx';
+import { translateUI } from '../i18n/uiTranslations.js';
 
 const ONBOARDING_STORAGE_KEY = 'learnfun_guest_onboarding_v1';
 
@@ -44,6 +47,7 @@ const TrainerSelector = () => {
     if (mode === 'sentence-builder') return 'sentence-builder';
     if (mode === 'speak-training-modes') return 'speak-training-modes';
     if (mode === 'dashboard') return 'dashboard';
+    if (mode === 'ai-conversation') return 'ai-conversation';
     return 'dashboard';
   };
 
@@ -59,8 +63,7 @@ const TrainerSelector = () => {
   const [showOnboarding, setShowOnboarding] = useState(false);
   const [onboardingStep, setOnboardingStep] = useState(1);
   const [autoSelectCategory, setAutoSelectCategory] = useState(null);
-
-
+  const { language } = useUILanguage();
 
   useEffect(() => {
     if (window.va) {
@@ -194,7 +197,7 @@ const handleCloseLevelUpModal = () => {
                                                           }`}
                                                         >
                                                           <House className="w-5 h-5" aria-hidden="true" />
-                                                          Home
+
                                                         </button>
               {/* Speak Training Button */}
               <button
@@ -215,7 +218,7 @@ const handleCloseLevelUpModal = () => {
                 }`}
               >
                 <Mic className="w-5 h-5" aria-hidden="true" />
-                Speak Training
+                {translateUI(language, 'navigation.speakTraining')}
               </button>
 
               <button
@@ -236,7 +239,7 @@ const handleCloseLevelUpModal = () => {
                 }`}
               >
                 <Radio className="w-5 h-5" aria-hidden="true" />
-                Live Rooms
+                {translateUI(language, 'navigation.liveRooms')}
               </button>
 
               {/* Challenge Mode Button */}
@@ -280,7 +283,7 @@ const handleCloseLevelUpModal = () => {
                 }`}
               >
                 <Video className="w-5 h-5" aria-hidden="true" />
-                Video
+                {translateUI(language, 'navigation.video')}
               </button>
             </div>
 
@@ -325,6 +328,7 @@ const handleCloseLevelUpModal = () => {
           {activeTrainer === 'categories' && (
             <CategoryTrainer autoSelectCategory={autoSelectCategory} />
           )}
+      {activeTrainer === 'ai-conversation' && <AIConversationTrainer />}
         {activeTrainer === 'dashboard' && <Dashboard onNavigate={handleTrainerChange} />}
         {activeTrainer === 'speak-training-modes' && <SpeakTrainingModes onNavigate={handleTrainerChange} />}
         {activeTrainer === 'translate' && <TranslateTrainer />}
@@ -359,7 +363,9 @@ const handleCloseLevelUpModal = () => {
           >
             {/* Header do Menu */}
             <div className="flex justify-between items-center p-4 border-b">
-              <h3 id="more-menu-title" className="text-lg font-bold text-gray-800">More Options</h3>
+              <h3 id="more-menu-title" className="text-lg font-bold text-gray-800">
+                {translateUI(language, 'navigation.moreOptions')}
+              </h3>
               <button
                 onClick={() => setShowMoreMenu(false)}
                 onKeyDown={(e) => {
@@ -396,9 +402,9 @@ const handleCloseLevelUpModal = () => {
                   <MessageCircle className="w-6 h-6 text-white" aria-hidden="true" />
                 </div>
                 <div className="text-left flex-1">
-                  <div className="font-bold text-lg">LearnFun Community</div>
+                  <div className="font-bold text-lg">{translateUI(language, 'navigation.whatsappCommunity')}</div>
                   <div className="text-sm text-gray-600">
-                    Suporte e Dicas • WhatsApp
+                    {translateUI(language, 'navigation.whatsappCommunitySubtitle')}
                   </div>
                 </div>
                 <div className="text-green-600" aria-hidden="true">
@@ -429,9 +435,9 @@ const handleCloseLevelUpModal = () => {
                       <Gift className="w-6 h-6 text-white" aria-hidden="true" />
                     </div>
                     <div className="text-left flex-1">
-                      <div className="font-bold text-lg">Convide Amigos</div>
+                      <div className="font-bold text-lg">{translateUI(language, 'navigation.inviteFriends')}</div>
                       <div className="text-sm text-gray-600">
-                        Ganhe +5 pular frases • Grátis
+                        {translateUI(language, 'navigation.inviteFriendsSubtitle')}
                       </div>
                     </div>
                     <div className="text-purple-600">
@@ -462,8 +468,9 @@ const handleCloseLevelUpModal = () => {
                   <HelpCircle className="w-6 h-6 text-white" aria-hidden="true" />
                 </div>
                 <div className="text-left flex-1">
-                  <div className="font-bold text-lg">Perguntas Frequentes</div>
+                  <div className="font-bold text-lg">{translateUI(language, 'navigation.faq')}</div>
                   <div className="text-sm text-gray-600">
+                    {/* Texto extra permanece em PT-BR por enquanto */}
                     Tire suas dúvidas sobre o LearnFun
                   </div>
                 </div>
@@ -509,7 +516,7 @@ const handleCloseLevelUpModal = () => {
             }`}
           >
             <Mic className={`w-6 h-6 ${activeTrainer === 'speak-training-modes' ? 'scale-110' : ''}`} aria-hidden="true" />
-            <span className="text-xs font-semibold">Speak</span>
+            <span className="text-xs font-semibold">{translateUI(language, 'navigation.speakTraining')}</span>
             {(activeTrainer === 'speak-training-modes' || activeTrainer === 'categories' || activeTrainer === 'translate' || activeTrainer === 'numbers' || activeTrainer === 'challenge' || activeTrainer === 'sentence-builder') && (
               <div className="w-8 h-1 bg-purple-600 rounded-full mt-1" aria-hidden="true" />
             )}
@@ -533,11 +540,12 @@ const handleCloseLevelUpModal = () => {
               }`}
             >
               <Radio className={`w-6 h-6 ${activeTrainer === 'live-rooms' ? 'scale-110' : ''}`} aria-hidden="true" />
-              <span className="text-xs font-semibold">Live</span>
+              <span className="text-xs font-semibold">{translateUI(language, 'navigation.liveRooms')}</span>
               {activeTrainer === 'live-rooms' && (
                 <div className="w-8 h-1 bg-green-600 rounded-full mt-1" aria-hidden="true" />
               )}
             </button>
+
 
           {/* Home Button */}
           <button
@@ -556,7 +564,7 @@ const handleCloseLevelUpModal = () => {
             }`}
           >
             <House className={`w-6 h-6 ${activeTrainer === 'dashboard' ? 'scale-110' : ''}`} aria-hidden="true" />
-            <span className="text-xs font-semibold">Home</span>
+            <span className="text-xs font-semibold">{translateUI(language, 'navigation.home')}</span>
             {activeTrainer === 'dashboard' && (
               <div className="w-8 h-1 bg-blue-600 rounded-full mt-1" aria-hidden="true" />
             )}
@@ -579,7 +587,7 @@ const handleCloseLevelUpModal = () => {
             }`}
           >
             <Video className={`w-6 h-6 ${activeTrainer === 'VideoLearningApp' ? 'scale-110' : ''}`} aria-hidden="true" />
-            <span className="text-xs font-semibold">Video</span>
+            <span className="text-xs font-semibold">{translateUI(language, 'navigation.video')}</span>
             {activeTrainer === 'VideoLearningApp' && (
               <div className="w-8 h-1 bg-red-600 rounded-full mt-1" aria-hidden="true" />
             )}
@@ -604,7 +612,7 @@ const handleCloseLevelUpModal = () => {
             }`}
           >
             <MoreHorizontal className={`w-6 h-6 ${showMoreMenu ? 'scale-110' : ''}`} aria-hidden="true" />
-            <span className="text-xs font-semibold">More</span>
+            <span className="text-xs font-semibold">{translateUI(language, 'navigation.more')}</span>
             {(showMoreMenu || activeTrainer === 'challenge') && (
               <div className="w-8 h-1 bg-gray-800 rounded-full mt-1" aria-hidden="true" />
             )}

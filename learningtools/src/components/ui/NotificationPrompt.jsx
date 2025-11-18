@@ -3,12 +3,15 @@ import { useSelector } from 'react-redux';
 import { Bell, BellOff, X, Settings } from 'lucide-react';
 import { requestNotificationPermission } from '../../services/notificationService';
 import { useNavigate } from 'react-router-dom';
+import { useUILanguage } from '../../context/LanguageContext.jsx';
 
 const NotificationPrompt = () => {
   const { userId, mode } = useSelector(state => state.user);
   const [showPrompt, setShowPrompt] = useState(false);
   const [permissionStatus, setPermissionStatus] = useState('default');
   const navigate = useNavigate();
+  const { language } = useUILanguage();
+  const t = (pt, en) => (language === 'en-US' ? en : pt);
 
   useEffect(() => {
     checkNotificationStatus();
@@ -80,12 +83,12 @@ const NotificationPrompt = () => {
         // Salva que o usuário aceitou
         localStorage.setItem('notification-prompt-accepted', 'true');
       } else {
-        alert(`❌ ${error || 'Permissão negada'}`);
+        alert(`❌ ${error || t('Permissão negada', 'Permission denied')}`);
         handleDismiss();
       }
     } catch (error) {
       console.error('Erro ao solicitar permissão:', error);
-      alert('Erro ao solicitar permissão de notificações');
+      alert(t('Erro ao solicitar permissão de notificações', 'Error requesting notification permission'));
     }
   };
 
@@ -160,7 +163,7 @@ const NotificationPrompt = () => {
           onClick={handleDismiss}
           onKeyDown={handleKeyDownClose}
           tabIndex={0}
-          aria-label="Fechar prompt de notificações"
+          aria-label={t('Fechar prompt de notificações', 'Close notification prompt')}
           className="absolute top-4 right-4 p-2 hover:bg-gray-100 rounded-full transition-colors"
         >
           <X className="w-5 h-5 text-gray-600" aria-hidden="true" />
@@ -176,13 +179,13 @@ const NotificationPrompt = () => {
           </div>
           
           <h2 id="notification-prompt-title" className="text-2xl font-bold text-gray-800 mb-2">
-            Ative as Notificações
+            {t('Ative as Notificações', 'Enable Notifications')}
           </h2>
           
           <p id="notification-prompt-description" className="text-gray-600">
             {permissionStatus === 'denied' 
-              ? 'As notificações estão bloqueadas. Ative nas configurações do navegador para receber lembretes de treino!'
-              : 'Receba lembretes personalizados para treinar inglês e não perder sua sequência! 🔥'}
+              ? t('As notificações estão bloqueadas. Ative nas configurações do navegador para receber lembretes de treino!', 'Notifications are blocked. Enable them in your browser settings to receive training reminders!')
+              : t('Receba lembretes personalizados para treinar inglês e não perder sua sequência! 🔥', 'Receive personalized reminders to practice English and not lose your streak! 🔥')}
           </p>
         </div>
 
@@ -191,13 +194,13 @@ const NotificationPrompt = () => {
             onClick={handleEnable}
             onKeyDown={handleKeyDownEnable}
             tabIndex={0}
-            aria-label={permissionStatus === 'denied' ? 'Ir para configurações do navegador' : 'Ativar notificações'}
+            aria-label={permissionStatus === 'denied' ? t('Ir para configurações do navegador', 'Go to browser settings') : t('Ativar notificações', 'Enable notifications')}
             className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white font-bold py-3 px-6 rounded-xl hover:from-blue-700 hover:to-purple-700 transition-all flex items-center justify-center gap-2 shadow-lg"
           >
             <Bell className="w-5 h-5" aria-hidden="true" />
             {permissionStatus === 'denied' 
-              ? 'Ir para Configurações'
-              : 'Ativar Notificações'}
+              ? t('Ir para Configurações', 'Go to Settings')
+              : t('Ativar Notificações', 'Enable Notifications')}
           </button>
 
           <div className="flex gap-2">
@@ -205,19 +208,19 @@ const NotificationPrompt = () => {
               onClick={handleDismiss}
               onKeyDown={handleKeyDownDismiss}
               tabIndex={0}
-              aria-label="Fechar prompt agora"
+              aria-label={t('Fechar prompt agora', 'Close prompt now')}
               className="flex-1 px-4 py-2 text-gray-600 hover:text-gray-800 font-semibold transition-colors"
             >
-              Agora não
+              {t('Agora não', 'Not now')}
             </button>
             <button
               onClick={handleDismissPermanently}
               onKeyDown={handleKeyDownDismissPermanently}
               tabIndex={0}
-              aria-label="Não mostrar este prompt novamente"
+              aria-label={t('Não mostrar este prompt novamente', 'Do not show this prompt again')}
               className="flex-1 px-4 py-2 text-gray-500 hover:text-gray-700 text-sm transition-colors"
             >
-              Não mostrar novamente
+              {t('Não mostrar novamente', 'Do not show again')}
             </button>
           </div>
         </div>
@@ -228,8 +231,7 @@ const NotificationPrompt = () => {
               <Settings className="w-4 h-4" aria-hidden="true" />
             </div>
             <p>
-              Você pode configurar horários, frequência e tipos de notificações 
-              na página de configurações a qualquer momento.
+              {t('Você pode configurar horários, frequência e tipos de notificações na página de configurações a qualquer momento.', 'You can configure times, frequency and types of notifications on the settings page at any time.')}
             </p>
           </div>
         </div>

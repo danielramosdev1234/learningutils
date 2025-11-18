@@ -6,6 +6,7 @@ import App from './App.jsx';
 import store from './store/store.js';
 import './index.css';
 import { initializePWAInstallManager } from './utils/pwaInstallManager';
+import { LanguageProvider } from './context/LanguageContext.jsx';
 
 // Inicializa o PWA Install Manager ANTES de renderizar o React
 // Isso garante que o listener esteja ativo desde o início
@@ -41,7 +42,9 @@ if (rootElement) {
 ReactDOM.createRoot(rootElement).render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <LanguageProvider>
+        <App />
+      </LanguageProvider>
     </Provider>
   </React.StrictMode>,
 );

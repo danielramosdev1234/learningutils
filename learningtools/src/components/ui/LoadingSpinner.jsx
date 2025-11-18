@@ -1,12 +1,16 @@
 import React from 'react';
 import { Loader } from 'lucide-react';
+import { useUILanguage } from '../../context/LanguageContext.jsx';
 
 export const LoadingSpinner = ({ 
   size = 'md', 
-  text = 'Carregando...',
+  text,
   fullScreen = false,
   className = ''
 }) => {
+  const { language } = useUILanguage();
+  const t = (pt, en) => (language === 'en-US' ? en : pt);
+  const displayText = text ?? t('Carregando...', 'Loading...');
   const sizeClasses = {
     sm: 'w-4 h-4',
     md: 'w-8 h-8',
@@ -18,13 +22,13 @@ export const LoadingSpinner = ({
     <div className={`flex flex-col items-center justify-center ${className}`}>
       <Loader 
         className={`animate-spin text-blue-600 ${sizeClasses[size]}`}
-        aria-label="Carregando"
+        aria-label={t('Carregando', 'Loading')}
         role="status"
       />
-      {text && (
-        <p className="mt-2 text-gray-600 font-medium">{text}</p>
+      {displayText && (
+        <p className="mt-2 text-gray-600 font-medium">{displayText}</p>
       )}
-      <span className="sr-only">Carregando conteúdo</span>
+      <span className="sr-only">{t('Carregando conteúdo', 'Loading content')}</span>
     </div>
   );
 

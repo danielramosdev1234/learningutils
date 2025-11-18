@@ -9,6 +9,8 @@ import {
   ArrowRight
 } from 'lucide-react';
 import categoriesImage from '../../assets/categories.png';
+import { useUILanguage } from '../../context/LanguageContext.jsx';
+import { translateUI } from '../../i18n/uiTranslations.js';
 
 const TOTAL_STEPS = 3;
 
@@ -21,41 +23,41 @@ const iconMap = {
   mic: Mic
 };
 
-const getStepContent = (step) => {
+const getStepContent = (step, language) => {
   switch (step) {
     case 1:
       return {
-        title: 'Bem-vindo ao LearnFun!',
-        description: 'Vamos te mostrar rapidamente como dominar o inglês com treinos guiados.',
+        title: translateUI(language, 'onboarding.step1Title'),
+        description: translateUI(language, 'onboarding.step1Description'),
         bullets: [
-          { icon: 'sparkles', text: 'Escolha modos de prática pensados para situações reais.' },
-          { icon: 'book', text: 'Aprenda frases organizadas por temas essenciais.' },
-          { icon: 'users', text: 'Participe de experiências ao vivo quando quiser evoluir mais.' }
+          { icon: 'sparkles', text: translateUI(language, 'onboarding.step1Bullet1') },
+          { icon: 'book', text: translateUI(language, 'onboarding.step1Bullet2') },
+          { icon: 'users', text: translateUI(language, 'onboarding.step1Bullet3') }
         ],
-        primaryLabel: 'Ver categorias'
+        primaryLabel: translateUI(language, 'onboarding.step1Primary')
       };
     case 2:
       return {
-        title: 'Explore o modo Categories',
-        description: 'Cada categoria reúne frases prontas para você usar no dia a dia.',
+        title: translateUI(language, 'onboarding.step2Title'),
+        description: translateUI(language, 'onboarding.step2Description'),
         bullets: [
-          { icon: 'book', text: 'Veja o tema, descrição e progresso de cada coleção.' },
-          { icon: 'sparkles', text: 'Escolha o que quer treinar agora com total liberdade.' },
-          { icon: 'check', text: 'Revise quantas vezes quiser para fixar o conteúdo.' }
+          { icon: 'book', text: translateUI(language, 'onboarding.step2Bullet1') },
+          { icon: 'sparkles', text: translateUI(language, 'onboarding.step2Bullet2') },
+          { icon: 'check', text: translateUI(language, 'onboarding.step2Bullet3') }
         ],
         image: categoriesImage,
-        primaryLabel: 'Explorar Daily Basics'
+        primaryLabel: translateUI(language, 'onboarding.step2Primary')
       };
     case 3:
       return {
-        title: 'Daily Basics na prática',
-        description: 'Aqui está sua primeira frase para destravar conversas do dia a dia.',
+        title: translateUI(language, 'onboarding.step3Title'),
+        description: translateUI(language, 'onboarding.step3Description'),
         bullets: [
-          { icon: 'volume', text: 'Clique em “Ouvir” para escutar a pronúncia nativa.' },
-          { icon: 'mic', text: 'Use o microfone para repetir e receber feedback imediato.' },
-          { icon: 'check', text: 'Marque como concluída e avance para a próxima expressão.' }
+          { icon: 'volume', text: translateUI(language, 'onboarding.step3Bullet1') },
+          { icon: 'mic', text: translateUI(language, 'onboarding.step3Bullet2') },
+          { icon: 'check', text: translateUI(language, 'onboarding.step3Bullet3') }
         ],
-        primaryLabel: 'Começar prática'
+        primaryLabel: translateUI(language, 'onboarding.step3Primary')
       };
     default:
       return null;
@@ -63,7 +65,8 @@ const getStepContent = (step) => {
 };
 
 export const GuestOnboarding = ({ open, step, onNext, onSkip }) => {
-  const content = useMemo(() => getStepContent(step), [step]);
+  const { language } = useUILanguage();
+  const content = useMemo(() => getStepContent(step, language), [step, language]);
 
   if (!open || !content) {
     return null;
@@ -75,17 +78,17 @@ export const GuestOnboarding = ({ open, step, onNext, onSkip }) => {
         <div className="flex items-start justify-between gap-3 mb-4">
           <div>
             <div className="text-sm font-semibold text-purple-600 uppercase tracking-wide">
-              Tour guiado
+              {translateUI(language, 'onboarding.guidedTour')}
             </div>
             <div className="text-xs font-medium text-purple-500 mt-1">
-              Passo {step} de {TOTAL_STEPS}
+              {translateUI(language, 'onboarding.stepOf', { step, total: TOTAL_STEPS })}
             </div>
           </div>
 
           <button
             onClick={onSkip}
             className="p-2 text-gray-400 hover:text-gray-600 transition-colors"
-            aria-label="Pular tutorial"
+            aria-label={translateUI(language, 'onboarding.closeTourAria')}
           >
             ✕
           </button>
