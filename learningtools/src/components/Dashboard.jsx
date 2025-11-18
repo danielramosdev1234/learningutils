@@ -341,7 +341,7 @@ const Dashboard = () => {
                 <span className="font-semibold text-yellow-800">
                   🔥 {translateUI(language, 'dashboard.streakBonusTitle')}
                 </span>
-                <span className="text-yellow-600 text-base font-bold">+2 XP</span>
+                <span className="text-yellow-600 text-base font-bold">+2 XP teste</span>
               </div>
               <p className="text-yellow-700 text-sm">
                 {translateUI(language, 'dashboard.streakBonusText')}
