@@ -21,7 +21,7 @@ export const IPATranscription = ({ text, show }) => {
 
       {/* IPA Text */}
       <div className="bg-white p-2.5 rounded border border-purple-150 mb-2">
-        <p className="text-2xl font-mono text-purple-800 leading-relaxed">
+        <p className="text-lg sm:text-xl md:text-2xl font-mono text-purple-800 leading-relaxed">
           /{ipaText}/
         </p>
       </div>

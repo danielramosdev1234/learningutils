@@ -373,7 +373,7 @@ const handleNextSkip = () => {
       <div className="text-center mb-6">
         <div className="flex items-center justify-center gap-3 mb-2">
           <h2
-            className="text-3xl font-bold text-gray-800"
+            className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-800"
             data-tour-id="tour-phrase-text"
           >
             {phrase.text}
@@ -382,11 +382,12 @@ const handleNextSkip = () => {
 
         {phrase.translation && (
           <p
-            className="text-gray-500 text-lg italic mb-3"
+            className="text-sm sm:text-base md:text-lg text-gray-500 italic mb-3"
             data-tour-id="tour-phrase-translation"
           >
             {phrase.translation}
           </p>
+
         )}
 
         <div data-tour-id="tour-ipa">
@@ -521,7 +522,7 @@ const handleNextSkip = () => {
       )}
 
       {speechError && (
-        <div 
+        <div
           className="mb-4 p-4 bg-red-50 border-2 border-red-300 rounded-lg flex items-center gap-2"
           role="alert"
           aria-live="assertive"
