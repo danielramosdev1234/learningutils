@@ -9,14 +9,13 @@ const AIConversationTrainer = () => {
   const [conversationStarted, setConversationStarted] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false);
-  const [autoPlayEnabled, setAutoPlayEnabled] = useState(false);
+  const [autoPlayEnabled, setAutoPlayEnabled] = useState(true);
   const messagesEndRef = useRef(null);
   const recognitionRef = useRef(null);
   const speechSynthRef = useRef(null);
   const [recordedText, setRecordedText] = useState('');
   const recordedTextRef = useRef('');
   const [recordingLanguage, setRecordingLanguage] = useState('en-US');
-  const [level, setLevel] = useState('B1');
   const [topic, setTopic] = useState('General conversation');
   const [copiedMessageIndex, setCopiedMessageIndex] = useState(null);
 
@@ -35,7 +34,7 @@ const AIConversationTrainer = () => {
   ]);
 
   // Avatars
-  const AI_AVATAR = "https://api.dicebear.com/7.x/bottts/svg?seed=alex&backgroundColor=b6e3f4";
+  const AI_AVATAR = "https://learnfun-sigma.vercel.app/learninho.png";
   const { mode, profile } = useSelector(state => state.user);
   const USER_AVATAR = profile?.photoURL || null;
 
@@ -227,10 +226,9 @@ const AIConversationTrainer = () => {
           messages: [
             {
               role: 'system',
-              content: `You're Alex, a 28-year-old American who loves helping people learn English through casual conversation.
+              content: `You're Learninho, a 20-year-old American who loves helping people learn English through casual conversation.
 
 LEARNER CONTEXT:
-- Level: ${level}
 - Main topic for this session: ${topic}
 
 YOUR VIBE:
@@ -311,9 +309,8 @@ Make sure to include the '---' separator exactly once and keep sections short an
         });
       }
 
-      if (autoPlayEnabled) {
         setTimeout(() => speakText(aiResponse), 500);
-      }
+
 
     } catch (error) {
       console.error('Error calling Groq API:', error);
@@ -365,13 +362,13 @@ Make sure to include the '---' separator exactly once and keep sections short an
     setConversationStarted(true);
     const welcomeMessage = {
       role: 'assistant',
-      content: `Hey! 👋 I'm Alex, your English conversation buddy!
+      content: `Hey! 👋 I'm Learninho, your English conversation buddy!
 
-Level for this session: ${level}. Topic: ${topic}.
+ Topic: ${topic}.
 
 Let's chat naturally - I'll help you improve while we talk. No pressure, just real conversation!
 
-What brings you here today? Work, travel, or just want to practice?`,
+What brings you here today? ${topic}?`,
       timestamp: new Date()
     };
     setMessages([welcomeMessage]);
@@ -497,7 +494,7 @@ What brings you here today? Work, travel, or just want to practice?`,
           </div>
 
           <h1 className="text-3xl font-bold text-slate-900 mb-2 mt-4">
-            Chat with Alex
+            Chat with Learninho
           </h1>
           <p className="text-indigo-600 font-semibold mb-4">Your AI English Buddy</p>
 
@@ -507,28 +504,7 @@ What brings you here today? Work, travel, or just want to practice?`,
 
           {/* Level and Topic selection */}
           <div className="mb-6 space-y-4 text-left">
-            <div>
-              <h3 className="text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
-                <Sparkles className="w-4 h-4 text-indigo-500" />
-                Choose your level
-              </h3>
-              <div className="flex flex-wrap gap-2">
-                {['A2', 'B1', 'B2', 'C1'].map(lvl => (
-                  <button
-                    key={lvl}
-                    type="button"
-                    onClick={() => setLevel(lvl)}
-                    className={`px-3 py-1.5 rounded-full text-xs font-semibold border transition-all ${
-                      level === lvl
-                        ? 'bg-indigo-600 text-white border-indigo-600 shadow-sm'
-                        : 'bg-white text-indigo-700 border-indigo-200 hover:bg-indigo-50'
-                    }`}
-                  >
-                    {lvl}
-                  </button>
-                ))}
-              </div>
-            </div>
+
 
             <div>
               <h3 className="text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
@@ -574,10 +550,10 @@ What brings you here today? Work, travel, or just want to practice?`,
           <div className="max-w-4xl mx-auto">
           <div className="flex items-center justify-between mb-3">
             <div className="flex items-center gap-3">
-              <img src={AI_AVATAR} alt="Alex" className="w-10 h-10 rounded-full shadow-md" />
+              <img src={AI_AVATAR} alt="Learninho" className="w-10 h-10 rounded-full shadow-md" />
               <div>
                 <h2 className="text-lg sm:text-xl font-semibold text-slate-900 flex items-center gap-2">
-                  Alex
+                  Learninho
                   <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
                 </h2>
                 <p className="text-[11px] text-slate-500">AI English Teacher • Online</p>
@@ -635,8 +611,10 @@ What brings you here today? Work, travel, or just want to practice?`,
 
         {/* Messages */}
         <div className="flex-1 overflow-y-auto px-2 sm:px-4 py-4 sm:py-6 bg-slate-50">
+
           <div className="max-w-3xl mx-auto space-y-6 sm:space-y-8">
             {messages.map((message, index) => (
+
               <div
                 key={index}
                 className={`flex gap-3 animate-fade-in ${
@@ -647,6 +625,21 @@ What brings you here today? Work, travel, or just want to practice?`,
                   animationFillMode: 'both'
                 }}
               >
+              <div className="absolute bottom-0 left-0 right-0 z-10 flex items-center justify-between text-xs sm:text-sm px-1 h-10 sm:h-11">
+                                                    <div className="flex gap-2 items-center flex-wrap">
+                                                      <button
+                                                        onClick={() => (isSpeaking ? stopSpeaking() : speakText(message.content))}
+                                                        className={`flex items-center gap-1 px-3 py-1 rounded-lg text-xs font-semibold transition-all ${
+                                                          isSpeaking
+                                                            ? 'bg-green-100 text-green-700 shadow-sm'
+                                                            : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                                                        }`}
+                                                      >
+                                                        {isSpeaking ? <VolumeX className="w-3 h-3" /> : <Volume2 className="w-3 h-3" />}
+                                                        {isSpeaking ? 'Stop' : 'Listen'}
+                                                      </button>
+                                                      </div>
+                                                      </div>
                 {/* AI Avatar (left) */}
               {message.role === 'assistant' && (
                 <div className="flex-shrink-0 mt-1">
@@ -654,92 +647,70 @@ What brings you here today? Work, travel, or just want to practice?`,
                 </div>
               )}
 
+
+
+
+
+
               {/* Message Content */}
-              <div className="flex flex-col gap-2 max-w-full sm:max-w-[80%] selection:bg-amber-200 selection:text-black">
-                <div className="relative">
+              <div className="flex flex-col gap-2 max-w-full sm:max-w-[75%] selection:bg-amber-200 selection:text-black">
+
+                <div className="relative group">
+                  {/* NOVO DESIGN DE BALÃO */}
+
                   <div
-                    className={`rounded-lg p-4 sm:p-5 pb-12 sm:pb-14 drop-shadow-sm text-sm sm:text-base leading-snug font-sans ${
+                    className={`relative rounded-3xl p-4 sm:p-5 text-sm sm:text-base leading-relaxed shadow-lg transition-all duration-300 ${
                       message.role === 'user'
-                        ? 'bg-indigo-600 text-white'
+                        ? 'bg-gradient-to-br from-indigo-600 via-indigo-500 to-indigo-700 text-white rounded-br-md'
                         : message.isError
-                        ? 'bg-red-50 border border-red-200 text-red-800'
-                        : 'bg-indigo-900 text-white font-medium'
+                        ? 'bg-red-50 border-2 border-red-200 text-red-800 rounded-tl-md'
+                        : 'bg-white border border-slate-200 text-slate-800 rounded-tl-md'
+                    } ${
+                      message.role === 'assistant' ? 'group-hover:shadow-xl group-hover:border-indigo-300' : 'hover:shadow-xl'
                     }`}
                   >
-                    {message.role === 'assistant' ? (
-                      formatMessage(message.content)
-                    ) : (
-                      <div className="whitespace-pre-wrap font-medium">{message.content}</div>
+                    {/* Efeito de brilho para mensagens do usuário */}
+                    {message.role === 'user' && (
+                      <div className="absolute inset-0 rounded-3xl rounded-br-md bg-gradient-to-br from-white/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     )}
-                    <div className={`text-[11px] sm:text-xs mt-3 ${
-                      message.role === 'user' ? 'text-indigo-100' : 'text-gray-400'
+
+
+                    <div className="relative z-10">
+                      {message.role === 'assistant' ? (
+                        formatMessage(message.content)
+                      ) : (
+                        <div className="whitespace-pre-wrap font-medium">{message.content}</div>
+                      )}
+                    </div>
+
+
+                    {/* Timestamp */}
+                    <div className={`text-[10px] sm:text-xs mt-3 font-medium ${
+                      message.role === 'user' ? 'text-indigo-200' : 'text-slate-400'
                     }`}>
                       {message.timestamp.toLocaleTimeString('en-US', {
                         hour: '2-digit',
                         minute: '2-digit'
                       })}
                     </div>
+
+
+                    {/* Rabinho do balão (tail) */}
+                    <div className={`absolute bottom-0 ${
+                      message.role === 'user'
+                        ? 'right-0 translate-y-full'
+                        : 'left-0 translate-y-full'
+                    }`}>
+                      <svg width="20" height="20" viewBox="0 0 20 20" className={
+                        message.role === 'user'
+                          ? 'text-indigo-700 scale-x-[-1]'
+                          : 'text-white'
+                      }>
+                      </svg>
+                    </div>
                   </div>
 
-                  {/* Actions for AI messages inside bubble footer */}
-                  {message.role === 'assistant' && !message.isError && (
-                    <div className="absolute bottom-0 left-0 right-0 z-10 flex items-center justify-between text-xs sm:text-sm px-1 h-10 sm:h-11">
-                      <div className="flex gap-2 items-center flex-wrap">
-                        <button
-                          onClick={() => (isSpeaking ? stopSpeaking() : speakText(message.content))}
-                          className={`flex items-center gap-1 px-3 py-1 rounded-lg text-xs font-semibold transition-all ${
-                            isSpeaking
-                              ? 'bg-green-100 text-green-700 shadow-sm'
-                              : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                          }`}
-                        >
-                          {isSpeaking ? <VolumeX className="w-3 h-3" /> : <Volume2 className="w-3 h-3" />}
-                          {isSpeaking ? 'Stop' : 'Listen'}
-                        </button>
 
-                        {/* Quick Reactions */}
-                        <button
-                          onClick={() => handleReaction(index, '👍')}
-                          className="text-lg hover:scale-125 transition-transform"
-                          title="Good!"
-                        >
-                          👍
-                        </button>
-                        <button
-                          onClick={() => handleReaction(index, '❤️')}
-                          className="text-lg hover:scale-125 transition-transform"
-                          title="Love it!"
-                        >
-                          ❤️
-                        </button>
-                        <button
-                          onClick={() => sendMessage('Can you explain that differently?')}
-                          className="text-xs bg-indigo-50 hover:bg-indigo-100 text-indigo-700 px-2 py-1 rounded-lg transition-colors flex items-center gap-1 font-semibold"
-                        >
-                          <RefreshCw className="w-3 h-3" />
-                          Rephrase
-                        </button>
-                        <button
-                          onClick={() => sendMessage('Can you translate your last answer into Portuguese and highlight key phrases?')}
-                          className="text-xs bg-blue-50 hover:bg-blue-100 text-blue-700 px-2 py-1 rounded-lg transition-colors flex items-center gap-1 font-semibold"
-                        >
-                          <HelpCircle className="w-3 h-3" />
-                          Explain in PT
-                        </button>
-                      </div>
-
-                      <button
-                        onClick={() => handleCopyMessage(message.content, index)}
-                        className="ml-2 flex items-center gap-1 px-2 py-1 rounded-lg text-[11px] sm:text-xs text-gray-500 hover:text-indigo-700 hover:bg-gray-100 transition-colors"
-                        title={copiedMessageIndex === index ? 'Copied!' : 'Copy message'}
-                      >
-                        <Clipboard className={`w-3 h-3 ${copiedMessageIndex === index ? 'text-cyan-500' : ''}`} />
-                        <span className="hidden sm:inline">
-                          {copiedMessageIndex === index ? 'Copied' : 'Copy'}
-                        </span>
-                      </button>
-                    </div>
-                  )}
                 </div>
 
                 {/* Quick Replies (only on last AI message) */}
