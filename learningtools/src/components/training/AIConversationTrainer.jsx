@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
-import { Send, MessageCircle, Sparkles, CheckCircle, AlertCircle, Loader2, Mic, Volume2, VolumeX, ThumbsUp, Heart, HelpCircle, RefreshCw, Award, Flame, BookOpen, Clipboard } from 'lucide-react';
+import { Send, MessageCircle, Sparkles, CheckCircle, AlertCircle, Loader2, Mic, Volume2, VolumeX, ThumbsUp, Heart, HelpCircle, RefreshCw, Award, Flame, BookOpen, Clipboard, Circle , X } from 'lucide-react';
 
 const AIConversationTrainer = () => {
   const [messages, setMessages] = useState([]);
@@ -18,6 +18,12 @@ const AIConversationTrainer = () => {
   const [recordingLanguage, setRecordingLanguage] = useState('en-US');
   const [topic, setTopic] = useState('General conversation');
   const [copiedMessageIndex, setCopiedMessageIndex] = useState(null);
+  const [selectedVoice, setSelectedVoice] = useState('en-AU-CarlyNeural');
+  const [availableVoices, setAvailableVoices] = useState([]);
+  const [isLoadingVoices, setIsLoadingVoices] = useState(true);
+  const [recordingTime, setRecordingTime] = useState(0);
+  const timerRef = useRef(null);
+
 
   // Gamification states
   const [userStats, setUserStats] = useState({
@@ -51,6 +57,81 @@ const AIConversationTrainer = () => {
       .map(line => line.split('–')[0].split('-')[0].trim())
       .filter(Boolean);
   };
+
+useEffect(() => {
+  if (isRecording) {
+    timerRef.current = setInterval(() => {
+      setRecordingTime(prev => prev + 1);
+    }, 1000);
+  } else {
+    clearInterval(timerRef.current);
+    setRecordingTime(0);
+  }
+
+  return () => clearInterval(timerRef.current);
+}, [isRecording]);
+
+const formatTime = (seconds) => {
+  const mins = Math.floor(seconds / 60);
+  const secs = seconds % 60;
+  return `${mins}:${secs.toString().padStart(2, '0')}`;
+};
+
+// ❌ ADICIONAR: Função para cancelar gravação
+const cancelRecording = () => {
+  if (recognitionRef.current) {
+    recognitionRef.current.stop();
+  }
+  recordedTextRef.current = '';
+  setRecordedText('');
+  setIsRecording(false);
+  setRecordingTime(0);
+};
+
+// ✅ ADICIONAR: Função para enviar gravação
+const sendRecording = () => {
+  if (recognitionRef.current) {
+    recognitionRef.current.stop();
+  }
+
+  const textToSend = recordedTextRef.current.trim();
+  if (textToSend) {
+    sendMessage(textToSend);
+  }
+
+  recordedTextRef.current = '';
+  setRecordedText('');
+  setIsRecording(false);
+  setRecordingTime(0);
+};
+
+useEffect(() => {
+  const fetchVoices = async () => {
+    try {
+      setIsLoadingVoices(true);
+      const BACKEND_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001';
+      const response = await fetch(`${BACKEND_URL}/api/tts/voices`);
+      const data = await response.json();
+
+      if (data.success) {
+        setAvailableVoices(data.voices);
+      }
+    } catch (error) {
+      console.error('Error fetching voices:', error);
+      // Fallback para vozes padrão em caso de erro
+      setAvailableVoices([
+        { name: 'en-US-JennyNeural', gender: 'Female', language: 'en-US', description: 'Jenny (US - Female)' },
+        { name: 'en-US-GuyNeural', gender: 'Male', language: 'en-US', description: 'Guy (US - Male)' },
+        { name: 'en-US-AriaNeural', gender: 'Female', language: 'en-US', description: 'Aria (US - Female)' },
+        { name: 'en-GB-SoniaNeural', gender: 'Female', language: 'en-GB', description: 'Sonia (UK - Female)' }
+      ]);
+    } finally {
+      setIsLoadingVoices(false);
+    }
+  };
+
+  fetchVoices();
+}, []);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -157,36 +238,101 @@ const AIConversationTrainer = () => {
     }
   };
 
-  const speakText = (text) => {
-    if (!speechSynthRef.current) {
-      alert('Text-to-speech is not supported in your browser.');
-      return;
-    }
+const speakText = async (text) => {
+  try {
+    // Parar qualquer áudio anterior
+    stopSpeaking();
 
+    setIsSpeaking(true);
+
+    // Limpar texto
     const cleanText = text
       .replace(/[#*_~`]/g, '')
       .replace(/\*\*/g, '')
-      .replace(/[📝💡✅🎯📚👍❤️🤔]/g, '')
-      .split('---')[0];
+      .replace(/[📝💡✅🎯📚👍❤️🤔🔥]/g, '')
+      .split('---')[0]
+      .trim();
 
-    const utterance = new SpeechSynthesisUtterance(cleanText);
-    utterance.lang = recordingLanguage === 'pt-BR' ? 'pt-BR' : 'en-US';
-    utterance.rate = 0.9;
-    utterance.pitch = 1;
+    if (!cleanText) {
+      setIsSpeaking(false);
+      return;
+    }
 
-    utterance.onstart = () => setIsSpeaking(true);
-    utterance.onend = () => setIsSpeaking(false);
-    utterance.onerror = () => setIsSpeaking(false);
+    // Chamar API do backend (Edge TTS)
+    const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3001';
 
-    speechSynthRef.current.cancel();
-    speechSynthRef.current.speak(utterance);
-  };
+    const response = await fetch(`${BACKEND_URL}/api/tts/synthesize-stream`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        text: cleanText,
+        voice: selectedVoice,
+        rate: 1.2,
+        pitch: 0
+      })
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to synthesize speech');
+    }
+
+    // Converter resposta em Blob
+    const audioBlob = await response.blob();
+    const audioUrl = URL.createObjectURL(audioBlob);
+
+    // Criar e armazenar referência do áudio
+    const audio = new Audio(audioUrl);
+    audioRef.current = audio;
+
+    audio.onended = () => {
+      setIsSpeaking(false);
+      URL.revokeObjectURL(audioUrl);
+      audioRef.current = null;
+    };
+
+    audio.onerror = () => {
+      setIsSpeaking(false);
+      URL.revokeObjectURL(audioUrl);
+      audioRef.current = null;
+      console.error('Error playing audio');
+    };
+
+    await audio.play();
+
+  } catch (error) {
+    console.error('Edge TTS Error:', error);
+    setIsSpeaking(false);
+
+    // Fallback para Web Speech API
+    if (speechSynthRef.current) {
+      const utterance = new SpeechSynthesisUtterance(text.split('---')[0]);
+      utterance.lang = 'en-US';
+      utterance.rate = 0.9;
+      utterance.onend = () => setIsSpeaking(false);
+      speechSynthRef.current.speak(utterance);
+    }
+  }
+};
+
+  // Adicionar ref para controlar áudio do Edge TTS
+  const audioRef = useRef(null);
 
   const stopSpeaking = () => {
+    // Parar áudio do Edge TTS se estiver tocando
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+      audioRef.current = null;
+    }
+
+    // Parar Web Speech API (fallback)
     if (speechSynthRef.current) {
       speechSynthRef.current.cancel();
-      setIsSpeaking(false);
     }
+
+    setIsSpeaking(false);
   };
 
   const sendMessage = async (userMessage) => {
@@ -362,13 +508,13 @@ Make sure to include the '---' separator exactly once and keep sections short an
     setConversationStarted(true);
     const welcomeMessage = {
       role: 'assistant',
-      content: `Hey! 👋 I'm Learninho, your English conversation buddy!
+      content: `Hey! 👋 I'm Learninho, or Learny, your English conversation buddy!
 
  Topic: ${topic}.
 
 Let's chat naturally - I'll help you improve while we talk. No pressure, just real conversation!
 
-What brings you here today? ${topic}?`,
+What brings you here today?`,
       timestamp: new Date()
     };
     setMessages([welcomeMessage]);
@@ -761,50 +907,102 @@ What brings you here today? ${topic}?`,
       </div>
 
         {/* Input Area */}
+        {/* Input Area */}
         <div className="bg-slate-50 border-t border-slate-200 px-4 py-4">
           <div className="max-w-4xl mx-auto">
             <div className="flex gap-2 mb-2">
-            <button
-              onClick={startEnglishRecording}
-              disabled={isLoading || sessionEnded}
-              className={`px-4 py-3 rounded-full font-semibold text-sm sm:text-base transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 shadow-md hover:shadow-lg ${
-                isRecording
-                  ? 'bg-red-600 text-white animate-pulse'
-                  : 'bg-indigo-600 hover:bg-indigo-700 text-white'
-              }`}
-              title={isRecording ? 'Click to stop and send' : 'Speak in English'}
-            >
-              <Mic className="w-5 h-5" />
-              <span className="hidden xs:inline">{isRecording ? 'Stop' : 'Speak in English'}</span>
-            </button>
+              <input
+                type="text"
+                value={inputText}
+                onChange={(e) => setInputText(e.target.value)}
+                onKeyPress={handleKeyPress}
+                placeholder={isRecording ? '🎤 Listening...' : '💬 Type your message...'}
+                disabled={isLoading || isRecording}
+                className="flex-1 px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent disabled:bg-gray-50 shadow-sm text-sm sm:text-base"
+              />
 
-            <input
-              type="text"
-              value={inputText}
-              onChange={(e) => setInputText(e.target.value)}
-              onKeyPress={handleKeyPress}
-              placeholder={isRecording ? '🎤 Listening...' : '💬 Type your message...'}
-              disabled={isLoading || isRecording}
-              className="flex-1 px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent disabled:bg-gray-50 shadow-sm text-sm sm:text-base"
-            />
+              <button
+                onClick={startEnglishRecording}
+                disabled={isLoading || sessionEnded}
+                className="px-4 py-3 rounded-full bg-indigo-600 hover:bg-indigo-700 text-white shadow-md hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                <Mic className="w-5 h-5" />
+              </button>
+            </div>
 
-            <button
-              onClick={handleSendClick}
-              disabled={isLoading || !inputText.trim()}
-              className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 sm:px-6 py-3 rounded-lg font-semibold text-sm sm:text-base hover:shadow-lg transform hover:scale-105 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none flex items-center gap-2 shadow-md"
-            >
-              <Send className="w-5 h-5" />
-            </button>
-
+            <p className="text-xs text-slate-500 text-center">
+              {sessionEnded
+                ? `Session limit reached (${SESSION_LIMIT} messages).`
+                : '💡 Press Enter to send • 🎤 Click mic to speak'}
+            </p>
           </div>
-
-          <p className="text-xs text-slate-500 text-center">
-            {sessionEnded
-              ? `Session limit reached (${SESSION_LIMIT} messages).`
-              : '💡 Press Enter to send • 🎤 Click mic to speak'}
-          </p>
         </div>
-      </div>
+
+        {/* 🎤 Modal de Gravação */}
+        {isRecording && (
+          <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+            <div className="bg-white rounded-2xl shadow-2xl p-6 max-w-2xl w-full animate-fade-in">
+              {/* Header com tempo e botões */}
+              <div className="flex items-center justify-between mb-6">
+                <div className="flex items-center gap-3">
+                  <div className="relative">
+                    <Circle className="w-6 h-6 text-red-500 fill-red-500 animate-pulse" />
+                    <div className="absolute inset-0 w-6 h-6 bg-red-500 rounded-full animate-ping opacity-75" />
+                  </div>
+                  <span className="text-2xl font-mono font-bold text-gray-800 tabular-nums">
+                    {formatTime(recordingTime)}
+                  </span>
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={cancelRecording}
+                    className="p-3 bg-gray-100 hover:bg-gray-200 rounded-full transition-all"
+                    title="Cancel recording"
+                  >
+                    <X className="w-5 h-5 text-gray-600" />
+                  </button>
+
+                  <button
+                    onClick={sendRecording}
+                    className="p-3 bg-green-500 hover:bg-green-600 rounded-full transition-all shadow-lg hover:shadow-xl"
+                    title="Send recording"
+                  >
+                    <Send className="w-5 h-5 text-white" />
+                  </button>
+                </div>
+              </div>
+
+              {/* Visualizador de ondas sonoras */}
+              <div className="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-xl p-6 border border-indigo-100">
+                <div className="flex items-center justify-center gap-1 h-24">
+                  {Array.from({ length: 30 }).map((_, i) => (
+                    <div
+                      key={i}
+                      className="w-1 bg-indigo-600 rounded-full transition-all duration-100 animate-pulse"
+                      style={{
+                        height: `${20 + Math.random() * 80}%`,
+                        animationDelay: `${i * 50}ms`
+                      }}
+                    />
+                  ))}
+                </div>
+              </div>
+
+              {/* Indicador de status */}
+              <div className="mt-4 text-center">
+                <p className="text-sm text-gray-600">
+                  🎤 Recording... Speak clearly into your microphone
+                </p>
+                {recordedText && (
+                  <p className="text-xs text-gray-500 mt-2 italic">
+                    "{recordedText}"
+                  </p>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
 
         <style>{`
         @keyframes fadeInUp {
