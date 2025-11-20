@@ -787,39 +787,22 @@ What brings you here today? Let's talk about ${topic}`,
           <div className="max-w-3xl mx-auto space-y-6 sm:space-y-8">
             {messages.map((message, index) => (
 
-              <div
-                key={index}
-                className={`flex gap-3 animate-fade-in ${
-                  message.role === 'user' ? 'justify-end mr-6 sm:mr-12' : 'justify-start ml-6 sm:ml-12'
-                }`}
-                style={{
-                  animation: 'fadeInUp 0.4s ease-out',
-                  animationFillMode: 'both'
-                }}
-              >
-              <div className=" z-10 flex items-center justify-between text-xs sm:text-sm px-1 h-10 sm:h-11">
-                                                    <div className="flex gap-2 items-center flex-wrap">
-                                                      <button
-                                                        onClick={() => speakText(message.content)}
-                                                        disabled={speakState !== 'idle'}
-                                                        className={`
-                                                          px-4 py-2 rounded-lg font-semibold transition-all
-                                                          ${speakState === 'idle'
-                                                            ? 'bg-blue-500 hover:bg-blue-600 text-white'
-                                                            : 'bg-gray-400 text-gray-200 cursor-not-allowed'}
-                                                        `}
-                                                      >
-                                                        {speakState === 'idle' && '🔊 Listen'}
-                                                        {speakState === 'preparing' && '⏳ Preparing...'}
-                                                        {speakState === 'speaking' && '🔉 Speaking...'}
-                                                      </button>
-                                                      </div>
-                                                      </div>
-
-
-
-
-
+                <div
+                    key={index}
+                    className={`flex gap-3 animate-fade-in ${
+                      message.role === 'user' ? 'justify-end' : 'justify-start'
+                    }`}
+                    style={{
+                      animation: 'fadeInUp 0.4s ease-out',
+                      animationFillMode: 'both'
+                    }}
+                  >
+                    {/* AI Avatar (left) */}
+                    {message.role === 'assistant' && (
+                      <div className="flex-shrink-0">
+                        <img src={AI_AVATAR} alt="Learninho" className="w-10 h-10 rounded-full shadow-md" />
+                      </div>
+                    )}
 
 
               {/* Message Content */}
@@ -852,8 +835,35 @@ What brings you here today? Let's talk about ${topic}`,
                       ) : (
                         <div className="whitespace-pre-wrap font-medium">{message.content}</div>
                       )}
-                    </div>
 
+                      {/* Listen button - apenas para mensagens do assistente */}
+                      {message.role === 'assistant' && !message.isError && (
+                        <button
+                          onClick={() => speakText(message.content)}
+                          disabled={speakState !== 'idle'}
+                          className={`
+                            mt-3 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center gap-1
+                            ${speakState === 'idle'
+                              ? 'bg-indigo-100 hover:bg-indigo-200 text-indigo-700'
+                              : 'bg-gray-100 text-gray-400 cursor-not-allowed'}
+                          `}
+                        >
+                          {speakState === 'idle' && (
+                            <>
+                              <Volume2 className="w-3 h-3" />
+                              Listen
+                            </>
+                          )}
+                          {speakState === 'preparing' && '⏳ Preparing...'}
+                          {speakState === 'speaking' && (
+                            <>
+                              <VolumeX className="w-3 h-3 animate-pulse" />
+                              Speaking...
+                            </>
+                          )}
+                        </button>
+                      )}
+                    </div>
 
                     {/* Timestamp */}
                     <div className={`text-[10px] sm:text-xs mt-3 font-medium ${
@@ -920,19 +930,19 @@ What brings you here today? Let's talk about ${topic}`,
 
         {/* Input Area */}
         <div className="bg-slate-50 border-t border-slate-200 px-4 py-4 flex-shrink-0">
-            <div className="flex flex-wrap gap-2 mt-1">
-                                {quickReplies.map((reply, i) => (
-                                  <button
-                                    key={i}
-                                    onClick={() => sendMessage(reply)}
-                                    className="bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-xs px-3 py-1.5 rounded-full border border-indigo-200 transition-all font-semibold"
-                                  >
+            <div className="flex flex-wrap gap-1.5 mb-2">
+              {quickReplies.map((reply, i) => (
+                <button
+                  key={i}
+                  onClick={() => sendMessage(reply)}
+                  className="bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-[11px] px-2.5 py-1 rounded-full border border-indigo-200 transition-all font-medium"
+                >
                                     {reply}
                                   </button>
                                 ))}
                               </div>
           <div className="max-w-4xl mx-auto">
-            <div className="flex gap-2 mb-2">
+            <div className="flex gap-1.5 mb-2">
               <input
                 type="text"
                 value={inputText}
@@ -940,17 +950,15 @@ What brings you here today? Let's talk about ${topic}`,
                 onKeyPress={handleKeyPress}
                 placeholder={isRecording ? '🎤 Listening...' : '💬 Type your message...'}
                 disabled={isLoading || isRecording}
-                className="flex-1 px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent disabled:bg-gray-50 shadow-sm text-sm sm:text-base"
+                className="flex-1 px-3 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent disabled:bg-gray-50 shadow-sm text-sm"
               />
 
-
-
-              <div className="flex items-center gap-2">
-                {/* Toggle visual */}
-                <div className="flex rounded-lg overflow-hidden border-2 border-indigo-200">
+              <div className="flex items-center gap-1">
+                {/* Toggle compacto */}
+                <div className="flex rounded-lg overflow-hidden border border-indigo-200">
                   <button
                     onClick={() => setRecordingLanguage('en-US')}
-                    className={`px-3 py-1.5 text-sm font-semibold transition-all ${
+                      className={`px-2 py-1.5 text-xs font-semibold transition-all ${
                       recordingLanguage === 'en-US'
                         ? 'bg-indigo-600 text-white'
                         : 'bg-white text-indigo-600 hover:bg-indigo-50'
@@ -960,7 +968,7 @@ What brings you here today? Let's talk about ${topic}`,
                   </button>
                   <button
                     onClick={() => setRecordingLanguage('PT')}
-                    className={`px-3 py-1.5 text-sm font-semibold transition-all ${
+                      className={`px-2 py-1.5 text-xs font-semibold transition-all ${
                       recordingLanguage === 'PT'
                         ? 'bg-green-600 text-white'
                         : 'bg-white text-green-600 hover:bg-green-50'
@@ -973,13 +981,13 @@ What brings you here today? Let's talk about ${topic}`,
                 {/* Botão de gravar */}
                 <button
                   onClick={startEnglishRecording}
-                  className={`px-4 py-3 rounded-full shadow-md transition-all ${
+                  className={`p-2.5 rounded-full shadow-md transition-all ${
                     recordingLanguage === 'en-US'
                       ? 'bg-indigo-600 hover:bg-indigo-700'
                       : 'bg-green-600 hover:bg-green-700'
                   } text-white`}
                 >
-                  <Mic className="w-5 h-5" />
+                  <Mic className="w-4 h-4" />
                 </button>
                 </div>
                 </div>
