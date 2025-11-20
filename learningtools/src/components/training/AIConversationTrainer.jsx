@@ -594,7 +594,7 @@ const playAudioBlock = async (block) => {
     setConversationStarted(true);
     const welcomeMessage = {
       role: 'assistant',
-      content: `Olá amigos do Learn fun! 👋🐺
+      content: `Olá amigos do Learn fun, Dudu . Herbert. Bia . E Bianca! 👋🐺
 Estou contando com vosses ... quem me der o nome mais top... ganha um abrasso... eterno de lobo... e meu corassaum inteiro!... 🐺💙🇧🇷 Tô contando com vocês..., hein? beijoss❤️❤️❤️`,
       timestamp: new Date()
     };
