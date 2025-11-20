@@ -26,6 +26,8 @@ import { useFCM } from './hooks/useFCM';
 import { useUILanguage } from './context/LanguageContext.jsx';
 import { translateUI } from './i18n/uiTranslations.js';
 
+import AIConversationTrainer from './components/training/AIConversationTrainer';
+
 // Lazy loading de páginas para melhor performance
 const FAQ = lazy(() => import('./components/FAQ'));
 const Home = lazy(() => import('./pages/Home'));
@@ -110,6 +112,8 @@ function App() {
           <Routes>
             {/* Rota principal com todos os trainers */}
             <Route path="/" element={<TrainerSelector />} />
+
+            <Route path="/ai-conversation" element={<AIConversationTrainer />} />
 
             {/* Páginas estáticas para SEO - Lazy loaded */}
             <Route 

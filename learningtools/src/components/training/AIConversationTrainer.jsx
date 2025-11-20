@@ -300,7 +300,7 @@ const speakText = async (text) => {
     const languageBlocks = parseLanguageBlocks(cleanText);
 
     setSpeakState('speaking');
-    setIsSpeaking(true);
+
 
     // Reproduzir cada bloco sequencialmente
     for (const block of languageBlocks) {
@@ -345,6 +345,7 @@ const playAudioBlock = async (block) => {
 
       const audio = new Audio(audioUrl);
       audioRef.current = audio;
+      setIsSpeaking(true);
 
       audio.onended = () => {
         URL.revokeObjectURL(audioUrl);
