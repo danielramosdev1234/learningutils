@@ -562,7 +562,6 @@ const playAudioBlock = async (block) => {
 
   const handleReaction = (messageIndex, emoji) => {
     console.log(`Reacted with ${emoji} to message ${messageIndex}`);
-    // Você pode salvar isso no Firebase ou state global
   };
 
   const handleCopyMessage = async (content, index) => {
