@@ -562,6 +562,7 @@ const playAudioBlock = async (block) => {
 
   const handleReaction = (messageIndex, emoji) => {
     console.log(`Reacted with ${emoji} to message ${messageIndex}`);
+    // Você pode salvar isso no Firebase ou state global
   };
 
   const handleCopyMessage = async (content, index) => {
@@ -593,8 +594,17 @@ const playAudioBlock = async (block) => {
     setConversationStarted(true);
     const welcomeMessage = {
       role: 'assistant',
-      content: `Olá amigos do Learn fun. Dudu . Herbert. Bia . E Bianca! 👋🐺
-Estou contando com vosses ... quem me der o nome mais top... ganha um abrasso... eterno de lobo... e meu corassaum inteiro!... 🐺💙🇧🇷 Tô contando com vocês..., hein? beijoss❤️❤️❤️`,
+      content: `Olá amigos do Brasil! 👋🐺
+I just arrived and I'm super excited to be your new English buddy!
+One small thing... I still don't have an official name. 😭
+Can you help me pick the coolest one ever?
+Which name do you like the most? (just reply with the name!)
+
+Howly. Lobi. Lobix. Lobinho. Wolfinho. Snowlf. Fluentinho. Learninho. Learny. Lexy. LexUP. Wolfy. Learny Funny. Learny FunnyIA!
+
+Can't wait to see which one wins... that'll be my name forever and we'll start chatting right away, like old friends! ❤️
+Go ahead and tell me your favorite! 🗳️🐺
+Quem me der o nome mais, top... ganha um abrasso... eterno de lobo... e meu corassaum inteiro!... 🐺💙🇧🇷 Tô contando com vocês... beijoss❤️❤️❤️`,
       timestamp: new Date()
     };
     setMessages([welcomeMessage]);
