@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import  learninhoTalking  from '../../assets/animation.json';
-import { Send, MessageCircle, Sparkles, CheckCircle, AlertCircle, Loader2, Mic, Volume2, VolumeX, ThumbsUp, Heart, HelpCircle, RefreshCw, Award, Flame, BookOpen, Clipboard, Circle , X } from 'lucide-react';
+import { Send, MessageCircle, Sparkles, CheckCircle, AlertCircle, Loader2, Mic, Volume2, VolumeX, ThumbsUp, Heart, HelpCircle, RefreshCw, Award, Flame, BookOpen, Clipboard, Circle , X, Maximize2, Video   } from 'lucide-react';
 import Lottie from 'react-lottie-player'
 
 const AIConversationTrainer = () => {
@@ -11,6 +11,7 @@ const AIConversationTrainer = () => {
   const [conversationStarted, setConversationStarted] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false);
+  const [speakState, setSpeakState] = useState('idle');
   const [autoPlayEnabled, setAutoPlayEnabled] = useState(true);
   const messagesEndRef = useRef(null);
   const recognitionRef = useRef(null);
@@ -60,6 +61,37 @@ const AIConversationTrainer = () => {
       .map(line => line.split('–')[0].split('-')[0].trim())
       .filter(Boolean);
   };
+
+// Função para extrair blocos de idioma das tags [EN] e [PT]
+const parseLanguageBlocks = (text) => {
+  const blocks = [];
+  const regex = /\[([A-Z]{2})\]\s*([\s\S]*?)(?=\[([A-Z]{2})\]|$)/g;
+
+  let match;
+  while ((match = regex.exec(text)) !== null) {
+    const lang = match[1]; // 'EN' ou 'PT'
+    const content = match[2].trim();
+
+    if (content) {
+      blocks.push({
+        lang: lang,
+        text: content,
+        voice: lang === 'PT' ? 'pt-BR-AntonioNeural' : selectedVoice
+      });
+    }
+  }
+
+  // Fallback: se não encontrou tags, assume inglês
+  if (blocks.length === 0) {
+    blocks.push({
+      lang: 'EN',
+      text: text,
+      voice: selectedVoice
+    });
+  }
+
+  return blocks;
+};
 
 useEffect(() => {
   if (isRecording) {
@@ -233,7 +265,7 @@ useEffect(() => {
 
     setInputText('');
     try {
-      recognitionRef.current.lang = 'en-US';
+      recognitionRef.current.lang = recordingLanguage === 'PT' ? 'pt-BR' : 'en-US';
       recognitionRef.current.start();
     } catch (error) {
       console.error('Error starting recognition:', error);
@@ -246,7 +278,9 @@ const speakText = async (text) => {
     // Parar qualquer áudio anterior
     stopSpeaking();
 
-    setIsSpeaking(true);
+    if (speakState !== 'idle') return;
+
+    setSpeakState('preparing');
 
     // Limpar texto
     const cleanText = text
@@ -257,66 +291,91 @@ const speakText = async (text) => {
       .trim();
 
     if (!cleanText) {
+      setSpeakState('idle');
       setIsSpeaking(false);
       return;
     }
 
-    // Chamar API do backend (Edge TTS)
-    const BACKEND_URL = import.meta.env.VITE_API_BASE_URL ;
+    // Extrair blocos de idioma
+    const languageBlocks = parseLanguageBlocks(cleanText);
 
-    const response = await fetch(`${BACKEND_URL}/api/tts/synthesize-stream`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        text: cleanText,
-        voice: selectedVoice,
-        rate: 0.9,
-        pitch: 0
-      })
-    });
+    setSpeakState('speaking');
+    setIsSpeaking(true);
 
-    if (!response.ok) {
-      throw new Error('Failed to synthesize speech');
+    // Reproduzir cada bloco sequencialmente
+    for (const block of languageBlocks) {
+      await playAudioBlock(block);
     }
 
-    // Converter resposta em Blob
-    const audioBlob = await response.blob();
-    const audioUrl = URL.createObjectURL(audioBlob);
-
-    // Criar e armazenar referência do áudio
-    const audio = new Audio(audioUrl);
-    audioRef.current = audio;
-
-    audio.onended = () => {
-      setIsSpeaking(false);
-      URL.revokeObjectURL(audioUrl);
-      audioRef.current = null;
-    };
-
-    audio.onerror = () => {
-      setIsSpeaking(false);
-      URL.revokeObjectURL(audioUrl);
-      audioRef.current = null;
-      console.error('Error playing audio');
-    };
-
-    await audio.play();
-
-  } catch (error) {
-    console.error('Edge TTS Error:', error);
+    setSpeakState('idle');
     setIsSpeaking(false);
 
-    // Fallback para Web Speech API
-    if (speechSynthRef.current) {
-      const utterance = new SpeechSynthesisUtterance(text.split('---')[0]);
-      utterance.lang = 'en-US';
-      utterance.rate = 0.9;
-      utterance.onend = () => setIsSpeaking(false);
-      speechSynthRef.current.speak(utterance);
-    }
+  } catch (error) {
+    console.error('Speech Error:', error);
+    setSpeakState('idle');
+    setIsSpeaking(false);
   }
+};
+
+// Função para reproduzir um bloco de áudio
+const playAudioBlock = async (block) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const BACKEND_URL = import.meta.env.VITE_API_BASE_URL;
+
+      const response = await fetch(`${BACKEND_URL}/api/tts/synthesize-stream`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          text: block.text,
+          voice: block.voice,
+          rate: 0.9,
+          pitch: 0
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to synthesize speech');
+      }
+
+      const audioBlob = await response.blob();
+      const audioUrl = URL.createObjectURL(audioBlob);
+
+      const audio = new Audio(audioUrl);
+      audioRef.current = audio;
+
+      audio.onended = () => {
+        URL.revokeObjectURL(audioUrl);
+        audioRef.current = null;
+        resolve();
+      };
+
+      audio.onerror = () => {
+        URL.revokeObjectURL(audioUrl);
+        audioRef.current = null;
+        reject(new Error('Audio playback error'));
+      };
+
+      await audio.play();
+
+    } catch (error) {
+      console.error('Edge TTS Error:', error);
+
+      // Fallback para Web Speech API
+      if (speechSynthRef.current) {
+        const utterance = new SpeechSynthesisUtterance(block.text);
+        utterance.lang = block.lang === 'PT' ? 'pt-BR' : 'en-US';
+        utterance.rate = 0.9;
+        utterance.onend = () => resolve();
+        utterance.onerror = () => reject();
+        speechSynthRef.current.speak(utterance);
+      } else {
+        resolve();
+      }
+    }
+  });
 };
 
   // Adicionar ref para controlar áudio do Edge TTS
@@ -336,6 +395,7 @@ const speakText = async (text) => {
     }
 
     setIsSpeaking(false);
+    setSpeakState('idle');
   };
 
   const sendMessage = async (userMessage) => {
@@ -403,7 +463,19 @@ const speakText = async (text) => {
             - Only use the structured sections below when it genuinely helps (most of the time just chat)
 
             CODE-SWITCHING (only when needed):
-            - If they get stuck or ask for translation → reply in Portuguese super casually: "mano, fala em português rapidinho que eu te ajudo, mas volta pro inglês hein safado kkk"
+            - If they get stuck or ask for translation → reply in Portuguese super casually: "mano, fala em português rapidinho que eu te ajudo, mas volta pro inglês hein hahaha"
+
+            LANGUAGE TAGS (IMPORTANTE):
+            Quando você mudar de idioma na sua resposta, marque cada bloco assim:
+
+            [EN] texto em inglês aqui
+            [PT] texto em português aqui
+            [EN] volta para inglês
+
+            Exemplos:
+            [EN] Hey bro! No worries!
+            [PT] Mano, vou te explicar rapidinho em português: "get over it" significa superar algo.
+            [EN] Now you try using it in a sentence!
 
             RESPONSE FORMAT — ONLY use this when you really need to teach something clear:
             [Your natural, fun reply — 1-4 sentences max]
@@ -691,76 +763,25 @@ What brings you here today? Let's talk about ${topic}`,
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-indigo-50 via-slate-50 to-slate-100 flex items-stretch justify-center px-2 sm:px-4 py-4 sm:py-8 font-sans text-gray-900 selection:bg-amber-200 selection:text-black">
-      <div className="w-full max-w-4xl bg-white rounded-2xl shadow-lg border border-slate-100 flex flex-col overflow-hidden">
-        {/* Header with Stats */}
-        <div className="bg-white px-4 py-4 border-b border-slate-100 shadow-sm">
-          <div className="max-w-4xl mx-auto">
-          <div className="flex items-center justify-between mb-3">
-            <div className="flex items-center gap-3">
-              <img src={AI_AVATAR} alt="Learninho" className="w-10 h-10 rounded-full shadow-md" />
-              <div>
-                <h2 className="text-lg sm:text-xl font-semibold text-slate-900 flex items-center gap-2">
-                  Learninho
-                  <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-                </h2>
-                <p className="text-[11px] text-slate-500">AI English Teacher • Online</p>
-              </div>
-            </div>
+    <div className="h-screen bg-gradient-to-b from-indigo-50 via-slate-50 to-slate-100 flex justify-center px-2 sm:px-4 py-4 sm:py-8 font-sans text-gray-900 selection:bg-amber-200 selection:text-black">
+        <div className="w-full max-w-4xl h-full bg-white rounded-2xl shadow-lg border border-slate-100 flex flex-col overflow-hidden">
 
-            <div className="flex items-center gap-2">
-              <button
-                onClick={() => setAutoPlayEnabled(!autoPlayEnabled)}
-                className={`flex items-center gap-1 px-3 py-2 rounded-lg transition-all text-sm font-semibold ${
-                  autoPlayEnabled
-                    ? 'bg-green-100 text-green-700'
-                    : 'bg-gray-100 text-gray-600'
-                }`}
-              >
-                {autoPlayEnabled ? <Volume2 className="w-4 h-4" /> : <VolumeX className="w-4 h-4" />}
-                <span className="hidden sm:inline">Auto</span>
-              </button>
-            </div>
+        {/* Área do vídeo/avatar (Lottie) - FIXO NO TOPO */}
+        <div className="sticky top-0 left-0 right-0 z-20 flex-shrink-0">
+          <div className="relative bg-gradient-to-br from-gray-800 via-gray-700 to-gray-900 overflow-hidden aspect-video">
+            <Lottie
+              loop
+              play={isSpeaking}
+              animationData={learninhoTalking}
+              style={{ width: '100%', height: '100%' }}
+              className="object-cover"
+            />
           </div>
-
-          {/* Progress Bar */}
-          <div className="mb-2">
-            <div className="flex items-center justify-between text-[11px] text-slate-600 mb-1">
-              <span className="font-semibold">Conversation Progress</span>
-              <span>{userStats.messagesCount}/{conversationGoal} messages</span>
-            </div>
-            <div className="w-full bg-slate-200 rounded-full h-2 overflow-hidden">
-              <div
-                className="bg-indigo-600 h-2 rounded-full transition-all duration-500 ease-out"
-                style={{ width: `${progressPercentage}%` }}
-              ></div>
-            </div>
-          </div>
-
-          {/* Stats Badges */}
-          <div className="flex gap-2 flex-wrap mb-1">
-            <div className="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1 shadow-sm">
-              <MessageCircle className="w-3 h-3" />
-              {userStats.messagesCount}
-            </div>
-            <div className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1 shadow-sm">
-              <BookOpen className="w-3 h-3" />
-              {userStats.wordsLearned.size} words learned
-            </div>
-          </div>
-
-          {sessionEnded && (
-            <div className="mt-1 text-xs text-red-600 font-semibold">
-              Daily session limit reached ({SESSION_LIMIT} messages). Come back later for a new session!
-            </div>
-          )}
         </div>
-      </div>
 
 
         {/* Messages */}
-        <div className="flex-1 overflow-y-auto px-2 sm:px-4 py-4 sm:py-6 bg-slate-50">
-
+<div className="flex-1 overflow-y-auto px-2 sm:px-4 py-4 sm:py-6 bg-slate-50 min-h-0">
 
           <div className="max-w-3xl mx-auto space-y-6 sm:space-y-8">
             {messages.map((message, index) => (
@@ -775,18 +796,21 @@ What brings you here today? Let's talk about ${topic}`,
                   animationFillMode: 'both'
                 }}
               >
-              <div className="absolute bottom-0 left-0 right-0 z-10 flex items-center justify-between text-xs sm:text-sm px-1 h-10 sm:h-11">
+              <div className=" z-10 flex items-center justify-between text-xs sm:text-sm px-1 h-10 sm:h-11">
                                                     <div className="flex gap-2 items-center flex-wrap">
                                                       <button
-                                                        onClick={() => (isSpeaking ? stopSpeaking() : speakText(message.content))}
-                                                        className={`flex items-center gap-1 px-3 py-1 rounded-lg text-xs font-semibold transition-all ${
-                                                          isSpeaking
-                                                            ? 'bg-green-100 text-green-700 shadow-sm'
-                                                            : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                                                        }`}
+                                                        onClick={() => speakText(message.content)}
+                                                        disabled={speakState !== 'idle'}
+                                                        className={`
+                                                          px-4 py-2 rounded-lg font-semibold transition-all
+                                                          ${speakState === 'idle'
+                                                            ? 'bg-blue-500 hover:bg-blue-600 text-white'
+                                                            : 'bg-gray-400 text-gray-200 cursor-not-allowed'}
+                                                        `}
                                                       >
-                                                        {isSpeaking ? <VolumeX className="w-3 h-3" /> : <Volume2 className="w-3 h-3" />}
-                                                        {isSpeaking ? 'Stop' : 'Listen'}
+                                                        {speakState === 'idle' && '🔊 Listen'}
+                                                        {speakState === 'preparing' && '⏳ Preparing...'}
+                                                        {speakState === 'speaking' && '🔉 Speaking...'}
                                                       </button>
                                                       </div>
                                                       </div>
@@ -803,39 +827,6 @@ What brings you here today? Let's talk about ${topic}`,
 
                 <div className="relative group">
                   {/* NOVO DESIGN DE BALÃO */}
-                  {/* AI Avatar (left) */}
-                                {message.role === 'assistant' && (
-                                  <div className="relative flex-shrink-0 item-center">
-
-                                  {/* O Learninho falando */}
-                                                      {isSpeaking ? (
-                                                        // === AQUI VOCÊ COLOCA LOTTIE, RIVE, GIF OU VIDEO ===
-                                                        <div className="w-24 h-24 md:w-32 md:h-32 lg:w-36 lg:h-36 rounded-full overflow-hidden border-4 border-indigo-400 shadow-xl animate-in fade-in zoom-in duration-300">
-                                                          {/* Exemplo com Lottie */}
-                                                          <Lottie className="animate-in slide-in-from-left duration-500"
-                                                            loop
-                                                            play={isSpeaking}
-                                                            animationData={learninhoTalking}
-                                                            style={{ width: '100%', height: '100%' }}
-                                                          />
-
-                                                          {/* Exemplo com GIF */}
-                                                          {/* <img src="/learninho-speaking.gif" alt="Learninho" className="w-full h-full object-cover" /> */}
-
-                                                          {/* Exemplo com vídeo do HeyGen/SadTalker */}
-                                                          {/* <video src={currentVideoUrl} autoPlay muted loop className="w-full h-full object-cover rounded-full" /> */}
-                                                        </div>
-                                                      ) : (
-                                                        // Foto estática quando não está falando
-                                                        <img
-                                                          src={AI_AVATAR}
-                                                          alt="Learninho"
-                                                          className="w-24 h-24 md:w-32 md:h-32 lg:w-36 lg:h-36 rounded-full shadow-md border-4 border-transparent"
-                                                        />
-                                                      )}
-
-                                                    </div>
-                                )}
 
                   <div
                     className={`relative rounded-3xl p-4 sm:p-5 text-sm sm:text-base leading-relaxed shadow-lg transition-all duration-300 ${
@@ -892,20 +883,7 @@ What brings you here today? Let's talk about ${topic}`,
 
                 </div>
 
-                {/* Quick Replies (only on last AI message) */}
-                {message.role === 'assistant' && index === messages.length - 1 && !isLoading && (
-                  <div className="flex flex-wrap gap-2 mt-1">
-                    {quickReplies.map((reply, i) => (
-                      <button
-                        key={i}
-                        onClick={() => sendMessage(reply)}
-                        className="bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-xs px-3 py-1.5 rounded-full border border-indigo-200 transition-all font-semibold"
-                      >
-                        {reply}
-                      </button>
-                    ))}
-                  </div>
-                )}
+
               </div>
 
               {/* User Avatar (right) */}
@@ -940,8 +918,18 @@ What brings you here today? Let's talk about ${topic}`,
       </div>
 
         {/* Input Area */}
-        {/* Input Area */}
-        <div className="bg-slate-50 border-t border-slate-200 px-4 py-4">
+        <div className="bg-slate-50 border-t border-slate-200 px-4 py-4 flex-shrink-0">
+            <div className="flex flex-wrap gap-2 mt-1">
+                                {quickReplies.map((reply, i) => (
+                                  <button
+                                    key={i}
+                                    onClick={() => sendMessage(reply)}
+                                    className="bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-xs px-3 py-1.5 rounded-full border border-indigo-200 transition-all font-semibold"
+                                  >
+                                    {reply}
+                                  </button>
+                                ))}
+                              </div>
           <div className="max-w-4xl mx-auto">
             <div className="flex gap-2 mb-2">
               <input
@@ -954,19 +942,53 @@ What brings you here today? Let's talk about ${topic}`,
                 className="flex-1 px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent disabled:bg-gray-50 shadow-sm text-sm sm:text-base"
               />
 
-              <button
-                onClick={startEnglishRecording}
-                disabled={isLoading || sessionEnded}
-                className="px-4 py-3 rounded-full bg-indigo-600 hover:bg-indigo-700 text-white shadow-md hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                <Mic className="w-5 h-5" />
-              </button>
-            </div>
+
+
+              <div className="flex items-center gap-2">
+                {/* Toggle visual */}
+                <div className="flex rounded-lg overflow-hidden border-2 border-indigo-200">
+                  <button
+                    onClick={() => setRecordingLanguage('en-US')}
+                    className={`px-3 py-1.5 text-sm font-semibold transition-all ${
+                      recordingLanguage === 'en-US'
+                        ? 'bg-indigo-600 text-white'
+                        : 'bg-white text-indigo-600 hover:bg-indigo-50'
+                    }`}
+                  >
+                    🇺🇸 EN
+                  </button>
+                  <button
+                    onClick={() => setRecordingLanguage('PT')}
+                    className={`px-3 py-1.5 text-sm font-semibold transition-all ${
+                      recordingLanguage === 'PT'
+                        ? 'bg-green-600 text-white'
+                        : 'bg-white text-green-600 hover:bg-green-50'
+                    }`}
+                  >
+                    🇧🇷 PT
+                  </button>
+                </div>
+
+                {/* Botão de gravar */}
+                <button
+                  onClick={startEnglishRecording}
+                  className={`px-4 py-3 rounded-full shadow-md transition-all ${
+                    recordingLanguage === 'en-US'
+                      ? 'bg-indigo-600 hover:bg-indigo-700'
+                      : 'bg-green-600 hover:bg-green-700'
+                  } text-white`}
+                >
+                  <Mic className="w-5 h-5" />
+                </button>
+                </div>
+                </div>
+
+
 
             <p className="text-xs text-slate-500 text-center">
               {sessionEnded
                 ? `Session limit reached (${SESSION_LIMIT} messages).`
-                : '💡 Press Enter to send • 🎤 Click mic to speak'}
+                : '💡 Press Enter to send • 🎤 (BR PT se precisar falar português)'}
             </p>
           </div>
         </div>
