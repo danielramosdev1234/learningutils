@@ -215,13 +215,13 @@ useEffect(() => {
           }
         }
 
-        // ✅ FIX: Apenas acumula se houver novo finalTranscript
+        // ✅ Apenas acumula o que é final
         if (finalTranscript.trim()) {
           recordedTextRef.current += finalTranscript;
         }
 
-        // ✅ Mostra final + interim, sem duplicar
-        setRecordedText((recordedTextRef.current + ' ' + interimTranscript).trim());
+        // ✅ Mostra APENAS o interim (sem duplicar o que já foi acumulado)
+        setRecordedText((recordedTextRef.current.trim() + ' ' + interimTranscript).trim());
       };
 
       recognitionRef.current.onstart = () => {
@@ -234,18 +234,7 @@ useEffect(() => {
       };
 
       recognitionRef.current.onend = () => {
-        // ✅ FIX: Envia automaticamente após a fala terminar
-        setTimeout(() => {
-          const textToSend = recordedTextRef.current.trim();
-          if (textToSend) {
-            sendMessage(textToSend);
-            recordedTextRef.current = '';
-            setRecordedText('');
-            setIsRecording(false);
-          } else {
-            setIsRecording(false);
-          }
-        }, 2000); // pequeno delay para garantir que o texto foi capturado
+        setIsRecording(false);
       };
     }
 
