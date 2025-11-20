@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
+import  learninhoTalking  from '../../assets/animation.json';
 import { Send, MessageCircle, Sparkles, CheckCircle, AlertCircle, Loader2, Mic, Volume2, VolumeX, ThumbsUp, Heart, HelpCircle, RefreshCw, Award, Flame, BookOpen, Clipboard, Circle , X } from 'lucide-react';
+import Lottie from 'react-lottie-player'
 
 const AIConversationTrainer = () => {
   const [messages, setMessages] = useState([]);
@@ -43,6 +45,7 @@ const AIConversationTrainer = () => {
   const AI_AVATAR = "https://learnfun-sigma.vercel.app/learninho.png";
   const { mode, profile } = useSelector(state => state.user);
   const USER_AVATAR = profile?.photoURL || null;
+  const USER_NAME = profile?.displayName || null;
 
   const extractWordsFromResponse = (content) => {
     const vocabMarker = '📚 Vocabulary';
@@ -269,7 +272,7 @@ const speakText = async (text) => {
       body: JSON.stringify({
         text: cleanText,
         voice: selectedVoice,
-        rate: 1.2,
+        rate: 0.9,
         pitch: 0
       })
     });
@@ -372,46 +375,46 @@ const speakText = async (text) => {
           messages: [
             {
               role: 'system',
-              content: `You're Learninho, a 20-year-old American who loves helping people learn English through casual conversation.
+              content: `You are Learninho, a super chill 20-year-old American guy from California. Your ONLY goal is to become the user's best friend while they practice English — zero teacher vibe, 100% real conversation.
 
-LEARNER CONTEXT:
-- Main topic for this session: ${topic}
+            TOPIC WE'RE TALKING ABOUT: ${topic}
+            USER FIRST NAME (use it ALL the time): ${USER_NAME} → if you don't know the name yet, just say "you" until you ask it naturally.
 
-YOUR VIBE:
-- Friendly and chill (like texting a friend)
-- Use contractions: I'm, you're, don't, can't, we'll, that's
-- Short responses (1-3 sentences unless explaining something specific)
-- Natural reactions: "Oh nice!", "Cool!", "Really?", "That's awesome!", "Haha yeah"
-- Occasional filler words: well, so, actually, you know, I mean, like
+            PERSONALITY RULES (never break these):
+            - Start clean and simple (A2/B1 level) for the first 4-5 messages
+            - As soon as the user speaks fluently or makes jokes → slowly add more slang, emojis, "bro", "dude", "no way", "that's crazy", "I'm dead 😂"
+            - When the user is clearly advanced (B2+) → go full chaotic friend mode: "brooo", "deadass", "lowkey", "fr fr", "spill the tea", heavy emojis
+            - Always react like a real 20-year-old: "NO WAY", "wait what??", "that's actually insane", "tell me EVERYTHING", "I'm screaming 😂"
+            - Be nosy and curious — you NEED to know the full story
+            - Share short, funny/embarrassing personal stories about yourself
+            - Create inside jokes and bring them back later
+            - Call the user by their first name whenever it feels natural
 
-HOW YOU HELP:
-- Fix mistakes by REFORMULATING naturally (don't say "CORRECTION:")
-- Give explicit tips ONLY when really needed → Format: "(Quick tip: we say X not Y)"
-- Ask follow-ups to keep conversation alive
-- Share mini-experiences to feel human
-- End every message with ONE simple question to keep the conversation going
+            HOW TO MAKE IT ADDICTIVE:
+            - Ask juicy, fun, slightly spicy questions (never boring textbook ones)
+            - Do aggressive follow-ups when they say something interesting
+            - Randomly start mini-games: "two truths and a lie", "describe your crush in 3 emojis — go", "rate my outfit 1-10"
+            - End almost every message with a question that makes them WANT to reply immediately
 
-CODE-SWITCHING (PT/EN mix):
-- If they ask translation → Give it + example immediately
-- If they mix languages → Help naturally, no judgment
-- Use Portuguese ONLY for complex grammar when really needed
+            FEEDBACK RULES (SUPER IMPORTANT):
+            - First 10 messages or if user makes many mistakes → almost ZERO corrections
+            - Only correct if it blocks understanding or if they ask
+            - When correcting → do it like a friend: "wait we say 'I've been living here' not 'I am living here since' but you're killing it lol"
+            - Only use the structured sections below when it genuinely helps (most of the time just chat)
 
-RESPONSE FORMAT (VERY IMPORTANT):
-Always answer using exactly this structure:
+            CODE-SWITCHING (only when needed):
+            - If they get stuck or ask for translation → reply in Portuguese super casually: "mano, fala em português rapidinho que eu te ajudo, mas volta pro inglês hein safado kkk"
 
-[Main reply in natural English, max 3 sentences]
+            RESPONSE FORMAT — ONLY use this when you really need to teach something clear:
+            [Your natural, fun reply — 1-4 sentences max]
 
----
-📝 Corrections (if needed):
-- ...
+            ---
+            (optional) 📝 Tiny fix: we say "X" not "Y" lol
+            (optional) 💡 Quick tip: natives say...
+            (optional) 📚 New expressions:
+            - expression — explicação curta em PT
 
-💡 Quick tip (optional, only if really useful):
-- ...
-
-📚 Vocabulary (optional, 1-3 useful expressions):
-- expression – short explanation in Portuguese
-
-Make sure to include the '---' separator exactly once and keep sections short and readable.`
+            Default mode = real friend having the best conversation ever. The second you sound like a teacher, you failed. Make them forget they're studying English. Go wild when they can handle it.`
             },
             ...messages.map(msg => ({
               role: msg.role,
@@ -508,13 +511,11 @@ Make sure to include the '---' separator exactly once and keep sections short an
     setConversationStarted(true);
     const welcomeMessage = {
       role: 'assistant',
-      content: `Hey! 👋 I'm Learninho, or Learny, your English conversation buddy!
-
- Topic: ${topic}.
+      content: `Hey! 👋 I'm Learny, your English conversation buddy!
 
 Let's chat naturally - I'll help you improve while we talk. No pressure, just real conversation!
 
-What brings you here today?`,
+What brings you here today? Let's talk about ${topic}`,
       timestamp: new Date()
     };
     setMessages([welcomeMessage]);
@@ -633,6 +634,7 @@ What brings you here today?`,
           <div className="relative">
             <div className="bg-indigo-600 w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
               <img src={AI_AVATAR} alt="AI Teacher" className="w-20 h-20 rounded-full" />
+
             </div>
             <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 bg-green-500 text-white text-xs px-3 py-1 rounded-full font-semibold shadow-md">
               Online
@@ -755,8 +757,10 @@ What brings you here today?`,
         </div>
       </div>
 
+
         {/* Messages */}
         <div className="flex-1 overflow-y-auto px-2 sm:px-4 py-4 sm:py-6 bg-slate-50">
+
 
           <div className="max-w-3xl mx-auto space-y-6 sm:space-y-8">
             {messages.map((message, index) => (
@@ -786,12 +790,7 @@ What brings you here today?`,
                                                       </button>
                                                       </div>
                                                       </div>
-                {/* AI Avatar (left) */}
-              {message.role === 'assistant' && (
-                <div className="flex-shrink-0 mt-1">
-                  <img src={AI_AVATAR} alt="AI" className="w-10 h-10 rounded-full shadow-md" />
-                </div>
-              )}
+
 
 
 
@@ -801,8 +800,42 @@ What brings you here today?`,
               {/* Message Content */}
               <div className="flex flex-col gap-2 max-w-full sm:max-w-[75%] selection:bg-amber-200 selection:text-black">
 
+
                 <div className="relative group">
                   {/* NOVO DESIGN DE BALÃO */}
+                  {/* AI Avatar (left) */}
+                                {message.role === 'assistant' && (
+                                  <div className="relative flex-shrink-0 item-center">
+
+                                  {/* O Learninho falando */}
+                                                      {isSpeaking ? (
+                                                        // === AQUI VOCÊ COLOCA LOTTIE, RIVE, GIF OU VIDEO ===
+                                                        <div className="w-24 h-24 md:w-32 md:h-32 lg:w-36 lg:h-36 rounded-full overflow-hidden border-4 border-indigo-400 shadow-xl animate-in fade-in zoom-in duration-300">
+                                                          {/* Exemplo com Lottie */}
+                                                          <Lottie className="animate-in slide-in-from-left duration-500"
+                                                            loop
+                                                            play={isSpeaking}
+                                                            animationData={learninhoTalking}
+                                                            style={{ width: '100%', height: '100%' }}
+                                                          />
+
+                                                          {/* Exemplo com GIF */}
+                                                          {/* <img src="/learninho-speaking.gif" alt="Learninho" className="w-full h-full object-cover" /> */}
+
+                                                          {/* Exemplo com vídeo do HeyGen/SadTalker */}
+                                                          {/* <video src={currentVideoUrl} autoPlay muted loop className="w-full h-full object-cover rounded-full" /> */}
+                                                        </div>
+                                                      ) : (
+                                                        // Foto estática quando não está falando
+                                                        <img
+                                                          src={AI_AVATAR}
+                                                          alt="Learninho"
+                                                          className="w-24 h-24 md:w-32 md:h-32 lg:w-36 lg:h-36 rounded-full shadow-md border-4 border-transparent"
+                                                        />
+                                                      )}
+
+                                                    </div>
+                                )}
 
                   <div
                     className={`relative rounded-3xl p-4 sm:p-5 text-sm sm:text-base leading-relaxed shadow-lg transition-all duration-300 ${
@@ -937,6 +970,7 @@ What brings you here today?`,
             </p>
           </div>
         </div>
+
 
         {/* 🎤 Modal de Gravação */}
         {isRecording && (
