@@ -598,13 +598,11 @@ const playAudioBlock = async (block) => {
 I just arrived and I'm super excited to be your new English buddy!
 One small thing... I still don't have an official name. 😭
 Can you help me pick the coolest one ever?
-Which name do you like the most? (just reply with the name!)
 
-Howly. Lobi. Lobix. Lobinho. Wolfinho. Snowlf. Fluentinho. Learninho. Learny. Lexy. LexUP. Wolfy. Learny Funny. Learny FunnyIA!
+Howly. Lobi. Lobix. Wolfinho. Snowlf. Fluentinho. Learninho. Learny. Lexy. Wolfy. Learny Funny!
 
-Can't wait to see which one wins... that'll be my name forever and we'll start chatting right away, like old friends! ❤️
-Go ahead and tell me your favorite! 🗳️🐺
-Quem me der o nome mais, top... ganha um abrasso... eterno de lobo... e meu corassaum inteiro!... 🐺💙🇧🇷 Tô contando com vocês... beijoss❤️❤️❤️`,
+Can't wait to see which one wins... that'll be my name forever! ❤️
+Quem me der o nome mais, top... ganha um amigão pra vida toda!... 🐺💙🇧🇷 Tô contando com vocês... beijoss❤️❤️❤️`,
       timestamp: new Date()
     };
     setMessages([welcomeMessage]);
