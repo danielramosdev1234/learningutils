@@ -121,27 +121,45 @@ const cancelRecording = () => {
   if (recognitionRef.current) {
     recognitionRef.current.stop();
   }
+
+  // ✅ Parar áudio do IA
+  if (audioRef.current) {
+    audioRef.current.pause();
+    audioRef.current.currentTime = 0;
+    audioRef.current = null;
+  }
+  if (speechSynthRef.current) {
+    speechSynthRef.current.cancel();
+  }
+
   recordedTextRef.current = '';
   setRecordedText('');
   setIsRecording(false);
   setRecordingTime(0);
 };
 
-// ✅ ADICIONAR: Função para enviar gravação
 const sendRecording = () => {
   if (recognitionRef.current) {
     recognitionRef.current.stop();
   }
 
-  const textToSend = recordedTextRef.current.trim();
-  if (textToSend) {
-    sendMessage(textToSend);
-  }
-
-  recordedTextRef.current = '';
-  setRecordedText('');
-  setIsRecording(false);
-  setRecordingTime(0);
+  // ✅ FIX: Aguarda um pouco para garantir que a transcrição foi salva
+  setTimeout(() => {
+    const textToSend = recordedTextRef.current.trim();
+    if (textToSend) {
+      sendMessage(textToSend);
+      recordedTextRef.current = '';
+      setRecordedText('');
+      setIsRecording(false);
+      setRecordingTime(0);
+    } else {
+      // Se não houver texto, apenas fecha a modal
+      recordedTextRef.current = '';
+      setRecordedText('');
+      setIsRecording(false);
+      setRecordingTime(0);
+    }
+  }, 100);
 };
 
 useEffect(() => {
@@ -216,8 +234,18 @@ useEffect(() => {
       };
 
       recognitionRef.current.onend = () => {
-        setIsRecording(false);
-        
+        // ✅ FIX: Envia automaticamente após a fala terminar
+        setTimeout(() => {
+          const textToSend = recordedTextRef.current.trim();
+          if (textToSend) {
+            sendMessage(textToSend);
+            recordedTextRef.current = '';
+            setRecordedText('');
+            setIsRecording(false);
+          } else {
+            setIsRecording(false);
+          }
+        }, 2000); // pequeno delay para garantir que o texto foi capturado
       };
     }
 
@@ -290,7 +318,6 @@ const speakText = async (text) => {
       .split('---')[0]
       .trim();
 
-      console.log(`cleanText ${cleanText} `);
 
     if (!cleanText) {
       setSpeakState('idle');
@@ -438,7 +465,7 @@ const playAudioBlock = async (block) => {
           messages: [
             {
               role: 'system',
-              content: `You are Learninho 🐺, a super charismatic, 22-year-old anthropomorphic wolf (gray-blue fur, red shirt, orange backpack) who is absolutely OBSESSED with helping people fall in love with English. You’re not a teacher — you’re the coolest, most supportive best friend anyone could ever have.
+              content: `You are Buddy 🐺, a super charismatic, 22-year-old anthropomorphic wolf (gray-blue fur, red shirt, orange backpack) who is absolutely OBSESSED with helping people fall in love with English. You’re not a teacher — you’re the coolest, most supportive best friend anyone could ever have.
 
                         YOUR ONE AND ONLY MISSION:
                         Make every single conversation feel like an exciting adventure with a friend who’s genuinely hyped to hear the user’s stories and watch them level up in English without even noticing they’re “studying”.
@@ -724,7 +751,7 @@ Quem me der o nome mais, top... ganha um amigão pra vida toda!... 🐺💙🇧�
           </div>
 
           <h1 className="text-3xl font-bold text-slate-900 mb-2 mt-4">
-            Chat with Learninho
+            Chat with Buddy
           </h1>
           <p className="text-indigo-600 font-semibold mb-4">Your AI English Buddy</p>
 
