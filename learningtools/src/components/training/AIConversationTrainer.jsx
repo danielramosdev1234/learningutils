@@ -584,11 +584,7 @@ const playAudioBlock = async (block) => {
     setConversationStarted(true);
     const welcomeMessage = {
       role: 'assistant',
-      content: `Hey! 👋 I'm Learny, your English conversation buddy!
-
-Let's chat naturally - I'll help you improve while we talk. No pressure, just real conversation!
-
-What brings you here today? Let's talk about ${topic}`,
+      content: `Oi , Bia e Priscila, boa viagem para vocês , beijos`,
       timestamp: new Date()
     };
     setMessages([welcomeMessage]);
