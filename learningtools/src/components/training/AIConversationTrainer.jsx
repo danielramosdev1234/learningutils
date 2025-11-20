@@ -21,7 +21,7 @@ const AIConversationTrainer = () => {
   const recognitionTimeoutRef = useRef(null);
   const [recordedText, setRecordedText] = useState('');
   const recordedTextRef = useRef('');
-  const [recordingLanguage, setRecordingLanguage] = useState('en-US');
+  const [recordingLanguage, setRecordingLanguage] = useState('PT');
   const [topic, setTopic] = useState('General conversation');
   const [copiedMessageIndex, setCopiedMessageIndex] = useState(null);
   const [selectedVoice, setSelectedVoice] = useState('en-AU-CarlyNeural');
@@ -789,7 +789,7 @@ Quem me der o nome mais, top... ganha um amigão pra vida toda!... 🐺💙🇧�
           </div>
 
           <h1 className="text-3xl font-bold text-slate-900 mb-2 mt-4">
-            Chat with Buddy test 2
+            Chat with Buddy test 3
           </h1>
           <p className="text-indigo-600 font-semibold mb-4">Your AI English Buddy</p>
 
@@ -1028,29 +1028,7 @@ Quem me der o nome mais, top... ganha um amigão pra vida toda!... 🐺💙🇧�
               />
 
               <div className="flex items-center gap-1">
-                {/* Toggle compacto */}
-                <div className="flex rounded-lg overflow-hidden border border-indigo-200">
-                  <button
-                    onClick={() => setRecordingLanguage('en-US')}
-                      className={`px-2 py-1.5 text-xs font-semibold transition-all ${
-                      recordingLanguage === 'en-US'
-                        ? 'bg-indigo-600 text-white'
-                        : 'bg-white text-indigo-600 hover:bg-indigo-50'
-                    }`}
-                  >
-                    🇺🇸 EN
-                  </button>
-                  <button
-                    onClick={() => setRecordingLanguage('PT')}
-                      className={`px-2 py-1.5 text-xs font-semibold transition-all ${
-                      recordingLanguage === 'PT'
-                        ? 'bg-green-600 text-white'
-                        : 'bg-white text-green-600 hover:bg-green-50'
-                    }`}
-                  >
-                    🇧🇷 PT
-                  </button>
-                </div>
+
 
                 {/* Botão de gravar */}
                 <button
@@ -1058,7 +1036,7 @@ Quem me der o nome mais, top... ganha um amigão pra vida toda!... 🐺💙🇧�
                   className={`p-2.5 rounded-full shadow-md transition-all ${
                     recordingLanguage === 'en-US'
                       ? 'bg-indigo-600 hover:bg-indigo-700'
-                      : 'bg-green-600 hover:bg-green-700'
+                      : 'bg-indigo-600 hover:bg-indigo-700'
                   } text-white`}
                 >
                   <Mic className="w-4 h-4" />
