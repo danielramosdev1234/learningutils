@@ -30,6 +30,7 @@ const AIConversationTrainer = () => {
   const [recordingTime, setRecordingTime] = useState(0);
   const timerRef = useRef(null);
   const isSendingRef = useRef(false);
+  const isActiveRecordingRef = useRef(false);
 
 
   // Gamification states
@@ -122,6 +123,7 @@ const formatTime = (seconds) => {
 
 // ❌ ADICIONAR: Função para cancelar gravação
 const cancelRecording = () => {
+    isActiveRecordingRef.current = false;
   if (recognitionRef.current) {
     recognitionRef.current.stop();
   }
@@ -150,7 +152,8 @@ const cancelRecording = () => {
 };
 
 const sendRecording = () => {
-  isSendingRef.current = true; // ✅ Marca que está enviando
+  isSendingRef.current = true;
+  isActiveRecordingRef.current = false;
 
   if (recognitionRef.current) {
     recognitionRef.current.stop();
@@ -254,15 +257,27 @@ useEffect(() => {
       };
 
       recognitionRef.current.onend = () => {
-        // ✅ Só limpa o timeout se NÃO estiver enviando
+        // ✅ Se está em gravação ativa, reinicia automaticamente
+        if (isActiveRecordingRef.current && !isSendingRef.current) {
+          try {
+            recognitionRef.current.start();
+            return; // Não fecha a modal
+          } catch (error) {
+            console.error('Error restarting recognition:', error);
+            setIsRecording(false);
+            isActiveRecordingRef.current = false;
+          }
+        }
+
+        // Só limpa o timeout se NÃO estiver enviando
         if (recognitionTimeoutRef.current && !isSendingRef.current) {
           clearTimeout(recognitionTimeoutRef.current);
         }
 
-            if (!isSendingRef.current) { // ✅ Só reseta se não estiver enviando
-              setIsRecording(false);
-            }
-        };
+        if (!isSendingRef.current) {
+          setIsRecording(false);
+        }
+      };
     }
 
     if ('speechSynthesis' in window) {
@@ -299,6 +314,8 @@ useEffect(() => {
     recordedTextRef.current = '';
     setRecordedText('');
 
+    isActiveRecordingRef.current = true;
+
     if (audioRef.current) {
       audioRef.current.pause();
       audioRef.current.currentTime = 0;
@@ -317,6 +334,7 @@ useEffect(() => {
     } catch (error) {
       console.error('Error starting recognition:', error);
       setIsRecording(false);
+      isActiveRecordingRef.current = false;
     }
   };
 
@@ -771,7 +789,7 @@ Quem me der o nome mais, top... ganha um amigão pra vida toda!... 🐺💙🇧�
           </div>
 
           <h1 className="text-3xl font-bold text-slate-900 mb-2 mt-4">
-            Chat with Buddy test
+            Chat with Buddy test 2
           </h1>
           <p className="text-indigo-600 font-semibold mb-4">Your AI English Buddy</p>
 
