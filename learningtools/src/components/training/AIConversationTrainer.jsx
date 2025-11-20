@@ -16,6 +16,9 @@ const AIConversationTrainer = () => {
   const messagesEndRef = useRef(null);
   const recognitionRef = useRef(null);
   const speechSynthRef = useRef(null);
+  const lastProcessedIndexRef = useRef(-1);
+  const isProcessingRef = useRef(false);
+  const recognitionTimeoutRef = useRef(null);
   const [recordedText, setRecordedText] = useState('');
   const recordedTextRef = useRef('');
   const [recordingLanguage, setRecordingLanguage] = useState('en-US');
@@ -26,6 +29,7 @@ const AIConversationTrainer = () => {
   const [isLoadingVoices, setIsLoadingVoices] = useState(true);
   const [recordingTime, setRecordingTime] = useState(0);
   const timerRef = useRef(null);
+  const isSendingRef = useRef(false);
 
 
   // Gamification states
@@ -122,16 +126,23 @@ const cancelRecording = () => {
     recognitionRef.current.stop();
   }
 
-  // ✅ Parar áudio do IA
+  // ✅ Limpa timeout
+  if (recognitionTimeoutRef.current) {
+    clearTimeout(recognitionTimeoutRef.current);
+  }
+
   if (audioRef.current) {
     audioRef.current.pause();
     audioRef.current.currentTime = 0;
     audioRef.current = null;
   }
+
   if (speechSynthRef.current) {
     speechSynthRef.current.cancel();
   }
 
+  // ✅ Reseta tudo
+  lastProcessedIndexRef.current = -1;
   recordedTextRef.current = '';
   setRecordedText('');
   setIsRecording(false);
@@ -139,27 +150,29 @@ const cancelRecording = () => {
 };
 
 const sendRecording = () => {
+  isSendingRef.current = true; // ✅ Marca que está enviando
+
   if (recognitionRef.current) {
     recognitionRef.current.stop();
   }
 
-  // ✅ FIX: Aguarda um pouco para garantir que a transcrição foi salva
-  setTimeout(() => {
+  if (recognitionTimeoutRef.current) {
+    clearTimeout(recognitionTimeoutRef.current);
+  }
+
+  recognitionTimeoutRef.current = setTimeout(() => {
     const textToSend = recordedTextRef.current.trim();
     if (textToSend) {
       sendMessage(textToSend);
-      recordedTextRef.current = '';
-      setRecordedText('');
-      setIsRecording(false);
-      setRecordingTime(0);
-    } else {
-      // Se não houver texto, apenas fecha a modal
-      recordedTextRef.current = '';
-      setRecordedText('');
-      setIsRecording(false);
-      setRecordingTime(0);
     }
-  }, 100);
+
+    lastProcessedIndexRef.current = -1;
+    recordedTextRef.current = '';
+    setRecordedText('');
+    setIsRecording(false);
+    setRecordingTime(0);
+    isSendingRef.current = false; // ✅ Reset
+  }, 300);
 };
 
 useEffect(() => {
@@ -203,25 +216,32 @@ useEffect(() => {
       recognitionRef.current.lang = recordingLanguage;
 
       recognitionRef.current.onresult = (event) => {
+        if (isProcessingRef.current) return; // ✅ Evita processamento duplo
+
+        isProcessingRef.current = true;
+
         let finalTranscript = '';
         let interimTranscript = '';
 
-        for (let i = event.resultIndex; i < event.results.length; i++) {
+        // ✅ Processa APENAS novos resultados desde o último índice
+        for (let i = Math.max(event.resultIndex, lastProcessedIndexRef.current + 1); i < event.results.length; i++) {
           const transcript = event.results[i][0].transcript;
           if (event.results[i].isFinal) {
             finalTranscript += transcript + ' ';
+            lastProcessedIndexRef.current = i; // ✅ Rastreia o índice
           } else {
             interimTranscript += transcript;
           }
         }
 
-        // ✅ Apenas acumula o que é final
+        // ✅ Acumula APENAS novo conteúdo final
         if (finalTranscript.trim()) {
           recordedTextRef.current += finalTranscript;
         }
 
-        // ✅ Mostra APENAS o interim (sem duplicar o que já foi acumulado)
         setRecordedText((recordedTextRef.current.trim() + ' ' + interimTranscript).trim());
+
+        isProcessingRef.current = false;
       };
 
       recognitionRef.current.onstart = () => {
@@ -234,8 +254,15 @@ useEffect(() => {
       };
 
       recognitionRef.current.onend = () => {
-        setIsRecording(false);
-      };
+        // ✅ Só limpa o timeout se NÃO estiver enviando
+        if (recognitionTimeoutRef.current && !isSendingRef.current) {
+          clearTimeout(recognitionTimeoutRef.current);
+        }
+
+            if (!isSendingRef.current) { // ✅ Só reseta se não estiver enviando
+              setIsRecording(false);
+            }
+        };
     }
 
     if ('speechSynthesis' in window) {
@@ -249,6 +276,9 @@ useEffect(() => {
       if (speechSynthRef.current) {
         speechSynthRef.current.cancel();
       }
+  if (recognitionTimeoutRef.current) {
+      clearTimeout(recognitionTimeoutRef.current);
+    }
     };
   }, [recordingLanguage]);
 
@@ -259,20 +289,21 @@ useEffect(() => {
     }
 
     if (isRecording) {
-      // Se já está gravando, para e envia
+      // Se já está gravando, para
       recognitionRef.current.stop();
       return;
     }
 
-    // Começa nova gravação
+    // ✅ Reseta rastreamento
+    lastProcessedIndexRef.current = -1;
     recordedTextRef.current = '';
     setRecordedText('');
 
     if (audioRef.current) {
-          audioRef.current.pause();
-          audioRef.current.currentTime = 0;
-          audioRef.current = null;
-        }
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+      audioRef.current = null;
+    }
 
     if (speechSynthRef.current) {
       speechSynthRef.current.cancel();
