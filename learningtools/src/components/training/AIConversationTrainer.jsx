@@ -187,7 +187,7 @@ useEffect(() => {
       recognitionRef.current.onresult = (event) => {
         let finalTranscript = '';
         let interimTranscript = '';
-        
+
         for (let i = event.resultIndex; i < event.results.length; i++) {
           const transcript = event.results[i][0].transcript;
           if (event.results[i].isFinal) {
@@ -196,17 +196,14 @@ useEffect(() => {
             interimTranscript += transcript;
           }
         }
-        
-        // Acumula transcrições finais
-        if (finalTranscript) {
-          const currentFinal = recordedTextRef.current;
-          const newText = (currentFinal + ' ' + finalTranscript).trim();
-          recordedTextRef.current = newText;
-          setRecordedText(newText + (interimTranscript ? ' ' + interimTranscript : ''));
-        } else if (interimTranscript) {
-          // Mostra interim mas não salva ainda
-          setRecordedText((recordedTextRef.current + ' ' + interimTranscript).trim());
+
+        // ✅ FIX: Apenas acumula se houver novo finalTranscript
+        if (finalTranscript.trim()) {
+          recordedTextRef.current += finalTranscript;
         }
+
+        // ✅ Mostra final + interim, sem duplicar
+        setRecordedText((recordedTextRef.current + ' ' + interimTranscript).trim());
       };
 
       recognitionRef.current.onstart = () => {
@@ -220,15 +217,7 @@ useEffect(() => {
 
       recognitionRef.current.onend = () => {
         setIsRecording(false);
-        // Quando a gravação terminar, envia automaticamente se houver texto
-        setTimeout(() => {
-          const textToSend = recordedTextRef.current.trim();
-          if (textToSend) {
-            sendMessage(textToSend);
-            recordedTextRef.current = '';
-            setRecordedText('');
-          }
-        }, 2000);
+        
       };
     }
 
