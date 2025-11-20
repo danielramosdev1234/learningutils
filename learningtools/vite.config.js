@@ -31,7 +31,7 @@ export default defineConfig({
       srcDir: 'public',
       filename: 'sw.js',
       injectManifest: {
-        maximumFileSizeToCacheInBytes: 8 * 1024 * 1024,
+        maximumFileSizeToCacheInBytes: 10  * 1024 * 1024,
       },
       includeAssets: ['vite.svg'],
       manifest: {
