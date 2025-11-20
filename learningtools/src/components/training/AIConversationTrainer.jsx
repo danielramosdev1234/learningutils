@@ -262,6 +262,12 @@ useEffect(() => {
     recordedTextRef.current = '';
     setRecordedText('');
 
+    if (audioRef.current) {
+          audioRef.current.pause();
+          audioRef.current.currentTime = 0;
+          audioRef.current = null;
+        }
+
     if (speechSynthRef.current) {
       speechSynthRef.current.cancel();
       setIsSpeaking(false);
