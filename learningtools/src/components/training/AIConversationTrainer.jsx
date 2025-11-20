@@ -17,7 +17,6 @@ const AIConversationTrainer = () => {
   const recognitionRef = useRef(null);
   const speechSynthRef = useRef(null);
   const lastProcessedIndexRef = useRef(-1);
-  const isProcessingRef = useRef(false);
   const recognitionTimeoutRef = useRef(null);
   const [recordedText, setRecordedText] = useState('');
   const recordedTextRef = useRef('');
@@ -219,32 +218,26 @@ useEffect(() => {
       recognitionRef.current.lang = recordingLanguage;
 
       recognitionRef.current.onresult = (event) => {
-        if (isProcessingRef.current) return; // ✅ Evita processamento duplo
-
-        isProcessingRef.current = true;
-
         let finalTranscript = '';
         let interimTranscript = '';
 
-        // ✅ Processa APENAS novos resultados desde o último índice
-        for (let i = Math.max(event.resultIndex, lastProcessedIndexRef.current + 1); i < event.results.length; i++) {
+        // ✅ Processa apenas os resultados NOVOS desta chamada
+        for (let i = event.resultIndex; i < event.results.length; i++) {
           const transcript = event.results[i][0].transcript;
           if (event.results[i].isFinal) {
             finalTranscript += transcript + ' ';
-            lastProcessedIndexRef.current = i; // ✅ Rastreia o índice
           } else {
             interimTranscript += transcript;
           }
         }
 
-        // ✅ Acumula APENAS novo conteúdo final
+        // ✅ Acumula APENAS novos resultados finais
         if (finalTranscript.trim()) {
           recordedTextRef.current += finalTranscript;
         }
 
+        // ✅ Mostra: texto acumulado + preview do interim
         setRecordedText((recordedTextRef.current.trim() + ' ' + interimTranscript).trim());
-
-        isProcessingRef.current = false;
       };
 
       recognitionRef.current.onstart = () => {
@@ -257,6 +250,9 @@ useEffect(() => {
       };
 
       recognitionRef.current.onend = () => {
+        // ✅ CRÍTICO: Reseta índice para a próxima sessão
+        lastProcessedIndexRef.current = -1;
+
         // ✅ Se está em gravação ativa, reinicia automaticamente
         if (isActiveRecordingRef.current && !isSendingRef.current) {
           try {
@@ -789,7 +785,7 @@ Quem me der o nome mais, top... ganha um amigão pra vida toda!... 🐺💙🇧�
           </div>
 
           <h1 className="text-3xl font-bold text-slate-900 mb-2 mt-4">
-            Chat with Buddy test 3
+            Chat with Buddy test 4
           </h1>
           <p className="text-indigo-600 font-semibold mb-4">Your AI English Buddy</p>
 
