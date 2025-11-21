@@ -25,6 +25,7 @@ const AIConversationTrainer = () => {
   const [recordingTime, setRecordingTime] = useState(0);
   const timerRef = useRef(null);
   const [isListening, setIsListening] = useState(false);
+  const [showReconnectButton, setShowReconnectButton] = useState(false);
   const [transcript, setTranscript] = useState('');
   const recognitionRef = useRef(null);
   const [voiceTranscript, setVoiceTranscript] = useState('');
@@ -117,18 +118,9 @@ const AIConversationTrainer = () => {
         console.log('📝 transcript onend:', transcript);
                 console.log('📝 combinedTranscript onend :', combinedTranscript);
                 combinedTranscript = '';
-                // ✅ SE ainda está em modo "listening", reinicia automaticamente
-                  if (isListening) {
-                    console.log('🔄 Reiniciando reconhecimento...');
-
-                    // Pequeno delay para evitar erro "recognition already started"
-                    setTimeout(() => {
-                      try {
-                        recognitionRef.current.start();
-                      } catch (e) {
-                        console.error('Erro ao reiniciar:', e);
-                      }
-                    }, 100); // 100ms de delay
+                if (isListening) {
+                    setShowReconnectButton(true); // Mostrar botão "Tap to Continue"
+                    setIsListening(false);
                   }
       };
 
@@ -823,7 +815,7 @@ Quem me der o nome mais, top... ganha um amigão pra vida toda!... 🐺💙🇧�
           </div>
 
           <h1 className="text-3xl font-bold text-slate-900 mb-2 mt-4">
-            Chat with Buddy test 8.3
+            Chat with Buddy test 8.4
           </h1>
           <p className="text-indigo-600 font-semibold mb-4">Your AI English Buddy</p>
 
@@ -1166,6 +1158,11 @@ Quem me der o nome mais, top... ganha um amigão pra vida toda!... 🐺💙🇧�
                <p className="text-sm text-gray-600">
                  🎤 Recording... Speak clearly into your microphone
                </p>
+               {showReconnectButton && (
+                 <button onClick={restartRecognition}>
+                   🎤 Tap to Continue Recording
+                 </button>
+               )}
                {transcript && transcript !== '🎤 Listening...' && (
                  <div className="mt-3 bg-indigo-50 rounded-lg p-3 border border-indigo-200">
                    <p className="text-xs font-semibold text-indigo-800 mb-1">Detected text:</p>
