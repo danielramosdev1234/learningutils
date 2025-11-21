@@ -117,6 +117,19 @@ const AIConversationTrainer = () => {
         console.log('📝 transcript onend:', transcript);
                 console.log('📝 combinedTranscript onend :', combinedTranscript);
                 combinedTranscript = '';
+                // ✅ SE ainda está em modo "listening", reinicia automaticamente
+                  if (isListening) {
+                    console.log('🔄 Reiniciando reconhecimento...');
+
+                    // Pequeno delay para evitar erro "recognition already started"
+                    setTimeout(() => {
+                      try {
+                        recognitionRef.current.start();
+                      } catch (e) {
+                        console.error('Erro ao reiniciar:', e);
+                      }
+                    }, 100); // 100ms de delay
+                  }
       };
 
       recognitionRef.current = recognition;
@@ -810,7 +823,7 @@ Quem me der o nome mais, top... ganha um amigão pra vida toda!... 🐺💙🇧�
           </div>
 
           <h1 className="text-3xl font-bold text-slate-900 mb-2 mt-4">
-            Chat with Buddy test 8.2
+            Chat with Buddy test 8.3
           </h1>
           <p className="text-indigo-600 font-semibold mb-4">Your AI English Buddy</p>
 
