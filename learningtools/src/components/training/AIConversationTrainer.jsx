@@ -618,7 +618,7 @@ Quem me der o nome mais, top... ganha um amigão pra vida toda!... 🐺💙🇧�
           </div>
 
           <h1 className="text-3xl font-bold text-slate-900 mb-2 mt-4">
-            Chat with Buddy test 6
+            Chat with Buddy test 7
           </h1>
           <p className="text-indigo-600 font-semibold mb-4">Your AI English Buddy</p>
 
@@ -741,30 +741,43 @@ Quem me der o nome mais, top... ganha um amigão pra vida toda!... 🐺💙🇧�
 
                       {/* Listen button - apenas para mensagens do assistente */}
                       {message.role === 'assistant' && !message.isError && (
-                        <button
-                          onClick={() => speakText(message.content)}
-                          disabled={speakState !== 'idle'}
-                          className={`
-                            mt-3 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center gap-1
-                            ${speakState === 'idle'
-                              ? 'bg-indigo-100 hover:bg-indigo-200 text-indigo-700'
-                              : 'bg-gray-100 text-gray-400 cursor-not-allowed'}
-                          `}
-                        >
-                          {speakState === 'idle' && (
-                            <>
-                              <Volume2 className="w-3 h-3" />
-                              Listen
-                            </>
+                        <div className="flex gap-2 mt-3">
+                          <button
+                            onClick={() => speakText(message.content)}
+                            disabled={speakState !== 'idle'}
+                            className={`
+                              px-3 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center gap-1
+                              ${speakState === 'idle'
+                                ? 'bg-indigo-100 hover:bg-indigo-200 text-indigo-700'
+                                : 'bg-gray-100 text-gray-400 cursor-not-allowed'}
+                            `}
+                          >
+                            {speakState === 'idle' && (
+                              <>
+                                <Volume2 className="w-3 h-3" />
+                                Listen
+                              </>
+                            )}
+                            {speakState === 'speaking' || speakState === 'preparing'  &&  (
+                              <>
+                                <VolumeX className="w-3 h-3 animate-pulse" />
+                                Speaking...
+                              </>
+                            )}
+                          </button>
+
+                          {/* ✅ NOVO BOTÃO STOP */}
+                          {speakState === 'speaking' || speakState === 'preparing'  && (
+                            <button
+                              onClick={stopSpeaking}
+                              className="px-3 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center gap-1 bg-red-100 hover:bg-red-200 text-red-700"
+                              title="Stop speaking"
+                            >
+                              <X className="w-3 h-3" />
+                              Stop
+                            </button>
                           )}
-                          {speakState === 'preparing' && '⏳ Preparing...'}
-                          {speakState === 'speaking' && (
-                            <>
-                              <VolumeX className="w-3 h-3 animate-pulse" />
-                              Speaking...
-                            </>
-                          )}
-                        </button>
+                        </div>
                       )}
                     </div>
 
