@@ -7,8 +7,11 @@ export const useSpeechRecognition = (selectedLanguage, onResult) => {
   const recognitionRef = useRef(null);
   const isInitializedRef = useRef(false);
 
-  // 🔑 CRÍTICO: Acumular TODOS os resultados finais
+  // 🔒 CRÍTICO: Acumular TODOS os resultados finais
   const finalTranscriptRef = useRef('');
+
+  // 🆕 NOVO: Rastrear o último índice processado
+  const lastProcessedIndexRef = useRef(0);
 
   // 🚀 FLAG DE INTENÇÃO: Controla se DEVE enviar ao parar
   const shouldAutoSendRef = useRef(true);
@@ -37,17 +40,21 @@ export const useSpeechRecognition = (selectedLanguage, onResult) => {
       setIsListening(true);
       setTranscript('🎤 Listening...');
       shouldAutoSendRef.current = true;
+      lastProcessedIndexRef.current = 0; // 🆕 Reset do índice
     };
 
     newRecognition.onresult = (event) => {
       let interimTranscript = '';
 
-      for (let i = event.resultIndex; i < event.results.length; i++) {
+      // 🆕 FIX: Processar apenas NOVOS resultados a partir do último índice
+      for (let i = lastProcessedIndexRef.current; i < event.results.length; i++) {
         const transcriptPart = event.results[i][0].transcript;
 
         if (event.results[i].isFinal) {
-          // ✅ ACUMULAR resultados finais
+          // ✅ ACUMULAR resultados finais APENAS UMA VEZ
+          console.log('📝 Final result added:', transcriptPart);
           finalTranscriptRef.current += transcriptPart + ' ';
+          lastProcessedIndexRef.current = i + 1; // 🆕 Atualizar índice processado
         } else {
           interimTranscript += transcriptPart;
         }
@@ -79,7 +86,7 @@ export const useSpeechRecognition = (selectedLanguage, onResult) => {
 
       const textToSend = finalTranscriptRef.current.trim();
 
-      // 🔑 CRÍTICO: SÓ ENVIA SE shouldAutoSendRef = true
+      // 🔒 CRÍTICO: SÓ ENVIA SE shouldAutoSendRef = true
       if (textToSend && shouldAutoSendRef.current) {
         console.log('📤 Auto-sending:', textToSend);
         setTranscript(textToSend);
@@ -88,6 +95,7 @@ export const useSpeechRecognition = (selectedLanguage, onResult) => {
 
       // Reset para próxima sessão
       finalTranscriptRef.current = '';
+      lastProcessedIndexRef.current = 0; // 🆕 Reset do índice
       shouldAutoSendRef.current = true;
     };
 
@@ -119,7 +127,7 @@ export const useSpeechRecognition = (selectedLanguage, onResult) => {
     }
 
     if (isListening) {
-      // 🔑 Se clicou em X (cancelar), não envia
+      // 🔒 Se clicou em X (cancelar), não envia
       if (action === 'cancel') {
         console.log('❌ Cancel: shouldAutoSend = false');
         shouldAutoSendRef.current = false;
@@ -136,6 +144,7 @@ export const useSpeechRecognition = (selectedLanguage, onResult) => {
 
     // ✅ INICIAR GRAVAÇÃO
     finalTranscriptRef.current = '';
+    lastProcessedIndexRef.current = 0; // 🆕 Reset do índice
     shouldAutoSendRef.current = true;
     setTranscript('');
 

@@ -618,7 +618,7 @@ Quem me der o nome mais, top... ganha um amigão pra vida toda!... 🐺💙🇧�
           </div>
 
           <h1 className="text-3xl font-bold text-slate-900 mb-2 mt-4">
-            Chat with Buddy test 7
+            Chat with Buddy test 8
           </h1>
           <p className="text-indigo-600 font-semibold mb-4">Your AI English Buddy</p>
 
