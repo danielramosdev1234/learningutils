@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import  learninhoTalking  from '../../assets/animation.json';
 import { Send, MessageCircle, Sparkles, CheckCircle, AlertCircle, Loader2, Mic, Volume2, VolumeX, ThumbsUp, Heart, HelpCircle, RefreshCw, Award, Flame, BookOpen, Clipboard, Circle , X, Maximize2, Video   } from 'lucide-react';
 import Lottie from 'react-lottie-player'
+import { useSpeechRecognition } from '../../hooks/useSpeechRecognition';
 
 const AIConversationTrainer = () => {
   const [messages, setMessages] = useState([]);
@@ -14,12 +15,7 @@ const AIConversationTrainer = () => {
   const [speakState, setSpeakState] = useState('idle');
   const [autoPlayEnabled, setAutoPlayEnabled] = useState(true);
   const messagesEndRef = useRef(null);
-  const recognitionRef = useRef(null);
   const speechSynthRef = useRef(null);
-  const lastProcessedIndexRef = useRef(-1);
-  const recognitionTimeoutRef = useRef(null);
-  const [recordedText, setRecordedText] = useState('');
-  const recordedTextRef = useRef('');
   const [recordingLanguage, setRecordingLanguage] = useState('PT');
   const [topic, setTopic] = useState('General conversation');
   const [copiedMessageIndex, setCopiedMessageIndex] = useState(null);
@@ -28,8 +24,6 @@ const AIConversationTrainer = () => {
   const [isLoadingVoices, setIsLoadingVoices] = useState(true);
   const [recordingTime, setRecordingTime] = useState(0);
   const timerRef = useRef(null);
-  const isSendingRef = useRef(false);
-  const isActiveRecordingRef = useRef(false);
 
 
   // Gamification states
@@ -49,6 +43,16 @@ const AIConversationTrainer = () => {
   // Avatars
   const AI_AVATAR = "https://learnfun-sigma.vercel.app/learninho.png";
   const { mode, profile } = useSelector(state => state.user);
+  const { isListening, transcript, setTranscript, toggleListening } = useSpeechRecognition(
+    recordingLanguage === 'PT' ? 'pt-BR' : 'en-US',
+    (result, error) => {
+      if (error) {
+        console.error('Speech recognition error:', error);
+      } else if (result) {
+        sendMessage(result); // ✅ Envia automaticamente
+      }
+    }
+  );
   const USER_AVATAR = profile?.photoURL || null;
   const USER_NAME = profile?.displayName || null;
 
@@ -102,7 +106,7 @@ const parseLanguageBlocks = (text) => {
 };
 
 useEffect(() => {
-  if (isRecording) {
+  if (isListening) { // ✅ Usar isListening do hook
     timerRef.current = setInterval(() => {
       setRecordingTime(prev => prev + 1);
     }, 1000);
@@ -110,9 +114,8 @@ useEffect(() => {
     clearInterval(timerRef.current);
     setRecordingTime(0);
   }
-
   return () => clearInterval(timerRef.current);
-}, [isRecording]);
+}, [isListening]);
 
 const formatTime = (seconds) => {
   const mins = Math.floor(seconds / 60);
@@ -120,62 +123,7 @@ const formatTime = (seconds) => {
   return `${mins}:${secs.toString().padStart(2, '0')}`;
 };
 
-// ❌ ADICIONAR: Função para cancelar gravação
-const cancelRecording = () => {
-    isActiveRecordingRef.current = false;
-  if (recognitionRef.current) {
-    recognitionRef.current.stop();
-  }
 
-  // ✅ Limpa timeout
-  if (recognitionTimeoutRef.current) {
-    clearTimeout(recognitionTimeoutRef.current);
-  }
-
-  if (audioRef.current) {
-    audioRef.current.pause();
-    audioRef.current.currentTime = 0;
-    audioRef.current = null;
-  }
-
-  if (speechSynthRef.current) {
-    speechSynthRef.current.cancel();
-  }
-
-  // ✅ Reseta tudo
-  lastProcessedIndexRef.current = -1;
-  recordedTextRef.current = '';
-  setRecordedText('');
-  setIsRecording(false);
-  setRecordingTime(0);
-};
-
-const sendRecording = () => {
-  isSendingRef.current = true;
-  isActiveRecordingRef.current = false;
-
-  if (recognitionRef.current) {
-    recognitionRef.current.stop();
-  }
-
-  if (recognitionTimeoutRef.current) {
-    clearTimeout(recognitionTimeoutRef.current);
-  }
-
-  recognitionTimeoutRef.current = setTimeout(() => {
-    const textToSend = recordedTextRef.current.trim();
-    if (textToSend) {
-      sendMessage(textToSend);
-    }
-
-    lastProcessedIndexRef.current = -1;
-    recordedTextRef.current = '';
-    setRecordedText('');
-    setIsRecording(false);
-    setRecordingTime(0);
-    isSendingRef.current = false; // ✅ Reset
-  }, 300);
-};
 
 useEffect(() => {
   const fetchVoices = async () => {
@@ -209,129 +157,10 @@ useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
-  useEffect(() => {
-    if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
-      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-      recognitionRef.current = new SpeechRecognition();
-      recognitionRef.current.continuous = true;
-      recognitionRef.current.interimResults = true; // Captura resultados intermediários
-      recognitionRef.current.lang = recordingLanguage;
 
-      recognitionRef.current.onresult = (event) => {
-        let finalTranscript = '';
-        let interimTranscript = '';
-
-        // ✅ Processa apenas os resultados NOVOS desta chamada
-        for (let i = event.resultIndex; i < event.results.length; i++) {
-          const transcript = event.results[i][0].transcript;
-          if (event.results[i].isFinal) {
-            finalTranscript += transcript + ' ';
-          } else {
-            interimTranscript += transcript;
-          }
-        }
-
-        // ✅ Acumula APENAS novos resultados finais
-        if (finalTranscript.trim()) {
-          recordedTextRef.current += finalTranscript;
-        }
-
-        // ✅ Mostra: texto acumulado + preview do interim
-        setRecordedText((recordedTextRef.current.trim() + ' ' + interimTranscript).trim());
-      };
-
-      recognitionRef.current.onstart = () => {
-        setIsRecording(true);
-      };
-
-      recognitionRef.current.onerror = (event) => {
-        console.error('Speech recognition error:', event.error);
-        setIsRecording(false);
-      };
-
-      recognitionRef.current.onend = () => {
-        // ✅ CRÍTICO: Reseta índice para a próxima sessão
-        lastProcessedIndexRef.current = -1;
-
-        // ✅ Se está em gravação ativa, reinicia automaticamente
-        if (isActiveRecordingRef.current && !isSendingRef.current) {
-          try {
-            recognitionRef.current.start();
-            return; // Não fecha a modal
-          } catch (error) {
-            console.error('Error restarting recognition:', error);
-            setIsRecording(false);
-            isActiveRecordingRef.current = false;
-          }
-        }
-
-        // Só limpa o timeout se NÃO estiver enviando
-        if (recognitionTimeoutRef.current && !isSendingRef.current) {
-          clearTimeout(recognitionTimeoutRef.current);
-        }
-
-        if (!isSendingRef.current) {
-          setIsRecording(false);
-        }
-      };
-    }
-
-    if ('speechSynthesis' in window) {
-      speechSynthRef.current = window.speechSynthesis;
-    }
-
-    return () => {
-      if (recognitionRef.current) {
-        recognitionRef.current.stop();
-      }
-      if (speechSynthRef.current) {
-        speechSynthRef.current.cancel();
-      }
-  if (recognitionTimeoutRef.current) {
-      clearTimeout(recognitionTimeoutRef.current);
-    }
-    };
-  }, [recordingLanguage]);
 
   const startEnglishRecording = () => {
-    if (!recognitionRef.current) {
-      alert('Speech recognition is not supported in your browser. Try Chrome or Edge.');
-      return;
-    }
-
-    if (isRecording) {
-      // Se já está gravando, para
-      recognitionRef.current.stop();
-      return;
-    }
-
-    // ✅ Reseta rastreamento
-    lastProcessedIndexRef.current = -1;
-    recordedTextRef.current = '';
-    setRecordedText('');
-
-    isActiveRecordingRef.current = true;
-
-    if (audioRef.current) {
-      audioRef.current.pause();
-      audioRef.current.currentTime = 0;
-      audioRef.current = null;
-    }
-
-    if (speechSynthRef.current) {
-      speechSynthRef.current.cancel();
-      setIsSpeaking(false);
-    }
-
-    setInputText('');
-    try {
-      recognitionRef.current.lang = recordingLanguage === 'PT' ? 'pt-BR' : 'en-US';
-      recognitionRef.current.start();
-    } catch (error) {
-      console.error('Error starting recognition:', error);
-      setIsRecording(false);
-      isActiveRecordingRef.current = false;
-    }
+    toggleListening(); // ✅ Apenas chama o toggle do hook
   };
 
 const speakText = async (text) => {
@@ -785,7 +614,7 @@ Quem me der o nome mais, top... ganha um amigão pra vida toda!... 🐺💙🇧�
           </div>
 
           <h1 className="text-3xl font-bold text-slate-900 mb-2 mt-4">
-            Chat with Buddy test 4
+            Chat with Buddy test 5
           </h1>
           <p className="text-indigo-600 font-semibold mb-4">Your AI English Buddy</p>
 
@@ -1018,8 +847,8 @@ Quem me der o nome mais, top... ganha um amigão pra vida toda!... 🐺💙🇧�
                 value={inputText}
                 onChange={(e) => setInputText(e.target.value)}
                 onKeyPress={handleKeyPress}
-                placeholder={isRecording ? '🎤 Listening...' : '💬 Type your message...'}
-                disabled={isLoading || isRecording}
+                placeholder={isListening ? '🎤 Listening...' : '💬 Type your message...'}
+                disabled={isLoading || isListening}
                 className="flex-1 px-3 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent disabled:bg-gray-50 shadow-sm text-sm"
               />
 
@@ -1051,71 +880,93 @@ Quem me der o nome mais, top... ganha um amigão pra vida toda!... 🐺💙🇧�
         </div>
 
 
-        {/* 🎤 Modal de Gravação */}
-        {isRecording && (
-          <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
-            <div className="bg-white rounded-2xl shadow-2xl p-6 max-w-2xl w-full animate-fade-in">
-              {/* Header com tempo e botões */}
-              <div className="flex items-center justify-between mb-6">
-                <div className="flex items-center gap-3">
-                  <div className="relative">
-                    <Circle className="w-6 h-6 text-red-500 fill-red-500 animate-pulse" />
-                    <div className="absolute inset-0 w-6 h-6 bg-red-500 rounded-full animate-ping opacity-75" />
-                  </div>
-                  <span className="text-2xl font-mono font-bold text-gray-800 tabular-nums">
-                    {formatTime(recordingTime)}
-                  </span>
-                </div>
+       {/* 🎤 Modal de Gravação */}
+       {isListening && (
+         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+           <div className="bg-white rounded-2xl shadow-2xl p-6 max-w-2xl w-full animate-fade-in">
 
-                <div className="flex items-center gap-2">
-                  <button
-                    onClick={cancelRecording}
-                    className="p-3 bg-gray-100 hover:bg-gray-200 rounded-full transition-all"
-                    title="Cancel recording"
-                  >
-                    <X className="w-5 h-5 text-gray-600" />
-                  </button>
+             {/* Header com tempo e botões */}
+             <div className="flex items-center justify-between mb-6">
+               <div className="flex items-center gap-3">
+                 <div className="relative">
+                   <Circle className="w-6 h-6 text-red-500 fill-red-500 animate-pulse" />
+                   <div className="absolute inset-0 w-6 h-6 bg-red-500 rounded-full animate-ping opacity-75" />
+                 </div>
+                 <span className="text-2xl font-mono font-bold text-gray-800 tabular-nums">
+                   {formatTime(recordingTime)}
+                 </span>
+               </div>
 
-                  <button
-                    onClick={sendRecording}
-                    className="p-3 bg-green-500 hover:bg-green-600 rounded-full transition-all shadow-lg hover:shadow-xl"
-                    title="Send recording"
-                  >
-                    <Send className="w-5 h-5 text-white" />
-                  </button>
-                </div>
-              </div>
+               <div className="flex items-center gap-2">
+                 {/* ❌ Botão Cancelar */}
+                 <button
+                   onClick={toggleListening}
+                   className="p-3 bg-gray-100 hover:bg-gray-200 rounded-full transition-all"
+                   title="Cancel recording"
+                 >
+                   <X className="w-5 h-5 text-gray-600" />
+                 </button>
 
-              {/* Visualizador de ondas sonoras */}
-              <div className="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-xl p-6 border border-indigo-100">
-                <div className="flex items-center justify-center gap-1 h-24">
-                  {Array.from({ length: 30 }).map((_, i) => (
-                    <div
-                      key={i}
-                      className="w-1 bg-indigo-600 rounded-full transition-all duration-100 animate-pulse"
-                      style={{
-                        height: `${20 + Math.random() * 80}%`,
-                        animationDelay: `${i * 50}ms`
-                      }}
-                    />
-                  ))}
-                </div>
-              </div>
+                 {/* ✅ Botão Enviar Manual */}
+                 <button
+                   onClick={() => {
+                     const textToSend = transcript && transcript !== '🎤 Listening...' ? transcript : '';
+                     if (textToSend.trim()) {
+                       toggleListening(); // Para a gravação
+                       setTimeout(() => {
+                         sendMessage(textToSend);
+                       }, 100);
+                     }
+                   }}
+                   disabled={!transcript || transcript === '🎤 Listening...'}
+                   className={`p-3 rounded-full transition-all ${
+                     transcript && transcript !== '🎤 Listening...'
+                       ? 'bg-green-500 hover:bg-green-600 shadow-lg hover:shadow-xl cursor-pointer'
+                       : 'bg-gray-300 cursor-not-allowed'
+                   }`}
+                   title="Send recording"
+                 >
+                   <Send className="w-5 h-5 text-white" />
+                 </button>
+               </div>
+             </div>
 
-              {/* Indicador de status */}
-              <div className="mt-4 text-center">
-                <p className="text-sm text-gray-600">
-                  🎤 Recording... Speak clearly into your microphone
-                </p>
-                {recordedText && (
-                  <p className="text-xs text-gray-500 mt-2 italic">
-                    "{recordedText}"
-                  </p>
-                )}
-              </div>
-            </div>
-          </div>
-        )}
+             {/* Visualizador de ondas sonoras */}
+             <div className="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-xl p-6 border border-indigo-100">
+               <div className="flex items-center justify-center gap-1 h-24">
+                 {Array.from({ length: 30 }).map((_, i) => (
+                   <div
+                     key={i}
+                     className="w-1 bg-indigo-600 rounded-full transition-all duration-100 animate-pulse"
+                     style={{
+                       height: `${20 + Math.random() * 80}%`,
+                       animationDelay: `${i * 50}ms`
+                     }}
+                   />
+                 ))}
+               </div>
+             </div>
+
+             {/* Indicador de status */}
+             <div className="mt-4 text-center">
+               <p className="text-sm text-gray-600">
+                 🎤 Recording... Speak clearly into your microphone
+               </p>
+               {transcript && transcript !== '🎤 Listening...' && (
+                 <div className="mt-3 bg-indigo-50 rounded-lg p-3 border border-indigo-200">
+                   <p className="text-xs font-semibold text-indigo-800 mb-1">Detected text:</p>
+                   <p className="text-sm text-indigo-900 italic">
+                     "{transcript}"
+                   </p>
+                   <p className="text-xs text-gray-500 mt-2">
+                     ✅ Click the green button to send, or continue speaking to add more text
+                   </p>
+                 </div>
+               )}
+             </div>
+           </div>
+         </div>
+       )}
 
         <style>{`
         @keyframes fadeInUp {
