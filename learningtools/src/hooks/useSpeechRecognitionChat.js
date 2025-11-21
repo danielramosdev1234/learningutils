@@ -6,6 +6,7 @@ export const useSpeechRecognition = (selectedLanguage, onResult) => {
   const [transcript, setTranscript] = useState('');
   const recognitionRef = useRef(null);
   const isInitializedRef = useRef(false);
+  const processedTextsRef = useRef(new Set());
 
   // 🔒 CRÍTICO: Acumular TODOS os resultados finais
   const finalTranscriptRef = useRef('');
@@ -46,19 +47,20 @@ export const useSpeechRecognition = (selectedLanguage, onResult) => {
     newRecognition.onresult = (event) => {
       let interimTranscript = '';
 
-      // 🆕 FIX: Processar apenas NOVOS resultados a partir do último índice
-      for (let i = lastProcessedIndexRef.current; i < event.results.length; i++) {
-        const transcriptPart = event.results[i][0].transcript;
+      for (let i = 0; i < event.results.length; i++) {
+          const text = event.results[i][0].transcript.trim();
 
-        if (event.results[i].isFinal) {
-          // ✅ ACUMULAR resultados finais APENAS UMA VEZ
-          console.log('📝 Final result added:', transcriptPart);
-          finalTranscriptRef.current += transcriptPart + ' ';
-          lastProcessedIndexRef.current = i + 1; // 🆕 Atualizar índice processado
-        } else {
-          interimTranscript += transcriptPart;
+          if (event.results[i].isFinal) {
+            // Só adiciona se NUNCA foi processado antes
+            if (!processedTextsRef.current.has(text)) {
+              console.log('📝 Novo texto final:', text);
+              finalTranscriptRef.current += text + ' ';
+              processedTextsRef.current.add(text);
+            } else {
+              console.log('⚠️ Texto duplicado ignorado:', text);
+            }
+          }
         }
-      }
 
       // ✅ Mostrar: texto acumulado + preview interim
       setTranscript(
