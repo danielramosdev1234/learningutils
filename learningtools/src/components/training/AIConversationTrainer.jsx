@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux';
 import  learninhoTalking  from '../../assets/animation.json';
 import { Send, MessageCircle, Sparkles, CheckCircle, AlertCircle, Loader2, Mic, Volume2, VolumeX, ThumbsUp, Heart, HelpCircle, RefreshCw, Award, Flame, BookOpen, Clipboard, Circle , X, Maximize2, Video   } from 'lucide-react';
 import Lottie from 'react-lottie-player'
-import { useSpeechRecognition } from '../../hooks/useSpeechRecognitionChat';
 import { useCallback } from 'react';
 
 const AIConversationTrainer = () => {
@@ -25,6 +24,10 @@ const AIConversationTrainer = () => {
   const [isLoadingVoices, setIsLoadingVoices] = useState(true);
   const [recordingTime, setRecordingTime] = useState(0);
   const timerRef = useRef(null);
+  const [isListening, setIsListening] = useState(false);
+  const [transcript, setTranscript] = useState('');
+  const recognitionRef = useRef(null);
+  const [voiceTranscript, setVoiceTranscript] = useState('');
 
 
   // Gamification states
@@ -44,19 +47,141 @@ const AIConversationTrainer = () => {
   // Avatars
   const AI_AVATAR = "https://learnfun-sigma.vercel.app/learninho.png";
   const { mode, profile } = useSelector(state => state.user);
-  const handleSpeechResult = useCallback((result, error) => {
-    console.log('🎤 handleSpeechResult called:', { result, error });
-    if (error) {
-      console.error('Speech recognition error:', error);
-    } else if (result) {
-      sendMessage(result); // ✅ Envia automaticamente
-    }
-  }, []);
-  const { isListening, transcript, setTranscript, toggleListening } = useSpeechRecognition(
-    recordingLanguage === 'PT' ? 'pt-BR' : 'en-US',
-    handleSpeechResult
 
-  );
+  useEffect(() => {
+    // Inicializar Web Speech API APENAS UMA VEZ
+    if (!recognitionRef.current && ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window)) {
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      const recognition = new SpeechRecognition();
+      let combinedTranscript ='';
+
+      recognition.continuous = true;
+      recognition.interimResults = true;
+      recognition.lang = 'en-US'; // Será alterado dinamicamente no toggleListening
+
+      recognition.onstart = () => {
+        console.log('🎤 Reconhecimento iniciado');
+        console.log('📝 transcript onstart:', transcript);
+                console.log('📝 combinedTranscript onstart :', combinedTranscript);
+      };
+
+
+      recognition.onresult = (event) => {
+
+        let interimTranscript = '';
+        let finalTranscript = '';
+        let combinedTranscriptAnterior = combinedTranscript;
+        console.log('📝 Transcrito inicio onresult:', transcript);
+                            console.log('📝 combinedTranscriptAnterior inicio onresult:', combinedTranscriptAnterior);
+
+        for (let i = event.resultIndex; i < event.results.length; i++) {
+          const transcript = event.results[i][0].transcript;
+          if (event.results[i].isFinal) {
+            finalTranscript += transcript + ' ';
+          } else {
+            interimTranscript += transcript;
+          }
+        }
+        console.log('📝 finalTranscript:', finalTranscript );
+        console.log('📝 interimTranscript:', interimTranscript);
+        combinedTranscript = mergeTranscripts(combinedTranscriptAnterior ,(finalTranscript).trim());
+        if (combinedTranscript) {
+          setTranscript(combinedTranscript);
+          console.log('📝 Transcrito:', transcript);
+          console.log('📝 combinedTranscript:', combinedTranscript);
+        }
+     console.log('📝 Transcrito fora if:', transcript);
+              console.log('📝 combinedTranscript fora if:', combinedTranscript);
+      };
+        console.log('📝 transcript fora:', transcript);
+        console.log('📝 combinedTranscript fora :', combinedTranscript);
+
+      recognition.onerror = (event) => {
+        console.error('❌ Speech recognition error:', event.error);
+
+        // Tratamento específico de erros
+        if (event.error === 'no-speech') {
+          console.log('⚠️ Nenhuma fala detectada');
+        } else if (event.error === 'not-allowed') {
+          alert('❌ Permissão de microfone negada. Por favor, habilite o microfone nas configurações do navegador.');
+          setIsListening(false);
+          setTranscript('');
+        } else {
+          setIsListening(false);
+          setTranscript('');
+        }
+      };
+
+      recognition.onend = () => {
+        console.log('🛑 Reconhecimento finalizado');
+        console.log('📝 transcript onend:', transcript);
+                console.log('📝 combinedTranscript onend :', combinedTranscript);
+                combinedTranscript = '';
+      };
+
+      recognitionRef.current = recognition;
+      console.log('✅ Reconhecimento de voz inicializado');
+    }
+
+    // Cleanup ao desmontar o componente
+    return () => {
+      if (recognitionRef.current) {
+        try {
+          recognitionRef.current.stop();
+        } catch (e) {
+          console.log('Reconhecimento já estava parado');
+        }
+      }
+    };
+  }, []); // ⚠️ ARRAY VAZIO - executa APENAS UMA VEZ
+
+const mergeTranscripts = (previous, current) => {
+  // Se vazio ou é o placeholder inicial
+  if (!previous || previous === '🎤 Listening...') {
+    return current;
+  }
+
+  // Remove espaços extras para comparação
+  const prev = previous.trim();
+  const curr = current.trim();
+
+  // Se o atual já contém completamente o anterior, retorna o atual
+  if (curr.startsWith(prev)) {
+    return curr;
+  }
+
+  // Se o anterior contém o atual (raro mas pode acontecer)
+  if (prev.includes(curr)) {
+    return prev;
+  }
+
+  // Encontrar palavras em comum no final de prev e início de curr
+  const prevWords = prev.split(' ');
+  const currWords = curr.split(' ');
+
+  let maxOverlap = 0;
+
+  // Verificar de trás pra frente
+  for (let i = 1; i <= Math.min(prevWords.length, currWords.length); i++) {
+    const prevEnd = prevWords.slice(-i).join(' ');
+    const currStart = currWords.slice(0, i).join(' ');
+
+    if (prevEnd === currStart) {
+      maxOverlap = i;
+    }
+  }
+
+  if (maxOverlap > 0) {
+    // Remove a parte duplicada
+    const newPart = currWords.slice(maxOverlap).join(' ');
+    return newPart ? `${prev} ${newPart}` : prev;
+  }
+
+  // Sem sobreposição - concatenar
+  return `${prev} ${curr}`;
+};
+
+
   const USER_AVATAR = profile?.photoURL || null;
   const USER_NAME = profile?.displayName || null;
 
@@ -109,17 +234,7 @@ const parseLanguageBlocks = (text) => {
   return blocks;
 };
 
-useEffect(() => {
-  if (isListening) { // ✅ Usar isListening do hook
-    timerRef.current = setInterval(() => {
-      setRecordingTime(prev => prev + 1);
-    }, 1000);
-  } else {
-    clearInterval(timerRef.current);
-    setRecordingTime(0);
-  }
-  return () => clearInterval(timerRef.current);
-}, [isListening]);
+
 
 const formatTime = (seconds) => {
   const mins = Math.floor(seconds / 60);
@@ -166,6 +281,83 @@ useEffect(() => {
   const startEnglishRecording = () => {
     toggleListening(); // ✅ Apenas chama o toggle do hook
   };
+
+const toggleListening = (action = 'toggle') => {
+  if (!recognitionRef.current) {
+    alert('❌ Speech recognition não é suportado neste navegador. Tente Chrome, Edge ou Safari.');
+    return;
+  }
+
+  if (action === 'cancel') {
+    // ❌ Cancelar - apenas para gravação
+    try {
+      recognitionRef.current.stop();
+    } catch (e) {
+      console.log('Reconhecimento já estava parado');
+    }
+    setIsListening(false);
+    setTranscript('');
+    setRecordingTime(0);
+    if (timerRef.current) clearInterval(timerRef.current);
+    console.log('❌ Gravação cancelada');
+    return;
+  }
+
+  if (action === 'send') {
+    // ✅ Enviar - para gravação E transcrição
+    if (transcript && transcript !== '🎤 Listening...') {
+      try {
+        recognitionRef.current.stop();
+      } catch (e) {
+        console.log('Reconhecimento já estava parado');
+      }
+      setIsListening(false);
+      console.log('transcript sendMessage toggleListening', transcript);
+      sendMessage(transcript); // Envia o que foi transcrito
+      setTranscript('');
+      setRecordingTime(0);
+      if (timerRef.current) clearInterval(timerRef.current);
+      console.log('✅ Mensagem enviada:', transcript);
+    }
+    return;
+  }
+
+  // Toggle normal (iniciar/parar)
+  if (isListening) {
+    try {
+      recognitionRef.current.stop();
+    } catch (e) {
+      console.log('Reconhecimento já estava parado');
+    }
+    setIsListening(false);
+    setRecordingTime(0);
+    if (timerRef.current) clearInterval(timerRef.current);
+    console.log('⏸️ Gravação pausada');
+  } else {
+    // Configurar idioma baseado no recordingLanguage
+    recognitionRef.current.lang = recordingLanguage === 'PT' ? 'pt-BR' : 'en-US';
+    console.log('🌍 Idioma configurado:', recognitionRef.current.lang);
+
+    setTranscript('🎤 Listening...');
+    setIsListening(true);
+    setRecordingTime(0);
+
+    try {
+      recognitionRef.current.start();
+      console.log('🎤 Iniciando gravação...');
+    } catch (e) {
+      console.error('Erro ao iniciar reconhecimento:', e);
+      setIsListening(false);
+      setTranscript('');
+      return;
+    }
+
+    // Iniciar timer
+    timerRef.current = setInterval(() => {
+      setRecordingTime(prev => prev + 1);
+    }, 1000);
+  }
+};
 
 const speakText = async (text) => {
   try {
@@ -618,7 +810,7 @@ Quem me der o nome mais, top... ganha um amigão pra vida toda!... 🐺💙🇧�
           </div>
 
           <h1 className="text-3xl font-bold text-slate-900 mb-2 mt-4">
-            Chat with Buddy test 8.1
+            Chat with Buddy test 8.2
           </h1>
           <p className="text-indigo-600 font-semibold mb-4">Your AI English Buddy</p>
 
@@ -876,7 +1068,7 @@ Quem me der o nome mais, top... ganha um amigão pra vida toda!... 🐺💙🇧�
                 <button
                   onClick={startEnglishRecording}
                   className={`p-2.5 rounded-full shadow-md transition-all ${
-                    recordingLanguage === 'en-US'
+                    recordingLanguage === 'PT'
                       ? 'bg-indigo-600 hover:bg-indigo-700'
                       : 'bg-indigo-600 hover:bg-indigo-700'
                   } text-white`}
