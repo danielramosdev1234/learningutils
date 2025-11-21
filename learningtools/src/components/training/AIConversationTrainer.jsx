@@ -3,7 +3,8 @@ import { useSelector } from 'react-redux';
 import  learninhoTalking  from '../../assets/animation.json';
 import { Send, MessageCircle, Sparkles, CheckCircle, AlertCircle, Loader2, Mic, Volume2, VolumeX, ThumbsUp, Heart, HelpCircle, RefreshCw, Award, Flame, BookOpen, Clipboard, Circle , X, Maximize2, Video   } from 'lucide-react';
 import Lottie from 'react-lottie-player'
-import { useSpeechRecognition } from '../../hooks/useSpeechRecognition';
+import { useSpeechRecognition } from '../../hooks/useSpeechRecognitionChat';
+import { useCallback } from 'react';
 
 const AIConversationTrainer = () => {
   const [messages, setMessages] = useState([]);
@@ -43,15 +44,18 @@ const AIConversationTrainer = () => {
   // Avatars
   const AI_AVATAR = "https://learnfun-sigma.vercel.app/learninho.png";
   const { mode, profile } = useSelector(state => state.user);
+  const handleSpeechResult = useCallback((result, error) => {
+    console.log('🎤 handleSpeechResult called:', { result, error });
+    if (error) {
+      console.error('Speech recognition error:', error);
+    } else if (result) {
+      sendMessage(result); // ✅ Envia automaticamente
+    }
+  }, []);
   const { isListening, transcript, setTranscript, toggleListening } = useSpeechRecognition(
     recordingLanguage === 'PT' ? 'pt-BR' : 'en-US',
-    (result, error) => {
-      if (error) {
-        console.error('Speech recognition error:', error);
-      } else if (result) {
-        sendMessage(result); // ✅ Envia automaticamente
-      }
-    }
+    handleSpeechResult
+
   );
   const USER_AVATAR = profile?.photoURL || null;
   const USER_NAME = profile?.displayName || null;
@@ -614,7 +618,7 @@ Quem me der o nome mais, top... ganha um amigão pra vida toda!... 🐺💙🇧�
           </div>
 
           <h1 className="text-3xl font-bold text-slate-900 mb-2 mt-4">
-            Chat with Buddy test 5
+            Chat with Buddy test 6
           </h1>
           <p className="text-indigo-600 font-semibold mb-4">Your AI English Buddy</p>
 
@@ -898,26 +902,18 @@ Quem me der o nome mais, top... ganha um amigão pra vida toda!... 🐺💙🇧�
                </div>
 
                <div className="flex items-center gap-2">
-                 {/* ❌ Botão Cancelar */}
+                 {/* ❌ Botão Cancelar - NÃO envia */}
                  <button
-                   onClick={toggleListening}
+                   onClick={() => toggleListening('cancel')}
                    className="p-3 bg-gray-100 hover:bg-gray-200 rounded-full transition-all"
-                   title="Cancel recording"
+                   title="Cancel recording (don't send)"
                  >
                    <X className="w-5 h-5 text-gray-600" />
                  </button>
 
-                 {/* ✅ Botão Enviar Manual */}
+                 {/* ✅ Botão Enviar Manual - ENVIA */}
                  <button
-                   onClick={() => {
-                     const textToSend = transcript && transcript !== '🎤 Listening...' ? transcript : '';
-                     if (textToSend.trim()) {
-                       toggleListening(); // Para a gravação
-                       setTimeout(() => {
-                         sendMessage(textToSend);
-                       }, 100);
-                     }
-                   }}
+                   onClick={() => toggleListening('send')}
                    disabled={!transcript || transcript === '🎤 Listening...'}
                    className={`p-3 rounded-full transition-all ${
                      transcript && transcript !== '🎤 Listening...'
