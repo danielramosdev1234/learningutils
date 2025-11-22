@@ -29,6 +29,10 @@ const AIConversationTrainer = () => {
   const [transcript, setTranscript] = useState('');
   const recognitionRef = useRef(null);
   const [voiceTranscript, setVoiceTranscript] = useState('');
+  const mediaRecorderRef = useRef(null);
+  const audioChunksRef = useRef([]);
+  const [recordedAudioUrl, setRecordedAudioUrl] = useState(null);
+  const [isTranscribing, setIsTranscribing] = useState(false);
 
 
   // Gamification states
@@ -49,145 +53,18 @@ const AIConversationTrainer = () => {
   const AI_AVATAR = "https://learnfun-sigma.vercel.app/learninho.png";
   const { mode, profile } = useSelector(state => state.user);
 
-  useEffect(() => {
-    // Inicializar Web Speech API APENAS UMA VEZ
-    if (!recognitionRef.current && ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window)) {
-      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-      const recognition = new SpeechRecognition();
-      let combinedTranscript ='';
-
-      recognition.continuous = true;
-      recognition.interimResults = true;
-      recognition.lang = 'en-US'; // Será alterado dinamicamente no toggleListening
-
-      recognition.onstart = () => {
-        console.log('🎤 Reconhecimento iniciado');
-        console.log('📝 transcript onstart:', transcript);
-                console.log('📝 combinedTranscript onstart :', combinedTranscript);
-      };
 
 
-      recognition.onresult = (event) => {
-
-        let interimTranscript = '';
-        let finalTranscript = '';
-        let combinedTranscriptAnterior = combinedTranscript;
-        console.log('📝 Transcrito inicio onresult:', transcript);
-                            console.log('📝 combinedTranscriptAnterior inicio onresult:', combinedTranscriptAnterior);
-
-        for (let i = event.resultIndex; i < event.results.length; i++) {
-          const transcript = event.results[i][0].transcript;
-          if (event.results[i].isFinal) {
-            finalTranscript += transcript + ' ';
-          } else {
-            interimTranscript += transcript;
-          }
-        }
-        console.log('📝 finalTranscript:', finalTranscript );
-        console.log('📝 interimTranscript:', interimTranscript);
-        combinedTranscript = mergeTranscripts(combinedTranscriptAnterior ,(finalTranscript).trim());
-        if (combinedTranscript) {
-          setTranscript(combinedTranscript);
-          console.log('📝 Transcrito:', transcript);
-          console.log('📝 combinedTranscript:', combinedTranscript);
-        }
-     console.log('📝 Transcrito fora if:', transcript);
-              console.log('📝 combinedTranscript fora if:', combinedTranscript);
-      };
-        console.log('📝 transcript fora:', transcript);
-        console.log('📝 combinedTranscript fora :', combinedTranscript);
-
-      recognition.onerror = (event) => {
-        console.error('❌ Speech recognition error:', event.error);
-
-        // Tratamento específico de erros
-        if (event.error === 'no-speech') {
-          console.log('⚠️ Nenhuma fala detectada');
-        } else if (event.error === 'not-allowed') {
-          alert('❌ Permissão de microfone negada. Por favor, habilite o microfone nas configurações do navegador.');
-          setIsListening(false);
-          setTranscript('');
-        } else {
-          setIsListening(false);
-          setTranscript('');
-        }
-      };
-
-      recognition.onend = () => {
-        console.log('🛑 Reconhecimento finalizado');
-        console.log('📝 transcript onend:', transcript);
-                console.log('📝 combinedTranscript onend :', combinedTranscript);
-                combinedTranscript = '';
-                if (isListening) {
-                    setShowReconnectButton(true); // Mostrar botão "Tap to Continue"
-                    setIsListening(false);
-                  }
-      };
-
-      recognitionRef.current = recognition;
-      console.log('✅ Reconhecimento de voz inicializado');
+useEffect(() => {
+  // Cleanup ao desmontar
+  return () => {
+    if (mediaRecorderRef.current && mediaRecorderRef.current.state === 'recording') {
+      mediaRecorderRef.current.stop();
     }
+  };
+}, []);
 
-    // Cleanup ao desmontar o componente
-    return () => {
-      if (recognitionRef.current) {
-        try {
-          recognitionRef.current.stop();
-        } catch (e) {
-          console.log('Reconhecimento já estava parado');
-        }
-      }
-    };
-  }, []); // ⚠️ ARRAY VAZIO - executa APENAS UMA VEZ
-
-const mergeTranscripts = (previous, current) => {
-  // Se vazio ou é o placeholder inicial
-  if (!previous || previous === '🎤 Listening...') {
-    return current;
-  }
-
-  // Remove espaços extras para comparação
-  const prev = previous.trim();
-  const curr = current.trim();
-
-  // Se o atual já contém completamente o anterior, retorna o atual
-  if (curr.startsWith(prev)) {
-    return curr;
-  }
-
-  // Se o anterior contém o atual (raro mas pode acontecer)
-  if (prev.includes(curr)) {
-    return prev;
-  }
-
-  // Encontrar palavras em comum no final de prev e início de curr
-  const prevWords = prev.split(' ');
-  const currWords = curr.split(' ');
-
-  let maxOverlap = 0;
-
-  // Verificar de trás pra frente
-  for (let i = 1; i <= Math.min(prevWords.length, currWords.length); i++) {
-    const prevEnd = prevWords.slice(-i).join(' ');
-    const currStart = currWords.slice(0, i).join(' ');
-
-    if (prevEnd === currStart) {
-      maxOverlap = i;
-    }
-  }
-
-  if (maxOverlap > 0) {
-    // Remove a parte duplicada
-    const newPart = currWords.slice(maxOverlap).join(' ');
-    return newPart ? `${prev} ${newPart}` : prev;
-  }
-
-  // Sem sobreposição - concatenar
-  return `${prev} ${curr}`;
-};
-
-
-  const USER_AVATAR = profile?.photoURL || null;
+const USER_AVATAR = profile?.photoURL || null;
   const USER_NAME = profile?.displayName || null;
 
   const extractWordsFromResponse = (content) => {
@@ -204,40 +81,7 @@ const mergeTranscripts = (previous, current) => {
       .filter(Boolean);
   };
 
-// Função para extrair blocos de idioma das tags [EN] e [PT]
-const parseLanguageBlocks = (text) => {
-  const blocks = [];
-  const regex = /\[([A-Z]{2})\]\s*([\s\S]*?)(?=\[([A-Z]{2})\]|$)/g;
 
-  let match;
-  while ((match = regex.exec(text)) !== null) {
-    const lang = match[1]; // 'EN' ou 'PT'
-    const content = match[2].trim();
-
-    if (content) {
-      blocks.push({
-        lang: lang,
-        text: content,
-        voice: lang === 'PT' ? 'en-AU-CarlyNeural' : selectedVoice,
-        pitch: 0,
-        rate: 1.0,
-      });
-    }
-  }
-
-  // Fallback: se não encontrou tags, assume inglês
-  if (blocks.length === 0) {
-    blocks.push({
-      lang: 'EN',
-      text: text,
-      voice: selectedVoice,
-      pitch: 0,
-      rate: 1.0,
-    });
-  }
-
-  return blocks;
-};
 
 
 
@@ -287,82 +131,195 @@ useEffect(() => {
     toggleListening(); // ✅ Apenas chama o toggle do hook
   };
 
-const toggleListening = (action = 'toggle') => {
-  if (!recognitionRef.current) {
-    alert('❌ Speech recognition não é suportado neste navegador. Tente Chrome, Edge ou Safari.');
-    return;
-  }
-
+const toggleListening = async (action = 'toggle') => {
   if (action === 'cancel') {
-    // ❌ Cancelar - apenas para gravação
-    try {
-      recognitionRef.current.stop();
-    } catch (e) {
-      console.log('Reconhecimento já estava parado');
+    // Cancelar gravação
+    if (mediaRecorderRef.current && mediaRecorderRef.current.state === 'recording') {
+      mediaRecorderRef.current.stop();
     }
     setIsListening(false);
     setTranscript('');
     setRecordingTime(0);
     if (timerRef.current) clearInterval(timerRef.current);
+    audioChunksRef.current = [];
     console.log('❌ Gravação cancelada');
     return;
   }
 
-  if (action === 'send') {
-    // ✅ Enviar - para gravação E transcrição
-    if (transcript && transcript !== '🎤 Listening...') {
-      try {
-        recognitionRef.current.stop();
-      } catch (e) {
-        console.log('Reconhecimento já estava parado');
-      }
-      setIsListening(false);
-      console.log('transcript sendMessage toggleListening', transcript);
-      sendMessage(transcript); // Envia o que foi transcrito
-      setTranscript('');
-      setRecordingTime(0);
-      if (timerRef.current) clearInterval(timerRef.current);
-      console.log('✅ Mensagem enviada:', transcript);
-    }
-    return;
-  }
 
-  // Toggle normal (iniciar/parar)
+
+  // Toggle normal
   if (isListening) {
-    try {
-      recognitionRef.current.stop();
-    } catch (e) {
-      console.log('Reconhecimento já estava parado');
+    // Parar gravação
+    if (mediaRecorderRef.current && mediaRecorderRef.current.state === 'recording') {
+      mediaRecorderRef.current.stop();
     }
     setIsListening(false);
     setRecordingTime(0);
     if (timerRef.current) clearInterval(timerRef.current);
-    console.log('⏸️ Gravação pausada');
   } else {
-    // Configurar idioma baseado no recordingLanguage
-    recognitionRef.current.lang = recordingLanguage === 'PT' ? 'pt-BR' : 'en-US';
-    console.log('🌍 Idioma configurado:', recognitionRef.current.lang);
-
-    setTranscript('🎤 Listening...');
-    setIsListening(true);
-    setRecordingTime(0);
-
+    // Iniciar gravação
     try {
-      recognitionRef.current.start();
-      console.log('🎤 Iniciando gravação...');
-    } catch (e) {
-      console.error('Erro ao iniciar reconhecimento:', e);
-      setIsListening(false);
-      setTranscript('');
-      return;
-    }
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
 
-    // Iniciar timer
-    timerRef.current = setInterval(() => {
-      setRecordingTime(prev => prev + 1);
-    }, 1000);
+      const mediaRecorder = new MediaRecorder(stream, {
+        mimeType: 'audio/webm;codecs=opus'
+      });
+      mediaRecorderRef.current = mediaRecorder;
+      audioChunksRef.current = [];
+
+      mediaRecorder.ondataavailable = (event) => {
+        if (event.data.size > 0) {
+          audioChunksRef.current.push(event.data);
+        }
+      };
+
+      mediaRecorder.onstop = async () => {
+        const audioBlob = new Blob(audioChunksRef.current, { type: 'audio/webm' });
+
+        // ✅ Criar URL do áudio para o player
+        const audioUrl = URL.createObjectURL(audioBlob);
+        setRecordedAudioUrl(audioUrl);
+
+        try {
+          setIsTranscribing(true);
+          setTranscript('🔄 Converting to WAV...');
+
+          const arrayBuffer = await audioBlob.arrayBuffer();
+          const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+          const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
+
+          const wavBlob = audioBufferToWav(audioBuffer);
+
+          setTranscript('🔄 Transcribing...');
+
+          const formData = new FormData();
+          formData.append('file', wavBlob, 'recording.wav');
+
+          const response = await fetch('http://localhost:8000/transcribe', {
+            method: 'POST',
+            body: formData
+          });
+
+          if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(`HTTP ${response.status}: ${errorText}`);
+          }
+
+          const data = await response.json();
+
+          if (data.success) {
+            const transcribedText = data.text;
+
+            setTranscript(transcribedText);
+            setVoiceTranscript(transcribedText);
+            setIsTranscribing(false);
+            console.log('✅ Transcrição:', transcribedText);
+
+            // ❌ NÃO enviar automaticamente - usuário decide quando enviar
+
+          } else {
+            throw new Error('Transcription failed');
+          }
+        } catch (error) {
+          console.error('❌ Erro na transcrição:', error);
+          setTranscript(`❌ Error: ${error.message}`);
+          setIsTranscribing(false);
+        }
+
+        // Limpar stream
+        stream.getTracks().forEach(track => track.stop());
+      };
+
+   mediaRecorder.start();
+        setIsListening(true);
+        setTranscript('🎤 Recording...');
+        setRecordingTime(0);
+
+        timerRef.current = setInterval(() => {
+          setRecordingTime(prev => prev + 1);
+        }, 1000);
+
+        console.log('🎤 Gravação iniciada');
+      } catch (error) {
+        console.error('❌ Erro ao acessar microfone:', error);
+        alert('Não foi possível acessar o microfone. Verifique as permissões.');
+      }
+    }
+  };
+
+  // Função para converter AudioBuffer para WAV
+    const audioBufferToWav = (audioBuffer) => {
+      const numberOfChannels = audioBuffer.numberOfChannels;
+      const sampleRate = audioBuffer.sampleRate;
+      const format = 1; // PCM
+      const bitDepth = 16;
+
+      const bytesPerSample = bitDepth / 8;
+      const blockAlign = numberOfChannels * bytesPerSample;
+
+      const data = [];
+      for (let i = 0; i < numberOfChannels; i++) {
+        data.push(audioBuffer.getChannelData(i));
+      }
+
+      const interleaved = new Float32Array(audioBuffer.length * numberOfChannels);
+      for (let src = 0; src < audioBuffer.length; src++) {
+        for (let channel = 0; channel < numberOfChannels; channel++) {
+          interleaved[src * numberOfChannels + channel] = data[channel][src];
+        }
+      }
+
+      const dataLength = interleaved.length * bytesPerSample;
+      const buffer = new ArrayBuffer(44 + dataLength);
+      const view = new DataView(buffer);
+
+      const writeString = (offset, string) => {
+        for (let i = 0; i < string.length; i++) {
+          view.setUint8(offset + i, string.charCodeAt(i));
+        }
+      };
+
+      writeString(0, 'RIFF');
+      view.setUint32(4, 36 + dataLength, true);
+      writeString(8, 'WAVE');
+      writeString(12, 'fmt ');
+      view.setUint32(16, 16, true);
+      view.setUint16(20, format, true);
+      view.setUint16(22, numberOfChannels, true);
+      view.setUint32(24, sampleRate, true);
+      view.setUint32(28, sampleRate * blockAlign, true);
+      view.setUint16(32, blockAlign, true);
+      view.setUint16(34, bitDepth, true);
+      writeString(36, 'data');
+      view.setUint32(40, dataLength, true);
+
+      let index = 44;
+      for (let i = 0; i < interleaved.length; i++) {
+        const sample = Math.max(-1, Math.min(1, interleaved[i]));
+        view.setInt16(index, sample < 0 ? sample * 0x8000 : sample * 0x7FFF, true);
+        index += 2;
+      }
+
+      return new Blob([buffer], { type: 'audio/wav' });
+    };
+
+const handleSendTranscription = () => {
+  if (transcript && transcript !== '🎤 Recording...' && !transcript.includes('🔄') && !transcript.includes('❌')) {
+    setIsListening(false);
+    sendMessage(transcript);
+    setTranscript('');
+    setRecordingTime(0);
+    if (timerRef.current) clearInterval(timerRef.current);
+
+    // Limpar áudio
+    if (recordedAudioUrl) {
+      URL.revokeObjectURL(recordedAudioUrl);
+      setRecordedAudioUrl(null);
+    }
   }
 };
+
 
 const speakText = async (text) => {
   try {
@@ -815,7 +772,7 @@ Quem me der o nome mais, top... ganha um amigão pra vida toda!... 🐺💙🇧�
           </div>
 
           <h1 className="text-3xl font-bold text-slate-900 mb-2 mt-4">
-            Chat with Buddy test 8.4
+            Chat with Buddy test 8.5
           </h1>
           <p className="text-indigo-600 font-semibold mb-4">Your AI English Buddy</p>
 
@@ -1073,7 +1030,7 @@ Quem me der o nome mais, top... ganha um amigão pra vida toda!... 🐺💙🇧�
                 <button
                   onClick={startEnglishRecording}
                   className={`p-2.5 rounded-full shadow-md transition-all ${
-                    recordingLanguage === 'PT'
+                    recordingLanguage === 'EN'
                       ? 'bg-indigo-600 hover:bg-indigo-700'
                       : 'bg-indigo-600 hover:bg-indigo-700'
                   } text-white`}
@@ -1088,7 +1045,7 @@ Quem me der o nome mais, top... ganha um amigão pra vida toda!... 🐺💙🇧�
             <p className="text-xs text-slate-500 text-center">
               {sessionEnded
                 ? `Session limit reached (${SESSION_LIMIT} messages).`
-                : '🎤 (BR PT se precisar falar português)'}
+                : ''}
             </p>
           </div>
         </div>
@@ -1103,8 +1060,10 @@ Quem me der o nome mais, top... ganha um amigão pra vida toda!... 🐺💙🇧�
              <div className="flex items-center justify-between mb-6">
                <div className="flex items-center gap-3">
                  <div className="relative">
-                   <Circle className="w-6 h-6 text-red-500 fill-red-500 animate-pulse" />
-                   <div className="absolute inset-0 w-6 h-6 bg-red-500 rounded-full animate-ping opacity-75" />
+                   <Circle className={`w-6 h-6 ${mediaRecorderRef.current?.state === 'recording' ? 'text-red-500 fill-red-500 animate-pulse' : 'text-gray-400 fill-gray-400'}`} />
+                   {mediaRecorderRef.current?.state === 'recording' && (
+                     <div className="absolute inset-0 w-6 h-6 bg-red-500 rounded-full animate-ping opacity-75" />
+                   )}
                  </div>
                  <span className="text-2xl font-mono font-bold text-gray-800 tabular-nums">
                    {formatTime(recordingTime)}
@@ -1112,66 +1071,126 @@ Quem me der o nome mais, top... ganha um amigão pra vida toda!... 🐺💙🇧�
                </div>
 
                <div className="flex items-center gap-2">
-                 {/* ❌ Botão Cancelar - NÃO envia */}
+                 {/* ❌ Botão Cancelar */}
                  <button
-                   onClick={() => toggleListening('cancel')}
+                   onClick={() => {
+                     toggleListening('cancel');
+                     if (recordedAudioUrl) {
+                       URL.revokeObjectURL(recordedAudioUrl);
+                       setRecordedAudioUrl(null);
+                     }
+                     setIsTranscribing(false);
+                   }}
                    className="p-3 bg-gray-100 hover:bg-gray-200 rounded-full transition-all"
-                   title="Cancel recording (don't send)"
+                   title="Cancel recording"
                  >
                    <X className="w-5 h-5 text-gray-600" />
                  </button>
 
-                 {/* ✅ Botão Enviar Manual - ENVIA */}
-                 <button
-                   onClick={() => toggleListening('send')}
-                   disabled={!transcript || transcript === '🎤 Listening...'}
-                   className={`p-3 rounded-full transition-all ${
-                     transcript && transcript !== '🎤 Listening...'
-                       ? 'bg-green-500 hover:bg-green-600 shadow-lg hover:shadow-xl cursor-pointer'
-                       : 'bg-gray-300 cursor-not-allowed'
-                   }`}
-                   title="Send recording"
-                 >
-                   <Send className="w-5 h-5 text-white" />
-                 </button>
+                 {/* ⏹️ Botão Parar (só quando gravando) */}
+                 {mediaRecorderRef.current?.state === 'recording' && (
+                   <button
+                     onClick={() => {
+                       if (mediaRecorderRef.current) {
+                         mediaRecorderRef.current.stop();
+                         setRecordingTime(0);
+                         if (timerRef.current) clearInterval(timerRef.current);
+                       }
+                     }}
+                     className="p-3 bg-indigo-500 hover:bg-indigo-600 rounded-full transition-all shadow-lg"
+                     title="Stop recording and transcribe"
+                   >
+                     <Circle className="w-5 h-5 text-white fill-white" />
+                   </button>
+                 )}
+
+                 {/* ✅ Botão Enviar (só quando transcrição estiver pronta) */}
+                 {!isTranscribing && transcript && transcript !== '🎤 Recording...' && !transcript.includes('🔄') && !transcript.includes('❌') && (
+                   <button
+                     onClick={handleSendTranscription}
+                     className="p-3 bg-green-500 hover:bg-green-600 rounded-full transition-all shadow-lg hover:shadow-xl"
+                     title="Send transcription"
+                   >
+                     <Send className="w-5 h-5 text-white" />
+                   </button>
+                 )}
                </div>
              </div>
 
-             {/* Visualizador de ondas sonoras */}
+             {/* Visualizador de ondas sonoras OU animação de processamento */}
              <div className="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-xl p-6 border border-indigo-100">
-               <div className="flex items-center justify-center gap-1 h-24">
-                 {Array.from({ length: 30 }).map((_, i) => (
-                   <div
-                     key={i}
-                     className="w-1 bg-indigo-600 rounded-full transition-all duration-100 animate-pulse"
-                     style={{
-                       height: `${20 + Math.random() * 80}%`,
-                       animationDelay: `${i * 50}ms`
-                     }}
-                   />
-                 ))}
-               </div>
+               {isTranscribing || transcript.includes('🔄') ? (
+                 // Animação de processamento
+                 <div className="flex flex-col items-center justify-center h-24 gap-3">
+                   <div className="flex gap-2">
+                     <div className="w-3 h-3 bg-indigo-600 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
+                     <div className="w-3 h-3 bg-purple-600 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
+                     <div className="w-3 h-3 bg-pink-600 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
+                   </div>
+                   <p className="text-sm font-medium text-indigo-700">{transcript}</p>
+                 </div>
+               ) : mediaRecorderRef.current?.state === 'recording' ? (
+                 // Ondas sonoras (gravando)
+                 <div className="flex items-center justify-center gap-1 h-24">
+                   {Array.from({ length: 30 }).map((_, i) => (
+                     <div
+                       key={i}
+                       className="w-1 bg-indigo-600 rounded-full transition-all duration-100 animate-pulse"
+                       style={{
+                         height: `${20 + Math.random() * 80}%`,
+                         animationDelay: `${i * 50}ms`
+                       }}
+                     />
+                   ))}
+                 </div>
+               ) : (
+                 // Estado de espera após parar
+                 <div className="flex items-center justify-center h-24">
+                   <p className="text-sm text-gray-500">Processing...</p>
+                 </div>
+               )}
              </div>
+
+             {/* Player de áudio (só aparece após gravação) */}
+             {recordedAudioUrl && (
+               <div className="mt-4 bg-gray-50 rounded-lg p-4 border border-gray-200">
+                 <p className="text-xs font-semibold text-gray-700 mb-2">🎧 Your recording:</p>
+                 <audio
+                   controls
+                   src={recordedAudioUrl}
+                   className="w-full"
+                   style={{ height: '40px' }}
+                 />
+               </div>
+             )}
 
              {/* Indicador de status */}
              <div className="mt-4 text-center">
-               <p className="text-sm text-gray-600">
-                 🎤 Recording... Speak clearly into your microphone
-               </p>
-               {showReconnectButton && (
-                 <button onClick={restartRecognition}>
-                   🎤 Tap to Continue Recording
-                 </button>
+               {mediaRecorderRef.current?.state === 'recording' && (
+                 <p className="text-sm text-gray-600">
+                   🎤 Recording... Speak clearly into your microphone
+                 </p>
                )}
-               {transcript && transcript !== '🎤 Listening...' && (
-                 <div className="mt-3 bg-indigo-50 rounded-lg p-3 border border-indigo-200">
-                   <p className="text-xs font-semibold text-indigo-800 mb-1">Detected text:</p>
-                   <p className="text-sm text-indigo-900 italic">
+
+               {!isTranscribing && transcript && transcript !== '🎤 Recording...' && !transcript.includes('🔄') && !transcript.includes('❌') && (
+                 <div className="mt-3 bg-green-50 rounded-lg p-4 border border-green-200 animate-fade-in">
+                   <p className="text-xs font-semibold text-green-800 mb-2">✅ Transcription complete!</p>
+                   <p className="text-base text-green-900 font-medium mb-3">
                      "{transcript}"
                    </p>
-                   <p className="text-xs text-gray-500 mt-2">
-                     ✅ Click the green button to send, or continue speaking to add more text
-                   </p>
+                   <button
+                     onClick={handleSendTranscription}
+                     className="w-full bg-green-500 hover:bg-green-600 text-white py-3 px-4 rounded-lg font-semibold transition-all flex items-center justify-center gap-2 shadow-md hover:shadow-lg"
+                   >
+                     <Send className="w-4 h-4" />
+                     Send Message
+                   </button>
+                 </div>
+               )}
+
+               {transcript.includes('❌') && (
+                 <div className="mt-3 bg-red-50 rounded-lg p-4 border border-red-200">
+                   <p className="text-sm text-red-800">{transcript}</p>
                  </div>
                )}
              </div>
