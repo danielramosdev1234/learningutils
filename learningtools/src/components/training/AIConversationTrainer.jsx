@@ -198,7 +198,7 @@ const toggleListening = async (action = 'toggle') => {
 
           const BACKEND_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001';
 
-          const response = await fetch(`${BACKEND_URL}/transcribe`, {
+          const response = await fetch(`${BACKEND_URL}/api/whisper/transcribe`, {
             method: 'POST',
             headers: {
               'X-API-Key': import.meta.env.VITE_WHISPER_API_KEY  // Adicione no .env
