@@ -200,9 +200,6 @@ const toggleListening = async (action = 'toggle') => {
 
           const response = await fetch(`${BACKEND_URL}/api/whisper/transcribe`, {
             method: 'POST',
-            headers: {
-              'X-API-Key': import.meta.env.VITE_WHISPER_API_KEY  // Adicione no .env
-            },
             body: formData
           });
 
