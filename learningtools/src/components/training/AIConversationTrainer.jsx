@@ -655,9 +655,8 @@ Quem me der o nome mais, top... ganha um amigão pra vida toda!... 🐺💙🇧�
     };
     setMessages([welcomeMessage]);
 
-    if (speechSynthRef.current) {
       setTimeout(() => speakText(welcomeMessage.content), 500);
-    }
+
   };
 
   const formatMessage = (content) => {
