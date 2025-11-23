@@ -126,8 +126,8 @@
     "id": "tech_014"
   },
   {
-    "text": "I use Postgre SQL database.",
-    "translation": "Uso banco de dados PostgreSQL.",
+    "text": "I use SQL database.",
+    "translation": "Uso banco de dados SQL.",
     "category": "tech_interview",
     "theme": "technologies",
     "difficulty": 2,
