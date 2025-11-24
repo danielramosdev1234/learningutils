@@ -369,6 +369,131 @@ const handleNextSkip = () => {
 
   return (
     <div className={`bg-white rounded-xl shadow-lg p-8 transition-all duration-300 ${isActive ? 'ring-4 ring-blue-400' : ''}`}>
+         {/* Grammar Notes Section */}
+              {phrase.grammar_notes && (
+                <div className="mb-6 bg-gradient-to-br from-indigo-50 to-purple-50 rounded-xl border-2 border-indigo-200 shadow-md overflow-hidden">
+                  <button
+                    onClick={() => setShowGrammarNotes(!showGrammarNotes)}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        setShowGrammarNotes(!showGrammarNotes);
+                      }
+                    }}
+                    tabIndex={0}
+                    aria-expanded={showGrammarNotes}
+                    aria-label={showGrammarNotes ? 'Ocultar dicas de gramática' : 'Mostrar dicas de gramática'}
+                    className="w-full p-4 flex items-center justify-between hover:bg-indigo-100 transition-colors"
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className="p-2 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-lg">
+                        <Lightbulb className="w-5 h-5 text-white" aria-hidden="true" />
+                      </div>
+                      <div className="text-left">
+                        <h3 className="font-bold text-gray-800 text-lg">Grammar Tips</h3>
+                        <p className="text-sm text-gray-600">Click to see grammar explanations</p>
+                      </div>
+                    </div>
+                    {showGrammarNotes ? (
+                      <ChevronUp className="w-5 h-5 text-gray-600" aria-hidden="true" />
+                    ) : (
+                      <ChevronDown className="w-5 h-5 text-gray-600" aria-hidden="true" />
+                    )}
+                  </button>
+
+                  {showGrammarNotes && (
+                    <div className="px-4 pb-4 space-y-3 animate-in fade-in slide-in-from-top-2 duration-300">
+                      {phrase.grammar_notes.estrutura && (
+                        <div className="bg-white rounded-lg p-3 border-l-4 border-indigo-500">
+                          <p className="text-xs font-semibold text-indigo-700 uppercase tracking-wide mb-1">Structure</p>
+                          <p className="text-sm text-gray-800 font-mono">{phrase.grammar_notes.estrutura}</p>
+                        </div>
+                      )}
+
+                      {phrase.grammar_notes.explicacao_pt && (
+                        <div className="bg-white rounded-lg p-3 border-l-4 border-purple-500">
+                          <p className="text-xs font-semibold text-purple-700 uppercase tracking-wide mb-1">Explanation</p>
+                          <p className="text-sm text-gray-700">{phrase.grammar_notes.explicacao_pt}</p>
+                        </div>
+                      )}
+
+                      {phrase.grammar_notes.porque_assim && (
+                        <div className="bg-white rounded-lg p-3 border-l-4 border-blue-500">
+                          <p className="text-xs font-semibold text-blue-700 uppercase tracking-wide mb-1">Why?</p>
+                          <p className="text-sm text-gray-700">{phrase.grammar_notes.porque_assim}</p>
+                        </div>
+                      )}
+
+                      {phrase.grammar_notes.palavra_chave && (
+                        <div className="bg-gradient-to-r from-yellow-50 to-amber-50 rounded-lg p-3 border-l-4 border-yellow-500">
+                          <p className="text-xs font-semibold text-yellow-700 uppercase tracking-wide mb-1">Key Word</p>
+                          <p className="text-sm text-gray-800 font-semibold">{phrase.grammar_notes.palavra_chave}</p>
+                        </div>
+                      )}
+
+                      {phrase.grammar_notes.dica_pronuncia && (
+                        <div className="bg-white rounded-lg p-3 border-l-4 border-green-500">
+                          <p className="text-xs font-semibold text-green-700 uppercase tracking-wide mb-1">Pronunciation Tip</p>
+                          <p className="text-sm text-gray-700 italic">{phrase.grammar_notes.dica_pronuncia}</p>
+                        </div>
+                      )}
+
+                      {phrase.grammar_notes.erro_comum && (
+                        <div className="bg-red-50 rounded-lg p-3 border-l-4 border-red-500">
+                          <p className="text-xs font-semibold text-red-700 uppercase tracking-wide mb-1">Common Mistake</p>
+                          <p className="text-sm text-red-800">{phrase.grammar_notes.erro_comum}</p>
+                        </div>
+                      )}
+
+                    {phrase.grammar_notes.forma_negativa  && (
+                                    <div className="bg-red-50 rounded-lg p-3 border-l-4 border-red-500">
+                                      <p className="text-xs font-semibold text-red-700 uppercase tracking-wide mb-1">❌ Negative Form</p>
+                                      <p className="text-sm text-red-800">{phrase.grammar_notes.forma_negativa }</p>
+                                    </div>
+                                  )}
+
+                    {phrase.grammar_notes.forma_interrogativa   && (
+                                                <div className="bg-white rounded-lg p-3 border-l-4 border-cyan-500">
+                                                  <p className="text-xs font-semibold text-red-700 uppercase tracking-wide mb-1">❓ Question Form</p>
+                                                  <p className="text-sm text-red-800">{phrase.grammar_notes.forma_interrogativa  }</p>
+                                                </div>
+                                              )}
+                    {phrase.grammar_notes.time_markers    && (
+                                                            <div className="bg-white rounded-lg p-3 border-l-4 border-cyan-500">
+                                                              <p className="text-xs font-semibold text-cyan-700 uppercase tracking-wide mb-2">⏰ Time Markers</p>
+                                                              <div className="flex flex-wrap gap-2">
+                                                                                  {phrase.grammar_notes.time_markers.map((alt, index) => (
+                                                                                    <span
+                                                                                      key={index}
+                                                                                      className="px-3 py-1 bg-cyan-100 text-cyan-800 rounded-full text-xs font-medium"
+                                                                                    >
+                                                                                      {alt}
+                                                                                    </span>
+                                                                                  ))}
+                                                                                </div>
+                                                            </div>
+                                                          )}
+
+
+                      {phrase.grammar_notes.formas_alternativas && phrase.grammar_notes.formas_alternativas.length > 0 && (
+                        <div className="bg-white rounded-lg p-3 border-l-4 border-cyan-500">
+                          <p className="text-xs font-semibold text-cyan-700 uppercase tracking-wide mb-2">Alternative Forms</p>
+                          <div className="flex flex-wrap gap-2">
+                            {phrase.grammar_notes.formas_alternativas.map((alt, index) => (
+                              <span
+                                key={index}
+                                className="px-3 py-1 bg-cyan-100 text-cyan-800 rounded-full text-xs font-medium"
+                              >
+                                {alt}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
+              )}
 
       <div className="text-center mb-6">
         <div className="flex items-center justify-center gap-3 mb-2">
@@ -395,131 +520,7 @@ const handleNextSkip = () => {
         </div>
       </div>
 
-      {/* Grammar Notes Section */}
-      {phrase.grammar_notes && (
-        <div className="mb-6 bg-gradient-to-br from-indigo-50 to-purple-50 rounded-xl border-2 border-indigo-200 shadow-md overflow-hidden">
-          <button
-            onClick={() => setShowGrammarNotes(!showGrammarNotes)}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                setShowGrammarNotes(!showGrammarNotes);
-              }
-            }}
-            tabIndex={0}
-            aria-expanded={showGrammarNotes}
-            aria-label={showGrammarNotes ? 'Ocultar dicas de gramática' : 'Mostrar dicas de gramática'}
-            className="w-full p-4 flex items-center justify-between hover:bg-indigo-100 transition-colors"
-          >
-            <div className="flex items-center gap-3">
-              <div className="p-2 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-lg">
-                <Lightbulb className="w-5 h-5 text-white" aria-hidden="true" />
-              </div>
-              <div className="text-left">
-                <h3 className="font-bold text-gray-800 text-lg">Grammar Tips</h3>
-                <p className="text-sm text-gray-600">Click to see grammar explanations</p>
-              </div>
-            </div>
-            {showGrammarNotes ? (
-              <ChevronUp className="w-5 h-5 text-gray-600" aria-hidden="true" />
-            ) : (
-              <ChevronDown className="w-5 h-5 text-gray-600" aria-hidden="true" />
-            )}
-          </button>
 
-          {showGrammarNotes && (
-            <div className="px-4 pb-4 space-y-3 animate-in fade-in slide-in-from-top-2 duration-300">
-              {phrase.grammar_notes.estrutura && (
-                <div className="bg-white rounded-lg p-3 border-l-4 border-indigo-500">
-                  <p className="text-xs font-semibold text-indigo-700 uppercase tracking-wide mb-1">Structure</p>
-                  <p className="text-sm text-gray-800 font-mono">{phrase.grammar_notes.estrutura}</p>
-                </div>
-              )}
-
-              {phrase.grammar_notes.explicacao_pt && (
-                <div className="bg-white rounded-lg p-3 border-l-4 border-purple-500">
-                  <p className="text-xs font-semibold text-purple-700 uppercase tracking-wide mb-1">Explanation</p>
-                  <p className="text-sm text-gray-700">{phrase.grammar_notes.explicacao_pt}</p>
-                </div>
-              )}
-
-              {phrase.grammar_notes.porque_assim && (
-                <div className="bg-white rounded-lg p-3 border-l-4 border-blue-500">
-                  <p className="text-xs font-semibold text-blue-700 uppercase tracking-wide mb-1">Why?</p>
-                  <p className="text-sm text-gray-700">{phrase.grammar_notes.porque_assim}</p>
-                </div>
-              )}
-
-              {phrase.grammar_notes.palavra_chave && (
-                <div className="bg-gradient-to-r from-yellow-50 to-amber-50 rounded-lg p-3 border-l-4 border-yellow-500">
-                  <p className="text-xs font-semibold text-yellow-700 uppercase tracking-wide mb-1">Key Word</p>
-                  <p className="text-sm text-gray-800 font-semibold">{phrase.grammar_notes.palavra_chave}</p>
-                </div>
-              )}
-
-              {phrase.grammar_notes.dica_pronuncia && (
-                <div className="bg-white rounded-lg p-3 border-l-4 border-green-500">
-                  <p className="text-xs font-semibold text-green-700 uppercase tracking-wide mb-1">Pronunciation Tip</p>
-                  <p className="text-sm text-gray-700 italic">{phrase.grammar_notes.dica_pronuncia}</p>
-                </div>
-              )}
-
-              {phrase.grammar_notes.erro_comum && (
-                <div className="bg-red-50 rounded-lg p-3 border-l-4 border-red-500">
-                  <p className="text-xs font-semibold text-red-700 uppercase tracking-wide mb-1">Common Mistake</p>
-                  <p className="text-sm text-red-800">{phrase.grammar_notes.erro_comum}</p>
-                </div>
-              )}
-
-            {phrase.grammar_notes.forma_negativa  && (
-                            <div className="bg-red-50 rounded-lg p-3 border-l-4 border-red-500">
-                              <p className="text-xs font-semibold text-red-700 uppercase tracking-wide mb-1">❌ Negative Form</p>
-                              <p className="text-sm text-red-800">{phrase.grammar_notes.forma_negativa }</p>
-                            </div>
-                          )}
-
-            {phrase.grammar_notes.forma_interrogativa   && (
-                                        <div className="bg-white rounded-lg p-3 border-l-4 border-cyan-500">
-                                          <p className="text-xs font-semibold text-red-700 uppercase tracking-wide mb-1">❓ Question Form</p>
-                                          <p className="text-sm text-red-800">{phrase.grammar_notes.forma_interrogativa  }</p>
-                                        </div>
-                                      )}
-            {phrase.grammar_notes.time_markers    && (
-                                                    <div className="bg-white rounded-lg p-3 border-l-4 border-cyan-500">
-                                                      <p className="text-xs font-semibold text-cyan-700 uppercase tracking-wide mb-2">⏰ Time Markers</p>
-                                                      <div className="flex flex-wrap gap-2">
-                                                                          {phrase.grammar_notes.time_markers.map((alt, index) => (
-                                                                            <span
-                                                                              key={index}
-                                                                              className="px-3 py-1 bg-cyan-100 text-cyan-800 rounded-full text-xs font-medium"
-                                                                            >
-                                                                              {alt}
-                                                                            </span>
-                                                                          ))}
-                                                                        </div>
-                                                    </div>
-                                                  )}
-
-
-              {phrase.grammar_notes.formas_alternativas && phrase.grammar_notes.formas_alternativas.length > 0 && (
-                <div className="bg-white rounded-lg p-3 border-l-4 border-cyan-500">
-                  <p className="text-xs font-semibold text-cyan-700 uppercase tracking-wide mb-2">Alternative Forms</p>
-                  <div className="flex flex-wrap gap-2">
-                    {phrase.grammar_notes.formas_alternativas.map((alt, index) => (
-                      <span
-                        key={index}
-                        className="px-3 py-1 bg-cyan-100 text-cyan-800 rounded-full text-xs font-medium"
-                      >
-                        {alt}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
-          )}
-        </div>
-      )}
 
       {speechError && (
         <div
