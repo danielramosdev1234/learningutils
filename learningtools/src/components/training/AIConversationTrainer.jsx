@@ -196,10 +196,13 @@ const toggleListening = async (action = 'toggle') => {
           const formData = new FormData();
           formData.append('file', wavBlob, 'recording.wav');
 
-          const BACKEND_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001';
+          const BACKEND_URL = import.meta.env.VITE_WHISPER_API_URL || 'http://localhost:3001';
 
-          const response = await fetch(`${BACKEND_URL}/api/whisper/transcribe`, {
+          const response = await fetch(`${BACKEND_URL}/transcribe`, {
             method: 'POST',
+            headers: {
+                          'X-API-Key': import.meta.env.VITE_WHISPER_API_KEY  // Adicione no .env
+                        },
             body: formData
           });
 
