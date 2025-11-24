@@ -616,10 +616,10 @@ const shareScore = () => {
                       </>
                     )}
 
-                    {/* ↓ Botão Play Again permanece igual */}
+                    {/* ↓ Botão Play Again */}
                     <button
                       onClick={() => setGameState('ready')}
-                      className="w-full bg-gradient-to-r from-purple-500 to-pink-500..."
+                      className="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-4 px-8 rounded-xl shadow-lg transition-all duration-300 flex items-center justify-center gap-3"
                     >
                       <Play size={24} />
                       Play Again
