@@ -1,4 +1,4 @@
-// src/components/PhraseCard.jsx (ATUALIZADO - Referral processado no login)
+// src/components/PhraseCard.jsx (ATUALIZADO - Com i18n)
 
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { Volume2, Mic, MicOff, CheckCircle, XCircle, Loader, AlertCircle, Play, Pause, ArrowRight, Gift, Settings, BookOpen, ChevronDown, ChevronUp, Lightbulb } from 'lucide-react';
@@ -22,6 +22,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useXP } from '../../hooks/useXP';
 import { trackExerciseComplete, trackError, trackUserAction } from '../../utils/analytics';
 import { countWords } from '../../utils/wordCounter';
+import { useUILanguage } from '../../context/LanguageContext.jsx';
+import { translateUI } from '../../i18n/uiTranslations.js';
 
 const isAndroidDevice = () => {
   const ua = navigator.userAgent.toLowerCase();
@@ -40,6 +42,9 @@ export const PhraseCard = ({
   tourStep = 0,
   onTourFeedbackVisible
 }) => {
+ const { language } = useUILanguage();
+ const t = (key, params) => translateUI(language, `phraseCard.${key}`, params);
+
  const isAndroid = useMemo(() => isAndroidDevice(), []);
 
  const chunksHook = useSpeechRecognitionForChunks();
@@ -114,7 +119,7 @@ export const PhraseCard = ({
   const audioRef = useRef(null);
   const shouldShowIPA = showIPA || (tourActive && tourStep >= 3);
 
-  // Processa o resultado quando terminar de ouvir
+  // [MANTER TODO O useEffect de processamento - linhas 110-211]
   useEffect(() => {
     if (transcript && !isListening && !hasProcessed && transcript.trim() !== '') {
       console.log('🔊 Processing - Phrase:', phrase.text, '| Said:', transcript);
@@ -130,7 +135,6 @@ export const PhraseCard = ({
         onTourFeedbackVisible();
       }
 
-      // Track exercise completion
       const startTime = performance.now();
       trackExerciseComplete('phrase', comparison.similarity, 0, {
         phraseId: phrase.id,
@@ -141,15 +145,13 @@ export const PhraseCard = ({
         console.log(`✅ ${comparison.similarity}% - Marking phrase as completed!`);
 
         try {
-          // Conta palavras na frase para calcular XP (1 XP por palavra)
           const wordCount = countWords(phrase.text);
-          
-          // Ganha XP baseado no número de palavras (1 XP por palavra)
+
           earnXP('phrases', {
             phraseId: phrase.id,
             accuracy: comparison.similarity,
             streak: streak.current,
-            amount: wordCount // Passa o número de palavras como amount
+            amount: wordCount
           });
 
           dispatch(markPhraseCompleted({
@@ -157,15 +159,12 @@ export const PhraseCard = ({
             phraseIndex: phrase.index
           }));
 
-          // Chama onCorrectAnswer para marcar como completa
           if (onCorrectAnswer) {
             onCorrectAnswer();
           }
 
-          // Só avança automaticamente se autoAdvance estiver habilitado
           if (autoAdvance && onNextPhrase) {
             console.log(`🎉 Auto advancing!`);
-            // Aguarda um pouco antes de avançar para mostrar o feedback
             setTimeout(() => {
               onNextPhrase();
             }, 2000);
@@ -174,8 +173,6 @@ export const PhraseCard = ({
           console.error('Erro ao processar frase completa:', error);
           trackError('phrase_completion_error', error.message, { phraseId: phrase.id });
         }
-      } else {
-        // Feedback para acurácia abaixo de 80%
       }
 
       if (comparison.similarity === 100) {
@@ -227,7 +224,6 @@ useEffect(() => {
   }
 }, [phrase.text, phrase.id, isAndroid]);
 
- // ✅ Dar bônus de boas-vindas na primeira frase (mantido)
   useEffect(() => {
     if (
       referral?.referredBy &&
@@ -240,9 +236,7 @@ useEffect(() => {
   }, [referral, mode, dispatch]);
 
 const handleSkipPhrase = () => {
-
     setIsDisabled(true);
-
     setShowSkipConfirm(true);
     confirmSkipPhrase()
   };
@@ -263,8 +257,6 @@ console.log('if (!canSkipPhrase) return;!');
     }
     handleNextSkip();
 
-
-
     setShowSkipConfirm(false);
 
     trackReferralEvent('phrase_skipped', {
@@ -272,6 +264,7 @@ console.log('if (!canSkipPhrase) return;!');
       remaining: referral.rewards.skipPhrases - 1
     });
   };
+
 const handleNextSkip = () => {
         onNextPhrase()
         setIsDisabled(false);
@@ -286,13 +279,12 @@ const handleNextSkip = () => {
       } else {
         console.log('🎤 Starting new recording...');
         trackUserAction('recording_started', { phraseId: phrase.id });
-        
-        // Para a reprodução do áudio do botão "Hear" se estiver reproduzindo
+
         if ('speechSynthesis' in window) {
           window.speechSynthesis.cancel();
           console.log('🔇 Stopped TTS playback');
         }
-        
+
         setResult(null);
         setShowFeedback(false);
         setHasProcessed(false);
@@ -382,7 +374,7 @@ const handleNextSkip = () => {
                     }}
                     tabIndex={0}
                     aria-expanded={showGrammarNotes}
-                    aria-label={showGrammarNotes ? 'Ocultar dicas de gramática' : 'Mostrar dicas de gramática'}
+                    aria-label={t(showGrammarNotes ? 'hideGrammarTips' : 'showGrammarTips')}
                     className="w-full p-4 flex items-center justify-between hover:bg-indigo-100 transition-colors"
                   >
                     <div className="flex items-center gap-3">
@@ -390,8 +382,8 @@ const handleNextSkip = () => {
                         <Lightbulb className="w-5 h-5 text-white" aria-hidden="true" />
                       </div>
                       <div className="text-left">
-                        <h3 className="font-bold text-gray-800 text-lg">Grammar Tips</h3>
-                        <p className="text-sm text-gray-600">Click to see grammar explanations</p>
+                        <h3 className="font-bold text-gray-800 text-lg">{t('grammarTips')}</h3>
+                        <p className="text-sm text-gray-600">{t('clickToSeeGrammar')}</p>
                       </div>
                     </div>
                     {showGrammarNotes ? (
@@ -405,62 +397,62 @@ const handleNextSkip = () => {
                     <div className="px-4 pb-4 space-y-3 animate-in fade-in slide-in-from-top-2 duration-300">
                       {phrase.grammar_notes.estrutura && (
                         <div className="bg-white rounded-lg p-3 border-l-4 border-indigo-500">
-                          <p className="text-xs font-semibold text-indigo-700 uppercase tracking-wide mb-1">Structure</p>
+                          <p className="text-xs font-semibold text-indigo-700 uppercase tracking-wide mb-1">{t('structure')}</p>
                           <p className="text-sm text-gray-800 font-mono">{phrase.grammar_notes.estrutura}</p>
                         </div>
                       )}
 
                       {phrase.grammar_notes.explicacao_pt && (
                         <div className="bg-white rounded-lg p-3 border-l-4 border-purple-500">
-                          <p className="text-xs font-semibold text-purple-700 uppercase tracking-wide mb-1">Explanation</p>
+                          <p className="text-xs font-semibold text-purple-700 uppercase tracking-wide mb-1">{t('explanation')}</p>
                           <p className="text-sm text-gray-700">{phrase.grammar_notes.explicacao_pt}</p>
                         </div>
                       )}
 
                       {phrase.grammar_notes.porque_assim && (
                         <div className="bg-white rounded-lg p-3 border-l-4 border-blue-500">
-                          <p className="text-xs font-semibold text-blue-700 uppercase tracking-wide mb-1">Why?</p>
+                          <p className="text-xs font-semibold text-blue-700 uppercase tracking-wide mb-1">{t('why')}</p>
                           <p className="text-sm text-gray-700">{phrase.grammar_notes.porque_assim}</p>
                         </div>
                       )}
 
                       {phrase.grammar_notes.palavra_chave && (
                         <div className="bg-gradient-to-r from-yellow-50 to-amber-50 rounded-lg p-3 border-l-4 border-yellow-500">
-                          <p className="text-xs font-semibold text-yellow-700 uppercase tracking-wide mb-1">Key Word</p>
+                          <p className="text-xs font-semibold text-yellow-700 uppercase tracking-wide mb-1">{t('keyWord')}</p>
                           <p className="text-sm text-gray-800 font-semibold">{phrase.grammar_notes.palavra_chave}</p>
                         </div>
                       )}
 
                       {phrase.grammar_notes.dica_pronuncia && (
                         <div className="bg-white rounded-lg p-3 border-l-4 border-green-500">
-                          <p className="text-xs font-semibold text-green-700 uppercase tracking-wide mb-1">Pronunciation Tip</p>
+                          <p className="text-xs font-semibold text-green-700 uppercase tracking-wide mb-1">{t('pronunciationTip')}</p>
                           <p className="text-sm text-gray-700 italic">{phrase.grammar_notes.dica_pronuncia}</p>
                         </div>
                       )}
 
                       {phrase.grammar_notes.erro_comum && (
                         <div className="bg-red-50 rounded-lg p-3 border-l-4 border-red-500">
-                          <p className="text-xs font-semibold text-red-700 uppercase tracking-wide mb-1">Common Mistake</p>
+                          <p className="text-xs font-semibold text-red-700 uppercase tracking-wide mb-1">{t('commonMistake')}</p>
                           <p className="text-sm text-red-800">{phrase.grammar_notes.erro_comum}</p>
                         </div>
                       )}
 
                     {phrase.grammar_notes.forma_negativa  && (
                                     <div className="bg-red-50 rounded-lg p-3 border-l-4 border-red-500">
-                                      <p className="text-xs font-semibold text-red-700 uppercase tracking-wide mb-1">❌ Negative Form</p>
+                                      <p className="text-xs font-semibold text-red-700 uppercase tracking-wide mb-1">❌ {t('negativeForm')}</p>
                                       <p className="text-sm text-red-800">{phrase.grammar_notes.forma_negativa }</p>
                                     </div>
                                   )}
 
                     {phrase.grammar_notes.forma_interrogativa   && (
                                                 <div className="bg-white rounded-lg p-3 border-l-4 border-cyan-500">
-                                                  <p className="text-xs font-semibold text-red-700 uppercase tracking-wide mb-1">❓ Question Form</p>
+                                                  <p className="text-xs font-semibold text-red-700 uppercase tracking-wide mb-1">❓ {t('questionForm')}</p>
                                                   <p className="text-sm text-red-800">{phrase.grammar_notes.forma_interrogativa  }</p>
                                                 </div>
                                               )}
                     {phrase.grammar_notes.time_markers    && (
                                                             <div className="bg-white rounded-lg p-3 border-l-4 border-cyan-500">
-                                                              <p className="text-xs font-semibold text-cyan-700 uppercase tracking-wide mb-2">⏰ Time Markers</p>
+                                                              <p className="text-xs font-semibold text-cyan-700 uppercase tracking-wide mb-2">⏰ {t('timeMarkers')}</p>
                                                               <div className="flex flex-wrap gap-2">
                                                                                   {phrase.grammar_notes.time_markers.map((alt, index) => (
                                                                                     <span
@@ -477,7 +469,7 @@ const handleNextSkip = () => {
 
                       {phrase.grammar_notes.formas_alternativas && phrase.grammar_notes.formas_alternativas.length > 0 && (
                         <div className="bg-white rounded-lg p-3 border-l-4 border-cyan-500">
-                          <p className="text-xs font-semibold text-cyan-700 uppercase tracking-wide mb-2">Alternative Forms</p>
+                          <p className="text-xs font-semibold text-cyan-700 uppercase tracking-wide mb-2">{t('alternativeForms')}</p>
                           <div className="flex flex-wrap gap-2">
                             {phrase.grammar_notes.formas_alternativas.map((alt, index) => (
                               <span
@@ -532,8 +524,8 @@ const handleNextSkip = () => {
           <AlertCircle className="text-red-600" size={20} aria-hidden="true" />
           <p className="text-red-700 text-sm">
             {speechError === 'not-allowed'
-              ? '🔒 Microphone permission denied. Click the 🔒 icon and allow access.'
-              : `Error: ${speechError}`
+              ? t('micPermissionDenied')
+              : `${t('error')} ${speechError}`
             }
           </p>
         </div>
@@ -544,11 +536,11 @@ const handleNextSkip = () => {
                     <button
                       onClick={handleSkipPhrase}
                       className="flex items-center gap-1 sm:gap-2 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white px-3 sm:px-6 py-2 sm:py-3 rounded-lg transition-all shadow-md font-semibold text-sm sm:text-base"
-                      title={`Você tem ${referral.rewards.skipPhrases} frases para pular`}
+                      title={t('skipPhraseTooltip', { count: referral.rewards.skipPhrases })}
                       disabled={isDisabled}
                     >
                       <Gift size={20} className="sm:w-6 sm:h-6" />
-                      <span>Skip ({referral.rewards.skipPhrases})</span>
+                      <span>{t('skip')} ({referral.rewards.skipPhrases})</span>
                     </button>
                   )}
 
@@ -573,11 +565,11 @@ const handleNextSkip = () => {
           }}
           style={{ touchAction: 'manipulation' }}
           className="flex items-center gap-1 sm:gap-2 bg-blue-500 hover:bg-blue-600 text-white px-3 sm:px-6 py-2 sm:py-3 rounded-lg transition-colors shadow-md font-semibold text-sm sm:text-base relative z-10"
-          aria-label="Reproduzir áudio da frase"
-          title="Clique para ouvir a pronúncia correta."
+          aria-label={t('playAudioAria')}
+          title={t('clickToHearCorrect')}
         >
           <Volume2 size={20} className="sm:w-6 sm:h-6" aria-hidden="true" />
-          <span>Hear</span>
+          <span>{t('hear')}</span>
         </button>
 
         <button
@@ -599,16 +591,16 @@ const handleNextSkip = () => {
               : 'bg-green-500 hover:bg-green-600 text-white'
           }`}
           data-tour-id="tour-speak-button"
-          aria-label={isListening ? 'Parar gravação' : 'Iniciar gravação'}
+          aria-label={isListening ? t('stopRecordingAria') : t('startRecordingAria')}
           aria-pressed={isListening}
-          title={isListening ? 'Clique para parar a gravação' : 'Clique para começar a falar'}
+          title={isListening ? t('clickToStopRecording') : t('clickToStartSpeaking')}
         >
           {isListening ? (
             <MicOff size={20} className="sm:w-6 sm:h-6" aria-hidden="true" />
           ) : (
             <Mic size={20} className="sm:w-6 sm:h-6" aria-hidden="true" />
           )}
-          <span>{isListening ? 'Stop' : 'Speak'}</span>
+          <span>{isListening ? t('stop') : t('speak')}</span>
         </button>
 
 
@@ -620,7 +612,7 @@ const handleNextSkip = () => {
             data-tour-id="tour-next-button"
           >
             <ArrowRight size={20} className="sm:w-6 sm:h-6" />
-            <span>Next</span>
+            <span>{t('next')}</span>
           </button>
         )}
       </div>
@@ -629,7 +621,7 @@ const handleNextSkip = () => {
         <div className="mb-6 p-4 bg-white rounded-lg shadow-md border-2 border-blue-300">
           <h3 className="font-bold text-gray-700 mb-3 flex items-center gap-2">
             <Settings size={20} />
-            Choose Voice ({voices.length} available in your device)
+            {t('chooseVoice', { count: voices.length })}
           </h3>
 
           <div className="space-y-2 max-h-64 overflow-y-auto">
@@ -640,7 +632,7 @@ const handleNextSkip = () => {
                                   }}
                                   className="ml-2 px-3 py-1 bg-blue-500 hover:bg-blue-600 text-white rounded text-sm font-semibold"
                                 >
-                                  Select the voice and click here for Test
+                                  {t('selectAndTest')}
                                 </button>
             {voices.map((voice) => (
               <div
@@ -679,18 +671,18 @@ const handleNextSkip = () => {
                 ? 'bg-purple-600 hover:bg-purple-700 text-white'
                 : 'bg-purple-500 hover:bg-purple-600 text-white'
             }`}
-            aria-label={isPlayingUserAudio ? 'Parar reprodução da gravação' : 'Reproduzir minha gravação'}
+            aria-label={isPlayingUserAudio ? t('stopPlaybackAria') : t('playRecordingAria')}
             aria-pressed={isPlayingUserAudio}
           >
             {isPlayingUserAudio ? (
               <>
                 <Pause size={20} className="animate-pulse" aria-hidden="true" />
-                <span>Stop Recording</span>
+                <span>{t('stopRecording')}</span>
               </>
             ) : (
               <>
                 <Play size={20} aria-hidden="true" />
-                <span>Hear Your Recording</span>
+                <span>{t('hearYourRecording')}</span>
               </>
             )}
           </button>
@@ -699,7 +691,7 @@ const handleNextSkip = () => {
 
       <div data-tour-id="tour-feedback-area" className="space-y-4">
         {showFeedback && result && !isListening && (
-          <div 
+          <div
             className={`mt-6 p-5 rounded-lg transition-all ${
               result.similarity === 100
                 ? 'bg-green-100 border-2 border-green-600 shadow-lg'
@@ -710,7 +702,7 @@ const handleNextSkip = () => {
             role="status"
             aria-live="polite"
             aria-atomic="true"
-            aria-label={`Resultado: ${result.similarity}% de acurácia`}
+            aria-label={t('resultAria', { similarity: result.similarity })}
           >
             <div className="flex items-center gap-3 mb-3">
               {result.similarity > 80 ? (

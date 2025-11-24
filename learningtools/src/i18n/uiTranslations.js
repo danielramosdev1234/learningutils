@@ -237,7 +237,63 @@ export const UI_TRANSLATIONS = {
       // Tips
       tipsTitle: 'Dicas para Melhores Resultados',
       tipsText: '💡 Pratique diariamente por pelo menos 10 minutos. Cada modo desenvolve habilidades diferentes para ajudá-lo a se tornar fluente!',
-    },
+    },phraseCard: {
+        // Grammar Notes
+        grammarTips: 'Dicas de Gramática',
+        clickToSeeGrammar: 'Clique para ver explicações gramaticais',
+        hideGrammarTips: 'Ocultar dicas de gramática',
+        showGrammarTips: 'Mostrar dicas de gramática',
+        structure: 'Estrutura',
+        explanation: 'Explicação',
+        why: 'Por quê?',
+        keyWord: 'Palavra-chave',
+        pronunciationTip: 'Dica de Pronúncia',
+        commonMistake: 'Erro Comum',
+        negativeForm: 'Forma Negativa',
+        questionForm: 'Forma Interrogativa',
+        timeMarkers: 'Marcadores de Tempo',
+        alternativeForms: 'Formas Alternativas',
+
+        // Buttons
+        skip: 'Pular',
+        hear: 'Ouvir',
+        speak: 'Falar',
+        stop: 'Parar',
+        next: 'Próximo',
+
+        // Voice Selector
+        chooseVoice: 'Escolher Voz',
+        availableVoices: '{{count}} disponíveis no seu dispositivo',
+        selectAndTest: 'Selecione a voz e clique aqui para Testar',
+
+        // Audio Playback
+        stopRecording: 'Parar Gravação',
+        hearYourRecording: 'Ouvir sua Gravação',
+
+        // Feedback
+        perfect: 'Perfeito! 🎉',
+        veryGood: 'Muito Bom! 👏',
+        keepPracticing: 'Continue Praticando! 💪',
+        youSaid: 'Você disse:',
+        recordingListening: '🎙️ Gravando & Ouvindo...',
+
+        // Errors
+        micPermissionDenied: '🔒 Permissão de microfone negada. Clique no ícone 🔒 e permita o acesso.',
+        error: 'Erro:',
+
+        // Tooltips/Aria
+        skipPhraseTooltip: 'Você tem {{count}} frases para pular',
+        playAudioAria: 'Reproduzir áudio da frase',
+        clickToHearCorrect: 'Clique para ouvir a pronúncia correta.',
+        startRecordingAria: 'Iniciar gravação',
+        stopRecordingAria: 'Parar gravação',
+        clickToStartSpeaking: 'Clique para começar a falar',
+        clickToStopRecording: 'Clique para parar a gravação',
+        stopPlaybackAria: 'Parar reprodução da gravação',
+        playRecordingAria: 'Reproduzir minha gravação',
+        resultAria: 'Resultado: {{similarity}}% de acurácia',
+      },
+
   },
   'en-US': {
     common: {
@@ -473,6 +529,62 @@ export const UI_TRANSLATIONS = {
       // Tips
       tipsTitle: 'Tips for Better Results',
       tipsText: '💡 Practice daily for at least 10 minutes. Each mode targets different skills to help you become fluent!',
+    },
+    phraseCard: {
+      // Grammar Notes
+      grammarTips: 'Grammar Tips',
+      clickToSeeGrammar: 'Click to see grammar explanations',
+      hideGrammarTips: 'Hide grammar tips',
+      showGrammarTips: 'Show grammar tips',
+      structure: 'Structure',
+      explanation: 'Explanation',
+      why: 'Why?',
+      keyWord: 'Key Word',
+      pronunciationTip: 'Pronunciation Tip',
+      commonMistake: 'Common Mistake',
+      negativeForm: 'Negative Form',
+      questionForm: 'Question Form',
+      timeMarkers: 'Time Markers',
+      alternativeForms: 'Alternative Forms',
+
+      // Buttons
+      skip: 'Skip',
+      hear: 'Hear',
+      speak: 'Speak',
+      stop: 'Stop',
+      next: 'Next',
+
+      // Voice Selector
+      chooseVoice: 'Choose Voice',
+      availableVoices: '{{count}} available in your device',
+      selectAndTest: 'Select the voice and click here for Test',
+
+      // Audio Playback
+      stopRecording: 'Stop Recording',
+      hearYourRecording: 'Hear Your Recording',
+
+      // Feedback
+      perfect: 'Perfect! 🎉',
+      veryGood: 'Very Good! 👏',
+      keepPracticing: 'Keep Practicing! 💪',
+      youSaid: 'You said:',
+      recordingListening: '🎙️ Recording & Listening...',
+
+      // Errors
+      micPermissionDenied: '🔒 Microphone permission denied. Click the 🔒 icon and allow access.',
+      error: 'Error:',
+
+      // Tooltips/Aria
+      skipPhraseTooltip: 'You have {{count}} phrases to skip',
+      playAudioAria: 'Play phrase audio',
+      clickToHearCorrect: 'Click to hear the correct pronunciation.',
+      startRecordingAria: 'Start recording',
+      stopRecordingAria: 'Stop recording',
+      clickToStartSpeaking: 'Click to start speaking',
+      clickToStopRecording: 'Click to stop recording',
+      stopPlaybackAria: 'Stop recording playback',
+      playRecordingAria: 'Play my recording',
+      resultAria: 'Result: {{similarity}}% accuracy',
     },
   },
 };
