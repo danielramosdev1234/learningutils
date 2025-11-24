@@ -1,4 +1,4 @@
-import { collection, getDocs } from 'firebase/firestore';
+import { collection, getDocs, query, where, orderBy, limit } from 'firebase/firestore';
 import { db } from '../config/firebase';
 import { calculateLevel, calculateXPProgress } from '../store/slices/xpSlice';
 
@@ -16,7 +16,13 @@ export const loadLevelRanking = async (limitCount = 50, includeGuests = false) =
 
     // Busca todos os usuários
     const usersRef = collection(db, 'users');
-    const querySnapshot = await getDocs(usersRef);
+    const q = query(
+      usersRef,
+      where('xpSystem.totalXP', '>', 0),
+      orderBy('xpSystem.totalXP', 'desc'),
+      limit(20)
+    );
+    const querySnapshot = await getDocs(q);
 
     console.log(`📊 Total de documentos encontrados: ${querySnapshot.size}`);
 

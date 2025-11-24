@@ -508,7 +508,7 @@ const FeatureCard = ({ feature, onNavigate }) => {
   const { language } = useUILanguage();
 
   return (
-    <div className="bg-white rounded-2xl shadow-md hover:shadow-xl transition-all overflow-hidden group flex flex-col h-full">
+    <div className="bg-white rounded-2xl shadow-md hover:shadow-xl transition-all overflow-hidden group flex flex-col h-full" onClick={() => onNavigate(feature.path)}>
       {/* Header with gradient and icon */}
       <div className={`bg-gradient-to-r ${feature.gradient} p-4 relative`}>
         <div className="flex items-center gap-3 text-white">
@@ -553,7 +553,7 @@ const FeatureCard = ({ feature, onNavigate }) => {
 
         {/* CTA Button - sempre no final */}
         <button
-          onClick={() => onNavigate(feature.path)}
+
           className={`w-full bg-gradient-to-r ${feature.gradient} text-white py-3 rounded-xl font-bold hover:shadow-lg transition-all flex items-center justify-center gap-2 group-hover:scale-105 mt-auto`}
         >
           {translateUI(language, 'dashboard.featureStartTraining')}

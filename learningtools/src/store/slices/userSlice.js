@@ -850,7 +850,29 @@ const userSlice = createSlice({
         console.log(`🔥 Streak: ${state.stats.streak.current} dias!`);
 
       } else if (diffDays === 2 && state.stats.streak.freezes > 0) {
-        console.log(`⚠️ Perdeu 1 dia! Você tem ${state.stats.streak.freezes} freeze(s) disponível(is)`);
+        // ⭐ FECHAMENTO DO IF ANTERIOR ADICIONADO ACIMA
+
+        // AUTO-USAR FREEZE
+        state.stats.streak.freezes -= 1;
+        state.stats.streak.freezesUsed.push(lastDate);
+
+        // Preenche o dia perdido
+        const missedDateStr = new Date(lastDateObj.getTime() + 86400000)
+          .toISOString().split('T')[0];
+
+        if (!state.stats.streak.history.includes(missedDateStr)) {
+          state.stats.streak.history.push(missedDateStr);
+        }
+
+        // Continua o streak
+        state.stats.streak.current += 1;
+        state.stats.streak.lastActivityDate = today;
+
+        if (!state.stats.streak.history.includes(today)) {
+          state.stats.streak.history.push(today);
+        }
+
+        console.log(`❄️ Freeze usado automaticamente! Restam: ${state.stats.streak.freezes}`);
 
       } else {
         console.log(`💔 Streak quebrado: ${state.stats.streak.current} dias`);
