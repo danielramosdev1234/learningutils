@@ -104,6 +104,8 @@ const initialState = {
     lastPromptAt: null
   },
 
+  lastActivity: null,
+
   loading: false,
   error: null,
   syncStatus: 'synced'
@@ -255,7 +257,8 @@ export const initializeUser = createAsyncThunk(
           progress: userData.progress,
           stats: userData.stats,
           levelSystem: userData.levelSystem,
-          referral: referralData
+          referral: referralData,
+          lastActivity: userData.lastActivity || null
         };
       } else {
         // ✅ GUEST
@@ -499,7 +502,8 @@ export const saveProgress = createAsyncThunk(
           state.progress,
           state.stats,
           state.levelSystem,
-          referralToSave
+          referralToSave,
+          state.lastActivity
         );
 
         console.log('✅ Dados salvos no Firestore');
@@ -891,6 +895,23 @@ const userSlice = createSlice({
       const { indices } = action.payload;
       state.levelSystem.globalCompletedIndices = indices;
       console.log('✅ Level system indices updated:', indices);
+    },
+
+    updateLastActivity: (state, action) => {
+      const { trainerType, mode, categoryId, phraseId, phraseIndex, resumeUrl, displayText } = action.payload;
+
+      state.lastActivity = {
+        timestamp: new Date().toISOString(),
+        trainerType,
+        mode,
+        categoryId: categoryId || null,
+        phraseId: phraseId || null,
+        phraseIndex: phraseIndex || null,
+        resumeUrl,
+        displayText
+      };
+
+      console.log('✅ Last activity updated:', state.lastActivity);
     }
   },
   extraReducers: (builder) => {
@@ -910,6 +931,7 @@ const userSlice = createSlice({
         };
         state.stats = action.payload.stats;
         state.levelSystem = action.payload.levelSystem;
+        state.lastActivity = action.payload.lastActivity || null;
 
         if (action.payload.referral) {
           state.referral = {
@@ -1023,7 +1045,8 @@ export const {
   useSkipPhrase,
   confirmInviteSuccess,
   giveWelcomeBonus,
-  updateReferralData
+  updateReferralData,
+  updateLastActivity
 } = userSlice.actions;
 
 export default userSlice.reducer;

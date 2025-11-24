@@ -4,9 +4,16 @@ import questionsImportadas from '../../utils/questionsDatabase.js';
 import questionsScenesDatabase from '../../utils/questionsScenesDatabase.js';
 import { useXP } from '../../hooks/useXP';
 import { LevelIndicator } from '../leaderboard/LevelIndicator';
+import { useDispatch, useSelector } from 'react-redux';  // ✅ CORRIGIDO
+import { updateLastActivity } from '../../store/slices/userSlice';
+
+
 
 const VideoLearningApp = () => {
+  const dispatch = useDispatch();
   const { earnXP } = useXP();
+  
+  // ... rest of the code
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [score, setScore] = useState(0);
   const [correctAnswers, setCorrectAnswers] = useState(0);
@@ -21,6 +28,8 @@ const VideoLearningApp = () => {
   const [showFinalResults, setShowFinalResults] = useState(false);
   const [shuffledQuestions, setShuffledQuestions] = useState([]);
   const [showTranslations, setShowTranslations] = useState(false);
+  const { mode } = useSelector(state => state.user);
+
 
    const questions = gameMode === 'phrases'
       ? questionsImportadas
@@ -90,15 +99,14 @@ const VideoLearningApp = () => {
     setShowResult(true);
 
     if (correct) {
-
       setCorrectAnswers(correctAnswers + 1);
       
       // Ganha XP por acertar questão de vídeo
       // Phrases: 5 XP | Scenes: 10 XP
       const xpAmount = gameMode === 'phrases' ? 5 : 10;
-
+    
       setScore(score + xpAmount);
-            setStreak(streak + 1);
+      setStreak(streak + 1);
       
       try {
         await earnXP('video', {
@@ -107,6 +115,18 @@ const VideoLearningApp = () => {
           videoId: currentQ.videoId,
           gameMode
         });
+    
+        // ✅ CORRIGIDO: Track last activity for authenticated users
+        if (mode === 'authenticated') {
+          dispatch(updateLastActivity({
+            trainerType: 'video',                                    // ✅ Tipo correto
+            mode: gameMode,                                          // ✅ 'phrases' ou 'scenes'
+            phraseId: currentQ.id || `video-q-${currentQuestion}`,  // ✅ ID da questão
+            phraseIndex: currentQuestion,                            // ✅ Índice correto
+            resumeUrl: '/?mode=video',                               // ✅ URL correta
+            displayText: `Video ${gameMode === 'phrases' ? 'Phrases' : 'Scenes'} - Question ${currentQuestion + 1}` // ✅ Texto descritivo
+          }));
+        }
       } catch (error) {
         console.error('Erro ao ganhar XP:', error);
       }

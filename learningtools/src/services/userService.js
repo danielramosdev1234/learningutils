@@ -320,7 +320,7 @@ const removeUndefined = (obj) => {
 /**
  * Salva dados do usuário autenticado no Firestore
  */
-export const saveAuthUserData = async (userId, profile, progress, stats, levelSystem, referral) => {
+export const saveAuthUserData = async (userId, profile, progress, stats, levelSystem, referral, lastActivity = null) => {
   try {
     console.log('💾 === DEBUG SAVE AUTH USER DATA ===');
     console.log('   User ID:', userId);
@@ -350,6 +350,7 @@ export const saveAuthUserData = async (userId, profile, progress, stats, levelSy
       stats,
       levelSystem,
       referral,
+      lastActivity,
       lastUpdated: serverTimestamp()
     };
 
@@ -372,7 +373,8 @@ export const saveAuthUserData = async (userId, profile, progress, stats, levelSy
       progress,
       stats,
       levelSystem,
-      referral
+      referral,
+      lastActivity
     };
     saveAuthUserDataToCache(userId, userData);
 
@@ -388,7 +390,8 @@ export const saveAuthUserData = async (userId, profile, progress, stats, levelSy
         progress,
         stats,
         levelSystem,
-        referral
+        referral,
+        lastActivity
       };
       saveAuthUserDataToCache(userId, userData);
       console.log('💾 Dados salvos no cache local mesmo após erro');

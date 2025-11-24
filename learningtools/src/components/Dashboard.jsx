@@ -8,6 +8,7 @@ import {
 import { useSelector } from 'react-redux';
 import LevelRankingModal from './modals/LevelRankingModal';
 import StreakModal from './modals/StreakModal';
+import ContinueCard from './ContinueCard';
 import wordByWordImg from '../assets/wordbyword.png';
 import translatePracticeImg from '../assets/translatepractice.png';
 import numerosImg from '../assets/numeros.png';
@@ -348,6 +349,11 @@ const Dashboard = () => {
               </p>
             </div>
           </div>
+        </div>
+
+        {/* Continue Card */}
+        <div className="mb-4">
+          <ContinueCard />
         </div>
 
         {showModal && (

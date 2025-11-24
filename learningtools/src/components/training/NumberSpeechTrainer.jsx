@@ -8,7 +8,7 @@ import { loadLeaderboard, saveRecord as saveRecordService, checkIfNewRecord } fr
 import { RecordModal } from '../modals/RecordModal';
 import { Leaderboard } from '../leaderboard/Leaderboard';
 import { useSelector, useDispatch } from 'react-redux';
-import { incrementPhraseCompleted, incrementIncorrectAttempt } from '../../store/slices/userSlice';
+import { incrementPhraseCompleted, incrementIncorrectAttempt, updateLastActivity } from '../../store/slices/userSlice';
 import ProtectedLeaderboardSave from '../leaderboard/ProtectedLeaderboardSave';
 import { useXP } from '../../hooks/useXP';
 import { LevelIndicator } from '../leaderboard/LevelIndicator';
@@ -128,6 +128,18 @@ export default function NumberSpeechTrainer() {
       } catch (error) {
         console.error('Erro ao ganhar XP:', error);
       }
+
+      if (mode === 'authenticated') {
+        dispatch(updateLastActivity({
+          trainerType: 'numbers',
+          mode: 'speech',
+          phraseId: `number-${currentNumber}`,
+          phraseIndex: score.total,
+          resumeUrl: '/?mode=numbers',
+          displayText: `Number Practice - ${selectedLanguage}`
+        }));
+      }
+      
       
       setTimeout(() => {
         generateNewNumber();

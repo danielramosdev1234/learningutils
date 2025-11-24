@@ -4,16 +4,20 @@ import { useTranslation } from '../../hooks/useTranslation';
 import { PhraseCard } from './PhraseCard';
 import { useTextToSpeech } from '../../hooks/useTextToSpeech';
 import { useSpeechRecognition } from '../../hooks/useSpeechRecognition';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   incrementPhraseCompleted,
   saveProgress,
-  markPhraseCompleted
+  markPhraseCompleted,
+  updateLastActivity  // ✅ ADD THIS
 } from '../../store/slices/userSlice';
 import { LevelIndicator } from '../leaderboard/LevelIndicator';
 
 const TranslateTrainer = () => {
   const dispatch = useDispatch();
+  const { mode } = useSelector(state => state.user);  // ✅ ADD THIS
+  
+  // ... rest of the code
 
   const [portugueseText, setPortugueseText] = useState('');
   const [currentPhrase, setCurrentPhrase] = useState(null);
@@ -113,16 +117,28 @@ const TranslateTrainer = () => {
 
   const handleCorrectAnswer = () => {
     console.log('✅ User completed the translated phrase!');
-
+  
     dispatch(incrementPhraseCompleted());
-
+  
     if (currentPhrase) {
       dispatch(markPhraseCompleted({
         phraseId: currentPhrase.id,
         phraseIndex: 0
       }));
     }
-
+  
+    // ✅ ADD THIS: Track last activity for authenticated users
+    if (mode === 'authenticated') {
+      dispatch(updateLastActivity({
+        trainerType: 'translate',
+        mode: 'translation',
+        phraseId: currentPhrase?.id || '',
+        phraseIndex: 0,
+        resumeUrl: '/?mode=translate',
+        displayText: 'Translation Practice'
+      }));
+    }
+  
     setTimeout(() => {
       dispatch(saveProgress());
     }, 500);

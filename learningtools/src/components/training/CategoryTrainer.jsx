@@ -9,7 +9,8 @@ import {
   markCategoryPhraseCompleted,
   incrementPhraseCompleted,
   saveProgress,
-  updateChunkProgress
+  updateChunkProgress,
+  updateLastActivity
 } from '../../store/slices/userSlice';
 import { LevelIndicator } from '../leaderboard/LevelIndicator';
 import GuidedTourOverlay from '../ui/GuidedTourOverlay';
@@ -378,7 +379,20 @@ const CategoryTrainer = ({ autoSelectCategory = null }) => {
     dispatch(incrementPhraseCompleted());
     setCompletedInSession([...completedInSession, currentPhrase.id]);
 
+    // Update last activity
     if (mode === 'authenticated' && userId) {
+      const categoryName = CATEGORIES.find(cat => cat.id === selectedCategory)?.name || selectedCategory;
+
+      dispatch(updateLastActivity({
+        trainerType: 'categories',
+        mode: 'phrases',
+        categoryId: selectedCategory,
+        phraseId: currentPhrase.id,
+        phraseIndex: currentIndex,
+        resumeUrl: `/?mode=categories&category=${selectedCategory}`,
+        displayText: `${categoryName} - Phrase ${currentIndex + 1}`
+      }));
+
       setTimeout(() => {
         dispatch(saveProgress());
         console.log('💾 Progresso de categoria salvo:', selectedCategory, currentPhrase.id);

@@ -12,7 +12,8 @@ import {
   saveProgress,
   closeLevelUpModal,
   updateLevelSystemIndices,
-  markPhraseCompleted
+  markPhraseCompleted,
+  updateLastActivity  // ✅ ADD THIS
 } from '../../store/slices/userSlice';
 import { InvitePromptModal } from '../modals/InvitePromptModal';
 import { Volume2, Mic, MicOff, CheckCircle, XCircle, Loader, AlertCircle, Play, Pause, ArrowRight, Gift, Settings } from 'lucide-react';
@@ -179,6 +180,17 @@ const ChunkTrainer = ({ onOpenInvite }) => {
     // ✅ Verifica se deve mostrar modal de convite
     const newCount = phrasesCompletedSincePrompt + 1;
     setPhrasesCompletedSincePrompt(newCount);
+
+    if (mode === 'authenticated') {
+      dispatch(updateLastActivity({
+        trainerType: 'speak_phrases',
+        mode: 'pronunciation',
+        phraseId: currentPhrase.id,
+        phraseIndex: currentIndex,
+        resumeUrl: '/?mode=phrases',
+        displayText: `Speak Phrases - Phrase ${currentIndex + 1}`
+      }));
+    }
 
     // Mostra modal a cada 7 frases completadas
     if (newCount >= 7) {

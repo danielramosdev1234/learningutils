@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Timer, Trophy, Zap, Volume2, Mic, MicOff, CheckCircle, XCircle, Play, Hash } from 'lucide-react';
 import { loadChallengeLeaderboard, saveChallengeRecord, checkIfMakesTop10 } from '../../services/challengeLeaderboardService';
 import { useSelector, useDispatch } from 'react-redux';
-import { updateChallengeHighScore } from '../../store/slices/userSlice';
+import { updateChallengeHighScore, updateLastActivity } from '../../store/slices/userSlice';
 import ProtectedLeaderboardSave from '../leaderboard/ProtectedLeaderboardSave';
 import { LevelIndicator } from '../leaderboard/LevelIndicator';
 import { useXP } from '../../hooks/useXP';
@@ -242,6 +242,18 @@ const ChallengeTrainer = () => {
           timeLeft,
           amount: wordCount // 1 XP por palavra
         });
+
+        // Update last activity
+        if (mode === 'authenticated') {
+          dispatch(updateLastActivity({
+            trainerType: 'challenge',
+            mode: 'challenge',
+            phraseId: currentPhrase.id,
+            phraseIndex: currentPhraseIndex,
+            resumeUrl: '/?mode=challenge',
+            displayText: `Challenge Mode - ${completedPhrases + 1} phrases completed`
+          }));
+        }
       } catch (error) {
         console.error('Erro ao ganhar XP:', error);
       }
