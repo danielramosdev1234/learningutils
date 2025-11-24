@@ -716,8 +716,13 @@ const handleNextSkip = () => {
                 <XCircle className="text-orange-600" size={32} aria-hidden="true" />
               )}
               <h3 className={`font-bold text-xl ${result.similarity > 80 ? 'text-green-700' : 'text-orange-700'}`}>
-                {result.similarity > 80 ? 'Perfect! 🎉' : 'Keep Practicing! 💪'}
+                {result.similarity === 100 ? 'Perfect! 🎉' : result.similarity >= 80 ? 'Very Good! 👍' : 'Keep Practicing! 💪'}
               </h3>
+              <span data-tour-id="tour-feedback-accuracy" className={`text-2xl font-bold ${
+                                result.similarity > 80 ? 'text-green-600' : 'text-orange-600'
+                              }`}>
+                                {result.similarity}%
+                              </span>
             </div>
 
             <div className="space-y-2">
@@ -730,17 +735,7 @@ const handleNextSkip = () => {
                 </p>
               </div>
 
-              <div
-                className="flex items-center justify-between bg-white bg-opacity-60 p-3 rounded-lg"
-                data-tour-id="tour-feedback-accuracy"
-              >
-                <span className="font-semibold text-gray-700">Accuracy:</span>
-                <span className={`text-2xl font-bold ${
-                  result.similarity > 80 ? 'text-green-600' : 'text-orange-600'
-                }`}>
-                  {result.similarity}%
-                </span>
-              </div>
+
 
                {transcript && !isListening && (
                         <div className="mt-4" data-tour-id="tour-feedback-word">
