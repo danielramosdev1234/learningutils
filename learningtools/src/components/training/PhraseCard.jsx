@@ -701,7 +701,9 @@ const handleNextSkip = () => {
         {showFeedback && result && !isListening && (
           <div 
             className={`mt-6 p-5 rounded-lg transition-all ${
-              result.similarity > 80
+              result.similarity === 100
+                ? 'bg-green-100 border-2 border-green-600 shadow-lg'
+                : result.similarity >= 80
                 ? 'bg-green-50 border-2 border-green-400 shadow-lg'
                 : 'bg-orange-50 border-2 border-orange-400 shadow-lg'
             }`}
