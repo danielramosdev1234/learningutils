@@ -386,6 +386,7 @@ const processOptionText = (text) => {
               allowFullScreen
               title="Video Question"
             />
+            <div className="absolute top-0 left-0 w-full h-full cursor-not-allowed" onClick={() => setVideoPlayCount(videoPlayCount + 1)}/>
             <div className="absolute top-0 left-0 right-0 h-16 bg-black pointer-events-none z-10"></div>
             <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-black to-transparent pointer-events-none z-10"></div>
           </div>
