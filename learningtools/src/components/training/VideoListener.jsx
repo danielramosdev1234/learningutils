@@ -103,7 +103,7 @@ const VideoLearningApp = () => {
       
       // Ganha XP por acertar questão de vídeo
       // Phrases: 5 XP | Scenes: 10 XP
-      const xpAmount = gameMode === 'phrases' ? 5 : 10;
+      const xpAmount = gameMode === 'phrases' ? 2 : 5;
     
       setScore(score + xpAmount);
       setStreak(streak + 1);
@@ -418,15 +418,6 @@ const processOptionText = (text) => {
           </h2>
         </div>
 
-        {/* Botão de Tradução */}
-        <div className="mb-4 flex justify-center">
-          <button
-            onClick={() => setShowTranslations(!showTranslations)}
-            className="bg-blue-500 hover:bg-blue-600 px-6 py-3 rounded-xl font-semibold transition-all transform hover:scale-105 shadow-lg flex items-center gap-2"
-          >
-            <span>{showTranslations ? '🔤 Ocultar Traduções' : '🌐 Mostrar Traduções'}</span>
-          </button>
-        </div>
 
 
         {/* Opções */}
@@ -487,7 +478,7 @@ const processOptionText = (text) => {
                     Você acertou! Sequência: {streak}x
                     <br />
                     <span className="text-yellow-300 font-bold">
-                      +{gameMode === 'phrases' ? 5 : 10} XP ganho!
+                      +{gameMode === 'phrases' ? 2 : 5} XP ganho!
                     </span>
                   </>
                 ) : (

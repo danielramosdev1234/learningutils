@@ -359,9 +359,9 @@ export const LevelIndicator = ({ variant = 'full' }) => {
                     <span className="text-base sm:text-xl flex-shrink-0">🎥</span>
                     <span className="font-bold text-indigo-800 text-xs sm:text-sm truncate">Video</span>
                   </div>
-                  <span className="px-2 sm:px-3 py-0.5 sm:py-1 bg-indigo-500 text-white rounded-lg text-xs sm:text-sm font-bold shadow-sm flex-shrink-0">5-10 XP</span>
+                  <span className="px-2 sm:px-3 py-0.5 sm:py-1 bg-indigo-500 text-white rounded-lg text-xs sm:text-sm font-bold shadow-sm flex-shrink-0">2-5 XP</span>
                 </div>
-                <p className="text-xs sm:text-sm text-indigo-700">Cada questão correta. Phrases: 5 XP | Scenes: 10 XP</p>
+                <p className="text-xs sm:text-sm text-indigo-700">Cada questão correta. Phrases: 2 XP | Scenes: 5 XP</p>
                 {xpBreakdown.video > 0 && (
                   <p className="text-[10px] sm:text-xs text-indigo-500 mt-1.5 sm:mt-2 font-semibold">✓ Total ganho: {xpBreakdown.video.toLocaleString()} XP</p>
                 )}

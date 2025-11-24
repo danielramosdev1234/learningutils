@@ -6,13 +6,12 @@ const questions = [
     audioText: "What is this? I think I got an idea",
     level: "beginner",
     options: [
-      "What is that? I think I got an idea (O que é aquilo? Acho que tive uma ideia)",
-      "What is this? I think I have an idea (O que é isso? Acho que tenho uma ideia)",
-      "What is this? I think I got an idea (O que é isso? Acho que tive uma ideia)",
-      "What is this? I think I get an idea (O que é isso? Acho que pego uma ideia)"
+      "O que é isso? Acho que tive uma ideia",
+      "O que é aquilo? Acho que entendi"
     ],
-    correctIndex: 2,
-    category: "Movies"
+    correctIndex: 0,
+    category: "Movies",
+    explanation: "'This' = isso (perto). 'That' seria aquilo. 'Got an idea' = tive uma ideia nova, não apenas entendi."
   },
   {
     videoId: "f1n1whYbo5Y",
@@ -21,13 +20,12 @@ const questions = [
     audioText: "Okay, so we messed up, but the world didn't end. We rebuilt it better for some",
     level: "intermediate",
     options: [
-      "Okay, so we missed up, but the world didn't end. We rebuild it better for some (Ok, então erramos, mas o mundo não acabou. Reconstruímos melhor para alguns)",
-      "Okay, so we messed up, but the world didn't end. We rebuilt it better for some (Ok, então bagunçamos, mas o mundo não acabou. Reconstruímos melhor para alguns)",
-      "Okay, so we messed up, but the world didn't end. We rebuild it better for sum (Ok, então bagunçamos, mas o mundo não acabou. Reconstruímos melhor para soma)",
-      "Okay, so we messed up, but the world didn't end. We rebuilt it better for sum (Ok, então bagunçamos, mas o mundo não acabou. Reconstruímos melhor para soma)"
+      "Ok, então bagunçamos, mas o mundo não acabou. Reconstruímos melhor para alguns",
+      "Ok, então bagunçamos, mas o mundo não acabou. Reconstruímos melhor para todos"
     ],
-    correctIndex: 1,
-    category: "Movies"
+    correctIndex: 0,
+    category: "Movies",
+    explanation: "'For some' = para alguns (não todos). Indica que apenas parte se beneficiou."
   },
   {
     videoId: "f1n1whYbo5Y",
@@ -36,13 +34,12 @@ const questions = [
     audioText: "The genetics. Genetically improved humans that live like kings",
     level: "intermediate",
     options: [
-      "The genetics. Genetically improved humans that lived like kings (Os geneticamente modificados. Humanos melhorados que viveram como reis)",
-      "The genetic. Genetically improved humans that live like kings (O genético. Humanos melhorados que vivem como reis)",
-      "The genetics. Genetically improve humans that live like kings (Os geneticamente modificados. Humanos melhoram que vivem como reis)",
-      "The genetics. Genetically improved humans that live like kings (Os geneticamente modificados. Humanos melhorados que vivem como reis)"
+      "Os geneticamente modificados. Humanos melhorados que vivem como reis",
+      "Os geneticamente modificados. Humanos melhorados que trabalham como reis"
     ],
-    correctIndex: 3,
-    category: "Movies"
+    correctIndex: 0,
+    category: "Movies",
+    explanation: "'Live like kings' = viver como reis (estilo de vida luxuoso). 'Trabalhar' mudaria completamente o sentido."
   },
   {
     videoId: "f1n1whYbo5Y",
@@ -51,13 +48,12 @@ const questions = [
     audioText: "Then there's the specials. Although there's nothing special about us",
     level: "intermediate",
     options: [
-      "Then there's the specials. Although there's nothing special about us (Então há os especiais. Embora não haja nada de especial sobre nós)",
-      "Then there's the specials. Although there's nothing especial about us (Então há os especiais. Embora não haja nada especial sobre nós)",
-      "Then there are the specials. Although there's nothing special about us (Então existem os especiais. Embora não haja nada de especial sobre nós)",
-      "Then there's the specials. Although there's nothing special about as (Então há os especiais. Embora não haja nada de especial sobre como)"
+      "Então há os especiais. Embora não haja nada de especial sobre nós",
+      "Então há os especiais. Embora haja algo de especial sobre nós"
     ],
     correctIndex: 0,
-    category: "Movies"
+    category: "Movies",
+    explanation: "'Nothing special' = nada de especial (irônico). A negação é essencial para o significado."
   },
   {
     videoId: "f1n1whYbo5Y",
@@ -66,13 +62,12 @@ const questions = [
     audioText: "Proposition 42 enables genetic enhancement for everyone",
     level: "advanced",
     options: [
-      "Proposition 42 enable genetic enhancement for everyone (Proposta 42 permite aprimoramento genético para todos)",
-      "Proposition 42 enables genetics enhancement for everyone (Proposta 42 permite aprimoramento genéticos para todos)",
-      "Proposition 42 enables genetic enhancement for everyone (Proposta 42 permite aprimoramento genético para todos)",
-      "Proposition 42 enables genetic enhancements for everyone (Proposta 42 permite aprimoramentos genéticos para todos)"
+      "Proposta 42 permite aprimoramento genético para todos",
+      "Proposta 42 proíbe aprimoramento genético para todos"
     ],
-    correctIndex: 2,
-    category: "Movies"
+    correctIndex: 0,
+    category: "Movies",
+    explanation: "'Enables' = permite/habilita. Oposto de 'prohibits/bans' (proíbe)."
   },
   {
     videoId: "f1n1whYbo5Y",
@@ -81,13 +76,12 @@ const questions = [
     audioText: "Fix my suit. I'll pay you triple. Deal. Triple free. Well, don't go to the genetic district",
     level: "advanced",
     options: [
-      "Fix my suit. I'll pay you triple. Deal. Triple fee. Well, don't go to the genetic district (Conserte meu traje. Pagarei o triplo. Feito. Taxa tripla. Bem, não vá ao distrito genético)",
-      "Fix my suit. I'll pay you triple. Deal. Triple free. Well, don't go to the genetics district (Conserte meu traje. Pagarei o triplo. Feito. Triplo grátis. Bem, não vá ao distrito genéticos)",
-      "Fix my suit. I'll pick you triple. Deal. Triple free. Well, don't go to the genetic district (Conserte meu traje. Vou te pegar triplo. Feito. Triplo grátis. Bem, não vá ao distrito genético)",
-      "Fix my suit. I'll pay you triple. Deal. Triple free. Well, don't go to the genetic district (Conserte meu traje. Pagarei o triplo. Feito. Triplo grátis. Bem, não vá ao distrito genético)"
+      "Conserte meu traje. Pagarei o triplo. Feito. Triplo grátis. Bem, não vá ao distrito genético",
+      "Conserte meu traje. Pagarei o triplo. Feito. Triplo grátis. Bem, vá ao distrito genético"
     ],
-    correctIndex: 3,
-    category: "Movies"
+    correctIndex: 0,
+    category: "Movies",
+    explanation: "'Don't go' = não vá (ordem negativa/aviso). Sem o 'don't' seria o oposto."
   },
   {
     videoId: "f1n1whYbo5Y",
@@ -96,13 +90,12 @@ const questions = [
     audioText: "Today's attack by the extremist anti-genetic squad is the bloodiest so far",
     level: "advanced",
     options: [
-      "Today's attack by the extremist anti-genetics squad is the bloodiest so far (O ataque de hoje pelo esquadrão extremista anti-genéticos é o mais sangrento até agora)",
-      "Today's attack by the extremist anti-genetic squad is the bloodiest so far (O ataque de hoje pelo esquadrão extremista anti-genético é o mais sangrento até agora)",
-      "Today's attack by the extremist anti-genetic squad is the bloody so far (O ataque de hoje pelo esquadrão extremista anti-genético é o sangrento até agora)",
-      "Today attack by the extremist anti-genetic squad is the bloodiest so far (Hoje ataque pelo esquadrão extremista anti-genético é o mais sangrento até agora)"
+      "O ataque de hoje pelo esquadrão extremista anti-genético é o mais sangrento até agora",
+      "O ataque de hoje pelo esquadrão extremista pró-genético é o mais sangrento até agora"
     ],
-    correctIndex: 1,
-    category: "Movies"
+    correctIndex: 0,
+    category: "Movies",
+    explanation: "'Anti-genetic' = contra genéticos. 'Pró-genetic' seria a favor, mudando totalmente quem atacou."
   },
   {
     videoId: "f1n1whYbo5Y",
@@ -111,13 +104,12 @@ const questions = [
     audioText: "They're going to frame the specialists. Well, we got to do something then",
     level: "intermediate",
     options: [
-      "They're going to frame the specialists. Well, we've got to do something then (Eles vão incriminar os especialistas. Bem, nós temos que fazer algo então)",
-      "They're gonna frame the specialists. Well, we got to do something then (Eles vão incriminar os especialistas. Bem, temos que fazer algo então)",
-      "They're going to frame the specialists. Well, we got to do something than (Eles vão incriminar os especialistas. Bem, temos que fazer algo do que)",
-      "They're going to frame the specialists. Well, we got to do something then (Eles vão incriminar os especialistas. Bem, temos que fazer algo então)"
+      "Eles vão incriminar os especialistas. Bem, temos que fazer algo então",
+      "Eles vão proteger os especialistas. Bem, temos que fazer algo então"
     ],
-    correctIndex: 3,
-    category: "Movies"
+    correctIndex: 0,
+    category: "Movies",
+    explanation: "'Frame' = incriminar falsamente (negativo). 'Protect' seria positivo, oposto total."
   },
   {
     videoId: "f1n1whYbo5Y",
@@ -126,13 +118,12 @@ const questions = [
     audioText: "He's the one behind all of this. We've cracked the enigma of human evolution",
     level: "advanced",
     options: [
-      "He's the one behind all of these. We've cracked the enigma of human evolution (Ele é o responsável por tudo isso. Desvendamos o enigma da evolução humana)",
-      "He's the one behind all of this. We've cracked the enigma of human evolution (Ele é o responsável por tudo isso. Desvendamos o enigma da evolução humana)",
-      "He's the one behind all of this. We've crack the enigma of human evolution (Ele é o responsável por tudo isso. Nós desvenda o enigma da evolução humana)",
-      "He's the one behind all of this. We've cracked the enigma of human revolution (Ele é o responsável por tudo isso. Desvendamos o enigma da revolução humana)"
+      "Ele é o responsável por tudo isso. Desvendamos o enigma da evolução humana",
+      "Ele é a vítima de tudo isso. Desvendamos o enigma da evolução humana"
     ],
-    correctIndex: 1,
-    category: "Movies"
+    correctIndex: 0,
+    category: "Movies",
+    explanation: "'Behind' = responsável/autor (causou). 'Vítima' mudaria completamente o papel dele."
   },
   {
     videoId: "f1n1whYbo5Y",
@@ -141,13 +132,12 @@ const questions = [
     audioText: "Question is, what are we going to do about it? We're going to fight",
     level: "intermediate",
     options: [
-      "Question is, what are we gonna do about it? We're going to fight (A questão é, o que vamos fazer sobre isso? Vamos lutar)",
-      "Question is, what are we going to do about it? We're gonna fight (A questão é, o que vamos fazer sobre isso? Vamos lutar)",
-      "Question is, what we going to do about it? We're going to fight (A questão é, o que vamos fazer sobre isso? Vamos lutar)",
-      "Question is, what are we going to do about it? We're going to fight (A questão é, o que vamos fazer sobre isso? Vamos lutar)"
+      "A questão é, o que vamos fazer sobre isso? Vamos lutar",
+      "A questão é, o que vamos fazer sobre isso? Vamos fugir"
     ],
-    correctIndex: 3,
-    category: "Movies"
+    correctIndex: 0,
+    category: "Movies",
+    explanation: "'Fight' = lutar (enfrentar). 'Flee/run' seria fugir, ação oposta."
   },
   {
     videoId: "f1n1whYbo5Y",
@@ -156,13 +146,12 @@ const questions = [
     audioText: "They want you to think that you're useless, worthless. It's not true",
     level: "intermediate",
     options: [
-      "They want you to think that you're useless, worthless. It's not truth (Eles querem que você pense que é inútil, sem valor. Não é verdade)",
-      "They want you to think that your useless, worthless. It's not true (Eles querem que você pense que seu inútil, sem valor. Não é verdade)",
-      "They want you to think that you're useless, worthless. It's not true (Eles querem que você pense que é inútil, sem valor. Não é verdade)",
-      "They want you to think that you're useless, worth less. It's not true (Eles querem que você pense que é inútil, vale menos. Não é verdade)"
+      "Eles querem que você pense que é inútil, sem valor. Não é verdade",
+      "Eles querem que você pense que é inútil, sem valor. É verdade"
     ],
-    correctIndex: 2,
-    category: "Movies"
+    correctIndex: 0,
+    category: "Movies",
+    explanation: "'It's not true' = não é verdade (contradiz). Sem o 'not' concordaria com a afirmação."
   },
   {
     videoId: "f1n1whYbo5Y",
@@ -171,13 +160,12 @@ const questions = [
     audioText: "It's evolution and you can't stop it",
     level: "beginner",
     options: [
-      "It's revolution and you can't stop it (É revolução e você não pode parar isso)",
-      "It's evolution and you can't stopped it (É evolução e você não pode parado isso)",
-      "Its evolution and you can't stop it (Sua evolução e você não pode parar isso)",
-      "It's evolution and you can't stop it (É evolução e você não pode parar isso)"
+      "É evolução e você não pode parar isso",
+      "É evolução e você pode parar isso"
     ],
-    correctIndex: 3,
-    category: "Movies"
+    correctIndex: 0,
+    category: "Movies",
+    explanation: "'Can't stop' = não pode parar (impossível). Sem 'can't' seria possível parar."
   },
   {
     videoId: "sEgPQ7HKoBA",
@@ -186,13 +174,12 @@ const questions = [
     audioText: "Cubs are wild in pursuit of suspect",
     level: "intermediate",
     options: [
-      "Cubs are wild in pursuit of suspects (Filhotes estão selvagens em perseguição de suspeitos)",
-      "Cubs are wild in pursuit of suspect (Filhotes estão selvagens em perseguição de suspeito)",
-      "Cubs are wild in pursuit of the suspect (Filhotes estão selvagens em perseguição do suspeito)",
-      "Cubs are wild in pursuits of suspect (Filhotes estão selvagens em perseguições de suspeito)"
+      "Policiais estão em perseguição selvagem do suspeito",
+      "Policiais estão fugindo do suspeito"
     ],
-    correctIndex: 1,
-    category: "Movies"
+    correctIndex: 0,
+    category: "Movies",
+    explanation: "'In pursuit of' = perseguindo (caçando). Oposto de 'fleeing from' (fugindo de)."
   },
   {
     videoId: "sEgPQ7HKoBA",
@@ -201,13 +188,12 @@ const questions = [
     audioText: "Back off the keys. We got him. Rolling spike",
     level: "intermediate",
     options: [
-      "Back off the case. We got him. Rolling spike (Afaste-se do caso. Pegamos ele. Espinho rolante)",
-      "Back of the keys. We got him. Rolling spike (Atrás das chaves. Pegamos ele. Espinho rolante)",
-      "Back off the keys. We got them. Rolling spike (Afaste-se das chaves. Pegamos eles. Espinho rolante)",
-      "Back off the keys. We got him. Rolling spike (Afaste-se das chaves. Pegamos ele. Espinho rolante)"
+      "Afaste-se das chaves. Pegamos ele. Espinho rolante",
+      "Pegue as chaves. Perdemos ele. Espinho rolante"
     ],
-    correctIndex: 3,
-    category: "Movies"
+    correctIndex: 0,
+    category: "Movies",
+    explanation: "'Back off' = afastar-se. 'Got him' = pegamos (sucesso). Opostos mudam tudo."
   },
   {
     videoId: "sEgPQ7HKoBA",
@@ -216,13 +202,12 @@ const questions = [
     audioText: "Sorry. Could you show me that clip again? Wasn't wearing my glasses",
     level: "advanced",
     options: [
-      "Sorry. Could you show me that clip again? I wasn't wearing my glasses (Desculpe. Você poderia me mostrar esse clipe de novo? Eu não estava usando meus óculos)",
-      "Sorry. Could you show me that clip again? Wasn't wearing my glasses (Desculpe. Você poderia me mostrar esse clipe de novo? Não estava usando meus óculos)",
-      "Sorry. Could you show me this clip again? Wasn't wearing my glasses (Desculpe. Você poderia me mostrar este clipe de novo? Não estava usando meus óculos)",
-      "Sorry. Could you show me that clip again? Wasn't wear my glasses (Desculpe. Você poderia me mostrar esse clipe de novo? Não estava usar meus óculos)"
+      "Desculpe. Você poderia me mostrar esse clipe de novo? Não estava usando meus óculos",
+      "Desculpe. Você poderia me mostrar esse clipe de novo? Estava usando meus óculos"
     ],
-    correctIndex: 1,
-    category: "Movies"
+    correctIndex: 0,
+    category: "Movies",
+    explanation: "'Wasn't wearing' = não estava usando (explica por que não viu bem). Sem 'wasn't' não faria sentido pedir pra ver de novo."
   },
   {
     videoId: "sEgPQ7HKoBA",
@@ -231,13 +216,12 @@ const questions = [
     audioText: "Fail at this case and I will split you up",
     level: "intermediate",
     options: [
-      "Fail at this case and I will split you out (Falhe neste caso e eu vou separar vocês para fora)",
-      "Fail in this case and I will split you up (Falhe neste caso e eu vou separar vocês)",
-      "Fail at this case and I will split you up (Falhe neste caso e eu vou separar vocês)",
-      "Fail at this case and I will separate you up (Falhe neste caso e eu vou separar vocês acima)"
+      "Falhe neste caso e eu vou separar vocês",
+      "Tenham sucesso neste caso e eu vou separar vocês"
     ],
-    correctIndex: 2,
-    category: "Movies"
+    correctIndex: 0,
+    category: "Movies",
+    explanation: "'Fail' = falhar (condição negativa). 'Succeed' seria ter sucesso, mudando totalmente a ameaça."
   },
   {
     videoId: "sEgPQ7HKoBA",
@@ -246,13 +230,12 @@ const questions = [
     audioText: "No snake has set foot in Zootopia in forever",
     level: "intermediate",
     options: [
-      "No snake has set foot in Zootopia for forever (Nenhuma cobra pisou em Zootopia por para sempre)",
-      "No snake has set feet in Zootopia in forever (Nenhuma cobra colocou pés em Zootopia para sempre)",
-      "No snake has sat foot in Zootopia in forever (Nenhuma cobra sentou pé em Zootopia para sempre)",
-      "No snake has set foot in Zootopia in forever (Nenhuma cobra pisou em Zootopia para sempre)"
+      "Nenhuma cobra pisou em Zootopia há séculos",
+      "Muitas cobras pisaram em Zootopia recentemente"
     ],
-    correctIndex: 3,
-    category: "Movies"
+    correctIndex: 0,
+    category: "Movies",
+    explanation: "'No snake' = nenhuma cobra (ausência total). 'Many snakes' seria o oposto completo."
   },
   {
     videoId: "sEgPQ7HKoBA",
@@ -261,13 +244,12 @@ const questions = [
     audioText: "We're going to crack this case and prove we're the greatest partners of all time",
     level: "advanced",
     options: [
-      "We're going to crack this case and prove we're the greatest partner of all time (Vamos resolver este caso e provar que somos o maior parceiro de todos os tempos)",
-      "We're going to crack this case and prove we're the greatest partners of all time (Vamos resolver este caso e provar que somos os maiores parceiros de todos os tempos)",
-      "We're going to crack this case and prove we are the greatest partners of all time (Vamos resolver este caso e provar que nós somos os maiores parceiros de todos os tempos)",
-      "We're gonna crack this case and prove we're the greatest partners of all time (Vamos resolver este caso e provar que somos os maiores parceiros de todos os tempos)"
+      "Vamos resolver este caso e provar que somos os maiores parceiros de todos os tempos",
+      "Vamos desistir deste caso e provar que somos os piores parceiros de todos os tempos"
     ],
-    correctIndex: 1,
-    category: "Movies"
+    correctIndex: 0,
+    category: "Movies",
+    explanation: "'Crack' = resolver. 'Greatest' = maiores. Opostos mudariam completamente a intenção."
   },
   {
     videoId: "sEgPQ7HKoBA",
@@ -276,13 +258,12 @@ const questions = [
     audioText: "Yeah. If you want to talk to a reptile, I am your gal",
     level: "intermediate",
     options: [
-      "Yeah. If you want to talk to a reptile, I am your girl (Sim. Se você quer falar com um réptil, eu sou sua garota)",
-      "Yeah. If you want to talk to a reptile, I'm your gal (Sim. Se você quer falar com um réptil, eu sou sua garota)",
-      "Yeah. If you want to talk with a reptile, I am your gal (Sim. Se você quer falar com um réptil, eu sou sua garota)",
-      "Yeah. If you want to talk to a reptile, I am your gal (Sim. Se você quer falar com um réptil, eu sou sua garota)"
+      "Sim. Se você quer falar com um réptil, eu sou sua garota",
+      "Não. Se você quer falar com um réptil, eu não posso ajudar"
     ],
-    correctIndex: 3,
-    category: "Movies"
+    correctIndex: 0,
+    category: "Movies",
+    explanation: "'I am your gal' = eu sou a pessoa certa (oferecimento). Oposto seria recusar ajudar."
   },
   {
     videoId: "sEgPQ7HKoBA",
@@ -291,13 +272,12 @@ const questions = [
     audioText: "When Zootopia was founded, this whole neighborhood got cut off from the rest of the town",
     level: "advanced",
     options: [
-      "When Zootopia was founded, this whole neighborhood got cut of from the rest of the town (Quando Zootopia foi fundada, todo esse bairro foi cortado do resto da cidade)",
-      "When Zootopia was founded, this whole neighborhood got cut off from the rest of town (Quando Zootopia foi fundada, todo esse bairro foi isolado do resto da cidade)",
-      "When Zootopia was founded, this whole neighborhood got cutted off from the rest of the town (Quando Zootopia foi fundada, todo esse bairro foi cortado do resto da cidade)",
-      "When Zootopia was founded, this whole neighborhood got cut off from the rest of the town (Quando Zootopia foi fundada, todo esse bairro foi isolado do resto da cidade)"
+      "Quando Zootopia foi fundada, todo esse bairro foi isolado do resto da cidade",
+      "Quando Zootopia foi fundada, todo esse bairro foi conectado ao resto da cidade"
     ],
-    correctIndex: 3,
-    category: "Movies"
+    correctIndex: 0,
+    category: "Movies",
+    explanation: "'Cut off' = isolado/separado. 'Connected' seria conectado, o oposto total."
   },
   {
     videoId: "sEgPQ7HKoBA",
@@ -306,13 +286,12 @@ const questions = [
     audioText: "It's the only place you can get away with wearing a shirt and no pants",
     level: "advanced",
     options: [
-      "It's the only place you can get away with wearing a shirt and no pant (É o único lugar onde você pode se safar usando uma camisa e nenhuma calça)",
-      "It's the only place you can get away wearing a shirt and no pants (É o único lugar onde você pode se safar usando uma camisa e sem calças)",
-      "It's the only place you can get away with wearing a shirt and no pants (É o único lugar onde você pode se safar usando uma camisa e sem calças)",
-      "It's the only place you can get away with wear a shirt and no pants (É o único lugar onde você pode se safar com usar uma camisa e sem calças)"
+      "É o único lugar onde você pode se safar usando uma camisa e sem calças",
+      "É o único lugar onde você é obrigado a usar camisa e calças"
     ],
-    correctIndex: 2,
-    category: "Movies"
+    correctIndex: 0,
+    category: "Movies",
+    explanation: "'Get away with' = conseguir fazer sem problemas. 'Obrigado' seria o oposto (required/must)."
   },
   {
     videoId: "sEgPQ7HKoBA",
@@ -321,13 +300,12 @@ const questions = [
     audioText: "Zootopia has a secret reptile population",
     level: "intermediate",
     options: [
-      "Zootopia has a secret reptile population (Zootopia tem uma população secreta de répteis)",
-      "Zootopia has a secret reptile populations (Zootopia tem uma populações secreta de répteis)",
-      "Zootopia has the secret reptile population (Zootopia tem a população secreta de répteis)",
-      "Zootopia has a secret reptiles population (Zootopia tem uma população secreta de répteis)"
+      "Zootopia tem uma população secreta de répteis",
+      "Zootopia não tem nenhuma população de répteis"
     ],
     correctIndex: 0,
-    category: "Movies"
+    category: "Movies",
+    explanation: "'Has' = tem (existe). 'Doesn't have' seria não tem, negação total da afirmação."
   },
   {
     videoId: "sEgPQ7HKoBA",
@@ -336,13 +314,12 @@ const questions = [
     audioText: "Whatever you're tangled up in has to do with snakes. It's dangerous",
     level: "advanced",
     options: [
-      "Whatever you're tangled up in has to do with snakes. Its dangerous (Seja lá no que você está envolvido tem a ver com cobras. Sua perigoso)",
-      "Whatever you're tangled up in has to do with snake. It's dangerous (Seja lá no que você está envolvido tem a ver com cobra. É perigoso)",
-      "Whatever your tangled up in has to do with snakes. It's dangerous (Seja lá no que seu envolvido tem a ver com cobras. É perigoso)",
-      "Whatever you're tangled up in has to do with snakes. It's dangerous (Seja lá no que você está envolvido tem a ver com cobras. É perigoso)"
+      "Seja lá no que você está envolvido tem a ver com cobras. É perigoso",
+      "Seja lá no que você está envolvido não tem a ver com cobras. É seguro"
     ],
-    correctIndex: 3,
-    category: "Movies"
+    correctIndex: 0,
+    category: "Movies",
+    explanation: "'Has to do with' = tem a ver com (relacionado). 'Doesn't have to do with' + 'safe' = opostos completos."
   },
   {
     videoId: "sEgPQ7HKoBA",
@@ -351,13 +328,12 @@ const questions = [
     audioText: "I want the fox and rabbit gone",
     level: "beginner",
     options: [
-      "I want the fox and rabbit go (Eu quero a raposa e coelho ir)",
-      "I want the fox and rabbit gone (Eu quero a raposa e coelho fora)",
-      "I want the fox and rabbits gone (Eu quero a raposa e coelhos fora)",
-      "I want a fox and rabbit gone (Eu quero uma raposa e coelho fora)"
+      "Eu quero a raposa e o coelho fora daqui",
+      "Eu quero a raposa e o coelho aqui"
     ],
-    correctIndex: 1,
-    category: "Movies"
+    correctIndex: 0,
+    category: "Movies",
+    explanation: "'Gone' = fora/embora (removidos). 'Here/to stay' seria o oposto (mantê-los)."
   },
   {
     videoId: "sEgPQ7HKoBA",
@@ -366,13 +342,12 @@ const questions = [
     audioText: "Stop pulling my ears. Stop pulling my ears",
     level: "beginner",
     options: [
-      "Stop pulling my ear. Stop pulling my ear (Pare de puxar minha orelha. Pare de puxar minha orelha)",
-      "Stop pull my ears. Stop pull my ears (Pare puxar minhas orelhas. Pare puxar minhas orelhas)",
-      "Stop pulling my ears. Stop pulling my ear (Pare de puxar minhas orelhas. Pare de puxar minha orelha)",
-      "Stop pulling my ears. Stop pulling my ears (Pare de puxar minhas orelhas. Pare de puxar minhas orelhas)"
+      "Pare de puxar minhas orelhas. Pare de puxar minhas orelhas",
+      "Continue puxando minhas orelhas. Continue puxando minhas orelhas"
     ],
-    correctIndex: 3,
-    category: "Movies"
+    correctIndex: 0,
+    category: "Movies",
+    explanation: "'Stop' = parar (ordem para cessar). 'Keep/continue' seria continuar, oposto."
   },
   {
     videoId: "sEgPQ7HKoBA",
@@ -381,13 +356,12 @@ const questions = [
     audioText: "Snakes aren't the bad guys. This is our chance to set things right",
     level: "advanced",
     options: [
-      "Snakes aren't the bad guys. This is our chance to set thing right (Cobras não são os vilões. Esta é nossa chance de acertar coisa)",
-      "Snakes aren't the bad guys. This is our chance to set things right (Cobras não são os vilões. Esta é nossa chance de acertar as coisas)",
-      "Snakes aren't the bad guys. This is our chance to sit things right (Cobras não são os vilões. Esta é nossa chance de sentar coisas certas)",
-      "Snakes aren't the bad guy. This is our chance to set things right (Cobras não são o vilão. Esta é nossa chance de acertar as coisas)"
+      "Cobras não são os vilões. Esta é nossa chance de acertar as coisas",
+      "Cobras são os vilões. Esta é nossa chance de eliminá-los"
     ],
-    correctIndex: 1,
-    category: "Movies"
+    correctIndex: 0,
+    category: "Movies",
+    explanation: "'Aren't the bad guys' = não são vilões (defesa). Sem 'aren't' + 'eliminate' muda completamente."
   },
   {
     videoId: "sEgPQ7HKoBA",
@@ -396,13 +370,12 @@ const questions = [
     audioText: "We took an oath to make the world a better place. And an innocent snake needs our help",
     level: "advanced",
     options: [
-      "We took an oath to make the world a better place. And an innocent snake need our help (Fizemos um juramento de tornar o mundo um lugar melhor. E uma cobra inocente precisa nossa ajuda)",
-      "We took an oath to make the world the better place. And an innocent snake needs our help (Fizemos um juramento de tornar o mundo o lugar melhor. E uma cobra inocente precisa da nossa ajuda)",
-      "We took an oath to make the world a better place. And a innocent snake needs our help (Fizemos um juramento de tornar o mundo um lugar melhor. E uma cobra inocente precisa da nossa ajuda)",
-      "We took an oath to make the world a better place. And an innocent snake needs our help (Fizemos um juramento de tornar o mundo um lugar melhor. E uma cobra inocente precisa da nossa ajuda)"
+      "Fizemos um juramento de tornar o mundo um lugar melhor. E uma cobra inocente precisa da nossa ajuda",
+      "Fizemos um juramento de tornar o mundo um lugar melhor. E uma cobra perigosa precisa ser capturada"
     ],
-    correctIndex: 3,
-    category: "Movies"
+    correctIndex: 0,
+    category: "Movies",
+    explanation: "'Innocent' = inocente (vítima). 'Dangerous/needs to be caught' = perigosa (ameaça), oposto moral."
   },
   {
     videoId: "sEgPQ7HKoBA",
@@ -411,13 +384,12 @@ const questions = [
     audioText: "Hey, Flash. Flash 100yard dash. We need to get across town",
     level: "advanced",
     options: [
-      "Hey, Flash. Flash 100 yard dash. We need to get across town (Ei, Flash. Flash corrida de 100 jardas. Precisamos atravessar a cidade)",
-      "Hey, Flash. Flash 100yard dash. We need to get across the town (Ei, Flash. Flash corrida de 100 jardas. Precisamos atravessar a cidade)",
-      "Hey, Flash. Flash 100yard dash. We need to get across town (Ei, Flash. Flash corrida de 100 jardas. Precisamos atravessar a cidade)",
-      "Hey, Flash. Flash hundred yard dash. We need to get across town (Ei, Flash. Flash corrida de cem jardas. Precisamos atravessar a cidade)"
+      "Ei, Flash. Flash corrida de 100 jardas. Precisamos atravessar a cidade",
+      "Ei, Flash. Flash corrida de 100 jardas. Precisamos sair da cidade"
     ],
-    correctIndex: 2,
-    category: "Movies"
+    correctIndex: 0,
+    category: "Movies",
+    explanation: "'Get across town' = atravessar a cidade (de um lado ao outro). 'Leave town' = sair da cidade completamente."
   },
   {
     videoId: "SyWKhDYf-w8",
@@ -426,13 +398,12 @@ const questions = [
     audioText: "So, what are we driving?",
     level: "beginner",
     options: [
-      "So, what are we driving? (Então, o que estamos dirigindo?)",
-      "So, what we are driving? (Então, o que nós estamos dirigindo?)",
-      "So, what are we driven? (Então, o que somos dirigidos?)",
-      "So, what are we drive? (Então, o que estamos dirigir?)"
+      "Então, o que estamos dirigindo?",
+      "Então, onde estamos indo?"
     ],
     correctIndex: 0,
-    category: "Movies"
+    category: "Movies",
+    explanation: "'What are we driving' = qual carro (objeto). 'Where are we going' = para onde (destino)."
   },
   {
     videoId: "SyWKhDYf-w8",
@@ -441,28 +412,26 @@ const questions = [
     audioText: "If you can guess, I'll give you the keys to it",
     level: "intermediate",
     options: [
-      "If you can guest, I'll give you the keys to it (Se você pode convidado, darei as chaves para isso)",
-      "If you can guess, I'll give you the keys to it (Se você conseguir adivinhar, darei as chaves para isso)",
-      "If you can guess, I'll gave you the keys to it (Se você conseguir adivinhar, dei as chaves para isso)",
-      "If you can guess, I give you the keys to it (Se você conseguir adivinhar, dou as chaves para isso)"
+      "Se você conseguir adivinhar, darei as chaves para você",
+      "Se você não conseguir adivinhar, darei as chaves para você"
     ],
-    correctIndex: 1,
-    category: "Movies"
+    correctIndex: 0,
+    category: "Movies",
+    explanation: "'If you can' = se conseguir (condição positiva). 'If you can't' seria condição negativa, oposta."
   },
   {
     videoId: "SyWKhDYf-w8",
     startTime: 11,
     endTime: 15,
-    audioText: "That is a beautiful car. I need to be in your line and work",
+    audioText: "That is a beautiful car. I need to be in your line of work",
     level: "intermediate",
     options: [
-      "That is a beautiful car. I need to be in your line and work (Esse é um carro lindo. Preciso estar na sua área e trabalhar)",
-      "That is the beautiful car. I need to be in your line and work (Esse é o carro lindo. Preciso estar na sua área e trabalhar)",
-      "That is a beautiful car. I need to been your line and work (Esse é um carro lindo. Preciso sido sua área e trabalhar)",
-      "That is a beautiful car. I need be in your line and work (Esse é um carro lindo. Preciso estar na sua área e trabalhar)"
+      "Esse é um carro lindo. Preciso estar na sua área de trabalho",
+      "Esse é um carro horrível. Preciso evitar sua área de trabalho"
     ],
     correctIndex: 0,
-    category: "Movies"
+    category: "Movies",
+    explanation: "'Beautiful' = lindo (admiração). 'Horrible/need to avoid' = horrível/evitar (rejeição)."
   },
   {
     videoId: "SyWKhDYf-w8",
@@ -471,13 +440,12 @@ const questions = [
     audioText: "I'm real good at reading people",
     level: "beginner",
     options: [
-      "I'm real good at read people (Sou muito bom em ler pessoas)",
-      "I'm really good at reading people (Sou realmente bom em ler pessoas)",
-      "I'm real good at reading people (Sou muito bom em ler pessoas)",
-      "I'm real good in reading people (Sou muito bom em ler pessoas)"
+      "Sou muito bom em ler pessoas",
+      "Sou muito ruim em ler pessoas"
     ],
-    correctIndex: 2,
-    category: "Movies"
+    correctIndex: 0,
+    category: "Movies",
+    explanation: "'Real good' = muito bom (habilidade). 'Real bad' seria muito ruim, oposto."
   },
   {
     videoId: "SyWKhDYf-w8",
@@ -486,58 +454,54 @@ const questions = [
     audioText: "You look like a person who has secrets",
     level: "intermediate",
     options: [
-      "You look like the person who has secrets (Você parece a pessoa que tem segredos)",
-      "You look like a person who have secrets (Você parece uma pessoa que têm segredos)",
-      "You look like a person who has secret (Você parece uma pessoa que tem segredo)",
-      "You look like a person who has secrets (Você parece uma pessoa que tem segredos)"
+      "Você parece uma pessoa que tem segredos",
+      "Você parece uma pessoa muito transparente"
     ],
-    correctIndex: 3,
-    category: "Movies"
+    correctIndex: 0,
+    category: "Movies",
+    explanation: "'Has secrets' = tem segredos (oculta coisas). 'Transparent/open' seria transparente, oposto."
   },
   {
-      videoId: "SyWKhDYf-w8",
-      startTime: 32,
-      endTime: 38,
-      audioText: "You got the cars, the clothes. You can't seem to look me in the eye",
-      level: "advanced",
-      options: [
-        "You got the cars, the clothes. You can't seem to look me in the eye (Você tem os carros, as roupas. Você não consegue me olhar nos olhos)",
-        "You got the cars, the clothes. You can't seems to look me in the eye (Você tem os carros, as roupas. Você não parece me olhar nos olhos)",
-        "You got the cars, the clothes. You can't seem to looking me in the eye (Você tem os carros, as roupas. Você não consegue olhando me nos olhos)",
-        "You got the cars, the cloth. You can't seem to look me in the eye (Você tem os carros, o pano. Você não consegue me olhar nos olhos)"
-      ],
-      correctIndex: 0,
-      category: "Movies"
-    },
-    {
-      videoId: "SyWKhDYf-w8",
-      startTime: 42,
-      endTime: 48,
-      audioText: "You're looking at robberies of jewels, money, or high value items in the last four years",
-      level: "advanced",
-      options: [
-        "You're looking at robberies of jewels, money, or high value items in the last four year (Você está vendo roubos de joias, dinheiro ou itens de alto valor nos últimos quatro ano)",
-        "You're looking at robberies of jewel, money, or high value items in the last four years (Você está vendo roubos de joia, dinheiro ou itens de alto valor nos últimos quatro anos)",
-        "You're looking at robberies of jewels, money, or high value items in the last four years (Você está vendo roubos de joias, dinheiro ou itens de alto valor nos últimos quatro anos)",
-        "You're looking at robbery of jewels, money, or high value items in the last four years (Você está vendo roubo de joias, dinheiro ou itens de alto valor nos últimos quatro anos)"
-      ],
-      correctIndex: 2,
-      category: "Movies"
-    },
-    {
+    videoId: "SyWKhDYf-w8",
+    startTime: 32,
+    endTime: 38,
+    audioText: "You got the cars, the clothes. You can't seem to look me in the eye",
+    level: "advanced",
+    options: [
+      "Você tem os carros, as roupas. Você não consegue me olhar nos olhos",
+      "Você tem os carros, as roupas. Você sempre me olha nos olhos"
+    ],
+    correctIndex: 0,
+    category: "Movies",
+    explanation: "'Can't look in the eye' = não consegue olhar nos olhos (evita, esconde algo). 'Always looks' = oposto."
+  },
+  {
+    videoId: "SyWKhDYf-w8",
+    startTime: 42,
+    endTime: 48,
+    audioText: "You're looking at robberies of jewels, money, or high value items in the last four years",
+    level: "advanced",
+    options: [
+      "Você está vendo roubos de joias, dinheiro ou itens de alto valor nos últimos quatro anos",
+      "Você está vendo roubos de joias, dinheiro ou itens sem valor nos últimos quatro anos"
+    ],
+    correctIndex: 0,
+    category: "Movies",
+    explanation: "'High value items' = itens de alto valor (caros/importantes). 'Low value/worthless' = sem valor."
+  },
+  {
       videoId: "SyWKhDYf-w8",
       startTime: 50,
       endTime: 55,
       audioText: "Now remove every robbery where there was DNA left at the scene",
       level: "advanced",
       options: [
-        "Now remove every robbery where there was DNA left at the scene (Agora remova todo roubo onde havia DNA deixado na cena)",
-        "Now remove every robbery where there were DNA left at the scene (Agora remova todo roubo onde havia DNAs deixados na cena)",
-        "Now remove every robbery where there was DNA leave at the scene (Agora remova todo roubo onde havia DNA sair na cena)",
-        "Now removes every robbery where there was DNA left at the scene (Agora remove todo roubo onde havia DNA deixado na cena)"
+        "Agora remova todo roubo onde havia DNA deixado na cena",
+        "Agora adicione todo roubo onde havia DNA deixado na cena"
       ],
       correctIndex: 0,
-      category: "Movies"
+      category: "Movies",
+      explanation: "'Remove' = remover/tirar. 'Add' seria adicionar, ação oposta."
     },
     {
       videoId: "SyWKhDYf-w8",
@@ -546,13 +510,12 @@ const questions = [
       audioText: "I think all of these are the same guy",
       level: "intermediate",
       options: [
-        "I think all of this are the same guy (Acho que tudo isso é o mesmo cara)",
-        "I think all of these is the same guy (Acho que todos esses é o mesmo cara)",
-        "I think all of these are the same guy (Acho que todos esses são o mesmo cara)",
-        "I think all these are the same guy (Acho que todos esses são o mesmo cara)"
+        "Acho que todos esses são o mesmo cara",
+        "Acho que todos esses são caras diferentes"
       ],
-      correctIndex: 2,
-      category: "Movies"
+      correctIndex: 0,
+      category: "Movies",
+      explanation: "'Same guy' = mesmo cara (um único criminoso). 'Different guys' = vários criminosos diferentes."
     },
     {
       videoId: "SyWKhDYf-w8",
@@ -561,13 +524,12 @@ const questions = [
       audioText: "and he hits every time along the 101 freeway",
       level: "intermediate",
       options: [
-        "and he hit every time along the 101 freeway (e ele bateu toda vez ao longo da rodovia 101)",
-        "and he hits every time along the 101 freeway (e ele ataca toda vez ao longo da rodovia 101)",
-        "and he hits every time alone the 101 freeway (e ele ataca toda vez sozinho a rodovia 101)",
-        "and he hits everytime along the 101 freeway (e ele ataca todavez ao longo da rodovia 101)"
+        "e ele ataca toda vez ao longo da rodovia 101",
+        "e ele nunca ataca na rodovia 101"
       ],
-      correctIndex: 1,
-      category: "Movies"
+      correctIndex: 0,
+      category: "Movies",
+      explanation: "'Hits every time' = ataca sempre (padrão consistente). 'Never hits' = nunca ataca, oposto."
     },
     {
       videoId: "SyWKhDYf-w8",
@@ -576,13 +538,12 @@ const questions = [
       audioText: "I came here to make you a business proposition",
       level: "intermediate",
       options: [
-        "I came here to make you the business proposition (Vim aqui para te fazer a proposta de negócios)",
-        "I come here to make you a business proposition (Venho aqui para te fazer uma proposta de negócios)",
-        "I came here to make you a business proposition (Vim aqui para te fazer uma proposta de negócios)",
-        "I came here to made you a business proposition (Vim aqui para te feito uma proposta de negócios)"
+        "Vim aqui para te fazer uma proposta de negócios",
+        "Vim aqui para te ameaçar"
       ],
-      correctIndex: 2,
-      category: "Movies"
+      correctIndex: 0,
+      category: "Movies",
+      explanation: "'Business proposition' = proposta de negócios (oferta comercial). 'Threaten' = ameaçar (hostil)."
     },
     {
       videoId: "SyWKhDYf-w8",
@@ -591,13 +552,12 @@ const questions = [
       audioText: "I easily make them disappear and no one gets hurt",
       level: "intermediate",
       options: [
-        "I easily make them disappear and no one get hurt (Eu facilmente faço eles desaparecerem e ninguém se machuca)",
-        "I easily make them disappear and no one gets hurt (Eu facilmente faço eles desaparecerem e ninguém se machuca)",
-        "I easy make them disappear and no one gets hurt (Eu fácil faço eles desaparecerem e ninguém se machuca)",
-        "I easily made them disappear and no one gets hurt (Eu facilmente fiz eles desaparecerem e ninguém se machuca)"
+        "Eu facilmente faço eles desaparecerem e ninguém se machuca",
+        "Eu facilmente faço eles desaparecerem e todos se machucam"
       ],
-      correctIndex: 1,
-      category: "Movies"
+      correctIndex: 0,
+      category: "Movies",
+      explanation: "'No one gets hurt' = ninguém se machuca (não violento). 'Everyone gets hurt' = todos se machucam."
     },
     {
       videoId: "SyWKhDYf-w8",
@@ -606,13 +566,12 @@ const questions = [
       audioText: "I wouldn't die for an insurance company",
       level: "beginner",
       options: [
-        "I wouldn't die for the insurance company (Eu não morreria pela seguradora)",
-        "I wouldn't died for an insurance company (Eu não morreria para uma seguradora)",
-        "I won't die for an insurance company (Eu não vou morrer por uma seguradora)",
-        "I wouldn't die for an insurance company (Eu não morreria por uma seguradora)"
+        "Eu não morreria por uma seguradora",
+        "Eu morreria por uma seguradora"
       ],
-      correctIndex: 3,
-      category: "Movies"
+      correctIndex: 0,
+      category: "Movies",
+      explanation: "'Wouldn't die for' = não morreria por (não vale a pena). Sem 'wouldn't' = oposto."
     },
     {
       videoId: "SyWKhDYf-w8",
@@ -621,13 +580,12 @@ const questions = [
       audioText: "Doesn't matter how much money you make, it's never enough",
       level: "advanced",
       options: [
-        "Doesn't matter how much money you make, it's never enough (Não importa quanto dinheiro você ganha, nunca é suficiente)",
-        "Doesn't matter how many money you make, it's never enough (Não importa quantos dinheiro você ganha, nunca é suficiente)",
-        "Don't matter how much money you make, it's never enough (Não importa quanto dinheiro você ganha, nunca é suficiente)",
-        "Doesn't matters how much money you make, it's never enough (Não importa quanto dinheiro você ganha, nunca é suficiente)"
+        "Não importa quanto dinheiro você ganha, nunca é suficiente",
+        "Não importa quanto dinheiro você ganha, sempre é suficiente"
       ],
       correctIndex: 0,
-      category: "Movies"
+      category: "Movies",
+      explanation: "'Never enough' = nunca é suficiente (insatisfação). 'Always enough' = sempre suficiente."
     },
     {
       videoId: "SyWKhDYf-w8",
@@ -636,13 +594,12 @@ const questions = [
       audioText: "As smart as that guy is, he can't help but form a pattern",
       level: "advanced",
       options: [
-        "As smart as that guy are, he can't help but form a pattern (Por mais inteligente que esse cara são, ele não pode evitar formar um padrão)",
-        "As smart as that guy is, he can't help but form the pattern (Por mais inteligente que esse cara seja, ele não pode evitar formar o padrão)",
-        "As smart as that guy is, he can't help but form a pattern (Por mais inteligente que esse cara seja, ele não pode evitar formar um padrão)",
-        "As smart as that guy is, he can't helps but form a pattern (Por mais inteligente que esse cara seja, ele não pode evitar formar um padrão)"
+        "Por mais inteligente que esse cara seja, ele não pode evitar formar um padrão",
+        "Por mais burro que esse cara seja, ele sempre quebra qualquer padrão"
       ],
-      correctIndex: 2,
-      category: "Movies"
+      correctIndex: 0,
+      category: "Movies",
+      explanation: "'As smart as' = por mais inteligente. 'Can't help but' = não consegue evitar. Opostos mudam tudo."
     },
     {
       videoId: "Ma1x7ikpid8",
@@ -651,13 +608,12 @@ const questions = [
       audioText: "This... is the only pure thing in this world.",
       level: "advanced",
       options: [
-        "This... is the only pure thing in this world. (Isso... é a única coisa pura neste mundo.)",
-        "This... is the only pure things in this world. (Isso... é as únicas coisas puras neste mundo.)",
-        "This... is an only pure thing in this world. (Isso... é uma única coisa pura neste mundo.)",
-        "This... is the only pure thing on this world. (Isso... é a única coisa pura sobre este mundo.)"
+        "Isso... é a única coisa pura neste mundo",
+        "Isso... é a coisa mais corrompida neste mundo"
       ],
       correctIndex: 0,
-      category: "Movies"
+      category: "Movies",
+      explanation: "'Only pure thing' = única coisa pura (especial/limpa). 'Most corrupt' = mais corrompida."
     },
     {
       videoId: "Ma1x7ikpid8",
@@ -666,13 +622,12 @@ const questions = [
       audioText: "The fire came from the mountain. Burnt our forests.",
       level: "advanced",
       options: [
-        "The fire come from the mountain. Burnt our forests. (O fogo veio da montanha. Queimou nossas florestas.)",
-        "The fire came from the mountain. Burnt our forests. (O fogo veio da montanha. Queimou nossas florestas.)",
-        "The fire came from the mountain. Burned our forest. (O fogo veio da montanha. Queimou nossa floresta.)",
-        "A fire came from the mountain. Burnt our forests. (Um fogo veio da montanha. Queimou nossas florestas.)"
+        "O fogo veio da montanha. Queimou nossas florestas",
+        "O fogo veio da montanha. Salvou nossas florestas"
       ],
-      correctIndex: 1,
-      category: "Movies"
+      correctIndex: 0,
+      category: "Movies",
+      explanation: "'Burnt' = queimou (destruiu). 'Saved' = salvou, oposto completo."
     },
     {
       videoId: "Ma1x7ikpid8",
@@ -681,13 +636,12 @@ const questions = [
       audioText: "My people... cried for help... but Eywa did not come.",
       level: "advanced",
       options: [
-        "My people... cried for help... but Eywa does not come. (Meu povo... pediu ajuda... mas Eywa não vem.)",
-        "My peoples... cried for help... but Eywa did not come. (Meus povos... pediram ajuda... mas Eywa não veio.)",
-        "My people... cried for help... but Eywa did not come. (Meu povo... pediu ajuda... mas Eywa não veio.)",
-        "My people... cried to help... but Eywa did not come. (Meu povo... chorou para ajudar... mas Eywa não veio.)"
+        "Meu povo... pediu ajuda... mas Eywa não veio",
+        "Meu povo... pediu ajuda... e Eywa veio imediatamente"
       ],
-      correctIndex: 2,
-      category: "Movies"
+      correctIndex: 0,
+      category: "Movies",
+      explanation: "'Did not come' = não veio (abandono). 'Came immediately' = veio imediatamente (socorro)."
     },
     {
       videoId: "Ma1x7ikpid8",
@@ -696,13 +650,12 @@ const questions = [
       audioText: "This world goes much deeper than you imagine.",
       level: "advanced",
       options: [
-        "This world go much deeper than you imagine. (Este mundo vai muito mais profundo do que você imagina.)",
-        "This world goes much deeper than you imagine. (Este mundo vai muito mais profundo do que você imagina.)",
-        "This world goes more deeper than you imagine. (Este mundo vai mais profundo do que você imagina.)",
-        "This world goes much deeper then you imagine. (Este mundo vai muito mais profundo então você imagina.)"
+        "Este mundo vai muito mais profundo do que você imagina",
+        "Este mundo é mais superficial do que você imagina"
       ],
-      correctIndex: 1,
-      category: "Movies"
+      correctIndex: 0,
+      category: "Movies",
+      explanation: "'Goes much deeper' = vai muito mais fundo (complexo). 'Superficial' = raso, oposto."
     },
     {
       videoId: "Ma1x7ikpid8",
@@ -711,13 +664,12 @@ const questions = [
       audioText: "Protect your sisters. Stay under cover.",
       level: "advanced",
       options: [
-        "Protect your sisters. Stay under the cover. (Proteja suas irmãs. Fique sob a cobertura.)",
-        "Protect your sister. Stay under cover. (Proteja sua irmã. Fique protegido.)",
-        "Protect your sisters. Stay under cover. (Proteja suas irmãs. Fique protegido.)",
-        "Protect your sisters. Stay in cover. (Proteja suas irmãs. Fique em cobertura.)"
+        "Proteja suas irmãs. Fique protegido",
+        "Abandone suas irmãs. Saia do esconderijo"
       ],
-      correctIndex: 2,
-      category: "Movies"
+      correctIndex: 0,
+      category: "Movies",
+      explanation: "'Protect' = proteger. 'Stay under cover' = ficar escondido. Opostos = abandone/saia."
     },
     {
       videoId: "Ma1x7ikpid8",
@@ -726,13 +678,12 @@ const questions = [
       audioText: "What does Dad always say? Sullys stick together.",
       level: "advanced",
       options: [
-        "What does Dad always say? Sullys stick together. (O que o papai sempre diz? Sullys ficam juntos.)",
-        "What do Dad always say? Sullys stick together. (O que o papai sempre diz? Sullys ficam juntos.)",
-        "What does Dad always says? Sullys stick together. (O que o papai sempre diz? Sullys ficam juntos.)",
-        "What does Dad always say? Sullys sticks together. (O que o papai sempre diz? Sullys fica juntos.)"
+        "O que o papai sempre diz? Sullys ficam juntos",
+        "O que o papai sempre diz? Sullys se separam"
       ],
       correctIndex: 0,
-      category: "Movies"
+      category: "Movies",
+      explanation: "'Stick together' = ficar juntos (união). 'Split up' = separar-se."
     },
     {
       videoId: "Ma1x7ikpid8",
@@ -741,13 +692,12 @@ const questions = [
       audioText: "Sullys never quit. That's right. Sullys never quit.",
       level: "advanced",
       options: [
-        "Sullys never quit. That's right. Sullys never quits. (Sullys nunca desistem. Isso mesmo. Sullys nunca desiste.)",
-        "Sullys never quit. That's right. Sullys never quit. (Sullys nunca desistem. Isso mesmo. Sullys nunca desistem.)",
-        "Sullys never quits. That's right. Sullys never quit. (Sullys nunca desiste. Isso mesmo. Sullys nunca desistem.)",
-        "Sully never quit. That's right. Sullys never quit. (Sully nunca desiste. Isso mesmo. Sullys nunca desistem.)"
+        "Sullys nunca desistem. Isso mesmo. Sullys nunca desistem",
+        "Sullys sempre desistem. Isso mesmo. Sullys sempre desistem"
       ],
-      correctIndex: 1,
-      category: "Movies"
+      correctIndex: 0,
+      category: "Movies",
+      explanation: "'Never quit' = nunca desistir (perseverança). 'Always quit' = sempre desistir."
     },
     {
       videoId: "Ma1x7ikpid8",
@@ -756,13 +706,12 @@ const questions = [
       audioText: "How do you still live? What if every human being on Earth could live here without a mask?",
       level: "advanced",
       options: [
-        "How do you still live? What if every human being on Earth could live here without mask? (Como você ainda vive? E se todo ser humano na Terra pudesse viver aqui sem máscara?)",
-        "How do you still live? What if every human being in Earth could live here without a mask? (Como você ainda vive? E se todo ser humano na Terra pudesse viver aqui sem uma máscara?)",
-        "How do you still live? What if every human being on Earth could live here without a mask? (Como você ainda vive? E se todo ser humano na Terra pudesse viver aqui sem uma máscara?)",
-        "How does you still live? What if every human being on Earth could live here without a mask? (Como você ainda vive? E se todo ser humano na Terra pudesse viver aqui sem uma máscara?)"
+        "Como você ainda vive? E se todo ser humano na Terra pudesse viver aqui sem máscara?",
+        "Como você ainda vive? E se nenhum ser humano na Terra pudesse viver aqui sem máscara?"
       ],
-      correctIndex: 2,
-      category: "Movies"
+      correctIndex: 0,
+      category: "Movies",
+      explanation: "'Every human could' = todos poderiam (possibilidade positiva). 'No human could' = nenhum poderia."
     },
     {
       videoId: "Ma1x7ikpid8",
@@ -771,13 +720,12 @@ const questions = [
       audioText: "Then the Na'vi people will be gone.",
       level: "advanced",
       options: [
-        "Then the Na'vi people will be gone. (Então o povo Na'vi terá desaparecido.)",
-        "Then the Na'vi peoples will be gone. (Então os povos Na'vi terão desaparecido.)",
-        "Then a Na'vi people will be gone. (Então um povo Na'vi terá desaparecido.)",
-        "Then the Na'vi people will gone. (Então o povo Na'vi será ido.)"
+        "Então o povo Na'vi terá desaparecido",
+        "Então o povo Na'vi será salvo"
       ],
       correctIndex: 0,
-      category: "Movies"
+      category: "Movies",
+      explanation: "'Will be gone' = desaparecerá/será extinto. 'Will be saved' = será salvo."
     },
     {
       videoId: "Ma1x7ikpid8",
@@ -786,13 +734,12 @@ const questions = [
       audioText: "You wanna spread your fire across the world, you need me.",
       level: "advanced",
       options: [
-        "You wanna spread your fire across the world, you need me. (Você quer espalhar seu fogo pelo mundo, você precisa de mim.)",
-        "You wanna spread your fire through the world, you need me. (Você quer espalhar seu fogo através do mundo, você precisa de mim.)",
-        "You want spread your fire across the world, you need me. (Você quer espalhar seu fogo pelo mundo, você precisa de mim.)",
-        "You wanna spread your fire across a world, you need me. (Você quer espalhar seu fogo por um mundo, você precisa de mim.)"
+        "Você quer espalhar seu fogo pelo mundo, você precisa de mim",
+        "Você quer conter seu fogo no mundo, você não precisa de mim"
       ],
       correctIndex: 0,
-      category: "Movies"
+      category: "Movies",
+      explanation: "'Spread across' = espalhar por todo. 'Contain/don't need' = conter/não precisa."
     },
     {
       videoId: "Ma1x7ikpid8",
@@ -801,13 +748,12 @@ const questions = [
       audioText: "We must fight!",
       level: "advanced",
       options: [
-        "We must to fight! (Nós devemos para lutar!)",
-        "We must fight! (Nós devemos lutar!)",
-        "We must fights! (Nós devemos luta!)",
-        "We must fighting! (Nós devemos lutando!)"
+        "Nós devemos lutar!",
+        "Nós devemos nos render!"
       ],
-      correctIndex: 1,
-      category: "Movies"
+      correctIndex: 0,
+      category: "Movies",
+      explanation: "'Must fight' = devemos lutar (resistir). 'Must surrender' = devemos nos render."
     },
     {
       videoId: "Ma1x7ikpid8",
@@ -816,13 +762,12 @@ const questions = [
       audioText: "I call upon the warrior mother.",
       level: "advanced",
       options: [
-        "I call upon a warrior mother. (Eu invoco uma mãe guerreira.)",
-        "I call upon the warrior mother. (Eu invoco a mãe guerreira.)",
-        "I call on the warrior mother. (Eu chamo a mãe guerreira.)",
-        "I call upon the warrior mothers. (Eu invoco as mães guerreiras.)"
+        "Eu invoco a mãe guerreira",
+        "Eu rejeito a mãe guerreira"
       ],
-      correctIndex: 1,
-      category: "Movies"
+      correctIndex: 0,
+      category: "Movies",
+      explanation: "'Call upon' = invocar/chamar (pedir ajuda). 'Reject' = rejeitar."
     },
     {
       videoId: "Ma1x7ikpid8",
@@ -831,419 +776,391 @@ const questions = [
       audioText: "I'll kill you, I swear!",
       level: "advanced",
       options: [
-        "I kill you, I swear! (Eu mato você, eu juro!)",
-        "I'll kill you, I swear! (Eu vou te matar, eu juro!)",
-        "I'll kill you, I swears! (Eu vou te matar, eu jura!)",
-        "I will kills you, I swear! (Eu vou mata você, eu juro!)"
+        "Eu vou te matar, eu juro!",
+        "Eu vou te salvar, eu juro!"
       ],
-      correctIndex: 1,
-      category: "Movies"
+      correctIndex: 0,
+      category: "Movies",
+      explanation: "'Kill' = matar (ameaça). 'Save' = salvar, oposto total."
     },
     {
-        videoId: "82xS4goDWZY",
-        startTime: 5,
-        endTime: 7,
-        audioText: "A great stirring is underway",
-        level: "intermediate",
-        options: [
-          "A great stirring are underway (Uma grande agitação estão em andamento)",
-          "An great stirring is underway (Um grande agitação está em andamento)",
-          "A great stirring is underway (Uma grande agitação está em andamento)",
-          "A great stirring is on underway (Uma grande agitação está sobre andamento)"
-        ],
-        correctIndex: 2,
-        category: "Movies"
-      },
-      {
-        videoId: "82xS4goDWZY",
-        startTime: 14,
-        endTime: 16,
-        audioText: "War is inevitable",
-        level: "beginner",
-        options: [
-          "War is inevitable (A guerra é inevitável)",
-          "War are inevitable (A guerra são inevitável)",
-          "The war is inevitable (A guerra é inevitável)",
-          "War is inevitably (A guerra é inevitavelmente)"
-        ],
-        correctIndex: 0,
-        category: "Movies"
-      },
-      {
-        videoId: "82xS4goDWZY",
-        startTime: 26,
-        endTime: 33,
-        audioText: "There are forces more powerful than the will of the gods, my son",
-        level: "advanced",
-        options: [
-          "There is forces more powerful than the will of the gods, my son (Há forças mais poderosa que a vontade dos deuses, meu filho)",
-          "There are forces more powerful than the will of the gods, my son (Há forças mais poderosas que a vontade dos deuses, meu filho)",
-          "There are force more powerful than the will of the gods, my son (Há força mais poderosa que a vontade dos deuses, meu filho)",
-          "There are forces more powerful then the will of the gods, my son (Há forças mais poderosas então a vontade dos deuses, meu filho)"
-        ],
-        correctIndex: 1,
-        category: "Movies"
-      },
-      {
-        videoId: "82xS4goDWZY",
-        startTime: 37,
-        endTime: 39,
-        audioText: "Brace yourself",
-        level: "beginner",
-        options: [
-          "Brace yourselves (Preparem-se)",
-          "Brace yourself (Prepare-se)",
-          "Braces yourself (Prepara-se)",
-          "Brace you self (Prepare você mesmo)"
-        ],
-        correctIndex: 1,
-        category: "Movies"
-      },
-      {
-        videoId: "82xS4goDWZY",
-        startTime: 42,
-        endTime: 49,
-        audioText: "Look, Peter, we all know that last year you did something cool",
-        level: "intermediate",
-        options: [
-          "Look, Peter, we all know that last year you did something cool (Olha, Peter, nós todos sabemos que no ano passado você fez algo legal)",
-          "Look, Peter, we all knows that last year you did something cool (Olha, Peter, nós todos sabe que no ano passado você fez algo legal)",
-          "Look, Peter, we all know what last year you did something cool (Olha, Peter, nós todos sabemos o que no ano passado você fez algo legal)",
-          "Look, Peter, we all known that last year you did something cool (Olha, Peter, nós todos sabido que no ano passado você fez algo legal)"
-        ],
-        correctIndex: 0,
-        category: "Movies"
-      },
-      {
-        videoId: "82xS4goDWZY",
-        startTime: 47,
-        endTime: 50,
-        audioText: "But honestly, I don't even remember what it was",
-        level: "intermediate",
-        options: [
-          "But honestly, I doesn't even remember what it was (Mas honestamente, eu não até lembro o que era)",
-          "But honestly, I don't even remember what it was (Mas honestamente, eu nem lembro o que era)",
-          "But honestly, I don't even remember what it were (Mas honestamente, eu nem lembro o que eram)",
-          "But honestly, I don't even remembered what it was (Mas honestamente, eu não até lembrado o que era)"
-        ],
-        correctIndex: 1,
-        category: "Movies"
-      },
-      {
-        videoId: "82xS4goDWZY",
-        startTime: 54,
-        endTime: 58,
-        audioText: "We're headed into the sea of monsters",
-        level: "intermediate",
-        options: [
-          "We're headed into a sea of monsters (Estamos indo para um mar de monstros)",
-          "We're headed into the sea of monsters (Estamos indo para o mar de monstros)",
-          "We're headed in the sea of monsters (Estamos indo em o mar de monstros)",
-          "We're heading into the sea of monsters (Estamos indo para o mar de monstros)"
-        ],
-        correctIndex: 1,
-        category: "Movies"
-      },
-      {
-        videoId: "82xS4goDWZY",
-        startTime: 57,
-        endTime: 65,
-        audioText: "You sure you're okay to do this?",
-        level: "beginner",
-        options: [
-          "You sure you're okay for do this? (Você tem certeza que está bem para fazer isso?)",
-          "You sure you're okay to doing this? (Você tem certeza que está bem para fazendo isso?)",
-          "You sure you're okay to do this? (Você tem certeza que está bem para fazer isso?)",
-          "You sure your okay to do this? (Você tem certeza você está bem para fazer isso?)"
-        ],
-        correctIndex: 2,
-        category: "Movies"
-      },
-      {
-        videoId: "82xS4goDWZY",
-        startTime: 64,
-        endTime: 79,
-        audioText: "Let's go do the impossible",
-        level: "intermediate",
-        options: [
-          "Let's go do the impossible (Vamos fazer o impossível)",
-          "Let's go do an impossible (Vamos fazer um impossível)",
-          "Let's go does the impossible (Vamos fazer o impossível)",
-          "Let's go doing the impossible (Vamos fazendo o impossível)"
-        ],
-        correctIndex: 0,
-        category: "Movies"
-      },
-      {
-        videoId: "82xS4goDWZY",
-        startTime: 83,
-        endTime: 85,
-        audioText: "So, this is your boyfriend, huh?",
-        level: "beginner",
-        options: [
-          "So, these is your boyfriend, huh? (Então, esses é seu namorado, né?)",
-          "So, this are your boyfriend, huh? (Então, isso são seu namorado, né?)",
-          "So, this is you boyfriend, huh? (Então, isso é você namorado, né?)",
-          "So, this is your boyfriend, huh? (Então, esse é seu namorado, né?)"
-        ],
-        correctIndex: 3,
-        category: "Movies"
-      },
-      {
-        videoId: "82xS4goDWZY",
-        startTime: 84,
-        endTime: 88,
-        audioText: "I never said boyfriend. I never said boyfriend",
-        level: "beginner",
-        options: [
-          "I never said boyfriend. I never said boyfriend (Eu nunca disse namorado. Eu nunca disse namorado)",
-          "I never say boyfriend. I never say boyfriend (Eu nunca dizer namorado. Eu nunca dizer namorado)",
-          "I never sayed boyfriend. I never sayed boyfriend (Eu nunca disse namorado. Eu nunca disse namorado)",
-          "I ever said boyfriend. I ever said boyfriend (Eu sempre disse namorado. Eu sempre disse namorado)"
-        ],
-        correctIndex: 0,
-        category: "Movies"
-      },
-      {
-        videoId: "82xS4goDWZY",
-        startTime: 87,
-        endTime: 91,
-        audioText: "I believe you",
-        level: "beginner",
-        options: [
-          "I believes you (Eu acredita em você)",
-          "I believe in you (Eu acredito em você)",
-          "I believe you (Eu acredito em você)",
-          "I believed you (Eu acreditei em você)"
-        ],
-        correctIndex: 2,
-        category: "Movies"
-      },
-      {
-          videoId: "VWqJifMMgZE",
-          startTime: 2,
-          endTime: 6,
-          audioText: "We have apprehended a dangerous experimental",
-          level: "intermediate",
-          options: [
-            "We has apprehended a dangerous experimental (Nós temos apreendido um experimental perigoso)",
-            "We have apprehended a dangerous experimental (Nós apreendemos um experimental perigoso)",
-            "We have apprehend a dangerous experimental (Nós apreender um experimental perigoso)",
-            "We have apprehended an dangerous experimental (Nós apreendemos um experimental perigoso)"
-          ],
-          correctIndex: 1,
-          category: "Movies"
-        },
-        {
-          videoId: "VWqJifMMgZE",
-          startTime: 6,
-          endTime: 10,
-          audioText: "Where is he? He escaped",
-          level: "beginner",
-          options: [
-            "Where is he? He escaped (Onde ele está? Ele escapou)",
-            "Where are he? He escaped (Onde está ele? Ele escapou)",
-            "Where is he? He escape (Onde ele está? Ele escapar)",
-            "Where is him? He escaped (Onde está ele? Ele escapou)"
-          ],
-          correctIndex: 0,
-          category: "Movies"
-        },
-        {
-          videoId: "VWqJifMMgZE",
-          startTime: 9,
-          endTime: 12,
-          audioText: "He's trying to find the police cruisers",
-          level: "intermediate",
-          options: [
-            "He's trying find the police cruisers (Ele está tentando encontrar os cruzadores policiais)",
-            "He's trying to find the police cruisers (Ele está tentando encontrar os cruzadores policiais)",
-            "He's trying to find a police cruisers (Ele está tentando encontrar os cruzadores policiais)",
-            "He's try to find the police cruisers (Ele está tentar encontrar os cruzadores policiais)"
-          ],
-          correctIndex: 1,
-          category: "Movies"
-        },
-        {
-          videoId: "VWqJifMMgZE",
-          startTime: 12,
-          endTime: 17,
-          audioText: "He took the red one",
-          level: "beginner",
-          options: [
-            "He take the red one (Ele pegar o vermelho)",
-            "He took a red one (Ele pegou um vermelho)",
-            "He took the red one (Ele pegou o vermelho)",
-            "He taked the red one (Ele pegou o vermelho)"
-          ],
-          correctIndex: 2,
-          category: "Movies"
-        },
-        {
-          videoId: "VWqJifMMgZE",
-          startTime: 16,
-          endTime: 22,
-          audioText: "What hideous planet is caught in your crosshairs?",
-          level: "advanced",
-          options: [
-            "What hideous planet is caught in your crosshairs? (Que planeta hediondo está preso na sua mira?)",
-            "What hideous planet are caught in your crosshairs? (Que planeta hediondo estão preso na sua mira?)",
-            "What hideous planet is catched in your crosshairs? (Que planeta hediondo está pegado na sua mira?)",
-            "What hideous planet is caught on your crosshairs? (Que planeta hediondo está preso sobre sua mira?)"
-          ],
-          correctIndex: 0,
-          category: "Movies"
-        },
-        {
-          videoId: "VWqJifMMgZE",
-          startTime: 24,
-          endTime: 30,
-          audioText: "I wish for a friend, like a best friend",
-          level: "beginner",
-          options: [
-            "I wish of a friend, like a best friend (Eu desejo de um amigo, como um melhor amigo)",
-            "I wish for an friend, like a best friend (Eu desejo por um amigo, como um melhor amigo)",
-            "I wish for a friend, like a best friend (Eu desejo um amigo, como um melhor amigo)",
-            "I wish for a friend, like the best friend (Eu desejo um amigo, como o melhor amigo)"
-          ],
-          correctIndex: 2,
-          category: "Movies"
-        },
-        {
-          videoId: "VWqJifMMgZE",
-          startTime: 43,
-          endTime: 47,
-          audioText: "He's so cute and fluffy",
-          level: "beginner",
-          options: [
-            "He's so cute and fluffy (Ele é tão fofo e peludo)",
-            "He's so cute and fluffies (Ele é tão fofo e peludos)",
-            "His so cute and fluffy (Dele tão fofo e peludo)",
-            "He so cute and fluffy (Ele tão fofo e peludo)"
-          ],
-          correctIndex: 0,
-          category: "Movies"
-        },
-        {
-          videoId: "VWqJifMMgZE",
-          startTime: 46,
-          endTime: 51,
-          audioText: "He is your responsibility, got it?",
-          level: "intermediate",
-          options: [
-            "He are your responsibility, got it? (Ele são sua responsabilidade, entendeu?)",
-            "He is your responsibility, got it? (Ele é sua responsabilidade, entendeu?)",
-            "He is you responsibility, got it? (Ele é você responsabilidade, entendeu?)",
-            "He is your responsibility, get it? (Ele é sua responsabilidade, pegar isso?)"
-          ],
-          correctIndex: 1,
-          category: "Movies"
-        },
-        {
-          videoId: "VWqJifMMgZE",
-          startTime: 51,
-          endTime: 57,
-          audioText: "Get down from there",
-          level: "beginner",
-          options: [
-            "Get down of there (Descer de lá)",
-            "Get down from there (Desça de lá)",
-            "Gets down from there (Desce de lá)",
-            "Get down from their (Desça de lá)"
-          ],
-          correctIndex: 1,
-          category: "Movies"
-        },
-        {
-          videoId: "VWqJifMMgZE",
-          startTime: 64,
-          endTime: 71,
-          audioText: "No dogs on the table",
-          level: "beginner",
-          options: [
-            "No dog on the table (Nenhum cachorro na mesa)",
-            "No dogs in the table (Nenhum cachorro dentro da mesa)",
-            "No dogs on the table (Nenhum cachorro na mesa)",
-            "Not dogs on the table (Não cachorros na mesa)"
-          ],
-          correctIndex: 2,
-          category: "Movies"
-        },
-        {
-          videoId: "VWqJifMMgZE",
-          startTime: 78,
-          endTime: 82,
-          audioText: "We are not keeping this thing",
-          level: "intermediate",
-          options: [
-            "We are not keep this thing (Nós não estamos manter essa coisa)",
-            "We are not keeping this thing (Nós não vamos ficar com essa coisa)",
-            "We is not keeping this thing (Nós não está ficando com essa coisa)",
-            "We are not keeping these thing (Nós não estamos ficando com essas coisa)"
-          ],
-          correctIndex: 1,
-          category: "Movies"
-        },
-        {
-          videoId: "VWqJifMMgZE",
-          startTime: 81,
-          endTime: 89,
-          audioText: "Family means nobody gets left behind or forgotten",
-          level: "intermediate",
-          options: [
-            "Family means nobody gets left behind or forgotten (Família significa que ninguém fica para trás ou esquecido)",
-            "Family mean nobody gets left behind or forgotten (Família significar que ninguém fica para trás ou esquecido)",
-            "Family means nobody get left behind or forgotten (Família significa que ninguém ficar para trás ou esquecido)",
-            "Family means nobody gets leaved behind or forgotten (Família significa que ninguém fica deixado para trás ou esquecido)"
-          ],
-          correctIndex: 0,
-          category: "Movies"
-        },
-        {
-          videoId: "VWqJifMMgZE",
-          startTime: 88,
-          endTime: 97,
-          audioText: "Sometimes family isn't perfect",
-          level: "intermediate",
-          options: [
-            "Sometimes family aren't perfect (Às vezes família não são perfeitos)",
-            "Sometimes family isn't perfect (Às vezes a família não é perfeita)",
-            "Sometimes family doesn't perfect (Às vezes família não perfeita)",
-            "Sometimes families isn't perfect (Às vezes famílias não é perfeita)"
-          ],
-          correctIndex: 1,
-          category: "Movies"
-        },
-        {
-          videoId: "VWqJifMMgZE",
-          startTime: 92,
-          endTime: 97,
-          audioText: "That doesn't mean they aren't good",
-          level: "intermediate",
-          options: [
-            "That doesn't mean they aren't good (Isso não significa que eles não são bons)",
-            "That don't mean they aren't good (Isso não significam que eles não são bons)",
-            "That doesn't mean they isn't good (Isso não significa que eles não é bons)",
-            "That doesn't mean they aren't goods (Isso não significa que eles não são bons)"
-          ],
-          correctIndex: 0,
-          category: "Movies"
-        },
-        {
-          videoId: "VWqJifMMgZE",
-          startTime: 98,
-          endTime: 106,
-          audioText: "I don't think you're supposed to drink that",
-          level: "advanced",
-          options: [
-            "I don't think you're suppose to drink that (Eu não acho que você é supor de beber isso)",
-            "I don't think you're supposed to drink that (Eu não acho que você deveria beber isso)",
-            "I don't think you're supposed to drank that (Eu não acho que você é suposto de bebeu isso)",
-            "I don't think you supposed to drink that (Eu não acho você suposto de beber isso)"
-          ],
-          correctIndex: 1,
-          category: "Movies"
-        }
-  ];
+      videoId: "82xS4goDWZY",
+      startTime: 5,
+      endTime: 7,
+      audioText: "A great stirring is underway",
+      level: "intermediate",
+      options: [
+        "Uma grande agitação está em andamento",
+        "Uma grande calmaria está em andamento"
+      ],
+      correctIndex: 0,
+      category: "Movies",
+      explanation: "'Stirring' = agitação/movimento. 'Calm' = calmaria, oposto."
+    },
+    {
+      videoId: "82xS4goDWZY",
+      startTime: 14,
+      endTime: 16,
+      audioText: "War is inevitable",
+      level: "beginner",
+      options: [
+        "A guerra é inevitável",
+        "A guerra pode ser evitada"
+      ],
+      correctIndex: 0,
+      category: "Movies",
+      explanation: "'Inevitable' = inevitável (vai acontecer). 'Can be avoided' = pode ser evitada."
+    },
+    {
+      videoId: "82xS4goDWZY",
+      startTime: 26,
+      endTime: 33,
+      audioText: "There are forces more powerful than the will of the gods, my son",
+      level: "advanced",
+      options: [
+        "Há forças mais poderosas que a vontade dos deuses, meu filho",
+        "Não há forças mais poderosas que a vontade dos deuses, meu filho"
+      ],
+      correctIndex: 0,
+      category: "Movies",
+      explanation: "'More powerful than' = mais poderoso que (superioridade). 'No forces more powerful' = nega a superioridade."
+    },
+    {
+      videoId: "82xS4goDWZY",
+      startTime: 37,
+      endTime: 39,
+      audioText: "Brace yourself",
+      level: "beginner",
+      options: [
+        "Prepare-se",
+        "Relaxe"
+      ],
+      correctIndex: 0,
+      category: "Movies",
+      explanation: "'Brace yourself' = prepare-se (para algo difícil). 'Relax' = relaxar, oposto."
+    },
+    {
+      videoId: "82xS4goDWZY",
+      startTime: 42,
+      endTime: 49,
+      audioText: "Look, Peter, we all know that last year you did something cool",
+      level: "intermediate",
+      options: [
+        "Olha, Peter, nós todos sabemos que no ano passado você fez algo legal",
+        "Olha, Peter, ninguém sabe o que você fez no ano passado"
+      ],
+      correctIndex: 0,
+      category: "Movies",
+      explanation: "'We all know' = todos sabemos (conhecimento comum). 'Nobody knows' = ninguém sabe."
+    },
+    {
+      videoId: "82xS4goDWZY",
+      startTime: 47,
+      endTime: 50,
+      audioText: "But honestly, I don't even remember what it was",
+      level: "intermediate",
+      options: [
+        "Mas honestamente, eu nem lembro o que era",
+        "Mas honestamente, eu lembro perfeitamente o que era"
+      ],
+      correctIndex: 0,
+      category: "Movies",
+      explanation: "'Don't even remember' = nem lembro (esqueceu). 'Remember perfectly' = lembra perfeitamente."
+    },
+    {
+      videoId: "82xS4goDWZY",
+      startTime: 54,
+      endTime: 58,
+      audioText: "We're headed into the sea of monsters",
+      level: "intermediate",
+      options: [
+        "Estamos indo para o mar de monstros",
+        "Estamos fugindo do mar de monstros"
+      ],
+      correctIndex: 0,
+      category: "Movies",
+      explanation: "'Headed into' = indo em direção a. 'Fleeing from' = fugindo de."
+    },
+    {
+      videoId: "82xS4goDWZY",
+      startTime: 57,
+      endTime: 65,
+      audioText: "You sure you're okay to do this?",
+      level: "beginner",
+      options: [
+        "Você tem certeza que está bem para fazer isso?",
+        "Você tem certeza que não está bem para fazer isso?"
+      ],
+      correctIndex: 0,
+      category: "Movies",
+      explanation: "'Okay to do' = bem para fazer (capaz). 'Not okay' = não está bem."
+    },
+    {
+      videoId: "82xS4goDWZY",
+      startTime: 64,
+      endTime: 79,
+      audioText: "Let's go do the impossible",
+      level: "intermediate",
+      options: [
+        "Vamos fazer o impossível",
+        "Vamos fazer o óbvio"
+      ],
+      correctIndex: 0,
+      category: "Movies",
+      explanation: "'The impossible' = o impossível (desafio extremo). 'The obvious' = o óbvio (fácil)."
+    },
+    {
+      videoId: "82xS4goDWZY",
+      startTime: 83,
+      endTime: 85,
+      audioText: "So, this is your boyfriend, huh?",
+      level: "beginner",
+      options: [
+        "Então, esse é seu namorado, né?",
+        "Então, esse não é seu namorado, né?"
+      ],
+      correctIndex: 0,
+      category: "Movies",
+      explanation: "'This is' = esse é (afirmação). 'This isn't' = esse não é (negação)."
+    },
+    {
+      videoId: "82xS4goDWZY",
+      startTime: 84,
+      endTime: 88,
+      audioText: "I never said boyfriend. I never said boyfriend",
+      level: "beginner",
+      options: [
+        "Eu nunca disse namorado. Eu nunca disse namorado",
+        "Eu sempre disse namorado. Eu sempre disse namorado"
+      ],
+      correctIndex: 0,
+      category: "Movies",
+      explanation: "'Never said' = nunca disse (nega). 'Always said' = sempre disse."
+    },
+    {
+      videoId: "82xS4goDWZY",
+      startTime: 87,
+      endTime: 91,
+      audioText: "I believe you",
+      level: "beginner",
+      options: [
+        "Eu acredito em você",
+        "Eu não acredito em você"
+      ],
+      correctIndex: 0,
+      category: "Movies",
+      explanation: "'I believe you' = acredito em você (confia). 'I don't believe you' = não acredito."
+    },
+    {
+      videoId: "VWqJifMMgZE",
+      startTime: 2,
+      endTime: 6,
+      audioText: "We have apprehended a dangerous experimental",
+      level: "intermediate",
+      options: [
+        "Nós apreendemos um experimental perigoso",
+        "Nós libertamos um experimental perigoso"
+      ],
+      correctIndex: 0,
+      category: "Movies",
+      explanation: "'Apprehended' = apreendeu/capturou. 'Released' = liberou, oposto."
+    },
+    {
+      videoId: "VWqJifMMgZE",
+      startTime: 6,
+      endTime: 10,
+      audioText: "Where is he? He escaped",
+      level: "beginner",
+      options: [
+        "Onde ele está? Ele escapou",
+        "Onde ele está? Ele foi capturado"
+      ],
+      correctIndex: 0,
+      category: "Movies",
+      explanation: "'Escaped' = escapou (livre). 'Was captured' = foi capturado."
+    },
+    {
+      videoId: "VWqJifMMgZE",
+      startTime: 9,
+      endTime: 12,
+      audioText: "He's trying to find the police cruisers",
+      level: "intermediate",
+      options: [
+        "Ele está tentando encontrar os cruzadores policiais",
+        "Ele está tentando evitar os cruzadores policiais"
+      ],
+      correctIndex: 0,
+      category: "Movies",
+      explanation: "'Trying to find' = tentando encontrar (buscar). 'Trying to avoid' = tentando evitar."
+    },
+    {
+      videoId: "VWqJifMMgZE",
+      startTime: 12,
+      endTime: 17,
+      audioText: "He took the red one",
+      level: "beginner",
+      options: [
+        "Ele pegou o vermelho",
+        "Ele pegou o azul"
+      ],
+      correctIndex: 0,
+      category: "Movies",
+      explanation: "'Red one' = o vermelho. 'Blue one' = o azul, cor diferente."
+    },
+    {
+      videoId: "VWqJifMMgZE",
+      startTime: 16,
+      endTime: 22,
+      audioText: "What hideous planet is caught in your crosshairs?",
+      level: "advanced",
+      options: [
+        "Que planeta hediondo está preso na sua mira?",
+        "Que planeta maravilhoso está preso na sua mira?"
+      ],
+      correctIndex: 0,
+      category: "Movies",
+      explanation: "'Hideous' = hediondo/horrível. 'Beautiful/wonderful' = maravilhoso, oposto."
+    },
+    {
+      videoId: "VWqJifMMgZE",
+      startTime: 24,
+      endTime: 30,
+      audioText: "I wish for a friend, like a best friend",
+      level: "beginner",
+      options: [
+        "Eu desejo um amigo, como um melhor amigo",
+        "Eu não quero nenhum amigo"
+      ],
+      correctIndex: 0,
+      category: "Movies",
+      explanation: "'I wish for a friend' = desejo um amigo (quer companhia). 'Don't want any friend' = não quer amigo."
+    },
+    {
+      videoId: "VWqJifMMgZE",
+      startTime: 43,
+      endTime: 47,
+      audioText: "He's so cute and fluffy",
+      level: "beginner",
+      options: [
+        "Ele é tão fofo e peludo",
+        "Ele é tão assustador e perigoso"
+      ],
+      correctIndex: 0,
+      category: "Movies",
+      explanation: "'Cute and fluffy' = fofo e peludo (adorável). 'Scary and dangerous' = assustador e perigoso."
+    },
+    {
+      videoId: "VWqJifMMgZE",
+      startTime: 46,
+      endTime: 51,
+      audioText: "He is your responsibility, got it?",
+      level: "intermediate",
+      options: [
+        "Ele é sua responsabilidade, entendeu?",
+        "Ele não é sua responsabilidade, entendeu?"
+      ],
+      correctIndex: 0,
+      category: "Movies",
+      explanation: "'Is your responsibility' = é sua responsabilidade (você deve cuidar). 'Isn't' = não é."
+    },
+    {
+      videoId: "VWqJifMMgZE",
+      startTime: 51,
+      endTime: 57,
+      audioText: "Get down from there",
+      level: "beginner",
+      options: [
+        "Desça de lá",
+        "Suba aí"
+      ],
+      correctIndex: 0,
+      category: "Movies",
+      explanation: "'Get down' = descer. 'Get up/climb up' = subir, oposto."
+    },
+    {
+      videoId: "VWqJifMMgZE",
+      startTime: 64,
+      endTime: 71,
+      audioText: "No dogs on the table",
+      level: "beginner",
+      options: [
+        "Nenhum cachorro na mesa",
+        "Todos os cachorros na mesa"
+      ],
+      correctIndex: 0,
+      category: "Movies",
+      explanation: "'No dogs' = nenhum cachorro (proibição). 'All dogs' = todos os cachorros."
+    },
+    {
+      videoId: "VWqJifMMgZE",
+      startTime: 78,
+      endTime: 82,
+      audioText: "We are not keeping this thing",
+      level: "intermediate",
+      options: [
+        "Nós não vamos ficar com essa coisa",
+        "Nós vamos ficar com essa coisa"
+      ],
+      correctIndex: 0,
+      category: "Movies",
+      explanation: "'Not keeping' = não vamos ficar (rejeitar). Sem 'not' = vamos ficar (aceitar)."
+    },
+    {
+      videoId: "VWqJifMMgZE",
+      startTime: 81,
+      endTime: 89,
+      audioText: "Family means nobody gets left behind or forgotten",
+      level: "intermediate",
+      options: [
+        "Família significa que ninguém fica para trás ou esquecido",
+        "Família significa que alguns ficam para trás ou esquecidos"
+      ],
+      correctIndex: 0,
+      category: "Movies",
+      explanation: "'Nobody gets left behind' = ninguém fica para trás (todos incluídos). 'Some get left' = alguns ficam."
+    },
+    {
+      videoId: "VWqJifMMgZE",
+      startTime: 88,
+      endTime: 97,
+      audioText: "Sometimes family isn't perfect",
+      level: "intermediate",
+      options: [
+        "Às vezes a família não é perfeita",
+        "Às vezes a família é sempre perfeita"
+      ],
+      correctIndex: 0,
+      category: "Movies",
+      explanation: "'Isn't perfect' = não é perfeita (tem falhas). 'Is always perfect' = é sempre perfeita."
+    },
+    {
+      videoId: "VWqJifMMgZE",
+      startTime: 92,
+      endTime: 97,
+      audioText: "That doesn't mean they aren't good",
+      level: "intermediate",
+      options: [
+        "Isso não significa que eles não são bons",
+        "Isso significa que eles não são bons"
+      ],
+      correctIndex: 0,
+      category: "Movies",
+      explanation: "'Doesn't mean they aren't good' = não significa que não são bons (ainda são bons). Sem 'doesn't' = confirma que não são bons."
+    },
+    {
+      videoId: "VWqJifMMgZE",
+      startTime: 98,
+      endTime: 106,
+      audioText: "I don't think you're supposed to drink that",
+      level: "advanced",
+      options: [
+        "Eu não acho que você deveria beber isso",
+        "Eu acho que você deveria beber isso"
+      ],
+      correctIndex: 0,
+      category: "Movies",
+      explanation: "'Don't think you're supposed to' = não deveria (desaconselhamento). Sem 'don't' = deveria."
+    }
+];
 
-  export default questions;
+export default questions;
