@@ -13,7 +13,6 @@ import {
   updateLastActivity
 } from '../../store/slices/userSlice';
 import { LevelIndicator } from '../leaderboard/LevelIndicator';
-import GuidedTourOverlay from '../ui/GuidedTourOverlay';
 import LexySpeakingOnboarding from '../ui/LexySpeakingOnboarding';
 import { useUILanguage } from '../../context/LanguageContext.jsx';
 import { translateUI } from '../../i18n/uiTranslations.js';
