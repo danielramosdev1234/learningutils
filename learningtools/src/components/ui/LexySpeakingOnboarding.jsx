@@ -206,6 +206,8 @@ const LexySpeakingOnboarding = ({
   const { language } = useUILanguage();
   const dispatch = useDispatch();
 
+const [hasUserInteracted, setHasUserInteracted] = useState(false);
+
   // ============================================================================
   // FUNÇÕES PRINCIPAIS
   // ============================================================================
@@ -385,20 +387,15 @@ const handleLexyFinish = () => {
   // ============================================================================
 
   // Iniciar áudio quando momento muda
-  useEffect(() => {
-    if (!visible || moment === 'waiting') {
-      console.log(`🦊 Momento: ${moment} - ${moment === 'waiting' ? 'Lexy sumiu' : 'Invisível'}`);
-      return;
-    }
+ useEffect(() => {
+   if (!visible || moment === 'waiting' || !hasUserInteracted) return;
 
-    console.log(`🦊 Novo momento: ${moment}`);
-    const audios = getMomentAudios();
-    if (audios.length > 0) {
-      playAudioSequence(audios);
-    }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [moment, visible, userAccuracy]);
+   console.log(`🦊 Novo momento: ${moment}`);
+   const audios = getMomentAudios();
+   if (audios.length > 0) {
+     playAudioSequence(audios);
+   }
+ }, [moment, visible, userAccuracy, hasUserInteracted]);
 
   // Atualizar highlight quando momento muda
   useLayoutEffect(() => {
@@ -443,6 +440,49 @@ const handleLexyFinish = () => {
 
   return (
     <>
+
+    // Add this "Start Tour" button in your render:
+    {moment === 'intro' && !hasUserInteracted && (
+      <div className="fixed inset-0 z-[1000] bg-slate-900/80 backdrop-blur-sm flex items-center justify-center p-4 pointer-events-auto">
+        <div className="bg-white rounded-3xl p-8 max-w-md w-full shadow-2xl border-4 border-purple-300 text-center">
+          {/* Lexy Animation */}
+          <div className="flex justify-center mb-6">
+            <Lottie
+              loop
+              play
+              animationData={learninhoTalking}
+              style={{ width: 120, height: 120 }}
+            />
+          </div>
+
+          <h2 className="text-2xl font-bold text-gray-800 mb-4">
+            👋 Hi! I'm Lexy!
+          </h2>
+
+          <p className="text-gray-600 mb-6">
+            Vou te guiar na sua primeira sessão de prática.
+            Pronto para começar?
+          </p>
+
+          <button
+            onClick={() => {
+              setHasUserInteracted(true);
+              // Audio will now play because user clicked
+            }}
+            className="w-full bg-purple-500  text-white font-bold py-4 rounded-xl transition-all shadow-lg text-lg"
+          >
+            🎤 Começar!
+          </button>
+
+          <button
+            onClick={handleSkipClick}
+            className="mt-3 w-full bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold py-3 rounded-xl transition-all"
+          >
+            Skip Tutorial
+          </button>
+        </div>
+      </div>
+    )}
       {/* ======================================================================
           OVERLAY COM HIGHLIGHTS
       ====================================================================== */}
