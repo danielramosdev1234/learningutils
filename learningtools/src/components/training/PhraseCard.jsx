@@ -38,9 +38,9 @@ export const PhraseCard = ({
   isActive,
   textToSpeech,
   autoAdvance = true,
-  tourActive = false,
-  tourStep = 0,
-  onTourFeedbackVisible
+  lexyOnboardingActive = false,
+  lexyMoment = 'intro',
+  onUserSpeakComplete
 }) => {
  const { language } = useUILanguage();
  const t = (key, params) => translateUI(language, `phraseCard.${key}`, params);
@@ -117,7 +117,7 @@ export const PhraseCard = ({
 
   const [isDisabled, setIsDisabled] = useState(false);
   const audioRef = useRef(null);
-  const shouldShowIPA = showIPA || (tourActive && tourStep >= 3);
+  const shouldShowIPA = showIPA || (lexyOnboardingActive && ['instruction', 'speak', 'waiting', 'feedback'].includes(lexyMoment));
 
   // [MANTER TODO O useEffect de processamento - linhas 110-211]
   useEffect(() => {
@@ -131,8 +131,8 @@ export const PhraseCard = ({
       setShowFeedback(true);
       setHasProcessed(true);
 
-      if (tourActive && typeof onTourFeedbackVisible === 'function') {
-        onTourFeedbackVisible();
+      if (lexyOnboardingActive && lexyMoment === 'waiting' && typeof onUserSpeakComplete === 'function') {
+        onUserSpeakComplete(comparison.similarity);
       }
 
       const startTime = performance.now();
@@ -187,7 +187,7 @@ export const PhraseCard = ({
       });
 
       let timer;
-      if (!tourActive) {
+      if (!lexyOnboardingActive) {
         timer = setTimeout(() => {
           setShowFeedback(false);
         }, 3000);
@@ -207,8 +207,9 @@ export const PhraseCard = ({
     onCorrectAnswer,
     autoAdvance,
     onNextPhrase,
-    tourActive,
-    onTourFeedbackVisible
+    lexyOnboardingActive,
+        lexyMoment,
+        onUserSpeakComplete
   ]);
 
 useEffect(() => {
@@ -553,6 +554,12 @@ const handleNextSkip = () => {
             try {
               trackUserAction('tts_playback_started', { phraseId: phrase.id });
               onSpeak(phrase.text);
+
+                    if (lexyOnboardingActive && lexyMoment === 'listen' && onUserSpeakComplete) {
+                      setTimeout(() => {
+                        onUserSpeakComplete(100); // Avança para próximo momento
+                      }, 2000);
+                    }
               if (isListening) {
               stopListening();
               }
@@ -565,6 +572,7 @@ const handleNextSkip = () => {
           }}
           style={{ touchAction: 'manipulation' }}
           className="flex items-center gap-1 sm:gap-2 bg-blue-500 hover:bg-blue-600 text-white px-3 sm:px-6 py-2 sm:py-3 rounded-lg transition-colors shadow-md font-semibold text-sm sm:text-base relative z-10"
+          data-tour-id="tour-hear-button"
           aria-label={t('playAudioAria')}
           title={t('clickToHearCorrect')}
         >

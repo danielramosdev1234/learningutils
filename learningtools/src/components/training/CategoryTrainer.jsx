@@ -14,6 +14,7 @@ import {
 } from '../../store/slices/userSlice';
 import { LevelIndicator } from '../leaderboard/LevelIndicator';
 import GuidedTourOverlay from '../ui/GuidedTourOverlay';
+import LexySpeakingOnboarding from '../ui/LexySpeakingOnboarding';
 import { useUILanguage } from '../../context/LanguageContext.jsx';
 import { translateUI } from '../../i18n/uiTranslations.js';
 
@@ -117,10 +118,10 @@ const CategoryTrainer = ({ autoSelectCategory = null }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [completedInSession, setCompletedInSession] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [showTour, setShowTour] = useState(false);
-  const [tourStep, setTourStep] = useState(0);
-  const [tourSpeakCompleted, setTourSpeakCompleted] = useState(false);
-  const tourInitializedRef = useRef(false);
+  const [showLexyOnboarding, setShowLexyOnboarding] = useState(false);
+  const [lexyMoment, setLexyMoment] = useState('intro'); // 'intro' | 'instruction' | 'speak' | 'waiting' | 'feedback' | 'next'
+  const [userAccuracy, setUserAccuracy] = useState(0);
+  const lexyInitializedRef = useRef(false);
 
   // Seleciona categoria automaticamente quando indicado (onboarding)
   useEffect(() => {
@@ -210,134 +211,73 @@ const CategoryTrainer = ({ autoSelectCategory = null }) => {
       !selectedCategory ||
       selectedCategory !== 'daily_basics' ||
       !categoryPhrases.length ||
-      currentIndex >= categoryPhrases.length ||
+      currentIndex !== 0 || // ⚠️ MUDANÇA CRÍTICA: só mostra na primeira frase
       mode !== 'guest'
     ) {
       return;
     }
 
-    if (typeof window === 'undefined' || tourInitializedRef.current) {
+    if (typeof window === 'undefined' || lexyInitializedRef.current) {
       return;
     }
 
     const stored = localStorage.getItem(TOUR_STORAGE_KEY);
     if (!stored) {
-      tourInitializedRef.current = true;
-      setTourStep(0);
-      setTourSpeakCompleted(false);
-      setShowTour(true);
+      lexyInitializedRef.current = true;
+      setLexyMoment('intro');
+      setUserAccuracy(0);
+      setShowLexyOnboarding(true);
     } else {
-      tourInitializedRef.current = true;
+      lexyInitializedRef.current = true;
     }
   }, [selectedCategory, categoryPhrases, currentIndex, mode]);
 
-  const tourSteps = useMemo(() => {
-    const baseSteps = [
-      {
-        id: 'intro',
-        title: translateUI(language, 'categoryTrainer.tourTitle'),
-        description: translateUI(language, 'categoryTrainer.tourIntro'),
-        targetId: null,
-        primaryLabel: translateUI(language, 'categoryTrainer.tourStart')
-      },
-      {
-        id: 'phrase',
-        title: translateUI(language, 'categoryTrainer.tourPhraseTitle'),
-        description: translateUI(language, 'categoryTrainer.tourPhraseDesc'),
-        targetId: 'tour-phrase-text'
-      },
-      {
-        id: 'translation',
-        title: translateUI(language, 'categoryTrainer.tourTranslationTitle'),
-        description: translateUI(language, 'categoryTrainer.tourTranslationDesc'),
-        targetId: 'tour-phrase-translation'
-      },
-      {
-        id: 'ipa',
-        title: translateUI(language, 'categoryTrainer.tourIpaTitle'),
-        description: translateUI(language, 'categoryTrainer.tourIpaDesc'),
-        targetId: 'tour-ipa'
-      },
-      {
-        id: 'speak',
-        title: tourSpeakCompleted
-          ? translateUI(language, 'categoryTrainer.tourFeedbackTitle')
-          : translateUI(language, 'categoryTrainer.tourSpeakTitle'),
-        description: tourSpeakCompleted
-          ? translateUI(language, 'categoryTrainer.tourFeedbackDesc')
-          : translateUI(language, 'categoryTrainer.tourSpeakDesc'),
-        targetId: tourSpeakCompleted ? 'tour-feedback-area' : 'tour-speak-button'
-      }
-    ];
+useEffect(() => {
+  // ⚠️ ADICIONAR ESTE EFEITO
+  if (mode === 'guest' && selectedCategory !== 'daily_basics') {
+    setSelectedCategory('daily_basics');
+  }
+}, [mode, selectedCategory]);
 
-    if (tourSpeakCompleted) {
-      baseSteps.push(
-        {
-          id: 'feedback-you-said',
-          title: translateUI(language, 'categoryTrainer.tourYouSaidTitle'),
-          description: translateUI(language, 'categoryTrainer.tourYouSaidDesc'),
-          targetId: 'tour-feedback-summary'
-        },
-        {
-          id: 'feedback-accuracy',
-          title: translateUI(language, 'categoryTrainer.tourAccuracyTitle'),
-          description: translateUI(language, 'categoryTrainer.tourAccuracyDesc'),
-          targetId: 'tour-feedback-accuracy'
-        },
-        {
-          id: 'feedback-word',
-          title: translateUI(language, 'categoryTrainer.tourWordTitle'),
-          description: translateUI(language, 'categoryTrainer.tourWordDesc'),
-          targetId: 'tour-feedback-word'
-        },
-        {
-          id: 'feedback-next',
-          title: translateUI(language, 'categoryTrainer.tourNextTitle'),
-          description: translateUI(language, 'categoryTrainer.tourNextDesc'),
-          targetId: 'tour-next-button'
-        }
-      );
-    }
 
-    return baseSteps;
-  }, [tourSpeakCompleted, language]);
 
-  const handleTourFinish = (status = 'completed') => {
+  const handleLexyMomentComplete = (nextMoment) => {
+    console.log(`🦊 Lexy completou momento: ${lexyMoment} → ${nextMoment}`);
+    setLexyMoment(nextMoment);
+  };
+
+  const handleLexySkip = () => {
+    console.log('⏭️ Usuário pulou onboarding');
     if (typeof window !== 'undefined') {
-      localStorage.setItem(TOUR_STORAGE_KEY, status);
+      localStorage.setItem(TOUR_STORAGE_KEY, 'skipped');
     }
-    setShowTour(false);
-    setTourStep(0);
-    setTourSpeakCompleted(false);
+    setShowLexyOnboarding(false);
+    setLexyMoment('intro');
+    setUserAccuracy(0);
   };
 
-  const handleTourNext = () => {
-    if (tourStep < tourSteps.length - 1) {
-      setTourStep(prev => prev + 1);
-      return;
+  const handleLexyFinish = () => {
+    console.log('✅ Onboarding concluído');
+    if (typeof window !== 'undefined') {
+      localStorage.setItem(TOUR_STORAGE_KEY, 'completed');
     }
-
-    if (tourSpeakCompleted) {
-      handleTourFinish('completed');
-    }
+    setShowLexyOnboarding(false);
+    setLexyMoment('intro');
+    setUserAccuracy(0);
   };
 
-  const handleTourPrev = () => {
-    if (tourStep === 0) return;
-    setTourStep(prev => Math.max(prev - 1, 0));
-  };
+  const handleUserSpeakComplete = (accuracy) => {
+    console.log(`🎤 Usuário completou ação com ${accuracy}% de acurácia`);
+    setUserAccuracy(accuracy);
 
-  const handleTourSkip = () => {
-    handleTourFinish('skipped');
-  };
-
-  const handleTourFeedbackVisible = () => {
-    if (showTour) {
-      setTourSpeakCompleted(true);
+    // Se estava no momento 'listen', avança para 'speak'
+    if (lexyMoment === 'listen') {
+      setLexyMoment('speak');
+    } else {
+      // Se estava em 'waiting', avança para 'feedback'
+      setLexyMoment('feedback');
     }
   };
-
-  const tourNextDisabled = tourStep === tourSteps.length - 1 && !tourSpeakCompleted;
 
   const handleCategorySelect = (categoryId) => {
     setSelectedCategory(categoryId);
@@ -601,6 +541,7 @@ const CategoryTrainer = ({ autoSelectCategory = null }) => {
         <LevelIndicator variant="full" />
         {/* Header com categoria e progresso */}
         <div className="mb-6">
+            {mode !== 'guest' && (
           <button
             onClick={handleBack}
             className="flex items-center text-gray-600 hover:text-gray-800 mb-4 transition-colors"
@@ -608,6 +549,7 @@ const CategoryTrainer = ({ autoSelectCategory = null }) => {
             <ArrowLeft className="w-5 h-5 mr-2" />
             {translateUI(language, 'categoryTrainer.backToCategories')}
           </button>
+           )}
 
           <div className={`bg-gradient-to-r ${currentCategory.color} rounded-xl p-6 shadow-lg text-white`}>
             <div className="flex items-center justify-between mb-3">
@@ -658,22 +600,20 @@ const CategoryTrainer = ({ autoSelectCategory = null }) => {
           onNextPhrase={handleNextPhrase}
           isActive={true}
           autoAdvance={false}
-          tourActive={showTour}
-          tourStep={tourStep}
-          onTourFeedbackVisible={handleTourFeedbackVisible}
+          lexyOnboardingActive={showLexyOnboarding}
+          lexyMoment={lexyMoment}
+          onUserSpeakComplete={handleUserSpeakComplete}
         />
       </div>
 
-      {showTour && (
-        <GuidedTourOverlay
-          visible={showTour}
-          steps={tourSteps}
-          currentStep={tourStep}
-          onNext={handleTourNext}
-          onPrev={handleTourPrev}
-          onSkip={handleTourSkip}
-          onFinish={() => handleTourFinish('completed')}
-          isNextDisabled={tourNextDisabled}
+      {showLexyOnboarding && (
+        <LexySpeakingOnboarding
+          visible={showLexyOnboarding}
+          moment={lexyMoment}
+          userAccuracy={userAccuracy}
+          onMomentComplete={handleLexyMomentComplete}
+          onSkip={handleLexySkip}
+          onFinish={handleLexyFinish}
         />
       )}
     </div>

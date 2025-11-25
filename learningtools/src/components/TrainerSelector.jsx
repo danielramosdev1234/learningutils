@@ -36,8 +36,12 @@ const ONBOARDING_STORAGE_KEY = 'learnfun_guest_onboarding_v1';
 
 const TrainerSelector = () => {
   const getInitialTrainer = () => {
+
     const params = new URLSearchParams(window.location.search);
     const mode = params.get('mode');
+    if (mode === 'guest') {
+              return 'categories';
+            }
     if (mode === 'categories') return 'categories';
     if (mode === 'live-rooms') return 'live-rooms';
     if (mode === 'translate') return 'translate';
@@ -64,6 +68,18 @@ const TrainerSelector = () => {
   const [onboardingStep, setOnboardingStep] = useState(1);
   const [autoSelectCategory, setAutoSelectCategory] = useState(null);
   const { language } = useUILanguage();
+
+  useEffect(() => {
+    // ⚠️ ADICIONAR ESTE EFEITO
+    if (mode === 'guest' && activeTrainer !== 'categories') {
+      setActiveTrainer('categories');
+      setAutoSelectCategory('daily_basics');
+      const url = new URL(window.location);
+      url.searchParams.set('mode', 'categories');
+      url.searchParams.set('category', 'daily_basics');
+      window.history.pushState({}, '', url);
+    }
+  }, [mode, activeTrainer]);
 
   useEffect(() => {
     if (window.va) {
@@ -161,6 +177,7 @@ const handleCloseLevelUpModal = () => {
 
       {/* TOP Navigation Bar - Desktop Only */}
       <nav className="bg-white shadow-md sticky top-0 z-50 hidden md:block">
+           {mode !== 'guest' && (
         <div className=" mx-auto px-4">
           <div className="flex justify-between items-center py-4">
             <div className="flex justify-center gap-4 flex-1">
@@ -298,6 +315,7 @@ const handleCloseLevelUpModal = () => {
             </div>
           </div>
         </div>
+        )}
       </nav>
 
       {/* MOBILE Top Bar - Simple header with Logo */}
@@ -496,6 +514,7 @@ const handleCloseLevelUpModal = () => {
 
       {/* BOTTOM Navigation Bar - Mobile Only */}
       <nav className="fixed bottom-0 left-0 right-0 bg-white border-t-2 shadow-lg z-40 md:hidden">
+          {mode !== 'guest' && (
         <div className="grid grid-cols-5 gap-1 px-2">
           {/* Speak Button - Vai direto para speak-training-modes */}
           <button
@@ -618,6 +637,7 @@ const handleCloseLevelUpModal = () => {
             )}
           </button>
         </div>
+         )}
       </nav>
 
       {/* Botão Flutuante WhatsApp - Desktop Only */}
@@ -625,14 +645,7 @@ const handleCloseLevelUpModal = () => {
         <WhatsAppFloatingButton />
       </div>
 
-      {showOnboarding && (
-        <GuestOnboarding
-          open={showOnboarding}
-          step={onboardingStep}
-          onNext={handleOnboardingNext}
-          onSkip={handleOnboardingSkip}
-        />
-      )}
+
     </div>
   );
 };

@@ -210,6 +210,32 @@ export const UI_TRANSLATIONS = {
       tourWordDesc: 'Analisa cada palavra e aponta diferenças de pronúncia entre o que você falou e a frase original para ajustar detalhes.',
       tourNextTitle: 'Avance para a próxima frase',
       tourNextDesc: 'Toque em "Next" para seguir para a próxima frase e continuar praticando com o mesmo foco.',
+      lexySkipConfirm: 'Tem certeza que deseja pular o tutorial?',
+      lexySkipYes: 'Sim, pular',
+      lexySkipNo: 'Continuar aprendendo',
+      lexyReplayAudio: 'Ouvir novamente',
+      lexyUnlockFeatures: '🎉 Desbloqueie Todos os Recursos!',
+            lexyLoginBenefit: 'Faça login com Google e ganhe acesso completo',
+
+            lexyAvailableResources: '🎁 Recursos Disponíveis',
+            lexyTrainingModes: '7 Modos de Treinamento',
+            lexyTrainingModesDesc: 'Categories, Speak, Translate, Numbers, Challenge, Video, Live Rooms',
+
+            lexyIPAAnalysis: 'Análise IPA',
+            lexyIPADescription: 'Transcrição fonética detalhada de cada frase',
+
+            lexyGamification: 'Gamificação',
+            lexyGamificationDescription: 'Sistema de níveis, XP, conquistas e recompensas',
+
+            lexyLeaderboard: 'Ranking',
+            lexyLiveRooms: 'Salas Ao Vivo',
+
+            lexyImportant: '⚠️ Importante',
+            lexyNoSaveWarning: 'Seu progresso como visitante não será salvo',
+
+            lexyLoginWithGoogle: '🔒 Fazer Login com Google',
+            lexyContinueWithoutLogin: 'Continuar sem Login',
+            lexyCanLoginLater: 'Você pode fazer login depois a qualquer momento',
     },
     speakTrainingModes: {
       // Header
@@ -502,6 +528,32 @@ export const UI_TRANSLATIONS = {
       tourWordDesc: 'Analyzes each word and points out pronunciation differences between what you said and the original phrase to adjust details.',
       tourNextTitle: 'Move to the next phrase',
       tourNextDesc: 'Tap "Next" to move to the next phrase and continue practicing with the same focus.',
+      lexySkipConfirm: 'Are you sure you want to skip the tutorial?',
+      lexySkipYes: 'Yes, skip',
+      lexySkipNo: 'Keep learning',
+      lexyReplayAudio: 'Listen again',
+      lexyUnlockFeatures: '🎉 Unlock All Features!',
+            lexyLoginBenefit: 'Login with Google and get full access',
+
+            lexyAvailableResources: '🎁 Available Resources',
+            lexyTrainingModes: '7 Training Modes',
+            lexyTrainingModesDesc: 'Categories, Speak, Translate, Numbers, Challenge, Video, Live Rooms',
+
+            lexyIPAAnalysis: 'IPA Analysis',
+            lexyIPADescription: 'Detailed phonetic transcription of each phrase',
+
+            lexyGamification: 'Gamification',
+            lexyGamificationDescription: 'Level system, XP, achievements and rewards',
+
+            lexyLeaderboard: 'Leaderboard',
+            lexyLiveRooms: 'Live Rooms',
+
+            lexyImportant: '⚠️ Important',
+            lexyNoSaveWarning: 'Your progress as a guest will not be saved',
+
+            lexyLoginWithGoogle: '🔒 Login with Google',
+            lexyContinueWithoutLogin: 'Continue without Login',
+            lexyCanLoginLater: 'You can login later at any time',
     },
     speakTrainingModes: {
       // Header
