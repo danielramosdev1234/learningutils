@@ -174,12 +174,11 @@ export default function LevelRankingModal({ isOpen, onClose, currentUserId }) {
                               <Trophy size={10} className="text-slate-500" />
                               <span className="text-xs font-semibold text-gray-700">Lvl {top3[1].currentLevel}</span>
                             </div>
-                            <p className="text-indigo-600 font-bold text-base mb-1">{top3[1].totalXP || 0} XP</p>
                             <div className="flex items-center justify-center gap-1 text-xs text-gray-600 mb-3">
                               <Flame size={12} className="text-orange-500" />
                               <span className="font-semibold">{top3[1].streak || 0}d</span>
                             </div>
-                            <div className="bg-gradient-to-t from-slate-200 to-slate-100 rounded-t-2xl border-2 border-slate-300 shadow-lg h-24 flex items-center justify-center">
+                            <div className="bg-gradient-to-t from-slate-200 to-slate-100 rounded-t-2xl border-2 border-slate-300 shadow-lg h-20 flex items-center justify-center">
                               <span className="text-5xl font-black text-slate-400">2</span>
                             </div>
                           </div>
@@ -218,12 +217,11 @@ export default function LevelRankingModal({ isOpen, onClose, currentUserId }) {
                               <Trophy size={12} className="text-yellow-600" />
                               <span className="text-sm font-bold text-gray-900">Lvl {top3[0].currentLevel}</span>
                             </div>
-                            <p className="text-indigo-600 font-black text-xl mb-1">{top3[0].totalXP || 0} XP</p>
                             <div className="flex items-center justify-center gap-1 text-sm text-gray-700 mb-3">
                               <Flame size={14} className="text-orange-500" />
                               <span className="font-bold">{top3[0].streak || 0}d streak</span>
                             </div>
-                            <div className="bg-gradient-to-t from-yellow-300 via-yellow-200 to-yellow-100 rounded-t-2xl border-2 border-yellow-400 shadow-2xl h-36 flex items-center justify-center relative overflow-hidden">
+                            <div className="bg-gradient-to-t from-yellow-300 via-yellow-200 to-yellow-100 rounded-t-2xl border-2 border-yellow-400 shadow-2xl h-22 flex items-center justify-center relative overflow-hidden">
                               <div className="absolute inset-0 bg-gradient-to-t from-transparent via-white/20 to-white/40"></div>
                               <span className="text-7xl font-black text-yellow-600 relative z-10">1</span>
                             </div>
@@ -262,12 +260,11 @@ export default function LevelRankingModal({ isOpen, onClose, currentUserId }) {
                               <Trophy size={10} className="text-orange-600" />
                               <span className="text-xs font-semibold text-gray-700">Lvl {top3[2].currentLevel}</span>
                             </div>
-                            <p className="text-indigo-600 font-bold text-base mb-1">{top3[2].totalXP || 0} XP</p>
                             <div className="flex items-center justify-center gap-1 text-xs text-gray-600 mb-3">
                               <Flame size={12} className="text-orange-500" />
                               <span className="font-semibold">{top3[2].streak || 0}d</span>
                             </div>
-                            <div className="bg-gradient-to-t from-orange-300 to-orange-100 rounded-t-2xl border-2 border-orange-400 shadow-lg h-20 flex items-center justify-center">
+                            <div className="bg-gradient-to-t from-orange-300 to-orange-100 rounded-t-2xl border-2 border-orange-400 shadow-lg h-18 flex items-center justify-center">
                               <span className="text-5xl font-black text-orange-500">3</span>
                             </div>
                           </div>
