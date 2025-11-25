@@ -18,38 +18,38 @@ const PADDING = 16;
 // Mapeamento de momentos → sequências de áudio
 const AUDIO_MAP = {
   intro: [
-    { file: '/assets/onboarding-lexy/01_intro_welcome.mp3', duration: 4000 },
-    { file: '/assets/onboarding-lexy/02_intro_lets_go.mp3', duration: 3000, pauseBefore: 500 }
+    { file: '/onboarding-lexy/01_intro_welcome.mp3', duration: 4000 },
+    { file: '/onboarding-lexy/02_intro_lets_go.mp3', duration: 3000, pauseBefore: 500 }
   ],
   instruction: [
-    { file: '/assets/onboarding-lexy/03_instruction_phrase.mp3', duration: 4000 }
+    { file: '/onboarding-lexy/03_instruction_phrase.mp3', duration: 4000 }
   ],
      listen: [
-       { file: '/assets/onboarding-lexy/03b_instruction_listen.mp3', duration: 3000 }
+       { file: '/onboarding-lexy/03b_instruction_listen.mp3', duration: 3000 }
      ],
   speak: [
-    { file: '/assets/onboarding-lexy/04_instruction_speak.mp3', duration: 4500 }
+    { file: '/onboarding-lexy/04_instruction_speak.mp3', duration: 4500 }
   ],
   feedback_high: [
-    { file: '/assets/onboarding-lexy/05_celebrate_high.mp3', duration: 2000 },
-    { file: '/assets/onboarding-lexy/08_feedback_explain.mp3', duration: 4000, pauseBefore: 300 }
+    { file: '/onboarding-lexy/05_celebrate_high.mp3', duration: 2000 },
+    { file: '/onboarding-lexy/08_feedback_explain.mp3', duration: 4000, pauseBefore: 300 }
   ],
   feedback_medium: [
-    { file: '/assets/onboarding-lexy/06_celebrate_medium.mp3', duration: 2000 },
-    { file: '/assets/onboarding-lexy/08_feedback_explain.mp3', duration: 4000, pauseBefore: 300 }
+    { file: '/onboarding-lexy/06_celebrate_medium.mp3', duration: 2000 },
+    { file: '/onboarding-lexy/08_feedback_explain.mp3', duration: 4000, pauseBefore: 300 }
   ],
   feedback_low: [
-    { file: '/assets/onboarding-lexy/07_celebrate_low.mp3', duration: 2500 },
-    { file: '/assets/onboarding-lexy/08_feedback_explain.mp3', duration: 4000, pauseBefore: 300 }
+    { file: '/onboarding-lexy/07_celebrate_low.mp3', duration: 2500 },
+    { file: '/onboarding-lexy/08_feedback_explain.mp3', duration: 4000, pauseBefore: 300 }
   ],
   next: [
-    { file: '/assets/onboarding-lexy/09_next_phrase.mp3', duration: 4000 }
+    { file: '/onboarding-lexy/09_next_phrase.mp3', duration: 4000 }
   ],
 
      login: [
-       { file: '/assets/onboarding-lexy/10_login_intro.mp3', duration: 6000 },
-       { file: '/assets/onboarding-lexy/11_login_benefits.mp3', duration: 7000, pauseBefore: 500 },
-       { file: '/assets/onboarding-lexy/12_login_warning.mp3', duration: 5000, pauseBefore: 500 }
+       { file: '/onboarding-lexy/10_login_intro.mp3', duration: 6000 },
+       { file: '/onboarding-lexy/11_login_benefits.mp3', duration: 7000, pauseBefore: 500 },
+       { file: '/onboarding-lexy/12_login_warning.mp3', duration: 5000, pauseBefore: 500 }
      ]
 };
 
