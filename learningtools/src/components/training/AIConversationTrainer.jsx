@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import  learninhoTalking  from '../../assets/animation.json';
-import { Send, MessageCircle, Sparkles, CheckCircle, AlertCircle, Loader2, Mic, Volume2, VolumeX, ThumbsUp, Heart, HelpCircle, RefreshCw, Award, Flame, BookOpen, Clipboard, Circle , X, Maximize2, Video   } from 'lucide-react';
+import { Send, MessageCircle, Sparkles, CheckCircle, AlertCircle, Loader2, Mic, Volume2, VolumeX, ThumbsUp, Heart, HelpCircle, RefreshCw, Award, Flame, BookOpen, Clipboard, Circle , X, Maximize2, Video, Trash2   } from 'lucide-react';
 import Lottie from 'react-lottie-player'
 import { useCallback } from 'react';
 
@@ -1056,151 +1056,147 @@ Quem me der o nome mais, top... ganha um amigão pra vida toda!... 🐺💙🇧�
 
 
        {/* 🎤 Modal de Gravação */}
-       {isListening && (
-         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
-           <div className="bg-white rounded-2xl shadow-2xl p-6 max-w-2xl w-full animate-fade-in">
+              {isListening && (
+                <div className="fixed inset-x-0 bottom-0 z-50 animate-slide-up">
+                  <div className="bg-white rounded-t-3xl shadow-2xl border-t border-gray-200">
 
-             {/* Header com tempo e botões */}
-             <div className="flex items-center justify-between mb-6">
-               <div className="flex items-center gap-3">
-                 <div className="relative">
-                   <Circle className={`w-6 h-6 ${mediaRecorderRef.current?.state === 'recording' ? 'text-red-500 fill-red-500 animate-pulse' : 'text-gray-400 fill-gray-400'}`} />
-                   {mediaRecorderRef.current?.state === 'recording' && (
-                     <div className="absolute inset-0 w-6 h-6 bg-red-500 rounded-full animate-ping opacity-75" />
-                   )}
-                 </div>
-                 <span className="text-2xl font-mono font-bold text-gray-800 tabular-nums">
-                   {formatTime(recordingTime)}
-                 </span>
-               </div>
+                    {/* Drag indicator */}
+                    <div className="pt-3 pb-2 flex justify-center">
+                      <div className="w-12 h-1.5 bg-gray-300 rounded-full"></div>
+                    </div>
 
-               <div className="flex items-center gap-2">
-                 {/* ❌ Botão Cancelar */}
-                 <button
-                   onClick={() => {
-                     toggleListening('cancel');
-                     if (recordedAudioUrl) {
-                       URL.revokeObjectURL(recordedAudioUrl);
-                       setRecordedAudioUrl(null);
-                     }
-                     setIsTranscribing(false);
-                   }}
-                   className="p-3 bg-gray-100 hover:bg-gray-200 rounded-full transition-all"
-                   title="Cancel recording"
-                 >
-                   <X className="w-5 h-5 text-gray-600" />
-                 </button>
+                    <div className="px-6 pb-6">
+                      {/* Header com timer e botão fechar */}
+                      <div className="flex items-center justify-between mb-4">
+                        <div className="flex items-center gap-3">
+                          <div className="relative">
+                            <div className="w-12 h-12 rounded-full bg-indigo-500 flex items-center justify-center">
+                              {mediaRecorderRef.current?.state === 'recording' && (
+                                <>
+                                  <div className="absolute inset-0 rounded-full bg-indigo-500 animate-ping opacity-75" />
+                                  <div className="absolute inset-0 rounded-full bg-indigo-400 animate-pulse opacity-50" />
+                                </>
+                              )}
+                              <Mic className="w-6 h-6 text-white relative z-10" />
+                            </div>
+                          </div>
+                          <div>
+                            <p className="text-sm text-gray-500">
+                              {mediaRecorderRef.current?.state === 'recording' ? 'Recording' : 'Complete'}
+                            </p>
+                            <span className="text-2xl font-mono font-bold text-gray-900 tabular-nums">
+                              {formatTime(recordingTime)}
+                            </span>
+                          </div>
+                        </div>
 
-                 {/* ⏹️ Botão Parar (só quando gravando) */}
-                 {mediaRecorderRef.current?.state === 'recording' && (
-                   <button
-                     onClick={() => {
-                       if (mediaRecorderRef.current) {
-                         mediaRecorderRef.current.stop();
-                         setRecordingTime(0);
-                         if (timerRef.current) clearInterval(timerRef.current);
-                       }
-                     }}
-                     className="p-3 bg-indigo-500 hover:bg-indigo-600 rounded-full transition-all shadow-lg"
-                     title="Stop recording and transcribe"
-                   >
-                     <Circle className="w-5 h-5 text-white fill-white" />
-                   </button>
-                 )}
+                        <button
+                          onClick={() => {
+                            toggleListening('cancel');
+                            if (recordedAudioUrl) {
+                              URL.revokeObjectURL(recordedAudioUrl);
+                              setRecordedAudioUrl(null);
+                            }
+                            setIsTranscribing(false);
+                          }}
+                          className="p-2 hover:bg-gray-100 rounded-full transition-all"
+                        >
+                          <X className="w-6 h-6 text-gray-600" />
+                        </button>
+                      </div>
 
-                 {/* ✅ Botão Enviar (só quando transcrição estiver pronta) */}
-                 {!isTranscribing && transcript && transcript !== '🎤 Recording...' && !transcript.includes('🔄') && !transcript.includes('❌') && (
-                   <button
-                     onClick={handleSendTranscription}
-                     className="p-3 bg-green-500 hover:bg-green-600 rounded-full transition-all shadow-lg hover:shadow-xl"
-                     title="Send transcription"
-                   >
-                     <Send className="w-5 h-5 text-white" />
-                   </button>
-                 )}
-               </div>
-             </div>
+                      {/* Visualizador de ondas */}
+                      <div className="bg-gray-50 rounded-2xl p-4 mb-4 h-24 flex items-center justify-center overflow-hidden">
+                        {isTranscribing || transcript.includes('🔄') ? (
+                          <div className="flex gap-2">
+                            <div className="w-2 h-2 bg-gray-500 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
+                            <div className="w-2 h-2 bg-gray-500 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
+                            <div className="w-2 h-2 bg-gray-500 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
+                          </div>
+                        ) : mediaRecorderRef.current?.state === 'recording' ? (
+                          <div className="flex items-end gap-0.5 h-20 w-full justify-center">
+                            {Array.from({ length: 50 }).map((_, i) => (
+                              <div
+                                key={i}
+                                className="w-1 bg-indigo-300 rounded-full animate-pulse"
+                                style={{
+                                  height: `${30 + Math.random() * 70}%`,
+                                  animationDelay: `${i * 30}ms`
+                                }}
+                              />
+                            ))}
+                          </div>
+                        ) : !isTranscribing && transcript && transcript !== '🎤 Recording...' && !transcript.includes('🔄') && !transcript.includes('❌') ? (
+                          <div className="w-full px-2">
+                            <p className="text-sm text-gray-800 text-center line-clamp-3">{transcript}</p>
+                          </div>
+                        ) : null}
+                      </div>
 
-             {/* Visualizador de ondas sonoras OU animação de processamento */}
-             <div className="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-xl p-6 border border-indigo-100">
-               {isTranscribing || transcript.includes('🔄') ? (
-                 // Animação de processamento
-                 <div className="flex flex-col items-center justify-center h-24 gap-3">
-                   <div className="flex gap-2">
-                     <div className="w-3 h-3 bg-indigo-600 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
-                     <div className="w-3 h-3 bg-purple-600 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
-                     <div className="w-3 h-3 bg-pink-600 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
-                   </div>
-                   <p className="text-sm font-medium text-indigo-700">{transcript}</p>
-                 </div>
-               ) : mediaRecorderRef.current?.state === 'recording' ? (
-                 // Ondas sonoras (gravando)
-                 <div className="flex items-center justify-center gap-1 h-24">
-                   {Array.from({ length: 30 }).map((_, i) => (
-                     <div
-                       key={i}
-                       className="w-1 bg-indigo-600 rounded-full transition-all duration-100 animate-pulse"
-                       style={{
-                         height: `${20 + Math.random() * 80}%`,
-                         animationDelay: `${i * 50}ms`
-                       }}
-                     />
-                   ))}
-                 </div>
-               ) : (
-                 // Estado de espera após parar
-                 <div className="flex items-center justify-center h-24">
-                   <p className="text-sm text-gray-500">Processing...</p>
-                 </div>
-               )}
-             </div>
+                      {/* Player de áudio (aparece após gravação) */}
+                      {recordedAudioUrl && !mediaRecorderRef.current?.state && (
+                        <div className="mb-4 bg-gray-100 rounded-2xl p-3">
+                          <audio
+                            controls
+                            src={recordedAudioUrl}
+                            className="w-full"
+                            style={{ height: '36px' }}
+                          />
+                        </div>
+                      )}
 
-             {/* Player de áudio (só aparece após gravação) */}
-             {recordedAudioUrl && (
-               <div className="mt-4 bg-gray-50 rounded-lg p-4 border border-gray-200">
-                 <p className="text-xs font-semibold text-gray-700 mb-2">🎧 Your recording:</p>
-                 <audio
-                   controls
-                   src={recordedAudioUrl}
-                   className="w-full"
-                   style={{ height: '40px' }}
-                 />
-               </div>
-             )}
+                      {/* Erro */}
+                      {transcript.includes('❌') && (
+                        <div className="mb-4 p-3 bg-red-50 rounded-2xl border border-red-200">
+                          <p className="text-sm text-red-800 text-center">{transcript}</p>
+                        </div>
+                      )}
 
-             {/* Indicador de status */}
-             <div className="mt-4 text-center">
-               {mediaRecorderRef.current?.state === 'recording' && (
-                 <p className="text-sm text-gray-600">
-                   🎤 Recording... Speak clearly into your microphone
-                 </p>
-               )}
+                      {/* Botões de ação */}
+                      <div className="flex gap-3">
+                        <button
+                          onClick={() => {
+                            toggleListening('cancel');
+                            if (recordedAudioUrl) {
+                              URL.revokeObjectURL(recordedAudioUrl);
+                              setRecordedAudioUrl(null);
+                            }
+                            setIsTranscribing(false);
+                          }}
+                          className="p-4 bg-gray-100 hover:bg-gray-200 rounded-full transition-all"
+                        >
+                          <Trash2 className="w-6 h-6 text-gray-600" />
+                        </button>
 
-               {!isTranscribing && transcript && transcript !== '🎤 Recording...' && !transcript.includes('🔄') && !transcript.includes('❌') && (
-                 <div className="mt-3 bg-green-50 rounded-lg p-4 border border-green-200 animate-fade-in">
-                   <p className="text-xs font-semibold text-green-800 mb-2">✅ Transcription complete!</p>
-                   <p className="text-base text-green-900 font-medium mb-3">
-                     "{transcript}"
-                   </p>
-                   <button
-                     onClick={handleSendTranscription}
-                     className="w-full bg-green-500 hover:bg-green-600 text-white py-3 px-4 rounded-lg font-semibold transition-all flex items-center justify-center gap-2 shadow-md hover:shadow-lg"
-                   >
-                     <Send className="w-4 h-4" />
-                     Send Message
-                   </button>
-                 </div>
-               )}
+                        {mediaRecorderRef.current?.state === 'recording' && (
+                          <button
+                            onClick={() => {
+                              if (mediaRecorderRef.current) {
+                                mediaRecorderRef.current.stop();
+                                setRecordingTime(0);
+                                if (timerRef.current) clearInterval(timerRef.current);
+                              }
+                            }}
+                            className="flex-1 py-4 bg-indigo-500 hover:bg-indigo-600 rounded-full font-semibold text-white transition-all shadow-lg"
+                          >
+                            Send Recording
+                          </button>
+                        )}
 
-               {transcript.includes('❌') && (
-                 <div className="mt-3 bg-red-50 rounded-lg p-4 border border-red-200">
-                   <p className="text-sm text-red-800">{transcript}</p>
-                 </div>
-               )}
-             </div>
-           </div>
-         </div>
-       )}
+                        {!isTranscribing && transcript && transcript !== '🎤 Recording...' && !transcript.includes('🔄') && !transcript.includes('❌') && (
+                          <button
+                            onClick={handleSendTranscription}
+                            className="flex-1 py-4 bg-green-500 hover:bg-green-600 rounded-full font-semibold text-white transition-all shadow-lg flex items-center justify-center gap-2"
+                          >
+                            <Send className="w-5 h-5" />
+                            Send Message
+                          </button>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
 
         <style>{`
         @keyframes fadeInUp {
