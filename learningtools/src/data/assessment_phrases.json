@@ -1,358 +1,883 @@
 {
   "speaking": [
     {
-      "id": "speak_a1_001",
-      "text": "Hello, my name is John.",
-      "translation": "Olá, meu nome é John.",
+      "id": "speak_a1_003",
+      "text": "I like coffee and tea.",
+      "translation": "Eu gosto de café e chá.",
       "cefr_level": "A1",
-      "theme": "greetings",
+      "theme": "food_preferences",
       "grammar_point": "simple_present"
     },
     {
-      "id": "speak_a1_002",
-      "text": "I am from Brazil.",
-      "translation": "Eu sou do Brasil.",
+      "id": "speak_a1_004",
+      "text": "This is my family.",
+      "translation": "Esta é minha família.",
       "cefr_level": "A1",
-      "theme": "introductions",
-      "grammar_point": "verb_to_be"
+      "theme": "family",
+      "grammar_point": "demonstratives"
     },
     {
-      "id": "speak_a2_001",
-      "text": "I work as a teacher in a school.",
-      "translation": "Eu trabalho como professor em uma escola.",
-      "cefr_level": "A2",
-      "theme": "work",
+      "id": "speak_a1_005",
+      "text": "I live in a small house.",
+      "translation": "Eu moro em uma casa pequena.",
+      "cefr_level": "A1",
+      "theme": "home",
       "grammar_point": "simple_present"
     },
     {
-      "id": "speak_a2_002",
-      "text": "Last weekend I went to the beach.",
-      "translation": "No último fim de semana eu fui à praia.",
+      "id": "speak_a1_006",
+      "text": "She has two dogs.",
+      "translation": "Ela tem dois cachorros.",
+      "cefr_level": "A1",
+      "theme": "pets",
+      "grammar_point": "verb_to_have"
+    },
+    {
+      "id": "speak_a1_007",
+      "text": "We eat breakfast at seven.",
+      "translation": "Nós tomamos café da manhã às sete.",
+      "cefr_level": "A1",
+      "theme": "daily_routine",
+      "grammar_point": "simple_present"
+    },
+    {
+      "id": "speak_a2_003",
+      "text": "I usually go shopping on Saturdays.",
+      "translation": "Eu geralmente faço compras aos sábados.",
       "cefr_level": "A2",
-      "theme": "past_events",
+      "theme": "routines",
+      "grammar_point": "adverbs_of_frequency"
+    },
+    {
+      "id": "speak_a2_004",
+      "text": "She is taller than her brother.",
+      "translation": "Ela é mais alta que o irmão dela.",
+      "cefr_level": "A2",
+      "theme": "comparisons",
+      "grammar_point": "comparatives"
+    },
+    {
+      "id": "speak_a2_005",
+      "text": "I am going to visit my grandmother tomorrow.",
+      "translation": "Eu vou visitar minha avó amanhã.",
+      "cefr_level": "A2",
+      "theme": "future_plans",
+      "grammar_point": "going_to_future"
+    },
+    {
+      "id": "speak_a2_006",
+      "text": "We watched a movie last night.",
+      "translation": "Nós assistimos a um filme ontem à noite.",
+      "cefr_level": "A2",
+      "theme": "entertainment",
       "grammar_point": "simple_past"
     },
     {
-      "id": "speak_b1_001",
-      "text": "I have been learning English for two years.",
-      "translation": "Eu venho aprendendo inglês há dois anos.",
-      "cefr_level": "B1",
-      "theme": "learning",
-      "grammar_point": "present_perfect_continuous"
+      "id": "speak_a2_007",
+      "text": "Can you help me with this exercise?",
+      "translation": "Você pode me ajudar com este exercício?",
+      "cefr_level": "A2",
+      "theme": "requests",
+      "grammar_point": "modal_verbs"
     },
     {
-      "id": "speak_b1_002",
-      "text": "If I had more time, I would travel around the world.",
-      "translation": "Se eu tivesse mais tempo, viajaria pelo mundo.",
+      "id": "speak_b1_003",
+      "text": "I used to play basketball when I was younger.",
+      "translation": "Eu costumava jogar basquete quando era mais jovem.",
       "cefr_level": "B1",
-      "theme": "travel",
-      "grammar_point": "conditional_second"
+      "theme": "past_habits",
+      "grammar_point": "used_to"
     },
     {
-      "id": "speak_b2_001",
-      "text": "Despite the challenges, she managed to finish the project on time.",
-      "translation": "Apesar dos desafios, ela conseguiu terminar o projeto no prazo.",
+      "id": "speak_b1_004",
+      "text": "She has just finished her university degree.",
+      "translation": "Ela acabou de terminar seu curso universitário.",
+      "cefr_level": "B1",
+      "theme": "education",
+      "grammar_point": "present_perfect"
+    },
+    {
+      "id": "speak_b1_005",
+      "text": "While I was cooking, the phone rang.",
+      "translation": "Enquanto eu estava cozinhando, o telefone tocou.",
+      "cefr_level": "B1",
+      "theme": "daily_life",
+      "grammar_point": "past_continuous"
+    },
+    {
+      "id": "speak_b1_006",
+      "text": "I think technology has changed the way we communicate.",
+      "translation": "Eu acho que a tecnologia mudou a forma como nos comunicamos.",
+      "cefr_level": "B1",
+      "theme": "technology",
+      "grammar_point": "present_perfect"
+    },
+    {
+      "id": "speak_b1_007",
+      "text": "You should try to exercise at least three times a week.",
+      "translation": "Você deveria tentar se exercitar pelo menos três vezes por semana.",
+      "cefr_level": "B1",
+      "theme": "health",
+      "grammar_point": "modal_verbs_advice"
+    },
+    {
+      "id": "speak_b2_003",
+      "text": "By the time we arrive, they will have already left.",
+      "translation": "Quando chegarmos, eles já terão ido embora.",
+      "cefr_level": "B2",
+      "theme": "timing",
+      "grammar_point": "future_perfect"
+    },
+    {
+      "id": "speak_b2_004",
+      "text": "Not only did she win the competition, but she also broke the record.",
+      "translation": "Ela não só ganhou a competição, como também quebrou o recorde.",
+      "cefr_level": "B2",
+      "theme": "achievements",
+      "grammar_point": "inversion"
+    },
+    {
+      "id": "speak_b2_005",
+      "text": "The research suggests that regular exercise can significantly improve mental health.",
+      "translation": "A pesquisa sugere que exercício regular pode melhorar significativamente a saúde mental.",
+      "cefr_level": "B2",
+      "theme": "health",
+      "grammar_point": "reporting_verbs"
+    },
+    {
+      "id": "speak_b2_006",
+      "text": "Having completed the training, she felt confident about her new role.",
+      "translation": "Tendo completado o treinamento, ela se sentiu confiante sobre seu novo papel.",
       "cefr_level": "B2",
       "theme": "work",
-      "grammar_point": "connectors"
+      "grammar_point": "perfect_participle"
     },
     {
-      "id": "speak_b2_002",
-      "text": "The company has been expanding rapidly since it launched its new product.",
-      "translation": "A empresa vem se expandindo rapidamente desde que lançou seu novo produto.",
+      "id": "speak_b2_007",
+      "text": "The government has been criticized for failing to address environmental concerns.",
+      "translation": "O governo tem sido criticado por não abordar preocupações ambientais.",
       "cefr_level": "B2",
-      "theme": "business",
-      "grammar_point": "present_perfect_continuous"
+      "theme": "environment",
+      "grammar_point": "passive_voice"
     },
     {
-      "id": "speak_c1_001",
-      "text": "Had I known about the meeting earlier, I would have prepared a presentation.",
-      "translation": "Se eu soubesse sobre a reunião antes, teria preparado uma apresentação.",
+      "id": "speak_c1_003",
+      "text": "Were it not for technological advances, global communication would be far more limited.",
+      "translation": "Não fossem os avanços tecnológicos, a comunicação global seria muito mais limitada.",
       "cefr_level": "C1",
-      "theme": "work",
-      "grammar_point": "conditional_third_inversion"
+      "theme": "technology",
+      "grammar_point": "conditional_inversion"
     },
     {
-      "id": "speak_c1_002",
-      "text": "The implementation of sustainable practices has been instrumental in reducing costs.",
-      "translation": "A implementação de práticas sustentáveis tem sido fundamental na redução de custos.",
+      "id": "speak_c1_004",
+      "text": "The ramifications of climate change are becoming increasingly apparent across diverse ecosystems.",
+      "translation": "As ramificações das mudanças climáticas estão se tornando cada vez mais evidentes em diversos ecossistemas.",
       "cefr_level": "C1",
-      "theme": "business",
+      "theme": "environment",
       "grammar_point": "advanced_vocabulary"
     },
     {
-      "id": "speak_c2_001",
-      "text": "Notwithstanding the regulatory constraints, the organization endeavored to innovate.",
-      "translation": "Apesar das restrições regulatórias, a organização se esforçou para inovar.",
-      "cefr_level": "C2",
-      "theme": "business",
-      "grammar_point": "formal_connectors"
+      "id": "speak_c1_005",
+      "text": "Scarcely had the announcement been made when controversy erupted.",
+      "translation": "Mal o anúncio foi feito quando a controvérsia eclodiu.",
+      "cefr_level": "C1",
+      "theme": "news",
+      "grammar_point": "negative_inversion"
     },
     {
-      "id": "speak_c2_002",
-      "text": "The paradigm shift in consumer behavior necessitates a comprehensive overhaul of our strategy.",
-      "translation": "A mudança de paradigma no comportamento do consumidor exige uma reformulação abrangente de nossa estratégia.",
-      "cefr_level": "C2",
+      "id": "speak_c1_006",
+      "text": "The company is committed to fostering an inclusive workplace culture.",
+      "translation": "A empresa está comprometida em promover uma cultura de trabalho inclusiva.",
+      "cefr_level": "C1",
       "theme": "business",
-      "grammar_point": "advanced_vocabulary"
+      "grammar_point": "gerunds_formal"
+    },
+    {
+      "id": "speak_c1_007",
+      "text": "The findings underscore the necessity of integrating interdisciplinary approaches.",
+      "translation": "Os resultados ressaltam a necessidade de integrar abordagens interdisciplinares.",
+      "cefr_level": "C1",
+      "theme": "research",
+      "grammar_point": "formal_vocabulary"
+    },
+    {
+      "id": "speak_c2_003",
+      "text": "The juxtaposition of traditional methodologies with contemporary innovations yielded unprecedented results.",
+      "translation": "A justaposição de metodologias tradicionais com inovações contemporâneas produziu resultados sem precedentes.",
+      "cefr_level": "C2",
+      "theme": "research",
+      "grammar_point": "sophisticated_vocabulary"
+    },
+    {
+      "id": "speak_c2_004",
+      "text": "Insofar as economic indicators remain volatile, prudent fiscal management is imperative.",
+      "translation": "Na medida em que os indicadores econômicos permanecem voláteis, gestão fiscal prudente é imperativa.",
+      "cefr_level": "C2",
+      "theme": "economics",
+      "grammar_point": "complex_connectors"
+    },
+    {
+      "id": "speak_c2_005",
+      "text": "The discourse surrounding artificial intelligence is replete with both utopian aspirations and dystopian anxieties.",
+      "translation": "O discurso em torno da inteligência artificial está repleto de aspirações utópicas e ansiedades distópicas.",
+      "cefr_level": "C2",
+      "theme": "technology",
+      "grammar_point": "nuanced_vocabulary"
+    },
+    {
+      "id": "speak_c2_006",
+      "text": "Albeit marginally effective, the intervention merits further investigation given its novel approach.",
+      "translation": "Embora marginalmente eficaz, a intervenção merece investigação adicional dado sua abordagem inovadora.",
+      "cefr_level": "C2",
+      "theme": "research",
+      "grammar_point": "concessive_clauses"
+    },
+    {
+      "id": "speak_c2_007",
+      "text": "The confluence of geopolitical tensions and economic uncertainty portends a period of considerable instability.",
+      "translation": "A confluência de tensões geopolíticas e incerteza econômica pressagia um período de considerável instabilidade.",
+      "cefr_level": "C2",
+      "theme": "politics",
+      "grammar_point": "formal_register"
     }
   ],
   "listening": [
     {
-      "id": "listen_a1_001",
-      "text": "Good morning!",
-      "translation": "Bom dia!",
+      "id": "listen_a1_003",
+      "text": "This is my book.",
+      "translation": "Este é meu livro.",
       "cefr_level": "A1",
-      "theme": "greetings",
-      "options": ["Good morning!", "Good night!", "Good afternoon!", "Hello!"]
+      "theme": "possessions",
+      "options": ["This is my book.", "This is your book.", "That is my book.", "These are my books."]
     },
     {
-      "id": "listen_a1_002",
-      "text": "My name is Sarah.",
-      "translation": "Meu nome é Sarah.",
+      "id": "listen_a1_004",
+      "text": "I am from Brazil.",
+      "translation": "Eu sou do Brasil.",
       "cefr_level": "A1",
       "theme": "introductions",
-      "options": ["My name is Sarah.", "My name is Sara.", "Your name is Sarah.", "Her name is Sarah."]
+      "options": ["I am from Brazil.", "I am in Brazil.", "I go to Brazil.", "I like Brazil."]
     },
     {
-      "id": "listen_a2_001",
-      "text": "I usually have breakfast at seven o'clock.",
-      "translation": "Eu geralmente tomo café da manhã às sete horas.",
+      "id": "listen_a1_005",
+      "text": "The cat is black.",
+      "translation": "O gato é preto.",
+      "cefr_level": "A1",
+      "theme": "descriptions",
+      "options": ["The cat is black.", "The cat is white.", "The dog is black.", "The cats are black."]
+    },
+    {
+      "id": "listen_a1_006",
+      "text": "I like coffee.",
+      "translation": "Eu gosto de café.",
+      "cefr_level": "A1",
+      "theme": "preferences",
+      "options": ["I like coffee.", "I drink coffee.", "I want coffee.", "I have coffee."]
+    },
+    {
+      "id": "listen_a1_007",
+      "text": "How are you?",
+      "translation": "Como você está?",
+      "cefr_level": "A1",
+      "theme": "greetings",
+      "options": ["How are you?", "Who are you?", "Where are you?", "What are you?"]
+    },
+    {
+      "id": "listen_a2_003",
+      "text": "I'm going to visit my parents next weekend.",
+      "translation": "Vou visitar meus pais no próximo fim de semana.",
       "cefr_level": "A2",
-      "theme": "daily_routine",
+      "theme": "future_plans",
       "options": [
-        "I usually have breakfast at seven o'clock.",
-        "I always have breakfast at seven o'clock.",
-        "I usually have dinner at seven o'clock.",
-        "I usually had breakfast at seven o'clock."
+        "I'm going to visit my parents next weekend.",
+        "I visit my parents next weekend.",
+        "I'm visiting my parents last weekend.",
+        "I went to visit my parents next weekend."
       ]
     },
     {
-      "id": "listen_a2_002",
-      "text": "She visited her grandmother last Sunday.",
-      "translation": "Ela visitou sua avó no domingo passado.",
+      "id": "listen_a2_004",
+      "text": "There are too many people in the restaurant.",
+      "translation": "Há muitas pessoas no restaurante.",
       "cefr_level": "A2",
-      "theme": "past_events",
+      "theme": "describing_places",
       "options": [
-        "She visited her grandmother last Sunday.",
-        "She visits her grandmother last Sunday.",
-        "She visited her grandfather last Sunday.",
-        "She will visit her grandmother last Sunday."
+        "There are too many people in the restaurant.",
+        "There is too many people in the restaurant.",
+        "There are too much people in the restaurant.",
+        "There were too many people in the restaurant."
       ]
     },
     {
-      "id": "listen_b1_001",
-      "text": "I've been working on this project since January.",
-      "translation": "Eu venho trabalhando neste projeto desde janeiro.",
+      "id": "listen_a2_005",
+      "text": "She can speak three languages fluently.",
+      "translation": "Ela consegue falar três idiomas fluentemente.",
+      "cefr_level": "A2",
+      "theme": "abilities",
+      "options": [
+        "She can speak three languages fluently.",
+        "She can speaks three languages fluently.",
+        "She could speak three languages fluently.",
+        "She can spoke three languages fluently."
+      ]
+    },
+    {
+      "id": "listen_a2_006",
+      "text": "We haven't finished our homework yet.",
+      "translation": "Ainda não terminamos nossa lição de casa.",
+      "cefr_level": "A2",
+      "theme": "school",
+      "options": [
+        "We haven't finished our homework yet.",
+        "We didn't finish our homework yet.",
+        "We don't finish our homework yet.",
+        "We hadn't finished our homework yet."
+      ]
+    },
+    {
+      "id": "listen_a2_007",
+      "text": "He's taller than his brother.",
+      "translation": "Ele é mais alto que seu irmão.",
+      "cefr_level": "A2",
+      "theme": "comparisons",
+      "options": [
+        "He's taller than his brother.",
+        "He's more tall than his brother.",
+        "He's the tallest than his brother.",
+        "He's as tall than his brother."
+      ]
+    },
+    {
+      "id": "listen_b1_003",
+      "text": "I wish I had studied harder for the exam.",
+      "translation": "Eu gostaria de ter estudado mais para a prova.",
+      "cefr_level": "B1",
+      "theme": "regrets",
+      "options": [
+        "I wish I had studied harder for the exam.",
+        "I wish I studied harder for the exam.",
+        "I hope I had studied harder for the exam.",
+        "I wish I have studied harder for the exam."
+      ]
+    },
+    {
+      "id": "listen_b1_004",
+      "text": "The movie was so boring that we left early.",
+      "translation": "O filme estava tão chato que saímos cedo.",
+      "cefr_level": "B1",
+      "theme": "entertainment",
+      "options": [
+        "The movie was so boring that we left early.",
+        "The movie was too boring that we left early.",
+        "The movie was such boring that we left early.",
+        "The movie was so bored that we left early."
+      ]
+    },
+    {
+      "id": "listen_b1_005",
+      "text": "She's used to working under pressure.",
+      "translation": "Ela está acostumada a trabalhar sob pressão.",
       "cefr_level": "B1",
       "theme": "work",
       "options": [
-        "I've been working on this project since January.",
-        "I've worked on this project since January.",
-        "I'm working on this project since January.",
-        "I was working on this project since January."
+        "She's used to working under pressure.",
+        "She's used to work under pressure.",
+        "She used to working under pressure.",
+        "She used to work under pressure."
       ]
     },
     {
-      "id": "listen_b1_002",
-      "text": "If I were you, I would accept the job offer.",
-      "translation": "Se eu fosse você, aceitaria a oferta de emprego.",
+      "id": "listen_b1_006",
+      "text": "Unless you hurry up, we'll miss the train.",
+      "translation": "A menos que você se apresse, perderemos o trem.",
       "cefr_level": "B1",
-      "theme": "advice",
+      "theme": "conditions",
       "options": [
-        "If I were you, I would accept the job offer.",
-        "If I was you, I would accept the job offer.",
-        "If I am you, I will accept the job offer.",
-        "If I were you, I will accept the job offer."
+        "Unless you hurry up, we'll miss the train.",
+        "If you don't hurry up, we'll miss the train.",
+        "Unless you don't hurry up, we'll miss the train.",
+        "Unless you hurry up, we missed the train."
       ]
     },
     {
-      "id": "listen_b2_001",
-      "text": "By the time you arrive, I will have finished preparing dinner.",
-      "translation": "Quando você chegar, eu já terei terminado de preparar o jantar.",
+      "id": "listen_b1_007",
+      "text": "The package should have arrived by now.",
+      "translation": "O pacote deveria ter chegado até agora.",
+      "cefr_level": "B1",
+      "theme": "expectations",
+      "options": [
+        "The package should have arrived by now.",
+        "The package should arrive by now.",
+        "The package must have arrived by now.",
+        "The package should had arrived by now."
+      ]
+    },
+    {
+      "id": "listen_b2_003",
+      "text": "Had I known about the traffic, I would have left earlier.",
+      "translation": "Se eu soubesse sobre o trânsito, teria saído mais cedo.",
       "cefr_level": "B2",
-      "theme": "daily_life",
+      "theme": "regrets",
       "options": [
-        "By the time you arrive, I will have finished preparing dinner.",
-        "By the time you arrive, I will finish preparing dinner.",
-        "By the time you arrive, I have finished preparing dinner.",
-        "By the time you arrived, I will have finished preparing dinner."
+        "Had I known about the traffic, I would have left earlier.",
+        "If I had known about the traffic, I would leave earlier.",
+        "Had I knew about the traffic, I would have left earlier.",
+        "If I have known about the traffic, I would have left earlier."
       ]
     },
     {
-      "id": "listen_b2_002",
-      "text": "Despite having worked late, she still managed to attend the meeting.",
-      "translation": "Apesar de ter trabalhado até tarde, ela ainda conseguiu comparecer à reunião.",
+      "id": "listen_b2_004",
+      "text": "She's been promoted twice since joining the company.",
+      "translation": "Ela foi promovida duas vezes desde que entrou na empresa.",
       "cefr_level": "B2",
-      "theme": "work",
+      "theme": "career",
       "options": [
-        "Despite having worked late, she still managed to attend the meeting.",
-        "Despite working late, she still managed to attend the meeting.",
-        "Despite she worked late, she still managed to attend the meeting.",
-        "Despite had worked late, she still managed to attend the meeting."
+        "She's been promoted twice since joining the company.",
+        "She was promoted twice since joining the company.",
+        "She has promoted twice since joining the company.",
+        "She's being promoted twice since joining the company."
       ]
     },
     {
-      "id": "listen_c1_001",
-      "text": "Not only did he complete the assignment, but he also exceeded expectations.",
-      "translation": "Ele não apenas completou a tarefa, mas também superou as expectativas.",
-      "cefr_level": "C1",
-      "theme": "work",
+      "id": "listen_b2_005",
+      "text": "No sooner had we left than it started raining heavily.",
+      "translation": "Mal saímos e começou a chover forte.",
+      "cefr_level": "B2",
+      "theme": "weather",
       "options": [
-        "Not only did he complete the assignment, but he also exceeded expectations.",
-        "Not only he completed the assignment, but he also exceeded expectations.",
-        "Not only did he completed the assignment, but he also exceeded expectations.",
-        "Not only he complete the assignment, but he also exceeded expectations."
+        "No sooner had we left than it started raining heavily.",
+        "No sooner we had left than it started raining heavily.",
+        "No sooner we left than it started raining heavily.",
+        "No sooner had we left when it started raining heavily."
       ]
     },
     {
-      "id": "listen_c1_002",
-      "text": "The conference, which was held in Geneva, addressed critical environmental issues.",
-      "translation": "A conferência, que foi realizada em Genebra, abordou questões ambientais críticas.",
-      "cefr_level": "C1",
-      "theme": "environment",
-      "options": [
-        "The conference, which was held in Geneva, addressed critical environmental issues.",
-        "The conference, that was held in Geneva, addressed critical environmental issues.",
-        "The conference which was held in Geneva addressed critical environmental issues.",
-        "The conference, which held in Geneva, addressed critical environmental issues."
-      ]
-    },
-    {
-      "id": "listen_c2_001",
-      "text": "Were it not for his intervention, the negotiations would have collapsed.",
-      "translation": "Não fosse sua intervenção, as negociações teriam fracassado.",
-      "cefr_level": "C2",
+      "id": "listen_b2_006",
+      "text": "The proposal, having been thoroughly reviewed, was finally approved.",
+      "translation": "A proposta, tendo sido minuciosamente revisada, foi finalmente aprovada.",
+      "cefr_level": "B2",
       "theme": "business",
       "options": [
-        "Were it not for his intervention, the negotiations would have collapsed.",
-        "If it were not for his intervention, the negotiations would have collapsed.",
-        "Were not for his intervention, the negotiations would have collapsed.",
-        "If not for his intervention, the negotiations would collapsed."
+        "The proposal, having been thoroughly reviewed, was finally approved.",
+        "The proposal, being thoroughly reviewed, was finally approved.",
+        "The proposal, had been thoroughly reviewed, was finally approved.",
+        "The proposal, has been thoroughly reviewed, was finally approved."
       ]
     },
     {
-      "id": "listen_c2_002",
-      "text": "The ramifications of this policy shift are yet to be fully comprehended.",
-      "translation": "As ramificações desta mudança de política ainda não foram totalmente compreendidas.",
+      "id": "listen_b2_007",
+      "text": "It's high time we addressed this issue properly.",
+      "translation": "Já é hora de abordarmos esta questão adequadamente.",
+      "cefr_level": "B2",
+      "theme": "problems",
+      "options": [
+        "It's high time we addressed this issue properly.",
+        "It's high time we address this issue properly.",
+        "It's high time we have addressed this issue properly.",
+        "It's about time we addressed this issue properly."
+      ]
+    },
+    {
+      "id": "listen_c1_003",
+      "text": "Scarcely had the presentation begun when the power went out.",
+      "translation": "Mal a apresentação havia começado quando a energia acabou.",
+      "cefr_level": "C1",
+      "theme": "events",
+      "options": [
+        "Scarcely had the presentation begun when the power went out.",
+        "Scarcely the presentation had begun when the power went out.",
+        "Scarcely had the presentation began when the power went out.",
+        "Scarcely the presentation begun when the power went out."
+      ]
+    },
+    {
+      "id": "listen_c1_004",
+      "text": "The legislation, albeit controversial, represents a significant step forward.",
+      "translation": "A legislação, embora controversa, representa um passo significativo à frente.",
+      "cefr_level": "C1",
+      "theme": "politics",
+      "options": [
+        "The legislation, albeit controversial, represents a significant step forward.",
+        "The legislation, although controversial, represents a significant step forward.",
+        "The legislation, despite controversial, represents a significant step forward.",
+        "The legislation, being controversial, represents a significant step forward."
+      ]
+    },
+    {
+      "id": "listen_c1_005",
+      "text": "Under no circumstances should confidential information be disclosed.",
+      "translation": "Em nenhuma circunstância informações confidenciais devem ser divulgadas.",
+      "cefr_level": "C1",
+      "theme": "rules",
+      "options": [
+        "Under no circumstances should confidential information be disclosed.",
+        "Under no circumstances confidential information should be disclosed.",
+        "Under no circumstances should confidential information disclose.",
+        "In no circumstances should confidential information be disclosed."
+      ]
+    },
+    {
+      "id": "listen_c1_006",
+      "text": "The researcher's findings, insofar as they've been verified, support the hypothesis.",
+      "translation": "As descobertas do pesquisador, na medida em que foram verificadas, apoiam a hipótese.",
+      "cefr_level": "C1",
+      "theme": "science",
+      "options": [
+        "The researcher's findings, insofar as they've been verified, support the hypothesis.",
+        "The researcher's findings, as far as they've been verified, support the hypothesis.",
+        "The researcher's findings, insofar they've been verified, support the hypothesis.",
+        "The researcher's findings, insofar as they're verified, support the hypothesis."
+      ]
+    },
+    {
+      "id": "listen_c1_007",
+      "text": "Notwithstanding the challenges faced, the team delivered exceptional results.",
+      "translation": "Apesar dos desafios enfrentados, a equipe entregou resultados excepcionais.",
+      "cefr_level": "C1",
+      "theme": "work",
+      "options": [
+        "Notwithstanding the challenges faced, the team delivered exceptional results.",
+        "Notwithstanding the challenges facing, the team delivered exceptional results.",
+        "Despite the challenges faced, the team delivered exceptional results.",
+        "Notwithstanding of the challenges faced, the team delivered exceptional results."
+      ]
+    },
+    {
+      "id": "listen_c2_003",
+      "text": "The paradigm shift in economic thinking necessitates a comprehensive reassessment of fiscal policies.",
+      "translation": "A mudança de paradigma no pensamento econômico necessita uma reavaliação abrangente das políticas fiscais.",
+      "cefr_level": "C2",
+      "theme": "economics",
+      "options": [
+        "The paradigm shift in economic thinking necessitates a comprehensive reassessment of fiscal policies.",
+        "The paradigm shift in economic thinking requires a comprehensive reassessment of fiscal policies.",
+        "The paradigm shift in economic thinking necessitate a comprehensive reassessment of fiscal policies.",
+        "The paradigm shift of economic thinking necessitates a comprehensive reassessment of fiscal policies."
+      ]
+    },
+    {
+      "id": "listen_c2_004",
+      "text": "So entrenched are these beliefs that any attempt at reform is met with fierce resistance.",
+      "translation": "Tão arraigadas estão essas crenças que qualquer tentativa de reforma é recebida com resistência feroz.",
+      "cefr_level": "C2",
+      "theme": "society",
+      "options": [
+        "So entrenched are these beliefs that any attempt at reform is met with fierce resistance.",
+        "These beliefs are so entrenched that any attempt at reform is met with fierce resistance.",
+        "So entrenched these beliefs are that any attempt at reform is met with fierce resistance.",
+        "So entrenched are these beliefs that any attempt at reform meets with fierce resistance."
+      ]
+    },
+    {
+      "id": "listen_c2_005",
+      "text": "The proposition, however laudable its intentions, fails to account for the multifaceted nature of the problem.",
+      "translation": "A proposição, por mais louváveis que sejam suas intenções, não consegue explicar a natureza multifacetada do problema.",
+      "cefr_level": "C2",
+      "theme": "analysis",
+      "options": [
+        "The proposition, however laudable its intentions, fails to account for the multifaceted nature of the problem.",
+        "The proposition, however laudable are its intentions, fails to account for the multifaceted nature of the problem.",
+        "The proposition, however laudable its intentions are, fails to account for the multifaceted nature of the problem.",
+        "The proposition, whatever laudable its intentions, fails to account for the multifaceted nature of the problem."
+      ]
+    },
+    {
+      "id": "listen_c2_006",
+      "text": "Little did they suspect that the ostensibly benign legislation would have such far-reaching consequences.",
+      "translation": "Pouco suspeitavam eles que a legislação ostensivamente benigna teria consequências tão abrangentes.",
       "cefr_level": "C2",
       "theme": "politics",
       "options": [
-        "The ramifications of this policy shift are yet to be fully comprehended.",
-        "The ramifications of this policy shift are yet to fully comprehend.",
-        "The ramifications of this policy shift yet to be fully comprehended.",
-        "The ramifications of this policy shift are yet fully comprehended."
+        "Little did they suspect that the ostensibly benign legislation would have such far-reaching consequences.",
+        "Little they suspected that the ostensibly benign legislation would have such far-reaching consequences.",
+        "Little did they suspect that the ostensibly benign legislation will have such far-reaching consequences.",
+        "They little suspected that the ostensibly benign legislation would have such far-reaching consequences."
+      ]
+    },
+    {
+      "id": "listen_c2_007",
+      "text": "The phenomenon, as yet insufficiently understood, warrants further empirical investigation.",
+      "translation": "O fenômeno, ainda insuficientemente compreendido, justifica uma investigação empírica adicional.",
+      "cefr_level": "C2",
+      "theme": "science",
+      "options": [
+        "The phenomenon, as yet insufficiently understood, warrants further empirical investigation.",
+        "The phenomenon, yet insufficiently understood, warrants further empirical investigation.",
+        "The phenomenon, as yet insufficiently understood, warrant further empirical investigation.",
+        "The phenomenon, as insufficiently understood, warrants further empirical investigation."
       ]
     }
   ],
   "reading": [
     {
-      "id": "read_a1_001",
-      "english": "I like coffee.",
-      "portuguese": "Eu gosto de café.",
-      "words": ["I", "like", "coffee"],
+      "id": "read_a1_003",
+      "english": "My name is John.",
+      "portuguese": "Meu nome é John.",
+      "words": ["My", "name", "is", "John"],
       "cefr_level": "A1",
-      "theme": "preferences",
-      "wordCount": 3
-    },
-    {
-      "id": "read_a1_002",
-      "english": "She is my sister.",
-      "portuguese": "Ela é minha irmã.",
-      "words": ["She", "is", "my", "sister"],
-      "cefr_level": "A1",
-      "theme": "family",
+      "theme": "introductions",
       "wordCount": 4
     },
     {
-      "id": "read_a2_001",
-      "english": "I go to work by bus every day.",
-      "portuguese": "Eu vou ao trabalho de ônibus todos os dias.",
-      "words": ["I", "go", "to", "work", "by", "bus", "every", "day"],
-      "cefr_level": "A2",
-      "theme": "transportation",
-      "wordCount": 8
+      "id": "read_a1_004",
+      "english": "The cat is small.",
+      "portuguese": "O gato é pequeno.",
+      "words": ["The", "cat", "is", "small"],
+      "cefr_level": "A1",
+      "theme": "descriptions",
+      "wordCount": 4
     },
     {
-      "id": "read_a2_002",
-      "english": "We went to the cinema last night.",
-      "portuguese": "Nós fomos ao cinema ontem à noite.",
-      "words": ["We", "went", "to", "the", "cinema", "last", "night"],
+      "id": "read_a1_005",
+      "english": "I have two dogs.",
+      "portuguese": "Eu tenho dois cachorros.",
+      "words": ["I", "have", "two", "dogs"],
+      "cefr_level": "A1",
+      "theme": "pets",
+      "wordCount": 4
+    },
+    {
+      "id": "read_a1_006",
+      "english": "This is my house.",
+      "portuguese": "Esta é minha casa.",
+      "words": ["This", "is", "my", "house"],
+      "cefr_level": "A1",
+      "theme": "home",
+      "wordCount": 4
+    },
+    {
+      "id": "read_a1_007",
+      "english": "Good morning everyone.",
+      "portuguese": "Bom dia a todos.",
+      "words": ["Good", "morning", "everyone"],
+      "cefr_level": "A1",
+      "theme": "greetings",
+      "wordCount": 3
+    },
+    {
+      "id": "read_a2_003",
+      "english": "She usually wakes up at seven o'clock.",
+      "portuguese": "Ela geralmente acorda às sete horas.",
+      "words": ["She", "usually", "wakes", "up", "at", "seven", "o'clock"],
       "cefr_level": "A2",
-      "theme": "entertainment",
+      "theme": "daily_routine",
       "wordCount": 7
     },
     {
-      "id": "read_b1_001",
-      "english": "I have been studying English for three years now.",
-      "portuguese": "Eu venho estudando inglês há três anos agora.",
-      "words": ["I", "have", "been", "studying", "English", "for", "three", "years", "now"],
+      "id": "read_a2_004",
+      "english": "I am going to visit my grandparents tomorrow.",
+      "portuguese": "Eu vou visitar meus avós amanhã.",
+      "words": ["I", "am", "going", "to", "visit", "my", "grandparents", "tomorrow"],
+      "cefr_level": "A2",
+      "theme": "family",
+      "wordCount": 8
+    },
+    {
+      "id": "read_a2_005",
+      "english": "There are many books on the shelf.",
+      "portuguese": "Há muitos livros na estante.",
+      "words": ["There", "are", "many", "books", "on", "the", "shelf"],
+      "cefr_level": "A2",
+      "theme": "home",
+      "wordCount": 7
+    },
+    {
+      "id": "read_a2_006",
+      "english": "He can swim very well now.",
+      "portuguese": "Ele consegue nadar muito bem agora.",
+      "words": ["He", "can", "swim", "very", "well", "now"],
+      "cefr_level": "A2",
+      "theme": "abilities",
+      "wordCount": 6
+    },
+    {
+      "id": "read_a2_007",
+      "english": "We haven't seen that movie yet.",
+      "portuguese": "Nós ainda não vimos aquele filme.",
+      "words": ["We", "haven't", "seen", "that", "movie", "yet"],
+      "cefr_level": "A2",
+      "theme": "entertainment",
+      "wordCount": 6
+    },
+    {
+      "id": "read_b1_003",
+      "english": "I wish I could speak French fluently.",
+      "portuguese": "Eu gostaria de poder falar francês fluentemente.",
+      "words": ["I", "wish", "I", "could", "speak", "French", "fluently"],
       "cefr_level": "B1",
       "theme": "learning",
-      "wordCount": 9
+      "wordCount": 7
     },
     {
-      "id": "read_b1_002",
-      "english": "If I save enough money, I will buy a new car.",
-      "portuguese": "Se eu economizar dinheiro suficiente, vou comprar um carro novo.",
-      "words": ["If", "I", "save", "enough", "money", "I", "will", "buy", "a", "new", "car"],
+      "id": "read_b1_004",
+      "english": "She has been working for this company since two thousand and ten.",
+      "portuguese": "Ela trabalha para esta empresa desde dois mil e dez.",
+      "words": ["She", "has", "been", "working", "for", "this", "company", "since", "two", "thousand", "and", "ten"],
       "cefr_level": "B1",
-      "theme": "shopping",
-      "wordCount": 11
+      "theme": "work",
+      "wordCount": 12
     },
     {
-      "id": "read_b2_001",
-      "english": "Although the weather was terrible, we decided to go hiking.",
-      "portuguese": "Embora o tempo estivesse terrível, decidimos fazer trilha.",
-      "words": ["Although", "the", "weather", "was", "terrible", "we", "decided", "to", "go", "hiking"],
-      "cefr_level": "B2",
-      "theme": "outdoor_activities",
+      "id": "read_b1_005",
+      "english": "Unless it rains tomorrow, we will go to the beach.",
+      "portuguese": "A menos que chova amanhã, iremos à praia.",
+      "words": ["Unless", "it", "rains", "tomorrow", "we", "will", "go", "to", "the", "beach"],
+      "cefr_level": "B1",
+      "theme": "weather",
       "wordCount": 10
     },
     {
-      "id": "read_b2_002",
-      "english": "The company has been expanding its operations throughout Asia since last year.",
-      "portuguese": "A empresa vem expandindo suas operações por toda a Ásia desde o ano passado.",
-      "words": ["The", "company", "has", "been", "expanding", "its", "operations", "throughout", "Asia", "since", "last", "year"],
+      "id": "read_b1_006",
+      "english": "The book that I bought yesterday was really interesting.",
+      "portuguese": "O livro que comprei ontem foi realmente interessante.",
+      "words": ["The", "book", "that", "I", "bought", "yesterday", "was", "really", "interesting"],
+      "cefr_level": "B1",
+      "theme": "reading",
+      "wordCount": 9
+    },
+    {
+      "id": "read_b1_007",
+      "english": "I would travel more if I had more time.",
+      "portuguese": "Eu viajaria mais se tivesse mais tempo.",
+      "words": ["I", "would", "travel", "more", "if", "I", "had", "more", "time"],
+      "cefr_level": "B1",
+      "theme": "travel",
+      "wordCount": 9
+    },
+    {
+      "id": "read_b2_003",
+      "english": "Despite feeling exhausted, she managed to finish the presentation on time.",
+      "portuguese": "Apesar de se sentir exausta, ela conseguiu terminar a apresentação no prazo.",
+      "words": ["Despite", "feeling", "exhausted", "she", "managed", "to", "finish", "the", "presentation", "on", "time"],
+      "cefr_level": "B2",
+      "theme": "work",
+      "wordCount": 11
+    },
+    {
+      "id": "read_b2_004",
+      "english": "By the time we arrive at the station, the train will have already left.",
+      "portuguese": "Quando chegarmos à estação, o trem já terá partido.",
+      "words": ["By", "the", "time", "we", "arrive", "at", "the", "station", "the", "train", "will", "have", "already", "left"],
+      "cefr_level": "B2",
+      "theme": "transportation",
+      "wordCount": 14
+    },
+    {
+      "id": "read_b2_005",
+      "english": "The project, having been delayed several times, finally received approval from management.",
+      "portuguese": "O projeto, tendo sido adiado várias vezes, finalmente recebeu aprovação da gerência.",
+      "words": ["The", "project", "having", "been", "delayed", "several", "times", "finally", "received", "approval", "from", "management"],
       "cefr_level": "B2",
       "theme": "business",
       "wordCount": 12
     },
     {
-      "id": "read_c1_001",
-      "english": "Had I realized the implications earlier, I would have taken a different approach.",
-      "portuguese": "Se eu tivesse percebido as implicações antes, teria adotado uma abordagem diferente.",
-      "words": ["Had", "I", "realized", "the", "implications", "earlier", "I", "would", "have", "taken", "a", "different", "approach"],
-      "cefr_level": "C1",
-      "theme": "decision_making",
-      "wordCount": 13
-    },
-    {
-      "id": "read_c1_002",
-      "english": "The implementation of artificial intelligence has revolutionized various industries worldwide.",
-      "portuguese": "A implementação de inteligência artificial revolucionou várias indústrias em todo o mundo.",
-      "words": ["The", "implementation", "of", "artificial", "intelligence", "has", "revolutionized", "various", "industries", "worldwide"],
-      "cefr_level": "C1",
-      "theme": "technology",
-      "wordCount": 10
-    },
-    {
-      "id": "read_c2_001",
-      "english": "Notwithstanding the considerable obstacles, the research team persevered in their groundbreaking endeavor.",
-      "portuguese": "Apesar dos obstáculos consideráveis, a equipe de pesquisa perseverou em seu empreendimento revolucionário.",
-      "words": ["Notwithstanding", "the", "considerable", "obstacles", "the", "research", "team", "persevered", "in", "their", "groundbreaking", "endeavor"],
-      "cefr_level": "C2",
-      "theme": "research",
+      "id": "read_b2_006",
+      "english": "No sooner had the meeting started than the fire alarm went off.",
+      "portuguese": "Mal a reunião começou, o alarme de incêndio disparou.",
+      "words": ["No", "sooner", "had", "the", "meeting", "started", "than", "the", "fire", "alarm", "went", "off"],
+      "cefr_level": "B2",
+      "theme": "work",
       "wordCount": 12
     },
     {
-      "id": "read_c2_002",
-      "english": "The paradigm shift necessitates a comprehensive reevaluation of our fundamental assumptions and methodologies.",
-      "portuguese": "A mudança de paradigma exige uma reavaliação abrangente de nossas suposições e metodologias fundamentais.",
-      "words": ["The", "paradigm", "shift", "necessitates", "a", "comprehensive", "reevaluation", "of", "our", "fundamental", "assumptions", "and", "methodologies"],
+      "id": "read_b2_007",
+      "english": "It's high time we addressed these environmental issues more seriously.",
+      "portuguese": "Já é hora de abordarmos essas questões ambientais mais seriamente.",
+      "words": ["It's", "high", "time", "we", "addressed", "these", "environmental", "issues", "more", "seriously"],
+      "cefr_level": "B2",
+      "theme": "environment",
+      "wordCount": 10
+    },
+    {
+      "id": "read_c1_003",
+      "english": "Scarcely had the conference begun when technical difficulties disrupted the proceedings.",
+      "portuguese": "Mal a conferência havia começado quando dificuldades técnicas interromperam os trabalhos.",
+      "words": ["Scarcely", "had", "the", "conference", "begun", "when", "technical", "difficulties", "disrupted", "the", "proceedings"],
+      "cefr_level": "C1",
+      "theme": "events",
+      "wordCount": 11
+    },
+    {
+      "id": "read_c1_004",
+      "english": "The legislation, albeit controversial, represents significant progress in civil rights protection.",
+      "portuguese": "A legislação, embora controversa, representa progresso significativo na proteção dos direitos civis.",
+      "words": ["The", "legislation", "albeit", "controversial", "represents", "significant", "progress", "in", "civil", "rights", "protection"],
+      "cefr_level": "C1",
+      "theme": "politics",
+      "wordCount": 11
+    },
+    {
+      "id": "read_c1_005",
+      "english": "Under no circumstances should confidential information be disclosed to unauthorized personnel.",
+      "portuguese": "Em nenhuma circunstância informações confidenciais devem ser divulgadas a pessoal não autorizado.",
+      "words": ["Under", "no", "circumstances", "should", "confidential", "information", "be", "disclosed", "to", "unauthorized", "personnel"],
+      "cefr_level": "C1",
+      "theme": "business",
+      "wordCount": 11
+    },
+    {
+      "id": "read_c1_006",
+      "english": "Were it not for renewable energy innovations, climate change mitigation would be substantially more challenging.",
+      "portuguese": "Não fossem as inovações em energia renovável, a mitigação das mudanças climáticas seria substancialmente mais desafiadora.",
+      "words": ["Were", "it", "not", "for", "renewable", "energy", "innovations", "climate", "change", "mitigation", "would", "be", "substantially", "more", "challenging"],
+      "cefr_level": "C1",
+      "theme": "environment",
+      "wordCount": 15
+    },
+    {
+      "id": "read_c1_007",
+      "english": "The phenomenon, insofar as current research indicates, requires interdisciplinary collaboration for comprehensive understanding.",
+      "portuguese": "O fenômeno, na medida em que a pesquisa atual indica, requer colaboração interdisciplinar para compreensão abrangente.",
+      "words": ["The", "phenomenon", "insofar", "as", "current", "research", "indicates", "requires", "interdisciplinary", "collaboration", "for", "comprehensive", "understanding"],
+      "cefr_level": "C1",
+      "theme": "research",
+      "wordCount": 13
+    },
+    {
+      "id": "read_c2_003",
+      "english": "The ramifications of this unprecedented economic downturn extend far beyond conventional macroeconomic indicators.",
+      "portuguese": "As ramificações desta crise econômica sem precedentes se estendem muito além dos indicadores macroeconômicos convencionais.",
+      "words": ["The", "ramifications", "of", "this", "unprecedented", "economic", "downturn", "extend", "far", "beyond", "conventional", "macroeconomic", "indicators"],
+      "cefr_level": "C2",
+      "theme": "economics",
+      "wordCount": 13
+    },
+    {
+      "id": "read_c2_004",
+      "english": "So entrenched are these societal norms that any substantive reform encounters formidable institutional resistance.",
+      "portuguese": "Tão arraigadas estão essas normas sociais que qualquer reforma substantiva encontra resistência institucional formidável.",
+      "words": ["So", "entrenched", "are", "these", "societal", "norms", "that", "any", "substantive", "reform", "encounters", "formidable", "institutional", "resistance"],
+      "cefr_level": "C2",
+      "theme": "society",
+      "wordCount": 14
+    },
+    {
+      "id": "read_c2_005",
+      "english": "The proposition, however laudable its underlying intentions, fails to adequately address the multifaceted complexities inherent in the situation.",
+      "portuguese": "A proposição, por mais louváveis que sejam suas intenções subjacentes, não consegue abordar adequadamente as complexidades multifacetadas inerentes à situação.",
+      "words": ["The", "proposition", "however", "laudable", "its", "underlying", "intentions", "fails", "to", "adequately", "address", "the", "multifaceted", "complexities", "inherent", "in", "the", "situation"],
+      "cefr_level": "C2",
+      "theme": "analysis",
+      "wordCount": 18
+    },
+    {
+      "id": "read_c2_006",
+      "english": "Little did contemporary observers anticipate the profound transformative impact these technological innovations would ultimately exert.",
+      "portuguese": "Pouco anteciparam os observadores contemporâneos o profundo impacto transformador que essas inovações tecnológicas exerceriam.",
+      "words": ["Little", "did", "contemporary", "observers", "anticipate", "the", "profound", "transformative", "impact", "these", "technological", "innovations", "would", "ultimately", "exert"],
+      "cefr_level": "C2",
+      "theme": "technology",
+      "wordCount": 15
+    },
+    {
+      "id": "read_c2_007",
+      "english": "The epistemological implications, as yet insufficiently scrutinized, warrant rigorous interdisciplinary examination and empirical validation.",
+      "portuguese": "As implicações epistemológicas, ainda insuficientemente examinadas, justificam exame interdisciplinar rigoroso e validação empírica.",
+      "words": ["The", "epistemological", "implications", "as", "yet", "insufficiently", "scrutinized", "warrant", "rigorous", "interdisciplinary", "examination", "and", "empirical", "validation"],
       "cefr_level": "C2",
       "theme": "academic",
-      "wordCount": 13
+      "wordCount": 14
     }
   ],
   "writing_translate": [
@@ -455,112 +980,274 @@
   ],
   "writing_order": [
     {
-      "id": "write_order_a1_001",
-      "english": "I am happy.",
-      "portuguese": "Eu estou feliz.",
-      "words": ["I", "am", "happy"],
+      "id": "write_order_a1_003",
+      "english": "My cat is white.",
+      "portuguese": "Meu gato é branco.",
+      "words": ["My", "cat", "is", "white"],
       "cefr_level": "A1",
-      "theme": "emotions",
-      "wordCount": 3
+      "theme": "pets",
+      "wordCount": 4
     },
     {
-      "id": "write_order_a1_002",
-      "english": "She likes music.",
-      "portuguese": "Ela gosta de música.",
-      "words": ["She", "likes", "music"],
+      "id": "write_order_a1_004",
+      "english": "He has a car.",
+      "portuguese": "Ele tem um carro.",
+      "words": ["He", "has", "a", "car"],
       "cefr_level": "A1",
-      "theme": "preferences",
-      "wordCount": 3
+      "theme": "possessions",
+      "wordCount": 4
     },
     {
-      "id": "write_order_a2_001",
-      "english": "I went shopping yesterday afternoon.",
-      "portuguese": "Eu fui às compras ontem à tarde.",
-      "words": ["I", "went", "shopping", "yesterday", "afternoon"],
-      "cefr_level": "A2",
-      "theme": "shopping",
-      "wordCount": 5
+      "id": "write_order_a1_005",
+      "english": "We live in London.",
+      "portuguese": "Nós moramos em Londres.",
+      "words": ["We", "live", "in", "London"],
+      "cefr_level": "A1",
+      "theme": "location",
+      "wordCount": 4
     },
     {
-      "id": "write_order_a2_002",
-      "english": "They are studying for the exam.",
-      "portuguese": "Eles estão estudando para o exame.",
-      "words": ["They", "are", "studying", "for", "the", "exam"],
+      "id": "write_order_a1_006",
+      "english": "This is my book.",
+      "portuguese": "Este é meu livro.",
+      "words": ["This", "is", "my", "book"],
+      "cefr_level": "A1",
+      "theme": "possessions",
+      "wordCount": 4
+    },
+    {
+      "id": "write_order_a1_007",
+      "english": "I want water please.",
+      "portuguese": "Eu quero água por favor.",
+      "words": ["I", "want", "water", "please"],
+      "cefr_level": "A1",
+      "theme": "requests",
+      "wordCount": 4
+    },
+    {
+      "id": "write_order_a2_003",
+      "english": "She usually drinks coffee in the morning.",
+      "portuguese": "Ela geralmente toma café de manhã.",
+      "words": ["She", "usually", "drinks", "coffee", "in", "the", "morning"],
       "cefr_level": "A2",
-      "theme": "education",
+      "theme": "daily_routine",
+      "wordCount": 7
+    },
+    {
+      "id": "write_order_a2_004",
+      "english": "We are going to visit Paris next month.",
+      "portuguese": "Nós vamos visitar Paris no próximo mês.",
+      "words": ["We", "are", "going", "to", "visit", "Paris", "next", "month"],
+      "cefr_level": "A2",
+      "theme": "travel",
+      "wordCount": 8
+    },
+    {
+      "id": "write_order_a2_005",
+      "english": "He has been here since Monday.",
+      "portuguese": "Ele está aqui desde segunda-feira.",
+      "words": ["He", "has", "been", "here", "since", "Monday"],
+      "cefr_level": "A2",
+      "theme": "time",
       "wordCount": 6
     },
     {
-      "id": "write_order_b1_001",
-      "english": "I have lived in this city for five years.",
-      "portuguese": "Eu moro nesta cidade há cinco anos.",
-      "words": ["I", "have", "lived", "in", "this", "city", "for", "five", "years"],
+      "id": "write_order_a2_006",
+      "english": "There are many people in the park.",
+      "portuguese": "Há muitas pessoas no parque.",
+      "words": ["There", "are", "many", "people", "in", "the", "park"],
+      "cefr_level": "A2",
+      "theme": "places",
+      "wordCount": 7
+    },
+    {
+      "id": "write_order_a2_007",
+      "english": "I can speak English and Spanish.",
+      "portuguese": "Eu consigo falar inglês e espanhol.",
+      "words": ["I", "can", "speak", "English", "and", "Spanish"],
+      "cefr_level": "A2",
+      "theme": "abilities",
+      "wordCount": 6
+    },
+    {
+      "id": "write_order_b1_003",
+      "english": "I wish I could travel more often.",
+      "portuguese": "Eu gostaria de poder viajar com mais frequência.",
+      "words": ["I", "wish", "I", "could", "travel", "more", "often"],
       "cefr_level": "B1",
-      "theme": "living",
+      "theme": "wishes",
+      "wordCount": 7
+    },
+    {
+      "id": "write_order_b1_004",
+      "english": "She has been working here since last year.",
+      "portuguese": "Ela trabalha aqui desde o ano passado.",
+      "words": ["She", "has", "been", "working", "here", "since", "last", "year"],
+      "cefr_level": "B1",
+      "theme": "work",
+      "wordCount": 8
+    },
+    {
+      "id": "write_order_b1_005",
+      "english": "Unless you study hard, you won't pass the test.",
+      "portuguese": "A menos que você estude muito, não passará no teste.",
+      "words": ["Unless", "you", "study", "hard", "you", "won't", "pass", "the", "test"],
+      "cefr_level": "B1",
+      "theme": "education",
       "wordCount": 9
     },
     {
-      "id": "write_order_b1_002",
-      "english": "If it rains tomorrow, we will stay home.",
-      "portuguese": "Se chover amanhã, ficaremos em casa.",
-      "words": ["If", "it", "rains", "tomorrow", "we", "will", "stay", "home"],
+      "id": "write_order_b1_006",
+      "english": "The restaurant where we had dinner was excellent.",
+      "portuguese": "O restaurante onde jantamos foi excelente.",
+      "words": ["The", "restaurant", "where", "we", "had", "dinner", "was", "excellent"],
       "cefr_level": "B1",
-      "theme": "weather",
+      "theme": "food",
       "wordCount": 8
     },
     {
-      "id": "write_order_b2_001",
-      "english": "Having finished the report, she submitted it immediately.",
-      "portuguese": "Tendo terminado o relatório, ela o enviou imediatamente.",
-      "words": ["Having", "finished", "the", "report", "she", "submitted", "it", "immediately"],
-      "cefr_level": "B2",
-      "theme": "work",
-      "wordCount": 8
+      "id": "write_order_b1_007",
+      "english": "I would buy that house if I had enough money.",
+      "portuguese": "Eu compraria aquela casa se tivesse dinheiro suficiente.",
+      "words": ["I", "would", "buy", "that", "house", "if", "I", "had", "enough", "money"],
+      "cefr_level": "B1",
+      "theme": "hypothetical",
+      "wordCount": 10
     },
     {
-      "id": "write_order_b2_002",
-      "english": "The project, which was completed last month, exceeded expectations.",
-      "portuguese": "O projeto, que foi concluído no mês passado, superou as expectativas.",
-      "words": ["The", "project", "which", "was", "completed", "last", "month", "exceeded", "expectations"],
+      "id": "write_order_b2_003",
+      "english": "Despite feeling tired, she continued working on the presentation.",
+      "portuguese": "Apesar de se sentir cansada, ela continuou trabalhando na apresentação.",
+      "words": ["Despite", "feeling", "tired", "she", "continued", "working", "on", "the", "presentation"],
       "cefr_level": "B2",
       "theme": "work",
       "wordCount": 9
     },
     {
-      "id": "write_order_c1_001",
-      "english": "Rarely have I encountered such dedication and professionalism.",
-      "portuguese": "Raramente encontrei tanta dedicação e profissionalismo.",
-      "words": ["Rarely", "have", "I", "encountered", "such", "dedication", "and", "professionalism"],
-      "cefr_level": "C1",
-      "theme": "work",
-      "wordCount": 8
+      "id": "write_order_b2_004",
+      "english": "By next week, I will have finished all my assignments.",
+      "portuguese": "Até a próxima semana, terei terminado todas as minhas tarefas.",
+      "words": ["By", "next", "week", "I", "will", "have", "finished", "all", "my", "assignments"],
+      "cefr_level": "B2",
+      "theme": "education",
+      "wordCount": 10
     },
     {
-      "id": "write_order_c1_002",
-      "english": "The implementation has facilitated significant improvements in efficiency.",
-      "portuguese": "A implementação facilitou melhorias significativas na eficiência.",
-      "words": ["The", "implementation", "has", "facilitated", "significant", "improvements", "in", "efficiency"],
-      "cefr_level": "C1",
+      "id": "write_order_b2_005",
+      "english": "No sooner had he arrived than the meeting started.",
+      "portuguese": "Mal ele chegou, a reunião começou.",
+      "words": ["No", "sooner", "had", "he", "arrived", "than", "the", "meeting", "started"],
+      "cefr_level": "B2",
+      "theme": "events",
+      "wordCount": 9
+    },
+    {
+      "id": "write_order_b2_006",
+      "english": "The document, having been reviewed thoroughly, was finally approved.",
+      "portuguese": "O documento, tendo sido revisado minuciosamente, foi finalmente aprovado.",
+      "words": ["The", "document", "having", "been", "reviewed", "thoroughly", "was", "finally", "approved"],
+      "cefr_level": "B2",
       "theme": "business",
+      "wordCount": 9
+    },
+    {
+      "id": "write_order_b2_007",
+      "english": "It's high time we took this matter more seriously.",
+      "portuguese": "Já é hora de levarmos este assunto mais a sério.",
+      "words": ["It's", "high", "time", "we", "took", "this", "matter", "more", "seriously"],
+      "cefr_level": "B2",
+      "theme": "opinions",
+      "wordCount": 9
+    },
+    {
+      "id": "write_order_c1_003",
+      "english": "Scarcely had the presentation begun when the power failed.",
+      "portuguese": "Mal a apresentação havia começado quando a energia falhou.",
+      "words": ["Scarcely", "had", "the", "presentation", "begun", "when", "the", "power", "failed"],
+      "cefr_level": "C1",
+      "theme": "events",
+      "wordCount": 9
+    },
+    {
+      "id": "write_order_c1_004",
+      "english": "The policy, albeit controversial, represents considerable progress forward.",
+      "portuguese": "A política, embora controversa, representa progresso considerável.",
+      "words": ["The", "policy", "albeit", "controversial", "represents", "considerable", "progress", "forward"],
+      "cefr_level": "C1",
+      "theme": "politics",
       "wordCount": 8
     },
     {
-      "id": "write_order_c2_001",
-      "english": "Notwithstanding the substantial challenges, the team persevered admirably.",
-      "portuguese": "Apesar dos desafios substanciais, a equipe perseverou admiravelmente.",
-      "words": ["Notwithstanding", "the", "substantial", "challenges", "the", "team", "persevered", "admirably"],
+      "id": "write_order_c1_005",
+      "english": "Under no circumstances should sensitive data be disclosed publicly.",
+      "portuguese": "Em nenhuma circunstância dados sensíveis devem ser divulgados publicamente.",
+      "words": ["Under", "no", "circumstances", "should", "sensitive", "data", "be", "disclosed", "publicly"],
+      "cefr_level": "C1",
+      "theme": "security",
+      "wordCount": 9
+    },
+    {
+      "id": "write_order_c1_006",
+      "english": "Were it not for technology, communication would be significantly limited.",
+      "portuguese": "Não fosse pela tecnologia, a comunicação seria significativamente limitada.",
+      "words": ["Were", "it", "not", "for", "technology", "communication", "would", "be", "significantly", "limited"],
+      "cefr_level": "C1",
+      "theme": "technology",
+      "wordCount": 10
+    },
+    {
+      "id": "write_order_c1_007",
+      "english": "The research, insofar as it has been validated, supports this hypothesis.",
+      "portuguese": "A pesquisa, na medida em que foi validada, apoia esta hipótese.",
+      "words": ["The", "research", "insofar", "as", "it", "has", "been", "validated", "supports", "this", "hypothesis"],
+      "cefr_level": "C1",
+      "theme": "science",
+      "wordCount": 11
+    },
+    {
+      "id": "write_order_c2_003",
+      "english": "The ramifications extend far beyond conventional economic indicators and projections.",
+      "portuguese": "As ramificações se estendem muito além dos indicadores e projeções econômicas convencionais.",
+      "words": ["The", "ramifications", "extend", "far", "beyond", "conventional", "economic", "indicators", "and", "projections"],
       "cefr_level": "C2",
-      "theme": "work",
-      "wordCount": 8
+      "theme": "economics",
+      "wordCount": 10
     },
     {
-      "id": "write_order_c2_002",
-      "english": "The paradigm necessitates comprehensive reevaluation of fundamental assumptions.",
-      "portuguese": "O paradigma exige uma reavaliação abrangente das suposições fundamentais.",
-      "words": ["The", "paradigm", "necessitates", "comprehensive", "reevaluation", "of", "fundamental", "assumptions"],
+      "id": "write_order_c2_004",
+      "english": "So profound are these implications that comprehensive reassessment becomes imperative.",
+      "portuguese": "Tão profundas são essas implicações que a reavaliação abrangente se torna imperativa.",
+      "words": ["So", "profound", "are", "these", "implications", "that", "comprehensive", "reassessment", "becomes", "imperative"],
+      "cefr_level": "C2",
+      "theme": "analysis",
+      "wordCount": 10
+    },
+    {
+      "id": "write_order_c2_005",
+      "english": "Little did researchers anticipate the transformative impact of these discoveries.",
+      "portuguese": "Pouco anteciparam os pesquisadores o impacto transformador dessas descobertas.",
+      "words": ["Little", "did", "researchers", "anticipate", "the", "transformative", "impact", "of", "these", "discoveries"],
+      "cefr_level": "C2",
+      "theme": "research",
+      "wordCount": 10
+    },
+    {
+      "id": "write_order_c2_006",
+      "english": "The epistemological implications warrant rigorous interdisciplinary examination and scrutiny.",
+      "portuguese": "As implicações epistemológicas justificam exame e escrutínio interdisciplinar rigoroso.",
+      "words": ["The", "epistemological", "implications", "warrant", "rigorous", "interdisciplinary", "examination", "and", "scrutiny"],
       "cefr_level": "C2",
       "theme": "academic",
-      "wordCount": 8
+      "wordCount": 9
+    },
+    {
+      "id": "write_order_c2_007",
+      "english": "Notwithstanding substantial obstacles, the initiative yielded remarkably significant outcomes.",
+      "portuguese": "Apesar de obstáculos substanciais, a iniciativa gerou resultados notavelmente significativos.",
+      "words": ["Notwithstanding", "substantial", "obstacles", "the", "initiative", "yielded", "remarkably", "significant", "outcomes"],
+      "cefr_level": "C2",
+      "theme": "projects",
+      "wordCount": 9
     }
   ]
 }
