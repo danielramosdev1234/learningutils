@@ -239,6 +239,710 @@
       "cefr_level": "C2",
       "theme": "politics",
       "grammar_point": "formal_register"
+    },
+    {
+      "id": "speak_a1_008",
+      "text": "My name is Anna.",
+      "translation": "Meu nome é Anna.",
+      "cefr_level": "A1",
+      "theme": "introductions",
+      "grammar_point": "simple_present"
+    },
+    {
+      "id": "speak_a1_009",
+      "text": "I am twenty years old.",
+      "translation": "Eu tenho vinte anos.",
+      "cefr_level": "A1",
+      "theme": "age",
+      "grammar_point": "simple_present"
+    },
+    {
+      "id": "speak_a1_010",
+      "text": "This is a pen.",
+      "translation": "Esta é uma caneta.",
+      "cefr_level": "A1",
+      "theme": "objects",
+      "grammar_point": "demonstratives"
+    },
+    {
+      "id": "speak_a1_011",
+      "text": "He is tall.",
+      "translation": "Ele é alto.",
+      "cefr_level": "A1",
+      "theme": "descriptions",
+      "grammar_point": "simple_present"
+    },
+    {
+      "id": "speak_a1_012",
+      "text": "She works in an office.",
+      "translation": "Ela trabalha em um escritório.",
+      "cefr_level": "A1",
+      "theme": "jobs",
+      "grammar_point": "simple_present"
+    },
+    {
+      "id": "speak_a2_006",
+      "text": "I don't like spicy food.",
+      "translation": "Eu não gosto de comida picante.",
+      "cefr_level": "A2",
+      "theme": "preferences",
+      "grammar_point": "simple_present_negative"
+    },
+    {
+      "id": "speak_a2_007",
+      "text": "Do you have any brothers?",
+      "translation": "Você tem irmãos?",
+      "cefr_level": "A2",
+      "theme": "family",
+      "grammar_point": "questions"
+    },
+    {
+      "id": "speak_a2_008",
+      "text": "I went to the store yesterday.",
+      "translation": "Eu fui à loja ontem.",
+      "cefr_level": "A2",
+      "theme": "past_activities",
+      "grammar_point": "simple_past"
+    },
+    {
+      "id": "speak_a2_009",
+      "text": "She can speak French.",
+      "translation": "Ela pode falar francês.",
+      "cefr_level": "A2",
+      "theme": "abilities",
+      "grammar_point": "can_modal"
+    },
+    {
+      "id": "speak_a2_010",
+      "text": "We are going to the cinema.",
+      "translation": "Nós vamos ao cinema.",
+      "cefr_level": "A2",
+      "theme": "plans",
+      "grammar_point": "going_to_future"
+    },
+    {
+      "id": "speak_b1_006",
+      "text": "I have been living here for three years.",
+      "translation": "Eu moro aqui há três anos.",
+      "cefr_level": "B1",
+      "theme": "duration",
+      "grammar_point": "present_perfect_continuous"
+    },
+    {
+      "id": "speak_b1_007",
+      "text": "If I had more time, I would travel more.",
+      "translation": "Se eu tivesse mais tempo, eu viajaria mais.",
+      "cefr_level": "B1",
+      "theme": "hypothetical",
+      "grammar_point": "second_conditional"
+    },
+    {
+      "id": "speak_b1_008",
+      "text": "I used to play soccer when I was young.",
+      "translation": "Eu costumava jogar futebol quando era jovem.",
+      "cefr_level": "B1",
+      "theme": "past_habits",
+      "grammar_point": "used_to"
+    },
+    {
+      "id": "speak_b1_009",
+      "text": "She might be at home now.",
+      "translation": "Ela pode estar em casa agora.",
+      "cefr_level": "B1",
+      "theme": "possibility",
+      "grammar_point": "might_modal"
+    },
+    {
+      "id": "speak_b1_010",
+      "text": "I find it difficult to wake up early.",
+      "translation": "Eu acho difícil acordar cedo.",
+      "cefr_level": "B1",
+      "theme": "difficulties",
+      "grammar_point": "find_it_adjective"
+    },
+    {
+      "id": "speak_b2_006",
+      "text": "Had I known about the meeting, I would have attended.",
+      "translation": "Se eu soubesse sobre a reunião, eu teria comparecido.",
+      "cefr_level": "B2",
+      "theme": "regrets",
+      "grammar_point": "third_conditional"
+    },
+    {
+      "id": "speak_b2_007",
+      "text": "The proposal was rejected due to insufficient funding.",
+      "translation": "A proposta foi rejeitada devido a financiamento insuficiente.",
+      "cefr_level": "B2",
+      "theme": "business",
+      "grammar_point": "passive_voice"
+    },
+    {
+      "id": "speak_b2_008",
+      "text": "Notwithstanding the challenges, we persevered.",
+      "translation": "Não obstante os desafios, nós perseveramos.",
+      "cefr_level": "B2",
+      "theme": "persistence",
+      "grammar_point": "formal_language"
+    },
+    {
+      "id": "speak_b2_009",
+      "text": "She has a penchant for classical music.",
+      "translation": "Ela tem uma predileção por música clássica.",
+      "cefr_level": "B2",
+      "theme": "preferences",
+      "grammar_point": "formal_vocabulary"
+    },
+    {
+      "id": "speak_b2_010",
+      "text": "The implications of this decision are far-reaching.",
+      "translation": "As implicações desta decisão são de longo alcance.",
+      "cefr_level": "B2",
+      "theme": "consequences",
+      "grammar_point": "formal_register"
+    },
+    {
+      "id": "speak_c1_006",
+      "text": "The juxtaposition of tradition and modernity creates a unique cultural tapestry.",
+      "translation": "A justaposição de tradição e modernidade cria uma tapeçaria cultural única.",
+      "cefr_level": "C1",
+      "theme": "culture",
+      "grammar_point": "advanced_vocabulary"
+    },
+    {
+      "id": "speak_c1_007",
+      "text": "Notwithstanding the empirical evidence, skepticism persists.",
+      "translation": "Não obstante a evidência empírica, o ceticismo persiste.",
+      "cefr_level": "C1",
+      "theme": "science",
+      "grammar_point": "academic_language"
+    },
+    {
+      "id": "speak_c1_008",
+      "text": "The paradigm shift in technology has revolutionized communication.",
+      "translation": "A mudança de paradigma na tecnologia revolucionou a comunicação.",
+      "cefr_level": "C1",
+      "theme": "technology",
+      "grammar_point": "metaphorical_language"
+    },
+    {
+      "id": "speak_c1_009",
+      "text": "Her eloquence belied her youth.",
+      "translation": "Sua eloquência contradizia sua juventude.",
+      "cefr_level": "C1",
+      "theme": "character",
+      "grammar_point": "literary_devices"
+    },
+    {
+      "id": "speak_c1_010",
+      "text": "The confluence of factors culminated in an unprecedented outcome.",
+      "translation": "A confluência de fatores culminou em um resultado sem precedentes.",
+      "cefr_level": "C1",
+      "theme": "causation",
+      "grammar_point": "formal_register"
+    },
+    {
+      "id": "speak_c2_008",
+      "text": "The epistemological underpinnings of this philosophical discourse warrant meticulous scrutiny.",
+      "translation": "Os fundamentos epistemológicos deste discurso filosófico justificam escrutínio meticuloso.",
+      "cefr_level": "C2",
+      "theme": "philosophy",
+      "grammar_point": "academic_vocabulary"
+    },
+    {
+      "id": "speak_c2_009",
+      "text": "The symbiotic relationship between art and society engenders cultural evolution.",
+      "translation": "O relacionamento simbiótico entre arte e sociedade engendra evolução cultural.",
+      "cefr_level": "C2",
+      "theme": "sociology",
+      "grammar_point": "metaphorical_concepts"
+    },
+    {
+      "id": "speak_c2_010",
+      "text": "The quintessence of diplomatic acumen lies in nuanced interpretation.",
+      "translation": "A quintessência da perspicácia diplomática reside na interpretação nuances.",
+      "cefr_level": "C2",
+      "theme": "diplomacy",
+      "grammar_point": "abstract_concepts"
+    },
+    {
+      "id": "speak_a1_015",
+      "text": "I have a cat.",
+      "translation": "Eu tenho um gato.",
+      "cefr_level": "A1",
+      "theme": "pets",
+      "grammar_point": "simple_present"
+    },
+    {
+      "id": "speak_a1_016",
+      "text": "The book is red.",
+      "translation": "O livro é vermelho.",
+      "cefr_level": "A1",
+      "theme": "objects",
+      "grammar_point": "simple_present"
+    },
+    {
+      "id": "speak_a1_017",
+      "text": "We are friends.",
+      "translation": "Nós somos amigos.",
+      "cefr_level": "A1",
+      "theme": "relationships",
+      "grammar_point": "simple_present"
+    },
+    {
+      "id": "speak_a1_018",
+      "text": "He likes pizza.",
+      "translation": "Ele gosta de pizza.",
+      "cefr_level": "A1",
+      "theme": "food",
+      "grammar_point": "simple_present"
+    },
+    {
+      "id": "speak_a1_019",
+      "text": "She is a student.",
+      "translation": "Ela é uma estudante.",
+      "cefr_level": "A1",
+      "theme": "professions",
+      "grammar_point": "simple_present"
+    },
+    {
+      "id": "speak_a1_020",
+      "text": "It is sunny today.",
+      "translation": "Está ensolarado hoje.",
+      "cefr_level": "A1",
+      "theme": "weather",
+      "grammar_point": "simple_present"
+    },
+    {
+      "id": "speak_a1_021",
+      "text": "They live in Brazil.",
+      "translation": "Eles moram no Brasil.",
+      "cefr_level": "A1",
+      "theme": "location",
+      "grammar_point": "simple_present"
+    },
+    {
+      "id": "speak_a1_022",
+      "text": "I speak English.",
+      "translation": "Eu falo inglês.",
+      "cefr_level": "A1",
+      "theme": "languages",
+      "grammar_point": "simple_present"
+    },
+    {
+      "id": "speak_a1_023",
+      "text": "The dog is big.",
+      "translation": "O cachorro é grande.",
+      "cefr_level": "A1",
+      "theme": "animals",
+      "grammar_point": "simple_present"
+    },
+    {
+      "id": "speak_a1_024",
+      "text": "We have class now.",
+      "translation": "Temos aula agora.",
+      "cefr_level": "A1",
+      "theme": "education",
+      "grammar_point": "simple_present"
+    },
+    {
+      "id": "speak_a2_015",
+      "text": "I didn't go to school yesterday.",
+      "translation": "Eu não fui à escola ontem.",
+      "cefr_level": "A2",
+      "theme": "past_activities",
+      "grammar_point": "simple_past_negative"
+    },
+    {
+      "id": "speak_a2_016",
+      "text": "Are you coming to the party?",
+      "translation": "Você vai vir para a festa?",
+      "cefr_level": "A2",
+      "theme": "invitations",
+      "grammar_point": "present_continuous"
+    },
+    {
+      "id": "speak_a2_017",
+      "text": "She has already eaten lunch.",
+      "translation": "Ela já almoçou.",
+      "cefr_level": "A2",
+      "theme": "meals",
+      "grammar_point": "present_perfect"
+    },
+    {
+      "id": "speak_a2_018",
+      "text": "I need to buy some bread.",
+      "translation": "Eu preciso comprar pão.",
+      "cefr_level": "A2",
+      "theme": "shopping",
+      "grammar_point": "need_to"
+    },
+    {
+      "id": "speak_a2_019",
+      "text": "They were playing soccer.",
+      "translation": "Eles estavam jogando futebol.",
+      "cefr_level": "A2",
+      "theme": "sports",
+      "grammar_point": "past_continuous"
+    },
+    {
+      "id": "speak_a2_020",
+      "text": "Can I have some water, please?",
+      "translation": "Posso ter água, por favor?",
+      "cefr_level": "A2",
+      "theme": "politeness",
+      "grammar_point": "can_modal"
+    },
+    {
+      "id": "speak_a2_021",
+      "text": "I have never been to Paris.",
+      "translation": "Eu nunca fui a Paris.",
+      "cefr_level": "A2",
+      "theme": "travel",
+      "grammar_point": "present_perfect_negative"
+    },
+    {
+      "id": "speak_a2_022",
+      "text": "She is going to study medicine.",
+      "translation": "Ela vai estudar medicina.",
+      "cefr_level": "A2",
+      "theme": "future_plans",
+      "grammar_point": "going_to_future"
+    },
+    {
+      "id": "speak_a2_023",
+      "text": "Do you like listening to music?",
+      "translation": "Você gosta de ouvir música?",
+      "cefr_level": "A2",
+      "theme": "hobbies",
+      "grammar_point": "gerund"
+    },
+    {
+      "id": "speak_a2_024",
+      "text": "I usually wake up at 7 AM.",
+      "translation": "Eu geralmente acordo às 7 da manhã.",
+      "cefr_level": "A2",
+      "theme": "routines",
+      "grammar_point": "adverbs_of_frequency"
+    },
+    {
+      "id": "speak_b1_015",
+      "text": "I wish I could fly like a bird.",
+      "translation": "Eu gostaria de poder voar como um pássaro.",
+      "cefr_level": "B1",
+      "theme": "wishes",
+      "grammar_point": "wish_clauses"
+    },
+    {
+      "id": "speak_b1_016",
+      "text": "By the time we arrived, the movie had already started.",
+      "translation": "Quando chegamos, o filme já havia começado.",
+      "cefr_level": "B1",
+      "theme": "sequences",
+      "grammar_point": "past_perfect"
+    },
+    {
+      "id": "speak_b1_017",
+      "text": "She apologized for being late to the meeting.",
+      "translation": "Ela se desculpou por chegar atrasada à reunião.",
+      "cefr_level": "B1",
+      "theme": "apologies",
+      "grammar_point": "gerund_after_prepositions"
+    },
+    {
+      "id": "speak_b1_018",
+      "text": "If I had studied harder, I would have passed the exam.",
+      "translation": "Se eu tivesse estudado mais, teria passado na prova.",
+      "cefr_level": "B1",
+      "theme": "regrets",
+      "grammar_point": "third_conditional"
+    },
+    {
+      "id": "speak_b1_019",
+      "text": "I am used to getting up early in the morning.",
+      "translation": "Eu estou acostumado a acordar cedo de manhã.",
+      "cefr_level": "B1",
+      "theme": "habits",
+      "grammar_point": "used_to_be_used_to"
+    },
+    {
+      "id": "speak_b1_020",
+      "text": "The book that I bought yesterday is very interesting.",
+      "translation": "O livro que eu comprei ontem é muito interessante.",
+      "cefr_level": "B1",
+      "theme": "reading",
+      "grammar_point": "relative_clauses"
+    },
+    {
+      "id": "speak_b1_021",
+      "text": "She complained that the food was too spicy.",
+      "translation": "Ela reclamou que a comida estava muito picante.",
+      "cefr_level": "B1",
+      "theme": "complaints",
+      "grammar_point": "reported_speech"
+    },
+    {
+      "id": "speak_b1_022",
+      "text": "I find it difficult to concentrate when it's noisy.",
+      "translation": "Eu acho difícil me concentrar quando está barulhento.",
+      "cefr_level": "B1",
+      "theme": "difficulties",
+      "grammar_point": "find_it_adjective"
+    },
+    {
+      "id": "speak_b1_023",
+      "text": "They decided to postpone the meeting until next week.",
+      "translation": "Eles decidiram adiar a reunião até a próxima semana.",
+      "cefr_level": "B1",
+      "theme": "decisions",
+      "grammar_point": "decide_to_infinitive"
+    },
+    {
+      "id": "speak_b1_024",
+      "text": "I have been waiting for the bus for half an hour.",
+      "translation": "Eu estou esperando pelo ônibus há meia hora.",
+      "cefr_level": "B1",
+      "theme": "waiting",
+      "grammar_point": "present_perfect_continuous"
+    },
+    {
+      "id": "speak_b2_015",
+      "text": "The proposal was rejected on account of insufficient evidence.",
+      "translation": "A proposta foi rejeitada devido à evidência insuficiente.",
+      "cefr_level": "B2",
+      "theme": "business",
+      "grammar_point": "formal_passive"
+    },
+    {
+      "id": "speak_b2_016",
+      "text": "Had the weather been better, we would have gone hiking.",
+      "translation": "Se o tempo estivesse melhor, teríamos ido caminhar.",
+      "cefr_level": "B2",
+      "theme": "hypothetical",
+      "grammar_point": "mixed_conditional"
+    },
+    {
+      "id": "speak_b2_017",
+      "text": "The implications of this discovery are far-reaching and profound.",
+      "translation": "As implicações desta descoberta são de longo alcance e profundas.",
+      "cefr_level": "B2",
+      "theme": "science",
+      "grammar_point": "formal_adjectives"
+    },
+    {
+      "id": "speak_b2_018",
+      "text": "She attributed her success to hard work and perseverance.",
+      "translation": "Ela atribuiu seu sucesso ao trabalho duro e perseverança.",
+      "cefr_level": "B2",
+      "theme": "success",
+      "grammar_point": "attribute_to"
+    },
+    {
+      "id": "speak_b2_019",
+      "text": "Notwithstanding the challenges, the project was completed on time.",
+      "translation": "Não obstante os desafios, o projeto foi concluído no prazo.",
+      "cefr_level": "B2",
+      "theme": "projects",
+      "grammar_point": "formal_connectors"
+    },
+    {
+      "id": "speak_b2_020",
+      "text": "The phenomenon warrants further empirical investigation.",
+      "translation": "O fenômeno justifica investigação empírica adicional.",
+      "cefr_level": "B2",
+      "theme": "research",
+      "grammar_point": "formal_vocabulary"
+    },
+    {
+      "id": "speak_b2_021",
+      "text": "She has a propensity for asking pertinent questions.",
+      "translation": "Ela tem uma propensão para fazer perguntas pertinentes.",
+      "cefr_level": "B2",
+      "theme": "character",
+      "grammar_point": "formal_nouns"
+    },
+    {
+      "id": "speak_b2_022",
+      "text": "The discrepancy between theory and practice is evident.",
+      "translation": "A discrepância entre teoria e prática é evidente.",
+      "cefr_level": "B2",
+      "theme": "analysis",
+      "grammar_point": "formal_register"
+    },
+    {
+      "id": "speak_b2_023",
+      "text": "He postulated that the results would be inconclusive.",
+      "translation": "Ele postulou que os resultados seriam inconclusivos.",
+      "cefr_level": "B2",
+      "theme": "hypothesis",
+      "grammar_point": "academic_verbs"
+    },
+    {
+      "id": "speak_b2_024",
+      "text": "The paradigm shift necessitates a reevaluation of our assumptions.",
+      "translation": "A mudança de paradigma necessita uma reavaliação de nossas suposições.",
+      "cefr_level": "B2",
+      "theme": "change",
+      "grammar_point": "formal_construction"
+    },
+    {
+      "id": "speak_c1_015",
+      "text": "The juxtaposition of tradition and innovation creates a unique cultural synthesis.",
+      "translation": "A justaposição de tradição e inovação cria uma síntese cultural única.",
+      "cefr_level": "C1",
+      "theme": "culture",
+      "grammar_point": "abstract_nouns"
+    },
+    {
+      "id": "speak_c1_016",
+      "text": "Notwithstanding empirical evidence to the contrary, skepticism persists.",
+      "translation": "Não obstante evidência empírica em contrário, o ceticismo persiste.",
+      "cefr_level": "C1",
+      "theme": "science",
+      "grammar_point": "formal_concessions"
+    },
+    {
+      "id": "speak_c1_017",
+      "text": "The epistemological underpinnings of this theory warrant scrutiny.",
+      "translation": "Os fundamentos epistemológicos desta teoria justificam escrutínio.",
+      "cefr_level": "C1",
+      "theme": "philosophy",
+      "grammar_point": "academic_vocabulary"
+    },
+    {
+      "id": "speak_c1_018",
+      "text": "Her rhetorical prowess belied her apparent reticence.",
+      "translation": "Sua proeza retórica contradizia sua aparente reticência.",
+      "cefr_level": "C1",
+      "theme": "communication",
+      "grammar_point": "literary_devices"
+    },
+    {
+      "id": "speak_c1_019",
+      "text": "The symbiotic relationship between art and commerce engenders evolution.",
+      "translation": "O relacionamento simbiótico entre arte e comércio engendra evolução.",
+      "cefr_level": "C1",
+      "theme": "sociology",
+      "grammar_point": "metaphorical_language"
+    },
+    {
+      "id": "speak_c1_020",
+      "text": "The confluence of factors precipitated an unprecedented outcome.",
+      "translation": "A confluência de fatores precipitou um resultado sem precedentes.",
+      "cefr_level": "C1",
+      "theme": "causation",
+      "grammar_point": "formal_verbs"
+    },
+    {
+      "id": "speak_c1_021",
+      "text": "The paradigm shift in technology has revolutionized paradigms of interaction.",
+      "translation": "A mudança de paradigma na tecnologia revolucionou paradigmas de interação.",
+      "cefr_level": "C1",
+      "theme": "technology",
+      "grammar_point": "repeated_vocabulary"
+    },
+    {
+      "id": "speak_c1_022",
+      "text": "Notwithstanding substantial evidence, the hypothesis remains contentious.",
+      "translation": "Não obstante evidência substancial, a hipótese permanece controversa.",
+      "cefr_level": "C1",
+      "theme": "science",
+      "grammar_point": "formal_adjectives"
+    },
+    {
+      "id": "speak_c1_023",
+      "text": "The quintessence of diplomatic acumen resides in nuanced interpretation.",
+      "translation": "A quintessência da perspicácia diplomática reside na interpretação nuances.",
+      "cefr_level": "C1",
+      "theme": "diplomacy",
+      "grammar_point": "abstract_concepts"
+    },
+    {
+      "id": "speak_c1_024",
+      "text": "The ramifications extend beyond conventional economic indicators.",
+      "translation": "As ramificações se estendem além dos indicadores econômicos convencionais.",
+      "cefr_level": "C1",
+      "theme": "economics",
+      "grammar_point": "formal_register"
+    },
+    {
+      "id": "speak_c2_011",
+      "text": "The epistemological foundations underpinning this philosophical discourse necessitate rigorous interrogation.",
+      "translation": "Os fundamentos epistemológicos subjacentes a este discurso filosófico necessitam interrogação rigorosa.",
+      "cefr_level": "C2",
+      "theme": "philosophy",
+      "grammar_point": "complex_construction"
+    },
+    {
+      "id": "speak_c2_012",
+      "text": "The symbiotic interrelationship between socioeconomic factors engenders multifaceted societal evolution.",
+      "translation": "A inter-relação simbiótica entre fatores socioeconômicos engendra evolução societal multifacetada.",
+      "cefr_level": "C2",
+      "theme": "sociology",
+      "grammar_point": "compound_adjectives"
+    },
+    {
+      "id": "speak_c2_013",
+      "text": "Notwithstanding incontrovertible empirical substantiation, paradigmatic resistance persists unabated.",
+      "translation": "Não obstante substantiação empírica incontrovertível, resistência paradigmática persiste inabalável.",
+      "cefr_level": "C2",
+      "theme": "science",
+      "grammar_point": "rare_vocabulary"
+    },
+    {
+      "id": "speak_c2_014",
+      "text": "The quintessential manifestation of rhetorical dexterity resides in perspicacious lexical selection.",
+      "translation": "A manifestação quintessencial de destreza retórica reside na seleção lexical perspicaz.",
+      "cefr_level": "C2",
+      "theme": "language",
+      "grammar_point": "abstract_metaphors"
+    },
+    {
+      "id": "speak_c2_015",
+      "text": "The confluence of multifarious determinants precipitated an unprecedented paradigmatic metamorphosis.",
+      "translation": "A confluência de determinantes multifários precipitou uma metamorfose paradigmática sem precedentes.",
+      "cefr_level": "C2",
+      "theme": "change",
+      "grammar_point": "complex_compounds"
+    },
+    {
+      "id": "speak_c2_016",
+      "text": "Epistemological interrogation necessitates transcendence of conventional methodological constraints.",
+      "translation": "Interrogação epistemológica necessita transcendência de restrições metodológicas convencionais.",
+      "cefr_level": "C2",
+      "theme": "methodology",
+      "grammar_point": "academic_abstraction"
+    },
+    {
+      "id": "speak_c2_017",
+      "text": "The symbiotic nexus between technological innovation and socioeconomic paradigms engenders transformative evolution.",
+      "translation": "O nexus simbiótico entre inovação tecnológica e paradigmas socioeconômicos engendra evolução transformadora.",
+      "cefr_level": "C2",
+      "theme": "technology",
+      "grammar_point": "complex_metaphors"
+    },
+    {
+      "id": "speak_c2_018",
+      "text": "Notwithstanding empirical corroboration, theoretical underpinnings warrant epistemological scrutiny.",
+      "translation": "Não obstante corroboração empírica, fundamentos teóricos justificam escrutínio epistemológico.",
+      "cefr_level": "C2",
+      "theme": "theory",
+      "grammar_point": "formal_compounds"
+    },
+    {
+      "id": "speak_c2_019",
+      "text": "The quintessential paradigm of intercultural communication transcends linguistic boundaries.",
+      "translation": "O paradigma quintessencial de comunicação intercultural transcende fronteiras linguísticas.",
+      "cefr_level": "C2",
+      "theme": "communication",
+      "grammar_point": "abstract_construction"
+    },
+    {
+      "id": "speak_c2_020",
+      "text": "Ramifications emanating from this paradigm shift necessitate comprehensive methodological reevaluation.",
+      "translation": "Ramificações emanando desta mudança de paradigma necessitam reavaliação metodológica abrangente.",
+      "cefr_level": "C2",
+      "theme": "methodology",
+      "grammar_point": "complex_syntax"
     }
   ],
   "listening": [
@@ -606,6 +1310,890 @@
         "The phenomenon, as yet insufficiently understood, warrant further empirical investigation.",
         "The phenomenon, as insufficiently understood, warrants further empirical investigation."
       ]
+    },
+    {
+      "id": "listen_a1_011",
+      "text": "Hello, how are you?",
+      "translation": "Olá, como você está?",
+      "cefr_level": "A1",
+      "theme": "greetings",
+      "options": [
+        "Hello, how are you?",
+        "Hello, how you are?",
+        "Hello, how are you doing?",
+        "Hi, how are you?"
+      ]
+    },
+    {
+      "id": "listen_a1_012",
+      "text": "Thank you very much.",
+      "translation": "Muito obrigado.",
+      "cefr_level": "A1",
+      "theme": "politeness",
+      "options": [
+        "Thank you very much.",
+        "Thank you so much.",
+        "Thanks a lot.",
+        "Thank you very much indeed."
+      ]
+    },
+    {
+      "id": "listen_a2_011",
+      "text": "I have been waiting for an hour.",
+      "translation": "Eu estou esperando há uma hora.",
+      "cefr_level": "A2",
+      "theme": "duration",
+      "options": [
+        "I have been waiting for an hour.",
+        "I waited for an hour.",
+        "I am waiting for an hour.",
+        "I have waited for an hour."
+      ]
+    },
+    {
+      "id": "listen_a2_012",
+      "text": "Could you help me, please?",
+      "translation": "Você poderia me ajudar, por favor?",
+      "cefr_level": "A2",
+      "theme": "requests",
+      "options": [
+        "Could you help me, please?",
+        "Can you help me, please?",
+        "Could you to help me, please?",
+        "Could you help me please?"
+      ]
+    },
+    {
+      "id": "listen_b1_011",
+      "text": "If I were you, I would study harder.",
+      "translation": "Se eu fosse você, eu estudaria mais.",
+      "cefr_level": "B1",
+      "theme": "advice",
+      "options": [
+        "If I were you, I would study harder.",
+        "If I was you, I would study harder.",
+        "If I were you, I will study harder.",
+        "If I am you, I would study harder."
+      ]
+    },
+    {
+      "id": "listen_b1_012",
+      "text": "She complained that the service was slow.",
+      "translation": "Ela reclamou que o serviço era lento.",
+      "cefr_level": "B1",
+      "theme": "complaints",
+      "options": [
+        "She complained that the service was slow.",
+        "She complained the service was slow.",
+        "She complained that the service slow.",
+        "She complained about the service was slow."
+      ]
+    },
+    {
+      "id": "listen_b2_011",
+      "text": "Notwithstanding the difficulties, they succeeded.",
+      "translation": "Não obstante as dificuldades, eles tiveram sucesso.",
+      "cefr_level": "B2",
+      "theme": "success",
+      "options": [
+        "Notwithstanding the difficulties, they succeeded.",
+        "Despite the difficulties, they succeeded.",
+        "Although the difficulties, they succeeded.",
+        "In spite of the difficulties, they succeeded."
+      ]
+    },
+    {
+      "id": "listen_b2_012",
+      "text": "The proposal was met with considerable skepticism.",
+      "translation": "A proposta foi recebida com considerável ceticismo.",
+      "cefr_level": "B2",
+      "theme": "reactions",
+      "options": [
+        "The proposal was met with considerable skepticism.",
+        "The proposal was met with considerable scepticism.",
+        "The proposal was met by considerable skepticism.",
+        "The proposal was met with considerable scepticism."
+      ]
+    },
+    {
+      "id": "listen_c1_011",
+      "text": "The juxtaposition of colors creates a striking visual effect.",
+      "translation": "A justaposição de cores cria um efeito visual impressionante.",
+      "cefr_level": "C1",
+      "theme": "art",
+      "options": [
+        "The juxtaposition of colors creates a striking visual effect.",
+        "The juxtaposition of colours creates a striking visual effect.",
+        "The juxtaposition of colors create a striking visual effect.",
+        "The juxtaposition of colours create a striking visual effect."
+      ]
+    },
+    {
+      "id": "listen_c1_012",
+      "text": "Her eloquence belied her apparent nervousness.",
+      "translation": "Sua eloquência contradizia seu aparente nervosismo.",
+      "cefr_level": "C1",
+      "theme": "contradiction",
+      "options": [
+        "Her eloquence belied her apparent nervousness.",
+        "Her eloquence belied her apparent nervous.",
+        "Her eloquence belies her apparent nervousness.",
+        "Her eloquence belied her apparent nervousness."
+      ]
+    },
+    {
+      "id": "listen_c2_011",
+      "text": "The epistemological foundations of this theory remain contentious.",
+      "translation": "Os fundamentos epistemológicos desta teoria permanecem controversos.",
+      "cefr_level": "C2",
+      "theme": "philosophy",
+      "options": [
+        "The epistemological foundations of this theory remain contentious.",
+        "The epistemological foundations of this theory remains contentious.",
+        "The epistemological foundation of this theory remain contentious.",
+        "The epistemological foundation of this theory remains contentious."
+      ]
+    },
+    {
+      "id": "listen_c2_012",
+      "text": "The symbiotic relationship between art and commerce is increasingly evident.",
+      "translation": "O relacionamento simbiótico entre arte e comércio é cada vez mais evidente.",
+      "cefr_level": "C2",
+      "theme": "culture",
+      "options": [
+        "The symbiotic relationship between art and commerce is increasingly evident.",
+        "The symbiotic relationship between art and commerce are increasingly evident.",
+        "The symbiotic relationships between art and commerce is increasingly evident.",
+        "The symbiotic relationships between art and commerce are increasingly evident."
+      ]
+    },
+    {
+      "id": "listen_a1_015",
+      "text": "Good morning, teacher.",
+      "translation": "Bom dia, professor.",
+      "cefr_level": "A1",
+      "theme": "school",
+      "options": [
+        "Good morning, teacher.",
+        "Good morning, student.",
+        "Good afternoon, teacher.",
+        "Good morning, teachers."
+      ]
+    },
+    {
+      "id": "listen_a1_016",
+      "text": "I am from France.",
+      "translation": "Eu sou da França.",
+      "cefr_level": "A1",
+      "theme": "origins",
+      "options": [
+        "I am from France.",
+        "I am in France.",
+        "I go to France.",
+        "I like France."
+      ]
+    },
+    {
+      "id": "listen_a1_017",
+      "text": "The pencil is blue.",
+      "translation": "O lápis é azul.",
+      "cefr_level": "A1",
+      "theme": "colors",
+      "options": [
+        "The pencil is blue.",
+        "The pencil is red.",
+        "The pencils is blue.",
+        "The pencil are blue."
+      ]
+    },
+    {
+      "id": "listen_a1_018",
+      "text": "She has a brother.",
+      "translation": "Ela tem um irmão.",
+      "cefr_level": "A1",
+      "theme": "family",
+      "options": [
+        "She has a brother.",
+        "She have a brother.",
+        "She has brothers.",
+        "She has a sister."
+      ]
+    },
+    {
+      "id": "listen_a1_019",
+      "text": "We play soccer.",
+      "translation": "Nós jogamos futebol.",
+      "cefr_level": "A1",
+      "theme": "sports",
+      "options": [
+        "We play soccer.",
+        "We plays soccer.",
+        "We playing soccer.",
+        "We played soccer."
+      ]
+    },
+    {
+      "id": "listen_a1_020",
+      "text": "The house is big.",
+      "translation": "A casa é grande.",
+      "cefr_level": "A1",
+      "theme": "home",
+      "options": [
+        "The house is big.",
+        "The house are big.",
+        "The houses is big.",
+        "The house is small."
+      ]
+    },
+    {
+      "id": "listen_a1_021",
+      "text": "He drinks water.",
+      "translation": "Ele bebe água.",
+      "cefr_level": "A1",
+      "theme": "drinks",
+      "options": [
+        "He drinks water.",
+        "He drink water.",
+        "He drinking water.",
+        "He drank water."
+      ]
+    },
+    {
+      "id": "listen_a1_022",
+      "text": "They are happy.",
+      "translation": "Eles estão felizes.",
+      "cefr_level": "A1",
+      "theme": "emotions",
+      "options": [
+        "They are happy.",
+        "They is happy.",
+        "They are sad.",
+        "They were happy."
+      ]
+    },
+    {
+      "id": "listen_a1_023",
+      "text": "I eat breakfast.",
+      "translation": "Eu tomo café da manhã.",
+      "cefr_level": "A1",
+      "theme": "meals",
+      "options": [
+        "I eat breakfast.",
+        "I eats breakfast.",
+        "I eating breakfast.",
+        "I ate breakfast."
+      ]
+    },
+    {
+      "id": "listen_a1_024",
+      "text": "The car is fast.",
+      "translation": "O carro é rápido.",
+      "cefr_level": "A1",
+      "theme": "transportation",
+      "options": [
+        "The car is fast.",
+        "The car are fast.",
+        "The cars is fast.",
+        "The car is slow."
+      ]
+    },
+    {
+      "id": "listen_a2_015",
+      "text": "I have finished my homework.",
+      "translation": "Eu terminei minha lição de casa.",
+      "cefr_level": "A2",
+      "theme": "school",
+      "options": [
+        "I have finished my homework.",
+        "I finished my homework.",
+        "I have finish my homework.",
+        "I has finished my homework."
+      ]
+    },
+    {
+      "id": "listen_a2_016",
+      "text": "She is not coming today.",
+      "translation": "Ela não vem hoje.",
+      "cefr_level": "A2",
+      "theme": "plans",
+      "options": [
+        "She is not coming today.",
+        "She not is coming today.",
+        "She isn't coming today.",
+        "She is coming today."
+      ]
+    },
+    {
+      "id": "listen_a2_017",
+      "text": "Do you want some tea?",
+      "translation": "Você quer chá?",
+      "cefr_level": "A2",
+      "theme": "offers",
+      "options": [
+        "Do you want some tea?",
+        "Do you wants some tea?",
+        "Are you want some tea?",
+        "Do you wanted some tea?"
+      ]
+    },
+    {
+      "id": "listen_a2_018",
+      "text": "I went to the cinema yesterday.",
+      "translation": "Eu fui ao cinema ontem.",
+      "cefr_level": "A2",
+      "theme": "entertainment",
+      "options": [
+        "I went to the cinema yesterday.",
+        "I go to the cinema yesterday.",
+        "I gone to the cinema yesterday.",
+        "I going to the cinema yesterday."
+      ]
+    },
+    {
+      "id": "listen_a2_019",
+      "text": "They are playing in the park.",
+      "translation": "Eles estão brincando no parque.",
+      "cefr_level": "A2",
+      "theme": "activities",
+      "options": [
+        "They are playing in the park.",
+        "They play in the park.",
+        "They played in the park.",
+        "They playing in the park."
+      ]
+    },
+    {
+      "id": "listen_a2_020",
+      "text": "Can I open the window?",
+      "translation": "Posso abrir a janela?",
+      "cefr_level": "A2",
+      "theme": "permissions",
+      "options": [
+        "Can I open the window?",
+        "May I open the window?",
+        "Could I open the window?",
+        "Do I can open the window?"
+      ]
+    },
+    {
+      "id": "listen_a2_021",
+      "text": "I don't like spicy food.",
+      "translation": "Eu não gosto de comida picante.",
+      "cefr_level": "A2",
+      "theme": "preferences",
+      "options": [
+        "I don't like spicy food.",
+        "I not like spicy food.",
+        "I doesn't like spicy food.",
+        "I didn't like spicy food."
+      ]
+    },
+    {
+      "id": "listen_a2_022",
+      "text": "She has already left.",
+      "translation": "Ela já saiu.",
+      "cefr_level": "A2",
+      "theme": "departures",
+      "options": [
+        "She has already left.",
+        "She already left.",
+        "She has left already.",
+        "She have already left."
+      ]
+    },
+    {
+      "id": "listen_a2_023",
+      "text": "Are you going to the party?",
+      "translation": "Você vai à festa?",
+      "cefr_level": "A2",
+      "theme": "invitations",
+      "options": [
+        "Are you going to the party?",
+        "Do you going to the party?",
+        "Are you go to the party?",
+        "Were you going to the party?"
+      ]
+    },
+    {
+      "id": "listen_a2_024",
+      "text": "I need to buy milk.",
+      "translation": "Eu preciso comprar leite.",
+      "cefr_level": "A2",
+      "theme": "shopping",
+      "options": [
+        "I need to buy milk.",
+        "I need buy milk.",
+        "I needing to buy milk.",
+        "I needed to buy milk."
+      ]
+    },
+    {
+      "id": "listen_b1_015",
+      "text": "I wish I had more free time.",
+      "translation": "Eu gostaria de ter mais tempo livre.",
+      "cefr_level": "B1",
+      "theme": "wishes",
+      "options": [
+        "I wish I had more free time.",
+        "I wish I have more free time.",
+        "I wished I had more free time.",
+        "I wish I had more free times."
+      ]
+    },
+    {
+      "id": "listen_b1_016",
+      "text": "She apologized for being late.",
+      "translation": "Ela se desculpou por chegar atrasada.",
+      "cefr_level": "B1",
+      "theme": "apologies",
+      "options": [
+        "She apologized for being late.",
+        "She apologized for be late.",
+        "She apologizes for being late.",
+        "She apologized for being lately."
+      ]
+    },
+    {
+      "id": "listen_b1_017",
+      "text": "If it rains, we'll stay home.",
+      "translation": "Se chover, ficaremos em casa.",
+      "cefr_level": "B1",
+      "theme": "conditions",
+      "options": [
+        "If it rains, we'll stay home.",
+        "If it will rain, we'll stay home.",
+        "If it rains, we stay home.",
+        "If it rained, we'll stay home."
+      ]
+    },
+    {
+      "id": "listen_b1_018",
+      "text": "I have been studying English for two years.",
+      "translation": "Eu estudo inglês há dois anos.",
+      "cefr_level": "B1",
+      "theme": "education",
+      "options": [
+        "I have been studying English for two years.",
+        "I have studied English for two years.",
+        "I am studying English for two years.",
+        "I study English for two years."
+      ]
+    },
+    {
+      "id": "listen_b1_019",
+      "text": "She finds it difficult to wake up early.",
+      "translation": "Ela acha difícil acordar cedo.",
+      "cefr_level": "B1",
+      "theme": "habits",
+      "options": [
+        "She finds it difficult to wake up early.",
+        "She find it difficult to wake up early.",
+        "She finds difficult to wake up early.",
+        "She finds it difficulty to wake up early."
+      ]
+    },
+    {
+      "id": "listen_b1_020",
+      "text": "They decided to cancel the meeting.",
+      "translation": "Eles decidiram cancelar a reunião.",
+      "cefr_level": "B1",
+      "theme": "decisions",
+      "options": [
+        "They decided to cancel the meeting.",
+        "They decide to cancel the meeting.",
+        "They decided cancel the meeting.",
+        "They deciding to cancel the meeting."
+      ]
+    },
+    {
+      "id": "listen_b1_021",
+      "text": "I used to live in a small town.",
+      "translation": "Eu costumava morar em uma cidade pequena.",
+      "cefr_level": "B1",
+      "theme": "past_life",
+      "options": [
+        "I used to live in a small town.",
+        "I use to live in a small town.",
+        "I used live in a small town.",
+        "I was used to live in a small town."
+      ]
+    },
+    {
+      "id": "listen_b1_022",
+      "text": "The book that I read was interesting.",
+      "translation": "O livro que eu li foi interessante.",
+      "cefr_level": "B1",
+      "theme": "reading",
+      "options": [
+        "The book that I read was interesting.",
+        "The book which I read was interesting.",
+        "The book I read was interesting.",
+        "The book that I read were interesting."
+      ]
+    },
+    {
+      "id": "listen_b1_023",
+      "text": "She complained about the noise.",
+      "translation": "Ela reclamou sobre o barulho.",
+      "cefr_level": "B1",
+      "theme": "complaints",
+      "options": [
+        "She complained about the noise.",
+        "She complain about the noise.",
+        "She complained the noise.",
+        "She complaining about the noise."
+      ]
+    },
+    {
+      "id": "listen_b1_024",
+      "text": "I have been waiting here for an hour.",
+      "translation": "Eu estou esperando aqui há uma hora.",
+      "cefr_level": "B1",
+      "theme": "waiting",
+      "options": [
+        "I have been waiting here for an hour.",
+        "I have waited here for an hour.",
+        "I am waiting here for an hour.",
+        "I wait here for an hour."
+      ]
+    },
+    {
+      "id": "listen_b2_015",
+      "text": "The proposal was met with considerable skepticism.",
+      "translation": "A proposta foi recebida com considerável ceticismo.",
+      "cefr_level": "B2",
+      "theme": "reactions",
+      "options": [
+        "The proposal was met with considerable skepticism.",
+        "The proposal was met by considerable skepticism.",
+        "The proposal was met with considerable scepticism.",
+        "The proposal was meet with considerable skepticism."
+      ]
+    },
+    {
+      "id": "listen_b2_016",
+      "text": "Had I known earlier, I would have acted differently.",
+      "translation": "Se eu soubesse antes, teria agido de forma diferente.",
+      "cefr_level": "B2",
+      "theme": "regrets",
+      "options": [
+        "Had I known earlier, I would have acted differently.",
+        "If I had known earlier, I would have acted differently.",
+        "Had I knew earlier, I would have acted differently.",
+        "Had I known earlier, I would acted differently."
+      ]
+    },
+    {
+      "id": "listen_b2_017",
+      "text": "The implications of this decision are profound.",
+      "translation": "As implicações desta decisão são profundas.",
+      "cefr_level": "B2",
+      "theme": "consequences",
+      "options": [
+        "The implications of this decision are profound.",
+        "The implication of this decision are profound.",
+        "The implications of this decision is profound.",
+        "The implications of this decision are profoundly."
+      ]
+    },
+    {
+      "id": "listen_b2_018",
+      "text": "She attributed her success to hard work.",
+      "translation": "Ela atribuiu seu sucesso ao trabalho duro.",
+      "cefr_level": "B2",
+      "theme": "success",
+      "options": [
+        "She attributed her success to hard work.",
+        "She attribute her success to hard work.",
+        "She attributed her success for hard work.",
+        "She attributed her successes to hard work."
+      ]
+    },
+    {
+      "id": "listen_b2_019",
+      "text": "Notwithstanding the obstacles, they persevered.",
+      "translation": "Não obstante os obstáculos, eles perseveraram.",
+      "cefr_level": "B2",
+      "theme": "persistence",
+      "options": [
+        "Notwithstanding the obstacles, they persevered.",
+        "Despite the obstacles, they persevered.",
+        "Although the obstacles, they persevered.",
+        "In spite the obstacles, they persevered."
+      ]
+    },
+    {
+      "id": "listen_b2_020",
+      "text": "The phenomenon warrants further investigation.",
+      "translation": "O fenômeno justifica investigação adicional.",
+      "cefr_level": "B2",
+      "theme": "research",
+      "options": [
+        "The phenomenon warrants further investigation.",
+        "The phenomenon warrant further investigation.",
+        "The phenomena warrants further investigation.",
+        "The phenomenon warrants further investigations."
+      ]
+    },
+    {
+      "id": "listen_b2_021",
+      "text": "She has a propensity for asking questions.",
+      "translation": "Ela tem uma propensão para fazer perguntas.",
+      "cefr_level": "B2",
+      "theme": "character",
+      "options": [
+        "She has a propensity for asking questions.",
+        "She have a propensity for asking questions.",
+        "She has a propensity to asking questions.",
+        "She has propensity for asking questions."
+      ]
+    },
+    {
+      "id": "listen_b2_022",
+      "text": "The discrepancy between theory and practice is evident.",
+      "translation": "A discrepância entre teoria e prática é evidente.",
+      "cefr_level": "B2",
+      "theme": "analysis",
+      "options": [
+        "The discrepancy between theory and practice is evident.",
+        "The discrepancy between theory and practice are evident.",
+        "The discrepancies between theory and practice is evident.",
+        "The discrepancy between theory and practice is evidence."
+      ]
+    },
+    {
+      "id": "listen_b2_023",
+      "text": "He postulated that the results would be inconclusive.",
+      "translation": "Ele postulou que os resultados seriam inconclusivos.",
+      "cefr_level": "B2",
+      "theme": "hypothesis",
+      "options": [
+        "He postulated that the results would be inconclusive.",
+        "He postulate that the results would be inconclusive.",
+        "He postulated the results would be inconclusive.",
+        "He postulated that the results would inconclusive."
+      ]
+    },
+    {
+      "id": "listen_b2_024",
+      "text": "The paradigm shift necessitates reevaluation.",
+      "translation": "A mudança de paradigma necessita reavaliação.",
+      "cefr_level": "B2",
+      "theme": "change",
+      "options": [
+        "The paradigm shift necessitates reevaluation.",
+        "The paradigm shift necessitate reevaluation.",
+        "The paradigm shifts necessitates reevaluation.",
+        "The paradigm shift necessitates reevaluations."
+      ]
+    },
+    {
+      "id": "listen_c1_015",
+      "text": "The juxtaposition of colors creates visual impact.",
+      "translation": "A justaposição de cores cria impacto visual.",
+      "cefr_level": "C1",
+      "theme": "art",
+      "options": [
+        "The juxtaposition of colors creates visual impact.",
+        "The juxtaposition of colours creates visual impact.",
+        "The juxtaposition of colors create visual impact.",
+        "The juxtaposition of colours create visual impact."
+      ]
+    },
+    {
+      "id": "listen_c1_016",
+      "text": "Notwithstanding evidence, skepticism endures.",
+      "translation": "Não obstante evidência, o ceticismo perdura.",
+      "cefr_level": "C1",
+      "theme": "science",
+      "options": [
+        "Notwithstanding evidence, skepticism endures.",
+        "Despite evidence, skepticism endures.",
+        "Although evidence, skepticism endures.",
+        "In spite evidence, skepticism endures."
+      ]
+    },
+    {
+      "id": "listen_c1_017",
+      "text": "The epistemological foundations warrant scrutiny.",
+      "translation": "Os fundamentos epistemológicos justificam escrutínio.",
+      "cefr_level": "C1",
+      "theme": "philosophy",
+      "options": [
+        "The epistemological foundations warrant scrutiny.",
+        "The epistemological foundation warrant scrutiny.",
+        "The epistemological foundations warrants scrutiny.",
+        "The epistemological foundation warrants scrutiny."
+      ]
+    },
+    {
+      "id": "listen_c1_018",
+      "text": "Her eloquence belied apparent nervousness.",
+      "translation": "Sua eloquência contradizia aparente nervosismo.",
+      "cefr_level": "C1",
+      "theme": "character",
+      "options": [
+        "Her eloquence belied apparent nervousness.",
+        "Her eloquence belied apparent nervous.",
+        "Her eloquence belies apparent nervousness.",
+        "Her eloquence belied apparent nervousness."
+      ]
+    },
+    {
+      "id": "listen_c1_019",
+      "text": "The symbiotic relationship engenders evolution.",
+      "translation": "O relacionamento simbiótico engendra evolução.",
+      "cefr_level": "C1",
+      "theme": "sociology",
+      "options": [
+        "The symbiotic relationship engenders evolution.",
+        "The symbiotic relationship engender evolution.",
+        "The symbiotic relationships engenders evolution.",
+        "The symbiotic relationships engender evolution."
+      ]
+    },
+    {
+      "id": "listen_c1_020",
+      "text": "The confluence precipitated unprecedented outcome.",
+      "translation": "A confluência precipitou resultado sem precedentes.",
+      "cefr_level": "C1",
+      "theme": "causation",
+      "options": [
+        "The confluence precipitated unprecedented outcome.",
+        "The confluence precipitate unprecedented outcome.",
+        "The confluences precipitated unprecedented outcome.",
+        "The confluences precipitate unprecedented outcome."
+      ]
+    },
+    {
+      "id": "listen_c1_021",
+      "text": "The paradigm revolutionized interaction methods.",
+      "translation": "O paradigma revolucionou métodos de interação.",
+      "cefr_level": "C1",
+      "theme": "technology",
+      "options": [
+        "The paradigm revolutionized interaction methods.",
+        "The paradigm revolutionize interaction methods.",
+        "The paradigms revolutionized interaction methods.",
+        "The paradigms revolutionize interaction methods."
+      ]
+    },
+    {
+      "id": "listen_c1_022",
+      "text": "Notwithstanding evidence, hypothesis contentious.",
+      "translation": "Não obstante evidência, hipótese controversa.",
+      "cefr_level": "C1",
+      "theme": "science",
+      "options": [
+        "Notwithstanding evidence, hypothesis contentious.",
+        "Despite evidence, hypothesis contentious.",
+        "Although evidence, hypothesis contentious.",
+        "In spite evidence, hypothesis contentious."
+      ]
+    },
+    {
+      "id": "listen_c1_023",
+      "text": "The quintessence resides in interpretation.",
+      "translation": "A quintessência reside na interpretação.",
+      "cefr_level": "C1",
+      "theme": "diplomacy",
+      "options": [
+        "The quintessence resides in interpretation.",
+        "The quintessence reside in interpretation.",
+        "The quintessences resides in interpretation.",
+        "The quintessences reside in interpretation."
+      ]
+    },
+    {
+      "id": "listen_c1_024",
+      "text": "Ramifications extend beyond indicators.",
+      "translation": "Ramificações se estendem além dos indicadores.",
+      "cefr_level": "C1",
+      "theme": "economics",
+      "options": [
+        "Ramifications extend beyond indicators.",
+        "Ramification extend beyond indicators.",
+        "Ramifications extends beyond indicators.",
+        "Ramification extends beyond indicators."
+      ]
+    },
+    {
+      "id": "listen_c2_015",
+      "text": "Epistemological foundations necessitate interrogation.",
+      "translation": "Fundamentos epistemológicos necessitam interrogação.",
+      "cefr_level": "C2",
+      "theme": "philosophy",
+      "options": [
+        "Epistemological foundations necessitate interrogation.",
+        "Epistemological foundation necessitate interrogation.",
+        "Epistemological foundations necessitates interrogation.",
+        "Epistemological foundation necessitates interrogation."
+      ]
+    },
+    {
+      "id": "listen_c2_016",
+      "text": "Symbiotic interrelationship engenders evolution.",
+      "translation": "Inter-relação simbiótica engendra evolução.",
+      "cefr_level": "C2",
+      "theme": "sociology",
+      "options": [
+        "Symbiotic interrelationship engenders evolution.",
+        "Symbiotic interrelationship engender evolution.",
+        "Symbiotic interrelationships engenders evolution.",
+        "Symbiotic interrelationships engender evolution."
+      ]
+    },
+    {
+      "id": "listen_c2_017",
+      "text": "Notwithstanding substantiation, resistance unabated.",
+      "translation": "Não obstante substantiação, resistência inabalável.",
+      "cefr_level": "C2",
+      "theme": "science",
+      "options": [
+        "Notwithstanding substantiation, resistance unabated.",
+        "Despite substantiation, resistance unabated.",
+        "Although substantiation, resistance unabated.",
+        "In spite substantiation, resistance unabated."
+      ]
+    },
+    {
+      "id": "listen_c2_018",
+      "text": "Rhetorical prowess resides in selection.",
+      "translation": "Proeza retórica reside na seleção.",
+      "cefr_level": "C2",
+      "theme": "language",
+      "options": [
+        "Rhetorical prowess resides in selection.",
+        "Rhetorical prowess reside in selection.",
+        "Rhetorical prowesses resides in selection.",
+        "Rhetorical prowesses reside in selection."
+      ]
+    },
+    {
+      "id": "listen_c2_019",
+      "text": "Confluence precipitated metamorphosis.",
+      "translation": "Confluência precipitou metamorfose.",
+      "cefr_level": "C2",
+      "theme": "change",
+      "options": [
+        "Confluence precipitated metamorphosis.",
+        "Confluence precipitate metamorphosis.",
+        "Confluences precipitated metamorphosis.",
+        "Confluences precipitate metamorphosis."
+      ]
+    },
+    {
+      "id": "listen_c2_020",
+      "text": "Interrogation necessitates transcendence.",
+      "translation": "Interrogação necessita transcendência.",
+      "cefr_level": "C2",
+      "theme": "methodology",
+      "options": [
+        "Interrogation necessitates transcendence.",
+        "Interrogation necessitate transcendence.",
+        "Interrogations necessitates transcendence.",
+        "Interrogations necessitate transcendence."
+      ]
     }
   ],
   "reading": [
@@ -878,6 +2466,618 @@
       "cefr_level": "C2",
       "theme": "academic",
       "wordCount": 14
+    },
+    {
+      "id": "read_a1_013",
+      "english": "I am happy.",
+      "portuguese": "Eu estou feliz.",
+      "words": ["I", "am", "happy"],
+      "cefr_level": "A1",
+      "theme": "emotions",
+      "wordCount": 3
+    },
+    {
+      "id": "read_a1_014",
+      "english": "She goes to school.",
+      "portuguese": "Ela vai para a escola.",
+      "words": ["She", "goes", "to", "school"],
+      "cefr_level": "A1",
+      "theme": "education",
+      "wordCount": 4
+    },
+    {
+      "id": "read_a2_013",
+      "english": "I don't understand this word.",
+      "portuguese": "Eu não entendo esta palavra.",
+      "words": ["I", "don't", "understand", "this", "word"],
+      "cefr_level": "A2",
+      "theme": "comprehension",
+      "wordCount": 5
+    },
+    {
+      "id": "read_a2_014",
+      "english": "Can you repeat that, please?",
+      "portuguese": "Você pode repetir isso, por favor?",
+      "words": ["Can", "you", "repeat", "that", "please"],
+      "cefr_level": "A2",
+      "theme": "requests",
+      "wordCount": 5
+    },
+    {
+      "id": "read_b1_013",
+      "english": "I have been working here since 2010.",
+      "portuguese": "Eu trabalho aqui desde 2010.",
+      "words": ["I", "have", "been", "working", "here", "since", "2010"],
+      "cefr_level": "B1",
+      "theme": "experience",
+      "wordCount": 7
+    },
+    {
+      "id": "read_b1_014",
+      "english": "If it rains tomorrow, we'll stay home.",
+      "portuguese": "Se chover amanhã, ficaremos em casa.",
+      "words": ["If", "it", "rains", "tomorrow", "we'll", "stay", "home"],
+      "cefr_level": "B1",
+      "theme": "conditions",
+      "wordCount": 7
+    },
+    {
+      "id": "read_b2_013",
+      "english": "The proposal was rejected due to lack of funding.",
+      "portuguese": "A proposta foi rejeitada devido à falta de financiamento.",
+      "words": ["The", "proposal", "was", "rejected", "due", "to", "lack", "of", "funding"],
+      "cefr_level": "B2",
+      "theme": "business",
+      "wordCount": 9
+    },
+    {
+      "id": "read_b2_014",
+      "english": "Notwithstanding the challenges, we persevered.",
+      "portuguese": "Não obstante os desafios, perseveramos.",
+      "words": ["Notwithstanding", "the", "challenges", "we", "persevered"],
+      "cefr_level": "B2",
+      "theme": "persistence",
+      "wordCount": 5
+    },
+    {
+      "id": "read_c1_013",
+      "english": "The paradigm shift in technology revolutionized communication.",
+      "portuguese": "A mudança de paradigma na tecnologia revolucionou a comunicação.",
+      "words": ["The", "paradigm", "shift", "in", "technology", "revolutionized", "communication"],
+      "cefr_level": "C1",
+      "theme": "technology",
+      "wordCount": 7
+    },
+    {
+      "id": "read_c1_014",
+      "english": "Her eloquence belied her apparent youth.",
+      "portuguese": "Sua eloquência contradizia sua aparente juventude.",
+      "words": ["Her", "eloquence", "belied", "her", "apparent", "youth"],
+      "cefr_level": "C1",
+      "theme": "character",
+      "wordCount": 6
+    },
+    {
+      "id": "read_c2_013",
+      "english": "The epistemological foundations warrant meticulous scrutiny.",
+      "portuguese": "Os fundamentos epistemológicos justificam escrutínio meticuloso.",
+      "words": ["The", "epistemological", "foundations", "warrant", "meticulous", "scrutiny"],
+      "cefr_level": "C2",
+      "theme": "philosophy",
+      "wordCount": 6
+    },
+    {
+      "id": "read_c2_014",
+      "english": "The symbiotic relationship engenders cultural evolution.",
+      "portuguese": "O relacionamento simbiótico engendra evolução cultural.",
+      "words": ["The", "symbiotic", "relationship", "engenders", "cultural", "evolution"],
+      "cefr_level": "C2",
+      "theme": "sociology",
+      "wordCount": 6
+    },
+    {
+      "id": "read_a1_015",
+      "english": "I like music.",
+      "portuguese": "Eu gosto de música.",
+      "words": ["I", "like", "music"],
+      "cefr_level": "A1",
+      "theme": "hobbies",
+      "wordCount": 3
+    },
+    {
+      "id": "read_a1_016",
+      "english": "The table is brown.",
+      "portuguese": "A mesa é marrom.",
+      "words": ["The", "table", "is", "brown"],
+      "cefr_level": "A1",
+      "theme": "furniture",
+      "wordCount": 4
+    },
+    {
+      "id": "read_a1_017",
+      "english": "They watch TV.",
+      "portuguese": "Eles assistem TV.",
+      "words": ["They", "watch", "TV"],
+      "cefr_level": "A1",
+      "theme": "entertainment",
+      "wordCount": 3
+    },
+    {
+      "id": "read_a1_018",
+      "english": "My mother cooks dinner.",
+      "portuguese": "Minha mãe cozinha jantar.",
+      "words": ["My", "mother", "cooks", "dinner"],
+      "cefr_level": "A1",
+      "theme": "family",
+      "wordCount": 4
+    },
+    {
+      "id": "read_a1_019",
+      "english": "The sky is clear.",
+      "portuguese": "O céu está claro.",
+      "words": ["The", "sky", "is", "clear"],
+      "cefr_level": "A1",
+      "theme": "weather",
+      "wordCount": 4
+    },
+    {
+      "id": "read_a1_020",
+      "english": "We need water.",
+      "portuguese": "Nós precisamos de água.",
+      "words": ["We", "need", "water"],
+      "cefr_level": "A1",
+      "theme": "necessities",
+      "wordCount": 3
+    },
+    {
+      "id": "read_a1_021",
+      "english": "The phone rings.",
+      "portuguese": "O telefone toca.",
+      "words": ["The", "phone", "rings"],
+      "cefr_level": "A1",
+      "theme": "communication",
+      "wordCount": 3
+    },
+    {
+      "id": "read_a1_022",
+      "english": "She reads books.",
+      "portuguese": "Ela lê livros.",
+      "words": ["She", "reads", "books"],
+      "cefr_level": "A1",
+      "theme": "reading",
+      "wordCount": 3
+    },
+    {
+      "id": "read_a1_023",
+      "english": "The door is open.",
+      "portuguese": "A porta está aberta.",
+      "words": ["The", "door", "is", "open"],
+      "cefr_level": "A1",
+      "theme": "home",
+      "wordCount": 4
+    },
+    {
+      "id": "read_a1_024",
+      "english": "I want coffee.",
+      "portuguese": "Eu quero café.",
+      "words": ["I", "want", "coffee"],
+      "cefr_level": "A1",
+      "theme": "drinks",
+      "wordCount": 3
+    },
+    {
+      "id": "read_a2_015",
+      "english": "I didn't see him yesterday.",
+      "portuguese": "Eu não o vi ontem.",
+      "words": ["I", "didn't", "see", "him", "yesterday"],
+      "cefr_level": "A2",
+      "theme": "past_events",
+      "wordCount": 5
+    },
+    {
+      "id": "read_a2_016",
+      "english": "She is wearing a red dress.",
+      "portuguese": "Ela está vestindo um vestido vermelho.",
+      "words": ["She", "is", "wearing", "a", "red", "dress"],
+      "cefr_level": "A2",
+      "theme": "clothing",
+      "wordCount": 6
+    },
+    {
+      "id": "read_a2_017",
+      "english": "Do you have any plans for tonight?",
+      "portuguese": "Você tem planos para hoje à noite?",
+      "words": ["Do", "you", "have", "any", "plans", "for", "tonight"],
+      "cefr_level": "A2",
+      "theme": "plans",
+      "wordCount": 7
+    },
+    {
+      "id": "read_a2_018",
+      "english": "I have never been to Japan.",
+      "portuguese": "Eu nunca fui ao Japão.",
+      "words": ["I", "have", "never", "been", "to", "Japan"],
+      "cefr_level": "A2",
+      "theme": "travel",
+      "wordCount": 6
+    },
+    {
+      "id": "read_a2_019",
+      "english": "They are not coming to the party.",
+      "portuguese": "Eles não vêm à festa.",
+      "words": ["They", "are", "not", "coming", "to", "the", "party"],
+      "cefr_level": "A2",
+      "theme": "social",
+      "wordCount": 7
+    },
+    {
+      "id": "read_a2_020",
+      "english": "Can you help me with this?",
+      "portuguese": "Você pode me ajudar com isso?",
+      "words": ["Can", "you", "help", "me", "with", "this"],
+      "cefr_level": "A2",
+      "theme": "requests",
+      "wordCount": 6
+    },
+    {
+      "id": "read_a2_021",
+      "english": "I usually go to bed at 11 PM.",
+      "portuguese": "Eu geralmente vou para a cama às 11 da noite.",
+      "words": ["I", "usually", "go", "to", "bed", "at", "11", "PM"],
+      "cefr_level": "A2",
+      "theme": "routines",
+      "wordCount": 8
+    },
+    {
+      "id": "read_a2_022",
+      "english": "She has already finished her homework.",
+      "portuguese": "Ela já terminou a lição de casa.",
+      "words": ["She", "has", "already", "finished", "her", "homework"],
+      "cefr_level": "A2",
+      "theme": "school",
+      "wordCount": 6
+    },
+    {
+      "id": "read_a2_023",
+      "english": "Are you interested in music?",
+      "portuguese": "Você está interessado em música?",
+      "words": ["Are", "you", "interested", "in", "music"],
+      "cefr_level": "A2",
+      "theme": "interests",
+      "wordCount": 5
+    },
+    {
+      "id": "read_a2_024",
+      "english": "I need to buy some groceries.",
+      "portuguese": "Eu preciso comprar mantimentos.",
+      "words": ["I", "need", "to", "buy", "some", "groceries"],
+      "cefr_level": "A2",
+      "theme": "shopping",
+      "wordCount": 6
+    },
+    {
+      "id": "read_b1_015",
+      "english": "I wish I could travel more often.",
+      "portuguese": "Eu gostaria de poder viajar mais vezes.",
+      "words": ["I", "wish", "I", "could", "travel", "more", "often"],
+      "cefr_level": "B1",
+      "theme": "wishes",
+      "wordCount": 7
+    },
+    {
+      "id": "read_b1_016",
+      "english": "She apologized for arriving late.",
+      "portuguese": "Ela se desculpou por chegar atrasada.",
+      "words": ["She", "apologized", "for", "arriving", "late"],
+      "cefr_level": "B1",
+      "theme": "apologies",
+      "wordCount": 5
+    },
+    {
+      "id": "read_b1_017",
+      "english": "If it doesn't rain, we'll go hiking.",
+      "portuguese": "Se não chover, iremos caminhar.",
+      "words": ["If", "it", "doesn't", "rain", "we'll", "go", "hiking"],
+      "cefr_level": "B1",
+      "theme": "conditions",
+      "wordCount": 7
+    },
+    {
+      "id": "read_b1_018",
+      "english": "I have been living here for five years.",
+      "portuguese": "Eu moro aqui há cinco anos.",
+      "words": ["I", "have", "been", "living", "here", "for", "five", "years"],
+      "cefr_level": "B1",
+      "theme": "duration",
+      "wordCount": 8
+    },
+    {
+      "id": "read_b1_019",
+      "english": "He finds it hard to concentrate.",
+      "portuguese": "Ele acha difícil se concentrar.",
+      "words": ["He", "finds", "it", "hard", "to", "concentrate"],
+      "cefr_level": "B1",
+      "theme": "difficulties",
+      "wordCount": 6
+    },
+    {
+      "id": "read_b1_020",
+      "english": "They decided to postpone the event.",
+      "portuguese": "Eles decidiram adiar o evento.",
+      "words": ["They", "decided", "to", "postpone", "the", "event"],
+      "cefr_level": "B1",
+      "theme": "decisions",
+      "wordCount": 6
+    },
+    {
+      "id": "read_b1_021",
+      "english": "I used to play tennis every weekend.",
+      "portuguese": "Eu costumava jogar tênis todo fim de semana.",
+      "words": ["I", "used", "to", "play", "tennis", "every", "weekend"],
+      "cefr_level": "B1",
+      "theme": "past_habits",
+      "wordCount": 7
+    },
+    {
+      "id": "read_b1_022",
+      "english": "The movie that we saw was excellent.",
+      "portuguese": "O filme que vimos foi excelente.",
+      "words": ["The", "movie", "that", "we", "saw", "was", "excellent"],
+      "cefr_level": "B1",
+      "theme": "entertainment",
+      "wordCount": 7
+    },
+    {
+      "id": "read_b1_023",
+      "english": "She complained about the poor service.",
+      "portuguese": "Ela reclamou sobre o serviço ruim.",
+      "words": ["She", "complained", "about", "the", "poor", "service"],
+      "cefr_level": "B1",
+      "theme": "complaints",
+      "wordCount": 6
+    },
+    {
+      "id": "read_b1_024",
+      "english": "I have been waiting for twenty minutes.",
+      "portuguese": "Eu estou esperando há vinte minutos.",
+      "words": ["I", "have", "been", "waiting", "for", "twenty", "minutes"],
+      "cefr_level": "B1",
+      "theme": "waiting",
+      "wordCount": 7
+    },
+    {
+      "id": "read_b2_015",
+      "english": "The proposal was rejected due to insufficient funding.",
+      "portuguese": "A proposta foi rejeitada devido a financiamento insuficiente.",
+      "words": ["The", "proposal", "was", "rejected", "due", "to", "insufficient", "funding"],
+      "cefr_level": "B2",
+      "theme": "business",
+      "wordCount": 8
+    },
+    {
+      "id": "read_b2_016",
+      "english": "Had I known earlier, I would have acted differently.",
+      "portuguese": "Se eu soubesse antes, teria agido de forma diferente.",
+      "words": ["Had", "I", "known", "earlier", "I", "would", "have", "acted", "differently"],
+      "cefr_level": "B2",
+      "theme": "regrets",
+      "wordCount": 9
+    },
+    {
+      "id": "read_b2_017",
+      "english": "The implications of this discovery are far-reaching.",
+      "portuguese": "As implicações desta descoberta são de longo alcance.",
+      "words": ["The", "implications", "of", "this", "discovery", "are", "far-reaching"],
+      "cefr_level": "B2",
+      "theme": "science",
+      "wordCount": 7
+    },
+    {
+      "id": "read_b2_018",
+      "english": "She attributed her success to perseverance.",
+      "portuguese": "Ela atribuiu seu sucesso à perseverança.",
+      "words": ["She", "attributed", "her", "success", "to", "perseverance"],
+      "cefr_level": "B2",
+      "theme": "success",
+      "wordCount": 6
+    },
+    {
+      "id": "read_b2_019",
+      "english": "Notwithstanding the difficulties, we succeeded.",
+      "portuguese": "Não obstante as dificuldades, tivemos sucesso.",
+      "words": ["Notwithstanding", "the", "difficulties", "we", "succeeded"],
+      "cefr_level": "B2",
+      "theme": "achievement",
+      "wordCount": 5
+    },
+    {
+      "id": "read_b2_020",
+      "english": "The phenomenon warrants further investigation.",
+      "portuguese": "O fenômeno justifica investigação adicional.",
+      "words": ["The", "phenomenon", "warrants", "further", "investigation"],
+      "cefr_level": "B2",
+      "theme": "research",
+      "wordCount": 5
+    },
+    {
+      "id": "read_b2_021",
+      "english": "She has a propensity for creative thinking.",
+      "portuguese": "Ela tem uma propensão para pensamento criativo.",
+      "words": ["She", "has", "a", "propensity", "for", "creative", "thinking"],
+      "cefr_level": "B2",
+      "theme": "character",
+      "wordCount": 7
+    },
+    {
+      "id": "read_b2_022",
+      "english": "The discrepancy between theory and practice is apparent.",
+      "portuguese": "A discrepância entre teoria e prática é aparente.",
+      "words": ["The", "discrepancy", "between", "theory", "and", "practice", "is", "apparent"],
+      "cefr_level": "B2",
+      "theme": "analysis",
+      "wordCount": 8
+    },
+    {
+      "id": "read_b2_023",
+      "english": "He postulated that the experiment would fail.",
+      "portuguese": "Ele postulou que o experimento falharia.",
+      "words": ["He", "postulated", "that", "the", "experiment", "would", "fail"],
+      "cefr_level": "B2",
+      "theme": "hypothesis",
+      "wordCount": 7
+    },
+    {
+      "id": "read_b2_024",
+      "english": "The paradigm shift requires methodological adaptation.",
+      "portuguese": "A mudança de paradigma requer adaptação metodológica.",
+      "words": ["The", "paradigm", "shift", "requires", "methodological", "adaptation"],
+      "cefr_level": "B2",
+      "theme": "change",
+      "wordCount": 6
+    },
+    {
+      "id": "read_c1_015",
+      "english": "The juxtaposition of tradition and modernity creates synthesis.",
+      "portuguese": "A justaposição de tradição e modernidade cria síntese.",
+      "words": ["The", "juxtaposition", "of", "tradition", "and", "modernity", "creates", "synthesis"],
+      "cefr_level": "C1",
+      "theme": "culture",
+      "wordCount": 8
+    },
+    {
+      "id": "read_c1_016",
+      "english": "Notwithstanding empirical evidence, skepticism prevails.",
+      "portuguese": "Não obstante evidência empírica, o ceticismo prevalece.",
+      "words": ["Notwithstanding", "empirical", "evidence", "skepticism", "prevails"],
+      "cefr_level": "C1",
+      "theme": "science",
+      "wordCount": 5
+    },
+    {
+      "id": "read_c1_017",
+      "english": "The epistemological foundations warrant meticulous examination.",
+      "portuguese": "Os fundamentos epistemológicos justificam exame meticuloso.",
+      "words": ["The", "epistemological", "foundations", "warrant", "meticulous", "examination"],
+      "cefr_level": "C1",
+      "theme": "philosophy",
+      "wordCount": 6
+    },
+    {
+      "id": "read_c1_018",
+      "english": "Her rhetorical dexterity belied apparent timidity.",
+      "portuguese": "Sua destreza retórica contradizia aparente timidez.",
+      "words": ["Her", "rhetorical", "dexterity", "belied", "apparent", "timidity"],
+      "cefr_level": "C1",
+      "theme": "communication",
+      "wordCount": 6
+    },
+    {
+      "id": "read_c1_019",
+      "english": "The symbiotic nexus engenders cultural metamorphosis.",
+      "portuguese": "O nexus simbiótico engendra metamorfose cultural.",
+      "words": ["The", "symbiotic", "nexus", "engenders", "cultural", "metamorphosis"],
+      "cefr_level": "C1",
+      "theme": "sociology",
+      "wordCount": 6
+    },
+    {
+      "id": "read_c1_020",
+      "english": "The confluence of determinants precipitated paradigm shift.",
+      "portuguese": "A confluência de determinantes precipitou mudança de paradigma.",
+      "words": ["The", "confluence", "of", "determinants", "precipitated", "paradigm", "shift"],
+      "cefr_level": "C1",
+      "theme": "change",
+      "wordCount": 7
+    },
+    {
+      "id": "read_c1_021",
+      "english": "The paradigm revolutionized interaction paradigms.",
+      "portuguese": "O paradigma revolucionou paradigmas de interação.",
+      "words": ["The", "paradigm", "revolutionized", "interaction", "paradigms"],
+      "cefr_level": "C1",
+      "theme": "technology",
+      "wordCount": 5
+    },
+    {
+      "id": "read_c1_022",
+      "english": "Notwithstanding substantial corroboration, dissent persists.",
+      "portuguese": "Não obstante corroboração substancial, dissensão persiste.",
+      "words": ["Notwithstanding", "substantial", "corroboration", "dissent", "persists"],
+      "cefr_level": "C1",
+      "theme": "debate",
+      "wordCount": 5
+    },
+    {
+      "id": "read_c1_023",
+      "english": "The quintessence of diplomacy resides in nuance.",
+      "portuguese": "A quintessência da diplomacia reside na nuance.",
+      "words": ["The", "quintessence", "of", "diplomacy", "resides", "in", "nuance"],
+      "cefr_level": "C1",
+      "theme": "politics",
+      "wordCount": 7
+    },
+    {
+      "id": "read_c1_024",
+      "english": "Ramifications emanating transcend conventional boundaries.",
+      "portuguese": "Ramificações emanando transcendem fronteiras convencionais.",
+      "words": ["Ramifications", "emanating", "transcend", "conventional", "boundaries"],
+      "cefr_level": "C1",
+      "theme": "consequences",
+      "wordCount": 5
+    },
+    {
+      "id": "read_c2_015",
+      "english": "Epistemological interrogation necessitates methodological transcendence.",
+      "portuguese": "Interrogação epistemológica necessita transcendência metodológica.",
+      "words": ["Epistemological", "interrogation", "necessitates", "methodological", "transcendence"],
+      "cefr_level": "C2",
+      "theme": "philosophy",
+      "wordCount": 5
+    },
+    {
+      "id": "read_c2_016",
+      "english": "Symbiotic interrelationships engender multifaceted evolution.",
+      "portuguese": "Inter-relações simbióticas engendra evolução multifacetada.",
+      "words": ["Symbiotic", "interrelationships", "engender", "multifaceted", "evolution"],
+      "cefr_level": "C2",
+      "theme": "sociology",
+      "wordCount": 5
+    },
+    {
+      "id": "read_c2_017",
+      "english": "Notwithstanding incontrovertible substantiation, paradigmatic resistance endures.",
+      "portuguese": "Não obstante substantiação incontrovertível, resistência paradigmática perdura.",
+      "words": ["Notwithstanding", "incontrovertible", "substantiation", "paradigmatic", "resistance", "endures"],
+      "cefr_level": "C2",
+      "theme": "science",
+      "wordCount": 6
+    },
+    {
+      "id": "read_c2_018",
+      "english": "Quintessential rhetorical manifestations reside in lexical perspicacity.",
+      "portuguese": "Manifestações retóricas quintessenciais residem na perspicácia lexical.",
+      "words": ["Quintessential", "rhetorical", "manifestations", "reside", "in", "lexical", "perspicacity"],
+      "cefr_level": "C2",
+      "theme": "language",
+      "wordCount": 7
+    },
+    {
+      "id": "read_c2_019",
+      "english": "Confluence precipitated unprecedented paradigmatic metamorphosis.",
+      "portuguese": "Confluência precipitou metamorfose paradigmática sem precedentes.",
+      "words": ["Confluence", "precipitated", "unprecedented", "paradigmatic", "metamorphosis"],
+      "cefr_level": "C2",
+      "theme": "change",
+      "wordCount": 5
+    },
+    {
+      "id": "read_c2_020",
+      "english": "Epistemological scrutiny necessitates methodological paradigm transcendence.",
+      "portuguese": "Escrutínio epistemológico necessita transcendência de paradigma metodológico.",
+      "words": ["Epistemological", "scrutiny", "necessitates", "methodological", "paradigm", "transcendence"],
+      "cefr_level": "C2",
+      "theme": "methodology",
+      "wordCount": 6
     }
   ],
   "writing_translate": [
@@ -976,8 +3176,392 @@
       "cefr_level": "C2",
       "theme": "academic",
       "acceptedVariations": ["The paradigm shift necessitates a comprehensive reevaluation of our methodologies", "The paradigm shift requires a comprehensive reevaluation of our methodologies"]
-    }
-  ],
+    },
+    {
+      "id": "write_trans_a1_013",
+      "portuguese": "O céu é azul.",
+      "english": "The sky is blue.",
+      "cefr_level": "A1",
+      "theme": "nature",
+      "acceptedVariations": ["The sky is blue"]
+    },
+     {
+       "id": "write_trans_a1_014",
+       "portuguese": "Ela é minha amiga.",
+       "english": "She is my friend.",
+       "cefr_level": "A1",
+       "theme": "relationships",
+       "acceptedVariations": ["She is my friend", "She's my friend"]
+     },
+     {
+       "id": "write_trans_a1_015",
+       "portuguese": "O livro é interessante.",
+       "english": "The book is interesting.",
+       "cefr_level": "A1",
+       "theme": "reading",
+       "acceptedVariations": ["The book is interesting"]
+     },
+     {
+       "id": "write_trans_a1_016",
+       "portuguese": "Eu trabalho em um escritório.",
+       "english": "I work in an office.",
+       "cefr_level": "A1",
+       "theme": "work",
+       "acceptedVariations": ["I work in an office"]
+     },
+     {
+       "id": "write_trans_a1_017",
+       "portuguese": "Ele gosta de música.",
+       "english": "He likes music.",
+       "cefr_level": "A1",
+       "theme": "hobbies",
+       "acceptedVariations": ["He likes music"]
+     },
+     {
+       "id": "write_trans_a1_018",
+       "portuguese": "Nós moramos em uma casa.",
+       "english": "We live in a house.",
+       "cefr_level": "A1",
+       "theme": "home",
+       "acceptedVariations": ["We live in a house"]
+     },
+     {
+       "id": "write_trans_a1_019",
+       "portuguese": "O cachorro é pequeno.",
+       "english": "The dog is small.",
+       "cefr_level": "A1",
+       "theme": "pets",
+       "acceptedVariations": ["The dog is small"]
+     },
+     {
+       "id": "write_trans_a1_020",
+       "portuguese": "Ela bebe água.",
+       "english": "She drinks water.",
+       "cefr_level": "A1",
+       "theme": "drinks",
+       "acceptedVariations": ["She drinks water"]
+     },
+    {
+      "id": "write_trans_a2_013",
+      "portuguese": "Eu não gosto de chocolate.",
+      "english": "I don't like chocolate.",
+      "cefr_level": "A2",
+      "theme": "preferences",
+      "acceptedVariations": ["I don't like chocolate", "I do not like chocolate"]
+    },
+     {
+       "id": "write_trans_a2_014",
+       "portuguese": "Você pode me ajudar?",
+       "english": "Can you help me?",
+       "cefr_level": "A2",
+       "theme": "requests",
+       "acceptedVariations": ["Can you help me?", "Can you help me"]
+     },
+     {
+       "id": "write_trans_a2_015",
+       "portuguese": "Eu não gosto de café.",
+       "english": "I don't like coffee.",
+       "cefr_level": "A2",
+       "theme": "preferences",
+       "acceptedVariations": ["I don't like coffee", "I do not like coffee"]
+     },
+     {
+       "id": "write_trans_a2_016",
+       "portuguese": "Ela tem dois irmãos.",
+       "english": "She has two brothers.",
+       "cefr_level": "A2",
+       "theme": "family",
+       "acceptedVariations": ["She has two brothers"]
+     },
+     {
+       "id": "write_trans_a2_017",
+       "portuguese": "Nós vamos ao cinema amanhã.",
+       "english": "We are going to the cinema tomorrow.",
+       "cefr_level": "A2",
+       "theme": "plans",
+       "acceptedVariations": ["We are going to the cinema tomorrow", "We're going to the cinema tomorrow", "We will go to the cinema tomorrow"]
+     },
+     {
+       "id": "write_trans_a2_018",
+       "portuguese": "Ele está comendo pizza agora.",
+       "english": "He is eating pizza now.",
+       "cefr_level": "A2",
+       "theme": "food",
+       "acceptedVariations": ["He is eating pizza now", "He's eating pizza now"]
+     },
+     {
+       "id": "write_trans_a2_019",
+       "portuguese": "Você tem um carro?",
+       "english": "Do you have a car?",
+       "cefr_level": "A2",
+       "theme": "possessions",
+       "acceptedVariations": ["Do you have a car?"]
+     },
+     {
+       "id": "write_trans_a2_020",
+       "portuguese": "Eu vejo televisão todas as noites.",
+       "english": "I watch television every night.",
+       "cefr_level": "A2",
+       "theme": "routines",
+       "acceptedVariations": ["I watch television every night", "I watch TV every night"]
+     },
+     {
+       "id": "write_trans_b1_013",
+      "portuguese": "Eu tenho trabalhado aqui há dois anos.",
+      "english": "I have been working here for two years.",
+      "cefr_level": "B1",
+      "theme": "experience",
+      "acceptedVariations": ["I have been working here for two years", "I've been working here for two years"]
+    },
+     {
+       "id": "write_trans_b1_014",
+       "portuguese": "Se eu fosse rico, compraria uma casa grande.",
+       "english": "If I were rich, I would buy a big house.",
+       "cefr_level": "B1",
+       "theme": "hypothetical",
+       "acceptedVariations": ["If I were rich, I would buy a big house", "If I was rich, I would buy a big house"]
+     },
+     {
+       "id": "write_trans_b1_015",
+       "portuguese": "Eu tenho estudado francês há seis meses.",
+       "english": "I have been studying French for six months.",
+       "cefr_level": "B1",
+       "theme": "education",
+       "acceptedVariations": ["I have been studying French for six months", "I've been studying French for six months"]
+     },
+     {
+       "id": "write_trans_b1_016",
+       "portuguese": "Ela se desculpou por chegar atrasada.",
+       "english": "She apologized for arriving late.",
+       "cefr_level": "B1",
+       "theme": "apologies",
+       "acceptedVariations": ["She apologized for arriving late", "She apologised for arriving late"]
+     },
+     {
+       "id": "write_trans_b1_017",
+       "portuguese": "A menos que melhore o tempo, ficaremos em casa.",
+       "english": "Unless the weather improves, we will stay home.",
+       "cefr_level": "B1",
+       "theme": "weather",
+       "acceptedVariations": ["Unless the weather improves, we will stay home", "Unless the weather improves, we'll stay home"]
+     },
+     {
+       "id": "write_trans_b1_018",
+       "portuguese": "O filme que vimos ontem foi excelente.",
+       "english": "The movie that we saw yesterday was excellent.",
+       "cefr_level": "B1",
+       "theme": "entertainment",
+       "acceptedVariations": ["The movie that we saw yesterday was excellent", "The film that we saw yesterday was excellent"]
+     },
+     {
+       "id": "write_trans_b1_019",
+       "portuguese": "Eu acho difícil acordar cedo de manhã.",
+       "english": "I find it difficult to wake up early in the morning.",
+       "cefr_level": "B1",
+       "theme": "habits",
+       "acceptedVariations": ["I find it difficult to wake up early in the morning", "I find it hard to wake up early in the morning"]
+     },
+     {
+       "id": "write_trans_b1_020",
+       "portuguese": "Eles decidiram adiar a reunião até a próxima semana.",
+       "english": "They decided to postpone the meeting until next week.",
+       "cefr_level": "B1",
+       "theme": "decisions",
+       "acceptedVariations": ["They decided to postpone the meeting until next week", "They decided to delay the meeting until next week"]
+     },
+     {
+       "id": "write_trans_b2_013",
+      "portuguese": "A proposta foi rejeitada devido à falta de fundos.",
+      "english": "The proposal was rejected due to lack of funds.",
+      "cefr_level": "B2",
+      "theme": "business",
+      "acceptedVariations": ["The proposal was rejected due to lack of funds", "The proposal was rejected because of lack of funds"]
+    },
+     {
+       "id": "write_trans_b2_014",
+       "portuguese": "Não obstante as dificuldades, conseguimos.",
+       "english": "Notwithstanding the difficulties, we succeeded.",
+       "cefr_level": "B2",
+       "theme": "success",
+       "acceptedVariations": ["Notwithstanding the difficulties, we succeeded", "Despite the difficulties, we succeeded"]
+     },
+     {
+       "id": "write_trans_b2_015",
+       "portuguese": "A empresa tem expandido suas operações globalmente.",
+       "english": "The company has been expanding its operations globally.",
+       "cefr_level": "B2",
+       "theme": "business",
+       "acceptedVariations": ["The company has been expanding its operations globally", "The company has expanded its operations globally"]
+     },
+     {
+       "id": "write_trans_b2_016",
+       "portuguese": "Ela atribuiu seu sucesso ao trabalho duro.",
+       "english": "She attributed her success to hard work.",
+       "cefr_level": "B2",
+       "theme": "success",
+       "acceptedVariations": ["She attributed her success to hard work"]
+     },
+     {
+       "id": "write_trans_b2_017",
+       "portuguese": "As implicações desta decisão são de longo alcance.",
+       "english": "The implications of this decision are far-reaching.",
+       "cefr_level": "B2",
+       "theme": "consequences",
+       "acceptedVariations": ["The implications of this decision are far-reaching", "The implications of this decision are far reaching"]
+     },
+     {
+       "id": "write_trans_b2_018",
+       "portuguese": "Ele postulou que os resultados seriam inconclusivos.",
+       "english": "He postulated that the results would be inconclusive.",
+       "cefr_level": "B2",
+       "theme": "hypothesis",
+       "acceptedVariations": ["He postulated that the results would be inconclusive"]
+     },
+     {
+       "id": "write_trans_b2_019",
+       "portuguese": "Ela tem uma propensão para fazer perguntas pertinentes.",
+       "english": "She has a propensity for asking pertinent questions.",
+       "cefr_level": "B2",
+       "theme": "character",
+       "acceptedVariations": ["She has a propensity for asking pertinent questions", "She has a tendency for asking pertinent questions"]
+     },
+     {
+       "id": "write_trans_b2_020",
+       "portuguese": "O fenômeno justifica investigação adicional.",
+       "english": "The phenomenon warrants further investigation.",
+       "cefr_level": "B2",
+       "theme": "research",
+       "acceptedVariations": ["The phenomenon warrants further investigation"]
+     },
+     {
+       "id": "write_trans_c1_013",
+      "portuguese": "A justaposição de cores cria um efeito visual impressionante.",
+      "english": "The juxtaposition of colors creates a striking visual effect.",
+      "cefr_level": "C1",
+      "theme": "art",
+      "acceptedVariations": ["The juxtaposition of colors creates a striking visual effect", "The juxtaposition of colours creates a striking visual effect"]
+    },
+     {
+       "id": "write_trans_c1_014",
+       "portuguese": "Sua eloquência contradizia sua aparente juventude.",
+       "english": "Her eloquence belied her apparent youth.",
+       "cefr_level": "C1",
+       "theme": "character",
+       "acceptedVariations": ["Her eloquence belied her apparent youth", "Her eloquence contradicted her apparent youth"]
+     },
+     {
+       "id": "write_trans_c1_015",
+       "portuguese": "A legislação, embora controversa, representa progresso significativo.",
+       "english": "The legislation, albeit controversial, represents significant progress.",
+       "cefr_level": "C1",
+       "theme": "politics",
+       "acceptedVariations": ["The legislation, albeit controversial, represents significant progress", "The legislation, although controversial, represents significant progress"]
+     },
+     {
+       "id": "write_trans_c1_016",
+       "portuguese": "Não obstante evidência empírica, o ceticismo prevalece.",
+       "english": "Notwithstanding empirical evidence, skepticism prevails.",
+       "cefr_level": "C1",
+       "theme": "science",
+       "acceptedVariations": ["Notwithstanding empirical evidence, skepticism prevails", "Despite empirical evidence, skepticism prevails"]
+     },
+     {
+       "id": "write_trans_c1_017",
+       "portuguese": "Os fundamentos epistemológicos justificam exame meticuloso.",
+       "english": "The epistemological foundations warrant meticulous examination.",
+       "cefr_level": "C1",
+       "theme": "philosophy",
+       "acceptedVariations": ["The epistemological foundations warrant meticulous examination", "The epistemological foundations require meticulous examination"]
+     },
+     {
+       "id": "write_trans_c1_018",
+       "portuguese": "Sua destreza retórica contradizia aparente timidez.",
+       "english": "Her rhetorical dexterity belied apparent timidity.",
+       "cefr_level": "C1",
+       "theme": "communication",
+       "acceptedVariations": ["Her rhetorical dexterity belied apparent timidity", "Her rhetorical dexterity contradicted apparent timidity"]
+     },
+     {
+       "id": "write_trans_c1_019",
+       "portuguese": "O nexus simbiótico engendra metamorfose cultural.",
+       "english": "The symbiotic nexus engenders cultural metamorphosis.",
+       "cefr_level": "C1",
+       "theme": "sociology",
+       "acceptedVariations": ["The symbiotic nexus engenders cultural metamorphosis", "The symbiotic nexus generates cultural metamorphosis"]
+     },
+     {
+       "id": "write_trans_c1_020",
+       "portuguese": "A confluência de determinantes precipitou mudança paradigmática.",
+       "english": "The confluence of determinants precipitated paradigm shift.",
+       "cefr_level": "C1",
+       "theme": "change",
+       "acceptedVariations": ["The confluence of determinants precipitated paradigm shift", "The confluence of determinants caused paradigm shift"]
+     },
+     {
+       "id": "write_trans_c2_013",
+      "portuguese": "Os fundamentos epistemológicos justificam escrutínio meticuloso.",
+      "english": "The epistemological foundations warrant meticulous scrutiny.",
+      "cefr_level": "C2",
+      "theme": "philosophy",
+      "acceptedVariations": ["The epistemological foundations warrant meticulous scrutiny", "The epistemological foundations require meticulous scrutiny"]
+    },
+     {
+       "id": "write_trans_c2_014",
+       "portuguese": "O relacionamento simbiótico engendra evolução cultural.",
+       "english": "The symbiotic relationship engenders cultural evolution.",
+       "cefr_level": "C2",
+       "theme": "sociology",
+       "acceptedVariations": ["The symbiotic relationship engenders cultural evolution", "The symbiotic relationship generates cultural evolution"]
+     },
+     {
+       "id": "write_trans_c2_015",
+       "portuguese": "As ramificações desta decisão ainda não foram totalmente compreendidas.",
+       "english": "The ramifications of this decision have yet to be fully understood.",
+       "cefr_level": "C2",
+       "theme": "decision_making",
+       "acceptedVariations": ["The ramifications of this decision have yet to be fully understood", "The ramifications of this decision are yet to be fully understood"]
+     },
+     {
+       "id": "write_trans_c2_016",
+       "portuguese": "A mudança de paradigma exige reavaliação metodológica abrangente.",
+       "english": "The paradigm shift necessitates comprehensive methodological reevaluation.",
+       "cefr_level": "C2",
+       "theme": "academic",
+       "acceptedVariations": ["The paradigm shift necessitates comprehensive methodological reevaluation", "The paradigm shift requires comprehensive methodological reevaluation"]
+     },
+     {
+       "id": "write_trans_c2_017",
+       "portuguese": "Tão profundas são essas implicações que reavaliação se torna imperativa.",
+       "english": "So profound are these implications that reassessment becomes imperative.",
+       "cefr_level": "C2",
+       "theme": "analysis",
+       "acceptedVariations": ["So profound are these implications that reassessment becomes imperative", "These implications are so profound that reassessment becomes imperative"]
+     },
+     {
+       "id": "write_trans_c2_018",
+       "portuguese": "Pouco anteciparam os observadores o impacto transformador dessas descobertas.",
+       "english": "Little did observers anticipate the transformative impact of these discoveries.",
+       "cefr_level": "C2",
+       "theme": "research",
+       "acceptedVariations": ["Little did observers anticipate the transformative impact of these discoveries", "Observers little anticipated the transformative impact of these discoveries"]
+     },
+     {
+       "id": "write_trans_c2_019",
+       "portuguese": "As implicações epistemológicas justificam exame interdisciplinar rigoroso.",
+       "english": "The epistemological implications warrant rigorous interdisciplinary examination.",
+       "cefr_level": "C2",
+       "theme": "academic",
+       "acceptedVariations": ["The epistemological implications warrant rigorous interdisciplinary examination", "The epistemological implications require rigorous interdisciplinary examination"]
+     },
+     {
+       "id": "write_trans_c2_020",
+       "portuguese": "Não obstante obstáculos substanciais, a iniciativa gerou resultados significativos.",
+       "english": "Notwithstanding substantial obstacles, the initiative yielded remarkably significant outcomes.",
+       "cefr_level": "C2",
+       "theme": "projects",
+       "acceptedVariations": ["Notwithstanding substantial obstacles, the initiative yielded remarkably significant outcomes", "Despite substantial obstacles, the initiative yielded remarkably significant outcomes"]
+     }
+   ],
   "writing_order": [
     {
       "id": "write_order_a1_003",
@@ -1248,6 +3832,276 @@
       "cefr_level": "C2",
       "theme": "projects",
       "wordCount": 9
-    }
-  ]
+    },
+    {
+      "id": "write_order_a1_013",
+      "english": "I like apples.",
+      "portuguese": "Eu gosto de maçãs.",
+      "words": ["I", "like", "apples"],
+      "cefr_level": "A1",
+      "theme": "food",
+      "wordCount": 3
+    },
+     {
+       "id": "write_order_a1_014",
+       "english": "She is tall.",
+       "portuguese": "Ela é alta.",
+       "words": ["She", "is", "tall"],
+       "cefr_level": "A1",
+       "theme": "descriptions",
+       "wordCount": 3
+     },
+     {
+       "id": "write_order_a1_015",
+       "english": "The food is good.",
+       "portuguese": "A comida é boa.",
+       "words": ["The", "food", "is", "good"],
+       "cefr_level": "A1",
+       "theme": "food",
+       "wordCount": 4
+     },
+     {
+       "id": "write_order_a1_016",
+       "english": "They have a dog.",
+       "portuguese": "Eles têm um cachorro.",
+       "words": ["They", "have", "a", "dog"],
+       "cefr_level": "A1",
+       "theme": "pets",
+       "wordCount": 4
+     },
+     {
+       "id": "write_order_a1_017",
+       "english": "I am a student.",
+       "portuguese": "Eu sou um estudante.",
+       "words": ["I", "am", "a", "student"],
+       "cefr_level": "A1",
+       "theme": "education",
+       "wordCount": 4
+     },
+     {
+       "id": "write_order_a2_013",
+      "english": "I don't eat meat.",
+      "portuguese": "Eu não como carne.",
+      "words": ["I", "don't", "eat", "meat"],
+      "cefr_level": "A2",
+      "theme": "diet",
+      "wordCount": 4
+    },
+     {
+       "id": "write_order_a2_014",
+       "english": "Can you help me?",
+       "portuguese": "Você pode me ajudar?",
+       "words": ["Can", "you", "help", "me"],
+       "cefr_level": "A2",
+       "theme": "requests",
+       "wordCount": 4
+     },
+     {
+       "id": "write_order_a2_015",
+       "english": "I have finished my homework.",
+       "portuguese": "Eu terminei minha lição de casa.",
+       "words": ["I", "have", "finished", "my", "homework"],
+       "cefr_level": "A2",
+       "theme": "school",
+       "wordCount": 5
+     },
+     {
+       "id": "write_order_a2_016",
+       "english": "She is wearing a red dress.",
+       "portuguese": "Ela está vestindo um vestido vermelho.",
+       "words": ["She", "is", "wearing", "a", "red", "dress"],
+       "cefr_level": "A2",
+       "theme": "clothing",
+       "wordCount": 6
+     },
+     {
+       "id": "write_order_a2_017",
+       "english": "Do you like listening to music?",
+       "portuguese": "Você gosta de ouvir música?",
+       "words": ["Do", "you", "like", "listening", "to", "music"],
+       "cefr_level": "A2",
+       "theme": "hobbies",
+       "wordCount": 6
+     },
+     {
+       "id": "write_order_b1_013",
+      "english": "I have been studying English for two years.",
+      "portuguese": "Eu estudo inglês há dois anos.",
+      "words": ["I", "have", "been", "studying", "English", "for", "two", "years"],
+      "cefr_level": "B1",
+      "theme": "education",
+      "wordCount": 8
+    },
+     {
+       "id": "write_order_b1_014",
+       "english": "If I had time, I would travel more.",
+       "portuguese": "Se eu tivesse tempo, viajaria mais.",
+       "words": ["If", "I", "had", "time", "I", "would", "travel", "more"],
+       "cefr_level": "B1",
+       "theme": "hypothetical",
+       "wordCount": 8
+     },
+     {
+       "id": "write_order_b1_015",
+       "english": "I wish I could speak French fluently.",
+       "portuguese": "Eu gostaria de poder falar francês fluentemente.",
+       "words": ["I", "wish", "I", "could", "speak", "French", "fluently"],
+       "cefr_level": "B1",
+       "theme": "learning",
+       "wordCount": 7
+     },
+     {
+       "id": "write_order_b1_016",
+       "english": "She apologized for arriving late to the meeting.",
+       "portuguese": "Ela se desculpou por chegar atrasada à reunião.",
+       "words": ["She", "apologized", "for", "arriving", "late", "to", "the", "meeting"],
+       "cefr_level": "B1",
+       "theme": "apologies",
+       "wordCount": 8
+     },
+     {
+       "id": "write_order_b1_017",
+       "english": "The book that I bought yesterday was very interesting.",
+       "portuguese": "O livro que eu comprei ontem foi muito interessante.",
+       "words": ["The", "book", "that", "I", "bought", "yesterday", "was", "very", "interesting"],
+       "cefr_level": "B1",
+       "theme": "reading",
+       "wordCount": 9
+     },
+     {
+       "id": "write_order_b2_013",
+      "english": "The meeting was postponed due to unforeseen circumstances.",
+      "portuguese": "A reunião foi adiada devido a circunstâncias imprevistas.",
+      "words": ["The", "meeting", "was", "postponed", "due", "to", "unforeseen", "circumstances"],
+      "cefr_level": "B2",
+      "theme": "business",
+      "wordCount": 8
+    },
+     {
+       "id": "write_order_b2_014",
+       "english": "Notwithstanding the challenges, we persevered.",
+       "portuguese": "Não obstante os desafios, perseveramos.",
+       "words": ["Notwithstanding", "the", "challenges", "we", "persevered"],
+       "cefr_level": "B2",
+       "theme": "persistence",
+       "wordCount": 5
+     },
+     {
+       "id": "write_order_b2_015",
+       "english": "The proposal was met with considerable skepticism.",
+       "portuguese": "A proposta foi recebida com considerável ceticismo.",
+       "words": ["The", "proposal", "was", "met", "with", "considerable", "skepticism"],
+       "cefr_level": "B2",
+       "theme": "reactions",
+       "wordCount": 7
+     },
+     {
+       "id": "write_order_b2_016",
+       "english": "Had I known earlier, I would have acted differently.",
+       "portuguese": "Se eu soubesse antes, teria agido de forma diferente.",
+       "words": ["Had", "I", "known", "earlier", "I", "would", "have", "acted", "differently"],
+       "cefr_level": "B2",
+       "theme": "regrets",
+       "wordCount": 9
+     },
+     {
+       "id": "write_order_b2_017",
+       "english": "The implications of this discovery are far-reaching.",
+       "portuguese": "As implicações desta descoberta são de longo alcance.",
+       "words": ["The", "implications", "of", "this", "discovery", "are", "far-reaching"],
+       "cefr_level": "B2",
+       "theme": "science",
+       "wordCount": 7
+     },
+     {
+       "id": "write_order_c1_013",
+      "english": "The paradigm shift revolutionized communication methods.",
+      "portuguese": "A mudança de paradigma revolucionou os métodos de comunicação.",
+      "words": ["The", "paradigm", "shift", "revolutionized", "communication", "methods"],
+      "cefr_level": "C1",
+      "theme": "technology",
+      "wordCount": 6
+    },
+     {
+       "id": "write_order_c1_014",
+       "english": "Her eloquence belied her apparent nervousness.",
+       "portuguese": "Sua eloquência contradizia seu aparente nervosismo.",
+       "words": ["Her", "eloquence", "belied", "her", "apparent", "nervousness"],
+       "cefr_level": "C1",
+       "theme": "character",
+       "wordCount": 6
+     },
+     {
+       "id": "write_order_c1_015",
+       "english": "The juxtaposition of colors creates striking visual impact.",
+       "portuguese": "A justaposição de cores cria impacto visual impressionante.",
+       "words": ["The", "juxtaposition", "of", "colors", "creates", "striking", "visual", "impact"],
+       "cefr_level": "C1",
+       "theme": "art",
+       "wordCount": 8
+     },
+     {
+       "id": "write_order_c1_016",
+       "english": "Notwithstanding empirical evidence, skepticism endures.",
+       "portuguese": "Não obstante evidência empírica, o ceticismo perdura.",
+       "words": ["Notwithstanding", "empirical", "evidence", "skepticism", "endures"],
+       "cefr_level": "C1",
+       "theme": "science",
+       "wordCount": 5
+     },
+     {
+       "id": "write_order_c1_017",
+       "english": "The paradigm shift revolutionized interaction paradigms.",
+       "portuguese": "A mudança de paradigma revolucionou paradigmas de interação.",
+       "words": ["The", "paradigm", "shift", "revolutionized", "interaction", "paradigms"],
+       "cefr_level": "C1",
+       "theme": "technology",
+       "wordCount": 6
+     },
+     {
+       "id": "write_order_c2_013",
+      "english": "The epistemological foundations warrant meticulous scrutiny.",
+      "portuguese": "Os fundamentos epistemológicos justificam escrutínio meticuloso.",
+      "words": ["The", "epistemological", "foundations", "warrant", "meticulous", "scrutiny"],
+      "cefr_level": "C2",
+      "theme": "philosophy",
+      "wordCount": 6
+    },
+     {
+       "id": "write_order_c2_014",
+       "english": "The symbiotic relationship engenders cultural evolution.",
+       "portuguese": "O relacionamento simbiótico engendra evolução cultural.",
+       "words": ["The", "symbiotic", "relationship", "engenders", "cultural", "evolution"],
+       "cefr_level": "C2",
+       "theme": "sociology",
+       "wordCount": 6
+     },
+     {
+       "id": "write_order_c2_015",
+       "english": "The epistemological foundations necessitate rigorous interrogation.",
+       "portuguese": "Os fundamentos epistemológicos necessitam interrogação rigorosa.",
+       "words": ["The", "epistemological", "foundations", "necessitate", "rigorous", "interrogation"],
+       "cefr_level": "C2",
+       "theme": "philosophy",
+       "wordCount": 6
+     },
+     {
+       "id": "write_order_c2_016",
+       "english": "Notwithstanding incontrovertible substantiation, resistance endures unabated.",
+       "portuguese": "Não obstante substantiação incontrovertível, resistência perdura inabalável.",
+       "words": ["Notwithstanding", "incontrovertible", "substantiation", "resistance", "endures", "unabated"],
+       "cefr_level": "C2",
+       "theme": "science",
+       "wordCount": 6
+     },
+     {
+       "id": "write_order_c2_017",
+       "english": "The confluence precipitated unprecedented paradigmatic metamorphosis.",
+       "portuguese": "A confluência precipitou metamorfose paradigmática sem precedentes.",
+       "words": ["The", "confluence", "precipitated", "unprecedented", "paradigmatic", "metamorphosis"],
+       "cefr_level": "C2",
+       "theme": "change",
+       "wordCount": 6
+     }
+   ]
 }
