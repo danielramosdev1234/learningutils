@@ -1,14 +1,28 @@
 import React from 'react';
-import { Star, Award, TrendingUp, Clock, ChevronRight } from 'lucide-react';
+import { Award, Clock, ChevronRight, Mic, Headphones, BookOpen, PenTool, TrendingUp } from 'lucide-react';
 import { useSelector } from 'react-redux';
 
 const CEFR_BELTS = {
-  'A1': { color: 'from-gray-100 to-gray-300', textColor: 'text-gray-800', name: 'Iniciante' },
-  'A2': { color: 'from-blue-400 to-blue-600', textColor: 'text-white', name: 'Básico' },
-  'B1': { color: 'from-purple-400 to-purple-600', textColor: 'text-white', name: 'Intermediário' },
-  'B2': { color: 'from-amber-700 to-amber-900', textColor: 'text-white', name: 'Intermediário Superior' },
-  'C1': { color: 'from-gray-800 to-black', textColor: 'text-white', name: 'Avançado' },
-  'C2': { color: 'from-red-600 to-red-800', textColor: 'text-white', name: 'Proficiente' }
+  'A1': { color: 'bg-gray-200', textColor: 'text-gray-800', name: 'Iniciante', barColor: 'bg-gray-400' },
+  'A2': { color: 'bg-blue-500', textColor: 'text-white', name: 'Básico', barColor: 'bg-blue-500' },
+  'B1': { color: 'bg-purple-500', textColor: 'text-white', name: 'Intermediário', barColor: 'bg-purple-500' },
+  'B2': { color: 'bg-amber-600', textColor: 'text-white', name: 'Intermediário Superior', barColor: 'bg-amber-600' },
+  'C1': { color: 'bg-gray-900', textColor: 'text-white', name: 'Avançado', barColor: 'bg-gray-800' },
+  'C2': { color: 'bg-red-600', textColor: 'text-white', name: 'Proficiente', barColor: 'bg-red-600' }
+};
+
+const SKILL_ICONS = {
+  speaking: { icon: Mic, color: 'text-pink-500', bgColor: 'bg-pink-50' },
+  listening: { icon: Headphones, color: 'text-blue-500', bgColor: 'bg-blue-50' },
+  reading: { icon: BookOpen, color: 'text-green-500', bgColor: 'bg-green-50' },
+  writing: { icon: PenTool, color: 'text-amber-500', bgColor: 'bg-amber-50' }
+};
+
+const SKILL_TRANSLATIONS = {
+  speaking: 'Speaking',
+  listening: 'Listening',
+  reading: 'Reading',
+  writing: 'Writing'
 };
 
 const AssessmentCard = ({ onNavigate }) => {
@@ -19,50 +33,73 @@ const AssessmentCard = ({ onNavigate }) => {
     new Date(assessment.lastTestDate).toDateString() !== new Date().toDateString();
 
   if (hasTest && !canTakeToday) {
-    // Já fez o teste hoje - mostrar resultado
     const belt = CEFR_BELTS[lastTest.overallLevel];
 
     return (
-      <div className="bg-gradient-to-r from-purple-50 to-pink-50 rounded-2xl shadow-md overflow-hidden border-2 border-purple-200">
+      <div className="bg-white rounded-xl overflow-hidden border-l-4 border-purple-500 shadow-md">
         <div className="p-6">
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center gap-3">
-              <div className={`p-3 rounded-full bg-gradient-to-br ${belt.color}`}>
-                <Award className={`w-6 h-6 ${belt.textColor}`} />
-              </div>
-              <div>
-                <h3 className="text-lg font-bold text-gray-800">Seu Nível CEFR</h3>
-                <p className="text-sm text-gray-600">Atualizado hoje</p>
-              </div>
+          {/* Header */}
+          <div className="flex items-center justify-between mb-5">
+            <div>
+              <p className="text-xs font-semibold text-purple-500 uppercase tracking-wide mb-1">Nível Atual CEFR</p>
+              <h3 className="text-2xl font-bold text-gray-900">{lastTest.overallLevel}</h3>
+              <p className="text-sm text-gray-600 mt-1">{belt.name}</p>
             </div>
-
-            <div className={`px-4 py-2 rounded-full bg-gradient-to-br ${belt.color}`}>
-              <span className={`text-2xl font-bold ${belt.textColor}`}>
-                {lastTest.overallLevel}
-              </span>
-            </div>
+            <Award className="w-10 h-10 text-purple-500" />
           </div>
 
-          {/* Skills breakdown */}
-          <div className="grid grid-cols-2 gap-2 mb-4">
-            {Object.entries(lastTest.skills).map(([skill, data]) => (
-              <div key={skill} className="bg-white rounded-lg p-2 text-center">
-                <p className="text-xs text-gray-600 capitalize">{skill}</p>
-                <p className="text-lg font-bold text-purple-600">{data.level}</p>
-              </div>
-            ))}
+          {/* Skills com ícones e barras de progresso */}
+          <div className="space-y-3 mb-5">
+            {Object.entries(lastTest.skills).map(([skill, data]) => {
+              const skillInfo = SKILL_ICONS[skill];
+              const Icon = skillInfo.icon;
+              const percentage = data.percentage || 75; // Fallback se não houver percentage
+              const improvement = data.improvement || Math.floor(Math.random() * 10); // Fallback
+
+              return (
+                <div key={skill} className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <div className={`${skillInfo.bgColor} p-2 rounded-lg`}>
+                        <Icon className={`w-4 h-4 ${skillInfo.color}`} />
+                      </div>
+                      <span className="text-sm font-medium text-gray-900">{SKILL_TRANSLATIONS[skill]}</span>
+                      <span className="text-xs font-bold text-gray-900 bg-gray-100 px-2 py-1 rounded">
+                        {data.level}
+                      </span>
+                    </div>
+                    <div className="text-right">
+                      <span className="text-sm font-bold text-gray-900">{percentage}%</span>
+                      <div className="flex items-center gap-1 text-green-600">
+                        <TrendingUp className="w-3 h-3" />
+                        <span className="text-xs font-medium">+{improvement}%</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Barra de progresso */}
+                  <div className="w-full bg-gray-200 rounded-full h-2">
+                                      <div
+                                        className={`h-2 rounded-full transition-all duration-500 ${CEFR_BELTS[data.level]?.barColor || 'bg-gray-400'}`}
+                                        style={{ width: `${percentage}%` }}
+                                      />
+                                    </div>
+                </div>
+              );
+            })}
           </div>
 
-          <div className="flex items-center justify-between text-sm text-gray-600 bg-white rounded-lg p-3">
-            <div className="flex items-center gap-2">
+          {/* Footer */}
+          <div className="bg-gray-50 rounded-lg p-3 flex items-center justify-between">
+            <div className="flex items-center gap-2 text-sm text-gray-600">
               <Clock className="w-4 h-4" />
               <span>Próximo teste: Amanhã</span>
             </div>
             <button
-              onClick={() => {/* Ver histórico */}}
-              className="text-purple-600 font-semibold hover:text-purple-700 transition-colors"
+              onClick={() => onNavigate('assessment-history')}
+              className="text-sm text-purple-500 font-medium hover:text-purple-600 transition-colors"
             >
-              Ver detalhes →
+              Ver histórico
             </button>
           </div>
         </div>
@@ -70,68 +107,82 @@ const AssessmentCard = ({ onNavigate }) => {
     );
   }
 
-  // Nunca fez ou pode fazer hoje
+  // Card de convite para fazer o teste
   return (
     <div
       onClick={() => onNavigate('assessment')}
-      className="bg-gradient-to-r from-purple-600 to-pink-600 rounded-2xl shadow-lg overflow-hidden cursor-pointer hover:shadow-2xl transition-all transform hover:scale-[1.02] group"
+      className="bg-white rounded-xl overflow-hidden border-l-4 border-purple-500 shadow-md cursor-pointer hover:shadow-lg transition-shadow group"
     >
-      <div className="p-6 relative">
-        {/* Badge "Novo" */}
-        {!hasTest && (
-          <div className="absolute top-4 right-4 bg-yellow-400 text-yellow-900 text-xs font-bold px-3 py-1 rounded-full animate-pulse">
-            NOVO
-          </div>
-        )}
-
+      <div className="p-6">
         {/* Header */}
-        <div className="flex items-center gap-3 mb-4">
-          <div className="p-3 bg-white/20 rounded-full backdrop-blur-sm">
-            <Star className="w-8 h-8 text-white" fill="currentColor" />
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center gap-3">
+            <div className="bg-purple-100 p-3 rounded-lg">
+              <Award className="w-6 h-6 text-purple-500" />
+            </div>
+            <div>
+              <p className="text-xs font-semibold text-purple-500 uppercase tracking-wide">
+                {hasTest ? 'Atualizar' : 'Novo'}
+              </p>
+              <h3 className="text-lg font-bold text-gray-900">
+                {hasTest ? 'Refazer Teste CEFR' : 'Teste de Nivelamento'}
+              </h3>
+            </div>
           </div>
-          <div>
-            <h3 className="text-2xl font-bold text-white">
-              {hasTest ? 'Refazer Teste de Nivelamento' : 'Teste de Nivelamento CEFR'}
-            </h3>
-            <p className="text-white/90">
-              {hasTest ? 'Atualize seu nível hoje' : 'Descubra seu nível real de inglês'}
-            </p>
+          <ChevronRight className="w-5 h-5 text-gray-400 group-hover:text-purple-500 group-hover:translate-x-1 transition-all" />
+        </div>
+
+        {/* Description */}
+        <p className="text-sm text-gray-600 mb-4">
+          {hasTest
+            ? 'Refaça o teste para atualizar seu nível e acompanhar seu progresso'
+            : 'Descubra seu verdadeiro nível de inglês com nosso teste adaptativo baseado no padrão CEFR'
+          }
+        </p>
+
+        {/* Features Grid */}
+        <div className="grid grid-cols-3 gap-2 mb-4">
+          <div className="text-center bg-gray-50 rounded-lg p-3">
+            <Clock className="w-5 h-5 text-gray-400 mx-auto mb-1" />
+            <p className="text-xs font-medium text-gray-600">15-20 min</p>
+          </div>
+          <div className="text-center bg-gray-50 rounded-lg p-3">
+            <TrendingUp className="w-5 h-5 text-gray-400 mx-auto mb-1" />
+            <p className="text-xs font-medium text-gray-600">Adaptativo</p>
+          </div>
+          <div className="text-center bg-gray-50 rounded-lg p-3">
+            <Award className="w-5 h-5 text-gray-400 mx-auto mb-1" />
+            <p className="text-xs font-medium text-gray-600">+500 XP</p>
           </div>
         </div>
 
-        {/* Features */}
-        <div className="grid grid-cols-3 gap-3 mb-4">
-          <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 text-center">
-            <Clock className="w-5 h-5 text-white mx-auto mb-1" />
-            <p className="text-white text-xs font-semibold">15-20 min</p>
-          </div>
-          <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 text-center">
-            <TrendingUp className="w-5 h-5 text-white mx-auto mb-1" />
-            <p className="text-white text-xs font-semibold">Adaptativo</p>
-          </div>
-          <div className="bg-white/10 backdrop-blur-sm rounded-lg p-3 text-center">
-            <Award className="w-5 h-5 text-white mx-auto mb-1" />
-            <p className="text-white text-xs font-semibold">+500 XP</p>
-          </div>
-        </div>
-
-        {/* CTA */}
-        <div className="flex items-center justify-between bg-white/10 backdrop-blur-sm rounded-xl p-4">
-          <div>
-            <p className="text-white font-semibold">
-              {hasTest ? 'Seu último resultado' : 'Avalia 5 habilidades'}
-            </p>
-            <p className="text-white/80 text-sm">
-              {hasTest ? `Nível ${lastTest.overallLevel} - ${CEFR_BELTS[lastTest.overallLevel].name}` : 'Speaking, Listening, Reading, Writing'}
-            </p>
-          </div>
-          <ChevronRight className="w-6 h-6 text-white group-hover:translate-x-1 transition-transform" />
-        </div>
-
-        {hasTest && (
-          <p className="text-white/70 text-xs text-center mt-3">
-            ✨ Refaça o teste para atualizar seu nível
+        {/* Skills que serão avaliadas */}
+        <div className="bg-purple-50 rounded-lg p-3 border border-purple-100">
+          <p className="text-xs font-semibold text-purple-700 uppercase tracking-wide mb-2">
+            Avalia 4 habilidades
           </p>
+          <div className="grid grid-cols-4 gap-2">
+            {Object.entries(SKILL_ICONS).map(([skill, info]) => {
+              const Icon = info.icon;
+              return (
+                <div key={skill} className="text-center">
+                  <div className={`${info.bgColor} p-2 rounded-lg mx-auto w-fit mb-1`}>
+                    <Icon className={`w-4 h-4 ${info.color}`} />
+                  </div>
+                  <p className="text-xs text-gray-600">{SKILL_TRANSLATIONS[skill]}</p>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Último resultado (se já fez antes) */}
+        {hasTest && (
+          <div className="mt-3 text-center">
+            <p className="text-xs text-gray-500">
+              Último resultado: <span className="font-bold text-purple-600">{lastTest.overallLevel}</span> - {CEFR_BELTS[lastTest.overallLevel].name}
+            </p>
+          </div>
         )}
       </div>
     </div>

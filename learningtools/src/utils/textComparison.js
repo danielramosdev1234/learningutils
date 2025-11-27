@@ -1,6 +1,49 @@
 // ========================================
 // NUMBER WORDS TO NUMERIC
 // ========================================
+// ========================================
+// TIME EXPRESSIONS (não normalizar números quando são horas)
+// ========================================
+const TIME_EXPRESSIONS = [
+  /\b\d{1,2}:\d{2}\b/g,  // 7:00, 12:30, etc.
+  /\bat\s+\d{1,2}\s+o'clock\b/gi,  // at 7 o'clock
+  /\bat\s+\d{1,2}\s+(am|pm|a\.m\.|p\.m\.)\b/gi,  // at 7 am, at 7 pm
+  /\b\d{1,2}\s+(am|pm|a\.m\.|p\.m\.)\b/gi,  // 7 am, 7 pm
+  /\b\d{1,2}\s+o'clock\b/gi,  // 7 o'clock
+  /\bat\s+(seven|eight|nine|ten|eleven|twelve)\b/gi,  // at seven, at eight, etc.
+  /\b(seven|eight|nine|ten|eleven|twelve)\s+o'clock\b/gi,  // seven o'clock, etc.
+  /\b(seven|eight|nine|ten|eleven|twelve)\s+(am|pm|a\.m\.|p\.m\.)\b/gi,  // seven am, seven pm, etc.
+];
+
+const isTimeExpression = (text) => {
+  return TIME_EXPRESSIONS.some(regex => regex.test(text));
+};
+
+// Normaliza expressões temporais (converte tanto palavras quanto formatos de hora para números)
+const normalizeTimeExpressions = (text) => {
+  let normalized = text.toLowerCase();
+
+  // 1. Converter palavras para números em contextos temporais
+  const timeWordPatterns = [
+    /\bat\s+(zero|one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve)\b/gi,
+    /\b(zero|one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve)\s+o'clock\b/gi,
+    /\b(zero|one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve)\s+(am|pm|a\.m\.|p\.m\.)\b/gi,
+  ];
+
+  timeWordPatterns.forEach(pattern => {
+    normalized = normalized.replace(pattern, (match, numberWord) => {
+      const numeric = NUMBER_WORDS[numberWord.toLowerCase()];
+      return match.replace(numberWord, numeric);
+    });
+  });
+
+  // 2. Normalizar formatos de hora (7:00 → 7, 12:30 → 12:30, etc.)
+  // Remove :00 de horas simples, mantém minutos quando presentes
+  normalized = normalized.replace(/\b(\d{1,2}):00\b/g, '$1');
+
+  return normalized;
+};
+
 const NUMBER_WORDS = {
   'zero': '0', 'one': '1', 'two': '2', 'three': '3', 'four': '4',
   'five': '5', 'six': '6', 'seven': '7', 'eight': '8', 'nine': '9',
@@ -704,17 +747,20 @@ const CONTRACTION_MAP = {
 // Normaliza números escritos por extenso para numéricos
 const normalizeNumbers = (text) => {
   let normalized = text.toLowerCase();
-  
+
+  // Agora permitimos normalização de números mesmo em expressões temporais,
+  // pois normalizeTimeExpressions já cuidou disso adequadamente
+
   // Ordena por tamanho (maior primeiro) para evitar substituições parciais
   const sortedKeys = Object.keys(NUMBER_WORDS).sort((a, b) => b.length - a.length);
-  
+
   sortedKeys.forEach(word => {
     const numeric = NUMBER_WORDS[word];
     // Match com word boundaries para evitar falsos positivos
     const regex = new RegExp(`\\b${word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'gi');
     normalized = normalized.replace(regex, numeric);
   });
-  
+
   return normalized;
 };
 
@@ -820,36 +866,41 @@ const getEditDistance = (str1, str2) => {
   return matrix[s2.length][s1.length];
 };
 
+
+
 export const compareTexts = (original, spoken) => {
-  const normalize = (text) => {
+const normalize = (text) => {
     // 1. Converte para minúsculas
     let normalized = text.toLowerCase();
-    
+
     // 2. Normaliza termos técnicos PRIMEIRO (antes de remover pontuação)
     // Isso garante que "node.js", "node js", "node dot js" virem todos "nodejs"
     normalized = normalizeTechTerms(normalized);
-    
+
     // 3. Normaliza termos clínicos/médicos (antes de remover pontuação)
     // Isso garante que "SAE", "S A E", "say" virem todos "sae"
     normalized = normalizeClinicalTerms(normalized);
-    
-    // 4. Normaliza números escritos por extenso
+
+    // 4. Normaliza expressões temporais (converte "seven" para "7" apenas em contextos de hora)
+    normalized = normalizeTimeExpressions(normalized);
+
+    // 5. Normaliza números escritos por extenso (exceto em expressões temporais)
     normalized = normalizeNumbers(normalized);
-    
-    // 5. Remove pontuação, substituindo por espaço
+
+    // 6. Remove pontuação, substituindo por espaço
     // Isso garante que "node.js" vire "node js" após normalização técnica
     normalized = normalized
       .replace(/[^\w\s']/g, ' ') // Substitui pontuação por espaço
       .replace(/\s+/g, ' ') // Normaliza múltiplos espaços em um único espaço
       .trim();
 
-    // 6. Normaliza contrações
+    // 7. Normaliza contrações
     normalized = normalizeContractions(normalized);
 
-    // 7. Remove apóstrofos após normalização
+    // 8. Remove apóstrofos após normalização
     normalized = normalized.replace(/'/g, '');
-    
-    // 8. Normaliza espaços finais novamente
+
+    // 9. Normaliza espaços finais novamente
     normalized = normalized.replace(/\s+/g, ' ').trim();
 
     return normalized;
