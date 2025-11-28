@@ -15,9 +15,10 @@ export const InviteFriendsScreen = ({ onBack }) => {
 
 
   const handleShare = (platform) => {
-    if (!referral?.code) return;
+    const referralCode = typeof referral?.code === 'string' ? referral.code : String(referral?.code || '');
+    if (!referralCode) return;
 
-    const texts = generateReferralShareText(referral.code, profile.displayName);
+    const texts = generateReferralShareText(referralCode, profile.displayName);
     const link = `${window.location.origin}/?ref=${referral.code}`;
 
     trackReferralEvent('share_clicked', { platform, code: referral.code });
@@ -154,7 +155,7 @@ export const InviteFriendsScreen = ({ onBack }) => {
 
         {/* Card de Convite */}
         <ReferralCard
-          referralCode={referral?.code}
+          referralCode={typeof referral?.code === 'string' ? referral.code : String(referral?.code || '')}
           onShare={handleShare}
         />
 
