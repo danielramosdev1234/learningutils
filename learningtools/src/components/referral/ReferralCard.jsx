@@ -5,13 +5,17 @@ import { generateReferralLink, trackReferralEvent } from '../../utils/referralUt
 
 export const ReferralCard = ({ referralCode, onShare }) => {
   const [copied, setCopied] = useState(false);
-  const referralLink = generateReferralLink(referralCode);
+
+  // Garante que referralCode seja uma string
+  const safeReferralCode = typeof referralCode === 'string' ? referralCode : String(referralCode || '');
+
+  const referralLink = generateReferralLink(safeReferralCode);
 
   const handleCopyCode = async () => {
     try {
-      await navigator.clipboard.writeText(referralCode);
+      await navigator.clipboard.writeText(safeReferralCode);
       setCopied(true);
-      trackReferralEvent('code_copied', { code: referralCode });
+      trackReferralEvent('code_copied', { code: safeReferralCode });
       setTimeout(() => setCopied(false), 2000);
     } catch (error) {
       console.error('Erro ao copiar:', error);
@@ -21,7 +25,7 @@ export const ReferralCard = ({ referralCode, onShare }) => {
   const handleCopyLink = async () => {
     try {
       await navigator.clipboard.writeText(referralLink);
-      trackReferralEvent('link_copied', { code: referralCode });
+      trackReferralEvent('link_copied', { code: safeReferralCode });
       alert('✅ Link copiado! Cole no WhatsApp, Telegram ou onde quiser!');
     } catch (error) {
       console.error('Erro ao copiar link:', error);
@@ -46,9 +50,9 @@ export const ReferralCard = ({ referralCode, onShare }) => {
         <div className="flex items-center justify-between">
           <div>
             <p className="text-xs text-gray-500 font-semibold mb-1">SEU CÓDIGO</p>
-            <p className="text-3xl font-bold text-purple-600 tracking-wider">
-              {referralCode}
-            </p>
+             <p className="text-3xl font-bold text-purple-600 tracking-wider">
+               {safeReferralCode}
+             </p>
           </div>
           <button
             onClick={handleCopyCode}

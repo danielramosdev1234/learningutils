@@ -1,1566 +1,1664 @@
 {
-
   "listening": [
 {
   "id": "listen_a1_003",
   "text": "This is my book.",
+  "question": "What is the speaker showing?",
+  "options": ["Livro", "Caneta", "Cadeira", "Mesa"],
+  "correctAnswer": 0,
   "translation": "Este é meu livro.",
   "cefr_level": "A1",
-  "theme": "possessions",
-  "options": ["This is my book.", "This is your book.", "That is my book.", "These are my books."]
-},
-{
-"id": "listen_a1_004",
-"text": "I am from Brazil.",
-"translation": "Eu sou do Brasil.",
-"cefr_level": "A1",
-"theme": "introductions",
-"options": ["I am from Brazil.", "I am in Brazil.", "I go to Brazil.", "I like Brazil."]
-},
-{
-"id": "listen_a1_005",
-"text": "The cat is black.",
-"translation": "O gato é preto.",
-"cefr_level": "A1",
-"theme": "descriptions",
-"options": ["The cat is black.", "The cat is white.", "The dog is black.", "The cats are black."]
-},
-{
-"id": "listen_a1_006",
-"text": "I like coffee.",
-"translation": "Eu gosto de café.",
-"cefr_level": "A1",
-"theme": "preferences",
-"options": ["I like coffee.", "I drink coffee.", "I want coffee.", "I have coffee."]
-},
-{
-"id": "listen_a1_007",
-"text": "How are you?",
-"translation": "Como você está?",
-"cefr_level": "A1",
-"theme": "greetings",
-"options": ["How are you?", "Who are you?", "Where are you?", "What are you?"]
-},
-{
-"id": "listen_a2_003",
-"text": "I'm going to visit my parents next weekend.",
-"translation": "Vou visitar meus pais no próximo fim de semana.",
-"cefr_level": "A2",
-"theme": "future_plans",
-"options": [
-"I'm going to visit my parents next weekend.",
-"I visit my parents next weekend.",
-"I'm visiting my parents last weekend.",
-"I went to visit my parents next weekend."
-]
-},
-{
-"id": "listen_a2_004",
-"text": "There are too many people in the restaurant.",
-"translation": "Há muitas pessoas no restaurante.",
-"cefr_level": "A2",
-"theme": "describing_places",
-"options": [
-"There are too many people in the restaurant.",
-"There is too many people in the restaurant.",
-"There are too much people in the restaurant.",
-"There were too many people in the restaurant."
-]
-},
-{
-"id": "listen_a2_005",
-"text": "She can speak three languages fluently.",
-"translation": "Ela consegue falar três idiomas fluentemente.",
-"cefr_level": "A2",
-"theme": "abilities",
-"options": [
-"She can speak three languages fluently.",
-"She can speaks three languages fluently.",
-"She could speak three languages fluently.",
-"She can spoke three languages fluently."
-]
-},
-{
-"id": "listen_a2_006",
-"text": "We haven't finished our homework yet.",
-"translation": "Ainda não terminamos nossa lição de casa.",
-"cefr_level": "A2",
-"theme": "school",
-"options": [
-"We haven't finished our homework yet.",
-"We didn't finish our homework yet.",
-"We don't finish our homework yet.",
-"We hadn't finished our homework yet."
-]
-},
-{
-"id": "listen_a2_007",
-"text": "He's taller than his brother.",
-"translation": "Ele é mais alto que seu irmão.",
-"cefr_level": "A2",
-"theme": "comparisons",
-"options": [
-"He's taller than his brother.",
-"He's more tall than his brother.",
-"He's the tallest than his brother.",
-"He's as tall than his brother."
-]
-},
-{
-"id": "listen_b1_003",
-"text": "I wish I had studied harder for the exam.",
-"translation": "Eu gostaria de ter estudado mais para a prova.",
-"cefr_level": "B1",
-"theme": "regrets",
-"options": [
-"I wish I had studied harder for the exam.",
-"I wish I studied harder for the exam.",
-"I hope I had studied harder for the exam.",
-"I wish I have studied harder for the exam."
-]
-},
-{
-"id": "listen_b1_004",
-"text": "The movie was so boring that we left early.",
-"translation": "O filme estava tão chato que saímos cedo.",
-"cefr_level": "B1",
-"theme": "entertainment",
-"options": [
-"The movie was so boring that we left early.",
-"The movie was too boring that we left early.",
-"The movie was such boring that we left early.",
-"The movie was so bored that we left early."
-]
-},
-{
-"id": "listen_b1_005",
-"text": "She's used to working under pressure.",
-"translation": "Ela está acostumada a trabalhar sob pressão.",
-"cefr_level": "B1",
-"theme": "work",
-"options": [
-"She's used to working under pressure.",
-"She's used to work under pressure.",
-"She used to working under pressure.",
-"She used to work under pressure."
-]
-},
-{
-"id": "listen_b1_006",
-"text": "Unless you hurry up, we'll miss the train.",
-"translation": "A menos que você se apresse, perderemos o trem.",
-"cefr_level": "B1",
-"theme": "conditions",
-"options": [
-"Unless you hurry up, we'll miss the train.",
-"If you don't hurry up, we'll miss the train.",
-"Unless you don't hurry up, we'll miss the train.",
-"Unless you hurry up, we missed the train."
-]
-},
-{
-"id": "listen_b1_007",
-"text": "The package should have arrived by now.",
-"translation": "O pacote deveria ter chegado até agora.",
-"cefr_level": "B1",
-"theme": "expectations",
-"options": [
-"The package should have arrived by now.",
-"The package should arrive by now.",
-"The package must have arrived by now.",
-"The package should had arrived by now."
-]
-},
-{
-"id": "listen_b2_003",
-"text": "Had I known about the traffic, I would have left earlier.",
-"translation": "Se eu soubesse sobre o trânsito, teria saído mais cedo.",
-"cefr_level": "B2",
-"theme": "regrets",
-"options": [
-"Had I known about the traffic, I would have left earlier.",
-"If I had known about the traffic, I would leave earlier.",
-"Had I knew about the traffic, I would have left earlier.",
-"If I have known about the traffic, I would have left earlier."
-]
-},
-{
-"id": "listen_b2_004",
-"text": "She's been promoted twice since joining the company.",
-"translation": "Ela foi promovida duas vezes desde que entrou na empresa.",
-"cefr_level": "B2",
-"theme": "career",
-"options": [
-"She's been promoted twice since joining the company.",
-"She was promoted twice since joining the company.",
-"She has promoted twice since joining the company.",
-"She's being promoted twice since joining the company."
-]
-},
-{
-"id": "listen_b2_005",
-"text": "No sooner had we left than it started raining heavily.",
-"translation": "Mal saímos e começou a chover forte.",
-"cefr_level": "B2",
-"theme": "weather",
-"options": [
-"No sooner had we left than it started raining heavily.",
-"No sooner we had left than it started raining heavily.",
-"No sooner we left than it started raining heavily.",
-"No sooner had we left when it started raining heavily."
-]
-},
-{
-"id": "listen_b2_006",
-"text": "The proposal, having been thoroughly reviewed, was finally approved.",
-"translation": "A proposta, tendo sido minuciosamente revisada, foi finalmente aprovada.",
-"cefr_level": "B2",
-"theme": "business",
-"options": [
-"The proposal, having been thoroughly reviewed, was finally approved.",
-"The proposal, being thoroughly reviewed, was finally approved.",
-"The proposal, had been thoroughly reviewed, was finally approved.",
-"The proposal, has been thoroughly reviewed, was finally approved."
-]
-},
-{
-"id": "listen_b2_007",
-"text": "It's high time we addressed this issue properly.",
-"translation": "Já é hora de abordarmos esta questão adequadamente.",
-"cefr_level": "B2",
-"theme": "problems",
-"options": [
-"It's high time we addressed this issue properly.",
-"It's high time we address this issue properly.",
-"It's high time we have addressed this issue properly.",
-"It's about time we addressed this issue properly."
-]
-},
-{
-"id": "listen_c1_003",
-"text": "Scarcely had the presentation begun when the power went out.",
-"translation": "Mal a apresentação havia começado quando a energia acabou.",
-"cefr_level": "C1",
-"theme": "events",
-"options": [
-"Scarcely had the presentation begun when the power went out.",
-"Scarcely the presentation had begun when the power went out.",
-"Scarcely had the presentation began when the power went out.",
-"Scarcely the presentation begun when the power went out."
-]
-},
-{
-"id": "listen_c1_004",
-"text": "The legislation, albeit controversial, represents a significant step forward.",
-"translation": "A legislação, embora controversa, representa um passo significativo à frente.",
-"cefr_level": "C1",
-"theme": "politics",
-"options": [
-"The legislation, albeit controversial, represents a significant step forward.",
-"The legislation, although controversial, represents a significant step forward.",
-"The legislation, despite controversial, represents a significant step forward.",
-"The legislation, being controversial, represents a significant step forward."
-]
-},
-{
-"id": "listen_c1_005",
-"text": "Under no circumstances should confidential information be disclosed.",
-"translation": "Em nenhuma circunstância informações confidenciais devem ser divulgadas.",
-"cefr_level": "C1",
-"theme": "rules",
-"options": [
-"Under no circumstances should confidential information be disclosed.",
-"Under no circumstances confidential information should be disclosed.",
-"Under no circumstances should confidential information disclose.",
-"In no circumstances should confidential information be disclosed."
-]
-},
-{
-"id": "listen_c1_006",
-"text": "The researcher's findings, insofar as they've been verified, support the hypothesis.",
-"translation": "As descobertas do pesquisador, na medida em que foram verificadas, apoiam a hipótese.",
-"cefr_level": "C1",
-"theme": "science",
-"options": [
-"The researcher's findings, insofar as they've been verified, support the hypothesis.",
-"The researcher's findings, as far as they've been verified, support the hypothesis.",
-"The researcher's findings, insofar they've been verified, support the hypothesis.",
-"The researcher's findings, insofar as they're verified, support the hypothesis."
-]
-},
-{
-"id": "listen_c1_007",
-"text": "Notwithstanding the challenges faced, the team delivered exceptional results.",
-"translation": "Apesar dos desafios enfrentados, a equipe entregou resultados excepcionais.",
-"cefr_level": "C1",
-"theme": "work",
-"options": [
-"Notwithstanding the challenges faced, the team delivered exceptional results.",
-"Notwithstanding the challenges facing, the team delivered exceptional results.",
-"Despite the challenges faced, the team delivered exceptional results.",
-"Notwithstanding of the challenges faced, the team delivered exceptional results."
-]
-},
-{
-"id": "listen_c2_003",
-"text": "The paradigm shift in economic thinking necessitates a comprehensive reassessment of fiscal policies.",
-"translation": "A mudança de paradigma no pensamento econômico necessita uma reavaliação abrangente das políticas fiscais.",
-"cefr_level": "C2",
-"theme": "economics",
-"options": [
-"The paradigm shift in economic thinking necessitates a comprehensive reassessment of fiscal policies.",
-"The paradigm shift in economic thinking requires a comprehensive reassessment of fiscal policies.",
-"The paradigm shift in economic thinking necessitate a comprehensive reassessment of fiscal policies.",
-"The paradigm shift of economic thinking necessitates a comprehensive reassessment of fiscal policies."
-]
-},
-{
-"id": "listen_c2_004",
-"text": "So entrenched are these beliefs that any attempt at reform is met with fierce resistance.",
-"translation": "Tão arraigadas estão essas crenças que qualquer tentativa de reforma é recebida com resistência feroz.",
-"cefr_level": "C2",
-"theme": "society",
-"options": [
-"So entrenched are these beliefs that any attempt at reform is met with fierce resistance.",
-"These beliefs are so entrenched that any attempt at reform is met with fierce resistance.",
-"So entrenched these beliefs are that any attempt at reform is met with fierce resistance.",
-"So entrenched are these beliefs that any attempt at reform meets with fierce resistance."
-]
-},
-{
-"id": "listen_c2_005",
-"text": "The proposition, however laudable its intentions, fails to account for the multifaceted nature of the problem.",
-"translation": "A proposição, por mais louváveis que sejam suas intenções, não consegue explicar a natureza multifacetada do problema.",
-"cefr_level": "C2",
-"theme": "analysis",
-"options": [
-"The proposition, however laudable its intentions, fails to account for the multifaceted nature of the problem.",
-"The proposition, however laudable are its intentions, fails to account for the multifaceted nature of the problem.",
-"The proposition, however laudable its intentions are, fails to account for the multifaceted nature of the problem.",
-"The proposition, whatever laudable its intentions, fails to account for the multifaceted nature of the problem."
-]
-},
-{
-"id": "listen_c2_006",
-"text": "Little did they suspect that the ostensibly benign legislation would have such far-reaching consequences.",
-"translation": "Pouco suspeitavam eles que a legislação ostensivamente benigna teria consequências tão abrangentes.",
-"cefr_level": "C2",
-"theme": "politics",
-"options": [
-"Little did they suspect that the ostensibly benign legislation would have such far-reaching consequences.",
-"Little they suspected that the ostensibly benign legislation would have such far-reaching consequences.",
-"Little did they suspect that the ostensibly benign legislation will have such far-reaching consequences.",
-"They little suspected that the ostensibly benign legislation would have such far-reaching consequences."
-]
-},
-{
-"id": "listen_c2_007",
-"text": "The phenomenon, as yet insufficiently understood, warrants further empirical investigation.",
-"translation": "O fenômeno, ainda insuficientemente compreendido, justifica uma investigação empírica adicional.",
-"cefr_level": "C2",
-"theme": "science",
-"options": [
-"The phenomenon, as yet insufficiently understood, warrants further empirical investigation.",
-"The phenomenon, yet insufficiently understood, warrants further empirical investigation.",
-"The phenomenon, as yet insufficiently understood, warrant further empirical investigation.",
-"The phenomenon, as insufficiently understood, warrants further empirical investigation."
-]
-},
-{
-"id": "listen_a1_011",
-"text": "Hello, how are you?",
-"translation": "Olá, como você está?",
-"cefr_level": "A1",
-"theme": "greetings",
-"options": [
-"Hello, how are you?",
-"Hello, how you are?",
-"Hello, how are you doing?",
-"Hi, how are you?"
-]
-},
-{
-"id": "listen_a1_012",
-"text": "Thank you very much.",
-"translation": "Muito obrigado.",
-"cefr_level": "A1",
-"theme": "politeness",
-"options": [
-"Thank you very much.",
-"Thank you so much.",
-"Thanks a lot.",
-"Thank you very much indeed."
-]
-},
-{
-"id": "listen_a2_011",
-"text": "I have been waiting for an hour.",
-"translation": "Eu estou esperando há uma hora.",
-"cefr_level": "A2",
-"theme": "duration",
-"options": [
-"I have been waiting for an hour.",
-"I waited for an hour.",
-"I am waiting for an hour.",
-"I have waited for an hour."
-]
-},
-{
-"id": "listen_a2_012",
-"text": "Could you help me, please?",
-"translation": "Você poderia me ajudar, por favor?",
-"cefr_level": "A2",
-"theme": "requests",
-"options": [
-"Could you help me, please?",
-"Can you help me, please?",
-"Could you to help me, please?",
-"Could you help me please?"
-]
-},
-{
-"id": "listen_b1_011",
-"text": "If I were you, I would study harder.",
-"translation": "Se eu fosse você, eu estudaria mais.",
-"cefr_level": "B1",
-"theme": "advice",
-"options": [
-"If I were you, I would study harder.",
-"If I was you, I would study harder.",
-"If I were you, I will study harder.",
-"If I am you, I would study harder."
-]
-},
-{
-"id": "listen_b1_012",
-"text": "She complained that the service was slow.",
-"translation": "Ela reclamou que o serviço era lento.",
-"cefr_level": "B1",
-"theme": "complaints",
-"options": [
-"She complained that the service was slow.",
-"She complained the service was slow.",
-"She complained that the service slow.",
-"She complained about the service was slow."
-]
-},
-{
-"id": "listen_b2_011",
-"text": "Notwithstanding the difficulties, they succeeded.",
-"translation": "Não obstante as dificuldades, eles tiveram sucesso.",
-"cefr_level": "B2",
-"theme": "success",
-"options": [
-"Notwithstanding the difficulties, they succeeded.",
-"Despite the difficulties, they succeeded.",
-"Although the difficulties, they succeeded.",
-"In spite of the difficulties, they succeeded."
-]
-},
-{
-"id": "listen_b2_012",
-"text": "The proposal was met with considerable skepticism.",
-"translation": "A proposta foi recebida com considerável ceticismo.",
-"cefr_level": "B2",
-"theme": "reactions",
-"options": [
-"The proposal was met with considerable skepticism.",
-"The proposal was met with considerable scepticism.",
-"The proposal was met by considerable skepticism.",
-"The proposal was met with considerable scepticism."
-]
-},
-{
-"id": "listen_c1_011",
-"text": "The juxtaposition of colors creates a striking visual effect.",
-"translation": "A justaposição de cores cria um efeito visual impressionante.",
-"cefr_level": "C1",
-"theme": "art",
-"options": [
-"The juxtaposition of colors creates a striking visual effect.",
-"The juxtaposition of colours creates a striking visual effect.",
-"The juxtaposition of colors create a striking visual effect.",
-"The juxtaposition of colours create a striking visual effect."
-]
-},
-{
-"id": "listen_c1_012",
-"text": "Her eloquence belied her apparent nervousness.",
-"translation": "Sua eloquência contradizia seu aparente nervosismo.",
-"cefr_level": "C1",
-"theme": "contradiction",
-"options": [
-"Her eloquence belied her apparent nervousness.",
-"Her eloquence belied her apparent nervous.",
-"Her eloquence belies her apparent nervousness.",
-"Her eloquence belied her apparent nervousness."
-]
-},
-{
-"id": "listen_c2_011",
-"text": "The epistemological foundations of this theory remain contentious.",
-"translation": "Os fundamentos epistemológicos desta teoria permanecem controversos.",
-"cefr_level": "C2",
-"theme": "philosophy",
-"options": [
-"The epistemological foundations of this theory remain contentious.",
-"The epistemological foundations of this theory remains contentious.",
-"The epistemological foundation of this theory remain contentious.",
-"The epistemological foundation of this theory remains contentious."
-]
-},
-{
-"id": "listen_c2_012",
-"text": "The symbiotic relationship between art and commerce is increasingly evident.",
-"translation": "O relacionamento simbiótico entre arte e comércio é cada vez mais evidente.",
-"cefr_level": "C2",
-"theme": "culture",
-"options": [
-"The symbiotic relationship between art and commerce is increasingly evident.",
-"The symbiotic relationship between art and commerce are increasingly evident.",
-"The symbiotic relationships between art and commerce is increasingly evident.",
-"The symbiotic relationships between art and commerce are increasingly evident."
-]
-},
-{
-"id": "listen_a1_015",
-"text": "Good morning, teacher.",
-"translation": "Bom dia, professor.",
-"cefr_level": "A1",
-"theme": "school",
-"options": [
-"Good morning, teacher.",
-"Good morning, student.",
-"Good afternoon, teacher.",
-"Good morning, teachers."
-]
-},
-{
-"id": "listen_a1_016",
-"text": "I am from France.",
-"translation": "Eu sou da França.",
-"cefr_level": "A1",
-"theme": "origins",
-"options": [
-"I am from France.",
-"I am in France.",
-"I go to France.",
-"I like France."
-]
-},
-{
-"id": "listen_a1_017",
-"text": "The pencil is blue.",
-"translation": "O lápis é azul.",
-"cefr_level": "A1",
-"theme": "colors",
-"options": [
-"The pencil is blue.",
-"The pencil is red.",
-"The pencils is blue.",
-"The pencil are blue."
-]
-},
-{
-"id": "listen_a1_018",
-"text": "She has a brother.",
-"translation": "Ela tem um irmão.",
-"cefr_level": "A1",
-"theme": "family",
-"options": [
-"She has a brother.",
-"She have a brother.",
-"She has brothers.",
-"She has a sister."
-]
-},
-{
-"id": "listen_a1_019",
-"text": "We play soccer.",
-"translation": "Nós jogamos futebol.",
-"cefr_level": "A1",
-"theme": "sports",
-"options": [
-"We play soccer.",
-"We plays soccer.",
-"We playing soccer.",
-"We played soccer."
-]
-},
-{
-"id": "listen_a1_020",
-"text": "The house is big.",
-"translation": "A casa é grande.",
-"cefr_level": "A1",
-"theme": "home",
-"options": [
-"The house is big.",
-"The house are big.",
-"The houses is big.",
-"The house is small."
-]
-},
-{
-"id": "listen_a1_021",
-"text": "He drinks water.",
-"translation": "Ele bebe água.",
-"cefr_level": "A1",
-"theme": "drinks",
-"options": [
-"He drinks water.",
-"He drink water.",
-"He drinking water.",
-"He drank water."
-]
-},
-{
-"id": "listen_a1_022",
-"text": "They are happy.",
-"translation": "Eles estão felizes.",
-"cefr_level": "A1",
-"theme": "emotions",
-"options": [
-"They are happy.",
-"They is happy.",
-"They are sad.",
-"They were happy."
-]
-},
-{
-"id": "listen_a1_023",
-"text": "I eat breakfast.",
-"translation": "Eu tomo café da manhã.",
-"cefr_level": "A1",
-"theme": "meals",
-"options": [
-"I eat breakfast.",
-"I eats breakfast.",
-"I eating breakfast.",
-"I ate breakfast."
-]
-},
-{
-"id": "listen_a1_024",
-"text": "The car is fast.",
-"translation": "O carro é rápido.",
-"cefr_level": "A1",
-"theme": "transportation",
-"options": [
-"The car is fast.",
-"The car are fast.",
-"The cars is fast.",
-"The car is slow."
-]
-},
-{
-"id": "listen_a1_025",
-"text": "I want an apple.",
-"translation": "Eu quero uma maçã.",
-"cefr_level": "A1",
-"theme": "food",
-"options": [
-"I want an apple.",
-"I wants an apple.",
-"I wanting an apple.",
-"I wanted an apple."
-]
-},
-{
-"id": "listen_a1_026",
-"text": "The sky is blue.",
-"translation": "O céu é azul.",
-"cefr_level": "A1",
-"theme": "nature",
-"options": [
-"The sky is blue.",
-"The sky are blue.",
-"The skies is blue.",
-"The sky is red."
-]
-},
-{
-"id": "listen_a1_027",
-"text": "She reads books.",
-"translation": "Ela lê livros.",
-"cefr_level": "A1",
-"theme": "hobbies",
-"options": [
-"She reads books.",
-"She read books.",
-"She reading books.",
-"She reads book."
-]
-},
-{
-"id": "listen_a1_028",
-"text": "They are students.",
-"translation": "Eles são estudantes.",
-"cefr_level": "A1",
-"theme": "professions",
-"options": [
-"They are students.",
-"They is students.",
-"They are student.",
-"They were students."
-]
-},
-{
-"id": "listen_a2_015",
-"text": "I have finished my homework.",
-"translation": "Eu terminei minha lição de casa.",
-"cefr_level": "A2",
-"theme": "school",
-"options": [
-"I have finished my homework.",
-"I finished my homework.",
-"I have finish my homework.",
-"I has finished my homework."
-]
-},
-{
-"id": "listen_a2_016",
-"text": "She is not coming today.",
-"translation": "Ela não vem hoje.",
-"cefr_level": "A2",
-"theme": "plans",
-"options": [
-"She is not coming today.",
-"She not is coming today.",
-"She isn't coming today.",
-"She is coming today."
-]
-},
-{
-"id": "listen_a2_017",
-"text": "Do you want some tea?",
-"translation": "Você quer chá?",
-"cefr_level": "A2",
-"theme": "offers",
-"options": [
-"Do you want some tea?",
-"Do you wants some tea?",
-"Are you want some tea?",
-"Do you wanted some tea?"
-]
-},
-{
-"id": "listen_a2_018",
-"text": "I went to the cinema yesterday.",
-"translation": "Eu fui ao cinema ontem.",
-"cefr_level": "A2",
-"theme": "entertainment",
-"options": [
-"I went to the cinema yesterday.",
-"I go to the cinema yesterday.",
-"I gone to the cinema yesterday.",
-"I going to the cinema yesterday."
-]
-},
-{
-"id": "listen_a2_019",
-"text": "They are playing in the park.",
-"translation": "Eles estão brincando no parque.",
-"cefr_level": "A2",
-"theme": "activities",
-"options": [
-"They are playing in the park.",
-"They play in the park.",
-"They played in the park.",
-"They playing in the park."
-]
-},
-{
-"id": "listen_a2_020",
-"text": "Can I open the window?",
-"translation": "Posso abrir a janela?",
-"cefr_level": "A2",
-"theme": "permissions",
-"options": [
-"Can I open the window?",
-"May I open the window?",
-"Could I open the window?",
-"Do I can open the window?"
-]
-},
-{
-"id": "listen_a2_021",
-"text": "I don't like spicy food.",
-"translation": "Eu não gosto de comida picante.",
-"cefr_level": "A2",
-"theme": "preferences",
-"options": [
-"I don't like spicy food.",
-"I not like spicy food.",
-"I doesn't like spicy food.",
-"I didn't like spicy food."
-]
-},
-{
-"id": "listen_a2_022",
-"text": "She has already left.",
-"translation": "Ela já saiu.",
-"cefr_level": "A2",
-"theme": "departures",
-"options": [
-"She has already left.",
-"She already left.",
-"She has left already.",
-"She have already left."
-]
-},
-{
-"id": "listen_a2_023",
-"text": "Are you going to the party?",
-"translation": "Você vai à festa?",
-"cefr_level": "A2",
-"theme": "invitations",
-"options": [
-"Are you going to the party?",
-"Do you going to the party?",
-"Are you go to the party?",
-"Were you going to the party?"
-]
-},
-{
-"id": "listen_a2_024",
-"text": "I need to buy milk.",
-"translation": "Eu preciso comprar leite.",
-"cefr_level": "A2",
-"theme": "shopping",
-"options": [
-"I need to buy milk.",
-"I need buy milk.",
-"I needing to buy milk.",
-"I needed to buy milk."
-]
-},
-{
-"id": "listen_a2_025",
-"text": "I have visited Paris twice.",
-"translation": "Eu visitei Paris duas vezes.",
-"cefr_level": "A2",
-"theme": "travel",
-"options": [
-"I have visited Paris twice.",
-"I visited Paris twice.",
-"I am visiting Paris twice.",
-"I visit Paris twice."
-]
-},
-{
-"id": "listen_a2_026",
-"text": "She doesn't eat meat.",
-"translation": "Ela não come carne.",
-"cefr_level": "A2",
-"theme": "diet",
-"options": [
-"She doesn't eat meat.",
-"She not eat meat.",
-"She doesn't eats meat.",
-"She didn't eat meat."
-]
-},
-{
-"id": "listen_a2_027",
-"text": "We are meeting tomorrow.",
-"translation": "Nós nos encontramos amanhã.",
-"cefr_level": "A2",
-"theme": "arrangements",
-"options": [
-"We are meeting tomorrow.",
-"We meet tomorrow.",
-"We met tomorrow.",
-"We meeting tomorrow."
-]
-},
-{
-"id": "listen_a2_028",
-"text": "How much does this cost?",
-"translation": "Quanto custa isso?",
-"cefr_level": "A2",
-"theme": "shopping",
-"options": [
-"How much does this cost?",
-"How much this cost?",
-"How much does this costs?",
-"How much did this cost?"
-]
-},
-{
-"id": "listen_b1_015",
-"text": "I wish I had more free time.",
-"translation": "Eu gostaria de ter mais tempo livre.",
-"cefr_level": "B1",
-"theme": "wishes",
-"options": [
-"I wish I had more free time.",
-"I wish I have more free time.",
-"I wished I had more free time.",
-"I wish I had more free times."
-]
-},
-{
-"id": "listen_b1_016",
-"text": "She apologized for being late.",
-"translation": "Ela se desculpou por chegar atrasada.",
-"cefr_level": "B1",
-"theme": "apologies",
-"options": [
-"She apologized for being late.",
-"She apologized for be late.",
-"She apologizes for being late.",
-"She apologized for being lately."
-]
-},
-{
-"id": "listen_b1_017",
-"text": "If it rains, we'll stay home.",
-"translation": "Se chover, ficaremos em casa.",
-"cefr_level": "B1",
-"theme": "conditions",
-"options": [
-"If it rains, we'll stay home.",
-"If it will rain, we'll stay home.",
-"If it rains, we stay home.",
-"If it rained, we'll stay home."
-]
-},
-{
-"id": "listen_b1_018",
-"text": "I have been studying English for two years.",
-"translation": "Eu estudo inglês há dois anos.",
-"cefr_level": "B1",
-"theme": "education",
-"options": [
-"I have been studying English for two years.",
-"I have studied English for two years.",
-"I am studying English for two years.",
-"I study English for two years."
-]
-},
-{
-"id": "listen_b1_019",
-"text": "She finds it difficult to wake up early.",
-"translation": "Ela acha difícil acordar cedo.",
-"cefr_level": "B1",
-"theme": "habits",
-"options": [
-"She finds it difficult to wake up early.",
-"She find it difficult to wake up early.",
-"She finds difficult to wake up early.",
-"She finds it difficulty to wake up early."
-]
-},
-{
-"id": "listen_b1_020",
-"text": "They decided to cancel the meeting.",
-"translation": "Eles decidiram cancelar a reunião.",
-"cefr_level": "B1",
-"theme": "decisions",
-"options": [
-"They decided to cancel the meeting.",
-"They decide to cancel the meeting.",
-"They decided cancel the meeting.",
-"They deciding to cancel the meeting."
-]
-},
-{
-"id": "listen_b1_021",
-"text": "I used to live in a small town.",
-"translation": "Eu costumava morar em uma cidade pequena.",
-"cefr_level": "B1",
-"theme": "past_life",
-"options": [
-"I used to live in a small town.",
-"I use to live in a small town.",
-"I used live in a small town.",
-"I was used to live in a small town."
-]
-},
-{
-"id": "listen_b1_022",
-"text": "The book that I read was interesting.",
-"translation": "O livro que eu li foi interessante.",
-"cefr_level": "B1",
-"theme": "reading",
-"options": [
-"The book that I read was interesting.",
-"The book which I read was interesting.",
-"The book I read was interesting.",
-"The book that I read were interesting."
-]
-},
-{
-"id": "listen_b1_023",
-"text": "She complained about the noise.",
-"translation": "Ela reclamou sobre o barulho.",
-"cefr_level": "B1",
-"theme": "complaints",
-"options": [
-"She complained about the noise.",
-"She complain about the noise.",
-"She complained the noise.",
-"She complaining about the noise."
-]
-},
-{
-"id": "listen_b1_024",
-"text": "I have been waiting here for an hour.",
-"translation": "Eu estou esperando aqui há uma hora.",
-"cefr_level": "B1",
-"theme": "waiting",
-"options": [
-"I have been waiting here for an hour.",
-"I have waited here for an hour.",
-"I am waiting here for an hour.",
-"I wait here for an hour."
-]
-},
-{
-"id": "listen_b1_025",
-"text": "If I had the money, I would buy a new car.",
-"translation": "Se eu tivesse o dinheiro, compraria um carro novo.",
-"cefr_level": "B1",
-"theme": "hypothetical",
-"options": [
-"If I had the money, I would buy a new car.",
-"If I have the money, I would buy a new car.",
-"If I had the money, I will buy a new car.",
-"If I had the money, I bought a new car."
-]
-},
-{
-"id": "listen_b1_026",
-"text": "She suggested that we go to the cinema.",
-"translation": "Ela sugeriu que fôssemos ao cinema.",
-"cefr_level": "B1",
-"theme": "suggestions",
-"options": [
-"She suggested that we go to the cinema.",
-"She suggest that we go to the cinema.",
-"She suggested we go to the cinema.",
-"She suggested that we went to the cinema."
-]
-},
-{
-"id": "listen_b1_027",
-"text": "I am not used to cold weather.",
-"translation": "Eu não estou acostumado com tempo frio.",
-"cefr_level": "B1",
-"theme": "adaptation",
-"options": [
-"I am not used to cold weather.",
-"I not used to cold weather.",
-"I am not use to cold weather.",
-"I was not used to cold weather."
-]
-},
-{
-"id": "listen_b1_028",
-"text": "The man who lives next door is a doctor.",
-"translation": "O homem que mora ao lado é médico.",
-"cefr_level": "B1",
-"theme": "descriptions",
-"options": [
-"The man who lives next door is a doctor.",
-"The man which lives next door is a doctor.",
-"The man lives next door is a doctor.",
-"The man who live next door is a doctor."
-]
-},
-{
-"id": "listen_b2_015",
-"text": "The proposal was met with considerable skepticism.",
-"translation": "A proposta foi recebida com considerável ceticismo.",
-"cefr_level": "B2",
-"theme": "reactions",
-"options": [
-"The proposal was met with considerable skepticism.",
-"The proposal was met by considerable skepticism.",
-"The proposal was met with considerable scepticism.",
-"The proposal was meet with considerable skepticism."
-]
-},
-{
-"id": "listen_b2_016",
-"text": "Had I known earlier, I would have acted differently.",
-"translation": "Se eu soubesse antes, teria agido de forma diferente.",
-"cefr_level": "B2",
-"theme": "regrets",
-"options": [
-"Had I known earlier, I would have acted differently.",
-"If I had known earlier, I would have acted differently.",
-"Had I knew earlier, I would have acted differently.",
-"Had I known earlier, I would acted differently."
-]
-},
-{
-"id": "listen_b2_017",
-"text": "The implications of this decision are profound.",
-"translation": "As implicações desta decisão são profundas.",
-"cefr_level": "B2",
-"theme": "consequences",
-"options": [
-"The implications of this decision are profound.",
-"The implication of this decision are profound.",
-"The implications of this decision is profound.",
-"The implications of this decision are profoundly."
-]
-},
-{
-"id": "listen_b2_018",
-"text": "She attributed her success to hard work.",
-"translation": "Ela atribuiu seu sucesso ao trabalho duro.",
-"cefr_level": "B2",
-"theme": "success",
-"options": [
-"She attributed her success to hard work.",
-"She attribute her success to hard work.",
-"She attributed her success for hard work.",
-"She attributed her successes to hard work."
-]
-},
-{
-"id": "listen_b2_019",
-"text": "Notwithstanding the obstacles, they persevered.",
-"translation": "Não obstante os obstáculos, eles perseveraram.",
-"cefr_level": "B2",
-"theme": "persistence",
-"options": [
-"Notwithstanding the obstacles, they persevered.",
-"Despite the obstacles, they persevered.",
-"Although the obstacles, they persevered.",
-"In spite the obstacles, they persevered."
-]
-},
-{
-"id": "listen_b2_020",
-"text": "The phenomenon warrants further investigation.",
-"translation": "O fenômeno justifica investigação adicional.",
-"cefr_level": "B2",
-"theme": "research",
-"options": [
-"The phenomenon warrants further investigation.",
-"The phenomenon warrant further investigation.",
-"The phenomena warrants further investigation.",
-"The phenomenon warrants further investigations."
-]
-},
-{
-"id": "listen_b2_021",
-"text": "She has a propensity for asking questions.",
-"translation": "Ela tem uma propensão para fazer perguntas.",
-"cefr_level": "B2",
-"theme": "character",
-"options": [
-"She has a propensity for asking questions.",
-"She have a propensity for asking questions.",
-"She has a propensity to asking questions.",
-"She has propensity for asking questions."
-]
-},
-{
-"id": "listen_b2_022",
-"text": "The discrepancy between theory and practice is evident.",
-"translation": "A discrepância entre teoria e prática é evidente.",
-"cefr_level": "B2",
-"theme": "analysis",
-"options": [
-"The discrepancy between theory and practice is evident.",
-"The discrepancy between theory and practice are evident.",
-"The discrepancies between theory and practice is evident.",
-"The discrepancy between theory and practice is evidence."
-]
-},
-{
-"id": "listen_b2_023",
-"text": "He postulated that the results would be inconclusive.",
-"translation": "Ele postulou que os resultados seriam inconclusivos.",
-"cefr_level": "B2",
-"theme": "hypothesis",
-"options": [
-"He postulated that the results would be inconclusive.",
-"He postulate that the results would be inconclusive.",
-"He postulated the results would be inconclusive.",
-"He postulated that the results would inconclusive."
-]
-},
-{
-"id": "listen_b2_024",
-"text": "The paradigm shift necessitates reevaluation.",
-"translation": "A mudança de paradigma necessita reavaliação.",
-"cefr_level": "B2",
-"theme": "change",
-"options": [
-"The paradigm shift necessitates reevaluation.",
-"The paradigm shift necessitate reevaluation.",
-"The paradigm shifts necessitates reevaluation.",
-"The paradigm shift necessitates reevaluations."
-]
-},
-{
-"id": "listen_b2_025",
-"text": "Had the meeting not been cancelled, we would have discussed the issue.",
-"translation": "Se a reunião não tivesse sido cancelada, teríamos discutido o assunto.",
-"cefr_level": "B2",
-"theme": "hypothetical",
-"options": [
-"Had the meeting not been cancelled, we would have discussed the issue.",
-"If the meeting had not been cancelled, we would have discussed the issue.",
-"Had the meeting not been cancelled, we would discussed the issue.",
-"Had the meeting not cancelled, we would have discussed the issue."
-]
-},
-{
-"id": "listen_b2_026",
-"text": "The research, once completed, will provide valuable insights.",
-"translation": "A pesquisa, uma vez concluída, fornecerá insights valiosos.",
-"cefr_level": "B2",
-"theme": "research",
-"options": [
-"The research, once completed, will provide valuable insights.",
-"The research, once complete, will provide valuable insights.",
-"The research, being completed, will provide valuable insights.",
-"The research, has completed, will provide valuable insights."
-]
-},
-{
-"id": "listen_b2_027",
-"text": "She expressed concern that the project might be delayed.",
-"translation": "Ela expressou preocupação de que o projeto pudesse ser atrasado.",
-"cefr_level": "B2",
-"theme": "concerns",
-"options": [
-"She expressed concern that the project might be delayed.",
-"She express concern that the project might be delayed.",
-"She expressed concern the project might be delayed.",
-"She expressed concern that the project may be delayed."
-]
-},
-{
-"id": "listen_b2_028",
-"text": "The implications extend far beyond our initial expectations.",
-"translation": "As implicações se estendem muito além de nossas expectativas iniciais.",
-"cefr_level": "B2",
-"theme": "consequences",
-"options": [
-"The implications extend far beyond our initial expectations.",
-"The implication extend far beyond our initial expectations.",
-"The implications extends far beyond our initial expectations.",
-"The implications extend far beyond our initial expectation."
-]
-},
-{
-"id": "listen_c1_015",
-"text": "The juxtaposition of colors creates visual impact.",
-"translation": "A justaposição de cores cria impacto visual.",
-"cefr_level": "C1",
-"theme": "art",
-"options": [
-"The juxtaposition of colors creates visual impact.",
-"The juxtaposition of colours creates visual impact.",
-"The juxtaposition of colors create visual impact.",
-"The juxtaposition of colours create visual impact."
-]
-},
-{
-"id": "listen_c1_016",
-"text": "Notwithstanding evidence, skepticism endures.",
-"translation": "Não obstante evidência, o ceticismo perdura.",
-"cefr_level": "C1",
-"theme": "science",
-"options": [
-"Notwithstanding evidence, skepticism endures.",
-"Despite evidence, skepticism endures.",
-"Although evidence, skepticism endures.",
-"In spite evidence, skepticism endures."
-]
-},
-{
-"id": "listen_c1_017",
-"text": "The epistemological foundations warrant scrutiny.",
-"translation": "Os fundamentos epistemológicos justificam escrutínio.",
-"cefr_level": "C1",
-"theme": "philosophy",
-"options": [
-"The epistemological foundations warrant scrutiny.",
-"The epistemological foundation warrant scrutiny.",
-"The epistemological foundations warrants scrutiny.",
-"The epistemological foundation warrants scrutiny."
-]
-},
-{
-"id": "listen_c1_018",
-"text": "Her eloquence belied apparent nervousness.",
-"translation": "Sua eloquência contradizia aparente nervosismo.",
-"cefr_level": "C1",
-"theme": "character",
-"options": [
-"Her eloquence belied apparent nervousness.",
-"Her eloquence belied apparent nervous.",
-"Her eloquence belies apparent nervousness.",
-"Her eloquence belied apparent nervousness."
-]
-},
-{
-"id": "listen_c1_019",
-"text": "The symbiotic relationship engenders evolution.",
-"translation": "O relacionamento simbiótico engendra evolução.",
-"cefr_level": "C1",
-"theme": "sociology",
-"options": [
-"The symbiotic relationship engenders evolution.",
-"The symbiotic relationship engender evolution.",
-"The symbiotic relationships engenders evolution.",
-"The symbiotic relationships engender evolution."
-]
-},
-{
-"id": "listen_c1_020",
-"text": "The confluence precipitated unprecedented outcome.",
-"translation": "A confluência precipitou resultado sem precedentes.",
-"cefr_level": "C1",
-"theme": "causation",
-"options": [
-"The confluence precipitated unprecedented outcome.",
-"The confluence precipitate unprecedented outcome.",
-"The confluences precipitated unprecedented outcome.",
-"The confluences precipitate unprecedented outcome."
-]
-},
-{
-"id": "listen_c1_021",
-"text": "The paradigm revolutionized interaction methods.",
-"translation": "O paradigma revolucionou métodos de interação.",
-"cefr_level": "C1",
-"theme": "technology",
-"options": [
-"The paradigm revolutionized interaction methods.",
-"The paradigm revolutionize interaction methods.",
-"The paradigms revolutionized interaction methods.",
-"The paradigms revolutionize interaction methods."
-]
-},
-{
-"id": "listen_c1_022",
-"text": "Notwithstanding evidence, hypothesis contentious.",
-"translation": "Não obstante evidência, hipótese controversa.",
-"cefr_level": "C1",
-"theme": "science",
-"options": [
-"Notwithstanding evidence, hypothesis contentious.",
-"Despite evidence, hypothesis contentious.",
-"Although evidence, hypothesis contentious.",
-"In spite evidence, hypothesis contentious."
-]
-},
-{
-"id": "listen_c1_023",
-"text": "The quintessence resides in interpretation.",
-"translation": "A quintessência reside na interpretação.",
-"cefr_level": "C1",
-"theme": "diplomacy",
-"options": [
-"The quintessence resides in interpretation.",
-"The quintessence reside in interpretation.",
-"The quintessences resides in interpretation.",
-"The quintessences reside in interpretation."
-]
-},
-{
-"id": "listen_c1_024",
-"text": "Ramifications extend beyond indicators.",
-"translation": "Ramificações se estendem além dos indicadores.",
-"cefr_level": "C1",
-"theme": "economics",
-"options": [
-"Ramifications extend beyond indicators.",
-"Ramification extend beyond indicators.",
-"Ramifications extends beyond indicators.",
-"Ramification extends beyond indicators."
-]
-},
-{
-"id": "listen_c1_025",
-"text": "Were circumstances different, outcome dissimilar.",
-"translation": "Se circunstâncias fossem diferentes, resultado diferente.",
-"cefr_level": "C1",
-"theme": "hypothetical",
-"options": [
-"Were circumstances different, outcome dissimilar.",
-"If circumstances different, outcome dissimilar.",
-"Were circumstances were different, outcome dissimilar.",
-"Were circumstances different, outcome would dissimilar."
-]
-},
-{
-"id": "listen_c1_026",
-"text": "Paradigm shift revolutionized communication paradigms.",
-"translation": "Mudança de paradigma revolucionou paradigmas de comunicação.",
-"cefr_level": "C1",
-"theme": "technology",
-"options": [
-"Paradigm shift revolutionized communication paradigms.",
-"Paradigm shift revolutionize communication paradigms.",
-"Paradigm shifts revolutionized communication paradigms.",
-"Paradigm shifts revolutionize communication paradigms."
-]
-},
-{
-"id": "listen_c1_027",
-"text": "Notwithstanding evidence, skepticism endures unabated.",
-"translation": "Não obstante evidência, ceticismo perdura inabalável.",
-"cefr_level": "C1",
-"theme": "science",
-"options": [
-"Notwithstanding evidence, skepticism endures unabated.",
-"Despite evidence, skepticism endures unabated.",
-"Although evidence, skepticism endures unabated.",
-"In spite evidence, skepticism endures unabated."
-]
-},
-{
-"id": "listen_c1_028",
-"text": "Confluence of influences engendered synthesis.",
-"translation": "Confluência de influências engendrou síntese.",
-"cefr_level": "C1",
-"theme": "culture",
-"options": [
-"Confluence of influences engendered synthesis.",
-"Confluence of influences engender synthesis.",
-"Confluences of influences engendered synthesis.",
-"Confluences of influences engender synthesis."
-]
-},
-{
-"id": "listen_c2_015",
-"text": "Epistemological foundations necessitate interrogation.",
-"translation": "Fundamentos epistemológicos necessitam interrogação.",
-"cefr_level": "C2",
-"theme": "philosophy",
-"options": [
-"Epistemological foundations necessitate interrogation.",
-"Epistemological foundation necessitate interrogation.",
-"Epistemological foundations necessitates interrogation.",
-"Epistemological foundation necessitates interrogation."
-]
-},
-{
-"id": "listen_c2_016",
-"text": "Symbiotic interrelationship engenders evolution.",
-"translation": "Inter-relação simbiótica engendra evolução.",
-"cefr_level": "C2",
-"theme": "sociology",
-"options": [
-"Symbiotic interrelationship engenders evolution.",
-"Symbiotic interrelationship engender evolution.",
-"Symbiotic interrelationships engenders evolution.",
-"Symbiotic interrelationships engender evolution."
-]
-},
-{
-"id": "listen_c2_017",
-"text": "Notwithstanding substantiation, resistance unabated.",
-"translation": "Não obstante substantiação, resistência inabalável.",
-"cefr_level": "C2",
-"theme": "science",
-"options": [
-"Notwithstanding substantiation, resistance unabated.",
-"Despite substantiation, resistance unabated.",
-"Although substantiation, resistance unabated.",
-"In spite substantiation, resistance unabated."
-]
-},
-{
-"id": "listen_c2_018",
-"text": "Rhetorical prowess resides in selection.",
-"translation": "Proeza retórica reside na seleção.",
-"cefr_level": "C2",
-"theme": "language",
-"options": [
-"Rhetorical prowess resides in selection.",
-"Rhetorical prowess reside in selection.",
-"Rhetorical prowesses resides in selection.",
-"Rhetorical prowesses reside in selection."
-]
-},
-{
-"id": "listen_c2_019",
-"text": "Confluence precipitated metamorphosis.",
-"translation": "Confluência precipitou metamorfose.",
-"cefr_level": "C2",
-"theme": "change",
-"options": [
-"Confluence precipitated metamorphosis.",
-"Confluence precipitate metamorphosis.",
-"Confluences precipitated metamorphosis.",
-"Confluences precipitate metamorphosis."
-]
-},
-{
-"id": "listen_c2_020",
-"text": "Interrogation necessitates transcendence.",
-"translation": "Interrogação necessita transcendência.",
-"cefr_level": "C2",
-"theme": "methodology",
-"options": [
-"Interrogation necessitates transcendence.",
-"Interrogation necessitate transcendence.",
-"Interrogations necessitates transcendence.",
-"Interrogations necessitate transcendence."
-]
-},
-{
-"id": "listen_c2_021",
-"text": "Epistemological interrogation necessitates transcendence.",
-"translation": "Interrogação epistemológica necessita transcendência.",
-"cefr_level": "C2",
-"theme": "philosophy",
-"options": [
-"Epistemological interrogation necessitates transcendence.",
-"Epistemological interrogation necessitate transcendence.",
-"Epistemological interrogations necessitates transcendence.",
-"Epistemological interrogations necessitate transcendence."
-]
-},
-{
-"id": "listen_c2_022",
-"text": "Symbiotic nexus engenders transformative evolution.",
-"translation": "Nexus simbiótico engendra evolução transformadora.",
-"cefr_level": "C2",
-"theme": "technology",
-"options": [
-"Symbiotic nexus engenders transformative evolution.",
-"Symbiotic nexus engender transformative evolution.",
-"Symbiotic nexuses engenders transformative evolution.",
-"Symbiotic nexuses engender transformative evolution."
-]
-},
-{
-"id": "listen_c2_023",
-"text": "Notwithstanding corroboration, underpinnings warrant scrutiny.",
-"translation": "Não obstante corroboração, fundamentos justificam escrutínio.",
-"cefr_level": "C2",
-"theme": "theory",
-"options": [
-"Notwithstanding corroboration, underpinnings warrant scrutiny.",
-"Despite corroboration, underpinnings warrant scrutiny.",
-"Although corroboration, underpinnings warrant scrutiny.",
-"In spite corroboration, underpinnings warrant scrutiny."
-]
-},
-{
-"id": "listen_c2_024",
-"text": "Quintessential manifestation resides in orchestration.",
-"translation": "Manifestação quintessencial reside na orquestração.",
-"cefr_level": "C2",
-"theme": "language",
-"options": [
-"Quintessential manifestation resides in orchestration.",
-"Quintessential manifestation reside in orchestration.",
-"Quintessential manifestations resides in orchestration.",
-"Quintessential manifestations reside in orchestration."
-]
+  "theme": "possessions"
+},
+{
+  "id": "listen_a1_004",
+  "text": "I am from Brazil.",
+  "question": "Where is the speaker from?",
+  "options": ["Brazil", "Portugal", "Spain", "Italy"],
+  "correctAnswer": 0,
+  "translation": "Eu sou do Brasil.",
+  "cefr_level": "A1",
+  "theme": "introductions"
+},
+{
+  "id": "listen_a1_005",
+  "text": "The cat is black.",
+  "question": "What color is the cat?",
+  "options": ["Preto", "Branco", "Marrom", "Cinza"],
+  "correctAnswer": 0,
+  "translation": "O gato é preto.",
+  "cefr_level": "A1",
+  "theme": "descriptions"
+},
+{
+  "id": "listen_a1_006",
+  "text": "I like coffee.",
+  "question": "What does the speaker like?",
+  "options": ["Café", "Chá", "Agua", "Suco"],
+  "correctAnswer": 0,
+  "translation": "Eu gosto de café.",
+  "cefr_level": "A1",
+  "theme": "preferences"
+},
+{
+  "id": "listen_a1_007",
+  "text": "How are you?",
+  "question": "What is the speaker asking?",
+  "options": ["Como você está", "Como você vai", "O que você faz", "Onde você está"],
+  "correctAnswer": 0,
+  "translation": "Como você está?",
+  "cefr_level": "A1",
+  "theme": "greetings"
+},
+ {
+   "id": "listen_a2_003",
+   "text": "John Says: What are you doing next weekend? Any plans?\nDavid says: Yes, I'm going to visit my parents next weekend. They live about two hours away, so I'll probably stay overnight.\nJohn Says: That sounds nice. Give them my regards.",
+   "question": "When is David planning to visit their parents?",
+   "options": [
+     "Próximo fim de semana",
+     "Este fim de semana",
+     "Fim de semana passado",
+     "Todo fim de semana"
+   ],
+   "correctAnswer": 0,
+   "translation": "John Says: O que você vai fazer no próximo fim de semana? Algum plano?\nDavid says: Sim, vou visitar meus pais no próximo fim de semana. Eles moram a cerca de duas horas de distância, então provavelmente vou ficar a noite.\nJohn Says: Parece bom. Dê lembranças a eles.",
+   "cefr_level": "A2",
+   "theme": "future_plans"
+ },
+ {
+   "id": "listen_a2_004",
+   "text": "John Says: This restaurant looks really busy tonight.\nDavid says: Yes, there are too many people in the restaurant. We might have to wait for a table.\nJohn Says: I don't mind waiting. The food here is always good.\nDavid says: You're right. It's worth the wait.",
+   "question": "What does David say about the restaurant?",
+   "options": [
+     "Há muitas pessoas e talvez precisemos esperar",
+     "Há poucas pessoas e podemos sentar imediatamente",
+     "Não há ninguém esperando",
+     "As pessoas erradas estão esperando"
+   ],
+   "correctAnswer": 0,
+   "translation": "John Says: Este restaurante parece muito movimentado esta noite.\nDavid says: Sim, há muitas pessoas no restaurante. Podemos ter que esperar por uma mesa.\nJohn Says: Não me importo de esperar. A comida aqui é sempre boa.\nDavid says: Você está certo. Vale a pena esperar.",
+   "cefr_level": "A2",
+   "theme": "describing_places"
+ },
+ {
+   "id": "listen_a2_005",
+   "text": "John Says: Sarah is really talented with languages, isn't she?\nDavid says: Yes, she can speak three languages fluently. English, Spanish, and French.\nJohn Says: That's impressive! How did she learn them?\nDavid says: She studied abroad and practiced a lot.",
+   "question": "How many languages does Sarah speak fluently?",
+   "options": [
+     "Três idiomas",
+     "Dois idiomas",
+     "Um idioma",
+     "Quatro idiomas"
+   ],
+   "correctAnswer": 0,
+   "translation": "John Says: Sarah é realmente talentosa com idiomas, não é?\nDavid says: Sim, ela consegue falar três idiomas fluentemente. Inglês, espanhol e francês.\nJohn Says: Isso é impressionante! Como ela aprendeu?\nDavid says: Ela estudou no exterior e praticou muito.",
+   "cefr_level": "A2",
+   "theme": "abilities"
+ },
+ {
+   "id": "listen_a2_006",
+   "text": "John Says: Did you finish your homework for tomorrow?\nDavid says: No, we haven't finished our homework yet. We started it, but we got distracted.\nJohn Says: You should finish it tonight. The teacher will be angry if you don't.\nDavid says: You're right. Let's get back to work.",
+   "question": "What haven't the speakers finished?",
+   "options": [
+     "A lição de casa",
+     "O almoço",
+     "A aula",
+     "O jogo"
+   ],
+   "correctAnswer": 0,
+   "translation": "John Says: Você terminou a lição de casa para amanhã?\nDavid says: Não, ainda não terminamos nossa lição de casa. Começamos, mas nos distraímos.\nJohn Says: Você deveria terminar esta noite. O professor vai ficar bravo se não terminar.\nDavid says: Você está certo. Vamos voltar ao trabalho.",
+   "cefr_level": "A2",
+   "theme": "school"
+ },
+ {
+   "id": "listen_a2_007",
+   "text": "John Says: Look at those two boys over there. Which one is taller?\nDavid says: The one on the left is taller. He's taller than his brother.\nJohn Says: Really? They look about the same height to me.\nDavid says: No, definitely. The older one is much taller.",
+   "question": "Who is taller according to the speakers?",
+   "options": [
+     "Ele é mais alto que seu irmão",
+     "O irmão é mais alto",
+     "São da mesma altura",
+     "A irmã é mais alta"
+   ],
+   "correctAnswer": 0,
+   "translation": "John Says: Olhe aqueles dois meninos ali. Qual deles é mais alto?\nDavid says: O da esquerda é mais alto. Ele é mais alto que seu irmão.\nJohn Says: Sério? Eles parecem ter a mesma altura para mim.\nDavid says: Não, definitivamente. O mais velho é muito mais alto.",
+   "cefr_level": "A2",
+   "theme": "comparisons"
+ },
+ {
+   "id": "listen_b1_003",
+   "text": "I really thought I was prepared for that history exam, but when I saw the questions, I realized I hadn't covered enough of the material. I wish I had studied harder for the exam. Now I'm worried about how this will affect my overall grade for the semester. I should have spent more time in the library instead of going out with friends.",
+   "question": "What is the speaker's main concern?",
+   "options": [
+     "O impacto da prova no boletim escolar geral",
+     "Não ter tempo suficiente para fazer a prova",
+     "Esquecer de comparecer à prova",
+     "Não conseguir recuperar a nota posteriormente"
+   ],
+   "correctAnswer": 0,
+   "translation": "Eu realmente pensei que estava preparado para aquela prova de história, mas quando vi as perguntas, percebi que não havia coberto material suficiente...",
+   "cefr_level": "B1",
+   "theme": "regrets"
+ },
+ {
+   "id": "listen_b1_004",
+   "text": "We had been looking forward to seeing that new action movie all week, but it turned out to be a huge disappointment. The plot was predictable, the special effects were outdated, and the acting was just terrible. The movie was so boring that we left early. We could have stayed home and watched something better on TV. At least we didn't waste the full ticket price.",
+   "question": "What problem did the speakers have with the movie?",
+   "options": [
+     "A história era previsível e os efeitos especiais antiquados",
+     "O filme durou mais do que o esperado",
+     "Eles estavam muito cansados para assistir até o fim",
+     "Tinham que chegar em casa antes de certa hora"
+   ],
+   "correctAnswer": 0,
+   "translation": "Estávamos ansiosos para ver aquele novo filme de ação a semana toda, mas acabou sendo uma grande decepção...",
+   "cefr_level": "B1",
+   "theme": "entertainment"
+ },
+ {
+   "id": "listen_b1_005",
+   "text": "Sarah has been working in the emergency room for over five years now, and she's become really skilled at handling stressful situations. When there's a crisis, she stays calm and makes quick decisions. She's used to working under pressure. Her colleagues often comment on how she performs well even when things get really hectic. It's not easy, but she's good at managing the demands of the job.",
+   "question": "What do Sarah's colleagues admire about her?",
+   "options": [
+     "Sua capacidade de manter a calma sob pressão no trabalho",
+     "Sua habilidade de trabalhar em um ritmo mais lento",
+     "Sua preferência por trabalhar sozinha",
+     "Sua escolha de trabalhar em casa quando possível"
+   ],
+   "correctAnswer": 0,
+   "translation": "Sarah trabalha no pronto-socorro há mais de cinco anos e se tornou realmente habilidosa em lidar com situações estressantes...",
+   "cefr_level": "B1",
+   "theme": "work"
+ },
+ {
+   "id": "listen_b1_006",
+   "text": "We're already running late for our trip to the city, and the next train leaves in just fifteen minutes. The taxi is stuck in traffic, and we're still five blocks from the station. Unless you hurry up, we'll miss the train. Then we'll have to wait another hour for the next one, and we'll be late for our meeting. Come on, we need to pick up the pace!",
+   "question": "What is the speaker worried about?",
+   "options": [
+     "Perder o trem e ter que esperar muito tempo",
+     "Chegar cedo demais e ter que esperar na estação",
+     "Pegar o caminho errado para a estação",
+     "Não conseguir encontrar um táxi disponível"
+   ],
+   "correctAnswer": 0,
+   "translation": "Já estamos atrasados para nossa viagem para a cidade, e o próximo trem sai em apenas quinze minutos...",
+   "cefr_level": "B1",
+   "theme": "conditions"
+ },
+ {
+   "id": "listen_b1_007",
+   "text": "I ordered that new laptop three days ago with express shipping, and according to the tracking information, it was delivered yesterday. But when I checked the porch and the mailbox, there was nothing there. The package should have arrived by now. I'm getting really frustrated because I need it for work tomorrow. I think I should call customer service to find out what happened.",
+   "question": "What is frustrating the speaker?",
+   "options": [
+     "O pacote não chegou apesar de ter sido enviado há dias",
+     "O pacote chegou mas estava danificado",
+     "O pacote foi enviado pelo método errado",
+     "O pacote chegou mas não era o produto certo"
+   ],
+   "correctAnswer": 0,
+   "translation": "Eu pedi aquele novo laptop há três dias com envio expresso, e de acordo com as informações de rastreamento, foi entregue ontem...",
+   "cefr_level": "B1",
+   "theme": "expectations"
+ },
+ {
+   "id": "listen_b2_003",
+   "text": "The board meeting ran much longer than anticipated, and by the time we wrapped up, rush hour traffic had turned the usually straightforward commute into a two-hour ordeal. Had I known about the traffic congestion that was building up, I would have left earlier or taken the subway instead. As it stands, I missed my daughter's school recital entirely, and I'm still kicking myself for not checking the traffic app beforehand.",
+   "question": "What is the speaker expressing?",
+   "options": [
+     "Arrependimento por não ter previsto o trânsito",
+     "Raiva do engarrafamento causado pela reunião",
+     "Preocupação com o desempenho da filha",
+     "Frustração com o aplicativo de trânsito"
+   ],
+   "correctAnswer": 0,
+   "translation": "A reunião do conselho durou muito mais do que o esperado, e quando terminamos, o horário de pico havia transformado o trajeto normalmente direto em uma provação de duas horas...",
+   "cefr_level": "B2",
+   "theme": "regrets"
+ },
+ {
+   "id": "listen_b2_004",
+   "text": "Sarah's career trajectory at TechCorp has been nothing short of remarkable. Starting as a junior developer five years ago, she's rapidly ascended through the ranks, taking on increasingly complex projects and leading cross-functional teams. She's been promoted twice since joining the company, and her latest role as Senior Engineering Manager puts her in charge of a department with over fifty developers. Her colleagues often remark that her technical expertise combined with her leadership skills makes her an invaluable asset to the organization.",
+   "question": "What impression does the speaker give about Sarah's career?",
+   "options": [
+     "Ela teve progresso excepcional na empresa",
+     "Ela teve dificuldades para se adaptar à cultura corporativa",
+     "Ela preferiria ter ficado em uma posição técnica",
+     "Ela planeja deixar a empresa em breve"
+   ],
+   "correctAnswer": 0,
+   "translation": "A trajetória profissional de Sarah na TechCorp tem sido nada menos que notável...",
+   "cefr_level": "B2",
+   "theme": "career"
+ },
+ {
+   "id": "listen_b2_005",
+   "text": "We had meticulously planned our outdoor wedding ceremony for months, coordinating with the weather service and having contingency plans for various scenarios. The forecast looked promising right up until the morning of the event. No sooner had we left the church than it started raining heavily, turning what should have been a picturesque garden celebration into a chaotic scramble for cover. The rain was so intense that it actually damaged some of the floral arrangements and forced us to move the entire reception indoors at the last minute.",
+   "question": "What was the consequence of the sudden rain?",
+   "options": [
+     "A cerimônia teve que ser movida para dentro",
+     "Os convidados cancelaram sua participação",
+     "A cerimônia foi completamente cancelada",
+     "Os arranjos florais foram salvos da chuva"
+   ],
+   "correctAnswer": 0,
+   "translation": "Planejamos meticulosamente nossa cerimônia de casamento ao ar livre por meses, coordenando com o serviço meteorológico e tendo planos contingenciais para vários cenários...",
+   "cefr_level": "B2",
+   "theme": "weather"
+ },
+ {
+   "id": "listen_b2_006",
+   "text": "After weeks of intense debate and multiple rounds of revisions, the controversial merger proposal finally reached a conclusion. The board members had expressed various concerns ranging from financial risks to cultural integration challenges. The proposal, having been thoroughly reviewed by legal experts, financial analysts, and independent consultants, was finally approved with some minor amendments. This decision represents a significant strategic shift for the company, opening up new markets but also requiring substantial investment in the coming years.",
+   "question": "What can be inferred about the approval process?",
+   "options": [
+     "Foi um processo cuidadoso e bem examinado",
+     "Foi uma decisão tomada rapidamente sem análise",
+     "Foi rejeitado por questões legais",
+     "Foi aprovado sem nenhuma modificação"
+   ],
+   "correctAnswer": 0,
+   "translation": "Após semanas de intenso debate e múltiplas rodadas de revisões, a controversa proposta de fusão finalmente chegou a uma conclusão...",
+   "cefr_level": "B2",
+   "theme": "business"
+ },
+ {
+   "id": "listen_b2_007",
+   "text": "The cybersecurity breach that occurred last month has exposed significant vulnerabilities in our network infrastructure. Despite repeated warnings from IT security experts and the implementation of various patches, we've continued to operate with outdated protocols that clearly aren't sufficient. It's high time we addressed this issue properly by conducting a comprehensive security audit and investing in modern encryption technologies. The potential consequences of another breach—data loss, financial penalties, and reputational damage—are simply too severe to ignore any longer.",
+   "question": "What is the speaker's main concern?",
+   "options": [
+     "As vulnerabilidades de segurança precisam ser resolvidas urgentemente",
+     "Os especialistas de TI estão sendo muito alarmistas",
+     "As tecnologias de criptografia modernas são desnecessárias",
+     "As penalidades financeiras não são um problema sério"
+   ],
+   "correctAnswer": 0,
+   "translation": "A violação de segurança cibernética que ocorreu no mês passado expôs vulnerabilidades significativas em nossa infraestrutura de rede...",
+   "cefr_level": "B2",
+   "theme": "problems"
+ },
+ {
+   "id": "listen_c1_003",
+   "text": "During the annual shareholders' meeting, the CEO was midway through his presentation on quarterly earnings when the auditorium's power system failed completely. The room plunged into darkness, causing momentary panic among the assembled executives and investors. Scarcely had the presentation begun when the power went out, leaving the speaker fumbling for his backup slides and the audience reaching for their phones to provide emergency lighting. The technical team rushed to investigate, but it was clear that the electrical fault would delay proceedings for at least thirty minutes.",
+   "question": "What happened right after the presentation started?",
+   "options": ["A energia acabou", "As pessoas chegaram", "O palestrante terminou", "As luzes acenderam"],
+   "correctAnswer": 0,
+   "translation": "Durante a reunião anual de acionistas, o CEO estava no meio de sua apresentação sobre os lucros trimestrais quando o sistema elétrico do auditório falhou completamente...",
+   "cefr_level": "C1",
+   "theme": "events"
+ },
+ {
+   "id": "listen_c1_004",
+   "text": "The newly proposed environmental legislation has sparked intense debate among policymakers and industry leaders. While some critics argue that the regulations would impose excessive costs on businesses and potentially lead to job losses, proponents maintain that the measures are essential for addressing the climate crisis. The legislation, albeit controversial, represents a significant step forward in protecting natural resources and establishing stricter emissions standards. Despite the opposition from certain sectors, environmental groups are celebrating what they see as a breakthrough in sustainable policy development.",
+   "question": "What is the speaker's opinion of the legislation?",
+   "options": ["É uma grande melhoria", "Está completamente errado", "Não é importante", "É muito antigo"],
+   "correctAnswer": 0,
+   "translation": "A recém-proposta legislação ambiental provocou intenso debate entre formuladores de políticas e líderes da indústria...",
+   "cefr_level": "C1",
+   "theme": "politics"
+ },
+ {
+   "id": "listen_c1_005",
+   "text": "In today's digital age, corporate espionage and data breaches have become increasingly sophisticated threats to business operations. Companies must implement robust security protocols to protect sensitive information from unauthorized access. Under no circumstances should confidential information be disclosed, even to trusted partners without proper legal agreements in place. The consequences of such breaches can include financial losses, reputational damage, and legal liabilities that can cripple even the most established organizations in the marketplace.",
+   "question": "What should NOT happen with confidential information?",
+   "options": ["Ser divulgada", "Ser guardada", "Ser copiada", "Ser lida"],
+   "correctAnswer": 0,
+   "translation": "Na era digital de hoje, espionagem corporativa e violações de dados se tornaram ameaças cada vez mais sofisticadas...",
+   "cefr_level": "C1",
+   "theme": "rules"
+ },
+ {
+  "id": "listen_c1_006",
+  "text": "The groundbreaking study on neural plasticity has yielded remarkable insights into how the adult brain can rewire itself in response to learning and experience. After conducting extensive clinical trials with stroke patients, the research team discovered that targeted rehabilitation exercises could significantly improve motor function recovery. The researcher's findings, insofar as they've been verified through peer review and replication studies, support the hypothesis that neuroplasticity continues throughout adulthood, challenging long-held beliefs about the brain's fixed nature after childhood development.",
+  "question": "What do the researcher's findings support?",
+  "options": ["A hipótese", "A teoria", "A conclusão", "A pergunta"],
+  "correctAnswer": 0,
+  "translation": "O estudo inovador sobre plasticidade neural produziu insights notáveis sobre como o cérebro adulto pode se reconfigurar...",
+  "cefr_level": "C1",
+  "theme": "science"
+  },
+ {
+  "id": "listen_c1_007",
+  "text": "The software development project faced unprecedented obstacles when the lead developer unexpectedly left mid-way through the critical testing phase. Budget constraints forced the remaining team to work extended hours, and several key technologies proved more complex to implement than initially anticipated. Notwithstanding the challenges faced, the team delivered exceptional results by developing innovative workarounds and maintaining rigorous quality standards throughout the process. The final product not only met all specifications but exceeded performance expectations, earning praise from both clients and industry experts.",
+  "question": "What did the team deliver despite the challenges?",
+  "options": ["Resultados excepcionais", "Resultados ruins", "Nenhum resultado", "Resultados normais"],
+  "correctAnswer": 0,
+  "translation": "O projeto de desenvolvimento de software enfrentou obstáculos sem precedentes quando o desenvolvedor líder saiu inesperadamente...",
+  "cefr_level": "C1",
+  "theme": "work"
+  },
+{
+  "id": "listen_c2_003",
+  "text": "The proposed fiscal reforms, while ostensibly designed to stimulate economic growth, have been criticized by economists who argue that they fail to address the underlying structural imbalances in our monetary system. The legislation's emphasis on short-term tax incentives overlooks the long-term consequences of exacerbating income inequality and potentially destabilizing financial markets through unsustainable debt accumulation.",
+  "question": "What is the main criticism of the proposed fiscal reforms?",
+  "options": [
+    "Eles ignoram as necessidades de crescimento econômico",
+    "Eles não resolvem os desequilíbrios estruturais do sistema monetário",
+    "Eles focam demais em incentivos fiscais de longo prazo",
+    "Eles estabilizam os mercados financeiros adequadamente"
+  ],
+  "correctAnswer": 1,
+  "translation": "As reformas fiscais propostas, embora ostensivamente projetadas para estimular o crescimento econômico, foram criticadas por economistas que argumentam que elas falham em abordar os desequilíbrios estruturais subjacentes em nosso sistema monetário...",
+  "cefr_level": "C2",
+  "theme": "economics"
+},
+{
+  "id": "listen_c2_004",
+  "text": "The sociologist argued that deeply ingrained cultural narratives about meritocracy have become so entrenched in our collective consciousness that any attempt at meaningful educational reform is met with fierce resistance. These narratives, perpetuated through generations of institutional practices, create a cognitive dissonance that makes it psychologically uncomfortable for individuals to acknowledge systemic inequities in access to quality education.",
+  "question": "According to the sociologist, what makes educational reform psychologically difficult?",
+  "options": [
+    "A falta de vontade institucional de mudança",
+    "O desconforto de reconhecer desigualdades sistêmicas",
+    "A ausência de narrativas culturais sobre meritocracia",
+    "A facilidade de implementar mudanças educacionais"
+  ],
+  "correctAnswer": 1,
+  "translation": "A socióloga argumentou que narrativas culturais profundamente enraizadas sobre meritocracia se tornaram tão arraigadas em nossa consciência coletiva que qualquer tentativa de reforma educacional significativa é recebida com resistência feroz...",
+  "cefr_level": "C2",
+  "theme": "sociology"
+},
+{
+  "id": "listen_c2_005",
+  "text": "The environmental policy proposal, however laudable its intentions to reduce carbon emissions, fails to account for the multifaceted nature of climate change impacts across different socioeconomic groups. While it successfully targets industrial pollution, the legislation overlooks how climate adaptation strategies must be tailored to vulnerable communities that lack the resources to implement expensive technological solutions.",
+  "question": "What is the main limitation of the environmental policy proposal?",
+  "options": [
+    "Ela não consegue reduzir emissões de carbono",
+    "Ela ignora as necessidades específicas de comunidades vulneráveis",
+    "Ela foca demais em soluções tecnológicas caras",
+    "Ela não aborda a poluição industrial adequadamente"
+  ],
+  "correctAnswer": 1,
+  "translation": "A proposta de política ambiental, por mais louváveis que sejam suas intenções de reduzir emissões de carbono, não consegue explicar a natureza multifacetada dos impactos das mudanças climáticas em diferentes grupos socioeconômicos...",
+  "cefr_level": "C2",
+  "theme": "environment"
+},
+{
+  "id": "listen_c2_006",
+  "text": "The privacy legislation, ostensibly designed to protect consumer data from corporate exploitation, has been criticized for its unintended consequences on innovation in the tech sector. While the bill successfully addresses immediate data protection concerns, industry analysts argue that its overly broad definitions of personal information could stifle the development of emerging technologies that rely on sophisticated data analytics for improving user experiences.",
+  "question": "What unintended consequence of the privacy legislation are analysts concerned about?",
+  "options": [
+    "A redução da proteção de dados do consumidor",
+    "A limitação do desenvolvimento de novas tecnologias",
+    "O aumento da exploração corporativa de dados",
+    "A simplificação excessiva das definições de dados pessoais"
+  ],
+  "correctAnswer": 1,
+  "translation": "A legislação de privacidade, ostensivamente projetada para proteger dados do consumidor da exploração corporativa, foi criticada por suas consequências não intencionais na inovação no setor de tecnologia...",
+  "cefr_level": "C2",
+  "theme": "technology"
+},
+{
+  "id": "listen_c2_007",
+  "text": "Recent neuroscientific research has revealed that the phenomenon of lucid dreaming, as yet insufficiently understood by cognitive scientists, warrants further empirical investigation. While anecdotal evidence suggests that individuals can consciously control their dreams, the underlying neural mechanisms remain poorly understood, necessitating rigorous experimental protocols to determine whether lucid dreaming represents a genuine form of metacognition or merely an illusion of conscious control.",
+  "question": "What does the speaker argue is necessary to understand lucid dreaming?",
+  "options": [
+    "Mais evidências anedóticas de indivíduos",
+    "Protocolos experimentais rigorosos para investigar os mecanismos neurais",
+    "Aceitar que é apenas uma ilusão de controle consciente",
+    "Ignorar o fenômeno até que seja completamente compreendido"
+  ],
+  "correctAnswer": 1,
+  "translation": "Pesquisas neurocientíficas recentes revelaram que o fenômeno do sonho lúcido, ainda insuficientemente compreendido por cientistas cognitivos, justifica uma investigação empírica adicional...",
+  "cefr_level": "C2",
+  "theme": "neuroscience"
+},
+{
+  "id": "listen_a1_011",
+  "text": "Hello, how are you?",
+  "question": "What is the speaker saying?",
+  "options": ["Olá, como vai?", "Olá, como você está?", "Oi, como você está?", "Olá, o que você faz?"],
+  "correctAnswer": 1,
+  "translation": "Olá, como você está?",
+  "cefr_level": "A1",
+  "theme": "greetings"
+},
+{
+  "id": "listen_a1_012",
+  "text": "Thank you very much.",
+  "question": "What is the speaker expressing?",
+  "options": ["Obrigado muito", "Muito obrigado", "Obrigado demais", "Muito obrigado mesmo"],
+  "correctAnswer": 1,
+  "translation": "Muito obrigado.",
+  "cefr_level": "A1",
+  "theme": "politeness"
+},
+ {
+   "id": "listen_a2_011",
+   "text": "John Says: How long have you been waiting here?\nDavid says: I have been waiting for an hour. The bus is really late today.\nJohn Says: That's terrible. Maybe you should call the bus company.\nDavid says: I already did. They said there's traffic on the main road.",
+   "question": "How long has David been waiting?",
+   "options": [
+     "Uma hora",
+     "Meia hora",
+     "Duas horas",
+     "Quinze minutos"
+   ],
+   "correctAnswer": 0,
+   "translation": "John Says: Há quanto tempo você está esperando aqui?\nDavid says: Eu estou esperando há uma hora. O ônibus está realmente atrasado hoje.\nJohn Says: Isso é terrível. Talvez você devesse ligar para a empresa de ônibus.\nDavid says: Eu já liguei. Eles disseram que há trânsito na estrada principal.",
+   "cefr_level": "A2",
+   "theme": "duration"
+ },
+ {
+   "id": "listen_a2_012",
+   "text": "John Says: Excuse me, could you help me please?\nDavid says: Of course, what do you need?\nJohn Says: I'm looking for the train station. Is it near here?\nDavid says: Yes, it's just two blocks away. Go straight and turn left.",
+   "question": "What is John asking for?",
+   "options": [
+     "Ajuda para encontrar a estação de trem",
+     "Comida para comer",
+     "Dinheiro emprestado",
+     "Informação sobre o tempo"
+   ],
+   "correctAnswer": 0,
+   "translation": "John Says: Com licença, você poderia me ajudar por favor?\nDavid says: Claro, o que você precisa?\nJohn Says: Estou procurando a estação de trem. É perto daqui?\nDavid says: Sim, é apenas duas quadras. Vá em frente e vire à esquerda.",
+   "cefr_level": "A2",
+   "theme": "requests"
+ },
+ {
+   "id": "listen_b1_011",
+   "text": "I know you're struggling with your grades lately, and I can see how stressed you've been about the upcoming exams. If I were you, I would study harder. It might mean giving up some social activities for a while, but it would be worth it in the long run. You have the potential to do much better if you put in the effort.",
+   "question": "What is the speaker's main concern?",
+   "options": [
+     "O impacto das notas baixas no futuro acadêmico do amigo",
+     "A falta de tempo para atividades sociais",
+     "A dificuldade de encontrar tempo para estudar",
+     "A pressão excessiva dos exames escolares"
+   ],
+   "correctAnswer": 0,
+   "translation": "Eu sei que você está tendo dificuldades com suas notas ultimamente, e posso ver o quanto você está estressado com os exames que se aproximam...",
+   "cefr_level": "B1",
+   "theme": "advice"
+ },
+ {
+   "id": "listen_b1_012",
+   "text": "We decided to try that new Italian restaurant downtown, but the experience was really disappointing. We waited forty-five minutes just to get our drinks, and then another hour for the main course. She complained that the service was slow. The waiter seemed overwhelmed, and there weren't enough staff working. We probably won't go back there again.",
+   "question": "What was the main problem at the restaurant?",
+   "options": [
+     "O atendimento era muito lento e demorado",
+     "A comida tinha gosto ruim e estava fria",
+     "Os preços eram muito altos para a qualidade",
+     "Os funcionários eram rudes e mal-educados"
+   ],
+   "correctAnswer": 0,
+   "translation": "Decidimos experimentar aquele novo restaurante italiano no centro da cidade, mas a experiência foi realmente decepcionante...",
+   "cefr_level": "B1",
+   "theme": "complaints"
+ },
+ {
+   "id": "listen_b2_011",
+   "text": "The research team faced unprecedented challenges when their primary funding source was unexpectedly withdrawn midway through the project. Equipment failures, personnel turnover, and methodological setbacks plagued their efforts for months. Notwithstanding the difficulties, they succeeded in completing the groundbreaking study on renewable energy storage, publishing their findings in a prestigious scientific journal and receiving international recognition for their innovative approach to battery technology.",
+   "question": "What is the speaker's attitude toward the team's achievement?",
+   "options": [
+     "Admiração pelo sucesso apesar dos obstáculos",
+     "Crítica aos métodos utilizados",
+     "Preocupação com a perda de financiamento",
+     "Dúvida sobre a validade dos resultados"
+   ],
+   "correctAnswer": 0,
+   "translation": "A equipe de pesquisa enfrentou desafios sem precedentes quando sua principal fonte de financiamento foi inesperadamente retirada no meio do projeto...",
+   "cefr_level": "B2",
+   "theme": "success"
+ },
+ {
+   "id": "listen_b2_012",
+   "text": "The innovative urban planning proposal to convert abandoned industrial sites into community gardens and affordable housing complexes was presented to the city council last week. While the initiative promised to revitalize neglected neighborhoods and provide sustainable housing solutions, many council members questioned the financial feasibility and long-term maintenance costs. The proposal was met with considerable skepticism from both local business owners concerned about property values and environmental groups worried about potential ecological disruption.",
+   "question": "What was the main concern expressed about the proposal?",
+   "options": [
+     "Viabilidade financeira e custos de manutenção",
+     "Falta de apoio da comunidade local",
+     "Problemas de implementação técnica",
+     "Ausência de benefícios ambientais"
+   ],
+   "correctAnswer": 0,
+   "translation": "A inovadora proposta de planejamento urbano para converter locais industriais abandonados em jardins comunitários e complexos de habitação acessível foi apresentada ao conselho municipal na semana passada...",
+   "cefr_level": "B2",
+   "theme": "reactions"
+ },
+ {
+   "id": "listen_c1_011",
+   "text": "The contemporary art installation at the museum featured an innovative display where complementary colors were placed in direct opposition throughout the gallery space. The curator explained that by positioning vibrant reds against deep blues and bright yellows adjacent to rich purples, the exhibit created a dynamic visual tension that engaged viewers on multiple sensory levels. The juxtaposition of colors creates a striking visual effect that challenges traditional notions of harmony in artistic composition, forcing observers to reconsider how color relationships can evoke emotional responses beyond mere aesthetic pleasure.",
+   "question": "What does the juxtaposition of colors create?",
+   "options": ["Efeito visual impressionante", "Confusão visual", "Cores desbotadas", "Padrão repetitivo"],
+   "correctAnswer": 0,
+   "translation": "A instalação de arte contemporânea no museu apresentava uma exposição inovadora onde cores complementares foram colocadas em oposição direta...",
+   "cefr_level": "C1",
+   "theme": "art"
+ },
+ {
+   "id": "listen_c1_012",
+   "text": "During the high-stakes diplomatic negotiations, the young ambassador appeared visibly anxious as she approached the podium, her hands trembling slightly and her voice initially hesitant. However, as she began articulating the complex position of her government, her words flowed with remarkable clarity and conviction. Her eloquence belied her apparent nervousness, demonstrating how individuals can overcome visible signs of anxiety through preparation and determination. The audience was ultimately impressed by her composed delivery despite the challenging circumstances of the international forum.",
+   "question": "What contradicted her apparent nervousness?",
+   "options": ["Sua eloquência", "Sua timidez", "Sua experiência", "Sua idade"],
+   "correctAnswer": 0,
+   "translation": "Durante as negociações diplomáticas de alto risco, a jovem embaixadora parecia visivelmente ansiosa ao se aproximar do pódio...",
+   "cefr_level": "C1",
+   "theme": "contradiction"
+ },
+{
+  "id": "listen_c2_011",
+  "text": "In the philosophy of science seminar, Professor Chen argued that the epistemological foundations of quantum mechanics remain deeply contentious among physicists and philosophers alike. While the mathematical formalism successfully predicts experimental outcomes, the interpretation of what these equations actually mean about the nature of reality continues to divide scholars between realist and instrumentalist camps, with no consensus emerging despite decades of debate.",
+  "question": "What does Professor Chen identify as the main source of contention in quantum mechanics?",
+  "options": [
+    "A previsibilidade matemática das equações",
+    "A interpretação filosófica do que as equações significam sobre a realidade",
+    "A capacidade de realizar experimentos bem-sucedidos",
+    "A divisão entre físicos e filósofos da ciência"
+  ],
+  "correctAnswer": 1,
+  "translation": "No seminário de filosofia da ciência, o Professor Chen argumentou que os fundamentos epistemológicos da mecânica quântica permanecem profundamente controversos entre físicos e filósofos...",
+  "cefr_level": "C2",
+  "theme": "philosophy"
+},
+{
+  "id": "listen_c2_012",
+  "text": "The cultural critic observed that the symbiotic relationship between contemporary art and commercial interests has become increasingly evident in the global art market. Major auction houses now collaborate directly with artists to create works that appeal to high-net-worth collectors, while museums increasingly rely on corporate sponsorships to fund exhibitions. This interdependence, while ensuring the financial viability of artistic production, raises questions about whether art can maintain its critical distance from market forces.",
+  "question": "What concern does the cultural critic raise about the relationship between art and commerce?",
+  "options": [
+    "A viabilidade financeira da produção artística",
+    "A colaboração entre casas de leilão e artistas",
+    "A dependência de museus de patrocínios corporativos",
+    "A capacidade da arte de manter distância crítica das forças de mercado"
+  ],
+  "correctAnswer": 3,
+  "translation": "A crítica cultural observou que o relacionamento simbiótico entre arte contemporânea e interesses comerciais se tornou cada vez mais evidente no mercado de arte global...",
+  "cefr_level": "C2",
+  "theme": "cultural_criticism"
+},
+{
+  "id": "listen_a1_015",
+  "text": "Good morning, teacher.",
+  "question": "Who is being greeted?",
+  "options": ["Professor", "Aluno", "Diretor", "Pais"],
+  "correctAnswer": 0,
+  "translation": "Bom dia, professor.",
+  "cefr_level": "A1",
+  "theme": "school"
+},
+{
+  "id": "listen_a1_016",
+  "text": "I am from France.",
+  "question": "Where is the speaker from?",
+  "options": ["França", "Espanha", "Itália", "Portugal"],
+  "correctAnswer": 0,
+  "translation": "Eu sou da França.",
+  "cefr_level": "A1",
+  "theme": "origins"
+},
+{
+  "id": "listen_a1_017",
+  "text": "The pencil is blue.",
+  "question": "What color is the pencil?",
+  "options": ["Azul", "Vermelho", "Verde", "Preto"],
+  "correctAnswer": 0,
+  "translation": "O lápis é azul.",
+  "cefr_level": "A1",
+  "theme": "colors"
+},
+{
+  "id": "listen_a1_018",
+  "text": "She has a brother.",
+  "question": "What family member does she have?",
+  "options": ["Irmão", "Irmã", "Pai", "Mãe"],
+  "correctAnswer": 0,
+  "translation": "Ela tem um irmão.",
+  "cefr_level": "A1",
+  "theme": "family"
+},
+{
+  "id": "listen_a1_019",
+  "text": "We play soccer.",
+  "question": "What sport do they play?",
+  "options": ["Futebol", "Basquete", "Tênis", "Natação"],
+  "correctAnswer": 0,
+  "translation": "Nós jogamos futebol.",
+  "cefr_level": "A1",
+  "theme": "sports"
+},
+{
+  "id": "listen_a1_020",
+  "text": "The house is big.",
+  "question": "How is the house?",
+  "options": ["Grande", "Pequena", "Velha", "Nova"],
+  "correctAnswer": 0,
+  "translation": "A casa é grande.",
+  "cefr_level": "A1",
+  "theme": "home"
+},
+{
+  "id": "listen_a1_021",
+  "text": "He drinks water.",
+  "question": "What does he drink?",
+  "options": ["Água", "Leite", "Suco", "Café"],
+  "correctAnswer": 0,
+  "translation": "Ele bebe água.",
+  "cefr_level": "A1",
+  "theme": "drinks"
+},
+{
+  "id": "listen_a1_022",
+  "text": "They are happy.",
+  "question": "How are they feeling?",
+  "options": ["Felizes", "Tristes", "Cansados", "Com fome"],
+  "correctAnswer": 0,
+  "translation": "Eles estão felizes.",
+  "cefr_level": "A1",
+  "theme": "emotions"
+},
+{
+  "id": "listen_a1_023",
+  "text": "I eat breakfast.",
+  "question": "What meal does the speaker eat?",
+  "options": ["Café da manhã", "Almoço", "Jantar", "Lanche"],
+  "correctAnswer": 0,
+  "translation": "Eu tomo café da manhã.",
+  "cefr_level": "A1",
+  "theme": "meals"
+},
+{
+  "id": "listen_a1_024",
+  "text": "The car is fast.",
+  "question": "How is the car?",
+  "options": ["Rápido", "Lento", "Grande", "Pequeno"],
+  "correctAnswer": 0,
+  "translation": "O carro é rápido.",
+  "cefr_level": "A1",
+  "theme": "transportation"
+},
+{
+  "id": "listen_a1_025",
+  "text": "I want an apple.",
+  "question": "What fruit does the speaker want?",
+  "options": ["Maçã", "Banana", "Laranja", "Uva"],
+  "correctAnswer": 0,
+  "translation": "Eu quero uma maçã.",
+  "cefr_level": "A1",
+  "theme": "food"
+},
+{
+  "id": "listen_a1_026",
+  "text": "The sky is blue.",
+  "question": "What color is the sky?",
+  "options": ["Azul", "Verde", "Vermelho", "Amarelo"],
+  "correctAnswer": 0,
+  "translation": "O céu é azul.",
+  "cefr_level": "A1",
+  "theme": "nature"
+},
+{
+  "id": "listen_a1_027",
+  "text": "She reads books.",
+  "question": "What does she read?",
+  "options": ["Livros", "Jornais", "Revistas", "Cartas"],
+  "correctAnswer": 0,
+  "translation": "Ela lê livros.",
+  "cefr_level": "A1",
+   "theme": "hobbies"
+ },
+  {
+    "id": "listen_a1_028",
+    "text": "They are students.",
+    "question": "What are they?",
+    "options": ["Estudantes", "Professores", "Médicos", "Engenheiros"],
+    "correctAnswer": 0,
+    "translation": "Eles são estudantes.",
+    "cefr_level": "A1",
+    "theme": "professions"
+  },
+  {
+    "id": "listen_a2_015",
+  "text": "I have finished my homework.",
+  "question": "What has the speaker finished?",
+  "options": ["Lição de casa", "Trabalho", "Projeto", "Exame"],
+  "correctAnswer": 0,
+  "translation": "Eu terminei minha lição de casa.",
+  "cefr_level": "A2",
+  "theme": "school"
+},
+{
+  "id": "listen_a2_016",
+  "text": "She is not coming today.",
+  "question": "When is she not coming?",
+  "options": ["Hoje", "Amanhã", "Ontem", "Sempre"],
+  "correctAnswer": 0,
+  "translation": "Ela não vem hoje.",
+  "cefr_level": "A2",
+  "theme": "plans"
+},
+ {
+   "id": "listen_a2_017",
+   "text": "*knock knock*\nJohn Says: Oh, hi Emma! Come in!\nDavid says: Hi! Thanks for inviting me.\nJohn Says: No problem. Do you want some tea? I just made a pot.\nDavid says: Yes, please! That sounds nice.",
+   "question": "What is John offering to Emma?",
+   "options": [
+     "Chá",
+     "Café",
+     "Água",
+     "Um lugar para sentar"
+   ],
+   "correctAnswer": 0,
+   "translation": "*toc toc*\nJohn Says: Oh, oi Emma! Entre!\nDavid says: Oi! Obrigada por me convidar.\nJohn Says: Não há problema. Você quer chá? Acabei de fazer uma chaleira.\nDavid says: Sim, por favor! Parece bom.",
+   "cefr_level": "A2",
+   "theme": "offers"
+ },
+ {
+   "id": "listen_a2_018",
+   "text": "John Says: What did you do yesterday?\nDavid says: I went to the cinema yesterday. There was a new action movie playing.\nJohn Says: How was it?\nDavid says: It was really exciting! I enjoyed it a lot.",
+   "question": "Where did David go yesterday?",
+   "options": [
+     "Ao cinema",
+     "Ao teatro",
+     "Ao museu",
+     "Ao parque"
+   ],
+   "correctAnswer": 0,
+   "translation": "John Says: O que você fez ontem?\nDavid says: Eu fui ao cinema ontem. Estava passando um novo filme de ação.\nJohn Says: Como foi?\nDavid says: Foi realmente emocionante! Eu gostei muito.",
+   "cefr_level": "A2",
+   "theme": "entertainment"
+ },
+ {
+   "id": "listen_a2_019",
+   "text": "John Says: Look at those children over there. What are they doing?\nDavid says: They are playing in the park. It looks like they're having fun with their ball.\nJohn Says: Yes, the weather is nice today. Perfect for outdoor activities.\nDavid says: I agree. Parks are great places for kids to play.",
+   "question": "Where are the children playing?",
+   "options": [
+     "No parque",
+     "Em casa",
+     "Na escola",
+     "Na rua"
+   ],
+   "correctAnswer": 0,
+   "translation": "John Says: Olhe aquelas crianças ali. O que elas estão fazendo?\nDavid says: Elas estão brincando no parque. Parece que estão se divertindo com a bola delas.\nJohn Says: Sim, o tempo está bom hoje. Perfeito para atividades ao ar livre.\nDavid says: Concordo. Parques são ótimos lugares para crianças brincarem.",
+   "cefr_level": "A2",
+   "theme": "activities"
+ },
+ {
+   "id": "listen_a2_020",
+   "text": "John Says: It's getting warm in here.\nDavid says: Yes, it is. Can I open the window?\nJohn Says: Of course, go ahead.\nDavid says: Thanks. That should help.",
+   "question": "What does David want to do?",
+   "options": [
+     "Abrir a janela",
+     "Fechar a janela",
+     "Abrir a porta",
+     "Fechar a porta"
+   ],
+   "correctAnswer": 0,
+   "translation": "John Says: Está ficando quente aqui.\nDavid says: Sim, está. Posso abrir a janela?\nJohn Says: Claro, vá em frente.\nDavid says: Obrigado. Isso deve ajudar.",
+   "cefr_level": "A2",
+   "theme": "permissions"
+ },
+ {
+   "id": "listen_a2_021",
+   "text": "John Says: Would you like some of this curry? It's very spicy.\nDavid says: No, thank you. I don't like spicy food. It makes my mouth burn.\nJohn Says: Oh, I see. How about some mild chicken instead?\nDavid says: That sounds better. Thank you.",
+   "question": "What type of food does David not like?",
+   "options": [
+     "Comida picante",
+     "Comida doce",
+     "Comida salgada",
+     "Comida amarga"
+   ],
+   "correctAnswer": 0,
+   "translation": "John Says: Você gostaria de um pouco deste curry? É muito picante.\nDavid says: Não, obrigado. Eu não gosto de comida picante. Faz minha boca queimar.\nJohn Says: Oh, entendo. Que tal frango suave em vez disso?\nDavid says: Parece melhor. Obrigado.",
+   "cefr_level": "A2",
+   "theme": "preferences"
+ },
+ {
+   "id": "listen_a2_022",
+   "text": "John Says: Is Maria still here? I need to talk to her.\nDavid says: No, she has already left. She went home about ten minutes ago.\nJohn Says: Oh, that's too bad. I wanted to give her the documents.\nDavid says: You can call her later or email them to her.",
+   "question": "What has Maria done?",
+   "options": [
+     "Já saiu",
+     "Já chegou",
+     "Já comeu",
+     "Já dormiu"
+   ],
+   "correctAnswer": 0,
+   "translation": "John Says: Maria ainda está aqui? Preciso falar com ela.\nDavid says: Não, ela já saiu. Ela foi para casa há cerca de dez minutos.\nJohn Says: Oh, que pena. Eu queria dar os documentos para ela.\nDavid says: Você pode ligar para ela mais tarde ou enviar por email.",
+   "cefr_level": "A2",
+   "theme": "departures"
+ },
+ {
+   "id": "listen_a2_023",
+   "text": "John Says: There's a party at John's house this Saturday. Are you going to the party?\nDavid says: I don't think so. I have other plans.\nJohn Says: That's too bad. It should be fun.\nDavid says: Maybe next time.",
+   "question": "Where is John asking if David is going?",
+   "options": [
+     "À festa",
+     "Ao cinema",
+     "À praia",
+     "Ao shopping"
+   ],
+   "correctAnswer": 0,
+   "translation": "John Says: Há uma festa na casa do John neste sábado. Você vai à festa?\nDavid says: Eu não acho que sim. Tenho outros planos.\nJohn Says: Que pena. Deveria ser divertido.\nDavid says: Talvez da próxima vez.",
+   "cefr_level": "A2",
+   "theme": "invitations"
+ },
+ {
+   "id": "listen_a2_024",
+   "text": "John Says: We're out of milk for breakfast tomorrow.\nDavid says: I know. I need to buy milk. I'll go to the store after work.\nJohn Says: Can you get some bread too?\nDavid says: Sure, no problem.",
+   "question": "What does David need to buy?",
+   "options": [
+     "Leite",
+     "Pão",
+     "Queijo",
+     "Manteiga"
+   ],
+   "correctAnswer": 0,
+   "translation": "John Says: Estamos sem leite para o café da manhã amanhã.\nDavid says: Eu sei. Eu preciso comprar leite. Vou à loja depois do trabalho.\nJohn Says: Você pode pegar pão também?\nDavid says: Claro, sem problema.",
+   "cefr_level": "A2",
+   "theme": "shopping"
+ },
+ {
+   "id": "listen_a2_025",
+   "text": "John Says: Have you ever been to Paris?\nDavid says: Yes, I have visited Paris twice. Once last year and once when I was a student.\nJohn Says: That's great! Did you like it?\nDavid says: Yes, it's a beautiful city. I want to go back someday.",
+   "question": "How many times has David visited Paris?",
+   "options": [
+     "Duas vezes",
+     "Uma vez",
+     "Três vezes",
+     "Nunca"
+   ],
+   "correctAnswer": 0,
+   "translation": "John Says: Você já foi a Paris?\nDavid says: Sim, eu visitei Paris duas vezes. Uma vez no ano passado e uma vez quando eu era estudante.\nJohn Says: Que ótimo! Você gostou?\nDavid says: Sim, é uma cidade linda. Eu quero voltar algum dia.",
+   "cefr_level": "A2",
+   "theme": "travel"
+ },
+ {
+   "id": "listen_a2_026",
+   "text": "John Says: What would you like for dinner? We have chicken or fish.\nDavid says: Neither, thank you. She doesn't eat meat. She's vegetarian.\nJohn Says: Oh, I see. How about pasta with vegetables?\nDavid says: That sounds good. Thank you.",
+   "question": "What doesn't the woman eat?",
+   "options": [
+     "Carne",
+     "Peixe",
+     "Frutas",
+     "Vegetais"
+   ],
+   "correctAnswer": 0,
+   "translation": "John Says: O que você gostaria para o jantar? Temos frango ou peixe.\nDavid says: Nenhum, obrigado. Ela não come carne. Ela é vegetariana.\nJohn Says: Oh, entendo. Que tal macarrão com vegetais?\nDavid says: Parece bom. Obrigado.",
+   "cefr_level": "A2",
+   "theme": "diet"
+ },
+ {
+   "id": "listen_a2_027",
+   "text": "John Says: What time should we meet for the project?\nDavid says: How about 10 AM? We are meeting tomorrow at the library.\nJohn Says: That works for me. See you then.\nDavid says: Okay, bye.",
+   "question": "When are the speakers meeting?",
+   "options": [
+     "Amanhã",
+     "Hoje",
+     "Ontem",
+     "Sempre"
+   ],
+   "correctAnswer": 0,
+   "translation": "John Says: Que horas devemos nos encontrar para o projeto?\nDavid says: Que tal às 10h? Nós nos encontramos amanhã na biblioteca.\nJohn Says: Funciona para mim. Até lá.\nDavid says: Ok, tchau.",
+   "cefr_level": "A2",
+    "theme": "arrangements"
+  },
+  {
+    "id": "listen_a2_028",
+    "text": "John Says: I like this jacket. How much does this cost?\nDavid says: It's 45 euros.\nJohn Says: That's a good price. I'll take it.\nDavid says: Great! Would you like a bag?",
+    "question": "What is John asking about?",
+    "options": [
+      "O preço",
+      "A cor",
+      "O tamanho",
+      "A marca"
+    ],
+    "correctAnswer": 0,
+    "translation": "John Says: Eu gosto desta jaqueta. Quanto custa isso?\nDavid says: São 45 euros.\nJohn Says: É um bom preço. Vou levar.\nDavid says: Ótimo! Você gostaria de uma sacola?",
+    "cefr_level": "A2",
+    "theme": "shopping"
+  },
+  {
+    "id": "listen_b1_015",
+   "text": "Between my full-time job, part-time studies, and helping out with family responsibilities, I'm constantly busy from morning until night. I wish I had more free time. I'd love to take up a hobby or just relax without feeling guilty about it. Sometimes I feel like I'm missing out on life because I'm always rushing from one commitment to another.",
+   "question": "What does the speaker feel they are missing out on?",
+   "options": [
+     "Oportunidades de lazer e relaxamento pessoal",
+     "Mais dinheiro para gastar em atividades",
+     "Mais tempo com amigos e família",
+     "Mais oportunidades de trabalho remunerado"
+   ],
+   "correctAnswer": 0,
+   "translation": "Entre meu trabalho em tempo integral, estudos em meio período e ajudar com responsabilidades familiares, estou constantemente ocupado da manhã à noite...",
+   "cefr_level": "B1",
+   "theme": "wishes"
+ },
+ {
+   "id": "listen_b1_016",
+   "text": "We had arranged to meet at the coffee shop at 2 PM sharp, but she got caught in unexpected traffic on her way there. When she finally arrived twenty minutes late, she was really embarrassed about keeping everyone waiting. She apologized for being late. She explained that there had been an accident on the highway that caused major delays. We understood, but she still felt bad about it.",
+   "question": "What made the speaker feel embarrassed?",
+   "options": [
+     "Fazer os outros esperarem por causa do atraso",
+     "Chegar cedo demais ao encontro",
+     "Não conseguir encontrar o local do encontro",
+     "Esquecer completamente do compromisso"
+   ],
+   "correctAnswer": 0,
+   "translation": "Tínhamos combinado de nos encontrar na cafeteria às 14h em ponto, mas ela ficou presa em um trânsito inesperado no caminho...",
+   "cefr_level": "B1",
+   "theme": "apologies"
+ },
+ {
+   "id": "listen_b1_017",
+   "text": "We were planning to have a picnic in the park this afternoon with all our friends, but the weather forecast is showing a 70% chance of rain. We don't want to get soaked or have to cut the event short because of bad weather. If it rains, we'll stay home. We can always reschedule for next weekend when the forecast looks better. It's disappointing, but better safe than sorry.",
+   "question": "What is the speaker's main reason for the decision?",
+   "options": [
+     "Evitar se molhar e ter que cancelar o evento",
+     "Não gostar de passar tempo ao ar livre",
+     "Preferir fazer compras em vez de piquenique",
+     "Querer visitar amigos em casa em vez do parque"
+   ],
+   "correctAnswer": 0,
+   "translation": "Estávamos planejando fazer um piquenique no parque esta tarde com todos os nossos amigos, mas a previsão do tempo mostra 70% de chance de chuva...",
+   "cefr_level": "B1",
+   "theme": "conditions"
+ },
+ {
+   "id": "listen_b1_018",
+   "text": "I started learning English when I was in high school, but I wasn't very serious about it back then. Now that I'm working in international business, I've really committed to improving my language skills. I have been studying English for two years. I've made good progress, but I still struggle with business vocabulary and presentations. My colleagues say my English has improved a lot though.",
+   "question": "What has motivated the speaker to study English seriously?",
+   "options": [
+     "Necessidades profissionais em negócios internacionais",
+     "Interesse em literatura inglesa",
+     "Viagens frequentes ao exterior",
+     "Estudos acadêmicos na universidade"
+   ],
+   "correctAnswer": 0,
+   "translation": "Comecei a aprender inglês quando estava no ensino médio, mas não era muito sério sobre isso naquela época...",
+   "cefr_level": "B1",
+   "theme": "education"
+ },
+ {
+   "id": "listen_b1_019",
+   "text": "My sister has always been a night owl, staying up late working on her projects or watching movies. Her job requires her to be at the office by 8 AM, but she often hits the snooze button multiple times. She finds it difficult to wake up early. She's tried different alarm clocks and morning routines, but nothing seems to work consistently. It's affecting her work performance and making her really tired during the day.",
+   "question": "What is causing problems for the speaker's sister?",
+   "options": [
+     "Dificuldade para acordar cedo afetando o trabalho e energia",
+     "Problemas para dormir cedo o suficiente",
+     "Falta de apetite pela manhã",
+     "Dificuldade para se concentrar nos estudos matinais"
+   ],
+   "correctAnswer": 0,
+   "translation": "Minha irmã sempre foi uma coruja da noite, ficando acordada até tarde trabalhando em seus projetos ou assistindo filmes...",
+   "cefr_level": "B1",
+   "theme": "habits"
+ },
+ {
+   "id": "listen_b1_020",
+   "text": "The team had been planning this important project review meeting for weeks, but several key members called in sick this morning. With only half the team available and crucial data still missing from the reports, it didn't make sense to proceed. They decided to cancel the meeting. They'll reschedule for next week when everyone can participate properly and all the necessary information will be ready.",
+   "question": "What was the main reason for canceling the meeting?",
+   "options": [
+     "Falta de participantes e informações importantes",
+     "Mudança nos planos de viagem da equipe",
+     "Confirmação de que a reunião não era necessária",
+     "Decisão de alterar o local da reunião"
+   ],
+   "correctAnswer": 0,
+   "translation": "A equipe vinha planejando esta importante reunião de revisão de projeto há semanas, mas vários membros-chave ligaram dizendo que estavam doentes esta manhã...",
+   "cefr_level": "B1",
+   "theme": "decisions"
+ },
+ {
+   "id": "listen_b1_021",
+   "text": "Growing up in a quiet community where everyone knew each other was really different from city life. I used to live in a small town. There was only one main street with a few shops, and we had to drive thirty minutes to get to a proper supermarket. It was peaceful, but sometimes I missed having access to cultural events and diverse restaurants. Now that I live in the city, I appreciate both lifestyles.",
+   "question": "What does the speaker miss about living in the small town?",
+   "options": [
+     "A paz e tranquilidade da comunidade pequena",
+     "A agitação e conveniências da cidade grande",
+     "As opções limitadas de compras locais",
+     "A falta de eventos culturais e restaurantes"
+   ],
+   "correctAnswer": 0,
+   "translation": "Crescer em uma comunidade quieta onde todos se conheciam era muito diferente da vida na cidade...",
+   "cefr_level": "B1",
+   "theme": "past_life"
+ },
+ {
+   "id": "listen_b1_022",
+   "text": "I picked up that mystery novel at the library last week, and I couldn't put it down once I started reading. The plot kept me guessing until the very end, and the characters were really well-developed. The book that I read was interesting. It had unexpected twists and a satisfying conclusion. I might even read it again sometime. My friend recommended it, and I'm glad she did.",
+   "question": "What kept the speaker engaged with the book?",
+   "options": [
+     "A trama imprevisível e personagens bem desenvolvidos",
+     "O tema monótono e previsível",
+     "A dificuldade da linguagem usada",
+     "A simplicidade da história contada"
+   ],
+   "correctAnswer": 0,
+   "translation": "Peguei aquele romance de mistério na biblioteca na semana passada, e não consegui parar de ler assim que comecei...",
+   "cefr_level": "B1",
+   "theme": "reading"
+ },
+ {
+   "id": "listen_b1_023",
+   "text": "The apartment next door has been undergoing major renovations for the past two weeks, and it's been really disruptive. Construction workers start early in the morning and continue until late afternoon. She complained about the noise. The constant hammering and drilling makes it impossible to concentrate or even have a normal conversation. She's thinking about talking to the building manager about it.",
+   "question": "What is making it difficult for the speaker's neighbor?",
+   "options": [
+     "O barulho constante das obras de construção",
+     "A qualidade da comida servida no apartamento",
+     "A lentidão do serviço de manutenção",
+     "O preço alto das reformas no prédio"
+   ],
+   "correctAnswer": 0,
+   "translation": "O apartamento ao lado vem passando por grandes reformas nas últimas duas semanas, e tem sido realmente disruptivo...",
+   "cefr_level": "B1",
+   "theme": "complaints"
+ },
+ {
+   "id": "listen_b1_024",
+   "text": "I arrived at the doctor's office fifteen minutes early for my appointment, but the waiting room is still full of people. The receptionist said there are delays because the doctor is running behind schedule. I have been waiting here for an hour. I'm getting really impatient because I have other things to do today. I hope they call my name soon or I might have to reschedule.",
+   "question": "What is frustrating the speaker?",
+   "options": [
+     "A longa espera atrasando seus outros compromissos",
+     "A falta de pessoas na sala de espera",
+     "A pontualidade do médico sendo perfeita",
+     "A ausência de outros pacientes esperando"
+   ],
+   "correctAnswer": 0,
+   "translation": "Cheguei ao consultório médico quinze minutos adiantado para minha consulta, mas a sala de espera ainda está cheia de pessoas...",
+   "cefr_level": "B1",
+   "theme": "waiting"
+ },
+ {
+   "id": "listen_b1_025",
+   "text": "I'm really tired of relying on public transportation every day. The buses are always late, and the subway is so crowded during rush hour. If I had the money, I would buy a new car. It would make my commute so much easier and more reliable. I know it's expensive, but the convenience would be worth it. Maybe I can save up for a used one instead.",
+   "question": "What problem would a new car solve for the speaker?",
+   "options": [
+     "Dependência de transporte público pouco confiável",
+     "Falta de opções de lazer aos fins de semana",
+     "Dificuldade para encontrar estacionamento na cidade",
+     "Necessidade de viajar para outras cidades frequentemente"
+   ],
+   "correctAnswer": 0,
+   "translation": "Estou realmente cansado de depender de transporte público todos os dias...",
+   "cefr_level": "B1",
+   "theme": "hypothetical"
+ },
+ {
+   "id": "listen_b1_026",
+   "text": "We were trying to decide what to do this evening since it's been raining all day and we can't go for our usual walk in the park. She suggested that we go to the cinema. There's a new comedy film playing that everyone has been talking about. It would be a nice way to spend a couple of hours indoors and have a good laugh. I think it's a great idea, especially since we haven't been to the movies in ages.",
+   "question": "What was the main reason for the suggestion?",
+   "options": [
+     "Escapar da chuva e ter uma atividade indoor divertida",
+     "Assistir a uma peça de teatro específica",
+     "Experimentar um novo restaurante na cidade",
+     "Relaxar na praia apesar do tempo ruim"
+   ],
+   "correctAnswer": 0,
+   "translation": "Estávamos tentando decidir o que fazer esta noite já que está chovendo o dia todo e não podemos fazer nossa caminhada habitual no parque...",
+   "cefr_level": "B1",
+   "theme": "suggestions"
+ },
+ {
+   "id": "listen_b1_027",
+   "text": "I grew up in a tropical climate where it was warm year-round, so this sudden cold snap has been really challenging for me. I am not used to cold weather. I find myself wearing extra layers and staying indoors more than usual. My friends from here think it's normal, but I keep shivering and wishing for warmer temperatures. I suppose I'll adapt eventually, but right now it's quite uncomfortable.",
+   "question": "What is causing discomfort for the speaker?",
+   "options": [
+     "Dificuldade para se adaptar ao clima frio repentino",
+     "Problemas com temperaturas muito quentes",
+     "Incomodidade com tempo chuvoso constante",
+     "Desconforto com clima seco e árido"
+   ],
+   "correctAnswer": 0,
+   "translation": "Cresci em um clima tropical onde fazia calor o ano todo, então essa onda de frio repentina tem sido realmente desafiadora para mim...",
+   "cefr_level": "B1",
+   "theme": "adaptation"
+ },
+ {
+   "id": "listen_b1_028",
+   "text": "I've been having some health issues lately, and it's been really convenient to have someone knowledgeable nearby. The man who lives next door is a doctor. He works at the local hospital and specializes in internal medicine. I've seen him helping neighbors with medical advice, and he's always very professional and caring. It's comforting to know there's a medical professional right next door in case of emergencies.",
+   "question": "What makes the neighbor convenient for the speaker?",
+   "options": [
+     "Sua profissão médica permite ajuda em emergências",
+     "Seu trabalho como professor ajuda com estudos",
+     "Sua experiência como engenheiro auxilia com reparos",
+     "Seu conhecimento jurídico ajuda com questões legais"
+   ],
+   "correctAnswer": 0,
+   "translation": "Tenho tido alguns problemas de saúde ultimamente, e tem sido realmente conveniente ter alguém conhecedor por perto...",
+   "cefr_level": "B1",
+   "theme": "descriptions"
+ },
+ {
+   "id": "listen_b2_015",
+   "text": "The controversial plan to implement a four-day workweek across all government departments was unveiled during yesterday's cabinet meeting. While proponents argued that it would improve work-life balance and boost productivity, many senior officials expressed doubts about its practicality given the current workload demands and budget constraints. The proposal was met with considerable skepticism from department heads who worried about service delivery disruptions and the potential need for additional staffing to maintain operations.",
+   "question": "What was the primary objection to the four-day workweek proposal?",
+   "options": [
+     "Preocupação com interrupções no atendimento ao público",
+     "Falta de interesse em melhorar o equilíbrio trabalho-vida",
+     "Crença de que reduziria drasticamente a produtividade",
+     "Ausência de apoio dos sindicatos trabalhistas"
+   ],
+   "correctAnswer": 0,
+   "translation": "O controverso plano para implementar uma semana de trabalho de quatro dias em todos os departamentos governamentais foi revelado durante a reunião do gabinete de ontem...",
+   "cefr_level": "B2",
+   "theme": "reactions"
+ },
+ {
+   "id": "listen_b2_016",
+   "text": "The investment committee spent months analyzing the tech startup's financial projections before making our decision. If we'd had access to the revised quarterly reports that were released just last week, we might have reconsidered our entire investment strategy. Had I known earlier about the significant market share losses and the delayed product launches, I would have acted differently and recommended a more cautious approach rather than the substantial capital injection we ultimately provided.",
+   "question": "What would the speaker have recommended if they had the updated information?",
+   "options": [
+     "Uma abordagem mais cautelosa ao investimento",
+     "Aumentar o investimento de capital",
+     "Manter a estratégia original",
+     "Cancelar completamente o investimento"
+   ],
+   "correctAnswer": 0,
+   "translation": "O comitê de investimento passou meses analisando as projeções financeiras da startup de tecnologia antes de tomar nossa decisão...",
+   "cefr_level": "B2",
+   "theme": "regrets"
+ },
+ {
+   "id": "listen_b2_017",
+   "text": "The board's decision to divest from fossil fuel investments and redirect those funds toward renewable energy projects represents a fundamental shift in our corporate strategy. This move will affect everything from our quarterly earnings reports to our long-term sustainability goals. The implications of this decision are profound, potentially reshaping our entire business model and influencing how other companies in our sector approach environmental responsibility and stakeholder expectations.",
+   "question": "What does the speaker suggest about the divestment decision?",
+   "options": [
+     "Terá impacto significativo em toda a estratégia corporativa",
+     "Será uma mudança superficial sem consequências maiores",
+     "Afetará apenas os relatórios de ganhos trimestrais",
+     "Não influenciará outras empresas do setor"
+   ],
+   "correctAnswer": 0,
+   "translation": "A decisão do conselho de desinvestir em combustíveis fósseis e redirecionar esses fundos para projetos de energia renovável representa uma mudança fundamental em nossa estratégia corporativa...",
+   "cefr_level": "B2",
+   "theme": "consequences"
+ },
+ {
+   "id": "listen_b2_018",
+   "text": "In her keynote address at the international entrepreneurship summit, the self-made billionaire shared insights from her remarkable journey from a small-town startup to a global technology empire. When asked about the key factors behind her extraordinary achievements, she emphasized the importance of perseverance through setbacks and continuous learning. She attributed her success to hard work and strategic risk-taking rather than mere luck or inherited advantages, inspiring the audience with her story of transformation and resilience.",
+   "question": "According to the speaker, what was the entrepreneur's view of success?",
+   "options": [
+     "Resultado de trabalho duro e riscos estratégicos",
+     "Principalmente questão de sorte e vantagens herdadas",
+     "Devido apenas a talento natural e conexões",
+     "Consequência de evitar riscos e manter-se seguro"
+   ],
+   "correctAnswer": 0,
+   "translation": "Em seu discurso principal no summit internacional de empreendedorismo, a bilionária self-made compartilhou insights de sua jornada notável de uma startup de cidade pequena para um império tecnológico global...",
+   "cefr_level": "B2",
+   "theme": "success"
+ },
+ {
+   "id": "listen_b2_019",
+   "text": "The archaeological team excavating the ancient Mayan ruins faced unprecedented challenges including extreme weather conditions, equipment failures, and bureaucratic delays in obtaining necessary permits. Local political instability and limited funding further complicated their work. Notwithstanding the obstacles, they persevered with their research, ultimately uncovering significant artifacts that shed new light on Mayan civilization and cultural practices, contributing valuable insights to the field of Mesoamerican studies.",
+   "question": "What was the team's response to the various challenges they faced?",
+   "options": [
+     "Continuaram com sua pesquisa apesar das dificuldades",
+     "Abandonaram o projeto devido aos obstáculos",
+     "Mudaram seu foco para um local mais acessível",
+     "Reduziram o escopo para evitar complicações"
+   ],
+   "correctAnswer": 0,
+   "translation": "A equipe arqueológica escavando as antigas ruínas maias enfrentou desafios sem precedentes incluindo condições climáticas extremas, falhas de equipamento e atrasos burocráticos...",
+   "cefr_level": "B2",
+   "theme": "persistence"
+ },
+ {
+   "id": "listen_b2_020",
+   "text": "The unexpected correlation between sleep patterns and cognitive performance in elderly populations has caught the attention of researchers worldwide. While preliminary studies suggest a strong link between quality sleep and memory retention, the underlying mechanisms remain poorly understood. The phenomenon warrants further investigation to determine whether interventions targeting sleep quality could prevent or delay the onset of age-related cognitive decline, potentially revolutionizing approaches to geriatric healthcare.",
+   "question": "What does the speaker imply about the sleep-cognition correlation?",
+   "options": [
+     "Necessita de pesquisa mais aprofundada para entender os mecanismos",
+     "Já está completamente compreendido e não requer mais estudo",
+     "É um achado preliminar que deve ser ignorado",
+     "As intervenções de sono não afetarão o declínio cognitivo"
+   ],
+   "correctAnswer": 0,
+   "translation": "A correlação inesperada entre padrões de sono e desempenho cognitivo em populações idosas chamou a atenção de pesquisadores em todo o mundo...",
+   "cefr_level": "B2",
+   "theme": "research"
+ },
+ {
+   "id": "listen_b2_021",
+   "text": "During the graduate seminar on quantum physics, the young doctoral candidate consistently demonstrated exceptional intellectual curiosity and analytical thinking. Her contributions to the discussion were marked by insightful observations and a systematic approach to complex problems. She has a propensity for asking questions that challenge fundamental assumptions and probe deeper into theoretical concepts, often leading the group toward more nuanced understandings of the subject matter.",
+   "question": "What impression does the speaker give of the doctoral candidate?",
+   "options": [
+     "Ela tem inclinação para questionar pressupostos fundamentais",
+     "Ela prefere aceitar ideias sem questionamento",
+     "Ela evita discussões teóricas complexas",
+     "Ela se concentra apenas em observações superficiais"
+   ],
+   "correctAnswer": 0,
+   "translation": "Durante o seminário de pós-graduação em física quântica, a jovem candidata a doutorado demonstrou consistentemente excepcional curiosidade intelectual e pensamento analítico...",
+   "cefr_level": "B2",
+   "theme": "character"
+ },
+ {
+   "id": "listen_b2_022",
+   "text": "The management training program promised to transform our leadership capabilities through cutting-edge theoretical frameworks and practical workshops. However, six months after implementation, we're seeing mixed results at best. While the theoretical concepts were intellectually stimulating, their application in real-world scenarios has proven challenging. The discrepancy between theory and practice is evident in the gap between what participants learned in workshops and their ability to implement those principles in actual workplace situations.",
+   "question": "What is the speaker's main point about the training program?",
+   "options": [
+     "Há uma diferença clara entre teoria ensinada e prática aplicada",
+     "A teoria e a prática são igualmente efetivas no programa",
+     "Os workshops teóricos foram mais úteis que os práticos",
+     "Os participantes implementaram perfeitamente os princípios aprendidos"
+   ],
+   "correctAnswer": 0,
+   "translation": "O programa de treinamento de gestão prometeu transformar nossas capacidades de liderança através de estruturas teóricas de ponta e workshops práticos...",
+   "cefr_level": "B2",
+   "theme": "analysis"
+ },
+ {
+  "id": "listen_b2_023",
+  "text": "The lead researcher on the clinical trial expressed significant reservations about the preliminary data analysis. Given the small sample size and the unexpected variability in patient responses, he cautioned against drawing definitive conclusions. He postulated that the results would be inconclusive and recommended extending the study duration to gather more comprehensive data before making any therapeutic recommendations.",
+  "question": "What was the researcher's prediction about the study outcomes?",
+  "options": [
+     "Os resultados seriam inconclusivos e necessitariam de mais dados",
+     "Os resultados seriam definitivos e conclusivos",
+     "Os resultados confirmariam todas as hipóteses iniciais",
+     "Os resultados invalidariam completamente o estudo"
+  ],
+  "correctAnswer": 0,
+  "translation": "O pesquisador principal do ensaio clínico expressou reservas significativas sobre a análise preliminar dos dados...",
+  "cefr_level": "B2",
+  "theme": "hypothesis"
+  },
+ {
+  "id": "listen_b2_024",
+  "text": "The emergence of artificial intelligence as a transformative force in healthcare delivery has fundamentally altered how medical professionals approach diagnosis and treatment. Traditional methods of medical education and clinical decision-making are being challenged by AI-driven insights and predictive analytics. The paradigm shift necessitates reevaluation of medical curricula, professional certification processes, and ethical frameworks to ensure that healthcare providers can effectively integrate these technologies while maintaining patient-centered care.",
+  "question": "What does the speaker suggest is required due to AI in healthcare?",
+  "options": [
+     "Reavaliação de currículos médicos e processos de certificação",
+     "Manutenção dos métodos tradicionais sem mudanças",
+     "Rejeição completa das tecnologias de IA",
+     "Foco exclusivo em insights preditivos de IA"
+  ],
+  "correctAnswer": 0,
+  "translation": "O surgimento da inteligência artificial como uma força transformadora na prestação de cuidados de saúde alterou fundamentalmente como os profissionais médicos abordam diagnóstico e tratamento...",
+  "cefr_level": "B2",
+  "theme": "change"
+  },
+ {
+  "id": "listen_b2_025",
+  "text": "The emergency board meeting was called off at the last minute due to the CEO's unexpected hospitalization. This left several critical matters unresolved, including the proposed merger terms and the restructuring plan. Had the meeting not been cancelled, we would have discussed the issue of executive compensation packages and reached a consensus on the way forward. Now we'll have to reschedule and potentially renegotiate some of the terms that were on the table.",
+  "question": "What would have happened if the board meeting had taken place?",
+  "options": [
+     "Teriam discutido pacotes de compensação executiva",
+     "Teriam cancelado a fusão proposta",
+     "Teriam ignorado os assuntos críticos",
+     "Teriam mudado os termos da reestruturação"
+  ],
+  "correctAnswer": 0,
+  "translation": "A reunião emergencial do conselho foi cancelada no último minuto devido à hospitalização inesperada do CEO...",
+  "cefr_level": "B2",
+  "theme": "hypothetical"
+  },
+ {
+  "id": "listen_b2_026",
+  "text": "The longitudinal study examining the impact of remote work on employee productivity and well-being has been ongoing for eighteen months now. Despite the challenges of collecting consistent data during the pandemic, our research team has maintained rigorous methodological standards. The research, once completed, will provide valuable insights into how organizational policies can better support distributed workforces and improve work-life balance in the post-pandemic era.",
+  "question": "What does the speaker anticipate from the completed research?",
+  "options": [
+     "Insights valiosos sobre trabalho remoto e equilíbrio trabalho-vida",
+     "Confirmação de que o trabalho remoto é ineficaz",
+     "Evidências de que os métodos de pesquisa foram inadequados",
+     "Provas de que a produtividade diminuiu significativamente"
+  ],
+  "correctAnswer": 0,
+  "translation": "O estudo longitudinal examinando o impacto do trabalho remoto na produtividade e bem-estar dos funcionários está em andamento há dezoito meses...",
+  "cefr_level": "B2",
+  "theme": "research"
+  },
+ {
+  "id": "listen_b2_027",
+  "text": "The project manager called an emergency meeting to address the mounting issues with the software development timeline. Several key developers had fallen ill, supply chain disruptions were affecting hardware delivery, and the client had requested significant scope changes. She expressed concern that the project might be delayed by several weeks, potentially jeopardizing the launch date and incurring substantial penalty clauses in the contract.",
+  "question": "What was the project manager's main worry?",
+  "options": [
+     "O projeto poderia ser atrasado, afetando a data de lançamento",
+     "O projeto terminaria antes do previsto",
+     "O projeto custaria menos que o orçamento",
+     "O projeto seria cancelado completamente"
+  ],
+  "correctAnswer": 0,
+  "translation": "A gerente de projeto convocou uma reunião emergencial para abordar os problemas crescentes com o cronograma de desenvolvimento de software...",
+  "cefr_level": "B2",
+  "theme": "concerns"
+  },
+ {
+  "id": "listen_b2_028",
+  "text": "When we first conceptualized this research project two years ago, we anticipated it would yield some interesting findings about consumer behavior patterns. What we've discovered, however, has completely transformed our understanding of market dynamics. The implications extend far beyond our initial expectations, potentially reshaping entire industries and challenging fundamental assumptions about how people make purchasing decisions. We're now looking at applications that go well beyond retail, including healthcare policy and urban planning.",
+  "question": "What is the speaker's attitude toward the research findings?",
+  "options": [
+    "Surpreso com o alcance das implicações além do esperado",
+    "Decepcionado com os resultados limitados",
+    "Cético sobre a validade dos achados",
+    "Preocupado com as aplicações práticas"
+  ],
+  "correctAnswer": 0,
+  "translation": "Quando concebemos este projeto de pesquisa há dois anos, esperávamos que produzisse alguns achados interessantes sobre padrões de comportamento do consumidor...",
+  "cefr_level": "B2",
+  "theme": "consequences"
+  },
+ {
+  "id": "listen_c1_015",
+  "text": "The modern art exhibit challenged conventional gallery aesthetics by placing monochromatic paintings alongside wildly colorful abstract works in the same exhibition space. The curator's deliberate arrangement forced viewers to experience how stark contrasts could amplify the impact of each individual piece. The juxtaposition of colors creates visual impact that transforms passive observation into active engagement, compelling visitors to reconsider their preconceived notions about artistic harmony and the psychological effects of color relationships in visual composition.",
+  "question": "What does the juxtaposition of colors create?",
+  "options": ["Impacto visual", "Som agradável", "Texto interessante", "Movimento"],
+  "correctAnswer": 0,
+  "translation": "A exposição de arte moderna desafiou as estéticas convencionais da galeria colocando pinturas monocromáticas ao lado de obras abstratas...",
+  "cefr_level": "C1",
+  "theme": "art"
+  },
+{
+  "id": "listen_c1_016",
+  "text": "Recent controversies in psychology have exposed fundamental issues with how we conduct research. The 'replication crisis'—where landmark studies fail to produce the same results when repeated—has forced researchers to re-examine their methodological assumptions. Many are now questioning whether our statistical tools, peer-review processes, and publication practices are fit for purpose. Notwithstanding this overwhelming evidence of systemic problems, skepticism about the crisis itself endures among some researchers who argue that the findings are overstated or misinterpreted.",
+  "question": "What does the speaker say endures despite the evidence?",
+  "options": [
+    "A confiança nos métodos de pesquisa tradicionais",
+    "O ceticismo sobre a crise de replicação",
+    "A aceitação dos processos de revisão por pares",
+    "A crença nas ferramentas estatísticas atuais"
+  ],
+  "correctAnswer": 1,
+  "translation": "Controvérsias recentes em psicologia expuseram problemas fundamentais com a forma como conduzimos pesquisa...",
+  "cefr_level": "C1",
+  "theme": "science"
+},
+{
+  "id": "listen_c1_017",
+  "text": "In contemporary philosophy, there's been a notable shift away from purely empirical approaches toward questioning the very foundations of how we acquire knowledge. Scholars are increasingly challenging the epistemological assumptions that have underpinned Western thought since the Enlightenment. This critical examination—what some call a 'crisis of foundations'—suggests that our traditional methods of validation may themselves be flawed. The epistemological foundations of our knowledge systems warrant serious scrutiny before we can claim any certainty about what we know.",
+  "question": "What is the main argument being presented?",
+  "options": [
+    "Empirical methods are becoming more popular in philosophy",
+    "Traditional ways of validating knowledge may be unreliable",
+    "Western philosophy has resolved its foundational issues",
+    "Enlightenment thinking remains the dominant paradigm"
+  ],
+  "correctAnswer": 1,
+  "translation": "Na filosofia contemporânea, houve uma mudança notável para longe de abordagens puramente empíricas...",
+  "cefr_level": "C1",
+  "theme": "philosophy"
+},
+{
+  "id": "listen_c1_018",
+  "text": "During yesterday's board meeting, the CFO raised concerns about our current financial forecasting model. She pointed out that while it's served us well historically, recent market volatility has exposed significant blind spots. The assumptions we've relied on—stable interest rates, predictable consumer behavior, linear growth patterns—no longer hold true in today's environment. Several board members agreed that we need to fundamentally rethink our approach. Before making any major capital decisions, we should subject our entire planning framework to rigorous review.",
+  "question": "What does the CFO suggest about the company's forecasting model?",
+  "options": [
+    "It has always been unreliable and should be discarded",
+    "It needs re-evaluation given changing market conditions",
+    "It should remain unchanged despite recent challenges",
+    "It only requires minor adjustments to work effectively"
+  ],
+  "correctAnswer": 1,
+  "translation": "Durante a reunião do conselho de ontem, a CFO levantou preocupações sobre nosso modelo atual de previsão financeira...",
+  "cefr_level": "C1",
+  "theme": "business"
+},
+{
+  "id": "listen_c1_019",
+  "text": "The biologist explained that symbiotic interrelationships between species often engender evolutionary adaptations that benefit both organisms involved. In the case of the clownfish and sea anemone, the clownfish gains protection from predators while the anemone receives nutrients from the clownfish's waste products. This mutually beneficial arrangement has led to co-evolutionary changes where each species has developed specific adaptations to maximize the advantages of their partnership. The symbiotic relationship between these marine species engenders a form of evolution that couldn't occur in isolation.",
+  "question": "What has the symbiotic relationship led to according to the biologist?",
+  "options": [
+    "Competição entre as espécies marinhas",
+    "Adaptações evolutivas mutuamente benéficas",
+    "Destruição do habitat natural",
+    "Estagnação no desenvolvimento das espécies"
+  ],
+  "correctAnswer": 1,
+  "translation": "A bióloga explicou que inter-relações simbióticas entre espécies frequentemente engendram adaptações evolutivas...",
+  "cefr_level": "C1",
+  "theme": "biology"
+},
+{
+  "id": "listen_c1_020",
+  "text": "The historian explained that the confluence of technological innovation and social unrest in the late 18th century precipitated a metamorphosis in European political systems. The combination of Enlightenment ideas disseminated through the printing press with widespread economic discontent created the perfect conditions for revolutionary change. This transformation, rather than being a singular event, represented a fundamental reconfiguration of power relationships across multiple nations simultaneously. The confluence of these factors precipitated an unprecedented outcome that reshaped the modern world.",
+  "question": "What did the confluence of technology and social unrest lead to?",
+  "options": [
+    "Uma evolução gradual dos sistemas políticos",
+    "Uma metamorfose nos sistemas políticos europeus",
+    "Uma revolução isolada em um único país",
+    "Uma transformação superficial das instituições"
+  ],
+  "correctAnswer": 1,
+  "translation": "O historiador explicou que a confluência de inovação tecnológica e agitação social no final do século 18 precipitou uma metamorfose...",
+  "cefr_level": "C1",
+  "theme": "history"
+},
+{
+  "id": "listen_c1_021",
+  "text": "The economist explained that the digital paradigm has revolutionized interaction methods across all sectors of society. Traditional face-to-face meetings have been supplemented by virtual collaboration tools, while social media platforms have transformed how individuals connect and share information. This paradigm shift has not only changed how we communicate, but has also fundamentally altered business models, educational approaches, and even political engagement. The digital paradigm has revolutionized interaction methods in ways that were unimaginable just two decades ago.",
+  "question": "According to the economist, what has the digital paradigm revolutionized?",
+  "options": [
+    "Apenas os métodos de produção industrial",
+    "Os métodos de interação em todos os setores da sociedade",
+    "Exclusivamente os métodos educacionais",
+    "Principalmente os métodos de pesquisa científica"
+  ],
+  "correctAnswer": 1,
+  "translation": "O economista explicou que o paradigma digital revolucionou métodos de interação através de todos os setores da sociedade...",
+  "cefr_level": "C1",
+  "theme": "digital_transformation"
+},
+{
+  "id": "listen_c1_022",
+  "text": "Despite overwhelming scientific substantiation of climate change impacts, political resistance remains unabated in many policy circles. Even as extreme weather events become more frequent and empirical data clearly demonstrates human causation, ideological commitments continue to override evidence-based decision making. This cognitive dissonance creates a paradoxical situation where the very systems designed to protect societies become obstacles to necessary adaptation strategies. Notwithstanding this evidence, the hypothesis that climate change is primarily a natural phenomenon remains contentious in some political discourse.",
+  "question": "What does the speaker say remains contentious despite the evidence?",
+  "options": [
+    "A aceitação de mudanças climáticas",
+    "A hipótese de que mudanças climáticas são principalmente naturais",
+    "A implementação de estratégias de adaptação",
+    "A decisão baseada em evidências"
+  ],
+  "correctAnswer": 1,
+  "translation": "Apesar da esmagadora comprovação científica dos impactos das mudanças climáticas, a resistência política permanece inabalável...",
+  "cefr_level": "C1",
+  "theme": "climate_science"
+},
+{
+  "id": "listen_c1_023",
+  "text": "The literary critic argued that the true quintessence of any great novel resides not in its plot or characters alone, but in the layers of interpretation it invites from readers. A masterful work creates multiple meanings that emerge through careful analysis of themes, symbolism, and narrative structure. This interpretive depth transforms passive reading into an active dialogue between text and reader, where meaning is co-created rather than merely consumed. The quintessence of literary excellence resides in this interpretive richness that rewards repeated engagement.",
+  "question": "According to the critic, where does the quintessence of a great novel reside?",
+  "options": [
+    "Apenas na trama e nos personagens",
+    "Nas camadas de interpretação que convida aos leitores",
+    "Na estrutura narrativa simples",
+    "Na ação e no diálogo direto"
+  ],
+  "correctAnswer": 1,
+  "translation": "A crítica literária argumentou que a verdadeira quintessência de qualquer grande romance reside não apenas na trama ou personagens...",
+  "cefr_level": "C1",
+  "theme": "literary_criticism"
+},
+{
+  "id": "listen_c1_024",
+  "text": "The political analyst explained that the ramifications of the new trade policy extend far beyond the economic indicators typically cited by policymakers. While the legislation aims to boost domestic manufacturing, its broader implications include shifts in international alliances, changes in labor markets across multiple sectors, and potential geopolitical tensions with trading partners. These ramifications extend beyond simple economic indicators to encompass complex social, political, and diplomatic consequences that may not be immediately apparent in quarterly reports or GDP figures.",
+  "question": "According to the analyst, how far do the ramifications of the trade policy extend?",
+  "options": [
+    "Apenas aos indicadores econômicos típicos",
+    "Além dos indicadores econômicos para consequências sociais e políticas",
+    "Exclusivamente aos relatórios trimestrais",
+    "Apenas às figuras do PIB"
+  ],
+  "correctAnswer": 1,
+  "translation": "O analista político explicou que as ramificações da nova política comercial se estendem muito além dos indicadores econômicos tipicamente citados...",
+  "cefr_level": "C1",
+  "theme": "political_economy"
+},
+{
+  "id": "listen_c1_025",
+  "text": "The project manager reflected that were circumstances different during the product launch, the outcome would have been significantly dissimilar. If the development team had more time for testing, or if market conditions had been more favorable, or if competitor actions had been less aggressive, the product might have achieved much greater market penetration. However, given the challenging circumstances they faced—including budget constraints, tight deadlines, and unexpected technical issues—the team still managed to deliver a viable product that met most stakeholder expectations.",
+  "question": "What would the outcome have been if circumstances had been different?",
+  "options": [
+    "Exatamente o mesmo resultado",
+    "Significativamente diferente",
+    "Um pouco melhor apenas",
+    "Muito pior do que foi"
+  ],
+  "correctAnswer": 1,
+  "translation": "O gerente de projeto refletiu que se as circunstâncias fossem diferentes durante o lançamento do produto, o resultado teria sido significativamente diferente...",
+  "cefr_level": "C1",
+  "theme": "project_management"
+},
+ {
+  "id": "listen_c1_026",
+  "text": "The emergence of social media platforms has fundamentally altered how individuals and organizations interact in the digital landscape. What began as simple networking tools evolved into comprehensive communication ecosystems that connect billions of users worldwide. The paradigm shift revolutionized communication paradigms by democratizing information dissemination and enabling real-time global conversations that transcend geographical and cultural boundaries. This transformation has not only changed personal interactions but has also reshaped business strategies, political campaigns, and social movements across the entire spectrum of human communication.",
+  "question": "What did the paradigm shift revolutionize?",
+  "options": ["Paradigmas de comunicação", "Paradigmas de produção", "Paradigmas de ensino", "Paradigmas de pesquisa"],
+  "correctAnswer": 0,
+  "translation": "O surgimento de plataformas de mídia social alterou fundamentalmente como indivíduos e organizações interagem no cenário digital...",
+  "cefr_level": "C1",
+  "theme": "technology"
+  },
+ {
+  "id": "listen_c1_027",
+  "text": "The scientific community has amassed overwhelming evidence demonstrating the human contribution to climate change through decades of rigorous research and data collection. Despite this comprehensive body of work showing clear patterns of global warming and environmental degradation, certain political and economic interests continue to question the validity of these findings. Notwithstanding evidence, skepticism endures unabated among some stakeholders who prefer to maintain the status quo rather than implement necessary changes to industrial practices and energy policies.",
+  "question": "What endures unabated despite the evidence?",
+  "options": ["O ceticismo", "A evidência", "A crença", "O conhecimento"],
+  "correctAnswer": 0,
+  "translation": "A comunidade científica acumulou evidências esmagadoras demonstrando a contribuição humana para as mudanças climáticas...",
+  "cefr_level": "C1",
+  "theme": "science"
+  },
+ {
+  "id": "listen_c1_028",
+  "text": "The cultural renaissance of the Harlem Renaissance emerged from the intersection of African American artistic expression, European modernist influences, and the social changes following World War I. Writers, musicians, and visual artists converged in Harlem, creating a vibrant cultural movement that blended traditional African American folk traditions with contemporary urban experiences. The confluence of influences engendered synthesis that produced a uniquely American artistic voice, combining jazz rhythms with poetic verse and visual art that captured the spirit of a generation seeking self-expression and cultural identity.",
+  "question": "What did the confluence of influences engender?",
+  "options": ["Síntese", "Conflito", "Separação", "Divergência"],
+  "correctAnswer": 0,
+  "translation": "O renascimento cultural do Harlem Renaissance surgiu da interseção da expressão artística afro-americana...",
+  "cefr_level": "C1",
+  "theme": "culture"
+  },
+{
+  "id": "listen_c2_015",
+  "text": "The philosopher argued that the epistemological foundations of scientific inquiry necessitate constant interrogation and reevaluation. While empirical methods provide reliable data, the underlying assumptions about what constitutes valid knowledge must be continually questioned to prevent dogma from replacing genuine understanding. This critical examination, rather than acceptance of established paradigms, ensures that scientific progress remains dynamic and self-correcting.",
+  "question": "What does the philosopher argue must be done with epistemological foundations?",
+  "options": [
+    "Aceitá-los sem questionamento",
+    "Questioná-los e reavaliá-los constantemente",
+    "Substituí-los por métodos empíricos",
+    "Ignorá-los em favor de paradigmas estabelecidos"
+  ],
+  "correctAnswer": 1,
+  "translation": "O filósofo argumentou que os fundamentos epistemológicos da investigação científica necessitam interrogação e reavaliação constantes...",
+  "cefr_level": "C2",
+  "theme": "epistemology"
+},
+{
+  "id": "listen_c2_016",
+  "text": "The biologist explained that symbiotic interrelationships between species often engender evolutionary adaptations that benefit both organisms involved. In the case of the clownfish and sea anemone, the clownfish gains protection from predators while the anemone receives nutrients from the clownfish's waste products. This mutually beneficial arrangement has led to co-evolutionary changes where each species has developed specific adaptations to maximize the advantages of their partnership.",
+  "question": "What has the symbiotic relationship between clownfish and sea anemone led to?",
+  "options": [
+    "Competição entre as espécies",
+    "Adaptações evolutivas mutuamente benéficas",
+    "Destruição do habitat natural",
+    "Estagnação no desenvolvimento das espécies"
+  ],
+  "correctAnswer": 1,
+  "translation": "A bióloga explicou que inter-relações simbióticas entre espécies frequentemente engendram adaptações evolutivas que beneficiam ambos os organismos envolvidos...",
+  "cefr_level": "C2",
+  "theme": "biology"
+},
+{
+  "id": "listen_c2_017",
+  "text": "Despite overwhelming scientific substantiation of climate change impacts, political resistance remains unabated in many policy circles. Even as extreme weather events become more frequent and empirical data clearly demonstrates human causation, ideological commitments continue to override evidence-based decision making. This cognitive dissonance creates a paradoxical situation where the very systems designed to protect societies become obstacles to necessary adaptation strategies.",
+  "question": "What does the speaker identify as remaining strong despite scientific evidence?",
+  "options": [
+    "A aceitação de mudanças climáticas",
+    "A resistência política aos fatos científicos",
+    "A implementação de estratégias de adaptação",
+    "A decisão baseada em evidências"
+  ],
+  "correctAnswer": 1,
+  "translation": "Apesar da esmagadora comprovação científica dos impactos das mudanças climáticas, a resistência política permanece inabalável em muitos círculos políticos...",
+  "cefr_level": "C2",
+  "theme": "climate_science"
+},
+{
+  "id": "listen_c2_018",
+  "text": "The linguistics professor argued that true rhetorical prowess resides not in the mere accumulation of elaborate vocabulary or complex sentence structures, but in the strategic selection of words that precisely convey intended meaning while simultaneously evoking the desired emotional response. This deliberate choice of language, rather than ornamental flourishes, represents the pinnacle of communicative effectiveness in both written and spoken discourse.",
+  "question": "According to the professor, what is the key to rhetorical prowess?",
+  "options": [
+    "Acumulação de vocabulário elaborado",
+    "Seleção estratégica de palavras para transmitir significado preciso",
+    "Uso de estruturas de frases complexas",
+    "Inclusão de floreios ornamentais"
+  ],
+  "correctAnswer": 1,
+  "translation": "O professor de linguística argumentou que a verdadeira proeza retórica reside não na mera acumulação de vocabulário elaborado ou estruturas de frases complexas...",
+  "cefr_level": "C2",
+  "theme": "rhetoric"
+},
+{
+  "id": "listen_c2_019",
+  "text": "The historian explained that the confluence of technological innovation and social unrest in the late 18th century precipitated a metamorphosis in European political systems. The combination of Enlightenment ideas disseminated through the printing press with widespread economic discontent created the perfect conditions for revolutionary change. This transformation, rather than being a singular event, represented a fundamental reconfiguration of power relationships across multiple nations simultaneously.",
+  "question": "What did the confluence of technology and social unrest lead to?",
+  "options": [
+    "Uma evolução gradual dos sistemas políticos",
+    "Uma metamorfose nos sistemas políticos europeus",
+    "Uma revolução isolada em um único país",
+    "Uma transformação superficial das instituições"
+  ],
+  "correctAnswer": 1,
+  "translation": "O historiador explicou que a confluência de inovação tecnológica e agitação social no final do século 18 precipitou uma metamorfose nos sistemas políticos europeus...",
+  "cefr_level": "C2",
+  "theme": "history"
+},
+{
+  "id": "listen_c2_020",
+  "text": "The educational psychologist contended that meaningful learning interrogation necessitates transcendence beyond surface-level questioning. Rather than merely testing factual recall, true pedagogical inquiry requires students to transcend their existing frameworks of understanding, challenging assumptions and synthesizing information in novel ways. This higher-order thinking, essential for deep comprehension, transforms passive knowledge acquisition into active intellectual engagement.",
+  "question": "What does the psychologist argue that meaningful learning requires?",
+  "options": [
+    "Questionamento apenas no nível superficial",
+    "Transcendência além de estruturas existentes de compreensão",
+    "Teste de memorização de fatos",
+    "Aquisição passiva de conhecimento"
+  ],
+  "correctAnswer": 1,
+  "translation": "A psicóloga educacional argumentou que a interrogação significativa de aprendizagem necessita transcendência além do questionamento de nível superficial...",
+  "cefr_level": "C2",
+  "theme": "education"
+},
+{
+  "id": "listen_c2_021",
+  "text": "The cognitive scientist argued that epistemological interrogation of consciousness necessitates transcendence beyond traditional dualistic frameworks. Contemporary research in neuroscience reveals that subjective experience cannot be adequately explained through simple mind-body dichotomies. Instead, understanding consciousness requires transcending these outdated conceptual boundaries, integrating findings from quantum physics, evolutionary biology, and phenomenological philosophy into a more comprehensive explanatory model.",
+  "question": "What does the scientist argue is necessary to understand consciousness?",
+  "options": [
+    "Manter estruturas dualísticas tradicionais",
+    "Transcender fronteiras conceituais ultrapassadas",
+    "Focar apenas em descobertas de neurociência",
+    "Ignorar descobertas de física quântica"
+  ],
+  "correctAnswer": 1,
+  "translation": "O cientista cognitivo argumentou que a interrogação epistemológica da consciência necessita transcendência além de estruturas dualísticas tradicionais...",
+  "cefr_level": "C2",
+  "theme": "cognitive_science"
+},
+{
+  "id": "listen_c2_022",
+  "text": "The economist explained that the symbiotic nexus between digital platforms and content creators engenders transformative evolution in the creative industries. Streaming services provide creators with global distribution channels while creators supply platforms with diverse, engaging content that attracts users. This mutually beneficial relationship has evolved the entire ecosystem, forcing traditional media companies to adapt or become obsolete while simultaneously democratizing content creation and distribution.",
+  "question": "What has the symbiotic relationship between platforms and creators led to?",
+  "options": [
+    "Obsolescência das empresas de mídia tradicionais",
+    "Evolução transformadora nas indústrias criativas",
+    "Democratização exclusiva da distribuição de conteúdo",
+    "Fim da criação de conteúdo diversificado"
+  ],
+  "correctAnswer": 1,
+  "translation": "O economista explicou que o nexus simbiótico entre plataformas digitais e criadores de conteúdo engendra evolução transformadora nas indústrias criativas...",
+  "cefr_level": "C2",
+  "theme": "digital_economy"
+},
+{
+  "id": "listen_c2_023",
+  "text": "The political analyst argued that notwithstanding extensive corroboration from multiple intelligence agencies, the underpinnings of the foreign interference allegations warrant continued scrutiny. While the basic facts of the investigation have been substantiated, the methodological assumptions and interpretive frameworks used to analyze the data remain subject to legitimate debate. This critical examination ensures that conclusions are robust and not artifacts of confirmation bias in the analytical process.",
+  "question": "What does the analyst argue should happen despite corroboration?",
+  "options": [
+    "Aceitar as alegações sem questionamento",
+    "Continuar examinando criticamente os fundamentos",
+    "Rejeitar todas as descobertas da investigação",
+    "Ignorar o viés de confirmação no processo"
+  ],
+  "correctAnswer": 1,
+  "translation": "O analista político argumentou que não obstante corroboração extensa de múltiplas agências de inteligência, os fundamentos das alegações de interferência estrangeira justificam escrutínio continuado...",
+  "cefr_level": "C2",
+  "theme": "political_analysis"
+},
+{
+  "id": "listen_c2_024",
+  "text": "In Wagner's operatic works, the true genius lies not merely in the melodic composition or vocal performance, but in the intricate orchestration—the way he weaves together diverse instrumental voices to create a cohesive emotional landscape. His use of leitmotifs, seamlessly integrated across the orchestral fabric, transforms the orchestra from mere accompaniment into a narrative device in its own right, where the quintessential manifestation of his dramatic vision resides in this sophisticated symphonic architecture.",
+  "question": "According to the speaker, what distinguishes Wagner's genius in orchestration?",
+  "options": [
+    "A composição de melodias memoráveis",
+    "A transformação da orquestra em dispositivo narrativo",
+    "A performance vocal excepcional",
+    "A arquitetura sinfônica sofisticada"
+  ],
+  "correctAnswer": 1,
+  "translation": "Nas obras operísticas de Wagner, o verdadeiro gênio reside não apenas na composição melódica ou performance vocal, mas na orquestração intricada—a maneira como ele entrelaça vozes instrumentais diversas para criar uma paisagem emocional coesa...",
+  "cefr_level": "C2",
+  "theme": "musicology"
 }
 ]
 }

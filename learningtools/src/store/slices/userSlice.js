@@ -28,7 +28,7 @@ import {
   registerReferralUsage,
   confirmInviteAndReward
 } from '../../services/referralService';
-import { doc, updateDoc } from 'firebase/firestore';
+import { doc, updateDoc, arrayUnion } from 'firebase/firestore';
 import { db } from '../../config/firebase';
 import { checkAndCreateBackup } from '../../services/backupService';
 import { loadXPData } from './xpSlice';
@@ -98,13 +98,19 @@ const initialState = {
     challengeHighScore: 0
   },
 
-  incentives: {
-    phrasesUntilPrompt: 5,
-    hasSeenPrompt: false,
-    lastPromptAt: null
-  },
+   incentives: {
+     phrasesUntilPrompt: 5,
+     hasSeenPrompt: false,
+     lastPromptAt: null
+   },
 
-  lastActivity: null,
+   assessment: {
+     lastTestDate: null,
+     currentCefrLevel: null,
+     history: []
+   },
+
+   lastActivity: null,
 
   loading: false,
   error: null,
@@ -245,21 +251,22 @@ export const initializeUser = createAsyncThunk(
           }
         }
 
-        // ✅ RETORNA DADOS DO FIREBASE (nunca sobrescreve)
-        return {
-          mode: 'authenticated',
-          userId: currentUser.uid,
-          profile: {
-            displayName: currentUser.displayName,
-            email: currentUser.email,
-            photoURL: currentUser.photoURL
-          },
-          progress: userData.progress,
-          stats: userData.stats,
-          levelSystem: userData.levelSystem,
-          referral: referralData,
-          lastActivity: userData.lastActivity || null
-        };
+         // ✅ RETORNA DADOS DO FIREBASE (nunca sobrescreve)
+         return {
+           mode: 'authenticated',
+           userId: currentUser.uid,
+           profile: {
+             displayName: currentUser.displayName,
+             email: currentUser.email,
+             photoURL: currentUser.photoURL
+           },
+           progress: userData.progress,
+           stats: userData.stats,
+           levelSystem: userData.levelSystem,
+           referral: referralData,
+           assessment: userData.assessment || initialState.assessment,
+           lastActivity: userData.lastActivity || null
+         };
       } else {
         // ✅ GUEST
         const guestId = getOrCreateGuestId();
@@ -272,18 +279,19 @@ export const initializeUser = createAsyncThunk(
           displayName: 'Anonymous'
         }));
 
-        return {
-          mode: 'guest',
-          userId: guestId,
-          profile: initialState.profile,
-          progress: guestData.progress,
-          stats: guestData.stats,
-          levelSystem: guestData.levelSystem,
-          referral: {
-            ...guestData.referral || initialState.referral,
-            referredBy: referredByCode || null
-          }
-        };
+         return {
+           mode: 'guest',
+           userId: guestId,
+           profile: initialState.profile,
+           progress: guestData.progress,
+           stats: guestData.stats,
+           levelSystem: guestData.levelSystem,
+           referral: {
+             ...guestData.referral || initialState.referral,
+             referredBy: referredByCode || null
+           },
+           assessment: guestData.assessment || initialState.assessment
+         };
       }
     } catch (error) {
       console.error('❌ ERRO CRÍTICO em initializeUser:', error);
@@ -419,19 +427,20 @@ export const loginWithGoogle = createAsyncThunk(
         // Não falha o login se XP não carregar
       }
 
-      return {
-        userId: user.uid,
-        profile: {
-          displayName: user.displayName,
-          email: user.email,
-          photoURL: user.photoURL
-        },
-        progress: userData.progress,
-        stats: userData.stats,
-        levelSystem: userData.levelSystem,
-        referral: userData.referral || initialState.referral,
-        migrationResult
-      };
+       return {
+         userId: user.uid,
+         profile: {
+           displayName: user.displayName,
+           email: user.email,
+           photoURL: user.photoURL
+         },
+         progress: userData.progress,
+         stats: userData.stats,
+         levelSystem: userData.levelSystem,
+         referral: userData.referral || initialState.referral,
+         assessment: userData.assessment || initialState.assessment,
+         migrationResult
+       };
     } catch (error) {
       console.error('❌ Erro no login:', error);
       return rejectWithValue(error.message);
@@ -549,6 +558,46 @@ export const checkDailyBackup = createAsyncThunk(
     if (result.success) {
       console.log('✅ Backup diário criado com sucesso!');
     }
+
+    return result;
+  }
+);
+
+// ⭐ NOVO THUNK: Salva resultado do assessment
+export const saveAssessmentResult = createAsyncThunk(
+  'user/saveAssessmentResult',
+  async ({ overallLevel, skills, certificate }, { getState }) => {
+    const { userId, mode } = getState().user;
+    const today = new Date().toISOString();
+
+    const result = {
+      date: today,
+      overallLevel,
+      skills,
+      certificate
+    };
+
+    // Salvar Firebase (authenticated)
+    if (mode === 'authenticated') {
+      await updateDoc(doc(db, 'users', userId), {
+        'assessment.lastTestDate': today,
+        'assessment.currentCefrLevel': overallLevel,
+        'assessment.history': arrayUnion(result)
+      });
+    }
+
+    // Salvar localStorage (guest)
+    const cacheKey = mode === 'authenticated'
+      ? `learnfun_auth_cache_${userId}`
+      : 'learnfun_guest_assessment';
+
+    const cached = JSON.parse(localStorage.getItem(cacheKey) || '{}');
+    cached.assessment = {
+      lastTestDate: today,
+      currentCefrLevel: overallLevel,
+      history: [result, ...(cached.assessment?.history || [])].slice(0, 10)
+    };
+    localStorage.setItem(cacheKey, JSON.stringify(cached));
 
     return result;
   }
@@ -929,9 +978,11 @@ const userSlice = createSlice({
           chunkTrainer: action.payload.progress?.chunkTrainer || initialState.progress.chunkTrainer,
           categories: action.payload.progress?.categories || {}
         };
-        state.stats = action.payload.stats;
-        state.levelSystem = action.payload.levelSystem;
-        state.lastActivity = action.payload.lastActivity || null;
+         state.stats = action.payload.stats;
+         state.levelSystem = action.payload.levelSystem;
+         state.assessment = action.payload.assessment || initialState.assessment;
+         state.assessment = action.payload.assessment || initialState.assessment;
+         state.lastActivity = action.payload.lastActivity || null;
 
         if (action.payload.referral) {
           state.referral = {
@@ -995,9 +1046,10 @@ const userSlice = createSlice({
         state.userId = action.payload.userId;
         state.profile = initialState.profile;
         state.progress = initialState.progress;
-        state.stats = initialState.stats;
-        state.incentives = initialState.incentives;
-        state.referral = initialState.referral;
+         state.stats = initialState.stats;
+         state.incentives = initialState.incentives;
+         state.referral = initialState.referral;
+         state.assessment = initialState.assessment;
       });
 
     builder.addCase(initializeReferral.fulfilled, (state, action) => {
@@ -1024,8 +1076,24 @@ const userSlice = createSlice({
       .addCase(saveProgress.rejected, (state) => {
         state.syncStatus = 'error';
       });
+
+    builder.addCase(saveAssessmentResult.fulfilled, (state, action) => {
+      state.assessment.lastTestDate = action.payload.date;
+      state.assessment.currentCefrLevel = action.payload.overallLevel;
+      state.assessment.history = [action.payload, ...state.assessment.history].slice(0, 10);
+    });
   }
 });
+
+// ⭐ NOVO SELECTOR: Verifica se pode fazer assessment
+export const selectCanTakeAssessment = (state) => {
+  const lastTestDate = state.user.assessment?.lastTestDate;
+  if (!lastTestDate) return true;
+
+  const lastDate = new Date(lastTestDate).toDateString();
+  const today = new Date().toDateString();
+  return lastDate !== today;
+};
 
 export const {
   updateChunkProgress,

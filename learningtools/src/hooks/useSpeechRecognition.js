@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { getTranslation } from '../utils/translations';
 
-export const useSpeechRecognition = (selectedLanguage, onResult) => {
+export const useSpeechRecognition = (selectedLanguage, onResult, continuous = true) => {
   const [isListening, setIsListening] = useState(false);
   const [transcript, setTranscript] = useState('');
   const [recognition, setRecognition] = useState(null);
@@ -23,7 +23,7 @@ export const useSpeechRecognition = (selectedLanguage, onResult) => {
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     const newRecognition = new SpeechRecognition();
     newRecognition.lang = selectedLanguage;
-    newRecognition.continuous = true;
+    newRecognition.continuous = continuous;
     newRecognition.interimResults = true;
     newRecognition.maxAlternatives = 1;
 
@@ -41,9 +41,13 @@ export const useSpeechRecognition = (selectedLanguage, onResult) => {
         const transcript = event.results[i][0].transcript;
 
         if (event.results[i].isFinal) {
-          finalTranscript = transcript;
-          setTranscript(transcript);
-        } else {
+           finalTranscript = transcript;
+           setTranscript(transcript);
+           // Auto-stop when we get a final result (for non-continuous mode)
+           if (!continuous) {
+             recognition.stop();
+           }
+         } else {
           interimTranscript = transcript;
           setTranscript(interimTranscript);
         }
