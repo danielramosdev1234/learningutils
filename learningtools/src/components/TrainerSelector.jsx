@@ -1,7 +1,7 @@
 import React, { useState, useEffect, lazy, Suspense } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { Hash, Mic, Zap, Video, MoreHorizontal, X, MessageCircle, Gift, Radio, House, HelpCircle } from 'lucide-react';
+import { Hash, Mic, Zap, Video, MoreHorizontal, X, MessageCircle, Gift, Radio, House, HelpCircle, Star } from 'lucide-react';
 import { closeLevelUpModal } from '../store/slices/userSlice';
 import { useUILanguage } from '../context/LanguageContext.jsx';
 import { translateUI } from '../i18n/uiTranslations.js';
@@ -27,7 +27,8 @@ const CategoryTrainer = lazy(() => import('./training/CategoryTrainer'));
 const SentenceBuilder = lazy(() => import('./training/SentenceBuilder'));
 const SpeakTrainingModes = lazy(() => import('./SpeakTrainingModes'));
 const AIConversationTrainer = lazy(() => import('./training/AIConversationTrainer'));
-const InviteFriendsScreen = lazy(() => import('./referral/InviteFriendsScreen'));
+// InviteFriendsScreen carregado diretamente (não lazy) para evitar erros de lazy loading
+import { InviteFriendsScreen } from './referral/InviteFriendsScreen';
 const GuestOnboarding = lazy(() => import('./ui/GuestOnboarding'));
 
 // ===================================
@@ -159,6 +160,13 @@ const TRAINER_ROUTES = {
     label: '',
     color: 'purple',
     requiresAuth: true
+  },
+'assessment': {
+    component: lazy(() => import('./training/AssessmentTrainer')),
+    icon: Star,
+    label: 'Teste de Nível',
+    color: 'purple',
+    requiresAuth: false
   },
 };
 
