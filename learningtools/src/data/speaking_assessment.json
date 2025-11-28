@@ -1,6 +1,22 @@
 {
   "speaking": [
     {
+      "id": "speak_a1_001",
+      "text": "Hello, my name is John.",
+      "translation": "Olá, meu nome é John.",
+      "cefr_level": "A1",
+      "theme": "introductions",
+      "grammar_point": "simple_present"
+    },
+    {
+      "id": "speak_a1_002",
+      "text": "I am a student.",
+      "translation": "Eu sou um estudante.",
+      "cefr_level": "A1",
+      "theme": "professions",
+      "grammar_point": "verb_to_be"
+    },
+    {
       "id": "speak_a1_003",
       "text": "I like coffee and tea.",
       "translation": "Eu gosto de café e chá.",
@@ -39,6 +55,126 @@
       "cefr_level": "A1",
       "theme": "daily_routine",
       "grammar_point": "simple_present"
+    },
+    {
+      "id": "speak_a1_008",
+      "text": "My name is Anna.",
+      "translation": "Meu nome é Anna.",
+      "cefr_level": "A1",
+      "theme": "introductions",
+      "grammar_point": "simple_present"
+    },
+    {
+      "id": "speak_a1_009",
+      "text": "I am twenty.",
+      "translation": "Eu tenho vinte anos.",
+      "cefr_level": "A1",
+      "theme": "age",
+      "grammar_point": "simple_present"
+    },
+    {
+      "id": "speak_a1_010",
+      "text": "This is a pen.",
+      "translation": "Esta é uma caneta.",
+      "cefr_level": "A1",
+      "theme": "objects",
+      "grammar_point": "demonstratives"
+    },
+    {
+      "id": "speak_a1_011",
+      "text": "He is tall.",
+      "translation": "Ele é alto.",
+      "cefr_level": "A1",
+      "theme": "descriptions",
+      "grammar_point": "simple_present"
+    },
+    {
+      "id": "speak_a1_012",
+      "text": "She works in an office.",
+      "translation": "Ela trabalha em um escritório.",
+      "cefr_level": "A1",
+      "theme": "jobs",
+      "grammar_point": "simple_present"
+    },
+    {
+      "id": "speak_a1_013",
+      "text": "I have a cat.",
+      "translation": "Eu tenho um gato.",
+      "cefr_level": "A1",
+      "theme": "pets",
+      "grammar_point": "simple_present"
+    },
+    {
+      "id": "speak_a1_014",
+      "text": "The book is red.",
+      "translation": "O livro é vermelho.",
+      "cefr_level": "A1",
+      "theme": "objects",
+      "grammar_point": "simple_present"
+    },
+    {
+      "id": "speak_a1_015",
+      "text": "We are friends.",
+      "translation": "Nós somos amigos.",
+      "cefr_level": "A1",
+      "theme": "relationships",
+      "grammar_point": "simple_present"
+    },
+    {
+      "id": "speak_a1_016",
+      "text": "He likes pizza.",
+      "translation": "Ele gosta de pizza.",
+      "cefr_level": "A1",
+      "theme": "food",
+      "grammar_point": "simple_present"
+    },
+    {
+      "id": "speak_a1_017",
+      "text": "She is a student.",
+      "translation": "Ela é uma estudante.",
+      "cefr_level": "A1",
+      "theme": "professions",
+      "grammar_point": "simple_present"
+    },
+    {
+      "id": "speak_a1_018",
+      "text": "It is sunny today.",
+      "translation": "Está ensolarado hoje.",
+      "cefr_level": "A1",
+      "theme": "weather",
+      "grammar_point": "simple_present"
+    },
+    {
+      "id": "speak_a1_019",
+      "text": "They live in Brazil.",
+      "translation": "Eles moram no Brasil.",
+      "cefr_level": "A1",
+      "theme": "location",
+      "grammar_point": "simple_present"
+    },
+    {
+      "id": "speak_a1_020",
+      "text": "I speak English.",
+      "translation": "Eu falo inglês.",
+      "cefr_level": "A1",
+      "theme": "languages",
+      "grammar_point": "simple_present"
+    },
+    {
+      "id": "speak_a2_001",
+      "text": "I went to the park yesterday.",
+      "translation": "Eu fui ao parque ontem.",
+      "cefr_level": "A2",
+      "theme": "past_activities",
+      "grammar_point": "simple_past"
+    },
+    {
+      "id": "speak_a2_002",
+      "text": "She is cooking dinner now.",
+      "translation": "Ela está cozinhando o jantar agora.",
+      "cefr_level": "A2",
+      "theme": "present_activities",
+      "grammar_point": "present_continuous"
     },
     {
       "id": "speak_a2_003",
@@ -81,6 +217,126 @@
       "grammar_point": "modal_verbs"
     },
     {
+      "id": "speak_a2_008",
+      "text": "I don't like spicy food.",
+      "translation": "Eu não gosto de comida picante.",
+      "cefr_level": "A2",
+      "theme": "preferences",
+      "grammar_point": "simple_present_negative"
+    },
+    {
+      "id": "speak_a2_009",
+      "text": "Do you have any brothers?",
+      "translation": "Você tem irmãos?",
+      "cefr_level": "A2",
+      "theme": "family",
+      "grammar_point": "questions"
+    },
+    {
+      "id": "speak_a2_010",
+      "text": "I went to the store yesterday.",
+      "translation": "Eu fui à loja ontem.",
+      "cefr_level": "A2",
+      "theme": "past_activities",
+      "grammar_point": "simple_past"
+    },
+    {
+      "id": "speak_a2_011",
+      "text": "She can speak French.",
+      "translation": "Ela pode falar francês.",
+      "cefr_level": "A2",
+      "theme": "abilities",
+      "grammar_point": "can_modal"
+    },
+    {
+      "id": "speak_a2_012",
+      "text": "We are going to the cinema.",
+      "translation": "Nós vamos ao cinema.",
+      "cefr_level": "A2",
+      "theme": "plans",
+      "grammar_point": "present_continuous_future"
+    },
+    {
+      "id": "speak_a2_013",
+      "text": "I didn't go to school yesterday.",
+      "translation": "Eu não fui à escola ontem.",
+      "cefr_level": "A2",
+      "theme": "past_activities",
+      "grammar_point": "simple_past_negative"
+    },
+    {
+      "id": "speak_a2_014",
+      "text": "Are you coming to the party?",
+      "translation": "Você vai vir para a festa?",
+      "cefr_level": "A2",
+      "theme": "invitations",
+      "grammar_point": "present_continuous_future"
+    },
+    {
+      "id": "speak_a2_015",
+      "text": "She has already eaten lunch.",
+      "translation": "Ela já almoçou.",
+      "cefr_level": "A2",
+      "theme": "meals",
+      "grammar_point": "present_perfect"
+    },
+    {
+      "id": "speak_a2_016",
+      "text": "I need to buy some bread.",
+      "translation": "Eu preciso comprar pão.",
+      "cefr_level": "A2",
+      "theme": "shopping",
+      "grammar_point": "need_to"
+    },
+    {
+      "id": "speak_a2_017",
+      "text": "They were playing soccer.",
+      "translation": "Eles estavam jogando futebol.",
+      "cefr_level": "A2",
+      "theme": "sports",
+      "grammar_point": "past_continuous"
+    },
+    {
+      "id": "speak_a2_018",
+      "text": "Can I have some water, please?",
+      "translation": "Posso pegar água, por favor?",
+      "cefr_level": "A2",
+      "theme": "politeness",
+      "grammar_point": "can_modal"
+    },
+    {
+      "id": "speak_a2_019",
+      "text": "I have never been to Paris.",
+      "translation": "Eu nunca fui a Paris.",
+      "cefr_level": "A2",
+      "theme": "travel",
+      "grammar_point": "present_perfect_negative"
+    },
+    {
+      "id": "speak_a2_020",
+      "text": "She is going to study medicine.",
+      "translation": "Ela vai estudar medicina.",
+      "cefr_level": "A2",
+      "theme": "future_plans",
+      "grammar_point": "going_to_future"
+    },
+    {
+      "id": "speak_b1_001",
+      "text": "I have lived here for five years.",
+      "translation": "Eu moro aqui há cinco anos.",
+      "cefr_level": "B1",
+      "theme": "duration",
+      "grammar_point": "present_perfect_duration"
+    },
+    {
+      "id": "speak_b1_002",
+      "text": "If it rains tomorrow, we will stay home.",
+      "translation": "Se chover amanhã, ficaremos em casa.",
+      "cefr_level": "B1",
+      "theme": "conditional_plans",
+      "grammar_point": "first_conditional"
+    },
+    {
       "id": "speak_b1_003",
       "text": "I used to play basketball when I was younger.",
       "translation": "Eu costumava jogar basquete quando era mais jovem.",
@@ -119,6 +375,126 @@
       "cefr_level": "B1",
       "theme": "health",
       "grammar_point": "modal_verbs_advice"
+    },
+    {
+      "id": "speak_b1_008",
+      "text": "I'm getting better at speaking English every day.",
+      "translation": "Estou melhorando em falar inglês todos os dias.",
+      "cefr_level": "B1",
+      "theme": "language_learning",
+      "grammar_point": "present_continuous_progress"
+    },
+    {
+      "id": "speak_b1_009",
+      "text": "I have been living here for three years.",
+      "translation": "Eu moro aqui há três anos.",
+      "cefr_level": "B1",
+      "theme": "duration",
+      "grammar_point": "present_perfect_continuous"
+    },
+    {
+      "id": "speak_b1_010",
+      "text": "If I had more time, I would travel more.",
+      "translation": "Se eu tivesse mais tempo, eu viajaria mais.",
+      "cefr_level": "B1",
+      "theme": "hypothetical",
+      "grammar_point": "second_conditional"
+    },
+    {
+      "id": "speak_b1_011",
+      "text": "She might be at home now.",
+      "translation": "Ela pode estar em casa agora.",
+      "cefr_level": "B1",
+      "theme": "possibility",
+      "grammar_point": "might_modal"
+    },
+    {
+      "id": "speak_b1_012",
+      "text": "I find it difficult to wake up early.",
+      "translation": "Eu acho difícil acordar cedo.",
+      "cefr_level": "B1",
+      "theme": "difficulties",
+      "grammar_point": "find_it_adjective"
+    },
+    {
+      "id": "speak_b1_013",
+      "text": "I wish I could fly like a bird.",
+      "translation": "Eu gostaria de poder voar como um pássaro.",
+      "cefr_level": "B1",
+      "theme": "wishes",
+      "grammar_point": "wish_clauses"
+    },
+    {
+      "id": "speak_b1_014",
+      "text": "By the time we arrived, the movie had already started.",
+      "translation": "Quando chegamos, o filme já havia começado.",
+      "cefr_level": "B1",
+      "theme": "sequences",
+      "grammar_point": "past_perfect"
+    },
+    {
+      "id": "speak_b1_015",
+      "text": "She apologized for being late to the meeting.",
+      "translation": "Ela se desculpou por chegar atrasada à reunião.",
+      "cefr_level": "B1",
+      "theme": "apologies",
+      "grammar_point": "gerund_after_prepositions"
+    },
+    {
+      "id": "speak_b1_016",
+      "text": "I am used to getting up early in the morning.",
+      "translation": "Eu estou acostumado a acordar cedo de manhã.",
+      "cefr_level": "B1",
+      "theme": "habits",
+      "grammar_point": "be_used_to"
+    },
+    {
+      "id": "speak_b1_017",
+      "text": "The book that I bought yesterday is very interesting.",
+      "translation": "O livro que eu comprei ontem é muito interessante.",
+      "cefr_level": "B1",
+      "theme": "reading",
+      "grammar_point": "relative_clauses"
+    },
+    {
+      "id": "speak_b1_018",
+      "text": "She complained that the food was too spicy.",
+      "translation": "Ela reclamou que a comida estava muito picante.",
+      "cefr_level": "B1",
+      "theme": "complaints",
+      "grammar_point": "reported_speech"
+    },
+    {
+      "id": "speak_b1_019",
+      "text": "They decided to postpone the meeting until next week.",
+      "translation": "Eles decidiram adiar a reunião até a próxima semana.",
+      "cefr_level": "B1",
+      "theme": "decisions",
+      "grammar_point": "decide_to_infinitive"
+    },
+    {
+      "id": "speak_b1_020",
+      "text": "I have been waiting for the bus for half an hour.",
+      "translation": "Eu estou esperando pelo ônibus há meia hora.",
+      "cefr_level": "B1",
+      "theme": "waiting",
+      "grammar_point": "present_perfect_continuous"
+    },
+    {
+      "id": "speak_b2_001",
+      "text": "Should you need any assistance, please don't hesitate to contact us.",
+      "translation": "Caso precise de qualquer assistência, por favor não hesite em nos contatar.",
+      "cefr_level": "B2",
+      "theme": "formal_offers",
+      "grammar_point": "inversion_conditional"
+    },
+    {
+      "id": "speak_b2_002",
+      "text": "The company has been expanding rapidly over the past decade.",
+      "translation": "A empresa tem se expandido rapidamente na última década.",
+      "cefr_level": "B2",
+      "theme": "business",
+      "grammar_point": "present_perfect_continuous"
     },
     {
       "id": "speak_b2_003",
@@ -161,215 +537,15 @@
       "grammar_point": "passive_voice"
     },
     {
-      "id": "speak_c1_003",
-      "text": "Were it not for technological advances, global communication would be far more limited.",
-      "translation": "Não fossem os avanços tecnológicos, a comunicação global seria muito mais limitada.",
-      "cefr_level": "C1",
-      "theme": "technology",
-      "grammar_point": "conditional_inversion"
-    },
-    {
-      "id": "speak_c1_004",
-      "text": "The ramifications of climate change are becoming increasingly apparent across diverse ecosystems.",
-      "translation": "As ramificações das mudanças climáticas estão se tornando cada vez mais evidentes em diversos ecossistemas.",
-      "cefr_level": "C1",
-      "theme": "environment",
-      "grammar_point": "advanced_vocabulary"
-    },
-    {
-      "id": "speak_c1_005",
-      "text": "Scarcely had the announcement been made when controversy erupted.",
-      "translation": "Mal o anúncio foi feito quando a controvérsia eclodiu.",
-      "cefr_level": "C1",
-      "theme": "news",
-      "grammar_point": "negative_inversion"
-    },
-    {
-      "id": "speak_c1_006",
-      "text": "The company is committed to fostering an inclusive workplace culture.",
-      "translation": "A empresa está comprometida em promover uma cultura de trabalho inclusiva.",
-      "cefr_level": "C1",
-      "theme": "business",
-      "grammar_point": "gerunds_formal"
-    },
-    {
-      "id": "speak_c1_007",
-      "text": "The findings underscore the necessity of integrating interdisciplinary approaches.",
-      "translation": "Os resultados ressaltam a necessidade de integrar abordagens interdisciplinares.",
-      "cefr_level": "C1",
-      "theme": "research",
-      "grammar_point": "formal_vocabulary"
-    },
-    {
-      "id": "speak_c2_003",
-      "text": "The juxtaposition of traditional methodologies with contemporary innovations yielded unprecedented results.",
-      "translation": "A justaposição de metodologias tradicionais com inovações contemporâneas produziu resultados sem precedentes.",
-      "cefr_level": "C2",
-      "theme": "research",
-      "grammar_point": "sophisticated_vocabulary"
-    },
-    {
-      "id": "speak_c2_004",
-      "text": "Insofar as economic indicators remain volatile, prudent fiscal management is imperative.",
-      "translation": "Na medida em que os indicadores econômicos permanecem voláteis, gestão fiscal prudente é imperativa.",
-      "cefr_level": "C2",
-      "theme": "economics",
-      "grammar_point": "complex_connectors"
-    },
-    {
-      "id": "speak_c2_005",
-      "text": "The discourse surrounding artificial intelligence is replete with both utopian aspirations and dystopian anxieties.",
-      "translation": "O discurso em torno da inteligência artificial está repleto de aspirações utópicas e ansiedades distópicas.",
-      "cefr_level": "C2",
-      "theme": "technology",
-      "grammar_point": "nuanced_vocabulary"
-    },
-    {
-      "id": "speak_c2_006",
-      "text": "Albeit marginally effective, the intervention merits further investigation given its novel approach.",
-      "translation": "Embora marginalmente eficaz, a intervenção merece investigação adicional dado sua abordagem inovadora.",
-      "cefr_level": "C2",
-      "theme": "research",
-      "grammar_point": "concessive_clauses"
-    },
-    {
-      "id": "speak_c2_007",
-      "text": "The confluence of geopolitical tensions and economic uncertainty portends a period of considerable instability.",
-      "translation": "A confluência de tensões geopolíticas e incerteza econômica pressagia um período de considerável instabilidade.",
-      "cefr_level": "C2",
-      "theme": "politics",
-      "grammar_point": "formal_register"
-    },
-    {
-      "id": "speak_a1_008",
-      "text": "My name is Anna.",
-      "translation": "Meu nome é Anna.",
-      "cefr_level": "A1",
-      "theme": "introductions",
-      "grammar_point": "simple_present"
-    },
-    {
-      "id": "speak_a1_009",
-      "text": "I am twenty years old.",
-      "translation": "Eu tenho vinte anos.",
-      "cefr_level": "A1",
-      "theme": "age",
-      "grammar_point": "simple_present"
-    },
-    {
-      "id": "speak_a1_010",
-      "text": "This is a pen.",
-      "translation": "Esta é uma caneta.",
-      "cefr_level": "A1",
-      "theme": "objects",
-      "grammar_point": "demonstratives"
-    },
-    {
-      "id": "speak_a1_011",
-      "text": "He is tall.",
-      "translation": "Ele é alto.",
-      "cefr_level": "A1",
-      "theme": "descriptions",
-      "grammar_point": "simple_present"
-    },
-    {
-      "id": "speak_a1_012",
-      "text": "She works in an office.",
-      "translation": "Ela trabalha em um escritório.",
-      "cefr_level": "A1",
-      "theme": "jobs",
-      "grammar_point": "simple_present"
-    },
-    {
-      "id": "speak_a2_006",
-      "text": "I don't like spicy food.",
-      "translation": "Eu não gosto de comida picante.",
-      "cefr_level": "A2",
-      "theme": "preferences",
-      "grammar_point": "simple_present_negative"
-    },
-    {
-      "id": "speak_a2_007",
-      "text": "Do you have any brothers?",
-      "translation": "Você tem irmãos?",
-      "cefr_level": "A2",
-      "theme": "family",
-      "grammar_point": "questions"
-    },
-    {
-      "id": "speak_a2_008",
-      "text": "I went to the store yesterday.",
-      "translation": "Eu fui à loja ontem.",
-      "cefr_level": "A2",
-      "theme": "past_activities",
-      "grammar_point": "simple_past"
-    },
-    {
-      "id": "speak_a2_009",
-      "text": "She can speak French.",
-      "translation": "Ela pode falar francês.",
-      "cefr_level": "A2",
-      "theme": "abilities",
-      "grammar_point": "can_modal"
-    },
-    {
-      "id": "speak_a2_010",
-      "text": "We are going to the cinema.",
-      "translation": "Nós vamos ao cinema.",
-      "cefr_level": "A2",
-      "theme": "plans",
-      "grammar_point": "going_to_future"
-    },
-    {
-      "id": "speak_b1_006",
-      "text": "I have been living here for three years.",
-      "translation": "Eu moro aqui há três anos.",
-      "cefr_level": "B1",
-      "theme": "duration",
-      "grammar_point": "present_perfect_continuous"
-    },
-    {
-      "id": "speak_b1_007",
-      "text": "If I had more time, I would travel more.",
-      "translation": "Se eu tivesse mais tempo, eu viajaria mais.",
-      "cefr_level": "B1",
-      "theme": "hypothetical",
-      "grammar_point": "second_conditional"
-    },
-    {
-      "id": "speak_b1_008",
-      "text": "I used to play soccer when I was young.",
-      "translation": "Eu costumava jogar futebol quando era jovem.",
-      "cefr_level": "B1",
-      "theme": "past_habits",
-      "grammar_point": "used_to"
-    },
-    {
-      "id": "speak_b1_009",
-      "text": "She might be at home now.",
-      "translation": "Ela pode estar em casa agora.",
-      "cefr_level": "B1",
-      "theme": "possibility",
-      "grammar_point": "might_modal"
-    },
-    {
-      "id": "speak_b1_010",
-      "text": "I find it difficult to wake up early.",
-      "translation": "Eu acho difícil acordar cedo.",
-      "cefr_level": "B1",
-      "theme": "difficulties",
-      "grammar_point": "find_it_adjective"
-    },
-    {
-      "id": "speak_b2_006",
+      "id": "speak_b2_008",
       "text": "Had I known about the meeting, I would have attended.",
       "translation": "Se eu soubesse sobre a reunião, eu teria comparecido.",
       "cefr_level": "B2",
       "theme": "regrets",
-      "grammar_point": "third_conditional"
+      "grammar_point": "third_conditional_inversion"
     },
     {
-      "id": "speak_b2_007",
+      "id": "speak_b2_009",
       "text": "The proposal was rejected due to insufficient funding.",
       "translation": "A proposta foi rejeitada devido a financiamento insuficiente.",
       "cefr_level": "B2",
@@ -377,28 +553,92 @@
       "grammar_point": "passive_voice"
     },
     {
-      "id": "speak_b2_008",
-      "text": "Notwithstanding the challenges, we persevered.",
-      "translation": "Não obstante os desafios, nós perseveramos.",
+      "id": "speak_b2_010",
+      "text": "Despite the challenges, we managed to complete the project successfully.",
+      "translation": "Apesar dos desafios, conseguimos completar o projeto com sucesso.",
       "cefr_level": "B2",
       "theme": "persistence",
-      "grammar_point": "formal_language"
+      "grammar_point": "concessive_clauses"
     },
     {
-      "id": "speak_b2_009",
-      "text": "She has a penchant for classical music.",
-      "translation": "Ela tem uma predileção por música clássica.",
+      "id": "speak_b2_011",
+      "text": "She has a strong preference for classical music over modern genres.",
+      "translation": "Ela tem uma forte preferência por música clássica em vez de gêneros modernos.",
       "cefr_level": "B2",
       "theme": "preferences",
-      "grammar_point": "formal_vocabulary"
+      "grammar_point": "preference_structure"
     },
     {
-      "id": "speak_b2_010",
-      "text": "The implications of this decision are far-reaching.",
-      "translation": "As implicações desta decisão são de longo alcance.",
+      "id": "speak_b2_012",
+      "text": "The implications of this decision could be far-reaching.",
+      "translation": "As implicações desta decisão poderiam ser de longo alcance.",
       "cefr_level": "B2",
       "theme": "consequences",
-      "grammar_point": "formal_register"
+      "grammar_point": "modal_speculation"
+    },
+    {
+      "id": "speak_b2_013",
+      "text": "The proposal was rejected on account of insufficient evidence.",
+      "translation": "A proposta foi rejeitada devido à evidência insuficiente.",
+      "cefr_level": "B2",
+      "theme": "business",
+      "grammar_point": "formal_passive"
+    },
+    {
+      "id": "speak_b2_014",
+      "text": "Had the weather been better, we would have gone hiking.",
+      "translation": "Se o tempo estivesse melhor, teríamos ido caminhar.",
+      "cefr_level": "B2",
+      "theme": "hypothetical",
+      "grammar_point": "mixed_conditional"
+    },
+    {
+      "id": "speak_b2_015",
+      "text": "The implications of this discovery are significant and worth exploring.",
+      "translation": "As implicações desta descoberta são significativas e valem a pena explorar.",
+      "cefr_level": "B2",
+      "theme": "science",
+      "grammar_point": "worth_gerund"
+    },
+    {
+      "id": "speak_b2_016",
+      "text": "She attributed her success to hard work and perseverance.",
+      "translation": "Ela atribuiu seu sucesso ao trabalho duro e perseverança.",
+      "cefr_level": "B2",
+      "theme": "success",
+      "grammar_point": "attribute_to"
+    },
+    {
+      "id": "speak_b2_017",
+      "text": "Despite substantial challenges, the project was completed on time.",
+      "translation": "Apesar de desafios substanciais, o projeto foi concluído no prazo.",
+      "cefr_level": "B2",
+      "theme": "projects",
+      "grammar_point": "concessive_structures"
+    },
+    {
+      "id": "speak_b2_018",
+      "text": "This phenomenon is definitely worth investigating further.",
+      "translation": "Este fenômeno definitivamente vale a pena investigar mais.",
+      "cefr_level": "B2",
+      "theme": "research",
+      "grammar_point": "worth_gerund"
+    },
+    {
+      "id": "speak_b2_019",
+      "text": "She tends to ask very relevant and insightful questions.",
+      "translation": "Ela tende a fazer perguntas muito relevantes e perspicazes.",
+      "cefr_level": "B2",
+      "theme": "character",
+      "grammar_point": "tend_to_infinitive"
+    },
+    {
+      "id": "speak_b2_020",
+      "text": "The gap between theory and practice is quite noticeable.",
+      "translation": "A lacuna entre teoria e prática é bastante perceptível.",
+      "cefr_level": "B2",
+      "theme": "analysis",
+      "grammar_point": "abstract_concepts"
     },
     {
       "id": "speak_c1_006",
@@ -442,24 +682,24 @@
     },
     {
       "id": "speak_c2_008",
-      "text": "The epistemological underpinnings of this philosophical discourse warrant meticulous scrutiny.",
-      "translation": "Os fundamentos epistemológicos deste discurso filosófico justificam escrutínio meticuloso.",
+      "text": "The basic assumptions behind this philosophical discussion deserve careful examination.",
+      "translation": "As premissas básicas por trás desta discussão filosófica merecem exame cuidadoso.",
       "cefr_level": "C2",
       "theme": "philosophy",
       "grammar_point": "academic_vocabulary"
     },
     {
       "id": "speak_c2_009",
-      "text": "The symbiotic relationship between art and society engenders cultural evolution.",
-      "translation": "O relacionamento simbiótico entre arte e sociedade engendra evolução cultural.",
+      "text": "The interdependent connection between art and society drives cultural development.",
+      "translation": "A conexão interdependente entre arte e sociedade impulsiona o desenvolvimento cultural.",
       "cefr_level": "C2",
       "theme": "sociology",
       "grammar_point": "metaphorical_concepts"
     },
     {
       "id": "speak_c2_010",
-      "text": "The quintessence of diplomatic acumen lies in nuanced interpretation.",
-      "translation": "A quintessência da perspicácia diplomática reside na interpretação nuances.",
+      "text": "The essence of diplomatic skill lies in subtle understanding.",
+      "translation": "A essência da habilidade diplomática reside na compreensão sutil.",
       "cefr_level": "C2",
       "theme": "diplomacy",
       "grammar_point": "abstract_concepts"
@@ -801,15 +1041,111 @@
       "grammar_point": "relative_clauses"
     },
     {
-      "id": "speak_b2_015",
-      "text": "The proposal was rejected on account of insufficient evidence.",
-      "translation": "A proposta foi rejeitada devido à evidência insuficiente.",
+      "id": "speak_b2_001",
+      "text": "Should you need any assistance, please don't hesitate to contact us.",
+      "translation": "Caso precise de qualquer assistência, por favor não hesite em nos contatar.",
       "cefr_level": "B2",
-      "theme": "business",
-      "grammar_point": "formal_passive"
+      "theme": "formal_offers",
+      "grammar_point": "inversion_conditional"
     },
     {
-      "id": "speak_b2_016",
+      "id": "speak_b2_002",
+      "text": "The company has been expanding rapidly over the past decade.",
+      "translation": "A empresa tem se expandido rapidamente na última década.",
+      "cefr_level": "B2",
+      "theme": "business",
+      "grammar_point": "present_perfect_continuous"
+    },
+    {
+      "id": "speak_b2_003",
+      "text": "By the time we arrive, they will have already left.",
+      "translation": "Quando chegarmos, eles já terão ido embora.",
+      "cefr_level": "B2",
+      "theme": "timing",
+      "grammar_point": "future_perfect"
+    },
+    {
+      "id": "speak_b2_004",
+      "text": "Not only did she win the competition, but she also broke the record.",
+      "translation": "Ela não só ganhou a competição, como também quebrou o recorde.",
+      "cefr_level": "B2",
+      "theme": "achievements",
+      "grammar_point": "inversion"
+    },
+    {
+      "id": "speak_b2_005",
+      "text": "The research suggests that regular exercise can significantly improve mental health.",
+      "translation": "A pesquisa sugere que exercício regular pode melhorar significativamente a saúde mental.",
+      "cefr_level": "B2",
+      "theme": "health",
+      "grammar_point": "reporting_verbs"
+    },
+    {
+      "id": "speak_b2_006",
+      "text": "Having completed the training, she felt confident about her new role.",
+      "translation": "Tendo completado o treinamento, ela se sentiu confiante sobre seu novo papel.",
+      "cefr_level": "B2",
+      "theme": "work",
+      "grammar_point": "perfect_participle"
+    },
+    {
+      "id": "speak_b2_007",
+      "text": "The government has been criticized for failing to address environmental concerns.",
+      "translation": "O governo tem sido criticado por não abordar preocupações ambientais.",
+      "cefr_level": "B2",
+      "theme": "environment",
+      "grammar_point": "passive_voice"
+    },
+    {
+      "id": "speak_b2_008",
+      "text": "Had I known about the meeting, I would have attended.",
+      "translation": "Se eu soubesse sobre a reunião, eu teria comparecido.",
+      "cefr_level": "B2",
+      "theme": "regrets",
+      "grammar_point": "third_conditional_inversion"
+    },
+    {
+      "id": "speak_b2_009",
+      "text": "The proposal was rejected due to insufficient funding.",
+      "translation": "A proposta foi rejeitada devido a financiamento insuficiente.",
+      "cefr_level": "B2",
+      "theme": "business",
+      "grammar_point": "passive_voice"
+    },
+    {
+      "id": "speak_b2_010",
+      "text": "Despite the challenges, we managed to complete the project successfully.",
+      "translation": "Apesar dos desafios, conseguimos completar o projeto com sucesso.",
+      "cefr_level": "B2",
+      "theme": "persistence",
+      "grammar_point": "concessive_clauses"
+    },
+    {
+      "id": "speak_b2_011",
+      "text": "She has a strong preference for classical music over modern genres.",
+      "translation": "Ela tem uma forte preferência por música clássica em vez de gêneros modernos.",
+      "cefr_level": "B2",
+      "theme": "preferences",
+      "grammar_point": "preference_structure"
+    },
+    {
+      "id": "speak_b2_012",
+      "text": "What really matters is how we respond to setbacks, not whether we experience them.",
+      "translation": "O que realmente importa é como respondemos aos contratempos, não se os experimentamos.",
+      "cefr_level": "B2",
+      "theme": "resilience",
+      "grammar_point": "cleft_sentences"
+    },
+    {
+      "id": "speak_b2_013",
+      "text": "The committee is having the report reviewed by external consultants.",
+      "translation": "O comitê está tendo o relatório revisado por consultores externos.",
+      "cefr_level": "B2",
+      "theme": "business",
+      "grammar_point": "causative_have"
+    },
+    {
+      "id": "speak_b2_014",
       "text": "Had the weather been better, we would have gone hiking.",
       "translation": "Se o tempo estivesse melhor, teríamos ido caminhar.",
       "cefr_level": "B2",
@@ -817,15 +1153,15 @@
       "grammar_point": "mixed_conditional"
     },
     {
-      "id": "speak_b2_017",
-      "text": "The implications of this discovery are far-reaching and profound.",
-      "translation": "As implicações desta descoberta são de longo alcance e profundas.",
+      "id": "speak_b2_015",
+      "text": "It's high time we took climate change seriously.",
+      "translation": "Já passou da hora de levarmos a mudança climática a sério.",
       "cefr_level": "B2",
-      "theme": "science",
-      "grammar_point": "formal_adjectives"
+      "theme": "environment",
+      "grammar_point": "its_time_subjunctive"
     },
     {
-      "id": "speak_b2_018",
+      "id": "speak_b2_016",
       "text": "She attributed her success to hard work and perseverance.",
       "translation": "Ela atribuiu seu sucesso ao trabalho duro e perseverança.",
       "cefr_level": "B2",
@@ -833,308 +1169,445 @@
       "grammar_point": "attribute_to"
     },
     {
-      "id": "speak_b2_019",
-      "text": "Notwithstanding the challenges, the project was completed on time.",
-      "translation": "Não obstante os desafios, o projeto foi concluído no prazo.",
+      "id": "speak_b2_017",
+      "text": "Rarely have I encountered such dedication in a young professional.",
+      "translation": "Raramente encontrei tanta dedicação em um jovem profissional.",
       "cefr_level": "B2",
-      "theme": "projects",
-      "grammar_point": "formal_connectors"
+      "theme": "character",
+      "grammar_point": "negative_inversion"
     },
     {
-      "id": "speak_b2_020",
-      "text": "The phenomenon warrants further empirical investigation.",
-      "translation": "O fenômeno justifica investigação empírica adicional.",
+      "id": "speak_b2_018",
+      "text": "The phenomenon warrants further investigation.",
+      "translation": "O fenômeno justifica investigação adicional.",
       "cefr_level": "B2",
       "theme": "research",
       "grammar_point": "formal_vocabulary"
     },
     {
-      "id": "speak_b2_021",
-      "text": "She has a propensity for asking pertinent questions.",
-      "translation": "Ela tem uma propensão para fazer perguntas pertinentes.",
+      "id": "speak_b2_019",
+      "text": "Were I in your position, I would reconsider that decision.",
+      "translation": "Se eu estivesse na sua posição, reconsideraria essa decisão.",
       "cefr_level": "B2",
-      "theme": "character",
-      "grammar_point": "formal_nouns"
+      "theme": "advice",
+      "grammar_point": "conditional_inversion"
+    },
+    {
+      "id": "speak_b2_020",
+      "text": "The results of the study, though preliminary, are encouraging.",
+      "translation": "Os resultados do estudo, embora preliminares, são encorajadores.",
+      "cefr_level": "B2",
+      "theme": "research",
+      "grammar_point": "concessive_insertion"
+    },
+    {
+      "id": "speak_b2_021",
+      "text": "She tends to approach problems from unconventional angles.",
+      "translation": "Ela tende a abordar problemas de ângulos não convencionais.",
+      "cefr_level": "B2",
+      "theme": "problem_solving",
+      "grammar_point": "tend_to_infinitive"
     },
     {
       "id": "speak_b2_022",
-      "text": "The discrepancy between theory and practice is evident.",
-      "translation": "A discrepância entre teoria e prática é evidente.",
+      "text": "The initiative aims to bridge the gap between theory and practice.",
+      "translation": "A iniciativa visa preencher a lacuna entre teoria e prática.",
       "cefr_level": "B2",
-      "theme": "analysis",
-      "grammar_point": "formal_register"
+      "theme": "education",
+      "grammar_point": "metaphorical_expressions"
     },
     {
       "id": "speak_b2_023",
-      "text": "He postulated that the results would be inconclusive.",
-      "translation": "Ele postulou que os resultados seriam inconclusivos.",
+      "text": "He postulated that increased automation would transform the job market.",
+      "translation": "Ele postulou que o aumento da automação transformaria o mercado de trabalho.",
       "cefr_level": "B2",
-      "theme": "hypothesis",
+      "theme": "economics",
       "grammar_point": "academic_verbs"
     },
     {
       "id": "speak_b2_024",
-      "text": "The paradigm shift necessitates a reevaluation of our assumptions.",
-      "translation": "A mudança de paradigma necessita uma reavaliação de nossas suposições.",
+      "text": "What strikes me about this approach is its simplicity and effectiveness.",
+      "translation": "O que me impressiona nesta abordagem é sua simplicidade e eficácia.",
       "cefr_level": "B2",
-      "theme": "change",
-      "grammar_point": "formal_construction"
+      "theme": "evaluation",
+      "grammar_point": "cleft_sentences"
     },
     {
       "id": "speak_b2_025",
-      "text": "Had the meeting not been cancelled, we would have discussed the issue.",
-      "translation": "Se a reunião não tivesse sido cancelada, teríamos discutido o assunto.",
+      "text": "Little did we know that this decision would change everything.",
+      "translation": "Mal sabíamos que esta decisão mudaria tudo.",
       "cefr_level": "B2",
-      "theme": "hypothetical",
-      "grammar_point": "third_conditional"
+      "theme": "narrative",
+      "grammar_point": "negative_inversion"
     },
     {
       "id": "speak_b2_026",
-      "text": "The research, once completed, will provide valuable insights.",
-      "translation": "A pesquisa, uma vez concluída, fornecerá insights valiosos.",
+      "text": "The findings, once validated, will have significant implications for policy.",
+      "translation": "As descobertas, uma vez validadas, terão implicações significativas para a política.",
       "cefr_level": "B2",
-      "theme": "research",
+      "theme": "policy",
       "grammar_point": "participle_clauses"
     },
     {
       "id": "speak_b2_027",
-      "text": "She expressed concern that the project might be delayed.",
-      "translation": "Ela expressou preocupação de que o projeto pudesse ser atrasado.",
+      "text": "She expressed concern that funding cuts might jeopardize the project.",
+      "translation": "Ela expressou preocupação de que cortes de financiamento pudessem comprometer o projeto.",
       "cefr_level": "B2",
       "theme": "concerns",
       "grammar_point": "reporting_verbs"
     },
     {
       "id": "speak_b2_028",
-      "text": "The implications extend far beyond our initial expectations.",
-      "translation": "As implicações se estendem muito além de nossas expectativas iniciais.",
+      "text": "Under no circumstances should confidential information be disclosed.",
+      "translation": "Sob nenhuma circunstância informações confidenciais devem ser divulgadas.",
       "cefr_level": "B2",
-      "theme": "consequences",
-      "grammar_point": "formal_register"
+      "theme": "security",
+      "grammar_point": "negative_inversion"
     },
     {
-      "id": "speak_c1_015",
-      "text": "The juxtaposition of tradition and innovation creates a unique cultural synthesis.",
-      "translation": "A justaposição de tradição e inovação cria uma síntese cultural única.",
+      "id": "speak_c1_001",
+      "text": "The seemingly intractable problem yielded to an elegant solution once we reframed our assumptions.",
+      "translation": "O problema aparentemente intratável cedeu a uma solução elegante uma vez que reformulamos nossas suposições.",
+      "cefr_level": "C1",
+      "theme": "problem_solving",
+      "grammar_point": "complex_temporal_clauses"
+    },
+    {
+      "id": "speak_c1_002",
+      "text": "Scarcely had the ink dried on the agreement when disputes arose over its interpretation.",
+      "translation": "Mal a tinta havia secado no acordo quando surgiram disputas sobre sua interpretação.",
+      "cefr_level": "C1",
+      "theme": "legal",
+      "grammar_point": "inverted_temporal_clauses"
+    },
+    {
+      "id": "speak_c1_003",
+      "text": "The juxtaposition of ancient traditions with cutting-edge technology creates a fascinating cultural dynamic.",
+      "translation": "A justaposição de tradições antigas com tecnologia de ponta cria uma dinâmica cultural fascinante.",
       "cefr_level": "C1",
       "theme": "culture",
       "grammar_point": "abstract_nouns"
     },
     {
-      "id": "speak_c1_016",
-      "text": "Notwithstanding empirical evidence to the contrary, skepticism persists.",
-      "translation": "Não obstante evidência empírica em contrário, o ceticismo persiste.",
+      "id": "speak_c1_004",
+      "text": "It behooves us to consider the long-term ramifications of such a precedent.",
+      "translation": "Cabe a nós considerar as ramificações de longo prazo de tal precedente.",
       "cefr_level": "C1",
-      "theme": "science",
-      "grammar_point": "formal_concessions"
+      "theme": "responsibility",
+      "grammar_point": "formal_subjunctive"
     },
     {
-      "id": "speak_c1_017",
-      "text": "The epistemological underpinnings of this theory warrant scrutiny.",
-      "translation": "Os fundamentos epistemológicos desta teoria justificam escrutínio.",
+      "id": "speak_c1_005",
+      "text": "Her eloquence notwithstanding, the argument failed to persuade the skeptics.",
+      "translation": "Não obstante sua eloquência, o argumento falhou em persuadir os céticos.",
+      "cefr_level": "C1",
+      "theme": "rhetoric",
+      "grammar_point": "fronted_concession"
+    },
+    {
+      "id": "speak_c1_006",
+      "text": "The paradigm shift in artificial intelligence has fundamentally altered our conception of human uniqueness.",
+      "translation": "A mudança de paradigma em inteligência artificial alterou fundamentalmente nossa concepção de singularidade humana.",
+      "cefr_level": "C1",
+      "theme": "technology",
+      "grammar_point": "metaphorical_language"
+    },
+    {
+      "id": "speak_c1_007",
+      "text": "So profound was the impact that it took years to fully comprehend the consequences.",
+      "translation": "Tão profundo foi o impacto que levou anos para compreender completamente as consequências.",
+      "cefr_level": "C1",
+      "theme": "impact",
+      "grammar_point": "emphatic_inversion"
+    },
+    {
+      "id": "speak_c1_008",
+      "text": "The epistemological underpinnings of this approach merit rigorous examination.",
+      "translation": "Os fundamentos epistemológicos desta abordagem merecem exame rigoroso.",
       "cefr_level": "C1",
       "theme": "philosophy",
       "grammar_point": "academic_vocabulary"
     },
     {
-      "id": "speak_c1_018",
-      "text": "Her rhetorical prowess belied her apparent reticence.",
-      "translation": "Sua proeza retórica contradizia sua aparente reticência.",
+      "id": "speak_c1_009",
+      "text": "Lest we forget, history is replete with examples of unforeseen consequences.",
+      "translation": "Para que não esqueçamos, a história está repleta de exemplos de consequências imprevistas.",
+      "cefr_level": "C1",
+      "theme": "history",
+      "grammar_point": "lest_subjunctive"
+    },
+    {
+      "id": "speak_c1_010",
+      "text": "The confluence of economic pressures and political instability precipitated the crisis.",
+      "translation": "A confluência de pressões econômicas e instabilidade política precipitou a crise.",
+      "cefr_level": "C1",
+      "theme": "politics",
+      "grammar_point": "formal_causation"
+    },
+    {
+      "id": "speak_c1_011",
+      "text": "What distinguishes exceptional leaders from competent ones is their capacity to inspire transcendent purpose.",
+      "translation": "O que distingue líderes excepcionais de competentes é sua capacidade de inspirar propósito transcendente.",
+      "cefr_level": "C1",
+      "theme": "leadership",
+      "grammar_point": "complex_cleft_sentences"
+    },
+    {
+      "id": "speak_c1_012",
+      "text": "The symbiotic relationship between innovation and disruption engenders perpetual transformation.",
+      "translation": "O relacionamento simbiótico entre inovação e disrupção engendra transformação perpétua.",
+      "cefr_level": "C1",
+      "theme": "business",
+      "grammar_point": "metaphorical_abstraction"
+    },
+    {
+      "id": "speak_c1_013",
+      "text": "Were it not for serendipitous discoveries, scientific progress would be far more linear.",
+      "translation": "Não fossem as descobertas fortuitas, o progresso científico seria muito mais linear.",
+      "cefr_level": "C1",
+      "theme": "science",
+      "grammar_point": "subjunctive_inversion"
+    },
+    {
+      "id": "speak_c1_014",
+      "text": "The rhetorical sophistication evident in her discourse belied her ostensible informality.",
+      "translation": "A sofisticação retórica evidente em seu discurso contradizia sua informalidade ostensiva.",
       "cefr_level": "C1",
       "theme": "communication",
       "grammar_point": "literary_devices"
     },
     {
-      "id": "speak_c1_019",
-      "text": "The symbiotic relationship between art and commerce engenders evolution.",
-      "translation": "O relacionamento simbiótico entre arte e comércio engendra evolução.",
+      "id": "speak_c1_015",
+      "text": "Such is the complexity of the issue that simplistic solutions inevitably prove inadequate.",
+      "translation": "Tal é a complexidade da questão que soluções simplistas inevitavelmente se mostram inadequadas.",
       "cefr_level": "C1",
-      "theme": "sociology",
-      "grammar_point": "metaphorical_language"
+      "theme": "complexity",
+      "grammar_point": "fronted_demonstrative"
+    },
+    {
+      "id": "speak_c1_016",
+      "text": "The data, compelling though it may be, does not necessarily vindicate the hypothesis.",
+      "translation": "Os dados, por mais convincentes que sejam, não necessariamente justificam a hipótese.",
+      "cefr_level": "C1",
+      "theme": "research",
+      "grammar_point": "concessive_inversion"
+    },
+    {
+      "id": "speak_c1_017",
+      "text": "Nowhere is this tension more palpable than in debates surrounding technological ethics.",
+      "translation": "Em lugar algum essa tensão é mais palpável do que em debates sobre ética tecnológica.",
+      "cefr_level": "C1",
+      "theme": "ethics",
+      "grammar_point": "negative_fronting"
+    },
+    {
+      "id": "speak_c1_018",
+      "text": "The dichotomy between utilitarian and deontological perspectives permeates moral philosophy.",
+      "translation": "A dicotomia entre perspectivas utilitárias e deontológicas permeia a filosofia moral.",
+      "cefr_level": "C1",
+      "theme": "philosophy",
+      "grammar_point": "technical_vocabulary"
+    },
+    {
+      "id": "speak_c1_019",
+      "text": "Had circumstances been otherwise, the trajectory of events might have diverged dramatically.",
+      "translation": "Se as circunstâncias fossem diferentes, a trajetória dos eventos poderia ter divergido dramaticamente.",
+      "cefr_level": "C1",
+      "theme": "hypothetical",
+      "grammar_point": "past_conditional_inversion"
     },
     {
       "id": "speak_c1_020",
-      "text": "The confluence of factors precipitated an unprecedented outcome.",
-      "translation": "A confluência de fatores precipitou um resultado sem precedentes.",
+      "text": "The ramifications extend far beyond immediate economic indicators into societal fabric itself.",
+      "translation": "As ramificações se estendem muito além de indicadores econômicos imediatos para o próprio tecido social.",
       "cefr_level": "C1",
-      "theme": "causation",
-      "grammar_point": "formal_verbs"
+      "theme": "society",
+      "grammar_point": "extended_metaphor"
     },
     {
       "id": "speak_c1_021",
-      "text": "The paradigm shift in technology has revolutionized paradigms of interaction.",
-      "translation": "A mudança de paradigma na tecnologia revolucionou paradigmas de interação.",
+      "text": "What cannot be overstated is the degree to which cultural context shapes interpretation.",
+      "translation": "O que não pode ser exagerado é o grau em que o contexto cultural molda a interpretação.",
       "cefr_level": "C1",
-      "theme": "technology",
-      "grammar_point": "repeated_vocabulary"
+      "theme": "culture",
+      "grammar_point": "emphatic_cleft"
     },
     {
       "id": "speak_c1_022",
-      "text": "Notwithstanding substantial evidence, the hypothesis remains contentious.",
-      "translation": "Não obstante evidência substancial, a hipótese permanece controversa.",
+      "text": "The interstice between public discourse and private conviction often reveals uncomfortable truths.",
+      "translation": "O interstício entre o discurso público e a convicção privada frequentemente revela verdades desconfortáveis.",
       "cefr_level": "C1",
-      "theme": "science",
-      "grammar_point": "formal_adjectives"
+      "theme": "society",
+      "grammar_point": "abstract_spatial_metaphor"
     },
     {
       "id": "speak_c1_023",
-      "text": "The quintessence of diplomatic acumen resides in nuanced interpretation.",
-      "translation": "A quintessência da perspicácia diplomática reside na interpretação nuances.",
+      "text": "Only through sustained interdisciplinary collaboration can we hope to address multifaceted challenges.",
+      "translation": "Somente através de colaboração interdisciplinar sustentada podemos esperar enfrentar desafios multifacetados.",
+      "cefr_level": "C1",
+      "theme": "cooperation",
+      "grammar_point": "fronted_restrictive"
+    },
+    {
+      "id": "speak_c1_024",
+      "text": "The quintessence of diplomatic acumen lies in discerning unspoken nuances.",
+      "translation": "A quintessência da perspicácia diplomática reside em discernir nuances não ditas.",
       "cefr_level": "C1",
       "theme": "diplomacy",
       "grammar_point": "abstract_concepts"
     },
     {
-      "id": "speak_c1_024",
-      "text": "The ramifications extend beyond conventional economic indicators.",
-      "translation": "As ramificações se estendem além dos indicadores econômicos convencionais.",
-      "cefr_level": "C1",
-      "theme": "economics",
-      "grammar_point": "formal_register"
-    },
-    {
       "id": "speak_c1_025",
-      "text": "Were circumstances different, the outcome might have been entirely dissimilar.",
-      "translation": "Se as circunstâncias fossem diferentes, o resultado poderia ter sido totalmente diferente.",
+      "text": "Be that as it may, empirical evidence remains the cornerstone of scientific inquiry.",
+      "translation": "Seja como for, evidência empírica permanece a pedra angular da investigação científica.",
       "cefr_level": "C1",
-      "theme": "hypothetical",
-      "grammar_point": "conditional_inversion"
+      "theme": "science",
+      "grammar_point": "formal_concession"
     },
     {
       "id": "speak_c1_026",
-      "text": "The paradigm shift in digital communication has revolutionized interpersonal dynamics.",
-      "translation": "A mudança de paradigma na comunicação digital revolucionou as dinâmicas interpessoais.",
+      "text": "The hermeneutic challenge lies not in decoding meaning but in acknowledging interpretive bias.",
+      "translation": "O desafio hermenêutico reside não em decodificar significado, mas em reconhecer viés interpretativo.",
       "cefr_level": "C1",
-      "theme": "technology",
-      "grammar_point": "advanced_vocabulary"
+      "theme": "interpretation",
+      "grammar_point": "parallel_structure"
     },
     {
       "id": "speak_c1_027",
-      "text": "Notwithstanding substantial empirical evidence, skepticism persists unabated.",
-      "translation": "Não obstante evidência empírica substancial, o ceticismo persiste inabalável.",
+      "text": "Seldom have I witnessed such a flagrant disregard for established protocol.",
+      "translation": "Raramente testemunhei tal desrespeito flagrante ao protocolo estabelecido.",
       "cefr_level": "C1",
-      "theme": "science",
-      "grammar_point": "formal_concessions"
+      "theme": "formality",
+      "grammar_point": "negative_inversion"
     },
     {
       "id": "speak_c1_028",
-      "text": "The confluence of cultural influences has engendered a unique artistic synthesis.",
-      "translation": "A confluência de influências culturais engendrou uma síntese artística única.",
+      "text": "The nexus between theoretical constructs and practical applications warrants closer scrutiny.",
+      "translation": "O nexo entre construtos teóricos e aplicações práticas justifica escrutínio mais detalhado.",
       "cefr_level": "C1",
-      "theme": "culture",
-      "grammar_point": "metaphorical_language"
+      "theme": "analysis",
+      "grammar_point": "formal_register"
+    },
+    {
+      "id": "speak_c2_001",
+      "text": "The hermeneutical circularity inherent in textual interpretation renders absolute objectivity epistemologically untenable.",
+      "translation": "A circularidade hermenêutica inerente à interpretação textual torna a objetividade absoluta epistemologicamente insustentável.",
+      "cefr_level": "C2",
+      "theme": "philosophy",
+      "grammar_point": "complex_nominalization"
+    },
+    {
+      "id": "speak_c2_002",
+      "text": "The aporia at the heart of this dialectic reveals fundamental tensions between competing axiological frameworks.",
+      "translation": "A aporia no coração desta dialética revela tensões fundamentais entre estruturas axiológicas concorrentes.",
+      "cefr_level": "C2",
+      "theme": "philosophy",
+      "grammar_point": "technical_philosophical_terms"
+    },
+    {
+      "id": "speak_c2_003",
+      "text": "Were one to extrapolate from current trajectories, the confluence of technological singularity and ecological collapse presents a paradox defying conventional resolution.",
+      "translation": "Se alguém extrapolasse das trajetórias atuais, a confluência de singularidade tecnológica e colapso ecológico apresenta um paradoxo que desafia resolução convencional.",
+      "cefr_level": "C2",
+      "theme": "futurism",
+      "grammar_point": "hypothetical_complex_subordination"
+    },
+    {
+      "id": "speak_c2_004",
+      "text": "The liminal space between signifier and signified constitutes the very substrate upon which meaning is contested and negotiated.",
+      "translation": "O espaço liminal entre significante e significado constitui o próprio substrato sobre o qual o significado é contestado e negociado.",
+      "cefr_level": "C2",
+      "theme": "semiotics",
+      "grammar_point": "abstract_conceptual_metaphor"
+    },
+    {
+      "id": "speak_c2_005",
+      "text": "The Foucauldian notion of epistemic rupture illuminates discontinuities that positivist historiography systematically elides.",
+      "translation": "A noção foucaultiana de ruptura epistêmica ilumina descontinuidades que a historiografia positivista sistematicamente omite.",
+      "cefr_level": "C2",
+      "theme": "historiography",
+      "grammar_point": "academic_attribution"
+    },
+    {
+      "id": "speak_c2_006",
+      "text": "Insofar as phenomenological reduction brackets the natural attitude, it affords access to intentional structures otherwise obscured by quotidian preoccupation.",
+      "translation": "Na medida em que a redução fenomenológica coloca entre parênteses a atitude natural, ela proporciona acesso a estruturas intencionais de outra forma obscurecidas pela preocupação cotidiana.",
+      "cefr_level": "C2",
+      "theme": "phenomenology",
+      "grammar_point": "complex_causal_subordination"
+    },
+    {
+      "id": "speak_c2_007",
+      "text": "The apotheosis of technological rationality paradoxically engenders forms of alienation that instrumentalist paradigms cannot adequately conceptualize.",
+      "translation": "A apoteose da racionalidade tecnológica paradoxalmente engendra formas de alienação que paradigmas instrumentalistas não podem conceitualizar adequadamente.",
+      "cefr_level": "C2",
+      "theme": "critical_theory",
+      "grammar_point": "paradoxical_causation"
+    },
+    {
+      "id": "speak_c2_008",
+      "text": "The antinomy between descriptive accuracy and normative aspiration permeates metaethical discourse, resisting facile reconciliation.",
+      "translation": "A antinomia entre precisão descritiva e aspiração normativa permeia o discurso metaético, resistindo à reconciliação fácil.",
+      "cefr_level": "C2",
+      "theme": "ethics",
+      "grammar_point": "abstract_noun_constructions"
+    },
+    {
+      "id": "speak_c2_009",
+      "text": "Heidegger's deconstruction of metaphysical presence foregrounds the oblivion of Being that Western ontology has perpetuated since antiquity.",
+      "translation": "A desconstrução heideggeriana da presença metafísica coloca em primeiro plano o esquecimento do Ser que a ontologia ocidental perpetuou desde a antiguidade.",
+      "cefr_level": "C2",
+      "theme": "ontology",
+      "grammar_point": "philosophical_nominalization"
+    },
+    {
+      "id": "speak_c2_010",
+      "text": "The incommensurability of paradigms, as Kuhn articulated, precludes neutral arbitration between competing scientific frameworks.",
+      "translation": "A incomensurabilidade de paradigmas, como Kuhn articulou, impede arbitragem neutra entre estruturas científicas concorrentes.",
+      "cefr_level": "C2",
+      "theme": "philosophy_of_science",
+      "grammar_point": "technical_epistemology"
     },
     {
       "id": "speak_c2_011",
-      "text": "The epistemological foundations underpinning this philosophical discourse necessitate rigorous interrogation.",
-      "translation": "Os fundamentos epistemológicos subjacentes a este discurso filosófico necessitam interrogação rigorosa.",
+      "text": "The palimpsestic nature of cultural memory defies linear narrativization, revealing sedimented strata of signification.",
+      "translation": "A natureza palimpséstica da memória cultural desafia a narrativização linear, revelando estratos sedimentados de significação.",
       "cefr_level": "C2",
-      "theme": "philosophy",
-      "grammar_point": "complex_construction"
+      "theme": "cultural_studies",
+      "grammar_point": "extended_metaphorical_terminology"
     },
     {
       "id": "speak_c2_012",
-      "text": "The symbiotic interrelationship between socioeconomic factors engenders multifaceted societal evolution.",
-      "translation": "A inter-relação simbiótica entre fatores socioeconômicos engendra evolução societal multifacetada.",
+      "text": "The dialectical sublation of thesis and antithesis into synthesis presupposes teleological progression that poststructuralism fundamentally contests.",
+      "translation": "A sublação dialética de tese e antítese em síntese pressupõe progressão teleológica que o pós-estruturalismo contesta fundamentalmente.",
       "cefr_level": "C2",
-      "theme": "sociology",
-      "grammar_point": "compound_adjectives"
+      "theme": "philosophy",
+      "grammar_point": "hegelian_terminology"
     },
     {
       "id": "speak_c2_013",
-      "text": "Notwithstanding incontrovertible empirical substantiation, paradigmatic resistance persists unabated.",
-      "translation": "Não obstante substantiação empírica incontrovertível, resistência paradigmática persiste inabalável.",
+      "text": "Derrida's concept of différance displaces presence through infinite deferral, undermining logocentrism's foundational assumptions.",
+      "translation": "O conceito de différance de Derrida desloca a presença através de adiamento infinito, minando as suposições fundamentais do logocentrismo.",
       "cefr_level": "C2",
-      "theme": "science",
-      "grammar_point": "rare_vocabulary"
+      "theme": "deconstruction",
+      "grammar_point": "deconstructive_vocabulary"
     },
     {
       "id": "speak_c2_014",
-      "text": "The quintessential manifestation of rhetorical dexterity resides in perspicacious lexical selection.",
-      "translation": "A manifestação quintessencial de destreza retórica reside na seleção lexical perspicaz.",
+      "text": "The apophatic tradition in mystical theology articulates transcendence through systematic negation of predicative discourse.",
+      "translation": "A tradição apofática na teologia mística articula transcendência através de negação sistemática do discurso predicativo.",
       "cefr_level": "C2",
-      "theme": "language",
-      "grammar_point": "abstract_metaphors"
+      "theme": "theology",
+      "grammar_point": "specialized_theological_terms"
     },
     {
       "id": "speak_c2_015",
-      "text": "The confluence of multifarious determinants precipitated an unprecedented paradigmatic metamorphosis.",
-      "translation": "A confluência de determinantes multifários precipitou uma metamorfose paradigmática sem precedentes.",
+      "text": "Gadamer's fusion of horizons posits understanding as dialogical negotiation rather than monological appropriation of meaning.",
+      "translation": "A fusão de horizontes de Gadamer postula a compreensão como negociação dialógica em vez de apropriação monológica de significado.",
       "cefr_level": "C2",
-      "theme": "change",
-      "grammar_point": "complex_compounds"
-    },
-    {
-      "id": "speak_c2_016",
-      "text": "Epistemological interrogation necessitates transcendence of conventional methodological constraints.",
-      "translation": "Interrogação epistemológica necessita transcendência de restrições metodológicas convencionais.",
-      "cefr_level": "C2",
-      "theme": "methodology",
-      "grammar_point": "academic_abstraction"
-    },
-    {
-      "id": "speak_c2_017",
-      "text": "The symbiotic nexus between technological innovation and socioeconomic paradigms engenders transformative evolution.",
-      "translation": "O nexus simbiótico entre inovação tecnológica e paradigmas socioeconômicos engendra evolução transformadora.",
-      "cefr_level": "C2",
-      "theme": "technology",
-      "grammar_point": "complex_metaphors"
-    },
-    {
-      "id": "speak_c2_018",
-      "text": "Notwithstanding empirical corroboration, theoretical underpinnings warrant epistemological scrutiny.",
-      "translation": "Não obstante corroboração empírica, fundamentos teóricos justificam escrutínio epistemológico.",
-      "cefr_level": "C2",
-      "theme": "theory",
-      "grammar_point": "formal_compounds"
-    },
-    {
-      "id": "speak_c2_019",
-      "text": "The quintessential paradigm of intercultural communication transcends linguistic boundaries.",
-      "translation": "O paradigma quintessencial de comunicação intercultural transcende fronteiras linguísticas.",
-      "cefr_level": "C2",
-      "theme": "communication",
-      "grammar_point": "abstract_construction"
-    },
-    {
-      "id": "speak_c2_020",
-      "text": "Ramifications emanating from this paradigm shift necessitate comprehensive methodological reevaluation.",
-      "translation": "Ramificações emanando desta mudança de paradigma necessitam reavaliação metodológica abrangente.",
-      "cefr_level": "C2",
-      "theme": "methodology",
-      "grammar_point": "complex_syntax"
-    },
-    {
-      "id": "speak_c2_021",
-      "text": "Epistemological interrogation necessitates transcendence of entrenched methodological paradigms.",
-      "translation": "Interrogação epistemológica necessita transcendência de paradigmas metodológicos arraigados.",
-      "cefr_level": "C2",
-      "theme": "philosophy",
-      "grammar_point": "academic_abstraction"
-    },
-    {
-      "id": "speak_c2_022",
-      "text": "The symbiotic nexus between technological paradigms engenders transformative societal metamorphosis.",
-      "translation": "O nexus simbiótico entre paradigmas tecnológicos engendra metamorfose societal transformadora.",
-      "cefr_level": "C2",
-      "theme": "technology",
-      "grammar_point": "complex_metaphors"
-    },
-    {
-      "id": "speak_c2_023",
-      "text": "Notwithstanding incontrovertible corroboration, theoretical underpinnings warrant epistemological scrutiny.",
-      "translation": "Não obstante corroboração incontrovertível, fundamentos teóricos justificam escrutínio epistemológico.",
-      "cefr_level": "C2",
-      "theme": "theory",
-      "grammar_point": "formal_compounds"
-    },
-    {
-      "id": "speak_c2_024",
-      "text": "The quintessential manifestation of rhetorical dexterity resides in perspicacious lexical orchestration.",
-      "translation": "A manifestação quintessencial de destreza retórica reside na orquestração lexical perspicaz.",
-      "cefr_level": "C2",
-      "theme": "language",
-      "grammar_point": "abstract_metaphors"
+      "theme": "hermeneutics",
+      "grammar_point": "philosophical_contrast"
     }
   ]
+
 }
