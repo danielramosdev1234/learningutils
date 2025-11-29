@@ -401,8 +401,7 @@ const ListeningTest = ({
   questionIndex,
   totalQuestions = 6,
   currentLevel,
-  onComplete,
-  onNext
+  onComplete
 }) => {
   // Custom hook com toda a lógica
   const {
@@ -416,16 +415,7 @@ const ListeningTest = ({
     handleSelectAnswer
   } = useListeningAssessment(question, onComplete);
 
-  // Auto-avançar após feedback
-  useEffect(() => {
-    if (feedback) {
-      const timer = setTimeout(() => {
-        onNext();
-      }, 2500);
-
-      return () => clearTimeout(timer);
-    }
-  }, [feedback, onNext]);
+  // Avanço agora é controlado pelo AssessmentTrainer após feedback
 
   // Loading state
   if (!question) {

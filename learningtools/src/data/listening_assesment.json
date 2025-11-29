@@ -1,7 +1,7 @@
 {
   "listening": [
 {
-  "id": "listen_a1_003",
+  "id": "listen_a1_001",
   "text": "This is my book.",
   "question": "What is the speaker showing?",
   "options": ["Livro", "Caneta", "Cadeira", "Mesa"],
@@ -11,7 +11,7 @@
   "theme": "possessions"
 },
 {
-  "id": "listen_a1_004",
+  "id": "listen_a1_002",
   "text": "I am from Brazil.",
   "question": "Where is the speaker from?",
   "options": ["Brazil", "Portugal", "Spain", "Italy"],
@@ -21,7 +21,7 @@
   "theme": "introductions"
 },
 {
-  "id": "listen_a1_005",
+  "id": "listen_a1_003",
   "text": "The cat is black.",
   "question": "What color is the cat?",
   "options": ["Preto", "Branco", "Marrom", "Cinza"],
@@ -31,7 +31,7 @@
   "theme": "descriptions"
 },
 {
-  "id": "listen_a1_006",
+  "id": "listen_a1_004",
   "text": "I like coffee.",
   "question": "What does the speaker like?",
   "options": ["Café", "Chá", "Agua", "Suco"],
@@ -41,7 +41,7 @@
   "theme": "preferences"
 },
 {
-  "id": "listen_a1_007",
+  "id": "listen_a1_005",
   "text": "How are you?",
   "question": "What is the speaker asking?",
   "options": ["Como você está", "Como você vai", "O que você faz", "Onde você está"],
@@ -50,81 +50,456 @@
   "cefr_level": "A1",
   "theme": "greetings"
 },
- {
-   "id": "listen_a2_003",
-   "text": "John Says: What are you doing next weekend? Any plans?\nDavid says: Yes, I'm going to visit my parents next weekend. They live about two hours away, so I'll probably stay overnight.\nJohn Says: That sounds nice. Give them my regards.",
-   "question": "When is David planning to visit their parents?",
-   "options": [
-     "Próximo fim de semana",
-     "Este fim de semana",
-     "Fim de semana passado",
-     "Todo fim de semana"
-   ],
-   "correctAnswer": 0,
-   "translation": "John Says: O que você vai fazer no próximo fim de semana? Algum plano?\nDavid says: Sim, vou visitar meus pais no próximo fim de semana. Eles moram a cerca de duas horas de distância, então provavelmente vou ficar a noite.\nJohn Says: Parece bom. Dê lembranças a eles.",
-   "cefr_level": "A2",
-   "theme": "future_plans"
- },
- {
-   "id": "listen_a2_004",
-   "text": "John Says: This restaurant looks really busy tonight.\nDavid says: Yes, there are too many people in the restaurant. We might have to wait for a table.\nJohn Says: I don't mind waiting. The food here is always good.\nDavid says: You're right. It's worth the wait.",
-   "question": "What does David say about the restaurant?",
-   "options": [
-     "Há muitas pessoas e talvez precisemos esperar",
-     "Há poucas pessoas e podemos sentar imediatamente",
-     "Não há ninguém esperando",
-     "As pessoas erradas estão esperando"
-   ],
-   "correctAnswer": 0,
-   "translation": "John Says: Este restaurante parece muito movimentado esta noite.\nDavid says: Sim, há muitas pessoas no restaurante. Podemos ter que esperar por uma mesa.\nJohn Says: Não me importo de esperar. A comida aqui é sempre boa.\nDavid says: Você está certo. Vale a pena esperar.",
-   "cefr_level": "A2",
-   "theme": "describing_places"
- },
- {
-   "id": "listen_a2_005",
-   "text": "John Says: Sarah is really talented with languages, isn't she?\nDavid says: Yes, she can speak three languages fluently. English, Spanish, and French.\nJohn Says: That's impressive! How did she learn them?\nDavid says: She studied abroad and practiced a lot.",
-   "question": "How many languages does Sarah speak fluently?",
-   "options": [
-     "Três idiomas",
-     "Dois idiomas",
-     "Um idioma",
-     "Quatro idiomas"
-   ],
-   "correctAnswer": 0,
-   "translation": "John Says: Sarah é realmente talentosa com idiomas, não é?\nDavid says: Sim, ela consegue falar três idiomas fluentemente. Inglês, espanhol e francês.\nJohn Says: Isso é impressionante! Como ela aprendeu?\nDavid says: Ela estudou no exterior e praticou muito.",
-   "cefr_level": "A2",
-   "theme": "abilities"
- },
- {
-   "id": "listen_a2_006",
-   "text": "John Says: Did you finish your homework for tomorrow?\nDavid says: No, we haven't finished our homework yet. We started it, but we got distracted.\nJohn Says: You should finish it tonight. The teacher will be angry if you don't.\nDavid says: You're right. Let's get back to work.",
-   "question": "What haven't the speakers finished?",
-   "options": [
-     "A lição de casa",
-     "O almoço",
-     "A aula",
-     "O jogo"
-   ],
-   "correctAnswer": 0,
-   "translation": "John Says: Você terminou a lição de casa para amanhã?\nDavid says: Não, ainda não terminamos nossa lição de casa. Começamos, mas nos distraímos.\nJohn Says: Você deveria terminar esta noite. O professor vai ficar bravo se não terminar.\nDavid says: Você está certo. Vamos voltar ao trabalho.",
-   "cefr_level": "A2",
-   "theme": "school"
- },
- {
-   "id": "listen_a2_007",
-   "text": "John Says: Look at those two boys over there. Which one is taller?\nDavid says: The one on the left is taller. He's taller than his brother.\nJohn Says: Really? They look about the same height to me.\nDavid says: No, definitely. The older one is much taller.",
-   "question": "Who is taller according to the speakers?",
-   "options": [
-     "Ele é mais alto que seu irmão",
-     "O irmão é mais alto",
-     "São da mesma altura",
-     "A irmã é mais alta"
-   ],
-   "correctAnswer": 0,
-   "translation": "John Says: Olhe aqueles dois meninos ali. Qual deles é mais alto?\nDavid says: O da esquerda é mais alto. Ele é mais alto que seu irmão.\nJohn Says: Sério? Eles parecem ter a mesma altura para mim.\nDavid says: Não, definitivamente. O mais velho é muito mais alto.",
-   "cefr_level": "A2",
-   "theme": "comparisons"
- },
+    {
+      "id": "listen_a2_001",
+      "text": "I go to work by bus every morning.",
+      "question": "Como a pessoa vai para o trabalho?",
+      "options": [
+        "De ônibus",
+        "De carro",
+        "De metrô",
+        "A pé"
+      ],
+      "correctAnswer": 0,
+      "translation": "Eu vou para o trabalho de ônibus toda manhã.",
+      "cefr_level": "A2",
+      "theme": "daily_routine"
+    },
+    {
+      "id": "listen_a2_002",
+      "text": "The movie starts at seven thirty.",
+      "question": "Que horas o filme começa?",
+      "options": [
+        "Sete e meia",
+        "Seis e meia",
+        "Oito horas",
+        "Sete horas"
+      ],
+      "correctAnswer": 0,
+      "translation": "O filme começa às sete e meia.",
+      "cefr_level": "A2",
+      "theme": "time"
+    },
+    {
+      "id": "listen_a2_003",
+      "text": "She's wearing a blue dress today.",
+      "question": "O que ela está vestindo?",
+      "options": [
+        "Um vestido azul",
+        "Uma saia azul",
+        "Um vestido verde",
+        "Uma blusa azul"
+      ],
+      "correctAnswer": 0,
+      "translation": "Ela está usando um vestido azul hoje.",
+      "cefr_level": "A2",
+      "theme": "clothing"
+    },
+    {
+      "id": "listen_a2_004",
+      "text": "I bought some bread at the supermarket.",
+      "question": "O que a pessoa comprou?",
+      "options": [
+        "Pão",
+        "Leite",
+        "Frutas",
+        "Carne"
+      ],
+      "correctAnswer": 0,
+      "translation": "Eu comprei pão no supermercado.",
+      "cefr_level": "A2",
+      "theme": "shopping"
+    },
+    {
+      "id": "listen_a2_005",
+      "text": "My sister lives in São Paulo.",
+      "question": "Onde a irmã da pessoa mora?",
+      "options": [
+        "Em São Paulo",
+        "No Rio de Janeiro",
+        "Em Brasília",
+        "Em Belo Horizonte"
+      ],
+      "correctAnswer": 0,
+      "translation": "Minha irmã mora em São Paulo.",
+      "cefr_level": "A2",
+      "theme": "family"
+    },
+    {
+      "id": "listen_a2_006",
+      "text": "It's raining outside. Take an umbrella.",
+      "question": "Que conselho a pessoa está dando?",
+      "options": [
+        "Levar um guarda-chuva",
+        "Levar um casaco",
+        "Ficar em casa",
+        "Usar óculos de sol"
+      ],
+      "correctAnswer": 0,
+      "translation": "Está chovendo lá fora. Leve um guarda-chuva.",
+      "cefr_level": "A2",
+      "theme": "weather"
+    },
+    {
+      "id": "listen_a2_007",
+      "text": "I usually have breakfast at eight o'clock.",
+      "question": "Quando a pessoa toma café da manhã?",
+      "options": [
+        "Às oito horas",
+        "Às sete horas",
+        "Às nove horas",
+        "Às seis horas"
+      ],
+      "correctAnswer": 0,
+      "translation": "Eu geralmente tomo café da manhã às oito horas.",
+      "cefr_level": "A2",
+      "theme": "daily_routine"
+    },
+    {
+      "id": "listen_a2_008",
+      "text": "The restaurant is next to the bank.",
+      "question": "Onde fica o restaurante?",
+      "options": [
+        "Ao lado do banco",
+        "Em frente ao banco",
+        "Atrás do banco",
+        "Longe do banco"
+      ],
+      "correctAnswer": 0,
+      "translation": "O restaurante fica ao lado do banco.",
+      "cefr_level": "A2",
+      "theme": "directions"
+    },
+    {
+      "id": "listen_a2_009",
+      "text": "I need to buy a new phone.",
+      "question": "O que a pessoa precisa comprar?",
+      "options": [
+        "Um celular novo",
+        "Um computador novo",
+        "Uma televisão nova",
+        "Um tablet novo"
+      ],
+      "correctAnswer": 0,
+      "translation": "Eu preciso comprar um celular novo.",
+      "cefr_level": "A2",
+      "theme": "shopping"
+    },
+    {
+      "id": "listen_a2_010",
+      "text": "We're going to the beach this weekend.",
+      "question": "Para onde vão no fim de semana?",
+      "options": [
+        "Para a praia",
+        "Para as montanhas",
+        "Para o shopping",
+        "Para o parque"
+      ],
+      "correctAnswer": 0,
+      "translation": "Nós vamos para a praia neste fim de semana.",
+      "cefr_level": "A2",
+      "theme": "plans"
+    },
+    {
+      "id": "listen_a2_011",
+      "text": "The train leaves at six fifteen.",
+      "question": "Que horas o trem parte?",
+      "options": [
+        "Seis e quinze",
+        "Cinco e quinze",
+        "Seis e trinta",
+        "Seis horas"
+      ],
+      "correctAnswer": 0,
+      "translation": "O trem parte às seis e quinze.",
+      "cefr_level": "A2",
+      "theme": "travel"
+    },
+    {
+      "id": "listen_a2_012",
+      "text": "Can you help me with this bag?",
+      "question": "O que a pessoa está pedindo?",
+      "options": [
+        "Ajuda com uma bolsa",
+        "Ajuda com dinheiro",
+        "Ajuda com comida",
+        "Ajuda com direções"
+      ],
+      "correctAnswer": 0,
+      "translation": "Você pode me ajudar com esta bolsa?",
+      "cefr_level": "A2",
+      "theme": "requests"
+    },
+    {
+      "id": "listen_a2_013",
+      "text": "I'm looking for the nearest pharmacy.",
+      "question": "O que a pessoa está procurando?",
+      "options": [
+        "A farmácia mais próxima",
+        "O hospital mais próximo",
+        "O banco mais próximo",
+        "A padaria mais próxima"
+      ],
+      "correctAnswer": 0,
+      "translation": "Estou procurando a farmácia mais próxima.",
+      "cefr_level": "A2",
+      "theme": "directions"
+    },
+    {
+      "id": "listen_a2_014",
+      "text": "My birthday is in July.",
+      "question": "Quando é o aniversário da pessoa?",
+      "options": [
+        "Em julho",
+        "Em junho",
+        "Em agosto",
+        "Em maio"
+      ],
+      "correctAnswer": 0,
+      "translation": "Meu aniversário é em julho.",
+      "cefr_level": "A2",
+      "theme": "dates"
+    },
+    {
+      "id": "listen_a2_015",
+      "text": "The coffee shop opens at seven.",
+      "question": "Quando a cafeteria abre?",
+      "options": [
+        "Às sete",
+        "Às seis",
+        "Às oito",
+        "Às nove"
+      ],
+      "correctAnswer": 0,
+      "translation": "A cafeteria abre às sete.",
+      "cefr_level": "A2",
+      "theme": "business_hours"
+    },
+    {
+      "id": "listen_a2_016",
+      "text": "I have two brothers and one sister.",
+      "question": "Quantos irmãos a pessoa tem no total?",
+      "options": [
+        "Três",
+        "Dois",
+        "Quatro",
+        "Um"
+      ],
+      "correctAnswer": 0,
+      "translation": "Eu tenho dois irmãos e uma irmã.",
+      "cefr_level": "A2",
+      "theme": "family"
+    },
+    {
+      "id": "listen_a2_017",
+      "text": "Turn left at the traffic light.",
+      "question": "Que direção a pessoa deve seguir?",
+      "options": [
+        "Virar à esquerda",
+        "Virar à direita",
+        "Seguir em frente",
+        "Voltar"
+      ],
+      "correctAnswer": 0,
+      "translation": "Vire à esquerda no semáforo.",
+      "cefr_level": "A2",
+      "theme": "directions"
+    },
+    {
+      "id": "listen_a2_018",
+      "text": "I work from Monday to Friday.",
+      "question": "Quando a pessoa trabalha?",
+      "options": [
+        "De segunda a sexta",
+        "De segunda a sábado",
+        "Todos os dias",
+        "Apenas aos sábados"
+      ],
+      "correctAnswer": 0,
+      "translation": "Eu trabalho de segunda a sexta-feira.",
+      "cefr_level": "A2",
+      "theme": "work"
+    },
+    {
+      "id": "listen_a2_019",
+      "text": "The book costs twenty dollars.",
+      "question": "Quanto custa o livro?",
+      "options": [
+        "Vinte dólares",
+        "Dez dólares",
+        "Trinta dólares",
+        "Quinze dólares"
+      ],
+      "correctAnswer": 0,
+      "translation": "O livro custa vinte dólares.",
+      "cefr_level": "A2",
+      "theme": "prices"
+    },
+    {
+      "id": "listen_a2_020",
+      "text": "She's studying English at night school.",
+      "question": "O que ela está estudando?",
+      "options": [
+        "Inglês",
+        "Espanhol",
+        "Francês",
+        "Alemão"
+      ],
+      "correctAnswer": 0,
+      "translation": "Ela está estudando inglês na escola noturna.",
+      "cefr_level": "A2",
+      "theme": "education"
+    },
+    {
+      "id": "listen_a2_021",
+      "text": "I forgot my keys at home.",
+      "question": "O que a pessoa esqueceu?",
+      "options": [
+        "As chaves",
+        "A carteira",
+        "O celular",
+        "Os óculos"
+      ],
+      "correctAnswer": 0,
+      "translation": "Eu esqueci minhas chaves em casa.",
+      "cefr_level": "A2",
+      "theme": "problems"
+    },
+    {
+      "id": "listen_a2_022",
+      "text": "The hotel has a swimming pool.",
+      "question": "O que o hotel tem?",
+      "options": [
+        "Uma piscina",
+        "Uma academia",
+        "Um restaurante",
+        "Um spa"
+      ],
+      "correctAnswer": 0,
+      "translation": "O hotel tem uma piscina.",
+      "cefr_level": "A2",
+      "theme": "facilities"
+    },
+    {
+      "id": "listen_a2_023",
+      "text": "I'd like a cup of tea, please.",
+      "question": "O que a pessoa gostaria?",
+      "options": [
+        "Uma xícara de chá",
+        "Uma xícara de café",
+        "Um copo de água",
+        "Um suco"
+      ],
+      "correctAnswer": 0,
+      "translation": "Eu gostaria de uma xícara de chá, por favor.",
+      "cefr_level": "A2",
+      "theme": "orders"
+    },
+    {
+      "id": "listen_a2_024",
+      "text": "My class finishes at four thirty.",
+      "question": "Quando a aula termina?",
+      "options": [
+        "Às quatro e meia",
+        "Às três e meia",
+        "Às cinco horas",
+        "Às quatro horas"
+      ],
+      "correctAnswer": 0,
+      "translation": "Minha aula termina às quatro e meia.",
+      "cefr_level": "A2",
+      "theme": "schedule"
+    },
+    {
+      "id": "listen_a2_025",
+      "text": "It's very cold today. Wear a coat.",
+      "question": "Que roupa a pessoa deve usar?",
+      "options": [
+        "Um casaco",
+        "Uma camiseta",
+        "Shorts",
+        "Sandálias"
+      ],
+      "correctAnswer": 0,
+      "translation": "Está muito frio hoje. Use um casaco.",
+      "cefr_level": "A2",
+      "theme": "weather"
+    },
+    {
+      "id": "listen_a2_026",
+      "text": "The meeting is on Thursday morning.",
+      "question": "Quando é a reunião?",
+      "options": [
+        "Quinta-feira de manhã",
+        "Quarta-feira de manhã",
+        "Quinta-feira à tarde",
+        "Sexta-feira de manhã"
+      ],
+      "correctAnswer": 0,
+      "translation": "A reunião é na quinta-feira de manhã.",
+      "cefr_level": "A2",
+      "theme": "appointments"
+    },
+    {
+      "id": "listen_a2_027",
+      "text": "I don't like spicy food.",
+      "question": "Que tipo de comida a pessoa não gosta?",
+      "options": [
+        "Comida picante",
+        "Comida doce",
+        "Comida salgada",
+        "Comida azeda"
+      ],
+      "correctAnswer": 0,
+      "translation": "Eu não gosto de comida picante.",
+      "cefr_level": "A2",
+      "theme": "preferences"
+    },
+    {
+      "id": "listen_a2_028",
+      "text": "The park is ten minutes from here.",
+      "question": "Quão longe fica o parque?",
+      "options": [
+        "Dez minutos daqui",
+        "Cinco minutos daqui",
+        "Quinze minutos daqui",
+        "Vinte minutos daqui"
+      ],
+      "correctAnswer": 0,
+      "translation": "O parque fica a dez minutos daqui.",
+      "cefr_level": "A2",
+      "theme": "distance"
+    },
+    {
+      "id": "listen_a2_029",
+      "text": "I'm tired. I need some rest.",
+      "question": "O que a pessoa precisa?",
+      "options": [
+        "Descanso",
+        "Comida",
+        "Exercício",
+        "Trabalho"
+      ],
+      "correctAnswer": 0,
+      "translation": "Estou cansado. Preciso de algum descanso.",
+      "cefr_level": "A2",
+      "theme": "feelings"
+    },
+    {
+      "id": "listen_a2_030",
+      "text": "She speaks three languages fluently.",
+      "question": "Quantos idiomas ela fala fluentemente?",
+      "options": [
+        "Três",
+        "Dois",
+        "Quatro",
+        "Cinco"
+      ],
+      "correctAnswer": 0,
+      "translation": "Ela fala três idiomas fluentemente.",
+      "cefr_level": "A2",
+      "theme": "abilities"
+    },
  {
    "id": "listen_b1_003",
    "text": "I really thought I was prepared for that history exam, but when I saw the questions, I realized I hadn't covered enough of the material. I wish I had studied harder for the exam. Now I'm worried about how this will affect my overall grade for the semester. I should have spent more time in the library instead of going out with friends.",
@@ -326,7 +701,7 @@
   "theme": "work"
   },
 {
-  "id": "listen_c2_003",
+  "id": "listen_c2_023",
   "text": "The proposed fiscal reforms, while ostensibly designed to stimulate economic growth, have been criticized by economists who argue that they fail to address the underlying structural imbalances in our monetary system. The legislation's emphasis on short-term tax incentives overlooks the long-term consequences of exacerbating income inequality and potentially destabilizing financial markets through unsustainable debt accumulation.",
   "question": "What is the main criticism of the proposed fiscal reforms?",
   "options": [
@@ -341,7 +716,7 @@
   "theme": "economics"
 },
 {
-  "id": "listen_c2_004",
+  "id": "listen_c2_024",
   "text": "The sociologist argued that deeply ingrained cultural narratives about meritocracy have become so entrenched in our collective consciousness that any attempt at meaningful educational reform is met with fierce resistance. These narratives, perpetuated through generations of institutional practices, create a cognitive dissonance that makes it psychologically uncomfortable for individuals to acknowledge systemic inequities in access to quality education.",
   "question": "According to the sociologist, what makes educational reform psychologically difficult?",
   "options": [
@@ -356,7 +731,7 @@
   "theme": "sociology"
 },
 {
-  "id": "listen_c2_005",
+  "id": "listen_c2_025",
   "text": "The environmental policy proposal, however laudable its intentions to reduce carbon emissions, fails to account for the multifaceted nature of climate change impacts across different socioeconomic groups. While it successfully targets industrial pollution, the legislation overlooks how climate adaptation strategies must be tailored to vulnerable communities that lack the resources to implement expensive technological solutions.",
   "question": "What is the main limitation of the environmental policy proposal?",
   "options": [
@@ -371,7 +746,7 @@
   "theme": "environment"
 },
 {
-  "id": "listen_c2_006",
+  "id": "listen_c2_026",
   "text": "The privacy legislation, ostensibly designed to protect consumer data from corporate exploitation, has been criticized for its unintended consequences on innovation in the tech sector. While the bill successfully addresses immediate data protection concerns, industry analysts argue that its overly broad definitions of personal information could stifle the development of emerging technologies that rely on sophisticated data analytics for improving user experiences.",
   "question": "What unintended consequence of the privacy legislation are analysts concerned about?",
   "options": [
@@ -386,7 +761,7 @@
   "theme": "technology"
 },
 {
-  "id": "listen_c2_007",
+  "id": "listen_c2_027",
   "text": "Recent neuroscientific research has revealed that the phenomenon of lucid dreaming, as yet insufficiently understood by cognitive scientists, warrants further empirical investigation. While anecdotal evidence suggests that individuals can consciously control their dreams, the underlying neural mechanisms remain poorly understood, necessitating rigorous experimental protocols to determine whether lucid dreaming represents a genuine form of metacognition or merely an illusion of conscious control.",
   "question": "What does the speaker argue is necessary to understand lucid dreaming?",
   "options": [
@@ -400,6 +775,126 @@
   "cefr_level": "C2",
   "theme": "neuroscience"
 },
+    {
+      "id": "listen_c2_028",
+      "text": "The philosopher contends that contemporary discourse on artificial intelligence suffers from a fundamental categorical error, conflating computational processes with genuine consciousness. This ontological confusion, she argues, stems from an anthropomorphic tendency to project human qualities onto sophisticated algorithms, thereby obscuring the qualitative distinctions between information processing and phenomenological experience.",
+      "question": "What does the philosopher identify as the main problem in AI discourse?",
+      "options": [
+        "A falta de algoritmos suficientemente sofisticados",
+        "A confusão entre processamento computacional e consciência genuína",
+        "O excesso de análise fenomenológica das máquinas",
+        "A ausência de tendências antropomórficas no debate"
+      ],
+      "correctAnswer": 1,
+      "translation": "A filósofa argumenta que o discurso contemporâneo sobre inteligência artificial sofre de um erro categórico fundamental, confundindo processos computacionais com consciência genuína...",
+      "cefr_level": "C2",
+      "theme": "philosophy"
+    },
+    {
+      "id": "listen_c2_029",
+      "text": "The historiographical analysis challenges prevailing interpretations of colonial expansion by demonstrating that economic determinism alone cannot adequately explain the complex interplay of ideological, religious, and geopolitical factors that motivated imperial ventures. The author argues that reductionist frameworks obscure the contingent nature of historical processes and the agency of diverse actors who both resisted and facilitated colonial projects through multifaceted negotiations.",
+      "question": "What limitation does the author identify in economic determinism as an explanation?",
+      "options": [
+        "Ele explica perfeitamente todos os fatores da expansão colonial",
+        "Ele ignora a complexa interação de fatores ideológicos, religiosos e geopolíticos",
+        "Ele foca demais na agência de atores diversos",
+        "Ele enfatiza excessivamente os processos históricos contingentes"
+      ],
+      "correctAnswer": 1,
+      "translation": "A análise historiográfica desafia interpretações prevalecentes da expansão colonial demonstrando que o determinismo econômico sozinho não pode explicar adequadamente a complexa interação de fatores ideológicos, religiosos e geopolíticos...",
+      "cefr_level": "C2",
+      "theme": "history"
+    },
+    {
+      "id": "listen_c2_030",
+      "text": "The literary critic posits that postmodern narrative techniques, characterized by self-reflexivity and metafictional elements, represent not merely stylistic innovations but epistemological challenges to the very notion of objective truth in storytelling. By foregrounding the constructed nature of narrative itself, these techniques destabilize the reader's comfortable assumption that fiction can transparently represent reality, thereby demanding a more sophisticated hermeneutic engagement with textual ambiguity.",
+      "question": "According to the critic, what do postmodern narrative techniques fundamentally challenge?",
+      "options": [
+        "A inovação estilística na literatura contemporânea",
+        "A noção de verdade objetiva na narrativa",
+        "A simplicidade das técnicas tradicionais de escrita",
+        "O conforto do leitor com a ambiguidade textual"
+      ],
+      "correctAnswer": 1,
+      "translation": "A crítica literária propõe que técnicas narrativas pós-modernas, caracterizadas por autorreflexividade e elementos metaficcionais, representam não apenas inovações estilísticas mas desafios epistemológicos à própria noção de verdade objetiva na narrativa...",
+      "cefr_level": "C2",
+      "theme": "literature"
+    },
+    {
+      "id": "listen_c2_031",
+      "text": "The epidemiologist warns that public health interventions predicated exclusively on individual behavioral modification systematically neglect the upstream social determinants that constrain health choices among marginalized populations. This methodological individualism, endemic in much of contemporary health policy, effectively absolves structural inequities while placing disproportionate responsibility on those least equipped to overcome systemic barriers to wellness.",
+      "question": "What does the epidemiologist criticize about current health interventions?",
+      "options": [
+        "O foco excessivo em populações marginalizadas",
+        "A negligência dos determinantes sociais que limitam escolhas de saúde",
+        "A ênfase insuficiente na modificação comportamental individual",
+        "O reconhecimento adequado das barreiras sistêmicas"
+      ],
+      "correctAnswer": 1,
+      "translation": "O epidemiologista adverte que intervenções de saúde pública baseadas exclusivamente em modificação comportamental individual negligenciam sistematicamente os determinantes sociais a montante que restringem escolhas de saúde entre populações marginalizadas...",
+      "cefr_level": "C2",
+      "theme": "public_health"
+    },
+    {
+      "id": "listen_c2_032",
+      "text": "The architectural theorist contends that contemporary urban planning paradigms remain inextricably tethered to modernist assumptions about rationality and functionality that fail to accommodate the emergent, organic patterns of human inhabitation. She advocates for a more phenomenologically informed approach that recognizes how spatial experience shapes social relations and cultural identity in ways that transcend utilitarian considerations of efficiency and zoning regulations.",
+      "question": "What alternative approach does the theorist advocate for in urban planning?",
+      "options": [
+        "Um retorno aos paradigmas modernistas clássicos",
+        "Uma abordagem fenomenológica que reconhece como experiência espacial molda relações sociais",
+        "Um foco exclusivo em eficiência e regulamentos de zoneamento",
+        "A eliminação de padrões orgânicos de habitação humana"
+      ],
+      "correctAnswer": 1,
+      "translation": "A teórica de arquitetura argumenta que paradigmas contemporâneos de planejamento urbano permanecem inextrincavelmente ligados a pressupostos modernistas sobre racionalidade e funcionalidade que falham em acomodar os padrões emergentes e orgânicos de habitação humana...",
+      "cefr_level": "C2",
+      "theme": "architecture"
+    },
+    {
+      "id": "listen_c2_033",
+      "text": "The jurisprudential analysis reveals that constitutional interpretation has increasingly privileged originalist methodologies at the expense of living constitutionalism, thereby constraining judicial capacity to respond to evolving social norms and technological realities unforeseen by eighteenth-century framers. This hermeneutic rigidity, critics argue, transforms constitutional law into an antiquarian exercise disconnected from contemporary exigencies of democratic governance.",
+      "question": "What problem do critics identify with originalist methodologies?",
+      "options": [
+        "Elas se adaptam excessivamente às normas sociais contemporâneas",
+        "Elas limitam a capacidade judicial de responder a realidades sociais e tecnológicas atuais",
+        "Elas ignoram completamente as intenções dos framers constitucionais",
+        "Elas promovem uma democracia governamental muito flexível"
+      ],
+      "correctAnswer": 1,
+      "translation": "A análise jurisprudencial revela que a interpretação constitucional tem privilegiado cada vez mais metodologias originalistas em detrimento do constitucionalismo vivo, limitando assim a capacidade judicial de responder a normas sociais e realidades tecnológicas em evolução...",
+      "cefr_level": "C2",
+      "theme": "law"
+    },
+    {
+      "id": "listen_c2_034",
+      "text": "The quantum physicist elucidates that the measurement problem in quantum mechanics poses not merely a technical challenge but a profound philosophical conundrum regarding the relationship between observation and reality. The Copenhagen interpretation's instrumentalist stance, while pragmatically useful, sidesteps ontological questions about wavefunction collapse, leaving unresolved whether quantum indeterminacy reflects epistemic limitations or genuine ontological indeterminacy in nature itself.",
+      "question": "What does the physicist say remains unresolved in quantum mechanics?",
+      "options": [
+        "A utilidade pragmática da interpretação de Copenhague",
+        "Se a indeterminação quântica reflete limitações epistêmicas ou indeterminação ontológica genuína",
+        "O desafio técnico do problema de medição",
+        "A relação entre observação e instrumentalismo"
+      ],
+      "correctAnswer": 1,
+      "translation": "O físico quântico elucida que o problema de medição na mecânica quântica representa não apenas um desafio técnico mas um enigma filosófico profundo sobre a relação entre observação e realidade...",
+      "cefr_level": "C2",
+      "theme": "physics"
+    },
+    {
+      "id": "listen_c2_035",
+      "text": "The psycholinguist demonstrates that bilingual cognitive advantages, long touted in popular discourse, have been substantially overstated by methodologically flawed studies that failed to control for confounding socioeconomic variables. Her meta-analysis suggests that the putative executive function benefits attributed to bilingualism may be artifacts of selection bias rather than genuine cognitive enhancements, necessitating more rigorous experimental designs that disentangle language proficiency from other developmental factors.",
+      "question": "What does the psycholinguist's research suggest about bilingual cognitive advantages?",
+      "options": [
+        "Eles são comprovados de forma conclusiva por todos os estudos",
+        "Eles podem ser artefatos de viés de seleção em vez de melhorias cognitivas genuínas",
+        "Eles são subestimados pelo discurso popular",
+        "Eles independem completamente de variáveis socioeconômicas"
+      ],
+      "correctAnswer": 1,
+      "translation": "A psicolinguista demonstra que vantagens cognitivas bilíngues, há muito alardeadas no discurso popular, foram substancialmente exageradas por estudos metodologicamente falhos que não controlaram variáveis socioeconômicas confundidoras...",
+      "cefr_level": "C2",
+      "theme": "linguistics"
+    },
 {
   "id": "listen_a1_011",
   "text": "Hello, how are you?",
@@ -420,36 +915,7 @@
   "cefr_level": "A1",
   "theme": "politeness"
 },
- {
-   "id": "listen_a2_011",
-   "text": "John Says: How long have you been waiting here?\nDavid says: I have been waiting for an hour. The bus is really late today.\nJohn Says: That's terrible. Maybe you should call the bus company.\nDavid says: I already did. They said there's traffic on the main road.",
-   "question": "How long has David been waiting?",
-   "options": [
-     "Uma hora",
-     "Meia hora",
-     "Duas horas",
-     "Quinze minutos"
-   ],
-   "correctAnswer": 0,
-   "translation": "John Says: Há quanto tempo você está esperando aqui?\nDavid says: Eu estou esperando há uma hora. O ônibus está realmente atrasado hoje.\nJohn Says: Isso é terrível. Talvez você devesse ligar para a empresa de ônibus.\nDavid says: Eu já liguei. Eles disseram que há trânsito na estrada principal.",
-   "cefr_level": "A2",
-   "theme": "duration"
- },
- {
-   "id": "listen_a2_012",
-   "text": "John Says: Excuse me, could you help me please?\nDavid says: Of course, what do you need?\nJohn Says: I'm looking for the train station. Is it near here?\nDavid says: Yes, it's just two blocks away. Go straight and turn left.",
-   "question": "What is John asking for?",
-   "options": [
-     "Ajuda para encontrar a estação de trem",
-     "Comida para comer",
-     "Dinheiro emprestado",
-     "Informação sobre o tempo"
-   ],
-   "correctAnswer": 0,
-   "translation": "John Says: Com licença, você poderia me ajudar por favor?\nDavid says: Claro, o que você precisa?\nJohn Says: Estou procurando a estação de trem. É perto daqui?\nDavid says: Sim, é apenas duas quadras. Vá em frente e vire à esquerda.",
-   "cefr_level": "A2",
-   "theme": "requests"
- },
+
  {
    "id": "listen_b1_011",
    "text": "I know you're struggling with your grades lately, and I can see how stressed you've been about the upcoming exams. If I were you, I would study harder. It might mean giving up some social activities for a while, but it would be worth it in the long run. You have the potential to do much better if you put in the effort.",
@@ -700,206 +1166,7 @@
     "cefr_level": "A1",
     "theme": "professions"
   },
-  {
-    "id": "listen_a2_015",
-  "text": "I have finished my homework.",
-  "question": "What has the speaker finished?",
-  "options": ["Lição de casa", "Trabalho", "Projeto", "Exame"],
-  "correctAnswer": 0,
-  "translation": "Eu terminei minha lição de casa.",
-  "cefr_level": "A2",
-  "theme": "school"
-},
-{
-  "id": "listen_a2_016",
-  "text": "She is not coming today.",
-  "question": "When is she not coming?",
-  "options": ["Hoje", "Amanhã", "Ontem", "Sempre"],
-  "correctAnswer": 0,
-  "translation": "Ela não vem hoje.",
-  "cefr_level": "A2",
-  "theme": "plans"
-},
- {
-   "id": "listen_a2_017",
-   "text": "*knock knock*\nJohn Says: Oh, hi Emma! Come in!\nDavid says: Hi! Thanks for inviting me.\nJohn Says: No problem. Do you want some tea? I just made a pot.\nDavid says: Yes, please! That sounds nice.",
-   "question": "What is John offering to Emma?",
-   "options": [
-     "Chá",
-     "Café",
-     "Água",
-     "Um lugar para sentar"
-   ],
-   "correctAnswer": 0,
-   "translation": "*toc toc*\nJohn Says: Oh, oi Emma! Entre!\nDavid says: Oi! Obrigada por me convidar.\nJohn Says: Não há problema. Você quer chá? Acabei de fazer uma chaleira.\nDavid says: Sim, por favor! Parece bom.",
-   "cefr_level": "A2",
-   "theme": "offers"
- },
- {
-   "id": "listen_a2_018",
-   "text": "John Says: What did you do yesterday?\nDavid says: I went to the cinema yesterday. There was a new action movie playing.\nJohn Says: How was it?\nDavid says: It was really exciting! I enjoyed it a lot.",
-   "question": "Where did David go yesterday?",
-   "options": [
-     "Ao cinema",
-     "Ao teatro",
-     "Ao museu",
-     "Ao parque"
-   ],
-   "correctAnswer": 0,
-   "translation": "John Says: O que você fez ontem?\nDavid says: Eu fui ao cinema ontem. Estava passando um novo filme de ação.\nJohn Says: Como foi?\nDavid says: Foi realmente emocionante! Eu gostei muito.",
-   "cefr_level": "A2",
-   "theme": "entertainment"
- },
- {
-   "id": "listen_a2_019",
-   "text": "John Says: Look at those children over there. What are they doing?\nDavid says: They are playing in the park. It looks like they're having fun with their ball.\nJohn Says: Yes, the weather is nice today. Perfect for outdoor activities.\nDavid says: I agree. Parks are great places for kids to play.",
-   "question": "Where are the children playing?",
-   "options": [
-     "No parque",
-     "Em casa",
-     "Na escola",
-     "Na rua"
-   ],
-   "correctAnswer": 0,
-   "translation": "John Says: Olhe aquelas crianças ali. O que elas estão fazendo?\nDavid says: Elas estão brincando no parque. Parece que estão se divertindo com a bola delas.\nJohn Says: Sim, o tempo está bom hoje. Perfeito para atividades ao ar livre.\nDavid says: Concordo. Parques são ótimos lugares para crianças brincarem.",
-   "cefr_level": "A2",
-   "theme": "activities"
- },
- {
-   "id": "listen_a2_020",
-   "text": "John Says: It's getting warm in here.\nDavid says: Yes, it is. Can I open the window?\nJohn Says: Of course, go ahead.\nDavid says: Thanks. That should help.",
-   "question": "What does David want to do?",
-   "options": [
-     "Abrir a janela",
-     "Fechar a janela",
-     "Abrir a porta",
-     "Fechar a porta"
-   ],
-   "correctAnswer": 0,
-   "translation": "John Says: Está ficando quente aqui.\nDavid says: Sim, está. Posso abrir a janela?\nJohn Says: Claro, vá em frente.\nDavid says: Obrigado. Isso deve ajudar.",
-   "cefr_level": "A2",
-   "theme": "permissions"
- },
- {
-   "id": "listen_a2_021",
-   "text": "John Says: Would you like some of this curry? It's very spicy.\nDavid says: No, thank you. I don't like spicy food. It makes my mouth burn.\nJohn Says: Oh, I see. How about some mild chicken instead?\nDavid says: That sounds better. Thank you.",
-   "question": "What type of food does David not like?",
-   "options": [
-     "Comida picante",
-     "Comida doce",
-     "Comida salgada",
-     "Comida amarga"
-   ],
-   "correctAnswer": 0,
-   "translation": "John Says: Você gostaria de um pouco deste curry? É muito picante.\nDavid says: Não, obrigado. Eu não gosto de comida picante. Faz minha boca queimar.\nJohn Says: Oh, entendo. Que tal frango suave em vez disso?\nDavid says: Parece melhor. Obrigado.",
-   "cefr_level": "A2",
-   "theme": "preferences"
- },
- {
-   "id": "listen_a2_022",
-   "text": "John Says: Is Maria still here? I need to talk to her.\nDavid says: No, she has already left. She went home about ten minutes ago.\nJohn Says: Oh, that's too bad. I wanted to give her the documents.\nDavid says: You can call her later or email them to her.",
-   "question": "What has Maria done?",
-   "options": [
-     "Já saiu",
-     "Já chegou",
-     "Já comeu",
-     "Já dormiu"
-   ],
-   "correctAnswer": 0,
-   "translation": "John Says: Maria ainda está aqui? Preciso falar com ela.\nDavid says: Não, ela já saiu. Ela foi para casa há cerca de dez minutos.\nJohn Says: Oh, que pena. Eu queria dar os documentos para ela.\nDavid says: Você pode ligar para ela mais tarde ou enviar por email.",
-   "cefr_level": "A2",
-   "theme": "departures"
- },
- {
-   "id": "listen_a2_023",
-   "text": "John Says: There's a party at John's house this Saturday. Are you going to the party?\nDavid says: I don't think so. I have other plans.\nJohn Says: That's too bad. It should be fun.\nDavid says: Maybe next time.",
-   "question": "Where is John asking if David is going?",
-   "options": [
-     "À festa",
-     "Ao cinema",
-     "À praia",
-     "Ao shopping"
-   ],
-   "correctAnswer": 0,
-   "translation": "John Says: Há uma festa na casa do John neste sábado. Você vai à festa?\nDavid says: Eu não acho que sim. Tenho outros planos.\nJohn Says: Que pena. Deveria ser divertido.\nDavid says: Talvez da próxima vez.",
-   "cefr_level": "A2",
-   "theme": "invitations"
- },
- {
-   "id": "listen_a2_024",
-   "text": "John Says: We're out of milk for breakfast tomorrow.\nDavid says: I know. I need to buy milk. I'll go to the store after work.\nJohn Says: Can you get some bread too?\nDavid says: Sure, no problem.",
-   "question": "What does David need to buy?",
-   "options": [
-     "Leite",
-     "Pão",
-     "Queijo",
-     "Manteiga"
-   ],
-   "correctAnswer": 0,
-   "translation": "John Says: Estamos sem leite para o café da manhã amanhã.\nDavid says: Eu sei. Eu preciso comprar leite. Vou à loja depois do trabalho.\nJohn Says: Você pode pegar pão também?\nDavid says: Claro, sem problema.",
-   "cefr_level": "A2",
-   "theme": "shopping"
- },
- {
-   "id": "listen_a2_025",
-   "text": "John Says: Have you ever been to Paris?\nDavid says: Yes, I have visited Paris twice. Once last year and once when I was a student.\nJohn Says: That's great! Did you like it?\nDavid says: Yes, it's a beautiful city. I want to go back someday.",
-   "question": "How many times has David visited Paris?",
-   "options": [
-     "Duas vezes",
-     "Uma vez",
-     "Três vezes",
-     "Nunca"
-   ],
-   "correctAnswer": 0,
-   "translation": "John Says: Você já foi a Paris?\nDavid says: Sim, eu visitei Paris duas vezes. Uma vez no ano passado e uma vez quando eu era estudante.\nJohn Says: Que ótimo! Você gostou?\nDavid says: Sim, é uma cidade linda. Eu quero voltar algum dia.",
-   "cefr_level": "A2",
-   "theme": "travel"
- },
- {
-   "id": "listen_a2_026",
-   "text": "John Says: What would you like for dinner? We have chicken or fish.\nDavid says: Neither, thank you. She doesn't eat meat. She's vegetarian.\nJohn Says: Oh, I see. How about pasta with vegetables?\nDavid says: That sounds good. Thank you.",
-   "question": "What doesn't the woman eat?",
-   "options": [
-     "Carne",
-     "Peixe",
-     "Frutas",
-     "Vegetais"
-   ],
-   "correctAnswer": 0,
-   "translation": "John Says: O que você gostaria para o jantar? Temos frango ou peixe.\nDavid says: Nenhum, obrigado. Ela não come carne. Ela é vegetariana.\nJohn Says: Oh, entendo. Que tal macarrão com vegetais?\nDavid says: Parece bom. Obrigado.",
-   "cefr_level": "A2",
-   "theme": "diet"
- },
- {
-   "id": "listen_a2_027",
-   "text": "John Says: What time should we meet for the project?\nDavid says: How about 10 AM? We are meeting tomorrow at the library.\nJohn Says: That works for me. See you then.\nDavid says: Okay, bye.",
-   "question": "When are the speakers meeting?",
-   "options": [
-     "Amanhã",
-     "Hoje",
-     "Ontem",
-     "Sempre"
-   ],
-   "correctAnswer": 0,
-   "translation": "John Says: Que horas devemos nos encontrar para o projeto?\nDavid says: Que tal às 10h? Nós nos encontramos amanhã na biblioteca.\nJohn Says: Funciona para mim. Até lá.\nDavid says: Ok, tchau.",
-   "cefr_level": "A2",
-    "theme": "arrangements"
-  },
-  {
-    "id": "listen_a2_028",
-    "text": "John Says: I like this jacket. How much does this cost?\nDavid says: It's 45 euros.\nJohn Says: That's a good price. I'll take it.\nDavid says: Great! Would you like a bag?",
-    "question": "What is John asking about?",
-    "options": [
-      "O preço",
-      "A cor",
-      "O tamanho",
-      "A marca"
-    ],
-    "correctAnswer": 0,
-    "translation": "John Says: Eu gosto desta jaqueta. Quanto custa isso?\nDavid says: São 45 euros.\nJohn Says: É um bom preço. Vou levar.\nDavid says: Ótimo! Você gostaria de uma sacola?",
-    "cefr_level": "A2",
-    "theme": "shopping"
-  },
+
   {
     "id": "listen_b1_015",
    "text": "Between my full-time job, part-time studies, and helping out with family responsibilities, I'm constantly busy from morning until night. I wish I had more free time. I'd love to take up a hobby or just relax without feeling guilty about it. Sometimes I feel like I'm missing out on life because I'm always rushing from one commitment to another.",

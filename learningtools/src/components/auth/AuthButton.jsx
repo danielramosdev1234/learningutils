@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { LogIn, LogOut, Bell } from 'lucide-react';
-import { loginWithGoogle, logout } from '../../store/slices/userSlice';
+import { LogIn, LogOut, Bell, User } from 'lucide-react';
+import { loginWithGoogle, logout, updateProfile } from '../../store/slices/userSlice';
 import BackupManager from '../BackupManager';
 import NotificationSettings from '../settings/NotificationSettings';
 import { useUILanguage } from '../../context/LanguageContext.jsx';
@@ -13,6 +13,8 @@ const AuthButton = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [showBackupModal, setShowBackupModal] = useState(false);
   const [showNotificationSettings, setShowNotificationSettings] = useState(false);
+  const [showProfileModal, setShowProfileModal] = useState(false);
+  const [newDisplayName, setNewDisplayName] = useState('');
   const { language, setLanguage } = useUILanguage();
 
   // Escuta evento para abrir configurações de notificações
@@ -87,6 +89,26 @@ const AuthButton = () => {
       e.preventDefault();
       setShowNotificationSettings(true);
       setShowMenu(false);
+    }
+  };
+
+  const handleOpenProfile = () => {
+    setNewDisplayName(profile.displayName || '');
+    setShowProfileModal(true);
+    setShowMenu(false);
+  };
+
+  const handleSaveProfile = async () => {
+    if (newDisplayName.trim()) {
+      await dispatch(updateProfile({ displayName: newDisplayName.trim() }));
+      setShowProfileModal(false);
+    }
+  };
+
+  const handleKeyDownProfile = (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      handleOpenProfile();
     }
   };
 
@@ -170,23 +192,36 @@ const AuthButton = () => {
             <div className="p-4 border-b border-gray-200 bg-gradient-to-br from-blue-50 to-indigo-100">
               <p className="font-bold text-gray-800">{profile.displayName}</p>
               <p className="text-sm text-gray-600">{profile.email}</p>
-            </div>
+             </div>
 
-            {/* Notification Settings */}
-            <button
-              onClick={() => {
-                setShowNotificationSettings(true);
-                setShowMenu(false);
-              }}
-              onKeyDown={handleKeyDownNotificationSettings}
-              tabIndex={0}
-              aria-label={translateUI(language, 'auth.openNotificationSettingsAria')}
-              role="menuitem"
-              className="w-full flex items-center gap-3 px-4 py-3 hover:bg-purple-50 transition-colors text-left text-gray-700 border-b border-gray-200"
-            >
-              <Bell size={20} className="text-purple-600" aria-hidden="true" />
-              <span className="font-semibold">{translateUI(language, 'auth.notifications')}</span>
-            </button>
+              {/* Profile */}
+             <button
+               onClick={handleOpenProfile}
+               onKeyDown={handleKeyDownProfile}
+               tabIndex={0}
+               aria-label="Editar perfil"
+               role="menuitem"
+               className="w-full flex items-center gap-3 px-4 py-3 hover:bg-blue-50 transition-colors text-left text-gray-700 border-b border-gray-200"
+             >
+               <User size={20} className="text-blue-600" aria-hidden="true" />
+               <span className="font-semibold">Perfil</span>
+             </button>
+
+             {/* Notification Settings */}
+             <button
+               onClick={() => {
+                 setShowNotificationSettings(true);
+                 setShowMenu(false);
+               }}
+               onKeyDown={handleKeyDownNotificationSettings}
+               tabIndex={0}
+               aria-label={translateUI(language, 'auth.openNotificationSettingsAria')}
+               role="menuitem"
+               className="w-full flex items-center gap-3 px-4 py-3 hover:bg-purple-50 transition-colors text-left text-gray-700 border-b border-gray-200"
+             >
+               <Bell size={20} className="text-purple-600" aria-hidden="true" />
+               <span className="font-semibold">{translateUI(language, 'auth.notifications')}</span>
+             </button>
 
             {/* Interface language selector */}
             <div
@@ -233,6 +268,41 @@ const AuthButton = () => {
       {showNotificationSettings && (
         <div className="fixed inset-0 z-50 bg-white overflow-y-auto">
           <NotificationSettings onBack={() => setShowNotificationSettings(false)} />
+        </div>
+      )}
+
+      {/* Profile Modal */}
+      {showProfileModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white rounded-lg shadow-xl p-6 w-full max-w-md mx-4">
+            <h2 className="text-xl font-bold text-gray-800 mb-4">Editar Perfil</h2>
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Nome de Exibição
+              </label>
+              <input
+                type="text"
+                value={newDisplayName}
+                onChange={(e) => setNewDisplayName(e.target.value)}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Digite seu nome"
+              />
+            </div>
+            <div className="flex gap-3">
+              <button
+                onClick={handleSaveProfile}
+                className="flex-1 bg-blue-600 text-white py-2 rounded-md font-semibold hover:bg-blue-700 transition-colors"
+              >
+                Salvar
+              </button>
+              <button
+                onClick={() => setShowProfileModal(false)}
+                className="flex-1 bg-gray-300 text-gray-700 py-2 rounded-md font-semibold hover:bg-gray-400 transition-colors"
+              >
+                Cancelar
+              </button>
+            </div>
+          </div>
         </div>
       )}
     </div>

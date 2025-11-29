@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, ResponsiveContainer } from 'recharts';
 import {
@@ -16,6 +16,8 @@ import {
 } from '../../store/slices/userSlice';
 import { addXP } from '../../store/slices/xpSlice';
 import { generateAndDownloadCertificate } from '../../utils/assessmentUtils';
+import AssessmentResult from '../assessment/AssessmentResult.jsx';
+
 
 // ========================================
 // ASSESSMENT UTILITIES
@@ -29,6 +31,12 @@ const adjustLevel = (currentLevel, isCorrect) => {
   } else {
     return levels[Math.max(currentIndex - 1, 0)];
   }
+};
+
+const calculateScore = (answers) => {
+  if (!answers || answers.length === 0) return 0;
+  const correctAnswers = answers.filter(a => a.correct).length;
+  return Math.round((correctAnswers / answers.length) * 100);
 };
 
 // ========================================
@@ -106,39 +114,17 @@ const IntroPhase = ({ onStartSpeaking, onStartListening }) => (
 
 // ResultsPhase Component
 const ResultsPhase = ({
-  finalLevels,
+  finalLevel,
   testMode,
   onDownloadCertificate,
   onGoBack
 }) => {
-  const levelToNumber = { 'A1': 1, 'A2': 2, 'B1': 3, 'B2': 4, 'C1': 5, 'C2': 6 };
-  const numberToLevel = { 1: 'A1', 2: 'A2', 3: 'B1', 4: 'B2', 5: 'C1', 6: 'C2' };
+  const skillConfig = {
+    speaking: { name: 'Speaking', icon: Mic, color: 'purple' },
+    listening: { name: 'Listening', icon: Volume2, color: 'green' }
+  }[testMode];
 
-  let levels = [];
-  let skillsToShow = [];
-
-  if (testMode === 'speaking') {
-    levels = finalLevels.speaking ? [finalLevels.speaking] : [];
-    skillsToShow = ['speaking'];
-  } else if (testMode === 'listening') {
-    levels = finalLevels.listening ? [finalLevels.listening] : [];
-    skillsToShow = ['listening'];
-  }
-
-  const averageNumber = levels.length > 0 ?
-    levels.reduce((sum, level) => sum + levelToNumber[level], 0) / levels.length : 3;
-
-  const overallLevel = numberToLevel[Math.round(averageNumber)];
-
-  const data = skillsToShow.map(skill => ({
-    skill: skill.charAt(0).toUpperCase() + skill.slice(1),
-    level: finalLevels[skill] ? levelToNumber[finalLevels[skill]] : 3
-  }));
-
-  const skillLevels = {
-    speaking: { level: finalLevels.speaking, score: 0 },
-    listening: { level: finalLevels.listening, score: 0 }
-  };
+  const Icon = skillConfig.icon;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 to-pink-100 p-4">
@@ -154,54 +140,24 @@ const ResultsPhase = ({
           </p>
 
           <div className="inline-block bg-gradient-to-r from-purple-500 to-pink-500 text-white px-8 py-4 rounded-2xl">
-            <p className="text-sm font-semibold mb-1">Seu Nível</p>
-            <p className="text-5xl font-bold">{overallLevel}</p>
+            <p className="text-sm font-semibold mb-1">Seu Nível de {skillConfig.name}</p>
+            <p className="text-5xl font-bold">{finalLevel}</p>
           </div>
-        </div>
-
-        {/* Radar Chart */}
-        <div className="bg-white rounded-3xl shadow-xl p-8 mb-6">
-          <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">
-            Suas Habilidades
-          </h2>
-          <ResponsiveContainer width="100%" height={300}>
-            <RadarChart data={data}>
-              <PolarGrid stroke="#e5e7eb" />
-              <PolarAngleAxis dataKey="skill" tick={{ fill: '#6b7280', fontSize: 14 }} />
-              <Radar
-                name="Level"
-                dataKey="level"
-                stroke="#8b5cf6"
-                fill="#8b5cf6"
-                fillOpacity={0.6}
-              />
-            </RadarChart>
-          </ResponsiveContainer>
         </div>
 
         {/* Skill Details */}
         <div className="grid gap-4 mb-6 grid-cols-1 max-w-md mx-auto">
-          {skillsToShow.map(skill => {
-            const skillConfig = {
-              speaking: { name: 'Speaking', icon: Mic, color: 'purple' },
-              listening: { name: 'Listening', icon: Volume2, color: 'green' }
-            }[skill];
-
-            const Icon = skillConfig.icon;
-            return (
-              <div key={skill} className="bg-white rounded-2xl shadow-lg p-6">
-                <div className="flex items-center gap-3 mb-3">
-                  <div className={`p-3 bg-${skillConfig.color}-100 rounded-full`}>
-                    <Icon className={`w-6 h-6 text-${skillConfig.color}-600`} />
-                  </div>
-                  <div>
-                    <h3 className="font-bold text-gray-800">{skillConfig.name}</h3>
-                    <p className="text-2xl font-bold text-purple-600">{finalLevels[skill]}</p>
-                  </div>
-                </div>
+          <div className="bg-white rounded-2xl shadow-lg p-6">
+            <div className="flex items-center gap-3 mb-3">
+              <div className={`p-3 bg-${skillConfig.color}-100 rounded-full`}>
+                <Icon className={`w-6 h-6 text-${skillConfig.color}-600`} />
               </div>
-            );
-          })}
+              <div>
+                <h3 className="font-bold text-gray-800">{skillConfig.name}</h3>
+                <p className="text-2xl font-bold text-purple-600">{finalLevel}</p>
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* Actions */}
@@ -236,7 +192,7 @@ const ResultsPhase = ({
 // ========================================
 const AssessmentTrainer = () => {
   const dispatch = useDispatch();
-  const { profile } = useSelector(state => state.user);
+  const { profile, userId } = useSelector(state => state.user);
   const canTake = useSelector(selectCanTakeAssessment);
 
   // Main states
@@ -245,17 +201,23 @@ const AssessmentTrainer = () => {
   const [questionsLevel, setQuestionsLevel] = useState('B1');
   const [testMode, setTestMode] = useState('speaking'); // 'speaking' or 'listening'
 
-  // Final levels for each phase
-  const [finalLevels, setFinalLevels] = useState({
-    speaking: null,
-    listening: null
-  });
+  // Final level for current test
+  const [finalLevel, setFinalLevel] = useState(null);
 
   const [questionIndex, setQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState({
     speaking: [],
     listening: []
   });
+
+  const [consecutiveCorrects, setConsecutiveCorrects] = useState(0);
+
+  // ⭐ Flag para evitar salvar resultado duplicado
+  const [isSavingResult, setIsSavingResult] = useState(false);
+
+
+
+  const isProcessingAnswer = useRef(false);
 
   // Debug log
   useEffect(() => {
@@ -304,8 +266,8 @@ const AssessmentTrainer = () => {
     return currentQuestions[questionIndex];
   }, [currentQuestions, questionIndex]);
 
-  // Check if user can take test
-  if (!canTake) {
+  // ⭐ Check if user can take test - MAS permitir ver results
+  if (!canTake && phase !== 'results') {
     return (
       <div className="min-h-screen bg-blue-50 flex items-center justify-center p-4">
         <div className="bg-white rounded-2xl shadow-2xl p-8 max-w-md text-center">
@@ -335,102 +297,99 @@ const AssessmentTrainer = () => {
       setQuestionIndex(prev => prev + 1);
     } else {
       console.log('🎬 End of phase');
+
+      // ⭐ Verificar se já está em results para evitar chamada dupla
+      if (phase === 'results') {
+        console.log('⚠️ Already in results phase, skipping handleFinishTest');
+        return;
+      }
+
       const finalLevelValue = nextLevel || currentLevel;
       console.log('🏁 Test complete:', testMode, 'final level:', finalLevelValue);
       handleFinishTest({ [testMode]: finalLevelValue });
     }
   };
 
-  const handleFinishTest = async (specificFinalLevels = null) => {
-    const levelToNumber = { 'A1': 1, 'A2': 2, 'B1': 3, 'B2': 4, 'C1': 5, 'C2': 6 };
-
-    console.log('🏁 handleFinishTest - testMode:', testMode, 'finalLevels:', finalLevels, 'specificFinalLevels:', specificFinalLevels);
-
-    const effectiveFinalLevels = specificFinalLevels ? { ...finalLevels, ...specificFinalLevels } : finalLevels;
-
-    let overallLevel;
-    if (testMode === 'speaking') {
-      overallLevel = effectiveFinalLevels.speaking || currentLevel || 'B1';
-    } else if (testMode === 'listening') {
-      overallLevel = effectiveFinalLevels.listening || currentLevel || 'B1';
+  const handleFinishTest = async () => {
+    // ⭐ Guard para evitar salvar duplicado
+    if (isSavingResult) {
+      console.log('⚠️ Already saving result, skipping duplicate call');
+      return;
     }
 
-    const calculateScore = (answers) => {
-      if (!answers || answers.length === 0) return 0;
-      const correctAnswers = answers.filter(a => a.correct).length;
-      return Math.round((correctAnswers / answers.length) * 100);
-    };
+    setIsSavingResult(true);
 
-    const skillLevels = {
-      speaking: {
-        level: effectiveFinalLevels.speaking,
-        score: testMode === 'speaking' ? calculateScore(answers.speaking) : 0
-      },
-      listening: {
-        level: effectiveFinalLevels.listening,
-        score: testMode === 'listening' ? calculateScore(answers.listening) : 0
+    const levelToNumber = { 'A1': 1, 'A2': 2, 'B1': 3, 'B2': 4, 'C1': 5, 'C2': 6 };
+
+    console.log('🏁 handleFinishTest - testMode:', testMode);
+
+    // ⭐ Calcular nível final baseado nas últimas 10 respostas
+    const last10 = answers[testMode].slice(-10);
+    const levelCounts = {};
+    for (const answer of last10) {
+      if (answer.correct) {
+        levelCounts[answer.level] = (levelCounts[answer.level] || 0) + 1;
       }
-    };
+    }
+
+    let maxCount = 0;
+    let bestLevel = 'A1'; // default se nenhum acerto
+    for (const [level, count] of Object.entries(levelCounts)) {
+      if (count > maxCount) {
+        maxCount = count;
+        bestLevel = level;
+      } else if (count === maxCount) {
+        // empate, escolher nível mais alto
+        if (levelToNumber[level] > levelToNumber[bestLevel]) {
+          bestLevel = level;
+        }
+      }
+    }
+
+    console.log('📊 Nível final calculado:', bestLevel, 'com', maxCount, 'acertos nas últimas 10 questões');
+
+    setFinalLevel(bestLevel);
+
+    const score = calculateScore(answers[testMode]);
 
     console.log('📊 Final data before save:', {
       testMode,
-      overallLevel,
-      finalLevels,
-      skillLevels,
-      answersCount: {
-        speaking: answers.speaking.length,
-        listening: answers.listening.length
-      }
+      finalLevel,
+      score,
+      answersCount: answers[testMode].length
     });
 
-    const result = {
-      date: new Date().toISOString(),
-      overallLevel,
-      skills: skillLevels,
-      finalLevels: effectiveFinalLevels,
-      testMode,
-      answers: {
-        [testMode]: answers[testMode]
-      },
-      certificate: {
-        name: profile.displayName || 'Anonymous',
-        level: overallLevel,
-        skills: skillLevels,
-        finalLevels: effectiveFinalLevels,
-        date: new Date().toISOString()
-      }
+    const certificate = {
+      name: profile.displayName || 'Anonymous',
+      skill: testMode,
+      level: bestLevel,
+      score,
+      date: new Date().toISOString()
     };
 
-    console.log('📤 Saving assessment result:', result);
+    console.log('📤 Saving assessment result:', { skillType: testMode, level: bestLevel, score, certificate });
 
-    await dispatch(saveAssessmentResult(result));
-    dispatch(addXP({ amount: 500, reason: 'assessment_completion' }));
+    await dispatch(saveAssessmentResult({ skillType: testMode, level: bestLevel, score, certificate }));
+    dispatch(addXP({ userId, mode: 'assessment_completion', amount: 500 }));
     dispatch(incrementPhraseCompleted());
 
+    // ⭐ Mudar para results ANTES de resetar flag
     setPhase('results');
+
+    // ⭐ Resetar flag após delay
+    setTimeout(() => {
+      setIsSavingResult(false);
+    }, 1000);
   };
 
   const handleDownloadCertificate = () => {
-    const levelToNumber = { 'A1': 1, 'A2': 2, 'B1': 3, 'B2': 4, 'C1': 5, 'C2': 6 };
-    const numberToLevel = { 1: 'A1', 2: 'A2', 3: 'B1', 4: 'B2', 5: 'C1', 6: 'C2' };
-
-    const levels = [finalLevels.speaking, finalLevels.listening]
-      .filter(level => level !== null);
-
-    const averageNumber = levels.length > 0 ?
-      levels.reduce((sum, level) => sum + levelToNumber[level], 0) / levels.length : 3;
-
-    const overallLevel = numberToLevel[Math.round(averageNumber)];
-
-    const skillLevels = {
-      speaking: { level: finalLevels.speaking, score: 0 },
-      listening: { level: finalLevels.listening, score: 0 }
-    };
+    const score = calculateScore(answers[testMode]);
 
     const certificateData = {
       name: profile.displayName || 'Anonymous',
-      level: overallLevel,
-      skills: skillLevels,
+      skill: testMode,
+      level: finalLevel,
+      score,
       date: new Date().toISOString()
     };
     generateAndDownloadCertificate(certificateData);
@@ -440,67 +399,110 @@ const AssessmentTrainer = () => {
   // RENDER
   // ========================================
   switch (phase) {
-    case 'intro':
-      return (
-        <IntroPhase
-          onStartSpeaking={() => {
-            setTestMode('speaking');
-            setPhase('speaking');
-          }}
-          onStartListening={() => {
-            setTestMode('listening');
-            setPhase('listening');
-          }}
-        />
-      );
+     case 'intro':
+       return (
+         <IntroPhase
+           onStartSpeaking={() => {
+             setTestMode('speaking');
+             setPhase('speaking');
+             setConsecutiveCorrects(0);
+           }}
+           onStartListening={() => {
+             setTestMode('listening');
+             setPhase('listening');
+             setConsecutiveCorrects(0);
+           }}
+         />
+       );
 
     case 'speaking':
+        if (answers.listening.length >= 20) {
+                  // Mostrar loading enquanto processa o resultado
+                  return <AssessmentResult
+                           finalLevel={finalLevel}
+                           testMode={testMode}
+                           answers={answers[testMode]}
+                           onDownloadCertificate={handleDownloadCertificate}
+                           onGoBack={() => window.history.back()}
+                         />;
+                }
       return (
         <SpeakingTest
           question={currentQuestion}
           questionIndex={questionIndex}
           totalQuestions={20}
           currentLevel={currentLevel}
-          onComplete={(result) => {
-            const { correct, spokenText, similarity, attempts } = result;
+           onComplete={(result) => {
+             const { correct, spokenText, similarity, attempts } = result;
 
-            const newLevel = adjustLevel(currentLevel, correct);
-            console.log('🎚️ Level adjustment:', currentLevel, '->', newLevel, `(correct: ${correct})`);
+             let newLevel = currentLevel;
+             let newConsecutive = consecutiveCorrects;
 
-            setAnswers(prev => {
-              const newAnswers = {
-                ...prev,
-                speaking: [...prev.speaking, {
-                  correct,
-                  level: currentLevel,
-                  accuracy: similarity,
-                  userSpokenText: spokenText,
-                  attempts
-                }]
-              };
+             if (correct) {
+               newConsecutive = consecutiveCorrects + 1;
+               if (newConsecutive >= 2) {
+                 newLevel = adjustLevel(currentLevel, true);
+                 console.log('🎚️ Level increased:', currentLevel, '->', newLevel, `(2 consecutive corrects)`);
+               } else {
+                 console.log('🎚️ Consecutive corrects:', newConsecutive, '(need 2 to level up)');
+               }
+             } else {
+               newConsecutive = 0;
+               newLevel = adjustLevel(currentLevel, false);
+               console.log('🎚️ Level decreased:', currentLevel, '->', newLevel, `(wrong answer)`);
+             }
 
-              console.log('📊 Updated answers:', newAnswers.speaking.length);
+             setConsecutiveCorrects(newConsecutive);
 
-              setCurrentLevel(newLevel);
+             setAnswers(prev => {
+               const newAnswers = {
+                 ...prev,
+                 speaking: [...prev.speaking, {
+                   correct,
+                   level: currentLevel,
+                   accuracy: similarity,
+                   userSpokenText: spokenText,
+                   attempts
+                 }]
+               };
 
-              const currentSpeakingCount = newAnswers.speaking.length;
-              if (currentSpeakingCount % 20 === 0) {
-                setFinalLevels(prev => ({ ...prev, speaking: newLevel }));
-                console.log('🏁 Speaking phase completed with level:', newLevel);
-              }
+               console.log('📊 Updated answers:', newAnswers.speaking.length);
 
-              return newAnswers;
-            });
+               setCurrentLevel(newLevel);
 
-            handleNextQuestion(newLevel);
-          }}
+               // ⭐ Chamar handleFinishTest quando completar 20 questões
+               const currentSpeakingCount = newAnswers.speaking.length;
+               if (currentSpeakingCount >= 20) {
+                 console.log('🏁 Speaking phase completed with level:', newLevel);
+                 // ⭐ Chamar handleFinishTest diretamente
+                 setTimeout(() => {
+                   handleFinishTest();
+                 }, 0);
+               } else {
+                 // Apenas avançar para próxima questão
+                 handleNextQuestion(newLevel);
+               }
+
+               return newAnswers;
+             });
+           }}
           onNext={() => {
-            handleNextQuestion();
+            // Não fazer nada - já tratado no onComplete
           }}
         />
       );
 
     case 'listening':
+        if (answers.listening.length >= 20) {
+          // Mostrar loading enquanto processa o resultado
+          return <AssessmentResult
+                   finalLevel={finalLevel}
+                   testMode={testMode}
+                   answers={answers[testMode]}
+                   onDownloadCertificate={handleDownloadCertificate}
+                   onGoBack={() => window.history.back()}
+                 />;
+        }
       if (!currentQuestion) {
         return (
           <div className="min-h-screen bg-red-50 flex items-center justify-center p-4">
@@ -529,68 +531,95 @@ const AssessmentTrainer = () => {
           questionIndex={questionIndex}
           totalQuestions={20}
           currentLevel={currentLevel}
-          onComplete={(result) => {
-            const { correct, selectedAnswer, correctAnswer, playCount } = result;
+           onComplete={(result) => {
+                   // ✅ Guard para evitar chamadas duplicadas
+                   if (isProcessingAnswer.current) {
+                     console.log('⚠️ Already processing answer, skipping duplicate call');
+                     return;
+                   }
 
-            const newLevel = adjustLevel(currentLevel, correct);
-            console.log('🎚️ Level adjustment:', currentLevel, '->', newLevel, `(correct: ${correct})`);
+                   isProcessingAnswer.current = true;
+                   console.log('🎯 Processing listening answer for question', questionIndex);
 
-            setAnswers(prev => {
-              const newAnswers = {
-                ...prev,
-                listening: [...prev.listening, {
-                  correct,
-                  level: currentLevel,
-                  selected: selectedAnswer,
-                  correctAnswer: correctAnswer,
-                  playCount
-                }]
-              };
+                   const { correct, selectedAnswer, correctAnswer, playCount } = result;
 
-              console.log('📊 Updated answers:', newAnswers.listening.length);
+                   // ✅ Calcular novo nível FORA do setAnswers
+                   let newLevel = currentLevel;
+                   let newConsecutive = consecutiveCorrects;
 
-              setCurrentLevel(newLevel);
+                   if (correct) {
+                     newConsecutive = consecutiveCorrects + 1;
+                     if (newConsecutive >= 2) {
+                       newLevel = adjustLevel(currentLevel, true);
+                       console.log('🎚️ Level increased:', currentLevel, '->', newLevel);
+                     } else {
+                       console.log('🎚️ Consecutive corrects:', newConsecutive);
+                     }
+                   } else {
+                     newConsecutive = 0;
+                     newLevel = adjustLevel(currentLevel, false);
+                     console.log('🎚️ Level decreased:', currentLevel, '->', newLevel);
+                   }
 
-              const currentListeningCount = newAnswers.listening.length;
-              if (currentListeningCount % 20 === 0) {
-                setFinalLevels(prev => ({ ...prev, listening: newLevel }));
-                console.log('🏁 Listening phase completed with level:', newLevel);
-              }
+                   // ✅ Atualizar estados de controle ANTES do setAnswers
+                   setConsecutiveCorrects(newConsecutive);
+                   setCurrentLevel(newLevel);
 
-              return newAnswers;
-            });
+                   // ✅ Adicionar resposta ao array (SEM lógica dentro)
+                   setAnswers(prev => ({
+                     ...prev,
+                     listening: [...prev.listening, {
+                       correct,
+                       level: currentLevel,
+                       selected: selectedAnswer,
+                       correctAnswer: correctAnswer,
+                       playCount
+                     }]
+                   }));
 
-            handleNextQuestion(newLevel);
-          }}
-          onNext={() => {
-            handleNextQuestion();
-          }}
-        />
+                   // ✅ Verificar se completou FORA do setAnswers
+                   const newListeningCount = answers.listening.length + 1;
+                   console.log('📊 Total listening answers:', newListeningCount);
+
+                    if (newListeningCount >= 20) {
+                      console.log('🎬 Listening test completed!');
+                      isProcessingAnswer.current = false;
+                      handleFinishTest();
+                    } else {
+                     console.log('➡️ Moving to next question');
+                     setQuestionsLevel(newLevel);
+                     setQuestionIndex(prev => prev + 1);
+                     isProcessingAnswer.current = false;
+                   }
+                 }}
+               />
       );
 
     case 'results':
       return (
         <ResultsPhase
-          finalLevels={finalLevels}
+          finalLevel={finalLevel}
           testMode={testMode}
           onDownloadCertificate={handleDownloadCertificate}
           onGoBack={() => window.history.back()}
         />
       );
 
-    default:
-      return (
-        <IntroPhase
-          onStartSpeaking={() => {
-            setTestMode('speaking');
-            setPhase('speaking');
-          }}
-          onStartListening={() => {
-            setTestMode('listening');
-            setPhase('listening');
-          }}
-        />
-      );
+     default:
+       return (
+         <IntroPhase
+           onStartSpeaking={() => {
+             setTestMode('speaking');
+             setPhase('speaking');
+             setConsecutiveCorrects(0);
+           }}
+           onStartListening={() => {
+             setTestMode('listening');
+             setPhase('listening');
+             setConsecutiveCorrects(0);
+           }}
+         />
+       );
   }
 };
 

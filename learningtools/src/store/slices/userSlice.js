@@ -140,12 +140,12 @@ export const initializeUser = createAsyncThunk(
 
         if (!userData) {
           console.log('🆕 Primeira vez deste usuário ou sem dados no Firestore');
-          
+
           // Última tentativa: tenta carregar do cache local
           const cachedData = loadAuthUserDataFromCache(currentUser.uid);
           if (cachedData) {
             console.log('✅ Usando dados do cache local (primeira vez ou offline)');
-            
+
             // Se tem xpSystem no cache, carrega XP também
             if (cachedData.xpSystem) {
               try {
@@ -154,7 +154,7 @@ export const initializeUser = createAsyncThunk(
                 console.warn('⚠️ Erro ao carregar XP do cache (continuando):', xpError);
               }
             }
-            
+
             return {
               mode: 'authenticated',
               userId: currentUser.uid,
@@ -252,21 +252,21 @@ export const initializeUser = createAsyncThunk(
         }
 
          // ✅ RETORNA DADOS DO FIREBASE (nunca sobrescreve)
-         return {
-           mode: 'authenticated',
-           userId: currentUser.uid,
-           profile: {
-             displayName: currentUser.displayName,
-             email: currentUser.email,
-             photoURL: currentUser.photoURL
-           },
-           progress: userData.progress,
-           stats: userData.stats,
-           levelSystem: userData.levelSystem,
-           referral: referralData,
-           assessment: userData.assessment || initialState.assessment,
-           lastActivity: userData.lastActivity || null
-         };
+          return {
+            mode: 'authenticated',
+            userId: currentUser.uid,
+            profile: {
+              displayName: userData.profile?.displayName || currentUser.displayName,
+              email: currentUser.email,
+              photoURL: currentUser.photoURL
+            },
+            progress: userData.progress,
+            stats: userData.stats,
+            levelSystem: userData.levelSystem,
+            referral: referralData,
+            assessment: userData.assessment || initialState.assessment,
+            lastActivity: userData.lastActivity || null
+          };
       } else {
         // ✅ GUEST
         const guestId = getOrCreateGuestId();
@@ -295,16 +295,16 @@ export const initializeUser = createAsyncThunk(
       }
     } catch (error) {
       console.error('❌ ERRO CRÍTICO em initializeUser:', error);
-      
+
       // Se o usuário está autenticado mas houve erro, tenta cache antes de retornar estado inicial
       const currentUser = getCurrentUser();
       if (currentUser) {
         console.log('⚠️ Erro na inicialização, tentando cache local...');
         const cachedData = loadAuthUserDataFromCache(currentUser.uid);
-        
+
         if (cachedData) {
           console.log('✅ Usando dados do cache local após erro');
-          
+
           // Se tem xpSystem no cache, carrega XP também
           if (cachedData.xpSystem) {
             try {
@@ -313,22 +313,22 @@ export const initializeUser = createAsyncThunk(
               console.warn('⚠️ Erro ao carregar XP do cache (continuando):', xpError);
             }
           }
-          
-          return {
-            mode: 'authenticated',
-            userId: currentUser.uid,
-            profile: {
-              displayName: currentUser.displayName,
-              email: currentUser.email,
-              photoURL: currentUser.photoURL
-            },
-            progress: cachedData.progress || initialState.progress,
-            stats: cachedData.stats || initialState.stats,
-            levelSystem: cachedData.levelSystem || initialState.levelSystem,
-            referral: cachedData.referral || initialState.referral
-          };
+
+        return {
+          mode: 'authenticated',
+          userId: currentUser.uid,
+          profile: {
+            displayName: cachedData.profile?.displayName || currentUser.displayName,
+            email: currentUser.email,
+            photoURL: currentUser.photoURL
+          },
+          progress: cachedData.progress || initialState.progress,
+          stats: cachedData.stats || initialState.stats,
+          levelSystem: cachedData.levelSystem || initialState.levelSystem,
+          referral: cachedData.referral || initialState.referral
+        };
         }
-        
+
         console.log('⚠️ Nenhum cache encontrado, retornando perfil básico.');
         return {
           mode: 'authenticated',
@@ -344,7 +344,7 @@ export const initializeUser = createAsyncThunk(
           referral: initialState.referral
         };
       }
-      
+
       return rejectWithValue(error.message);
     }
   }
@@ -427,20 +427,20 @@ export const loginWithGoogle = createAsyncThunk(
         // Não falha o login se XP não carregar
       }
 
-       return {
-         userId: user.uid,
-         profile: {
-           displayName: user.displayName,
-           email: user.email,
-           photoURL: user.photoURL
-         },
-         progress: userData.progress,
-         stats: userData.stats,
-         levelSystem: userData.levelSystem,
-         referral: userData.referral || initialState.referral,
-         assessment: userData.assessment || initialState.assessment,
-         migrationResult
-       };
+        return {
+          userId: user.uid,
+          profile: {
+            displayName: userData.profile?.displayName || user.displayName,
+            email: user.email,
+            photoURL: user.photoURL
+          },
+          progress: userData.progress,
+          stats: userData.stats,
+          levelSystem: userData.levelSystem,
+          referral: userData.referral || initialState.referral,
+          assessment: userData.assessment || initialState.assessment,
+          migrationResult
+        };
     } catch (error) {
       console.error('❌ Erro no login:', error);
       return rejectWithValue(error.message);
@@ -566,23 +566,23 @@ export const checkDailyBackup = createAsyncThunk(
 // ⭐ NOVO THUNK: Salva resultado do assessment
 export const saveAssessmentResult = createAsyncThunk(
   'user/saveAssessmentResult',
-  async ({ overallLevel, skills, certificate }, { getState }) => {
+  async ({ skillType, level, score, certificate }, { getState }) => {
     const { userId, mode } = getState().user;
     const today = new Date().toISOString();
 
     const result = {
       date: today,
-      overallLevel,
-      skills,
+      level,
+      score,
       certificate
     };
 
     // Salvar Firebase (authenticated)
     if (mode === 'authenticated') {
       await updateDoc(doc(db, 'users', userId), {
-        'assessment.lastTestDate': today,
-        'assessment.currentCefrLevel': overallLevel,
-        'assessment.history': arrayUnion(result)
+        [`assessment.${skillType}.level`]: level,
+        [`assessment.${skillType}.lastTestDate`]: today,
+        [`assessment.${skillType}.history`]: arrayUnion(result)
       });
     }
 
@@ -592,10 +592,11 @@ export const saveAssessmentResult = createAsyncThunk(
       : 'learnfun_guest_assessment';
 
     const cached = JSON.parse(localStorage.getItem(cacheKey) || '{}');
-    cached.assessment = {
+    cached.assessment = cached.assessment || {};
+    cached.assessment[skillType] = {
+      level,
       lastTestDate: today,
-      currentCefrLevel: overallLevel,
-      history: [result, ...(cached.assessment?.history || [])].slice(0, 10)
+      history: [result, ...(cached.assessment[skillType]?.history || [])].slice(0, 10)
     };
     localStorage.setItem(cacheKey, JSON.stringify(cached));
 
@@ -720,12 +721,12 @@ const userSlice = createSlice({
 
     markCategoryPhraseCompleted: (state, action) => {
       const { categoryId, phraseId, currentIndex } = action.payload;
-      
+
       // Inicializa categories se não existir
       if (!state.progress.categories) {
         state.progress.categories = {};
       }
-      
+
       // Inicializa a categoria se não existir
       if (!state.progress.categories[categoryId]) {
         state.progress.categories[categoryId] = {
@@ -733,24 +734,24 @@ const userSlice = createSlice({
           lastIndex: 0
         };
       }
-      
+
       // Adiciona a frase se ainda não estiver completada
       if (!state.progress.categories[categoryId].completedPhrases.includes(phraseId)) {
         state.progress.categories[categoryId].completedPhrases.push(phraseId);
       }
-      
+
       // Atualiza o último índice
       state.progress.categories[categoryId].lastIndex = currentIndex;
     },
 
     markSentenceBuilderPhraseCompleted: (state, action) => {
       const { categoryId, phraseId, currentIndex } = action.payload;
-      
+
       // Inicializa sentenceBuilder se não existir
       if (!state.progress.sentenceBuilder) {
         state.progress.sentenceBuilder = {};
       }
-      
+
       // Inicializa a categoria se não existir
       if (!state.progress.sentenceBuilder[categoryId]) {
         state.progress.sentenceBuilder[categoryId] = {
@@ -758,12 +759,12 @@ const userSlice = createSlice({
           lastIndex: 0
         };
       }
-      
+
       // Adiciona a frase se ainda não estiver completada
       if (!state.progress.sentenceBuilder[categoryId].completedPhrases.includes(phraseId)) {
         state.progress.sentenceBuilder[categoryId].completedPhrases.push(phraseId);
       }
-      
+
       // Atualiza o último índice
       state.progress.sentenceBuilder[categoryId].lastIndex = currentIndex;
     },
@@ -1078,12 +1079,54 @@ const userSlice = createSlice({
       });
 
     builder.addCase(saveAssessmentResult.fulfilled, (state, action) => {
-      state.assessment.lastTestDate = action.payload.date;
-      state.assessment.currentCefrLevel = action.payload.overallLevel;
-      state.assessment.history = [action.payload, ...state.assessment.history].slice(0, 10);
+      const { skillType, level, date, score, certificate, levelUpdated } = action.payload;
+
+      // Update overall last test date
+      state.assessment.lastTestDate = date;
+
+      // Update per-skill data
+      if (!state.assessment[skillType]) {
+        state.assessment[skillType] = { level: null, lastTestDate: null, history: [] };
+      }
+
+      state.assessment[skillType].history = [certificate, ...state.assessment[skillType].history].slice(0, 10);
+
+      if (levelUpdated) {
+        state.assessment[skillType].level = level;
+        state.assessment[skillType].lastTestDate = date;
+      }
+
+      // Optionally set currentCefrLevel to the latest level
+      state.assessment.currentCefrLevel = level;
+    });
+
+    builder.addCase(updateProfile.fulfilled, (state, action) => {
+      state.profile.displayName = action.payload.displayName;
     });
   }
 });
+
+// ⭐ NOVO THUNK: Atualiza perfil do usuário
+export const updateProfile = createAsyncThunk(
+  'user/updateProfile',
+  async ({ displayName }, { getState, rejectWithValue }) => {
+    const state = getState().user;
+
+    if (state.mode !== 'authenticated') {
+      return rejectWithValue('Only authenticated users can update profile');
+    }
+
+    try {
+      await updateDoc(doc(db, 'users', state.userId), {
+        'profile.displayName': displayName
+      });
+
+      return { displayName };
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
 
 // ⭐ NOVO SELECTOR: Verifica se pode fazer assessment
 export const selectCanTakeAssessment = (state) => {
