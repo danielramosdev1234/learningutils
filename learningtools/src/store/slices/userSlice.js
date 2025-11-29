@@ -1128,9 +1128,29 @@ export const updateProfile = createAsyncThunk(
   }
 );
 
-// ⭐ NOVO SELECTOR: Verifica se pode fazer assessment
+// ⭐ NOVO SELECTOR: Verifica se pode fazer assessment (geral)
 export const selectCanTakeAssessment = (state) => {
   const lastTestDate = state.user.assessment?.lastTestDate;
+  if (!lastTestDate) return true;
+
+  const lastDate = new Date(lastTestDate).toDateString();
+  const today = new Date().toDateString();
+  return lastDate !== today;
+};
+
+// ⭐ NOVO SELECTOR: Verifica se pode fazer speaking assessment
+export const selectCanTakeSpeakingAssessment = (state) => {
+  const lastTestDate = state.user.assessment?.speaking?.lastTestDate;
+  if (!lastTestDate) return true;
+
+  const lastDate = new Date(lastTestDate).toDateString();
+  const today = new Date().toDateString();
+  return lastDate !== today;
+};
+
+// ⭐ NOVO SELECTOR: Verifica se pode fazer listening assessment
+export const selectCanTakeListeningAssessment = (state) => {
+  const lastTestDate = state.user.assessment?.listening?.lastTestDate;
   if (!lastTestDate) return true;
 
   const lastDate = new Date(lastTestDate).toDateString();

@@ -12,6 +12,8 @@ import ListeningTest from './ListeningTest.jsx';
 import {
   saveAssessmentResult,
   selectCanTakeAssessment,
+  selectCanTakeSpeakingAssessment,
+  selectCanTakeListeningAssessment,
   incrementPhraseCompleted
 } from '../../store/slices/userSlice';
 import { addXP } from '../../store/slices/xpSlice';
@@ -44,7 +46,7 @@ const calculateScore = (answers) => {
 // ========================================
 
 // IntroPhase Component
-const IntroPhase = ({ onStartSpeaking, onStartListening }) => (
+const IntroPhase = ({ onStartSpeaking, onStartListening, canTakeSpeaking, canTakeListening }) => (
   <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
     <div className="bg-white rounded-3xl shadow-2xl p-8 max-w-lg text-center">
       <div className="mb-6">
@@ -75,12 +77,17 @@ const IntroPhase = ({ onStartSpeaking, onStartListening }) => (
           <p className="text-sm text-purple-700 mb-4">
             Teste de pronúncia e fala em inglês
           </p>
-          <button
-            onClick={onStartSpeaking}
-            className="w-full bg-purple-600 text-white py-3 rounded-lg font-semibold hover:bg-purple-700 transition-colors"
-          >
-            Começar Speaking
-          </button>
+           <button
+             onClick={onStartSpeaking}
+             disabled={!canTakeSpeaking}
+             className={`w-full py-3 rounded-lg font-semibold transition-colors ${
+               canTakeSpeaking
+                 ? 'bg-purple-600 text-white hover:bg-purple-700'
+                 : 'bg-gray-400 text-gray-200 cursor-not-allowed'
+             }`}
+           >
+             {canTakeSpeaking ? 'Começar Speaking' : 'Já realizado hoje'}
+           </button>
         </div>
         <div className="bg-blue-50 rounded-xl p-6 border-2 border-blue-200">
           <Volume2 className="w-12 h-12 text-blue-600 mx-auto mb-3" />
@@ -88,12 +95,17 @@ const IntroPhase = ({ onStartSpeaking, onStartListening }) => (
           <p className="text-sm text-blue-700 mb-4">
             Teste de compreensão auditiva
           </p>
-          <button
-            onClick={onStartListening}
-            className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
-          >
-            Começar Listening
-          </button>
+           <button
+             onClick={onStartListening}
+             disabled={!canTakeListening}
+             className={`w-full py-3 rounded-lg font-semibold transition-colors ${
+               canTakeListening
+                 ? 'bg-blue-600 text-white hover:bg-blue-700'
+                 : 'bg-gray-400 text-gray-200 cursor-not-allowed'
+             }`}
+           >
+             {canTakeListening ? 'Começar Listening' : 'Já realizado hoje'}
+           </button>
         </div>
       </div>
 
@@ -194,6 +206,8 @@ const AssessmentTrainer = () => {
   const dispatch = useDispatch();
   const { profile, userId } = useSelector(state => state.user);
   const canTake = useSelector(selectCanTakeAssessment);
+  const canTakeSpeaking = useSelector(selectCanTakeSpeakingAssessment);
+  const canTakeListening = useSelector(selectCanTakeListeningAssessment);
 
   // Main states
   const [phase, setPhase] = useState('intro'); // intro, speaking, listening, results
@@ -398,22 +412,24 @@ const AssessmentTrainer = () => {
   // ========================================
   // RENDER
   // ========================================
-  switch (phase) {
-     case 'intro':
-       return (
-         <IntroPhase
-           onStartSpeaking={() => {
-             setTestMode('speaking');
-             setPhase('speaking');
-             setConsecutiveCorrects(0);
-           }}
-           onStartListening={() => {
-             setTestMode('listening');
-             setPhase('listening');
-             setConsecutiveCorrects(0);
-           }}
-         />
-       );
+   switch (phase) {
+      case 'intro':
+        return (
+          <IntroPhase
+            onStartSpeaking={() => {
+              setTestMode('speaking');
+              setPhase('speaking');
+              setConsecutiveCorrects(0);
+            }}
+            onStartListening={() => {
+              setTestMode('listening');
+              setPhase('listening');
+              setConsecutiveCorrects(0);
+            }}
+            canTakeSpeaking={canTakeSpeaking}
+            canTakeListening={canTakeListening}
+          />
+        );
 
     case 'speaking':
         if (answers.listening.length >= 20) {
@@ -604,21 +620,23 @@ const AssessmentTrainer = () => {
                                  onGoBack={() => window.history.back()}
                                />;
 
-     default:
-       return (
-         <IntroPhase
-           onStartSpeaking={() => {
-             setTestMode('speaking');
-             setPhase('speaking');
-             setConsecutiveCorrects(0);
-           }}
-           onStartListening={() => {
-             setTestMode('listening');
-             setPhase('listening');
-             setConsecutiveCorrects(0);
-           }}
-         />
-       );
+      default:
+        return (
+          <IntroPhase
+            onStartSpeaking={() => {
+              setTestMode('speaking');
+              setPhase('speaking');
+              setConsecutiveCorrects(0);
+            }}
+            onStartListening={() => {
+              setTestMode('listening');
+              setPhase('listening');
+              setConsecutiveCorrects(0);
+            }}
+            canTakeSpeaking={canTakeSpeaking}
+            canTakeListening={canTakeListening}
+          />
+        );
   }
 };
 
