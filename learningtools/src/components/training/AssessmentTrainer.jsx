@@ -3,23 +3,18 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, ResponsiveContainer } from 'recharts';
 import {
   Star, Volume2, Mic,
-  Trophy, Target, Clock, Brain, Zap,
-  Award, Download, CheckCircle, XCircle
+  Trophy, Clock, Award, Download, Zap
 } from 'lucide-react';
-import { compareTexts } from '../../utils/textComparison';
-import assessmentData from '../../data/assessment_phrases.json';
 import speakingAssessmentData from '../../data/speaking_assessment.json';
 import listeningAssessmentData from '../../data/listening_assesment.json';
 import SpeakingTest from './SpeakingTest.jsx';
 import ListeningTest from './ListeningTest.jsx';
-// Assessment utilities will be imported locally
 import {
   saveAssessmentResult,
   selectCanTakeAssessment,
   incrementPhraseCompleted
 } from '../../store/slices/userSlice';
 import { addXP } from '../../store/slices/xpSlice';
-import { LevelIndicator } from '../leaderboard/LevelIndicator';
 import { generateAndDownloadCertificate } from '../../utils/assessmentUtils';
 
 // ========================================
@@ -30,24 +25,33 @@ const adjustLevel = (currentLevel, isCorrect) => {
   const currentIndex = levels.indexOf(currentLevel);
 
   if (isCorrect) {
-    // Sobe 1 nível (máximo C2)
     return levels[Math.min(currentIndex + 1, levels.length - 1)];
   } else {
-    // Desce 1 nível (mínimo A1)
     return levels[Math.max(currentIndex - 1, 0)];
   }
 };
 
 // ========================================
-// COMPONENTES DE FASE (FORA DO ASSESSMENTTRAINER)
+// PHASE COMPONENTS
 // ========================================
 
-// 1. IntroPhase Component
+// IntroPhase Component
 const IntroPhase = ({ onStartSpeaking, onStartListening }) => (
   <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
     <div className="bg-white rounded-3xl shadow-2xl p-8 max-w-lg text-center">
       <div className="mb-6">
-        <Star className="w-16 h-16 text-yellow-500 mx-auto mb-4" fill="currentColor" />
+        <div className="flex justify-center gap-4 mb-4">
+          {[...Array(5)].map((_, i) => {
+            const belts = ['white', 'blue-500', 'purple-500', 'yellow-500', 'black'];
+            const belt = belts[i];
+            return (
+              <div key={i} className="flex flex-col items-center">
+                <Star className="w-8 h-8 text-yellow-500" fill="currentColor" />
+                <div className={`w-8 h-2 bg-${belt} rounded mt-1 border-2 border-black`}></div>
+              </div>
+            );
+          })}
+        </div>
         <h1 className="text-3xl font-bold text-gray-800 mb-2">
           Teste de Nivelamento CEFR
         </h1>
@@ -88,7 +92,7 @@ const IntroPhase = ({ onStartSpeaking, onStartListening }) => (
       <div className="bg-gray-50 rounded-xl p-4 mb-6">
         <div className="flex items-center justify-center gap-2 mb-2">
           <Trophy className="w-5 h-5 text-yellow-600" />
-          <span className="font-semibold text-gray-800">+250 XP</span>
+          <span className="font-semibold text-gray-800">+500 XP</span>
         </div>
         <p className="text-sm text-gray-600">por teste completado</p>
       </div>
@@ -100,259 +104,16 @@ const IntroPhase = ({ onStartSpeaking, onStartListening }) => (
   </div>
 );
 
-
-
-
-
-// 4. ReadingPhase Component
-const ReadingPhase = ({
-  currentQuestion,
-  questionIndex,
-  currentLevel,
-  userSentence,
-  showFeedback,
-  isCorrect,
-  onWordClick,
-  onCheckAnswer
-}) => {
-  if (!currentQuestion) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
-        <div className="bg-white rounded-2xl shadow-2xl p-8 max-w-md text-center">
-          <p className="text-xl font-bold text-gray-800 mb-4">
-            Carregando questões...
-          </p>
-          <div className="w-12 h-12 border-4 border-green-200 border-t-green-600 rounded-full animate-spin mx-auto" />
-        </div>
-      </div>
-    );
-  }
-
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
-      <div className="max-w-2xl mx-auto">
-        {/* Header */}
-        <div className="bg-white rounded-2xl shadow-lg p-6 mb-6">
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center gap-3">
-              <div className="p-3 bg-green-100 rounded-full">
-                <Brain className="w-6 h-6 text-green-600" />
-              </div>
-              <div>
-                <h2 className="text-xl font-bold text-gray-800">Reading Test</h2>
-                <p className="text-gray-600">Reordene as palavras para formar a frase</p>
-              </div>
-            </div>
-              <div className="text-right">
-                <p className="text-sm text-gray-600">Questão {questionIndex + 1}/6</p>
-                <p className="text-lg font-bold text-green-600">Nível {currentLevel}</p>
-              </div>
-          </div>
-
-          {/* Progress */}
-          <div className="w-full bg-gray-200 rounded-full h-2 mb-4">
-            <div
-              className="bg-green-600 h-2 rounded-full transition-all"
-              style={{ width: `${((questionIndex) / 6) * 100}%` }}
-            />
-          </div>
-        </div>
-
-        {/* Question */}
-        <div className="bg-white rounded-2xl shadow-lg p-6 mb-6">
-          {/* Portuguese translation */}
-          <div className="text-center mb-6">
-            <p className="text-sm text-gray-600 mb-1">Traduza para o inglês:</p>
-            <p className="text-xl font-bold text-gray-800 mb-2">
-              {currentQuestion.portuguese}
-            </p>
-          </div>
-
-          {/* User sentence */}
-          <div className="mb-6">
-            <p className="text-sm text-gray-600 mb-2">Sua frase em inglês:</p>
-            <div className="min-h-12 p-4 bg-gray-50 rounded-lg border-2 border-dashed border-gray-300">
-              <p className="text-lg">
-                {userSentence.length > 0 ? userSentence.map(w => w.split('_')[0]).join(' ') : 'Clique nas palavras abaixo...'}
-              </p>
-            </div>
-          </div>
-
-          {/* Word bank */}
-          <div className="mb-6">
-            <p className="text-sm text-gray-600 mb-2">Palavras disponíveis:</p>
-            <div className="flex flex-wrap gap-2">
-              {currentQuestion.scrambled.map((word, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => onWordClick(word, idx)}
-                  className={`px-3 py-2 rounded-lg font-semibold transition-colors ${
-                    userSentence.includes(`${word}_${idx}`)
-                      ? 'bg-blue-500 text-white'
-                      : 'bg-gray-100 text-gray-800 hover:bg-gray-200'
-                  }`}
-                >
-                  {word}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          <button
-            onClick={onCheckAnswer}
-            disabled={userSentence.length === 0}
-            className="w-full bg-green-600 text-white py-3 rounded-xl font-semibold hover:bg-green-700 transition-colors disabled:bg-gray-400"
-          >
-            Verificar Resposta
-          </button>
-        </div>
-
-        {/* Feedback */}
-        {showFeedback && (
-          <div className={`text-center p-4 rounded-xl ${isCorrect ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
-            {isCorrect ? (
-              <CheckCircle className="w-8 h-8 inline mr-2" />
-            ) : (
-              <XCircle className="w-8 h-8 inline mr-2" />
-            )}
-            <span className="font-semibold">
-              {isCorrect ? 'Correto!' : 'Incorreto'}
-            </span>
-            {!isCorrect && (
-              <p className="text-sm mt-1">Resposta correta: {currentQuestion.words.join(' ')}</p>
-            )}
-          </div>
-        )}
-      </div>
-    </div>
-  );
-};
-
-// 5. WritingPhase Component - ⭐ ESTE É O MAIS IMPORTANTE
-const WritingPhase = ({
-  phase,
-  currentQuestion,
-  questionIndex,
-  currentLevel,
-  userInput,
-  showFeedback,
-  isCorrect,
-  onInputChange,
-  onCheckAnswer
-}) => {
-  if (!currentQuestion) {
-    return (
-      <div className="min-h-screen bg-purple-50 flex items-center justify-center p-4">
-        <div className="bg-white rounded-2xl shadow-2xl p-8 max-w-md text-center">
-          <p className="text-xl font-bold text-gray-800 mb-4">
-            Carregando questões...
-          </p>
-          <div className="w-12 h-12 border-4 border-purple-200 border-t-purple-600 rounded-full animate-spin mx-auto" />
-        </div>
-      </div>
-    );
-  }
-
-  const isTranslation = phase === 'writing_translate';
-
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
-      <div className="max-w-2xl mx-auto">
-        {/* Header */}
-        <div className="bg-white rounded-2xl shadow-lg p-6 mb-6">
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center gap-3">
-              <div className="p-3 bg-purple-100 rounded-full">
-                <Target className="w-6 h-6 text-purple-600" />
-              </div>
-              <div>
-                <h2 className="text-xl font-bold text-gray-800">
-                  Writing Test - {isTranslation ? 'Translation' : 'Order'}
-                </h2>
-                <p className="text-gray-600">
-                  {isTranslation ? 'Traduza a frase para o inglês' : 'Reordene as palavras'}
-                </p>
-              </div>
-            </div>
-              <div className="text-right">
-                <p className="text-sm text-gray-600">Questão {questionIndex + 1}/{phase === 'writing_translate' ? 3 : 3}</p>
-                <p className="text-lg font-bold text-purple-600">Nível {currentLevel}</p>
-              </div>
-          </div>
-
-          {/* Progress */}
-          <div className="w-full bg-gray-200 rounded-full h-2 mb-4">
-            <div
-              className="bg-purple-600 h-2 rounded-full transition-all"
-              style={{ width: `${((questionIndex) / (phase === 'writing_translate' ? 3 : 3)) * 100}%` }}
-            />
-          </div>
-        </div>
-
-        {/* Question */}
-        <div className="bg-white rounded-2xl shadow-lg p-6 mb-6">
-          <div className="mb-6">
-            <p className="text-lg font-semibold text-gray-800 mb-2">
-              { currentQuestion.portuguese }
-            </p>
-            {!isTranslation && (
-              <p className="text-lg text-gray-600">
-                {currentQuestion.scrambled.join(' ')}
-              </p>
-            )}
-          </div>
-
-          {/* ⭐ TEXTAREA AGORA VAI MANTER FOCO */}
-          <textarea
-            value={userInput}
-            onChange={(e) => onInputChange(e.target.value)}
-            placeholder={isTranslation ? "Digite a tradução em inglês..." : "Digite a frase reordenada..."}
-            className="w-full p-4 border-2 border-gray-200 rounded-xl resize-none focus:border-purple-500 focus:outline-none"
-            rows={4}
-          />
-
-          <button
-            onClick={onCheckAnswer}
-            disabled={!userInput.trim()}
-            className="w-full mt-4 bg-purple-600 text-white py-3 rounded-xl font-semibold hover:bg-purple-700 transition-colors disabled:bg-gray-400"
-          >
-            Verificar Resposta
-          </button>
-        </div>
-
-        {/* Feedback */}
-        {showFeedback && (
-          <div className={`text-center p-4 rounded-xl ${isCorrect ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
-            {isCorrect ? (
-              <CheckCircle className="w-8 h-8 inline mr-2" />
-            ) : (
-              <XCircle className="w-8 h-8 inline mr-2" />
-            )}
-            <span className="font-semibold">
-              {isCorrect ? 'Excelente!' : 'Quase lá!'}
-            </span>
-            {!isCorrect && (
-              <p className="text-sm mt-1">Resposta correta: {isTranslation ? currentQuestion.english : currentQuestion.correctOrder.join(' ')}</p>
-            )}
-          </div>
-        )}
-      </div>
-    </div>
-  );
-};
-
-// 6. ResultsPhase Component
+// ResultsPhase Component
 const ResultsPhase = ({
   finalLevels,
   testMode,
   onDownloadCertificate,
   onGoBack
 }) => {
-  // Calcular nível médio baseado nos níveis finais
   const levelToNumber = { 'A1': 1, 'A2': 2, 'B1': 3, 'B2': 4, 'C1': 5, 'C2': 6 };
   const numberToLevel = { 1: 'A1', 2: 'A2', 3: 'B1', 4: 'B2', 5: 'C1', 6: 'C2' };
 
-  // Determinar quais níveis mostrar baseado no testMode
   let levels = [];
   let skillsToShow = [];
 
@@ -362,11 +123,6 @@ const ResultsPhase = ({
   } else if (testMode === 'listening') {
     levels = finalLevels.listening ? [finalLevels.listening] : [];
     skillsToShow = ['listening'];
-  } else {
-    // Teste completo
-    levels = [finalLevels.speaking, finalLevels.listening, finalLevels.reading, finalLevels.writing]
-      .filter(level => level !== null);
-    skillsToShow = ['speaking', 'listening', 'reading', 'writing'];
   }
 
   const averageNumber = levels.length > 0 ?
@@ -381,32 +137,20 @@ const ResultsPhase = ({
 
   const skillLevels = {
     speaking: { level: finalLevels.speaking, score: 0 },
-    listening: { level: finalLevels.listening, score: 0 },
-    reading: { level: finalLevels.reading, score: 0 },
-    writing: { level: finalLevels.writing, score: 0 }
-  };
-
-  const handleDownloadCertificate = () => {
-    const certificateData = {
-      name: 'Anonymous',
-      level: overallLevel,
-      skills: skillLevels,
-      date: new Date().toISOString()
-    };
-    generateAndDownloadCertificate(certificateData);
+    listening: { level: finalLevels.listening, score: 0 }
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 to-pink-100 p-4">
       <div className="max-w-4xl mx-auto">
-        {/* Header com Nível Geral */}
+        {/* Header */}
         <div className="bg-white rounded-3xl shadow-2xl p-8 mb-6 text-center">
           <Award className="w-20 h-20 text-yellow-500 mx-auto mb-4" fill="currentColor" />
           <h1 className="text-4xl font-bold text-gray-800 mb-2">
-            {testMode === 'full' ? 'Parabéns! 🎉' : 'Excelente! 🎉'}
+            Excelente! 🎉
           </h1>
           <p className="text-xl text-gray-600 mb-6">
-            Você completou o teste de {testMode === 'speaking' ? 'pronúncia' : testMode === 'listening' ? 'compreensão auditiva' : 'nivelamento CEFR'}
+            Você completou o teste de {testMode === 'speaking' ? 'pronúncia' : 'compreensão auditiva'}
           </p>
 
           <div className="inline-block bg-gradient-to-r from-purple-500 to-pink-500 text-white px-8 py-4 rounded-2xl">
@@ -435,14 +179,12 @@ const ResultsPhase = ({
           </ResponsiveContainer>
         </div>
 
-        {/* Detalhes por Habilidade */}
-        <div className={`grid gap-4 mb-6 ${skillsToShow.length === 1 ? 'grid-cols-1 max-w-md mx-auto' : 'grid-cols-1 md:grid-cols-2'}`}>
+        {/* Skill Details */}
+        <div className="grid gap-4 mb-6 grid-cols-1 max-w-md mx-auto">
           {skillsToShow.map(skill => {
             const skillConfig = {
               speaking: { name: 'Speaking', icon: Mic, color: 'purple' },
-              listening: { name: 'Listening', icon: Volume2, color: 'green' },
-              reading: { name: 'Reading', icon: Brain, color: 'blue' },
-              writing: { name: 'Writing', icon: Target, color: 'pink' }
+              listening: { name: 'Listening', icon: Volume2, color: 'green' }
             }[skill];
 
             const Icon = skillConfig.icon;
@@ -462,7 +204,7 @@ const ResultsPhase = ({
           })}
         </div>
 
-        {/* Ações */}
+        {/* Actions */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <button
             onClick={onDownloadCertificate}
@@ -482,77 +224,40 @@ const ResultsPhase = ({
         {/* XP Reward */}
         <div className="bg-green-100 border-2 border-green-200 rounded-xl p-4 mt-6 text-center">
           <Zap className="w-8 h-8 text-green-600 mx-auto mb-2" />
-          <p className="text-green-800 font-semibold">+{testMode === 'full' ? 500 : 250} XP conquistados!</p>
+          <p className="text-green-800 font-semibold">+500 XP conquistados!</p>
         </div>
       </div>
     </div>
   );
 };
 
+// ========================================
+// MAIN COMPONENT
+// ========================================
 const AssessmentTrainer = () => {
   const dispatch = useDispatch();
   const { profile } = useSelector(state => state.user);
   const canTake = useSelector(selectCanTakeAssessment);
 
-
-
-  // Helper function to prepare questions with missing fields - Otimizado para não modificar objetos
-  const prepareQuestion = React.useCallback((question, phase) => {
-    // Para listening: não modificar, retornar objeto original para evitar re-renders infinitos
-    if (phase === 'listening') {
-      return question;
-    }
-
-    // Para outras fases: criar cópia apenas quando necessário
-    const prepared = { ...question };
-
-    // Add scrambled for reading and writing_order
-    if ((phase === 'reading' || phase === 'writing_order') && !prepared.scrambled) {
-      const words = prepared.words || prepared.english?.split(' ') || [];
-      prepared.scrambled = [...words].sort(() => Math.random() - 0.5);
-    }
-
-    // Add correctOrder for writing_order
-    if (phase === 'writing_order' && !prepared.correctOrder) {
-      prepared.correctOrder = prepared.words || prepared.english?.split(' ') || [];
-    }
-
-    return prepared;
-  }, []);
-
-  // Estados principais
-  const [phase, setPhase] = useState('intro'); // intro, speaking, listening, reading, writing_translate, writing_order, results
+  // Main states
+  const [phase, setPhase] = useState('intro'); // intro, speaking, listening, results
   const [currentLevel, setCurrentLevel] = useState('B1');
-  const [questionsLevel, setQuestionsLevel] = useState('B1'); // Nível usado para gerar questões (separado para evitar re-randomização)
-  const [testMode, setTestMode] = useState('full'); // 'full', 'speaking', 'listening'
+  const [questionsLevel, setQuestionsLevel] = useState('B1');
+  const [testMode, setTestMode] = useState('speaking'); // 'speaking' or 'listening'
 
-  // Níveis finais de cada fase
+  // Final levels for each phase
   const [finalLevels, setFinalLevels] = useState({
     speaking: null,
-    listening: null,
-    reading: null,
-    writing: null
+    listening: null
   });
+
   const [questionIndex, setQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState({
     speaking: [],
-    listening: [],
-    reading: [],
-    writing_translate: [],
-    writing_order: []
+    listening: []
   });
 
-  // Estados por fase
-  const [userInput, setUserInput] = useState('');
-  const [userSentence, setUserSentence] = useState([]);
-
-
-
-  // Estados para feedback de reading e writing
-  const [isCorrect, setIsCorrect] = useState(false);
-  const [showFeedback, setShowFeedback] = useState(false);
-
-  // Debug otimizado - apenas em desenvolvimento
+  // Debug log
   useEffect(() => {
     if (typeof window !== 'undefined' && window.location.hostname === 'localhost') {
       console.log('🔍 Assessment State:', {
@@ -560,62 +265,46 @@ const AssessmentTrainer = () => {
         questionIndex,
         currentLevel,
         speakingAnswers: answers.speaking.length,
-        listeningAnswers: answers.listening.length,
-        readingAnswers: answers.reading.length
+        listeningAnswers: answers.listening.length
       });
     }
-  }, [phase, questionIndex, currentLevel, answers.speaking.length, answers.listening.length, answers.reading.length]);
+  }, [phase, questionIndex, currentLevel, answers.speaking.length, answers.listening.length]);
 
-  // Dados das questões baseado no nível atual - Otimizado com memoização e randomização
+  // Current questions based on level
   const currentQuestions = React.useMemo(() => {
-      // Retornar questões baseadas no nível
-          const questionsPerPhase = {
-            speaking: 20,
-            listening: 20,
-            reading: 6,
-            writing_translate: 3,
-            writing_order: 3
-          };
-          const questionCount = questionsPerPhase[phase] || 3;
-    // NÃO REMOVER _translate ou _order - usar phase diretamente ← MUDANÇA AQUI
-    const skill = phase;
-    // Use dedicated JSON files for speaking and listening phases, assessment_phrases.json for others
+    const questionCount = 20;
+
     let allQuestions;
     if (phase === 'speaking') {
       allQuestions = speakingAssessmentData.speaking || [];
     } else if (phase === 'listening') {
       allQuestions = listeningAssessmentData.listening || [];
     } else {
-      allQuestions = assessmentData[skill] || [];
+      return [];
     }
 
-    // Filtrar questões pelo nível das questões (não pelo currentLevel para evitar re-randomização)
     const filtered = allQuestions.filter(q => q.cefr_level === questionsLevel);
 
-    // Embaralhar as questões filtradas usando Fisher-Yates shuffle
+    // Fisher-Yates shuffle
     const shuffled = [...filtered];
     for (let i = shuffled.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
     }
 
-    // Selecionar as primeiras questões após embaralhamento
     if (shuffled.length >= questionCount) {
       return shuffled.slice(0, questionCount);
     }
 
-    // Se não tiver questões suficientes, usar todas disponíveis
     return shuffled;
   }, [phase, questionsLevel]);
 
   const currentQuestion = React.useMemo(() => {
     if (!currentQuestions || !currentQuestions[questionIndex]) return null;
-    return prepareQuestion(currentQuestions[questionIndex], phase);
-  }, [currentQuestions, questionIndex, phase, prepareQuestion]);
+    return currentQuestions[questionIndex];
+  }, [currentQuestions, questionIndex]);
 
-
-
-  // Verifica se pode fazer o teste
+  // Check if user can take test
   if (!canTake) {
     return (
       <div className="min-h-screen bg-blue-50 flex items-center justify-center p-4">
@@ -638,122 +327,94 @@ const AssessmentTrainer = () => {
     );
   }
 
-
-
-
-
-  const handleWordClick = (word, index) => {
-    if (userSentence.includes(`${word}_${index}`)) {
-      setUserSentence(prev => prev.filter(w => w !== `${word}_${index}`));
+  // Handlers
+  const handleNextQuestion = (nextLevel = null) => {
+    if (questionIndex < currentQuestions.length - 1) {
+      console.log('➡️ Moving to next question');
+      setQuestionsLevel(nextLevel || currentLevel);
+      setQuestionIndex(prev => prev + 1);
     } else {
-      setUserSentence(prev => [...prev, `${word}_${index}`]);
+      console.log('🎬 End of phase');
+      const finalLevelValue = nextLevel || currentLevel;
+      console.log('🏁 Test complete:', testMode, 'final level:', finalLevelValue);
+      handleFinishTest({ [testMode]: finalLevelValue });
     }
   };
 
-  const checkReadingAnswer = () => {
-    // Extrair apenas as palavras (remover sufixo _index) SEM ORDENAR
-    const userWords = userSentence.map(w => w.split('_')[0]);
-    const correctWords = currentQuestion.words; // Sem .sort()
-    const correct = JSON.stringify(userWords) === JSON.stringify(correctWords);
+  const handleFinishTest = async (specificFinalLevels = null) => {
+    const levelToNumber = { 'A1': 1, 'A2': 2, 'B1': 3, 'B2': 4, 'C1': 5, 'C2': 6 };
 
-    // Calcular novo nível ANTES
-    const newLevel = adjustLevel(currentLevel, correct);
-    console.log('🎚️ Level adjustment:', currentLevel, '->', newLevel, `(correct: ${correct})`);
+    console.log('🏁 handleFinishTest - testMode:', testMode, 'finalLevels:', finalLevels, 'specificFinalLevels:', specificFinalLevels);
 
-    setAnswers(prev => {
-      const newAnswers = {
-        ...prev,
-        reading: [...prev.reading, {
-          correct,
-          level: currentLevel,
-          userAnswer: userWords,
-          correctAnswer: currentQuestion.words
-        }]
-      };
+    const effectiveFinalLevels = specificFinalLevels ? { ...finalLevels, ...specificFinalLevels } : finalLevels;
 
-      // Atualizar currentLevel
-      setCurrentLevel(newLevel);
-
-      // Se completou a fase (3 questões), registra nível final
-      const currentReadingCount = newAnswers.reading.length;
-      if (currentReadingCount % 6 === 0) {
-        setFinalLevels(prev => ({ ...prev, reading: newLevel }));
-        console.log('🏁 Reading phase completed with level:', newLevel);
-      }
-
-      return newAnswers;
-    });
-
-    setIsCorrect(correct);
-    setShowFeedback(true);
-
-    setTimeout(() => {
-      handleNextQuestion(newLevel); // 👈 Passa o novo nível
-    }, 3000);
-  };
-
-  const checkWritingAnswer = () => {
-    let targetText, similarity, correct;
-
-    if (phase === 'writing_translate') {
-      // Translation: verificar similaridade do texto
-      targetText = currentQuestion.english;
-      similarity = compareTexts(targetText, userInput).similarity;
-      correct = similarity >= 90;
-    } else {
-      // Writing_order: verificar ordem EXATA das palavras
-      const userWords = userInput.trim().split(/\s+/).filter(w => w.length > 0);
-      const correctWords = currentQuestion.correctOrder;
-      targetText = correctWords.join(' ');
-
-      // Comparar arrays SEM .sort() - ordem importa!
-      correct = JSON.stringify(userWords) === JSON.stringify(correctWords);
-      similarity = correct ? 100 : 0; // Para manter consistência
+    let overallLevel;
+    if (testMode === 'speaking') {
+      overallLevel = effectiveFinalLevels.speaking || currentLevel || 'B1';
+    } else if (testMode === 'listening') {
+      overallLevel = effectiveFinalLevels.listening || currentLevel || 'B1';
     }
 
-    // Calcular novo nível ANTES
-    const newLevel = adjustLevel(currentLevel, correct);
-    console.log('🎚️ Level adjustment:', currentLevel, '->', newLevel, `(correct: ${correct})`);
+    const calculateScore = (answers) => {
+      if (!answers || answers.length === 0) return 0;
+      const correctAnswers = answers.filter(a => a.correct).length;
+      return Math.round((correctAnswers / answers.length) * 100);
+    };
 
-    setAnswers(prev => {
-      const newAnswers = {
-        ...prev,
-        [phase]: [...prev[phase], {
-          correct,
-          level: currentLevel,
-          userInput,
-          correctAnswer: targetText,
-          similarity
-        }]
-      };
-
-      // Atualizar currentLevel
-      setCurrentLevel(newLevel);
-
-      // Se completou a fase de writing (6 questões totais), registra nível final
-      const totalWritingAnswers = newAnswers.writing_translate.length + newAnswers.writing_order.length;
-      if (totalWritingAnswers % 6 === 0) {
-        setFinalLevels(prev => ({ ...prev, writing: newLevel }));
-        console.log('🏁 Writing phase completed with level:', newLevel);
+    const skillLevels = {
+      speaking: {
+        level: effectiveFinalLevels.speaking,
+        score: testMode === 'speaking' ? calculateScore(answers.speaking) : 0
+      },
+      listening: {
+        level: effectiveFinalLevels.listening,
+        score: testMode === 'listening' ? calculateScore(answers.listening) : 0
       }
+    };
 
-      return newAnswers;
+    console.log('📊 Final data before save:', {
+      testMode,
+      overallLevel,
+      finalLevels,
+      skillLevels,
+      answersCount: {
+        speaking: answers.speaking.length,
+        listening: answers.listening.length
+      }
     });
 
-    setIsCorrect(correct);
-    setShowFeedback(true);
+    const result = {
+      date: new Date().toISOString(),
+      overallLevel,
+      skills: skillLevels,
+      finalLevels: effectiveFinalLevels,
+      testMode,
+      answers: {
+        [testMode]: answers[testMode]
+      },
+      certificate: {
+        name: profile.displayName || 'Anonymous',
+        level: overallLevel,
+        skills: skillLevels,
+        finalLevels: effectiveFinalLevels,
+        date: new Date().toISOString()
+      }
+    };
 
-    setTimeout(() => {
-      handleNextQuestion(newLevel); // 👈 Passa o novo nível
-    }, 3000);
+    console.log('📤 Saving assessment result:', result);
+
+    await dispatch(saveAssessmentResult(result));
+    dispatch(addXP({ amount: 500, reason: 'assessment_completion' }));
+    dispatch(incrementPhraseCompleted());
+
+    setPhase('results');
   };
 
   const handleDownloadCertificate = () => {
-    // Calcular nível médio baseado nos níveis finais
     const levelToNumber = { 'A1': 1, 'A2': 2, 'B1': 3, 'B2': 4, 'C1': 5, 'C2': 6 };
     const numberToLevel = { 1: 'A1', 2: 'A2', 3: 'B1', 4: 'B2', 5: 'C1', 6: 'C2' };
 
-    const levels = [finalLevels.speaking, finalLevels.listening, finalLevels.reading, finalLevels.writing]
+    const levels = [finalLevels.speaking, finalLevels.listening]
       .filter(level => level !== null);
 
     const averageNumber = levels.length > 0 ?
@@ -763,9 +424,7 @@ const AssessmentTrainer = () => {
 
     const skillLevels = {
       speaking: { level: finalLevels.speaking, score: 0 },
-      listening: { level: finalLevels.listening, score: 0 },
-      reading: { level: finalLevels.reading, score: 0 },
-      writing: { level: finalLevels.writing, score: 0 }
+      listening: { level: finalLevels.listening, score: 0 }
     };
 
     const certificateData = {
@@ -777,162 +436,8 @@ const AssessmentTrainer = () => {
     generateAndDownloadCertificate(certificateData);
   };
 
-  // Handlers gerais
-
-  const handleNextQuestion = (nextLevel = null) => {
-
-    if (questionIndex < currentQuestions.length - 1) {
-      console.log('➡️ Moving to next question');
-      // Atualizar questionsLevel com o nível passado ou o currentLevel atual
-      setQuestionsLevel(nextLevel || currentLevel);
-       setQuestionIndex(prev => prev + 1);
-        setUserInput('');
-        setUserSentence([]);
-        // Reset reading/writing feedback states
-        setIsCorrect(false);
-        setShowFeedback(false);
-     } else {
-       console.log('🎬 End of phase, checking test mode');
-
-      // Se for um teste específico (não full), ir direto para results
-      if (testMode !== 'full') {
-        const finalLevelValue = nextLevel || currentLevel;
-        console.log('🏁 Specific test complete:', testMode, 'final level:', finalLevelValue);
-        // Passar o nível final diretamente para handleFinishTest
-        handleFinishTest({ [testMode]: finalLevelValue });
-      } else {
-         // Teste completo: próxima fase
-         const phaseOrder = ['speaking', 'listening', 'reading', 'writing_translate', 'writing_order'];
-         const currentPhaseIndex = phaseOrder.indexOf(phase);
-
-         if (currentPhaseIndex < phaseOrder.length - 1) {
-           const nextPhase = phaseOrder[currentPhaseIndex + 1];
-           console.log('📋 Next phase:', nextPhase);
-
-           // Reset TODOS os estados antes de mudar de fase
-           setCurrentLevel('B1');
-           setQuestionsLevel('B1');
-           setQuestionIndex(0);
-           setPhase(nextPhase);
-           setUserInput('');
-           setUserSentence([]);
-           // Reset reading/writing feedback states
-           setIsCorrect(false);
-           setShowFeedback(false);
-         } else {
-           console.log('🏁 Full test complete!');
-           handleFinishTest();
-         }
-       }
-     }
-  };
-
-  const handleFinishTest = async (specificFinalLevels = null) => {
-    // Calcular nível baseado no modo do teste
-    const levelToNumber = { 'A1': 1, 'A2': 2, 'B1': 3, 'B2': 4, 'C1': 5, 'C2': 6 };
-    const numberToLevel = { 1: 'A1', 2: 'A2', 3: 'B1', 4: 'B2', 5: 'C1', 6: 'C2' };
-
-    console.log('🏁 handleFinishTest - testMode:', testMode, 'finalLevels:', finalLevels, 'specificFinalLevels:', specificFinalLevels);
-
-    // Usar specificFinalLevels se fornecido (para testes específicos)
-    const effectiveFinalLevels = specificFinalLevels ? { ...finalLevels, ...specificFinalLevels } : finalLevels;
-
-    let overallLevel;
-    if (testMode === 'speaking') {
-      overallLevel = effectiveFinalLevels.speaking || currentLevel || 'B1';
-    } else if (testMode === 'listening') {
-      overallLevel = effectiveFinalLevels.listening || currentLevel || 'B1';
-    } else {
-      // Teste completo: calcular média
-      const levels = [effectiveFinalLevels.speaking, effectiveFinalLevels.listening, effectiveFinalLevels.reading, effectiveFinalLevels.writing]
-        .filter(level => level !== null);
-
-      if (levels.length > 0) {
-        const averageNumber = levels.reduce((sum, level) => sum + levelToNumber[level], 0) / levels.length;
-        overallLevel = numberToLevel[Math.round(averageNumber)];
-      } else {
-        overallLevel = 'B1';
-      }
-    }
-
-    // Calcular scores baseado nas respostas
-    const calculateScore = (answers) => {
-      if (!answers || answers.length === 0) return 0;
-      const correctAnswers = answers.filter(a => a.correct).length;
-      return Math.round((correctAnswers / answers.length) * 100);
-    };
-
-    // Preparar dados para o certificado
-    const skillLevels = {
-      speaking: {
-        level: effectiveFinalLevels.speaking,
-        score: testMode === 'full' || testMode === 'speaking' ? calculateScore(answers.speaking) : 0
-      },
-      listening: {
-        level: effectiveFinalLevels.listening,
-        score: testMode === 'full' || testMode === 'listening' ? calculateScore(answers.listening) : 0
-      },
-      reading: {
-        level: effectiveFinalLevels.reading,
-        score: testMode === 'full' ? calculateScore(answers.reading) : 0
-      },
-      writing: {
-        level: effectiveFinalLevels.writing,
-        score: testMode === 'full' ? calculateScore([...answers.writing_translate, ...answers.writing_order]) : 0
-      }
-    };
-
-    console.log('📊 Final data before save:');
-    console.log('- testMode:', testMode);
-    console.log('- overallLevel:', overallLevel);
-    console.log('- finalLevels:', finalLevels);
-    console.log('- skillLevels:', skillLevels);
-    console.log('- answers count:', {
-      speaking: answers.speaking.length,
-      listening: answers.listening.length,
-      reading: answers.reading.length,
-      writing: answers.writing_translate.length + answers.writing_order.length
-    });
-
-    const result = {
-      date: new Date().toISOString(),
-      overallLevel,
-      skills: skillLevels,
-      finalLevels: effectiveFinalLevels, // Usar effectiveFinalLevels
-      testMode, // Adicionar modo do teste
-      answers: testMode === 'full' ? answers : {
-        [testMode]: answers[testMode] // Apenas respostas do teste específico
-      },
-      certificate: {
-        name: profile.displayName || 'Anonymous',
-        level: overallLevel,
-        skills: skillLevels,
-        finalLevels: effectiveFinalLevels, // Usar effectiveFinalLevels
-        date: new Date().toISOString()
-      }
-    };
-
-    console.log('📤 Saving assessment result:', result);
-
-    // Salvar resultado
-    await dispatch(saveAssessmentResult(result));
-
-    // Dar XP baseado no modo do teste
-    const xpAmount = testMode === 'full' ? 500 : 250;
-    dispatch(addXP({ amount: xpAmount, reason: 'assessment_completion' }));
-
-    // Completar frase para streak
-    dispatch(incrementPhraseCompleted());
-
-    setPhase('results');
-  };
-
-
-
-  
-
   // ========================================
-  // RENDER - Agora usando componentes externos
+  // RENDER
   // ========================================
   switch (phase) {
     case 'intro':
@@ -957,10 +462,8 @@ const AssessmentTrainer = () => {
           totalQuestions={20}
           currentLevel={currentLevel}
           onComplete={(result) => {
-            // result: { correct, spokenText, similarity, attempts }
             const { correct, spokenText, similarity, attempts } = result;
 
-            // Calcular novo nível ANTES
             const newLevel = adjustLevel(currentLevel, correct);
             console.log('🎚️ Level adjustment:', currentLevel, '->', newLevel, `(correct: ${correct})`);
 
@@ -978,12 +481,10 @@ const AssessmentTrainer = () => {
 
               console.log('📊 Updated answers:', newAnswers.speaking.length);
 
-              // Atualizar currentLevel
               setCurrentLevel(newLevel);
 
-               // Se completou a fase (20 questões), registra nível final
-               const currentSpeakingCount = newAnswers.speaking.length;
-               if (currentSpeakingCount % 20 === 0) {
+              const currentSpeakingCount = newAnswers.speaking.length;
+              if (currentSpeakingCount % 20 === 0) {
                 setFinalLevels(prev => ({ ...prev, speaking: newLevel }));
                 console.log('🏁 Speaking phase completed with level:', newLevel);
               }
@@ -991,11 +492,9 @@ const AssessmentTrainer = () => {
               return newAnswers;
             });
 
-            // Avançar para próxima questão passando o novo nível
             handleNextQuestion(newLevel);
           }}
           onNext={() => {
-            // Avançar para próxima questão
             handleNextQuestion();
           }}
         />
@@ -1031,10 +530,8 @@ const AssessmentTrainer = () => {
           totalQuestions={20}
           currentLevel={currentLevel}
           onComplete={(result) => {
-            // result: { correct, selectedAnswer, correctAnswer, playCount }
             const { correct, selectedAnswer, correctAnswer, playCount } = result;
 
-            // Calcular novo nível ANTES
             const newLevel = adjustLevel(currentLevel, correct);
             console.log('🎚️ Level adjustment:', currentLevel, '->', newLevel, `(correct: ${correct})`);
 
@@ -1052,12 +549,10 @@ const AssessmentTrainer = () => {
 
               console.log('📊 Updated answers:', newAnswers.listening.length);
 
-              // Atualizar currentLevel
               setCurrentLevel(newLevel);
 
-               // Se completou a fase (20 questões), registra nível final
-               const currentListeningCount = newAnswers.listening.length;
-               if (currentListeningCount % 20 === 0) {
+              const currentListeningCount = newAnswers.listening.length;
+              if (currentListeningCount % 20 === 0) {
                 setFinalLevels(prev => ({ ...prev, listening: newLevel }));
                 console.log('🏁 Listening phase completed with level:', newLevel);
               }
@@ -1065,47 +560,15 @@ const AssessmentTrainer = () => {
               return newAnswers;
             });
 
-            // Avançar para próxima questão passando o novo nível
             handleNextQuestion(newLevel);
           }}
           onNext={() => {
-            // Avançar para próxima questão
             handleNextQuestion();
           }}
         />
       );
 
-    case 'reading':
-      return (
-        <ReadingPhase
-          currentQuestion={currentQuestion}
-          questionIndex={questionIndex}
-          currentLevel={currentLevel}
-          userSentence={userSentence}
-          showFeedback={showFeedback}
-          isCorrect={isCorrect}
-          onWordClick={handleWordClick}
-          onCheckAnswer={checkReadingAnswer}
-        />
-      );
-
-    case 'writing_translate':
-    case 'writing_order':
-      return (
-        <WritingPhase
-          phase={phase}
-          currentQuestion={currentQuestion}
-          questionIndex={questionIndex}
-          currentLevel={currentLevel}
-          userInput={userInput}
-          showFeedback={showFeedback}
-          isCorrect={isCorrect}
-          onInputChange={setUserInput} // ⭐ Passar função diretamente
-          onCheckAnswer={checkWritingAnswer}
-        />
-      );
-
-     case 'results':
+    case 'results':
       return (
         <ResultsPhase
           finalLevels={finalLevels}
@@ -1116,7 +579,18 @@ const AssessmentTrainer = () => {
       );
 
     default:
-      return <IntroPhase onStart={() => setPhase('speaking')} />;
+      return (
+        <IntroPhase
+          onStartSpeaking={() => {
+            setTestMode('speaking');
+            setPhase('speaking');
+          }}
+          onStartListening={() => {
+            setTestMode('listening');
+            setPhase('listening');
+          }}
+        />
+      );
   }
 };
 
