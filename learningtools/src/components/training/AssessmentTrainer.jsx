@@ -596,14 +596,13 @@ const AssessmentTrainer = () => {
       );
 
     case 'results':
-      return (
-        <ResultsPhase
-          finalLevel={finalLevel}
-          testMode={testMode}
-          onDownloadCertificate={handleDownloadCertificate}
-          onGoBack={() => window.history.back()}
-        />
-      );
+      return <AssessmentResult
+                                 finalLevel={finalLevel}
+                                 testMode={testMode}
+                                 answers={answers[testMode]}
+                                 onDownloadCertificate={handleDownloadCertificate}
+                                 onGoBack={() => window.history.back()}
+                               />;
 
      default:
        return (

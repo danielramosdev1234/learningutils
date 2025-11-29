@@ -90,17 +90,17 @@ const AssessmentResult = ({
           <div className="grid grid-cols-3 gap-4 max-w-md mx-auto">
             <div className="bg-blue-50 rounded-xl p-4 border-2 border-blue-200">
               <Target className="w-6 h-6 text-blue-600 mx-auto mb-2" />
-              <p className="text-2xl font-bold text-blue-600">{accuracy}%</p>
+              <p className="text-xl font-bold text-blue-600">{accuracy}%</p>
               <p className="text-xs text-gray-600">Precisão</p>
             </div>
             <div className="bg-green-50 rounded-xl p-4 border-2 border-green-200">
               <CheckCircle className="w-6 h-6 text-green-600 mx-auto mb-2" />
-              <p className="text-2xl font-bold text-green-600">{correctAnswers}/{totalQuestions}</p>
+              <p className="text-xl font-bold text-green-600">{correctAnswers}/{totalQuestions}</p>
               <p className="text-xs text-gray-600">Acertos</p>
             </div>
             <div className="bg-purple-50 rounded-xl p-4 border-2 border-purple-200">
               <Star className="w-6 h-6 text-purple-600 mx-auto mb-2" />
-              <p className="text-2xl font-bold text-purple-600">{score}</p>
+              <p className="text-xl font-bold text-purple-600">{score}</p>
               <p className="text-xs text-gray-600">Pontos</p>
             </div>
           </div>
