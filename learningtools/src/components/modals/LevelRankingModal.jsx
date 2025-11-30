@@ -150,7 +150,7 @@ export default function LevelRankingModal({ isOpen, onClose, currentUserId }) {
                           <div className="absolute -inset-2 rounded-2xl bg-gradient-to-br from-slate-400 via-slate-300 to-slate-500 p-[3px] shadow-[0_0_20px_rgba(148,163,184,0.7),inset_0_2px_8px_rgba(255,255,255,0.5),inset_0_-2px_8px_rgba(100,116,139,0.5)] z-0">
                             <div className="w-full h-full rounded-2xl bg-gradient-to-br from-slate-200 via-slate-100 to-slate-300"></div>
                           </div>
-                          
+
                           <div className="relative z-10">
                             <div className="relative inline-block mb-3">
                               <div className="absolute -inset-1 bg-gradient-to-r from-slate-300 to-slate-400 rounded-full blur-md opacity-50"></div>
@@ -174,9 +174,12 @@ export default function LevelRankingModal({ isOpen, onClose, currentUserId }) {
                               <Trophy size={10} className="text-slate-500" />
                               <span className="text-xs font-semibold text-gray-700">Lvl {top3[1].currentLevel}</span>
                             </div>
-                            <div className="flex items-center justify-center gap-1 text-xs text-gray-600 mb-3">
-                              <Flame size={12} className="text-orange-500" />
-                              <span className="font-semibold">{top3[1].streak || 0}d</span>
+                            <div className="flex flex-col items-center gap-1 text-xs text-gray-600 mb-3">
+                              <div className="flex items-center gap-0.5">
+                                <Flame size={12} className="text-orange-500" />
+                                <span className="font-semibold">{top3[1].streak || 0}d</span>
+                              </div>
+                              <span className="font-medium text-slate-500">{top3[1].totalXP || 0} XP</span>
                             </div>
                             <div className="bg-gradient-to-t from-slate-200 to-slate-100 rounded-t-2xl border-2 border-slate-300 shadow-lg h-20 flex items-center justify-center">
                               <span className="text-5xl font-black text-slate-400">2</span>
@@ -192,7 +195,7 @@ export default function LevelRankingModal({ isOpen, onClose, currentUserId }) {
                           <div className="absolute -inset-3 rounded-2xl bg-gradient-to-br from-yellow-500 via-amber-500 to-yellow-600 p-[4px] shadow-[0_0_25px_rgba(234,179,8,0.9),inset_0_2px_12px_rgba(255,255,255,0.6),inset_0_-2px_12px_rgba(217,119,6,0.6),0_3px_15px_rgba(234,179,8,0.6)] z-0">
                             <div className="w-full h-full rounded-2xl bg-gradient-to-br from-yellow-300 via-amber-200 to-yellow-400"></div>
                           </div>
-                          
+
                           <div className="relative z-10">
                             <div className="relative inline-block mb-3">
                               <div className="absolute -inset-2 bg-gradient-to-r from-yellow-300 to-yellow-400 rounded-full blur-xl opacity-60 animate-pulse"></div>
@@ -217,9 +220,12 @@ export default function LevelRankingModal({ isOpen, onClose, currentUserId }) {
                               <Trophy size={12} className="text-yellow-600" />
                               <span className="text-sm font-bold text-gray-900">Lvl {top3[0].currentLevel}</span>
                             </div>
-                            <div className="flex items-center justify-center gap-1 text-sm text-gray-700 mb-3">
-                              <Flame size={14} className="text-orange-500" />
-                              <span className="font-bold">{top3[0].streak || 0}d streak</span>
+                            <div className="flex flex-col items-center gap-1 text-sm text-gray-700 mb-3">
+                              <div className="flex items-center gap-0.5">
+                                <Flame size={14} className="text-orange-500" />
+                                <span className="font-bold">{top3[0].streak || 0}d</span>
+                              </div>
+                              <span className="font-bold text-yellow-700">{top3[0].totalXP || 0} XP</span>
                             </div>
                             <div className="bg-gradient-to-t from-yellow-300 via-yellow-200 to-yellow-100 rounded-t-2xl border-2 border-yellow-400 shadow-2xl h-22 flex items-center justify-center relative overflow-hidden">
                               <div className="absolute inset-0 bg-gradient-to-t from-transparent via-white/20 to-white/40"></div>
@@ -236,7 +242,7 @@ export default function LevelRankingModal({ isOpen, onClose, currentUserId }) {
                           <div className="absolute -inset-2 rounded-2xl bg-gradient-to-br from-amber-700 via-orange-600 to-amber-800 p-[3px] shadow-[0_0_20px_rgba(217,119,6,0.7),inset_0_2px_8px_rgba(255,255,255,0.4),inset_0_-2px_8px_rgba(180,83,9,0.5)] z-0">
                             <div className="w-full h-full rounded-2xl bg-gradient-to-br from-amber-300 via-orange-200 to-amber-400"></div>
                           </div>
-                          
+
                           <div className="relative z-10">
                             <div className="relative inline-block mb-3">
                               <div className="absolute -inset-1 bg-gradient-to-r from-orange-400 to-orange-500 rounded-full blur-md opacity-50"></div>
@@ -260,9 +266,12 @@ export default function LevelRankingModal({ isOpen, onClose, currentUserId }) {
                               <Trophy size={10} className="text-orange-600" />
                               <span className="text-xs font-semibold text-gray-700">Lvl {top3[2].currentLevel}</span>
                             </div>
-                            <div className="flex items-center justify-center gap-1 text-xs text-gray-600 mb-3">
-                              <Flame size={12} className="text-orange-500" />
-                              <span className="font-semibold">{top3[2].streak || 0}d</span>
+                            <div className="flex flex-col items-center gap-1 text-xs text-gray-600 mb-3">
+                              <div className="flex items-center gap-0.5">
+                                <Flame size={12} className="text-orange-500" />
+                                <span className="font-semibold">{top3[2].streak || 0}d</span>
+                              </div>
+                              <span className="font-medium text-orange-600/70">{top3[2].totalXP || 0} XP</span>
                             </div>
                             <div className="bg-gradient-to-t from-orange-300 to-orange-100 rounded-t-2xl border-2 border-orange-400 shadow-lg h-18 flex items-center justify-center">
                               <span className="text-5xl font-black text-orange-500">3</span>
@@ -286,9 +295,8 @@ export default function LevelRankingModal({ isOpen, onClose, currentUserId }) {
                     return (
                       <div
                         key={user.userId}
-                        className={`relative rounded-xl p-3 flex items-center gap-3 hover:shadow-md transition-all ${
-                          isCurrentUser ? 'ring-2 ring-blue-400' : ''
-                        }`}
+                        className={`relative rounded-xl p-3 flex items-center gap-3 hover:shadow-md transition-all ${isCurrentUser ? 'ring-2 ring-blue-400' : ''
+                          }`}
                       >
                         {/* Moldura para lugares 4-10 */}
                         {isTop10 && (
@@ -296,17 +304,15 @@ export default function LevelRankingModal({ isOpen, onClose, currentUserId }) {
                             <div className="w-full h-full rounded-xl bg-gradient-to-br from-indigo-200 via-purple-200 to-pink-200"></div>
                           </div>
                         )}
-                        
-                        <div className={`relative z-10 w-full flex items-center gap-3 ${
-                          isTop10 
-                            ? 'bg-gradient-to-r from-indigo-50 via-purple-50 to-pink-50' 
-                            : isCurrentUser 
-                            ? 'bg-gradient-to-r from-blue-50 to-indigo-50' 
-                            : 'bg-gradient-to-r from-gray-50 to-gray-100'
-                        } rounded-lg p-3 border ${isTop10 ? 'border-purple-300/50' : isCurrentUser ? 'border-blue-300' : 'border-gray-200'}`}>
-                          <span className={`font-bold text-base w-8 text-center ${
-                            isTop10 ? 'text-purple-700' : 'text-gray-500'
-                          }`}>{position}</span>
+
+                        <div className={`relative z-10 w-full flex items-center gap-3 ${isTop10
+                            ? 'bg-gradient-to-r from-indigo-50 via-purple-50 to-pink-50'
+                            : isCurrentUser
+                              ? 'bg-gradient-to-r from-blue-50 to-indigo-50'
+                              : 'bg-gradient-to-r from-gray-50 to-gray-100'
+                          } rounded-lg p-3 border ${isTop10 ? 'border-purple-300/50' : isCurrentUser ? 'border-blue-300' : 'border-gray-200'}`}>
+                          <span className={`font-bold text-base w-8 text-center ${isTop10 ? 'text-purple-700' : 'text-gray-500'
+                            }`}>{position}</span>
                           <div className="w-10 h-10 rounded-full bg-gradient-to-br from-indigo-400 to-purple-500 flex items-center justify-center text-xl shadow-md">
                             {user.photoURL ? (
                               <img
