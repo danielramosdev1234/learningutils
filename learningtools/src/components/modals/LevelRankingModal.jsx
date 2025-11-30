@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { X, Trophy, Medal, Crown, Loader, Sparkles, Flame, Star, Zap } from 'lucide-react';
+import { X, Trophy, Medal, Crown, Loader, Sparkles, Flame, Star, Zap, Headphones, Mic } from 'lucide-react';
 
 /**
  * Modal de Ranking de Níveis - Estilo Podium
@@ -91,6 +91,27 @@ export default function LevelRankingModal({ isOpen, onClose, currentUserId }) {
     return emojis[index];
   };
 
+  // Helper para obter a faixa mais alta entre listening e speaking
+  const getHighestBelt = (user) => {
+    const listeningLevel = user.listening?.level || user.listeningLevel;
+    const speakingLevel = user.speaking?.level || user.speakingLevel;
+
+    if (!listeningLevel && !speakingLevel) return null;
+    if (!listeningLevel) return { level: speakingLevel, skill: 'speaking' };
+    if (!speakingLevel) return { level: listeningLevel, skill: 'listening' };
+
+    // Compara os níveis CEFR (A1, A2, B1, B2, C1, C2)
+    const levels = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
+    const listeningIndex = levels.indexOf(listeningLevel);
+    const speakingIndex = levels.indexOf(speakingLevel);
+
+    if (listeningIndex >= speakingIndex) {
+      return { level: listeningLevel, skill: 'listening' };
+    } else {
+      return { level: speakingLevel, skill: 'speaking' };
+    }
+  };
+
   return (
     <div
       className="fixed inset-0 bg-gradient-to-br from-gray-50 to-gray-100 bg-opacity-95 z-[100] flex items-center justify-center p-4"
@@ -165,9 +186,20 @@ export default function LevelRankingModal({ isOpen, onClose, currentUserId }) {
                                   <span>{getUserAvatar(top3[1]) || top3[1].displayName?.charAt(0).toUpperCase() || '?'}</span>
                                 )}
                               </div>
-                              <div className="absolute -bottom-1 -right-1 w-8 h-8 bg-slate-400 rounded-full flex items-center justify-center border-2 border-white shadow-lg z-20">
-                                <Medal size={16} className="text-white" />
-                              </div>
+                               <div className="absolute -bottom-1 -right-1 w-8 h-8 bg-slate-400 rounded-full flex items-center justify-center border-2 border-white shadow-lg z-20">
+                                 <Medal size={16} className="text-white" />
+                               </div>
+                               {/* Belt Badge */}
+                               {getHighestBelt(top3[1]) && (
+                                 <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-auto px-2 h-6 bg-white rounded-full flex items-center justify-center gap-1 border-2 border-slate-300 shadow-md z-20">
+                                   {getHighestBelt(top3[1]).skill === 'listening' ? (
+                                     <Headphones size={10} className="text-blue-500" />
+                                   ) : (
+                                     <Mic size={10} className="text-pink-500" />
+                                   )}
+                                   <span className="text-[10px] font-bold text-gray-700">{getHighestBelt(top3[1]).level}</span>
+                                 </div>
+                               )}
                             </div>
                             <p className="font-bold text-gray-900 text-sm mb-1 truncate px-2">{top3[1].displayName}</p>
                             <div className="inline-flex items-center gap-1 bg-gray-100 px-2 py-1 rounded-full mb-2">
@@ -210,10 +242,21 @@ export default function LevelRankingModal({ isOpen, onClose, currentUserId }) {
                                   <span>{getUserAvatar(top3[0]) || top3[0].displayName?.charAt(0).toUpperCase() || '?'}</span>
                                 )}
                               </div>
-                              {/* Coroa com z-index alto para aparecer acima de tudo */}
-                              <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-12 h-12 bg-gradient-to-br from-yellow-300 to-yellow-500 rounded-full flex items-center justify-center border-2 border-white shadow-xl z-50">
-                                <Crown size={24} className="text-white" fill="currentColor" />
-                              </div>
+                               {/* Coroa com z-index alto para aparecer acima de tudo */}
+                               <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-8 h-8 bg-gradient-to-br from-yellow-300 to-yellow-500 rounded-full flex items-center justify-center border border-white shadow-md z-50">
+                                 <Crown size={16} className="text-white" fill="currentColor" />
+                               </div>
+                               {/* Belt Badge */}
+                               {getHighestBelt(top3[0]) && (
+                                 <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-auto px-2.5 h-7 bg-white rounded-full flex items-center justify-center gap-1 border-2 border-yellow-400 shadow-lg z-20">
+                                   {getHighestBelt(top3[0]).skill === 'listening' ? (
+                                     <Headphones size={12} className="text-blue-500" />
+                                   ) : (
+                                     <Mic size={12} className="text-pink-500" />
+                                   )}
+                                   <span className="text-xs font-bold text-gray-700">{getHighestBelt(top3[0]).level}</span>
+                                 </div>
+                               )}
                             </div>
                             <p className="font-black text-gray-900 text-base mb-1 truncate px-2">{top3[0].displayName}</p>
                             <div className="inline-flex items-center gap-1 bg-yellow-100 px-3 py-1 rounded-full mb-2">
@@ -257,9 +300,20 @@ export default function LevelRankingModal({ isOpen, onClose, currentUserId }) {
                                   <span>{getUserAvatar(top3[2]) || top3[2].displayName?.charAt(0).toUpperCase() || '?'}</span>
                                 )}
                               </div>
-                              <div className="absolute -bottom-1 -right-1 w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center border-2 border-white shadow-lg z-20">
-                                <Star size={16} className="text-white" fill="currentColor" />
-                              </div>
+                               <div className="absolute -bottom-1 -right-1 w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center border-2 border-white shadow-lg z-20">
+                                 <Star size={16} className="text-white" fill="currentColor" />
+                               </div>
+                               {/* Belt Badge */}
+                               {getHighestBelt(top3[2]) && (
+                                 <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-auto px-2 h-6 bg-white rounded-full flex items-center justify-center gap-1 border-2 border-orange-300 shadow-md z-20">
+                                   {getHighestBelt(top3[2]).skill === 'listening' ? (
+                                     <Headphones size={10} className="text-blue-500" />
+                                   ) : (
+                                     <Mic size={10} className="text-pink-500" />
+                                   )}
+                                   <span className="text-[10px] font-bold text-gray-700">{getHighestBelt(top3[2]).level}</span>
+                                 </div>
+                               )}
                             </div>
                             <p className="font-bold text-gray-900 text-sm mb-1 truncate px-2">{top3[2].displayName}</p>
                             <div className="inline-flex items-center gap-1 bg-orange-100 px-2 py-1 rounded-full mb-2">
@@ -313,17 +367,28 @@ export default function LevelRankingModal({ isOpen, onClose, currentUserId }) {
                           } rounded-lg p-3 border ${isTop10 ? 'border-purple-300/50' : isCurrentUser ? 'border-blue-300' : 'border-gray-200'}`}>
                           <span className={`font-bold text-base w-8 text-center ${isTop10 ? 'text-purple-700' : 'text-gray-500'
                             }`}>{position}</span>
-                          <div className="w-10 h-10 rounded-full bg-gradient-to-br from-indigo-400 to-purple-500 flex items-center justify-center text-xl shadow-md">
-                            {user.photoURL ? (
-                              <img
-                                src={user.photoURL}
-                                alt={user.displayName}
-                                className="w-full h-full rounded-full object-cover"
-                              />
-                            ) : (
-                              <span>{getUserAvatar(user) || user.displayName?.charAt(0).toUpperCase() || '?'}</span>
-                            )}
-                          </div>
+                           <div className="w-10 h-10 rounded-full bg-gradient-to-br from-indigo-400 to-purple-500 flex items-center justify-center text-xl shadow-md relative">
+                             {user.photoURL ? (
+                               <img
+                                 src={user.photoURL}
+                                 alt={user.displayName}
+                                 className="w-full h-full rounded-full object-cover"
+                               />
+                             ) : (
+                               <span>{getUserAvatar(user) || user.displayName?.charAt(0).toUpperCase() || '?'}</span>
+                             )}
+                             {/* Belt Badge for top 10 */}
+                             {isTop10 && getHighestBelt(user) && (
+                               <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-auto px-1.5 h-5 bg-white rounded-full flex items-center justify-center gap-0.5 border border-purple-300 shadow-sm">
+                                 {getHighestBelt(user).skill === 'listening' ? (
+                                   <Headphones size={8} className="text-blue-500" />
+                                 ) : (
+                                   <Mic size={8} className="text-pink-500" />
+                                 )}
+                                 <span className="text-[8px] font-bold text-gray-700">{getHighestBelt(user).level}</span>
+                               </div>
+                             )}
+                           </div>
                           <div className="flex-1 min-w-0">
                             <p className="font-bold text-gray-900 text-sm truncate flex items-center gap-2">
                               <span className="truncate">{user.displayName}</span>

@@ -51,6 +51,11 @@ export const loadLevelRanking = async (limitCount = 50, includeGuests = false) =
         const phrasesXP = data.xpSystem.xpBreakdown?.phrases || 0;
         const totalCompleted = Math.floor(phrasesXP / 5); // Cada frase dá 5 XP
 
+        // Busca níveis de assessment (listening e speaking)
+        const assessment = data.assessment || {};
+        const listeningLevel = assessment.listening?.level || null;
+        const speakingLevel = assessment.speaking?.level || null;
+
         users.push({
           userId: doc.id,
           displayName: profile.displayName || profile.email?.split('@')[0] || 'Anonymous',
@@ -62,7 +67,9 @@ export const loadLevelRanking = async (limitCount = 50, includeGuests = false) =
           progressPercent: xpProgress.percentage,
           streak: data.stats?.streak?.current || 0,
           lastUpdated: data.lastUpdated,
-          isGuest: isGuest
+          isGuest: isGuest,
+          listening: listeningLevel ? { level: listeningLevel } : null,
+          speaking: speakingLevel ? { level: speakingLevel } : null
         });
       }
     });
