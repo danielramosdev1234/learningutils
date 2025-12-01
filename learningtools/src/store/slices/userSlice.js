@@ -566,7 +566,7 @@ export const checkDailyBackup = createAsyncThunk(
 // ⭐ NOVO THUNK: Salva resultado do assessment
 export const saveAssessmentResult = createAsyncThunk(
   'user/saveAssessmentResult',
-  async ({ skillType, level, score, certificate }, { getState }) => {
+  async ({ skillType, level, score, certificate, answers }, { getState }) => {
     const { userId, mode } = getState().user;
     const today = new Date().toISOString();
 
@@ -574,7 +574,8 @@ export const saveAssessmentResult = createAsyncThunk(
       date: today,
       level,
       score,
-      certificate
+      certificate,
+      answers
     };
 
     // Salvar Firebase (authenticated)

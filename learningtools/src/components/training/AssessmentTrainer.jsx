@@ -228,9 +228,17 @@ const AssessmentTrainer = () => {
   // ⭐ Flag para evitar salvar resultado duplicado
   const [isSavingResult, setIsSavingResult] = useState(false);
 
+  // Ref to hold the current level for onNext
+  const currentLevelRef = useRef(currentLevel);
+
 
 
   const isProcessingAnswer = useRef(false);
+
+  // Update ref when currentLevel changes
+  useEffect(() => {
+    currentLevelRef.current = currentLevel;
+  }, [currentLevel]);
 
   // Debug log
   useEffect(() => {
@@ -382,7 +390,7 @@ const AssessmentTrainer = () => {
 
     console.log('📤 Saving assessment result:', { skillType: testMode, level: bestLevel, score, certificate });
 
-    await dispatch(saveAssessmentResult({ skillType: testMode, level: bestLevel, score, certificate }));
+    await dispatch(saveAssessmentResult({ skillType: testMode, level: bestLevel, score, certificate, answers: answers[testMode] }));
     dispatch(addXP({ userId, mode: 'assessment_completion', amount: 300 }));
     dispatch(incrementPhraseCompleted());
 
@@ -467,42 +475,41 @@ const AssessmentTrainer = () => {
               console.log('🎚️ Level decreased:', currentLevel, '->', newLevel, `(wrong answer)`);
             }
 
-            setConsecutiveCorrects(newConsecutive);
+             setConsecutiveCorrects(newConsecutive);
+             setCurrentLevel(newLevel);
+             currentLevelRef.current = newLevel;
 
-            setAnswers(prev => {
-              const newAnswers = {
-                ...prev,
-                speaking: [...prev.speaking, {
-                  correct,
-                  level: currentLevel,
-                  accuracy: similarity,
-                  userSpokenText: spokenText,
-                  attempts
-                }]
-              };
+             setAnswers(prev => {
+               const newAnswers = {
+                 ...prev,
+                   speaking: [...prev.speaking, {
+                     questionId: currentQuestion?.id || 'unknown',
+                     level: currentLevel,
+                     correct,
+                     accuracy: similarity
+                   }]
+               };
 
-              console.log('📊 Updated answers:', newAnswers.speaking.length);
+               console.log('📊 Updated answers:', newAnswers.speaking.length);
 
-              setCurrentLevel(newLevel);
+               // ⭐ Chamar handleFinishTest quando completar 20 questões
+               const currentSpeakingCount = newAnswers.speaking.length;
+               if (currentSpeakingCount >= 20) {
+                 console.log('🏁 Speaking phase completed with level:', newLevel);
+                 // ⭐ Chamar handleFinishTest diretamente
+                 setTimeout(() => {
+                   handleFinishTest();
+                 }, 0);
+               }
+               // ⭐ handleNextQuestion removido - agora é chamado pelo handleNext do SpeakingTest
 
-              // ⭐ Chamar handleFinishTest quando completar 20 questões
-              const currentSpeakingCount = newAnswers.speaking.length;
-              if (currentSpeakingCount >= 20) {
-                console.log('🏁 Speaking phase completed with level:', newLevel);
-                // ⭐ Chamar handleFinishTest diretamente
-                setTimeout(() => {
-                  handleFinishTest();
-                }, 0);
-              }
-              // ⭐ handleNextQuestion removido - agora é chamado pelo handleNext do SpeakingTest
-
-              return newAnswers;
-            });
-          }}
-          onNext={() => {
-            // Avançar para próxima questão com o nível atualizado
-            handleNextQuestion(currentLevel);
-          }}
+               return newAnswers;
+             });
+           }}
+           onNext={() => {
+             // Avançar para próxima questão com o nível atualizado
+             handleNextQuestion(currentLevelRef.current);
+           }}
         />
       );
 
@@ -575,20 +582,20 @@ const AssessmentTrainer = () => {
               console.log('🎚️ Level decreased:', currentLevel, '->', newLevel);
             }
 
-            // ✅ Atualizar estados de controle ANTES do setAnswers
-            setConsecutiveCorrects(newConsecutive);
-            setCurrentLevel(newLevel);
+             // ✅ Atualizar estados de controle ANTES do setAnswers
+             setConsecutiveCorrects(newConsecutive);
+             setCurrentLevel(newLevel);
+             currentLevelRef.current = newLevel;
 
             // ✅ Adicionar resposta ao array (SEM lógica dentro)
             setAnswers(prev => ({
               ...prev,
-              listening: [...prev.listening, {
-                correct,
-                level: currentLevel,
-                selected: selectedAnswer,
-                correctAnswer: correctAnswer,
-                playCount
-              }]
+                listening: [...prev.listening, {
+                  questionId: currentQuestion?.id || 'unknown',
+                  level: currentLevel,
+                  correct,
+                  accuracy: correct ? 100 : 0
+                }]
             }));
 
             // ✅ Verificar se completou FORA do setAnswers
