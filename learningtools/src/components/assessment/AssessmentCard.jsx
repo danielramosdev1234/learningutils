@@ -174,8 +174,7 @@ const AssessmentCard = ({ onNavigate }) => {
 
                   {skillLevel && (
                     <div className="flex items-center gap-1.5 bg-white/60 px-2 py-1 rounded-md border border-gray-100 w-full justify-center">
-                      <img src={`/faixa-${skillLevel}.gif`} alt={`Faixa ${skillLevel}`} className="w-5 h-5 object-contain mix-blend-multiply" />
-                      <span className="text-xs font-bold text-purple-600">{skillLevel}</span>
+                       <span className="text-xs font-bold text-purple-600">{skillLevel} - {CEFR_BELTS[skillLevel]?.name}</span>
                     </div>
                   )}
                 </div>
