@@ -204,7 +204,7 @@ const AssessmentResult = ({
         {/* XP Conquistado */}
         <div className="bg-gradient-to-r from-yellow-100 to-orange-100 border-2 border-yellow-300 rounded-xl p-6 text-center">
           <Zap className="w-10 h-10 text-yellow-600 mx-auto mb-3" />
-          <p className="text-2xl font-bold text-yellow-800 mb-1">+500 XP Conquistados!</p>
+          <p className="text-2xl font-bold text-yellow-800 mb-1">+300 XP Conquistados!</p>
           <p className="text-sm text-yellow-700">Continue treinando para ganhar mais experiência</p>
         </div>
       </div>

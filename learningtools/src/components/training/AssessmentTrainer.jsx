@@ -21,6 +21,7 @@ import { generateAndDownloadCertificate } from '../../utils/assessmentUtils';
 import AssessmentResult from '../assessment/AssessmentResult.jsx';
 
 
+
 // ========================================
 // ASSESSMENT UTILITIES
 // ========================================
@@ -75,19 +76,18 @@ const IntroPhase = ({ onStartSpeaking, onStartListening, canTakeSpeaking, canTak
           <Mic className="w-12 h-12 text-purple-600 mx-auto mb-3" />
           <h3 className="text-lg font-bold text-purple-800 mb-2">Speaking Test</h3>
           <p className="text-sm text-purple-700 mb-4">
-            Teste de pronúncia e fala em inglês
+            Teste de pronúncia e fala
           </p>
-           <button
-             onClick={onStartSpeaking}
-             disabled={!canTakeSpeaking}
-             className={`w-full py-3 rounded-lg font-semibold transition-colors ${
-               canTakeSpeaking
-                 ? 'bg-purple-600 text-white hover:bg-purple-700'
-                 : 'bg-gray-400 text-gray-200 cursor-not-allowed'
-             }`}
-           >
-             {canTakeSpeaking ? 'Começar Speaking' : 'Já realizado hoje'}
-           </button>
+          <button
+            onClick={onStartSpeaking}
+            disabled={!canTakeSpeaking}
+            className={`w-full py-3 rounded-lg font-semibold transition-colors ${canTakeSpeaking
+              ? 'bg-purple-600 text-white hover:bg-purple-700'
+              : 'bg-gray-400 text-gray-200 cursor-not-allowed'
+              }`}
+          >
+            {canTakeSpeaking ? 'Começar Speaking' : 'Já realizado hoje'}
+          </button>
         </div>
         <div className="bg-blue-50 rounded-xl p-6 border-2 border-blue-200">
           <Volume2 className="w-12 h-12 text-blue-600 mx-auto mb-3" />
@@ -95,24 +95,23 @@ const IntroPhase = ({ onStartSpeaking, onStartListening, canTakeSpeaking, canTak
           <p className="text-sm text-blue-700 mb-4">
             Teste de compreensão auditiva
           </p>
-           <button
-             onClick={onStartListening}
-             disabled={!canTakeListening}
-             className={`w-full py-3 rounded-lg font-semibold transition-colors ${
-               canTakeListening
-                 ? 'bg-blue-600 text-white hover:bg-blue-700'
-                 : 'bg-gray-400 text-gray-200 cursor-not-allowed'
-             }`}
-           >
-             {canTakeListening ? 'Começar Listening' : 'Já realizado hoje'}
-           </button>
+          <button
+            onClick={onStartListening}
+            disabled={!canTakeListening}
+            className={`w-full py-3 rounded-lg font-semibold transition-colors ${canTakeListening
+              ? 'bg-blue-600 text-white hover:bg-blue-700'
+              : 'bg-gray-400 text-gray-200 cursor-not-allowed'
+              }`}
+          >
+            {canTakeListening ? 'Começar Listening' : 'Já realizado hoje'}
+          </button>
         </div>
       </div>
 
       <div className="bg-gray-50 rounded-xl p-4 mb-6">
         <div className="flex items-center justify-center gap-2 mb-2">
           <Trophy className="w-5 h-5 text-yellow-600" />
-          <span className="font-semibold text-gray-800">+500 XP</span>
+          <span className="font-semibold text-gray-800">+300XP</span>
         </div>
         <p className="text-sm text-gray-600">por teste completado</p>
       </div>
@@ -192,7 +191,7 @@ const ResultsPhase = ({
         {/* XP Reward */}
         <div className="bg-green-100 border-2 border-green-200 rounded-xl p-4 mt-6 text-center">
           <Zap className="w-8 h-8 text-green-600 mx-auto mb-2" />
-          <p className="text-green-800 font-semibold">+500 XP conquistados!</p>
+          <p className="text-green-800 font-semibold">+300XP conquistados!</p>
         </div>
       </div>
     </div>
@@ -384,7 +383,7 @@ const AssessmentTrainer = () => {
     console.log('📤 Saving assessment result:', { skillType: testMode, level: bestLevel, score, certificate });
 
     await dispatch(saveAssessmentResult({ skillType: testMode, level: bestLevel, score, certificate }));
-    dispatch(addXP({ userId, mode: 'assessment_completion', amount: 500 }));
+    dispatch(addXP({ userId, mode: 'assessment_completion', amount: 300 }));
     dispatch(incrementPhraseCompleted());
 
     // ⭐ Mudar para results ANTES de resetar flag
@@ -412,113 +411,112 @@ const AssessmentTrainer = () => {
   // ========================================
   // RENDER
   // ========================================
-   switch (phase) {
-      case 'intro':
-        return (
-          <IntroPhase
-            onStartSpeaking={() => {
-              setTestMode('speaking');
-              setPhase('speaking');
-              setConsecutiveCorrects(0);
-            }}
-            onStartListening={() => {
-              setTestMode('listening');
-              setPhase('listening');
-              setConsecutiveCorrects(0);
-            }}
-            canTakeSpeaking={canTakeSpeaking}
-            canTakeListening={canTakeListening}
-          />
-        );
+  switch (phase) {
+    case 'intro':
+      return (
+        <IntroPhase
+          onStartSpeaking={() => {
+            setTestMode('speaking');
+            setPhase('speaking');
+            setConsecutiveCorrects(0);
+          }}
+          onStartListening={() => {
+            setTestMode('listening');
+            setPhase('listening');
+            setConsecutiveCorrects(0);
+          }}
+          canTakeSpeaking={canTakeSpeaking}
+          canTakeListening={canTakeListening}
+        />
+      );
 
     case 'speaking':
-        if (answers.listening.length >= 20) {
-                  // Mostrar loading enquanto processa o resultado
-                  return <AssessmentResult
-                           finalLevel={finalLevel}
-                           testMode={testMode}
-                           answers={answers[testMode]}
-                           onDownloadCertificate={handleDownloadCertificate}
-                           onGoBack={() => window.history.back()}
-                         />;
-                }
+      if (answers.listening.length >= 20) {
+        // Mostrar loading enquanto processa o resultado
+        return <AssessmentResult
+          finalLevel={finalLevel}
+          testMode={testMode}
+          answers={answers[testMode]}
+          onDownloadCertificate={handleDownloadCertificate}
+          onGoBack={() => window.history.back()}
+        />;
+      }
       return (
         <SpeakingTest
           question={currentQuestion}
           questionIndex={questionIndex}
           totalQuestions={20}
           currentLevel={currentLevel}
-           onComplete={(result) => {
-             const { correct, spokenText, similarity, attempts } = result;
+          onComplete={(result) => {
+            const { correct, spokenText, similarity, attempts } = result;
 
-             let newLevel = currentLevel;
-             let newConsecutive = consecutiveCorrects;
+            let newLevel = currentLevel;
+            let newConsecutive = consecutiveCorrects;
 
-             if (correct) {
-               newConsecutive = consecutiveCorrects + 1;
-               if (newConsecutive >= 2) {
-                 newLevel = adjustLevel(currentLevel, true);
-                 console.log('🎚️ Level increased:', currentLevel, '->', newLevel, `(2 consecutive corrects)`);
-               } else {
-                 console.log('🎚️ Consecutive corrects:', newConsecutive, '(need 2 to level up)');
-               }
-             } else {
-               newConsecutive = 0;
-               newLevel = adjustLevel(currentLevel, false);
-               console.log('🎚️ Level decreased:', currentLevel, '->', newLevel, `(wrong answer)`);
-             }
+            if (correct) {
+              newConsecutive = consecutiveCorrects + 1;
+              if (newConsecutive >= 2) {
+                newLevel = adjustLevel(currentLevel, true);
+                console.log('🎚️ Level increased:', currentLevel, '->', newLevel, `(2 consecutive corrects)`);
+              } else {
+                console.log('🎚️ Consecutive corrects:', newConsecutive, '(need 2 to level up)');
+              }
+            } else {
+              newConsecutive = 0;
+              newLevel = adjustLevel(currentLevel, false);
+              console.log('🎚️ Level decreased:', currentLevel, '->', newLevel, `(wrong answer)`);
+            }
 
-             setConsecutiveCorrects(newConsecutive);
+            setConsecutiveCorrects(newConsecutive);
 
-             setAnswers(prev => {
-               const newAnswers = {
-                 ...prev,
-                 speaking: [...prev.speaking, {
-                   correct,
-                   level: currentLevel,
-                   accuracy: similarity,
-                   userSpokenText: spokenText,
-                   attempts
-                 }]
-               };
+            setAnswers(prev => {
+              const newAnswers = {
+                ...prev,
+                speaking: [...prev.speaking, {
+                  correct,
+                  level: currentLevel,
+                  accuracy: similarity,
+                  userSpokenText: spokenText,
+                  attempts
+                }]
+              };
 
-               console.log('📊 Updated answers:', newAnswers.speaking.length);
+              console.log('📊 Updated answers:', newAnswers.speaking.length);
 
-               setCurrentLevel(newLevel);
+              setCurrentLevel(newLevel);
 
-               // ⭐ Chamar handleFinishTest quando completar 20 questões
-               const currentSpeakingCount = newAnswers.speaking.length;
-               if (currentSpeakingCount >= 20) {
-                 console.log('🏁 Speaking phase completed with level:', newLevel);
-                 // ⭐ Chamar handleFinishTest diretamente
-                 setTimeout(() => {
-                   handleFinishTest();
-                 }, 0);
-               } else {
-                 // Apenas avançar para próxima questão
-                 handleNextQuestion(newLevel);
-               }
+              // ⭐ Chamar handleFinishTest quando completar 20 questões
+              const currentSpeakingCount = newAnswers.speaking.length;
+              if (currentSpeakingCount >= 20) {
+                console.log('🏁 Speaking phase completed with level:', newLevel);
+                // ⭐ Chamar handleFinishTest diretamente
+                setTimeout(() => {
+                  handleFinishTest();
+                }, 0);
+              }
+              // ⭐ handleNextQuestion removido - agora é chamado pelo handleNext do SpeakingTest
 
-               return newAnswers;
-             });
-           }}
+              return newAnswers;
+            });
+          }}
           onNext={() => {
-            // Não fazer nada - já tratado no onComplete
+            // Avançar para próxima questão com o nível atualizado
+            handleNextQuestion(currentLevel);
           }}
         />
       );
 
     case 'listening':
-        if (answers.listening.length >= 20) {
-          // Mostrar loading enquanto processa o resultado
-          return <AssessmentResult
-                   finalLevel={finalLevel}
-                   testMode={testMode}
-                   answers={answers[testMode]}
-                   onDownloadCertificate={handleDownloadCertificate}
-                   onGoBack={() => window.history.back()}
-                 />;
-        }
+      if (answers.listening.length >= 20) {
+        // Mostrar loading enquanto processa o resultado
+        return <AssessmentResult
+          finalLevel={finalLevel}
+          testMode={testMode}
+          answers={answers[testMode]}
+          onDownloadCertificate={handleDownloadCertificate}
+          onGoBack={() => window.history.back()}
+        />;
+      }
       if (!currentQuestion) {
         return (
           <div className="min-h-screen bg-red-50 flex items-center justify-center p-4">
@@ -547,96 +545,96 @@ const AssessmentTrainer = () => {
           questionIndex={questionIndex}
           totalQuestions={20}
           currentLevel={currentLevel}
-           onComplete={(result) => {
-                   // ✅ Guard para evitar chamadas duplicadas
-                   if (isProcessingAnswer.current) {
-                     console.log('⚠️ Already processing answer, skipping duplicate call');
-                     return;
-                   }
+          onComplete={(result) => {
+            // ✅ Guard para evitar chamadas duplicadas
+            if (isProcessingAnswer.current) {
+              console.log('⚠️ Already processing answer, skipping duplicate call');
+              return;
+            }
 
-                   isProcessingAnswer.current = true;
-                   console.log('🎯 Processing listening answer for question', questionIndex);
+            isProcessingAnswer.current = true;
+            console.log('🎯 Processing listening answer for question', questionIndex);
 
-                   const { correct, selectedAnswer, correctAnswer, playCount } = result;
+            const { correct, selectedAnswer, correctAnswer, playCount } = result;
 
-                   // ✅ Calcular novo nível FORA do setAnswers
-                   let newLevel = currentLevel;
-                   let newConsecutive = consecutiveCorrects;
+            // ✅ Calcular novo nível FORA do setAnswers
+            let newLevel = currentLevel;
+            let newConsecutive = consecutiveCorrects;
 
-                   if (correct) {
-                     newConsecutive = consecutiveCorrects + 1;
-                     if (newConsecutive >= 2) {
-                       newLevel = adjustLevel(currentLevel, true);
-                       console.log('🎚️ Level increased:', currentLevel, '->', newLevel);
-                     } else {
-                       console.log('🎚️ Consecutive corrects:', newConsecutive);
-                     }
-                   } else {
-                     newConsecutive = 0;
-                     newLevel = adjustLevel(currentLevel, false);
-                     console.log('🎚️ Level decreased:', currentLevel, '->', newLevel);
-                   }
+            if (correct) {
+              newConsecutive = consecutiveCorrects + 1;
+              if (newConsecutive >= 2) {
+                newLevel = adjustLevel(currentLevel, true);
+                console.log('🎚️ Level increased:', currentLevel, '->', newLevel);
+              } else {
+                console.log('🎚️ Consecutive corrects:', newConsecutive);
+              }
+            } else {
+              newConsecutive = 0;
+              newLevel = adjustLevel(currentLevel, false);
+              console.log('🎚️ Level decreased:', currentLevel, '->', newLevel);
+            }
 
-                   // ✅ Atualizar estados de controle ANTES do setAnswers
-                   setConsecutiveCorrects(newConsecutive);
-                   setCurrentLevel(newLevel);
+            // ✅ Atualizar estados de controle ANTES do setAnswers
+            setConsecutiveCorrects(newConsecutive);
+            setCurrentLevel(newLevel);
 
-                   // ✅ Adicionar resposta ao array (SEM lógica dentro)
-                   setAnswers(prev => ({
-                     ...prev,
-                     listening: [...prev.listening, {
-                       correct,
-                       level: currentLevel,
-                       selected: selectedAnswer,
-                       correctAnswer: correctAnswer,
-                       playCount
-                     }]
-                   }));
+            // ✅ Adicionar resposta ao array (SEM lógica dentro)
+            setAnswers(prev => ({
+              ...prev,
+              listening: [...prev.listening, {
+                correct,
+                level: currentLevel,
+                selected: selectedAnswer,
+                correctAnswer: correctAnswer,
+                playCount
+              }]
+            }));
 
-                   // ✅ Verificar se completou FORA do setAnswers
-                   const newListeningCount = answers.listening.length + 1;
-                   console.log('📊 Total listening answers:', newListeningCount);
+            // ✅ Verificar se completou FORA do setAnswers
+            const newListeningCount = answers.listening.length + 1;
+            console.log('📊 Total listening answers:', newListeningCount);
 
-                    if (newListeningCount >= 20) {
-                      console.log('🎬 Listening test completed!');
-                      isProcessingAnswer.current = false;
-                      handleFinishTest();
-                    } else {
-                     console.log('➡️ Moving to next question');
-                     setQuestionsLevel(newLevel);
-                     setQuestionIndex(prev => prev + 1);
-                     isProcessingAnswer.current = false;
-                   }
-                 }}
-               />
+            if (newListeningCount >= 20) {
+              console.log('🎬 Listening test completed!');
+              isProcessingAnswer.current = false;
+              handleFinishTest();
+            } else {
+              console.log('➡️ Moving to next question');
+              setQuestionsLevel(newLevel);
+              setQuestionIndex(prev => prev + 1);
+              isProcessingAnswer.current = false;
+            }
+          }}
+        />
       );
 
     case 'results':
       return <AssessmentResult
-                                 finalLevel={finalLevel}
-                                 testMode={testMode}
-                                 answers={answers[testMode]}
-                                 onDownloadCertificate={handleDownloadCertificate}
-                                 onGoBack={() => window.history.back()}
-                               />;
+        finalLevel={finalLevel}
+        testMode={testMode}
+        answers={answers[testMode]}
+        onDownloadCertificate={handleDownloadCertificate}
+        onGoBack={() => window.history.back()}
+      />;
 
-      default:
-        return (
-          <IntroPhase
-            onStartSpeaking={() => {
-              setTestMode('speaking');
-              setPhase('speaking');
-              setConsecutiveCorrects(0);
-            }}
-            onStartListening={() => {
-              setTestMode('listening');
-              setPhase('listening');
-              setConsecutiveCorrects(0);
-            }}
-            canTakeSpeaking={canTakeSpeaking}
-            canTakeListening={canTakeListening}
-          />
-        );
+    default:
+      return (
+        <IntroPhase
+          onStartSpeaking={() => {
+            setTestMode('speaking');
+            setPhase('speaking');
+            setConsecutiveCorrects(0);
+          }}
+          onStartListening={() => {
+            setTestMode('listening');
+            setPhase('listening');
+            setConsecutiveCorrects(0);
+          }}
+          canTakeSpeaking={canTakeSpeaking}
+          canTakeListening={canTakeListening}
+        />
+      );
   }
 };
 

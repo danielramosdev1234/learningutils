@@ -1,28 +1,24 @@
 import React from 'react';
-import { Award, Clock, ChevronRight, Mic, Headphones, BookOpen, PenTool, TrendingUp } from 'lucide-react';
+import { Award, Clock, ChevronRight, Mic, Headphones, TrendingUp } from 'lucide-react';
 import { useSelector } from 'react-redux';
 
 const CEFR_BELTS = {
-  'A1': { color: 'bg-gray-200', textColor: 'text-gray-800', name: 'Iniciante', barColor: 'bg-gray-400' },
+  'A1': { color: 'bg-gray-200', textColor: 'text-gray-800', name: 'Iniciante', barColor: 'bg-white' },
   'A2': { color: 'bg-blue-500', textColor: 'text-white', name: 'Básico', barColor: 'bg-blue-500' },
   'B1': { color: 'bg-purple-500', textColor: 'text-white', name: 'Intermediário', barColor: 'bg-purple-500' },
-  'B2': { color: 'bg-amber-600', textColor: 'text-white', name: 'Intermediário Superior', barColor: 'bg-amber-600' },
-  'C1': { color: 'bg-gray-900', textColor: 'text-white', name: 'Avançado', barColor: 'bg-gray-800' },
+  'B2': { color: 'bg-amber-600', textColor: 'text-white', name: 'Intermediário Superior', barColor: 'bg-amber-800' },
+  'C1': { color: 'bg-gray-900', textColor: 'text-white', name: 'Avançado', barColor: 'bg-black' },
   'C2': { color: 'bg-red-600', textColor: 'text-white', name: 'Proficiente', barColor: 'bg-red-600' }
 };
 
 const SKILL_ICONS = {
-  speaking: { icon: Mic, color: 'text-pink-500', bgColor: 'bg-pink-50' },
-  listening: { icon: Headphones, color: 'text-blue-500', bgColor: 'bg-blue-50' },
-  reading: { icon: BookOpen, color: 'text-green-500', bgColor: 'bg-green-50' },
-  writing: { icon: PenTool, color: 'text-amber-500', bgColor: 'bg-amber-50' }
+  speaking: { icon: Mic, color: 'text-pink-500', bgColor: 'bg-purple-50' },
+  listening: { icon: Headphones, color: 'text-blue-500', bgColor: 'bg-blue-50' }
 };
 
 const SKILL_TRANSLATIONS = {
   speaking: 'Speaking',
-  listening: 'Listening',
-  reading: 'Reading',
-  writing: 'Writing'
+  listening: 'Listening'
 };
 
 const AssessmentCard = ({ onNavigate }) => {
@@ -50,11 +46,11 @@ const AssessmentCard = ({ onNavigate }) => {
 
           {/* Skills com ícones e barras de progresso */}
           <div className="space-y-3 mb-5">
-            {Object.entries(lastTest.skills).map(([skill, data]) => {
+            {Object.entries(lastTest.skills).filter(([, data]) => data.level && data.percentage).map(([skill, data]) => {
               const skillInfo = SKILL_ICONS[skill];
               const Icon = skillInfo.icon;
-              const percentage = data.percentage || 75; // Fallback se não houver percentage
-              const improvement = data.improvement || Math.floor(Math.random() * 10); // Fallback
+              const percentage = data.percentage;
+              const improvement = data.improvement;
 
               return (
                 <div key={skill} className="space-y-2">
@@ -70,20 +66,22 @@ const AssessmentCard = ({ onNavigate }) => {
                     </div>
                     <div className="text-right">
                       <span className="text-sm font-bold text-gray-900">{percentage}%</span>
-                      <div className="flex items-center gap-1 text-green-600">
-                        <TrendingUp className="w-3 h-3" />
-                        <span className="text-xs font-medium">+{improvement}%</span>
-                      </div>
+                      {improvement && (
+                        <div className="flex items-center gap-1 text-green-600">
+                          <TrendingUp className="w-3 h-3" />
+                          <span className="text-xs font-medium">+{improvement}%</span>
+                        </div>
+                      )}
                     </div>
                   </div>
 
                   {/* Barra de progresso */}
                   <div className="w-full bg-gray-200 rounded-full h-2">
-                                      <div
-                                        className={`h-2 rounded-full transition-all duration-500 ${CEFR_BELTS[data.level]?.barColor || 'bg-gray-400'}`}
-                                        style={{ width: `${percentage}%` }}
-                                      />
-                                    </div>
+                    <div
+                      className={`h-2 rounded-full transition-all duration-500 ${CEFR_BELTS[data.level]?.barColor || 'bg-gray-400'}`}
+                      style={{ width: `${percentage}%` }}
+                    />
+                  </div>
                 </div>
               );
             })}
@@ -152,24 +150,34 @@ const AssessmentCard = ({ onNavigate }) => {
           </div>
           <div className="text-center bg-gray-50 rounded-lg p-3">
             <Award className="w-5 h-5 text-gray-400 mx-auto mb-1" />
-            <p className="text-xs font-medium text-gray-600">+500 XP</p>
+            <p className="text-xs font-medium text-gray-600">+300 XP</p>
           </div>
         </div>
 
         {/* Skills que serão avaliadas */}
-        <div className="bg-purple-50 rounded-lg p-3 border border-purple-100">
+        <div className="rounded-lg p-3 border border-purple-100">
           <p className="text-xs font-semibold text-purple-700 uppercase tracking-wide mb-2">
-            Avalia 4 habilidades
+            Avalia as habilidades de comunicação
           </p>
-          <div className="grid grid-cols-4 gap-2">
+          <div className="grid grid-cols-2 gap-2">
             {Object.entries(SKILL_ICONS).map(([skill, info]) => {
               const Icon = info.icon;
+              const skillLevel = assessment?.[skill]?.level;
               return (
-                <div key={skill} className="text-center">
-                  <div className={`${info.bgColor} p-2 rounded-lg mx-auto w-fit mb-1`}>
-                    <Icon className={`w-4 h-4 ${info.color}`} />
+                <div key={skill} className={`${info.bgColor} rounded-lg p-3 flex flex-col items-center justify-center gap-2 transition-transform hover:scale-105 duration-200`}>
+                  <div className="flex items-center gap-2">
+                    <div className="bg-white/80 p-1.5 rounded-full shadow-sm">
+                      <Icon className={`w-4 h-4 ${info.color}`} />
+                    </div>
+                    <span className="text-xs font-bold text-gray-700">{SKILL_TRANSLATIONS[skill]}</span>
                   </div>
-                  <p className="text-xs text-gray-600">{SKILL_TRANSLATIONS[skill]}</p>
+
+                  {skillLevel && (
+                    <div className="flex items-center gap-1.5 bg-white/60 px-2 py-1 rounded-md border border-gray-100 w-full justify-center">
+                      <img src={`/faixa-${skillLevel}.gif`} alt={`Faixa ${skillLevel}`} className="w-5 h-5 object-contain mix-blend-multiply" />
+                      <span className="text-xs font-bold text-purple-600">{skillLevel}</span>
+                    </div>
+                  )}
                 </div>
               );
             })}

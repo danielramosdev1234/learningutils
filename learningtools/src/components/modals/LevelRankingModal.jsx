@@ -91,25 +91,39 @@ export default function LevelRankingModal({ isOpen, onClose, currentUserId }) {
     return emojis[index];
   };
 
-  // Helper para obter a faixa mais alta entre listening e speaking
-  const getHighestBelt = (user) => {
+
+
+  // Helper para renderizar ambos os badges de Speaking e Listening
+  const renderSkillBadges = (user, size = 'medium') => {
     const listeningLevel = user.listening?.level || user.listeningLevel;
     const speakingLevel = user.speaking?.level || user.speakingLevel;
 
     if (!listeningLevel && !speakingLevel) return null;
-    if (!listeningLevel) return { level: speakingLevel, skill: 'speaking' };
-    if (!speakingLevel) return { level: listeningLevel, skill: 'listening' };
 
-    // Compara os níveis CEFR (A1, A2, B1, B2, C1, C2)
-    const levels = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
-    const listeningIndex = levels.indexOf(listeningLevel);
-    const speakingIndex = levels.indexOf(speakingLevel);
+    const sizeConfig = {
+      small: { height: 'h-5', padding: 'px-1.5', iconSize: 8, textSize: 'text-[8px]' },
+      medium: { height: 'h-6', padding: 'px-2', iconSize: 10, textSize: 'text-[10px]' },
+      large: { height: 'h-7', padding: 'px-2.5', iconSize: 12, textSize: 'text-xs' }
+    };
 
-    if (listeningIndex >= speakingIndex) {
-      return { level: listeningLevel, skill: 'listening' };
-    } else {
-      return { level: speakingLevel, skill: 'speaking' };
-    }
+    const config = sizeConfig[size];
+
+    return (
+      <div className="flex items-center justify-center gap-1">
+        {speakingLevel && (
+          <div className={`${config.height} ${config.padding} bg-white rounded-full flex items-center gap-0.5 border border-pink-300 shadow-sm`}>
+            <Mic size={config.iconSize} className="text-pink-500" />
+            <span className={`${config.textSize} font-bold text-gray-700`}>{speakingLevel}</span>
+          </div>
+        )}
+        {listeningLevel && (
+          <div className={`${config.height} ${config.padding} bg-white rounded-full flex items-center gap-0.5 border border-blue-300 shadow-sm`}>
+            <Headphones size={config.iconSize} className="text-blue-500" />
+            <span className={`${config.textSize} font-bold text-gray-700`}>{listeningLevel}</span>
+          </div>
+        )}
+      </div>
+    );
   };
 
   return (
@@ -189,23 +203,17 @@ export default function LevelRankingModal({ isOpen, onClose, currentUserId }) {
                                <div className="absolute -bottom-1 -right-1 w-8 h-8 bg-slate-400 rounded-full flex items-center justify-center border-2 border-white shadow-lg z-20">
                                  <Medal size={16} className="text-white" />
                                </div>
-                               {/* Belt Badge */}
-                               {getHighestBelt(top3[1]) && (
-                                 <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-auto px-2 h-6 bg-white rounded-full flex items-center justify-center gap-1 border-2 border-slate-300 shadow-md z-20">
-                                   {getHighestBelt(top3[1]).skill === 'listening' ? (
-                                     <Headphones size={10} className="text-blue-500" />
-                                   ) : (
-                                     <Mic size={10} className="text-pink-500" />
-                                   )}
-                                   <span className="text-[10px] font-bold text-gray-700">{getHighestBelt(top3[1]).level}</span>
-                                 </div>
-                               )}
+
                             </div>
                             <p className="font-bold text-gray-900 text-sm mb-1 truncate px-2">{top3[1].displayName}</p>
-                            <div className="inline-flex items-center gap-1 bg-gray-100 px-2 py-1 rounded-full mb-2">
-                              <Trophy size={10} className="text-slate-500" />
-                              <span className="text-xs font-semibold text-gray-700">Lvl {top3[1].currentLevel}</span>
-                            </div>
+                             <div className="inline-flex items-center gap-1 bg-gray-100 px-2 py-1 rounded-full mb-2">
+                               <Trophy size={10} className="text-slate-500" />
+                               <span className="text-xs font-semibold text-gray-700">Lvl {top3[1].currentLevel}</span>
+                             </div>
+                             {/* Speaking & Listening Levels */}
+                             <div className="mb-2">
+                               {renderSkillBadges(top3[1], 'medium')}
+                             </div>
                             <div className="flex flex-col items-center gap-1 text-xs text-gray-600 mb-3">
                               <div className="flex items-center gap-0.5">
                                 <Flame size={12} className="text-orange-500" />
@@ -246,23 +254,17 @@ export default function LevelRankingModal({ isOpen, onClose, currentUserId }) {
                                <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-8 h-8 bg-gradient-to-br from-yellow-300 to-yellow-500 rounded-full flex items-center justify-center border border-white shadow-md z-50">
                                  <Crown size={16} className="text-white" fill="currentColor" />
                                </div>
-                               {/* Belt Badge */}
-                               {getHighestBelt(top3[0]) && (
-                                 <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-auto px-2.5 h-7 bg-white rounded-full flex items-center justify-center gap-1 border-2 border-yellow-400 shadow-lg z-20">
-                                   {getHighestBelt(top3[0]).skill === 'listening' ? (
-                                     <Headphones size={12} className="text-blue-500" />
-                                   ) : (
-                                     <Mic size={12} className="text-pink-500" />
-                                   )}
-                                   <span className="text-xs font-bold text-gray-700">{getHighestBelt(top3[0]).level}</span>
-                                 </div>
-                               )}
+
                             </div>
                             <p className="font-black text-gray-900 text-base mb-1 truncate px-2">{top3[0].displayName}</p>
-                            <div className="inline-flex items-center gap-1 bg-yellow-100 px-3 py-1 rounded-full mb-2">
-                              <Trophy size={12} className="text-yellow-600" />
-                              <span className="text-sm font-bold text-gray-900">Lvl {top3[0].currentLevel}</span>
-                            </div>
+                             <div className="inline-flex items-center gap-1 bg-yellow-100 px-3 py-1 rounded-full mb-2">
+                               <Trophy size={12} className="text-yellow-600" />
+                               <span className="text-sm font-bold text-gray-900">Lvl {top3[0].currentLevel}</span>
+                             </div>
+                             {/* Speaking & Listening Levels */}
+                             <div className="mb-2">
+                               {renderSkillBadges(top3[0], 'large')}
+                             </div>
                             <div className="flex flex-col items-center gap-1 text-sm text-gray-700 mb-3">
                               <div className="flex items-center gap-0.5">
                                 <Flame size={14} className="text-orange-500" />
@@ -303,23 +305,17 @@ export default function LevelRankingModal({ isOpen, onClose, currentUserId }) {
                                <div className="absolute -bottom-1 -right-1 w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center border-2 border-white shadow-lg z-20">
                                  <Star size={16} className="text-white" fill="currentColor" />
                                </div>
-                               {/* Belt Badge */}
-                               {getHighestBelt(top3[2]) && (
-                                 <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-auto px-2 h-6 bg-white rounded-full flex items-center justify-center gap-1 border-2 border-orange-300 shadow-md z-20">
-                                   {getHighestBelt(top3[2]).skill === 'listening' ? (
-                                     <Headphones size={10} className="text-blue-500" />
-                                   ) : (
-                                     <Mic size={10} className="text-pink-500" />
-                                   )}
-                                   <span className="text-[10px] font-bold text-gray-700">{getHighestBelt(top3[2]).level}</span>
-                                 </div>
-                               )}
+
                             </div>
                             <p className="font-bold text-gray-900 text-sm mb-1 truncate px-2">{top3[2].displayName}</p>
-                            <div className="inline-flex items-center gap-1 bg-orange-100 px-2 py-1 rounded-full mb-2">
-                              <Trophy size={10} className="text-orange-600" />
-                              <span className="text-xs font-semibold text-gray-700">Lvl {top3[2].currentLevel}</span>
-                            </div>
+                             <div className="inline-flex items-center gap-1 bg-orange-100 px-2 py-1 rounded-full mb-2">
+                               <Trophy size={10} className="text-orange-600" />
+                               <span className="text-xs font-semibold text-gray-700">Lvl {top3[2].currentLevel}</span>
+                             </div>
+                             {/* Speaking & Listening Levels */}
+                             <div className="mb-2">
+                               {renderSkillBadges(top3[2], 'medium')}
+                             </div>
                             <div className="flex flex-col items-center gap-1 text-xs text-gray-600 mb-3">
                               <div className="flex items-center gap-0.5">
                                 <Flame size={12} className="text-orange-500" />
@@ -377,17 +373,7 @@ export default function LevelRankingModal({ isOpen, onClose, currentUserId }) {
                              ) : (
                                <span>{getUserAvatar(user) || user.displayName?.charAt(0).toUpperCase() || '?'}</span>
                              )}
-                             {/* Belt Badge for top 10 */}
-                             {isTop10 && getHighestBelt(user) && (
-                               <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-auto px-1.5 h-5 bg-white rounded-full flex items-center justify-center gap-0.5 border border-purple-300 shadow-sm">
-                                 {getHighestBelt(user).skill === 'listening' ? (
-                                   <Headphones size={8} className="text-blue-500" />
-                                 ) : (
-                                   <Mic size={8} className="text-pink-500" />
-                                 )}
-                                 <span className="text-[8px] font-bold text-gray-700">{getHighestBelt(user).level}</span>
-                               </div>
-                             )}
+
                            </div>
                           <div className="flex-1 min-w-0">
                             <p className="font-bold text-gray-900 text-sm truncate flex items-center gap-2">
@@ -398,16 +384,19 @@ export default function LevelRankingModal({ isOpen, onClose, currentUserId }) {
                                 </span>
                               )}
                             </p>
-                            <div className="flex items-center gap-2 text-xs text-gray-600">
-                              <span className="flex items-center gap-0.5">
-                                <Trophy size={10} className="text-indigo-500" />
-                                Lv {user.currentLevel}
-                              </span>
-                              <span className="flex items-center gap-0.5">
-                                <Flame size={10} className="text-orange-500" />
-                                {user.streak || 0}d
-                              </span>
-                            </div>
+                             <div className="flex items-center gap-2 text-xs text-gray-600">
+                               <span className="flex items-center gap-0.5">
+                                 <Trophy size={10} className="text-indigo-500" />
+                                 Lv {user.currentLevel}
+                               </span>
+                               <span className="flex items-center gap-0.5">
+                                 <Flame size={10} className="text-orange-500" />
+                                 {user.streak || 0}d
+                               </span>
+                               {/* Speaking & Listening Levels */}
+                                                            {renderSkillBadges(user, 'small')}
+                             </div>
+
                           </div>
                           <div className="text-right">
                             <p className="font-bold text-indigo-600 text-sm">{user.totalXP || 0} XP</p>
