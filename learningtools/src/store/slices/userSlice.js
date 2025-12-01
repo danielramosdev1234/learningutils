@@ -127,24 +127,22 @@ export const initializeUser = createAsyncThunk(
       const currentUser = getCurrentUser();
       const referredByCode = getReferredBy();
 
-      console.log('🔐 === INICIALIZANDO USUÁRIO ===');
-      console.log('   Autenticado:', !!currentUser);
-      console.log('   Código de convite na URL:', referredByCode || 'Nenhum');
+
 
       if (currentUser) {
         // ✅ USUÁRIO AUTENTICADO
-        console.log('👤 Usuário autenticado:', currentUser.uid);
+  
 
         // ✅ PASSO 1: Carrega dados do Firebase (com retry automático e fallback para cache)
         const userData = await loadAuthUserData(currentUser.uid, 3);
 
         if (!userData) {
-          console.log('🆕 Primeira vez deste usuário ou sem dados no Firestore');
+
 
           // Última tentativa: tenta carregar do cache local
           const cachedData = loadAuthUserDataFromCache(currentUser.uid);
           if (cachedData) {
-            console.log('✅ Usando dados do cache local (primeira vez ou offline)');
+
 
             // Se tem xpSystem no cache, carrega XP também
             if (cachedData.xpSystem) {
@@ -174,7 +172,7 @@ export const initializeUser = createAsyncThunk(
           }
 
           // Se não tem cache também, retorna estado inicial
-          console.log('🆕 Criando perfil inicial zerado');
+
           return {
             mode: 'authenticated',
             userId: currentUser.uid,
@@ -217,20 +215,12 @@ export const initializeUser = createAsyncThunk(
 
         // ✅ PASSO 4: Processa código de convite (se existir e ainda não foi processado)
         if (referredByCode && !referralData.referredBy && !hasProcessedReferral()) {
-          console.log('🎯 Processando código de convite:', referredByCode);
-
           try {
             const result = await registerReferralUsage(currentUser.uid, referredByCode);
 
             if (result && result.success) {
-              console.log('✅ Referral registrado!');
-
               // Dá recompensa para quem convidou
               const rewardResult = await confirmInviteAndReward(result.referrerId, currentUser.uid);
-
-              if (rewardResult && rewardResult.success) {
-                console.log('🎉 Recompensa entregue ao convidador!');
-              }
 
               // Atualiza APENAS o campo referredBy no Firebase
               await updateDoc(doc(db, 'users', currentUser.uid), {
@@ -243,8 +233,6 @@ export const initializeUser = createAsyncThunk(
               // Limpa flags
               clearReferredBy();
               markReferralAsProcessed();
-
-              console.log('✅ Código de convite processado com sucesso!');
             }
           } catch (error) {
             console.error('❌ Erro ao processar referral:', error);
@@ -272,7 +260,7 @@ export const initializeUser = createAsyncThunk(
         const guestId = getOrCreateGuestId();
         const guestData = loadGuestData();
 
-        console.log('🎭 Modo Guest');
+
 
         await dispatch(initializeReferral({
           userId: guestId,
@@ -299,11 +287,9 @@ export const initializeUser = createAsyncThunk(
       // Se o usuário está autenticado mas houve erro, tenta cache antes de retornar estado inicial
       const currentUser = getCurrentUser();
       if (currentUser) {
-        console.log('⚠️ Erro na inicialização, tentando cache local...');
         const cachedData = loadAuthUserDataFromCache(currentUser.uid);
 
         if (cachedData) {
-          console.log('✅ Usando dados do cache local após erro');
 
           // Se tem xpSystem no cache, carrega XP também
           if (cachedData.xpSystem) {
@@ -329,7 +315,7 @@ export const initializeUser = createAsyncThunk(
         };
         }
 
-        console.log('⚠️ Nenhum cache encontrado, retornando perfil básico.');
+
         return {
           mode: 'authenticated',
           userId: currentUser.uid,
@@ -362,9 +348,6 @@ export const initializeReferral = createAsyncThunk(
       if (!code) {
         code = generateReferralCode(displayName, userId);
         saveMyReferralCode(code);
-        console.log('🎉 Novo código gerado e salvo:', code);
-      } else {
-        console.log('♻️ Código existente recuperado:', code);
       }
 
       const referredBy = existingReferredBy || getReferredBy();
@@ -388,7 +371,7 @@ export const loginWithGoogle = createAsyncThunk(
   'user/loginWithGoogle',
   async (_, { getState, dispatch, rejectWithValue }) => {
     try {
-      console.log('🔐 === LOGIN COM GOOGLE ===');
+
 
       const result = await signInWithGoogle();
 
@@ -397,7 +380,7 @@ export const loginWithGoogle = createAsyncThunk(
       }
 
       const { user } = result;
-      console.log('✅ Autenticação Google bem-sucedida:', user.uid);
+
 
       // ✅ MIGRAÇÃO (só acontece se Firebase estiver vazio)
       const migrationResult = await migrateGuestToAuth(user.uid, {
@@ -406,7 +389,7 @@ export const loginWithGoogle = createAsyncThunk(
         photoURL: user.photoURL
       });
 
-      console.log('📊 Resultado da migração:', migrationResult);
+
 
       // ✅ CARREGA DADOS DO FIREBASE (já salvos pela migração)
       const userData = await loadAuthUserData(user.uid, 3);
@@ -415,9 +398,7 @@ export const loginWithGoogle = createAsyncThunk(
         throw new Error('Falha ao carregar dados após login');
       }
 
-      console.log('✅ Dados carregados do Firebase:');
-      console.log(`   Frases: ${userData.stats?.totalPhrases || 0}`);
-      console.log(`   Level: ${userData.levelSystem?.currentLevel || 1}`);
+
 
       // ✅ Carrega dados de XP (todos os usuários já foram migrados)
       try {
@@ -484,12 +465,7 @@ export const saveProgress = createAsyncThunk(
   async (_, { getState }) => {
     const state = getState().user;
 
-    console.log('💾 Salvando progresso...');
-    console.log('   Mode:', state.mode);
-    console.log('   User ID:', state.userId);
-    console.log('   Total Frases:', state.stats.totalPhrases);
-    console.log('   Level:', state.levelSystem.currentLevel);
-    console.log('   Categories progress:', state.progress?.categories);
+
 
     if (state.mode === 'authenticated') {
       const referralToSave = state.referral || {
@@ -515,7 +491,7 @@ export const saveProgress = createAsyncThunk(
           state.lastActivity
         );
 
-        console.log('✅ Dados salvos no Firestore');
+
       } catch (error) {
         console.error('❌ Erro ao salvar no Firestore:', error);
         throw error;
@@ -528,7 +504,7 @@ export const saveProgress = createAsyncThunk(
         state.referral
       );
 
-      console.log('✅ Dados guest salvos');
+
     }
 
     return true;
@@ -556,7 +532,7 @@ export const checkDailyBackup = createAsyncThunk(
     const result = await checkAndCreateBackup(state.userId, userData);
 
     if (result.success) {
-      console.log('✅ Backup diário criado com sucesso!');
+      // Backup created successfully
     }
 
     return result;
@@ -623,30 +599,20 @@ const userSlice = createSlice({
 
       if (!state.levelSystem.globalCompletedPhrases.includes(phraseId)) {
         state.levelSystem.globalCompletedPhrases.push(phraseId);
-        console.log(`✅ Frase ${phraseIndex + 1} (ID: ${phraseId}) adicionada!`);
-      } else {
-        console.log(`ℹ️ Frase ${phraseIndex + 1} já estava completada (prática adicional)`);
       }
 
       if (!state.levelSystem.globalCompletedIndices.includes(phraseIndex)) {
         state.levelSystem.globalCompletedIndices.push(phraseIndex);
-        console.log(`📊 Índice ${phraseIndex} registrado nos completados`);
       }
 
       const phrasesNeededForCurrentLevel = currentLevel * 10;
       const totalCompleted = state.levelSystem.globalCompletedIndices.length;
 
-      console.log(`📈 Progresso: ${totalCompleted}/${phrasesNeededForCurrentLevel} frases únicas`);
-
       if (totalCompleted >= phrasesNeededForCurrentLevel) {
-        console.log(`🎉 Level ${currentLevel} completed! (${totalCompleted}/${phrasesNeededForCurrentLevel})`);
-
         const nextLevel = currentLevel + 1;
         state.levelSystem.currentLevel = nextLevel;
         state.levelSystem.showLevelUpModal = true;
         state.levelSystem.pendingLevelUp = nextLevel;
-
-        console.log(`🔓 Level ${nextLevel} unlocked! Need ${nextLevel * 10} total phrases.`);
       }
     },
 
@@ -655,7 +621,7 @@ const userSlice = createSlice({
         ...state.referral,
         ...action.payload
       };
-      console.log('✅ Referral data updated:', action.payload);
+
     },
 
     giveWelcomeBonus: (state) => {
@@ -663,7 +629,7 @@ const userSlice = createSlice({
         state.referral.rewards.skipPhrases += 3;
         state.referral.hasReceivedWelcomeBonus = true;
 
-        console.log('🎁 Bônus de boas-vindas: +3 frases!');
+
 
         trackReferralEvent('welcome_bonus_received', {
           referredBy: state.referral.referredBy
@@ -674,13 +640,13 @@ const userSlice = createSlice({
     useSkipPhrase: (state) => {
       if (state.referral.rewards.skipPhrases > 0) {
         state.referral.rewards.skipPhrases -= 1;
-        console.log(`🎁 Frase pulada! Restam: ${state.referral.rewards.skipPhrases}`);
+
 
         trackReferralEvent('skip_phrase_used', {
           remaining: state.referral.rewards.skipPhrases
         });
       } else {
-        console.log('⚠️ Sem frases para pular disponíveis');
+
       }
     },
 
@@ -698,8 +664,7 @@ const userSlice = createSlice({
         const { skipPhrases } = calculateRewards(state.referral.totalInvites);
         state.referral.rewards.skipPhrases = skipPhrases;
 
-        console.log(`✅ Amigo confirmado! Total: ${state.referral.totalInvites}`);
-        console.log(`🎁 Nova recompensa: ${state.referral.rewards.skipPhrases} frases`);
+
 
         trackReferralEvent('invite_confirmed', {
           totalInvites: state.referral.totalInvites,
@@ -829,7 +794,7 @@ const userSlice = createSlice({
       const { missedDate } = action.payload;
 
       if (state.stats.streak.freezes <= 0) {
-        console.log('❌ Sem freezes disponíveis');
+  
         return;
       }
 
@@ -843,7 +808,7 @@ const userSlice = createSlice({
       const today = new Date().toISOString().split('T')[0];
       state.stats.streak.lastActivityDate = today;
 
-      console.log(`❄️ Freeze usado! Restam: ${state.stats.streak.freezes}`);
+
     },
 
     updateStreak: (state) => {
@@ -862,7 +827,7 @@ const userSlice = createSlice({
         state.stats.streak.lastActivityDate = today;
         state.stats.streak.history = [today];
         state.stats.streak.nextRewardAt = 7;
-        console.log('🔥 Streak iniciado: Dia 1');
+
         return;
       }
 
@@ -898,11 +863,11 @@ const userSlice = createSlice({
             });
             state.stats.streak.showRewardModal = true;
             state.stats.streak.pendingReward = milestone;
-            console.log(`🎁 RECOMPENSA! ${milestone} dias - Ganhou 1 freeze! Total: ${state.stats.streak.freezes}`);
+
           }
         }
 
-        console.log(`🔥 Streak: ${state.stats.streak.current} dias!`);
+
 
       } else if (diffDays === 2 && state.stats.streak.freezes > 0) {
         // ⭐ FECHAMENTO DO IF ANTERIOR ADICIONADO ACIMA
@@ -927,10 +892,10 @@ const userSlice = createSlice({
           state.stats.streak.history.push(today);
         }
 
-        console.log(`❄️ Freeze usado automaticamente! Restam: ${state.stats.streak.freezes}`);
+
 
       } else {
-        console.log(`💔 Streak quebrado: ${state.stats.streak.current} dias`);
+
         state.stats.streak.current = 1;
         state.stats.streak.lastActivityDate = today;
 
@@ -945,7 +910,7 @@ const userSlice = createSlice({
     updateLevelSystemIndices: (state, action) => {
       const { indices } = action.payload;
       state.levelSystem.globalCompletedIndices = indices;
-      console.log('✅ Level system indices updated:', indices);
+
     },
 
     updateLastActivity: (state, action) => {
@@ -962,7 +927,7 @@ const userSlice = createSlice({
         displayText
       };
 
-      console.log('✅ Last activity updated:', state.lastActivity);
+
     }
   },
   extraReducers: (builder) => {
@@ -1058,13 +1023,13 @@ const userSlice = createSlice({
       state.referral.code = action.payload.code;
       state.referral.referredBy = action.payload.referredBy;
 
-      console.log('✅ Referral inicializado:', action.payload);
+
     });
 
     builder.addCase(checkDailyBackup.fulfilled, (state, action) => {
       if (action.payload.success) {
         state.needsBackup = false;
-        console.log('✅ Flag de backup limpa');
+
       }
     });
 

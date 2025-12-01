@@ -105,12 +105,7 @@ export const calculateXPProgress = (totalXP) => {
 
 // 📈 FUNÇÃO DE DEBUG (útil para testar)
 export const debugXPSystem = () => {
-  console.log('🔍 XP System Debug:');
-  for (let level = 1; level <= 10; level++) {
-    const xpRequired = getXPRequiredForLevel(level);
-    const totalXP = getTotalXPForLevel(level);
-    console.log(`Level ${level}: ${xpRequired} XP needed | Total accumulated: ${totalXP} XP`);
-  }
+  // Debug function removed for production
 };
 
 // Estado inicial
@@ -150,7 +145,7 @@ export const addXP = createAsyncThunk(
   'xp/addXP',
   async ({ userId, mode, amount, metadata = {} }, { getState, rejectWithValue }) => {
     try {
-      console.log(`✨ Adding ${amount} XP for ${mode}`);
+
 
       const state = getState().xp;
       const oldLevel = state.currentLevel;
@@ -204,7 +199,7 @@ export const addXP = createAsyncThunk(
         console.warn('⚠️ Failed to save XP history:', err);
       });
 
-      console.log(`✅ XP updated: ${state.totalXP} → ${newTotalXP}`);
+
 
       return {
         amount,
@@ -235,8 +230,7 @@ const loadXPDataFromCache = (userId) => {
       const xpSystem = cachedData.xpSystem || {};
       
       if (xpSystem.totalXP !== undefined) {
-        console.log('📦 XP carregado do cache local (offline)');
-        console.log('   Total XP:', xpSystem.totalXP);
+
         
         const lastUpdatedDate = xpSystem.lastUpdated ? new Date(xpSystem.lastUpdated) : new Date();
         const today = new Date();
@@ -280,7 +274,7 @@ const saveXPDataToCache = (userId, xpData) => {
         lastUpdated: xpData.lastUpdated?.toISOString ? xpData.lastUpdated.toISOString() : new Date().toISOString()
       };
       localStorage.setItem(cacheKey, JSON.stringify(cachedData));
-      console.log('💾 XP salvo no cache local');
+
     }
   } catch (error) {
     console.error('❌ Erro ao salvar XP no cache:', error);
@@ -364,7 +358,7 @@ export const loadXPData = createAsyncThunk(
         
         // Se não está online, tenta cache imediatamente
         if (!isOnline()) {
-          console.log('📴 Sem conexão, tentando cache local para XP...');
+
           const cachedXP = loadXPDataFromCache(userId);
           if (cachedXP) {
             return cachedXP;
@@ -373,10 +367,10 @@ export const loadXPData = createAsyncThunk(
       }
 
       // Se todas as tentativas falharam, tenta cache
-      console.log('⚠️ Tentando carregar XP do cache local...');
+
       const cachedXP = loadXPDataFromCache(userId);
       if (cachedXP) {
-        console.log('✅ XP carregado do cache local');
+
         return cachedXP;
       }
 
@@ -420,7 +414,7 @@ export const loadXPHistory = createAsyncThunk(
         ...doc.data()
       }));
 
-      console.log(`📊 Loaded ${history.length} XP activities`);
+
       return history;
 
     } catch (error) {
@@ -446,7 +440,7 @@ export const resetDailyXP = createAsyncThunk(
         const today = new Date();
 
         if (lastUpdate.toDateString() === today.toDateString()) {
-          console.log('ℹ️ XP already reset today');
+
           return state.xpToday;
         }
       }
@@ -456,7 +450,7 @@ export const resetDailyXP = createAsyncThunk(
         'xpSystem.xpToday': 0
       });
 
-      console.log('🔄 Daily XP reset');
+
       return 0;
 
     } catch (error) {
@@ -518,7 +512,7 @@ const xpSlice = createSlice({
         if (leveledUp) {
           state.showLevelUpModal = true;
           state.pendingLevelUp = newLevel;
-          console.log(`🎉 LEVEL UP! ${oldLevel} → ${newLevel}`);
+
         }
       })
       .addCase(addXP.rejected, (state, action) => {

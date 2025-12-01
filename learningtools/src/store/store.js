@@ -26,7 +26,6 @@ const autoSaveMiddleware = store => next => action => {
     // Salva após 1 segundo de inatividade
     window.autoSaveTimeout = setTimeout(() => {
           // XP já é salvo automaticamente, não precisa dispatch
-          console.log('💾 Auto-save triggered');
         }, 1000);
       }
 
@@ -43,8 +42,6 @@ const autoBackupMiddleware = store => next => action => {
 
     // Se está marcado para fazer backup (primeira atividade do dia)
     if (state.needsBackup && state.mode === 'authenticated') {
-      console.log('🔔 Primeira atividade do dia detectada, criando backup...');
-
       // Dispara backup após 2 segundos (espera salvar progresso primeiro)
       setTimeout(() => {
         store.dispatch(checkDailyBackup());
