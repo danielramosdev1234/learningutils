@@ -20,6 +20,7 @@ import { LevelIndicator } from './leaderboard/LevelIndicator';
 import PWAInstallCard from './ui/PWAInstallCard';
 import { useUILanguage } from '../context/LanguageContext.jsx';
 import { translateUI } from '../i18n/uiTranslations.js';
+import AssessmentCard from './assessment/AssessmentCard.jsx';
 
 const Dashboard = () => {
   const [showWelcome, setShowWelcome] = useState(true);
@@ -351,6 +352,16 @@ const Dashboard = () => {
           </div>
         </div>
 
+        <div className="mb-4">
+            <AssessmentCard onNavigate={(action) => {
+              if (action === 'assessment') {
+                window.location.href = '/?mode=assessment';
+              } else if (action === 'assessment-history') {
+                // Handle assessment history navigation if needed
+                console.log('Navigate to assessment history');
+              }
+            }} />
+        </div>
         {/* Continue Card */}
         <div className="mb-4">
           <ContinueCard />

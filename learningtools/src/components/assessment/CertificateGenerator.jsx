@@ -306,14 +306,24 @@ const styles = StyleSheet.create({
   }
 });
 
-// Descrições CEFR profissionais
+// Descrições CEFR específicas por habilidade
 const CEFR_DESCRIPTIONS = {
-  'A1': 'Capable of understanding and using familiar everyday expressions and basic phrases. Can introduce themselves and answer simple questions about personal details.',
-  'A2': 'Able to communicate in simple, routine tasks requiring direct exchange of information on familiar topics. Can describe aspects of their background and immediate environment.',
-  'B1': 'Proficient in handling most situations likely to arise while traveling. Can produce simple connected text on familiar topics and describe experiences, events, and ambitions.',
-  'B2': 'Demonstrates fluent and spontaneous interaction with native speakers. Can produce clear, detailed text on various subjects and explain viewpoints on topical issues.',
-  'C1': 'Exhibits advanced proficiency with flexible and effective language use for social, academic, and professional purposes. Can produce clear, well-structured, detailed text.',
-  'C2': 'Shows mastery comparable to educated native speakers. Can express themselves spontaneously, fluently, and precisely, differentiating finer shades of meaning in complex situations.'
+  speaking: {
+    'A1': 'Can pronounce basic words and phrases with understandable clarity. Able to introduce themselves and answer simple personal questions with short responses.',
+    'A2': 'Can communicate in simple conversations about familiar topics with acceptable pronunciation. Able to describe basic aspects of their life and immediate environment.',
+    'B1': 'Can speak with reasonable fluency on familiar topics. Able to express opinions, describe experiences, and handle most travel situations with clear pronunciation.',
+    'B2': 'Demonstrates fluent and natural speech with native speakers. Can articulate clear viewpoints on various subjects with good pronunciation and intonation control.',
+    'C1': 'Exhibits advanced speaking proficiency with flexible expression for social, academic, and professional contexts. Can produce clear, well-structured speech with natural flow.',
+    'C2': 'Shows speaking mastery comparable to educated native speakers. Can express themselves spontaneously and fluently with precise articulation and natural intonation patterns.'
+  },
+  listening: {
+    'A1': 'Can understand familiar words and basic phrases when people speak slowly and clearly. Able to comprehend simple questions about personal information.',
+    'A2': 'Can understand phrases and common vocabulary on familiar topics. Able to grasp the main point in short, clear messages and announcements.',
+    'B1': 'Can understand the main points of clear standard speech on familiar matters. Able to follow the main points of extended discussion on topics of personal interest.',
+    'B2': 'Demonstrates ability to understand extended speech and lectures on complex topics. Can follow most TV news and current affairs programs with good comprehension.',
+    'C1': 'Exhibits advanced listening comprehension of extended speech even when not clearly structured. Can understand television programs and films without much effort.',
+    'C2': 'Shows listening mastery comparable to educated native speakers. Can understand any kind of spoken language with ease, including fast-paced conversations and various accents.'
+  }
 };
 
 // Componente do PDF
@@ -325,7 +335,10 @@ const CertificatePDF = ({ name, level, skill, score, date, qrCodeUrl }) => {
   });
 
   const skillName = skill === 'speaking' ? 'Speaking' : 'Listening';
-  const certificateId = `LF-${Date.now().toString(36).toUpperCase()}-${skill.substring(0,3).toUpperCase()}`;
+  const certificateId = `LF-${Date.now().toString(36).toUpperCase()}-${skill.substring(0, 3).toUpperCase()}`;
+
+  // ✅ Obter descrição específica da habilidade
+  const cefrDescription = CEFR_DESCRIPTIONS[skill]?.[level] || CEFR_DESCRIPTIONS.speaking[level];
 
   return (
     <Document>
@@ -378,10 +391,10 @@ const CertificatePDF = ({ name, level, skill, score, date, qrCodeUrl }) => {
               </View>
             </View>
 
-            {/* Informação CEFR */}
+            {/* Informação CEFR - Específica da habilidade */}
             <View style={styles.cefrSection}>
-              <Text style={styles.cefrTitle}>CEFR Level {level} Reference</Text>
-              <Text style={styles.cefrText}>{CEFR_DESCRIPTIONS[level]}</Text>
+              <Text style={styles.cefrTitle}>CEFR Level {level} - {skillName} Proficiency</Text>
+              <Text style={styles.cefrText}>{cefrDescription}</Text>
             </View>
           </View>
         </View>
@@ -450,7 +463,7 @@ export const generateCertificate = async (certificateData) => {
     }
 
     // Gerar QR Code com URL de verificação
-    const certificateId = `LF-${Date.now().toString(36).toUpperCase()}-${certificateData.skill.substring(0,3).toUpperCase()}`;
+    const certificateId = `LF-${Date.now().toString(36).toUpperCase()}-${certificateData.skill.substring(0, 3).toUpperCase()}`;
     const qrCodeUrl = `${window.location.origin}/verify/${certificateId}`;
     let qrCodeDataUrl = null;
 
