@@ -20,7 +20,7 @@ export default function PWAInstallCard() {
       <div className="relative z-10">
         <div className="flex items-start gap-4 mb-4">
           <div className="text-blue-600 p-3 rounded-xl backdrop-blur-sm">
-            <Smartphone className="w-8 h-8" />
+            <img src="/pwa-512x512.png" alt="PWA Icon" className="w-18 h-18" />
           </div>
           <div className="flex-1">
             <h3 className="text-2xl font-bold mb-2 flex items-center gap-2 text-blue-600">
@@ -28,7 +28,7 @@ export default function PWAInstallCard() {
               Instale o App
             </h3>
             <p className="text-blue-600 text-sm leading-relaxed">
-              Adicione o LearnFunTools à sua tela inicial para acesso rápido, 
+              Adicione o LearnFun à sua tela inicial para acesso rápido,
               funcionalidades offline e uma experiência ainda melhor!
             </p>
           </div>
