@@ -1607,7 +1607,46 @@
       "cefr_level": "C2",
       "theme": "hermeneutics",
       "grammar_point": "philosophical_contrast"
+    },
+    {
+      "id": "speak_c2_016",
+      "text": "The dialectical tension between individual agency and structural determinism continues to vex sociologists grappling with questions of social reproduction and transformative praxis.",
+      "translation": "A tensão dialética entre agência individual e determinismo estrutural continua a atormentar sociólogos que lidam com questões de reprodução social e práxis transformadora.",
+      "cefr_level": "C2",
+      "theme": "sociology",
+      "grammar_point": "complex_nominal_compounds"
+    },
+    {
+      "id": "speak_c2_017",
+      "text": "Wittgenstein's private language argument fundamentally undermines the Cartesian cogito by demonstrating that linguistic meaning is inherently intersubjective and socially constituted.",
+      "translation": "O argumento da linguagem privada de Wittgenstein fundamentalmente mina o cogito cartesiano ao demonstrar que o significado linguístico é inerentemente intersubjetivo e socialmente constituído.",
+      "cefr_level": "C2",
+      "theme": "linguistic_philosophy",
+      "grammar_point": "philosophical_attribution"
+    },
+    {
+      "id": "speak_c2_018",
+      "text": "The quantum mechanical principle of superposition, when extrapolated to macroscopic domains, engenders paradoxes that challenge classical notions of causality and temporal sequence.",
+      "translation": "O princípio quântico da superposição, quando extrapolado para domínios macroscópicos, engendra paradoxos que desafiam noções clássicas de causalidade e sequência temporal.",
+      "cefr_level": "C2",
+      "theme": "quantum_physics",
+      "grammar_point": "scientific_extrapolation"
+    },
+    {
+      "id": "speak_c2_019",
+      "text": "The Lacanian mirror stage constitutes a pivotal moment in psychosexual development wherein the infant's fragmented body image coalesces into a unified ego through identificatory processes.",
+      "translation": "O estágio do espelho lacaniano constitui um momento crucial no desenvolvimento psicossexual em que a imagem corporal fragmentada do bebê coalesce em um ego unificado através de processos identificatórios.",
+      "cefr_level": "C2",
+      "theme": "psychoanalysis",
+      "grammar_point": "theoretical_terminology"
+    },
+    {
+      "id": "speak_c2_020",
+      "text": "The Deleuzian concept of deterritorialization posits that capitalist flows perpetually decode and recode social formations, creating nomadic subjectivities unbound by traditional territorial constraints.",
+      "translation": "O conceito deleuziano de desterritorialização postula que fluxos capitalistas decodificam e recodificam perpetuamente formações sociais, criando subjetividades nômades não vinculadas por restrições territoriais tradicionais.",
+      "cefr_level": "C2",
+      "theme": "poststructuralism",
+      "grammar_point": "metaphorical_abstraction"
     }
   ]
-
 }

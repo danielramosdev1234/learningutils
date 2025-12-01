@@ -234,6 +234,7 @@ const AssessmentTrainer = () => {
 
 
   const isProcessingAnswer = useRef(false);
+  const isCompletingSpeaking = useRef(false);
 
   // Update ref when currentLevel changes
   useEffect(() => {
@@ -317,17 +318,8 @@ const AssessmentTrainer = () => {
       setQuestionsLevel(nextLevel || currentLevel);
       setQuestionIndex(prev => prev + 1);
     } else {
-      console.log('🎬 End of phase');
-
-      // ⭐ Verificar se já está em results para evitar chamada dupla
-      if (phase === 'results') {
-        console.log('⚠️ Already in results phase, skipping handleFinishTest');
-        return;
-      }
-
-      const finalLevelValue = nextLevel || currentLevel;
-      console.log('🏁 Test complete:', testMode, 'final level:', finalLevelValue);
-      handleFinishTest({ [testMode]: finalLevelValue });
+      console.log('🎬 End of phase - waiting for completion handler');
+      // ✅ NÃO chamar handleFinishTest aqui - já é chamado no onComplete
     }
   };
 
@@ -461,55 +453,62 @@ const AssessmentTrainer = () => {
             let newLevel = currentLevel;
             let newConsecutive = consecutiveCorrects;
 
+            console.log('🎯 Answer received:', { correct, currentLevel, consecutiveCorrects });
+
             if (correct) {
               newConsecutive = consecutiveCorrects + 1;
               if (newConsecutive >= 2) {
                 newLevel = adjustLevel(currentLevel, true);
-                console.log('🎚️ Level increased:', currentLevel, '->', newLevel, `(2 consecutive corrects)`);
+                newConsecutive = 0; // ✅ Resetar contador após subir de nível
+                console.log('🎚️ ✅ LEVEL UP!', currentLevel, '->', newLevel, `(2 consecutive corrects, resetting counter)`);
               } else {
                 console.log('🎚️ Consecutive corrects:', newConsecutive, '(need 2 to level up)');
               }
             } else {
               newConsecutive = 0;
               newLevel = adjustLevel(currentLevel, false);
-              console.log('🎚️ Level decreased:', currentLevel, '->', newLevel, `(wrong answer)`);
+              console.log('🎚️ ⬇️ LEVEL DOWN:', currentLevel, '->', newLevel, `(wrong answer)`);
             }
 
-             setConsecutiveCorrects(newConsecutive);
-             setCurrentLevel(newLevel);
-             currentLevelRef.current = newLevel;
+            // ✅ Atualizar estados de controle
+            console.log('📝 Updating states:', { newLevel, newConsecutive });
+            setConsecutiveCorrects(newConsecutive);
+            setCurrentLevel(newLevel);
+            currentLevelRef.current = newLevel;
 
-             setAnswers(prev => {
-               const newAnswers = {
-                 ...prev,
-                   speaking: [...prev.speaking, {
-                     questionId: currentQuestion?.id || 'unknown',
-                     level: currentLevel,
-                     correct,
-                     accuracy: similarity
-                   }]
-               };
+            // ✅ Adicionar resposta ao array e verificar conclusão no callback
+            setAnswers(prev => {
+              const newAnswers = {
+                ...prev,
+                speaking: [...prev.speaking, {
+                  questionId: currentQuestion?.id || 'unknown',
+                  level: currentLevel,
+                  correct,
+                  accuracy: similarity
+                }]
+              };
 
-               console.log('📊 Updated answers:', newAnswers.speaking.length);
+              const newSpeakingCount = newAnswers.speaking.length;
+              console.log('📊 Total speaking answers:', newSpeakingCount);
 
-               // ⭐ Chamar handleFinishTest quando completar 20 questões
-               const currentSpeakingCount = newAnswers.speaking.length;
-               if (currentSpeakingCount >= 20) {
-                 console.log('🏁 Speaking phase completed with level:', newLevel);
-                 // ⭐ Chamar handleFinishTest diretamente
-                 setTimeout(() => {
-                   handleFinishTest();
-                 }, 0);
-               }
-               // ⭐ handleNextQuestion removido - agora é chamado pelo handleNext do SpeakingTest
+              // ✅ Verificar se completou 20 questões
+              if (newSpeakingCount >= 20 && !isCompletingSpeaking.current) {
+                console.log('🏁 Speaking test completed with level:', newLevel);
+                isCompletingSpeaking.current = true;
+                // ✅ Chamar handleFinishTest após delay para garantir que o estado foi atualizado
+                setTimeout(() => {
+                  handleFinishTest();
+                }, 100);
+              }
 
-               return newAnswers;
-             });
-           }}
-           onNext={() => {
-             // Avançar para próxima questão com o nível atualizado
-             handleNextQuestion(currentLevelRef.current);
-           }}
+              return newAnswers;
+            });
+          }}
+          onNext={() => {
+            // Avançar para próxima questão com o nível atualizado
+            console.log('⏭️ Moving to next question with level:', currentLevelRef.current);
+            handleNextQuestion(currentLevelRef.current);
+          }}
         />
       );
 
@@ -572,7 +571,8 @@ const AssessmentTrainer = () => {
               newConsecutive = consecutiveCorrects + 1;
               if (newConsecutive >= 2) {
                 newLevel = adjustLevel(currentLevel, true);
-                console.log('🎚️ Level increased:', currentLevel, '->', newLevel);
+                newConsecutive = 0; // ✅ Resetar contador após subir de nível
+                console.log('🎚️ Level increased:', currentLevel, '->', newLevel, '(2 consecutive corrects, resetting counter)');
               } else {
                 console.log('🎚️ Consecutive corrects:', newConsecutive);
               }
@@ -582,20 +582,20 @@ const AssessmentTrainer = () => {
               console.log('🎚️ Level decreased:', currentLevel, '->', newLevel);
             }
 
-             // ✅ Atualizar estados de controle ANTES do setAnswers
-             setConsecutiveCorrects(newConsecutive);
-             setCurrentLevel(newLevel);
-             currentLevelRef.current = newLevel;
+            // ✅ Atualizar estados de controle ANTES do setAnswers
+            setConsecutiveCorrects(newConsecutive);
+            setCurrentLevel(newLevel);
+            currentLevelRef.current = newLevel;
 
             // ✅ Adicionar resposta ao array (SEM lógica dentro)
             setAnswers(prev => ({
               ...prev,
-                listening: [...prev.listening, {
-                  questionId: currentQuestion?.id || 'unknown',
-                  level: currentLevel,
-                  correct,
-                  accuracy: correct ? 100 : 0
-                }]
+              listening: [...prev.listening, {
+                questionId: currentQuestion?.id || 'unknown',
+                level: currentLevel,
+                correct,
+                accuracy: correct ? 100 : 0
+              }]
             }));
 
             // ✅ Verificar se completou FORA do setAnswers

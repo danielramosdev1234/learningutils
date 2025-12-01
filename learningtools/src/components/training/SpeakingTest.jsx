@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo, useEffect } from 'react';
+import React, { useState, useCallback, useMemo, useEffect, useRef } from 'react';
 import { Mic, Volume2, CheckCircle, XCircle, AlertCircle } from 'lucide-react';
 import { useSpeechRecognition } from '../../hooks/useSpeechRecognition';
 import { compareTexts } from '../../utils/textComparison';
@@ -12,6 +12,7 @@ const useSpeakingAssessment = (question, onComplete) => {
   const [similarity, setSimilarity] = useState(0);
   const [showAnalysis, setShowAnalysis] = useState(false);
   const [error, setError] = useState(null);
+  const hasSubmitted = useRef(false); // ✅ Track if answer was submitted
 
   // Callback quando reconhecimento de voz retorna resultado
   const handleSpeechResult = useCallback((text, errorMsg) => {
@@ -43,9 +44,12 @@ const useSpeakingAssessment = (question, onComplete) => {
 
   // Handler para submeter resposta
   const handleSubmit = useCallback(() => {
-    if (!question) return;
+    if (!question || hasSubmitted.current) return; // ✅ Prevent duplicate submissions
 
     const isCorrect = similarity >= 90;
+    hasSubmitted.current = true; // ✅ Mark as submitted
+    console.log('📤 Submitting answer:', { isCorrect, similarity });
+
     onComplete({
       correct: isCorrect,
       spokenText,
@@ -61,6 +65,7 @@ const useSpeakingAssessment = (question, onComplete) => {
     setSimilarity(0);
     setShowAnalysis(false);
     setError(null);
+    hasSubmitted.current = false; // ✅ Reset submission flag
   }, [question?.id]);
 
   return {
@@ -315,10 +320,14 @@ const SpeakingTest = ({
     handleSubmit
   } = useSpeakingAssessment(question, onComplete);
 
-  // Handler combinado para próxima questão
+  // Handler para próxima questão
   const handleNext = useCallback(() => {
+    // ✅ Chamar handleSubmit para processar a resposta ANTES de avançar
     handleSubmit();
-    onNext();
+    // Pequeno delay para garantir que onComplete foi processado
+    setTimeout(() => {
+      onNext();
+    }, 50);
   }, [handleSubmit, onNext]);
 
   // Loading state
