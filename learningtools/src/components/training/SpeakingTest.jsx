@@ -99,7 +99,6 @@ const SpeakingHeader = React.memo(({ questionIndex, totalQuestions, currentLevel
       </div>
       <div className="text-right">
         <p className="text-sm text-gray-600">Questão {questionIndex + 1}/{totalQuestions}</p>
-        <p className="text-lg font-bold text-blue-600">Nível {currentLevel}</p>
       </div>
     </div>
 
