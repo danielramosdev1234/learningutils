@@ -50,13 +50,6 @@ export const getFCMToken = async () => {
       );
     }
 
-    console.log('🔑 VAPID Key configurada:', {
-      length: normalizedKey.length,
-      preview: normalizedKey.substring(0, 30) + '...',
-      hasHyphens: normalizedKey.includes('-'),
-      hasUnderscores: normalizedKey.includes('_')
-    });
-
     const messaging = await getFirebaseMessaging();
     if (!messaging) {
       throw new Error('Firebase Messaging não está disponível');
@@ -84,21 +77,13 @@ export const getFCMToken = async () => {
     try {
       // Primeiro, verifica se há algum Service Worker registrado
       const registrations = await navigator.serviceWorker.getRegistrations();
-      console.log('📋 Service Workers registrados:', registrations.length);
-      
+
       if (registrations.length === 0) {
         throw new Error('Nenhum Service Worker registrado. Recarregue a página.');
       }
 
       registration = await navigator.serviceWorker.ready;
-      console.log('✅ Service Worker registration pronto:', {
-        scope: registration.scope,
-        active: !!registration.active,
-        installing: !!registration.installing,
-        waiting: !!registration.waiting
-      });
     } catch (error) {
-      console.error('❌ Erro ao aguardar Service Worker:', error);
       throw new Error('Service Worker não está disponível. Recarregue a página e verifique se o Service Worker está registrado.');
     }
 
@@ -112,8 +97,6 @@ export const getFCMToken = async () => {
       throw new Error('Permissão de notificações não concedida. Solicite permissão primeiro.');
     }
 
-    console.log('🔑 Tentando obter token FCM...');
-
     // Obtém o token FCM
     const token = await getToken(messaging, {
       vapidKey: normalizedKey,
@@ -124,10 +107,8 @@ export const getFCMToken = async () => {
       throw new Error('Não foi possível obter o token FCM');
     }
 
-    console.log('✅ Token FCM obtido:', token);
     return token;
   } catch (error) {
-    console.error('❌ Erro ao obter token FCM:', error);
     
     // Mensagem de erro mais detalhada
     if (error.message.includes('applicationServerKey') || error.message.includes('not valid')) {
@@ -172,16 +153,13 @@ export const saveFCMToken = async (userId, token) => {
         platform: navigator.platform,
         userAgent: navigator.userAgent
       });
-      console.log('✅ Token FCM atualizado no Firestore');
     } else {
       // Cria novo documento
       await setDoc(tokenDocRef, tokenData);
-      console.log('✅ Token FCM salvo no Firestore');
     }
 
     return true;
   } catch (error) {
-    console.error('❌ Erro ao salvar token FCM:', error);
     throw error;
   }
 };
@@ -201,10 +179,8 @@ export const removeFCMToken = async (userId) => {
       removedAt: new Date().toISOString()
     });
 
-    console.log('✅ Token FCM removido do Firestore');
     return true;
   } catch (error) {
-    console.error('❌ Erro ao remover token FCM:', error);
     throw error;
   }
 };
@@ -217,8 +193,6 @@ export const setupFCMForegroundListener = (callback) => {
     if (!messaging) return;
 
     onMessage(messaging, (payload) => {
-      console.log('📨 Mensagem FCM recebida (foreground):', payload);
-      
       if (callback) {
         callback(payload);
       }
@@ -265,7 +239,6 @@ export const checkFCMTokenStatus = async (userId) => {
       updatedAt: data.updatedAt
     };
   } catch (error) {
-    console.error('❌ Erro ao verificar status do token FCM:', error);
     return { hasToken: false, error: error.message };
   }
 };

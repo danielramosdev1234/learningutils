@@ -19,28 +19,22 @@ export function usePWAInstall() {
     // Verifica estado inicial
     const currentPrompt = getDeferredPrompt();
     const installed = getIsInstalled();
-    
-    console.log('🔍 [Hook] Estado inicial - Prompt:', !!currentPrompt, 'Instalado:', installed);
-    
+
     if (currentPrompt) {
       setDeferredPrompt(currentPrompt);
       setIsAvailable(true);
-      console.log('✅ [Hook] DeferredPrompt encontrado no estado inicial');
     }
     setIsInstalled(installed);
 
     // Subscreve para receber atualizações
     const unsubscribe = subscribeToPWAInstall((prompt) => {
-      console.log('📨 [Hook] Recebida notificação do manager. Prompt:', !!prompt);
       if (prompt) {
         setDeferredPrompt(prompt);
         setIsAvailable(true);
-        console.log('✅ [Hook] DeferredPrompt atualizado via manager');
       } else {
         setDeferredPrompt(null);
         setIsAvailable(false);
         setIsInstalled(true);
-        console.log('✅ [Hook] App instalado ou prompt removido');
       }
     });
 
@@ -69,8 +63,7 @@ export function usePWAInstall() {
 
     if (!promptToUse) {
       // Tenta verificar se o evento ainda não foi disparado
-      console.log('⚠️ DeferredPrompt não disponível. Verificando requisitos...');
-      
+
       // Verifica se está em HTTPS ou localhost
       const isSecure = window.location.protocol === 'https:' || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
       if (!isSecure) {
@@ -112,16 +105,14 @@ Se o problema persistir, verifique o console do navegador (F12) para mais detalh
     }
 
     try {
-      console.log('🚀 Iniciando instalação do PWA...');
       const accepted = await globalInstallPWA();
-      
+
       if (accepted) {
-        console.log('✅ PWA instalado com sucesso!');
+        // Installation successful
       } else {
-        console.log('❌ Usuário cancelou a instalação');
+        // User cancelled installation
       }
     } catch (error) {
-      console.error('❌ Erro ao instalar PWA:', error);
       alert(`Erro ao instalar: ${error.message}\n\nTente recarregar a página e tentar novamente.`);
     }
   };
