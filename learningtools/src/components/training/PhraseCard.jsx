@@ -99,7 +99,7 @@ export const PhraseCard = ({
        error: chunksHook.error
      };
 
- console.log('📱 Using hook for:', isAndroid ? 'Android' : 'Desktop/iOS');
+
 
   const [result, setResult] = useState(null);
   const [showFeedback, setShowFeedback] = useState(false);
@@ -122,10 +122,7 @@ export const PhraseCard = ({
   // [MANTER TODO O useEffect de processamento - linhas 110-211]
   useEffect(() => {
     if (transcript && !isListening && !hasProcessed && transcript.trim() !== '') {
-      console.log('🔊 Processing - Phrase:', phrase.text, '| Said:', transcript);
-
       const comparison = compareTexts(phrase.text, transcript);
-      console.log('📈 Result:', comparison.similarity + '%');
 
       setResult(comparison);
       setShowFeedback(true);
@@ -142,7 +139,6 @@ export const PhraseCard = ({
       });
 
       if (comparison.similarity >= 80) {
-        console.log(`✅ ${comparison.similarity}% - Marking phrase as completed!`);
 
         try {
           const wordCount = countWords(phrase.text);
@@ -164,7 +160,6 @@ export const PhraseCard = ({
           }
 
           if (autoAdvance && onNextPhrase) {
-            console.log(`🎉 Auto advancing!`);
             setTimeout(() => {
               onNextPhrase();
             }, 2000);
@@ -213,7 +208,6 @@ export const PhraseCard = ({
   ]);
 
 useEffect(() => {
-  console.log('🔄 Phrase changed, resetting states');
   setResult(null);
   setShowFeedback(false);
   setHasProcessed(false);
@@ -231,7 +225,6 @@ useEffect(() => {
       !referral.hasReceivedWelcomeBonus &&
       mode === 'authenticated'
     ) {
-      console.log('🎁 Dando bônus de boas-vindas ao novo usuário!');
       dispatch(giveWelcomeBonus());
     }
   }, [referral, mode, dispatch]);
@@ -243,9 +236,7 @@ const handleSkipPhrase = () => {
   };
 
 const confirmSkipPhrase = () => {
-    console.log('confirmSkipPhrase!');
     if (!canSkipPhrase) return;
-console.log('if (!canSkipPhrase) return;!');
     dispatch(useSkipPhrase());
 
     dispatch(markPhraseCompleted({
@@ -278,12 +269,10 @@ const handleNextSkip = () => {
         trackUserAction('recording_stopped', { phraseId: phrase.id });
         stopListening();
       } else {
-        console.log('🎤 Starting new recording...');
         trackUserAction('recording_started', { phraseId: phrase.id });
 
         if ('speechSynthesis' in window) {
           window.speechSynthesis.cancel();
-          console.log('🔇 Stopped TTS playback');
         }
 
         setResult(null);
@@ -310,7 +299,6 @@ const handleNextSkip = () => {
     }
 
     try {
-      console.log('🔊 Playing recorded audio...');
       trackUserAction('audio_playback_started', { phraseId: phrase.id });
 
       if (audioRef.current) {
@@ -323,12 +311,10 @@ const handleNextSkip = () => {
       audioRef.current = audio;
 
       audio.onplay = () => {
-        console.log('▶️ Audio playing');
         setIsPlayingUserAudio(true);
       };
 
       audio.onended = () => {
-        console.log('⏹️ Audio ended');
         setIsPlayingUserAudio(false);
         URL.revokeObjectURL(audioUrl);
         trackUserAction('audio_playback_ended', { phraseId: phrase.id });
@@ -653,7 +639,6 @@ const handleNextSkip = () => {
                 onClick={() => {
                   setSelectedVoice(voice);
                   localStorage.setItem('learnfun_preferred_voice', voice.name);
-                  console.log('✅ Voice saved:', voice.name);
                 }}
               >
                 <div className="flex items-center justify-between">

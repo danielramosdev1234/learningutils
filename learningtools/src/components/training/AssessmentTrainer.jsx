@@ -244,13 +244,7 @@ const AssessmentTrainer = () => {
   // Debug log
   useEffect(() => {
     if (typeof window !== 'undefined' && window.location.hostname === 'localhost') {
-      console.log('🔍 Assessment State:', {
-        phase,
-        questionIndex,
-        currentLevel,
-        speakingAnswers: answers.speaking.length,
-        listeningAnswers: answers.listening.length
-      });
+      // Removed console.log for performance
     }
   }, [phase, questionIndex, currentLevel, answers.speaking.length, answers.listening.length]);
 
@@ -314,11 +308,9 @@ const AssessmentTrainer = () => {
   // Handlers
   const handleNextQuestion = (nextLevel = null) => {
     if (questionIndex < currentQuestions.length - 1) {
-      console.log('➡️ Moving to next question');
       setQuestionsLevel(nextLevel || currentLevel);
       setQuestionIndex(prev => prev + 1);
     } else {
-      console.log('🎬 End of phase - waiting for completion handler');
       // ✅ NÃO chamar handleFinishTest aqui - já é chamado no onComplete
     }
   };
@@ -326,15 +318,12 @@ const AssessmentTrainer = () => {
   const handleFinishTest = async () => {
     // ⭐ Guard para evitar salvar duplicado
     if (isSavingResult) {
-      console.log('⚠️ Already saving result, skipping duplicate call');
       return;
     }
 
     setIsSavingResult(true);
 
     const levelToNumber = { 'A1': 1, 'A2': 2, 'B1': 3, 'B2': 4, 'C1': 5, 'C2': 6 };
-
-    console.log('🏁 handleFinishTest - testMode:', testMode);
 
     // ⭐ Calcular nível final baseado nas últimas 10 respostas
     const last10 = answers[testMode].slice(-10);
@@ -359,18 +348,9 @@ const AssessmentTrainer = () => {
       }
     }
 
-    console.log('📊 Nível final calculado:', bestLevel, 'com', maxCount, 'acertos nas últimas 10 questões');
-
     setFinalLevel(bestLevel);
 
     const score = calculateScore(answers[testMode]);
-
-    console.log('📊 Final data before save:', {
-      testMode,
-      finalLevel,
-      score,
-      answersCount: answers[testMode].length
-    });
 
     const certificate = {
       name: profile.displayName || 'Anonymous',
@@ -379,8 +359,6 @@ const AssessmentTrainer = () => {
       score,
       date: new Date().toISOString()
     };
-
-    console.log('📤 Saving assessment result:', { skillType: testMode, level: bestLevel, score, certificate });
 
     await dispatch(saveAssessmentResult({ skillType: testMode, level: bestLevel, score, certificate, answers: answers[testMode] }));
     dispatch(addXP({ userId, mode: 'assessment_completion', amount: 300 }));
@@ -453,25 +431,18 @@ const AssessmentTrainer = () => {
             let newLevel = currentLevel;
             let newConsecutive = consecutiveCorrects;
 
-            console.log('🎯 Answer received:', { correct, currentLevel, consecutiveCorrects });
-
             if (correct) {
               newConsecutive = consecutiveCorrects + 1;
               if (newConsecutive >= 2) {
                 newLevel = adjustLevel(currentLevel, true);
                 newConsecutive = 0; // ✅ Resetar contador após subir de nível
-                console.log('🎚️ ✅ LEVEL UP!', currentLevel, '->', newLevel, `(2 consecutive corrects, resetting counter)`);
-              } else {
-                console.log('🎚️ Consecutive corrects:', newConsecutive, '(need 2 to level up)');
               }
             } else {
               newConsecutive = 0;
               newLevel = adjustLevel(currentLevel, false);
-              console.log('🎚️ ⬇️ LEVEL DOWN:', currentLevel, '->', newLevel, `(wrong answer)`);
             }
 
             // ✅ Atualizar estados de controle
-            console.log('📝 Updating states:', { newLevel, newConsecutive });
             setConsecutiveCorrects(newConsecutive);
             setCurrentLevel(newLevel);
             currentLevelRef.current = newLevel;
@@ -489,11 +460,9 @@ const AssessmentTrainer = () => {
               };
 
               const newSpeakingCount = newAnswers.speaking.length;
-              console.log('📊 Total speaking answers:', newSpeakingCount);
 
               // ✅ Verificar se completou 20 questões
               if (newSpeakingCount >= 20 && !isCompletingSpeaking.current) {
-                console.log('🏁 Speaking test completed with level:', newLevel);
                 isCompletingSpeaking.current = true;
                 // ✅ Chamar handleFinishTest após delay para garantir que o estado foi atualizado
                 setTimeout(() => {
@@ -506,7 +475,6 @@ const AssessmentTrainer = () => {
           }}
           onNext={() => {
             // Avançar para próxima questão com o nível atualizado
-            console.log('⏭️ Moving to next question with level:', currentLevelRef.current);
             handleNextQuestion(currentLevelRef.current);
           }}
         />
@@ -554,12 +522,10 @@ const AssessmentTrainer = () => {
           onComplete={(result) => {
             // ✅ Guard para evitar chamadas duplicadas
             if (isProcessingAnswer.current) {
-              console.log('⚠️ Already processing answer, skipping duplicate call');
               return;
             }
 
             isProcessingAnswer.current = true;
-            console.log('🎯 Processing listening answer for question', questionIndex);
 
             const { correct, selectedAnswer, correctAnswer, playCount } = result;
 
@@ -572,14 +538,10 @@ const AssessmentTrainer = () => {
               if (newConsecutive >= 2) {
                 newLevel = adjustLevel(currentLevel, true);
                 newConsecutive = 0; // ✅ Resetar contador após subir de nível
-                console.log('🎚️ Level increased:', currentLevel, '->', newLevel, '(2 consecutive corrects, resetting counter)');
-              } else {
-                console.log('🎚️ Consecutive corrects:', newConsecutive);
               }
             } else {
               newConsecutive = 0;
               newLevel = adjustLevel(currentLevel, false);
-              console.log('🎚️ Level decreased:', currentLevel, '->', newLevel);
             }
 
             // ✅ Atualizar estados de controle ANTES do setAnswers
@@ -600,14 +562,11 @@ const AssessmentTrainer = () => {
 
             // ✅ Verificar se completou FORA do setAnswers
             const newListeningCount = answers.listening.length + 1;
-            console.log('📊 Total listening answers:', newListeningCount);
 
             if (newListeningCount >= 20) {
-              console.log('🎬 Listening test completed!');
               isProcessingAnswer.current = false;
               handleFinishTest();
             } else {
-              console.log('➡️ Moving to next question');
               setQuestionsLevel(newLevel);
               setQuestionIndex(prev => prev + 1);
               isProcessingAnswer.current = false;

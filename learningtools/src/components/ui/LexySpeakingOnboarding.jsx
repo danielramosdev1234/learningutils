@@ -222,7 +222,6 @@ const [hasUserInteracted, setHasUserInteracted] = useState(false);
     return AUDIO_MAP[moment] || [];
   };
 const handleLexyFinish = () => {
-  console.log('✅ Onboarding concluído');
   if (typeof window !== 'undefined') {
     localStorage.setItem(TOUR_STORAGE_KEY, 'completed');
   }
@@ -234,11 +233,8 @@ const handleLexyFinish = () => {
   // 2. playAudioSequence() - toca sequência de áudios com pausas
   const playAudioSequence = async (audios) => {
     if (!audios || audios.length === 0) {
-      console.log('🦊 Sem áudios para tocar');
       return;
     }
-
-    console.log(`🎵 Iniciando sequência de ${audios.length} áudio(s) para momento: ${moment}`);
     setShowReplayButton(false);
     setCurrentAudioIndex(0);
 
@@ -247,20 +243,17 @@ const handleLexyFinish = () => {
 
       // Pausa antes do áudio (se configurada)
       if (audioConfig.pauseBefore) {
-        console.log(`⏸️ Pausando ${audioConfig.pauseBefore}ms antes do áudio ${i + 1}`);
         await new Promise(resolve => {
           sequenceTimeoutRef.current = setTimeout(resolve, audioConfig.pauseBefore);
         });
       }
 
       // Tocar áudio
-      console.log(`▶️ Tocando áudio ${i + 1}/${audios.length}: ${audioConfig.file}`);
       setCurrentAudioIndex(i);
       await playAudio(audioConfig.file);
     }
 
     // Sequência completa
-    console.log('✅ Sequência de áudios concluída');
     setIsPlaying(false);
     setShowReplayButton(true);
 
@@ -278,10 +271,8 @@ const handleLexyFinish = () => {
 
     const nextMoment = nextMomentMap[moment];
     if (nextMoment) {
-      console.log(`🦊 Avançando automaticamente: ${moment} → ${nextMoment}`);
       onMomentComplete(nextMoment);
     } else {
-      console.log('🎉 Onboarding concluído!');
       onFinish();
     }
   };
@@ -298,12 +289,10 @@ const handleLexyFinish = () => {
       audioRef.current = audio;
 
       audio.onplay = () => {
-        console.log('🔊 Áudio iniciado');
         setIsPlaying(true);
       };
 
       audio.onended = () => {
-        console.log('🔇 Áudio finalizado');
         setIsPlaying(false);
         resolve();
       };
@@ -332,13 +321,11 @@ const handleLexyFinish = () => {
 
   // 5. handleSkipClick() - mostra modal de confirmação
   const handleSkipClick = () => {
-    console.log('⏭️ Usuário clicou em Skip');
     setShowSkipConfirm(true);
   };
 
   // 6. confirmSkip() - pausa áudio + chama onSkip
   const confirmSkip = () => {
-    console.log('✅ Skip confirmado');
     if (audioRef.current) {
       audioRef.current.pause();
     }
@@ -352,7 +339,6 @@ const handleLexyFinish = () => {
 
   // 7. cancelSkip() - fecha modal sem pular
   const cancelSkip = () => {
-    console.log('❌ Skip cancelado');
     setShowSkipConfirm(false);
   };
 
@@ -387,11 +373,10 @@ const handleLexyFinish = () => {
   // ============================================================================
 
   // Iniciar áudio quando momento muda
- useEffect(() => {
-   if (!visible || moment === 'waiting' || !hasUserInteracted) return;
+  useEffect(() => {
+    if (!visible || moment === 'waiting' || !hasUserInteracted) return;
 
-   console.log(`🦊 Novo momento: ${moment}`);
-   const audios = getMomentAudios();
+    const audios = getMomentAudios();
    if (audios.length > 0) {
      playAudioSequence(audios);
    }
@@ -434,7 +419,6 @@ const handleLexyFinish = () => {
 
   // ⚠️ CRÍTICO: Se momento é 'waiting', NÃO renderiza nada (Lexy some)
   if (moment === 'waiting') {
-    console.log('👻 Lexy está invisível (waiting)');
     return null;
   }
 
@@ -720,13 +704,10 @@ const handleLexyFinish = () => {
             <div className="flex flex-col gap-3">
               <button
                 onClick={async () => {
-                  console.log('🔐 Usuário clicou em Login via Lexy Onboarding');
-
                   try {
                     const result = await dispatch(loginWithGoogle());
 
                     if (loginWithGoogle.fulfilled.match(result)) {
-                      console.log('✅ Login realizado com sucesso!');
                       handleLexyFinish();
                     } else {
                       console.error('❌ Erro no login');

@@ -51,9 +51,6 @@ const ChunkTrainer = ({ onOpenInvite }) => {
 
       // Verifica se precisa migrar
       if (globalCompletedPhrases.length > 0 && globalCompletedIndices.length === 0) {
-        console.log('🔄 Migrando dados antigos...');
-        console.log(`  - IDs: ${globalCompletedPhrases.length}`);
-        console.log(`  - Índices: ${globalCompletedIndices.length}`);
 
         const newIndices = [];
 
@@ -65,7 +62,6 @@ const ChunkTrainer = ({ onOpenInvite }) => {
         });
 
         if (newIndices.length > 0) {
-          console.log(`✅ Migrados ${newIndices.length} índices:`, newIndices.map(i => i + 1));
           dispatch(updateLevelSystemIndices({ indices: newIndices }));
 
           // Salva automaticamente
@@ -112,12 +108,10 @@ const ChunkTrainer = ({ onOpenInvite }) => {
       }));
 
       setFilteredPhrases(levelPhrases);
-      console.log(`📚 Level ${currentLevel}: Showing ${totalPhrasesToShow} phrases (${globalCompletedPhrases.length} completed)`);
 
       // ✅ CORRIGIDO: Corrige index SOMENTE se necessário e SOMENTE UMA VEZ
       if (currentIndex >= levelPhrases.length && !isCorrectingIndex.current) {
         isCorrectingIndex.current = true;
-        console.log(`⚠️ Current index ${currentIndex} out of range, adjusting to ${levelPhrases.length - 1}`);
 
         setTimeout(() => {
           dispatch(updateChunkProgress({
@@ -135,7 +129,7 @@ const ChunkTrainer = ({ onOpenInvite }) => {
   }, [phrases, levelSystem, currentIndex, dispatch, progress.chunkTrainer.completedPhrases]);
 
   useEffect(() => {
-    console.log('🔍 Current Index:', currentIndex);
+    // Track current index changes
   }, [currentIndex]);
 
   // Ao trocar de frase
@@ -151,8 +145,6 @@ const ChunkTrainer = ({ onOpenInvite }) => {
 
   // Ao acertar uma frase
   const handleCorrectAnswer = async () => {
-    console.log('✅ Correct answer! Moving to next phrase...');
-
     const currentPhrase = filteredPhrases[currentIndex];
 
 
@@ -210,8 +202,6 @@ const ChunkTrainer = ({ onOpenInvite }) => {
     setTimeout(() => {
       dispatch(saveProgress());
     }, 500);
-
-    console.log(`📊 Frase ${currentIndex + 1} (ID: ${currentPhrase.id}) marcada como completa`);
   };
 
 

@@ -142,7 +142,6 @@ const toggleListening = async (action = 'toggle') => {
     setRecordingTime(0);
     if (timerRef.current) clearInterval(timerRef.current);
     audioChunksRef.current = [];
-    console.log('❌ Gravação cancelada');
     return;
   }
 
@@ -219,7 +218,6 @@ const toggleListening = async (action = 'toggle') => {
             setTranscript(transcribedText);
             setVoiceTranscript(transcribedText);
             setIsTranscribing(false);
-            console.log('✅ Transcrição:', transcribedText);
 
             // ❌ NÃO enviar automaticamente - usuário decide quando enviar
 
@@ -244,8 +242,6 @@ const toggleListening = async (action = 'toggle') => {
         timerRef.current = setInterval(() => {
           setRecordingTime(prev => prev + 1);
         }, 1000);
-
-        console.log('🎤 Gravação iniciada');
       } catch (error) {
         console.error('❌ Erro ao acessar microfone:', error);
         alert('Não foi possível acessar o microfone. Verifique as permissões.');
@@ -609,7 +605,6 @@ const playAudioBlock = async (block) => {
   };
 
   const handleReaction = (messageIndex, emoji) => {
-    console.log(`Reacted with ${emoji} to message ${messageIndex}`);
     // Você pode salvar isso no Firebase ou state global
   };
 
