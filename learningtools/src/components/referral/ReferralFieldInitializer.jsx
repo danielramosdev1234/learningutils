@@ -14,7 +14,6 @@ export const ReferralFieldInitializer = () => {
   useEffect(() => {
     // ✅ Se já inicializou, não faz nada
     if (hasInitialized.current) {
-      console.log('✅ Campo referral já foi inicializado (skip)');
       return;
     }
 
@@ -25,19 +24,14 @@ export const ReferralFieldInitializer = () => {
 
     // ✅ Se referral é null, cria estrutura inicial
     if (referral === null || referral === undefined) {
-      console.log('⚠️ Campo referral null detectado! Criando estrutura inicial...');
-
       // Marca como inicializado ANTES de salvar para evitar loop
       hasInitialized.current = true;
 
       // Salva com estrutura inicial
       dispatch(saveProgress());
-
-      console.log('✅ Estrutura referral criada e salva');
     } else {
       // Referral já existe, marca como inicializado
       hasInitialized.current = true;
-      console.log('✅ Campo referral já existe no Redux');
     }
   }, [mode, userId, referral, dispatch]);
 

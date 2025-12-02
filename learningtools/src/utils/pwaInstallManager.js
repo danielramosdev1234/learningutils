@@ -17,28 +17,22 @@ function checkInstalled() {
 
 // Handler global para beforeinstallprompt
 function handleBeforeInstallPrompt(e) {
-  console.log('🎯 [Global] Evento beforeinstallprompt capturado!', e);
   e.preventDefault();
   deferredPrompt = e;
   window.deferredPrompt = e; // Backup no window
-  
-  console.log('💾 [Global] DeferredPrompt salvo. Listeners ativos:', listeners.size);
-  
+
   // Notifica todos os listeners
   listeners.forEach(callback => {
     try {
       callback(deferredPrompt);
     } catch (error) {
-      console.error('❌ [Global] Erro ao notificar listener:', error);
+      // Error handling without logging
     }
   });
-  
-  console.log('✅ [Global] Todos os listeners notificados');
 }
 
 // Handler global para appinstalled
 function handleAppInstalled() {
-  console.log('🎉 [Global] App instalado!');
   isInstalled = true;
   deferredPrompt = null;
   window.deferredPrompt = null;
@@ -52,40 +46,29 @@ let initialized = false;
 
 export function initializePWAInstallManager() {
   if (initialized) {
-    console.log('⚠️ [Global] PWA Install Manager já inicializado');
     return;
   }
 
-  console.log('🔧 [Global] Inicializando PWA Install Manager...');
-  console.log('📍 [Global] URL:', window.location.href);
-  console.log('🔒 [Global] HTTPS:', window.location.protocol === 'https:');
-  console.log('📱 [Global] User Agent:', navigator.userAgent);
-  
   // Verifica se já está instalado
   const installed = checkInstalled();
-  console.log('📦 [Global] App já instalado?', installed);
-  
+
   // Verifica se já existe um deferredPrompt (caso o evento tenha sido disparado antes)
   if (window.deferredPrompt) {
-    console.log('📦 [Global] DeferredPrompt encontrado no window (evento já disparado)');
     deferredPrompt = window.deferredPrompt;
     listeners.forEach(callback => {
       try {
         callback(deferredPrompt);
       } catch (error) {
-        console.error('❌ [Global] Erro ao notificar listener inicial:', error);
+        // Error handling without logging
       }
     });
-  } else {
-    console.log('⏳ [Global] Aguardando evento beforeinstallprompt...');
   }
   
   // Adiciona listeners globais (apenas uma vez)
   window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
   window.addEventListener('appinstalled', handleAppInstalled);
-  
+
   initialized = true;
-  console.log('✅ [Global] PWA Install Manager inicializado e aguardando eventos');
 }
 
 // Registra um listener para receber atualizações do deferredPrompt
@@ -126,7 +109,6 @@ export async function installPWA() {
     const { outcome } = await promptToUse.userChoice;
     return outcome === 'accepted';
   } catch (error) {
-    console.error('Erro ao instalar PWA:', error);
     throw error;
   }
 }
