@@ -12,8 +12,6 @@ import { calculateLevel, calculateXPProgress } from '../store/slices/xpSlice';
  */
 export const loadLevelRanking = async (limitCount = 50, includeGuests = false) => {
   try {
-    console.log('📄 Buscando ranking do Firestore (XP System)...');
-
     // Busca todos os usuários
     const usersRef = collection(db, 'users');
     const q = query(
@@ -23,8 +21,6 @@ export const loadLevelRanking = async (limitCount = 50, includeGuests = false) =
       limit(20)
     );
     const querySnapshot = await getDocs(q);
-
-    console.log(`📊 Total de documentos encontrados: ${querySnapshot.size}`);
 
     const users = [];
 
@@ -94,7 +90,6 @@ export const loadLevelRanking = async (limitCount = 50, includeGuests = false) =
     // Limita ao número solicitado
     const limitedUsers = users.slice(0, limitCount);
 
-    console.log(`✅ Ranking carregado: ${limitedUsers.length} usuários (${users.length} total)`);
     return limitedUsers;
 
   } catch (error) {

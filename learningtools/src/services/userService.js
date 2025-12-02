@@ -20,7 +20,6 @@ export const getOrCreateGuestId = () => {
   if (!guestId) {
     guestId = generateGuestId();
     localStorage.setItem('learnfun_guest_id', guestId);
-    console.log('🎭 Novo guest criado:', guestId);
   }
 
   return guestId;
@@ -97,8 +96,6 @@ export const saveGuestData = (progress, stats, levelSystem, referral) => {
     if (referral) {
       localStorage.setItem('learnfun_guest_referral', JSON.stringify(referral));
     }
-
-    console.log('✅ Dados guest salvos (incluindo referral)');
   } catch (error) {
     console.error('❌ Erro ao salvar dados guest:', error);
   }
@@ -135,7 +132,6 @@ export const saveAuthUserDataToCache = (userId, userData, xpSystem = null) => {
       cachedAt: new Date().toISOString()
     };
     localStorage.setItem(cacheKey, JSON.stringify(cacheData));
-    console.log('💾 Dados salvos no cache local (offline)', xpSystem ? '(com XP)' : '');
   } catch (error) {
     console.error('❌ Erro ao salvar cache local:', error);
   }
@@ -151,9 +147,6 @@ export const loadAuthUserDataFromCache = (userId) => {
     
     if (cachedStr) {
       const cachedData = JSON.parse(cachedStr);
-      console.log('📦 Dados carregados do cache local (offline)');
-      console.log('📍 CurrentIndex do cache:', cachedData.progress?.chunkTrainer?.currentIndex);
-      console.log('📅 Cache criado em:', cachedData.cachedAt);
       return cachedData;
     }
     
@@ -190,8 +183,6 @@ export const loadAuthUserData = async (userId, retryCount = 3) => {
 
         if (userDoc.exists()) {
           const data = userDoc.data();
-          console.log('✅ Dados carregados do Firestore');
-          console.log('📍 CurrentIndex do Firebase:', data.progress?.chunkTrainer?.currentIndex);
 
           // Valida estrutura de referral
           if (data.referral) {
@@ -219,7 +210,7 @@ export const loadAuthUserData = async (userId, retryCount = 3) => {
               await updateDoc(userDocRef, {
                 'referral.code': referralCode
               });
-              console.log('✅ Código de referral gerado:', referralCode);
+
             }
           }
 
@@ -229,12 +220,9 @@ export const loadAuthUserData = async (userId, retryCount = 3) => {
 
           return data;
         } else {
-          console.log('ℹ️ Primeira vez deste usuário');
-          
           // Tenta carregar do cache mesmo sendo primeira vez (pode ter dados não sincronizados)
           const cachedData = loadAuthUserDataFromCache(userId);
           if (cachedData) {
-            console.log('⚠️ Usuário não existe no Firestore, mas tem cache local. Usando cache.');
             return cachedData;
           }
           
@@ -246,7 +234,6 @@ export const loadAuthUserData = async (userId, retryCount = 3) => {
         
         // Se não está online, tenta cache imediatamente
         if (!isOnline()) {
-          console.log('📴 Sem conexão detectada, tentando cache local...');
           break;
         }
         
@@ -258,11 +245,9 @@ export const loadAuthUserData = async (userId, retryCount = 3) => {
     }
 
     // Se todas as tentativas falharam, tenta carregar do cache local
-    console.log('⚠️ Não foi possível carregar do Firestore, tentando cache local...');
     const cachedData = loadAuthUserDataFromCache(userId);
-    
+
     if (cachedData) {
-      console.log('✅ Usando dados do cache local (modo offline)');
       return cachedData;
     }
 
@@ -274,7 +259,6 @@ export const loadAuthUserData = async (userId, retryCount = 3) => {
     // Última tentativa: cache local
     const cachedData = loadAuthUserDataFromCache(userId);
     if (cachedData) {
-      console.log('✅ Usando dados do cache local após erro');
       return cachedData;
     }
     
@@ -322,12 +306,6 @@ const removeUndefined = (obj) => {
  */
 export const saveAuthUserData = async (userId, profile, progress, stats, levelSystem, referral, lastActivity = null) => {
   try {
-    console.log('💾 === DEBUG SAVE AUTH USER DATA ===');
-    console.log('   User ID:', userId);
-    console.log('   Progress:', progress);
-    console.log('   CurrentIndex sendo salvo:', progress?.chunkTrainer?.currentIndex);
-    console.log('   Categories progress:', progress?.categories);
-
     const userDocRef = doc(db, 'users', userId);
 
     // ✅ Verifica se já tem código no Firestore antes de gerar novo
@@ -337,10 +315,8 @@ export const saveAuthUserData = async (userId, profile, progress, stats, levelSy
 
       if (existingCode) {
         referral.code = existingCode;
-        console.log('🔄 Usando código existente:', existingCode);
       } else {
         referral.code = generateReferralCode(profile?.displayName);
-        console.log('🎁 Código de referral gerado:', referral.code);
       }
     }
 
@@ -360,8 +336,6 @@ export const saveAuthUserData = async (userId, profile, progress, stats, levelSy
     // Tenta salvar no Firestore
     try {
       await setDoc(userDocRef, cleanedData, { merge: true });
-      console.log('✅ Dados salvos no Firestore');
-      console.log('📍 CurrentIndex salvo:', progress?.chunkTrainer?.currentIndex);
     } catch (firestoreError) {
       console.warn('⚠️ Erro ao salvar no Firestore (continuando para salvar cache):', firestoreError.message);
       // Continua para salvar no cache mesmo se Firestore falhar
@@ -394,7 +368,7 @@ export const saveAuthUserData = async (userId, profile, progress, stats, levelSy
         lastActivity
       };
       saveAuthUserDataToCache(userId, userData);
-      console.log('💾 Dados salvos no cache local mesmo após erro');
+
     } catch (cacheError) {
       console.error('❌ Erro ao salvar cache local:', cacheError);
     }
@@ -408,34 +382,20 @@ export const saveAuthUserData = async (userId, profile, progress, stats, levelSy
  */
 export const migrateGuestToAuth = async (authUserId, authProfile) => {
   try {
-    console.log('🔄 Iniciando migração de dados...');
-
     const guestData = loadGuestData();
     const referredByCode = getReferredBy();
-
-    console.log('👤 Guest Data:', guestData);
-    console.log('📍 CurrentIndex do guest:', guestData.progress?.chunkTrainer?.currentIndex);
-    console.log('🎯 Código de convite (URL):', referredByCode);
 
     // ✅ Carrega dados existentes do Firestore
     const existingData = await loadAuthUserData(authUserId);
 
     // ✅ Se JÁ tem dados no Firestore, NÃO migra
     if (existingData && existingData.stats && existingData.stats.totalPhrases > 0) {
-      console.log('ℹ️ Usuário já tem dados no Firestore. Mantendo dados existentes.');
-      console.log(`   📊 Firestore: ${existingData.stats.totalPhrases} frases`);
-      console.log(`   📍 Firestore CurrentIndex: ${existingData.progress?.chunkTrainer?.currentIndex}`);
-      console.log(`   👤 Guest: ${guestData.stats.totalPhrases} frases (ignorado)`);
-
       // ⚠️ MAS PRESERVA O REFERRAL SE VEIO DA URL
       if (referredByCode && !existingData.referral?.referredBy) {
-        console.log('⭐ Atualizando apenas o referredBy...');
-
         try {
           await updateDoc(doc(db, 'users', authUserId), {
             'referral.referredBy': referredByCode
           });
-          console.log('✅ ReferredBy atualizado no Firestore');
         } catch (updateError) {
           console.error('❌ Erro ao atualizar referredBy:', updateError);
         }
