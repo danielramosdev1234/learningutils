@@ -152,19 +152,23 @@ export const addXP = createAsyncThunk(
       const newTotalXP = state.totalXP + amount;
       const newLevel = calculateLevel(newTotalXP);
 
-      // 1️⃣ ATUALIZA DOCUMENTO PRINCIPAL (atomic operation)
-      const userRef = doc(db, 'users', userId);
-      try {
-        await updateDoc(userRef, {
-          'xpSystem.totalXP': increment(amount),
-          [`xpSystem.xpBreakdown.${mode}`]: increment(amount),
-          'xpSystem.xpToday': increment(amount),
-          'xpSystem.lastUpdated': serverTimestamp()
-        });
-      } catch (firestoreError) {
-        console.warn('⚠️ Erro ao salvar XP no Firestore (continuando para cache):', firestoreError.message);
-        // Continua para salvar no cache mesmo se Firestore falhar
-      }
+       // 1️⃣ ATUALIZA DOCUMENTO PRINCIPAL (atomic operation)
+       const userRef = doc(db, 'users', userId);
+       try {
+         await updateDoc(userRef, {
+           'xpSystem.totalXP': increment(amount),
+           [`xpSystem.xpBreakdown.${mode}`]: increment(amount),
+           'xpSystem.xpToday': increment(amount),
+           'xpSystem.lastUpdated': serverTimestamp(),
+
+           // ⭐ NOVO: Grava XP do dia em um mapa
+           // Formato: { "2025-12-06": 150, "2025-12-05": 200, ... }
+           [`xpSystem.dailyXP.${new Date().toISOString().split('T')[0]}`]: increment(amount)
+         });
+       } catch (firestoreError) {
+         console.warn('⚠️ Erro ao salvar XP no Firestore (continuando para cache):', firestoreError.message);
+         // Continua para salvar no cache mesmo se Firestore falhar
+       }
       
       // Salva no cache local também
       const xpData = {
