@@ -480,7 +480,7 @@ const SentenceBuilder = () => {
             <div className="mb-6 bg-amber-50 border-l-4 border-amber-400 p-4 rounded">
               <p className="text-amber-800 flex items-start gap-2 text-sm md:text-base">
                 <Lightbulb size={20} className="mt-0.5 flex-shrink-0" />
-                <span><strong>Dica:</strong> A frase tem {categoryInfo?.count} palavras. Organize-as na ordem correta!</span>
+                <span><strong>Dica:</strong> Use todas as palavras disponiveis. Organize-as na ordem correta!</span>
               </p>
             </div>
           )}
