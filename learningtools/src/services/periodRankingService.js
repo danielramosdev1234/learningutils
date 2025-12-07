@@ -34,16 +34,16 @@ export const loadPeriodRanking = async (period = 'all', limitCount = 50) => {
     // Para período, busca todos usuários com XP > 0
     const q = period === 'all'
       ? query(
-          usersRef,
-          where('xpSystem.totalXP', '>', 0),
-          orderBy('xpSystem.totalXP', 'desc'),
-          limit(limitCount)
-        )
+        usersRef,
+        where('xpSystem.totalXP', '>', 0),
+        orderBy('xpSystem.totalXP', 'desc'),
+        limit(limitCount)
+      )
       : query(
-          usersRef,
-          where('xpSystem.totalXP', '>', 0), // Filtro básico
-          limit(200) // Busca mais para filtrar localmente
-        );
+        usersRef,
+        where('xpSystem.totalXP', '>', 0), // Filtro básico
+        limit(200) // Busca mais para filtrar localmente
+      );
 
     const snapshot = await getDocs(q);
     const users = [];
@@ -64,6 +64,11 @@ export const loadPeriodRanking = async (period = 'all', limitCount = 50) => {
 
       // Só adiciona se tiver XP no período
       if (xpValue > 0) {
+        // Busca níveis de assessment (listening e speaking)
+        const assessment = data.assessment || {};
+        const listeningLevel = assessment.listening?.level || null;
+        const speakingLevel = assessment.speaking?.level || null;
+
         users.push({
           userId: doc.id,
           displayName: data.profile?.displayName || 'Anonymous',
@@ -71,7 +76,10 @@ export const loadPeriodRanking = async (period = 'all', limitCount = 50) => {
           photoURL: data.profile?.photoURL || null,
           xpEarned: xpValue,
           currentLevel: calculateLevel(xpSystem.totalXP || 0),
-          totalXP: xpSystem.totalXP || 0
+          totalXP: xpSystem.totalXP || 0,
+          streak: data.stats?.streak?.current || 0,
+          listening: listeningLevel ? { level: listeningLevel } : null,
+          speaking: speakingLevel ? { level: speakingLevel } : null
         });
       }
     });
